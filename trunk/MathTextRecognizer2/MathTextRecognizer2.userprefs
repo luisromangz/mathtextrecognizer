@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<UserCombinePreferences filename="/home/luis/carrera/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
+  <Files>
+    <File filename="./MathTextBatchLearner/Assistant/BitmapProcessesStep.cs" />
+    <File filename="./MathTextBatchLearner/Assistant/BitmapProcessHelpers/ProcessEditorDialog.cs" />
+    <File filename="./MathTextBatchLearner/Assistant/BitmapProcessHelpers/ProcessEditorWidget.cs" />
+    <File filename="./MathTextLibrary/BitmapProcesses/BitmapProcess.cs" />
+    <File filename="./MathTextLibrary/BitmapProcesses/BitmapStentifordThinner.cs" />
+    <File filename="./MathTextLibrary/BitmapProcesses/BitmapZhangSuenHoltThinner.cs" />
+    <File filename="./MathTextBatchLearner/Assistant/BitmapProcessHelpers/ProcessSelectorDialog.cs" />
+  </Files>
+  <Views>
+    <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
+      <TreeView>
+        <Node expanded="True">
+          <Node name="CustomGtkWidgets" expanded="True" />
+          <Node name="MathTextBatchLearner" expanded="True">
+            <Node name="Resources" expanded="True" />
+            <Node name="Assistant" expanded="True">
+              <Node name="BitmapProcessHelpers" expanded="True">
+                <Node name="ProcessEditorWidget.cs" expanded="False" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+          <Node name="MathTextLearner" expanded="True" />
+          <Node name="MathTextLibrary" expanded="True">
+            <Node name="BitmapProcesses" expanded="True" />
+            <Node name="Databases" expanded="True">
+              <Node name="Caracteristic" expanded="True" />
+            </Node>
+          </Node>
+          <Node name="MathTextRecognizer" expanded="True" />
+        </Node>
+      </TreeView>
+    </ViewMemento>
+    <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ClassPad">
+      <TreeView>
+        <Node expanded="True">
+          <Option id="ShowProjects" value="False" />
+          <Option id="NestedNamespaces" value="False" />
+          <Option id="PublicApiOnly" value="False" />
+          <Option id="GroupByType" value="True" />
+          <Option id="GroupByAccess" value="False" />
+          <Node name="MathTextBatchLearner.Assistant" expanded="False" selected="True" />
+        </Node>
+      </TreeView>
+    </ViewMemento>
+    <ViewMemento Id="MonoQuery.DatabasePad">
+      <TreeView>
+        <Node expanded="False" />
+      </TreeView>
+    </ViewMemento>
+    <ViewMemento Id="MonoDevelop.NUnit.TestPad">
+      <TreeView>
+        <Node expanded="False" />
+      </TreeView>
+    </ViewMemento>
+  </Views>
+  <Properties>
+    <Properties>
+      <Property key="ActiveConfiguration" value="Debug" />
+      <Property key="ActiveWindow" value="/home/luis/carrera/pfc/MathTextRecognizer2/MathTextBatchLearner/Assistant/BitmapProcessHelpers/ProcessEditorWidget.cs" />
+    </Properties>
+  </Properties>
+</UserCombinePreferences>
