@@ -266,8 +266,10 @@ namespace MathTextBatchLearner.Assistant
 		
 		private string RetrieveDescription(Type t)
 		{		
-			object[] attributes = t.GetCustomAttributes(typeof(BitmapProcessDescription),true);
-			BitmapProcessDescription bd = (BitmapProcessDescription)attributes[0];
+			object[] attributes =
+				t.GetCustomAttributes(typeof(BitmapProcessDescription),true);
+			BitmapProcessDescription bd =
+				(BitmapProcessDescription)attributes[0];
 			return bd.Description;
 		}
 		
