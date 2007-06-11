@@ -1,1 +1,2 @@
-#summary One-sentence summary of this page.
+=MathTextRecognizer Wiki=
+This wiki is the place where information about this project will be published.
