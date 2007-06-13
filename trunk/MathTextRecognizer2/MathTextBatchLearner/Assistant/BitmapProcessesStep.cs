@@ -42,6 +42,14 @@ namespace MathTextBatchLearner.Assistant
 		[Glade.WidgetAttribute]
 		private ScrolledWindow bitmapsProcessSW;
 			
+		[Glade.WidgetAttribute]
+		private HBox previewHB;
+		
+		[Glade.WidgetAttribute]
+		private ToggleButton previewTB;
+		
+		[Glade.WidgetAttribute]
+		private VButtonBox processBtnBox;
 		
 		#endregion Controles de Glade
 		
@@ -109,6 +117,8 @@ namespace MathTextBatchLearner.Assistant
 			                           "text",1);		
 			
 			bitmapsProcessSW.Add(processesView);
+			
+			
 			
 		}
 		
@@ -181,6 +191,22 @@ namespace MathTextBatchLearner.Assistant
 			}
 		}
 		
+		private void OnPreviewTBToggled(object sender, EventArgs a)
+		{
+			// Si tenemos previsualización, la ocultamos, y si no, la mostramos.
+			if(previewTB.Active)
+			{
+				previewHB.Visible = false;
+				bitmapsProcessSW.Visible = true;
+				processBtnBox.Visible = true;
+			}
+			else
+			{
+				processBtnBox.Visible = false;
+				previewHB.Visible = true;
+				bitmapsProcessSW.Visible = false;
+			}
+		}
 		
 		private void OnProcessesSelectionChanged(object e, EventArgs a)
 		{
