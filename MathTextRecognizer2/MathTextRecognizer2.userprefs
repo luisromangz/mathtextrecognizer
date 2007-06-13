@@ -2,12 +2,8 @@
 <UserCombinePreferences filename="/home/luis/carrera/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
     <File filename="Bienvenido" />
+    <File filename="./MathTextLibrary/Databases/MathTextDatabase.cs" />
     <File filename="./MathTextBatchLearner/Assistant/BitmapProcessesStep.cs" />
-    <File filename="./MathTextBatchLearner/Assistant/BitmapProcessHelpers/ProcessEditorDialog.cs" />
-    <File filename="./MathTextBatchLearner/Assistant/BitmapProcessHelpers/ProcessEditorWidget.cs" />
-    <File filename="./MathTextLibrary/BitmapProcesses/BitmapProcess.cs" />
-    <File filename="./MathTextLibrary/BitmapProcesses/BitmapStentifordThinner.cs" />
-    <File filename="./MathTextLibrary/BitmapProcesses/BitmapZhangSuenHoltThinner.cs" />
   </Files>
   <Views>
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
@@ -17,17 +13,13 @@
           <Node name="MathTextBatchLearner" expanded="True">
             <Node name="Resources" expanded="True" />
             <Node name="Assistant" expanded="True">
-              <Node name="BitmapProcessHelpers" expanded="True" />
+              <Node name="BitmapProcessesStep.cs" expanded="False" selected="True" />
             </Node>
           </Node>
           <Node name="MathTextLearner" expanded="True" />
           <Node name="MathTextLibrary" expanded="True">
-            <Node name="BitmapProcesses" expanded="True">
-              <Node name="BitmapZhangSuenHoltThinner.cs" expanded="False" selected="True" />
-            </Node>
-            <Node name="Databases" expanded="True">
-              <Node name="Caracteristic" expanded="True" />
-            </Node>
+            <Node name="BitmapProcesses" expanded="True" />
+            <Node name="Databases" expanded="True" />
           </Node>
           <Node name="MathTextRecognizer" expanded="True" />
         </Node>
@@ -38,9 +30,9 @@
         <Node expanded="True">
           <Option id="ShowProjects" value="False" />
           <Option id="NestedNamespaces" value="False" />
-          <Option id="GroupByAccess" value="False" />
           <Option id="PublicApiOnly" value="False" />
           <Option id="GroupByType" value="True" />
+          <Option id="GroupByAccess" value="False" />
         </Node>
       </TreeView>
     </ViewMemento>
@@ -58,7 +50,7 @@
   <Properties>
     <Properties>
       <Property key="ActiveConfiguration" value="Debug" />
-      <Property key="ActiveWindow" value="/home/luis/carrera/pfc/MathTextRecognizer2/MathTextLibrary/BitmapProcesses/BitmapZhangSuenHoltThinner.cs" />
+      <Property key="ActiveWindow" value="/home/luis/carrera/pfc/MathTextRecognizer2/MathTextBatchLearner/Assistant/BitmapProcessesStep.cs" />
     </Properties>
   </Properties>
 </UserCombinePreferences>

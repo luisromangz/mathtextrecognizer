@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+
+using MathTextLibrary.BitmapProcesses;
 
 namespace MathTextLibrary.Databases
 {
@@ -10,10 +13,28 @@ namespace MathTextLibrary.Databases
 	[DatabaseDescription("Descripción por defecto")]
 	public abstract class MathTextDatabase
 	{	
+		private List<BitmapProcess> processes;
+		
+		
 		
 		public MathTextDatabase()
 		{
 		}		
+		
+		/// <summary>
+		/// Esta propiedad permite establecer y recuperar la lista de los
+		/// procesos de imagenes usados en la base de datos.
+		/// </summary>
+		public List<BitmapProcess> Processes 
+		{
+			get {
+				return processes;
+			}
+			
+			set{
+				processes = value;
+			}
+		}
 	
 	}
 	
