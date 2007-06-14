@@ -17,7 +17,7 @@ namespace MathTextBatchLearner.Assistant
 	public class FileSelectionStep : PanelAssistantStep
 	{
 	
-		#region Controles de Glade
+#region Controles de Glade
 		
 		[Glade.WidgetAttribute]
 		private Frame fileSelectionStepFrame;
@@ -28,15 +28,15 @@ namespace MathTextBatchLearner.Assistant
 		[Glade.WidgetAttribute]
 		private IconView filesIconView;			
 		
-		#endregion Controles de Glade
+#endregion Controles de Glade
 		
-		#region Atributos
+#region Atributos
 		
 		private ListStore fileStore;
 		
-		#endregion Atributos
+#endregion Atributos
 		
-		#region Constructor
+#region Constructor
 		
 		public FileSelectionStep(PanelAssistant assistant) 
 			: base(assistant)
@@ -51,9 +51,9 @@ namespace MathTextBatchLearner.Assistant
 			InitializeWidgets();
 		}
 		
-		#endregion Constructor
+#endregion Constructor
 		
-		#region Metodos públicos
+#region Metodos públicos
 		
 		public override bool HasErrors ()
 		{
@@ -68,9 +68,21 @@ namespace MathTextBatchLearner.Assistant
 			return errors.Length > 0;
 		}
 		
-		#endregion Metodos públicos
+#endregion Metodos públicos
 		
-		#region Metodos privados
+#region Propiedades
+		
+		public ListStore ImagesStore
+		{
+			get
+			{
+				return fileStore;
+			}
+		}
+		
+#endregion Propiedades
+		
+#region Metodos privados
 		
 		private void AddIcon(string fileName)
 		{
@@ -233,6 +245,6 @@ namespace MathTextBatchLearner.Assistant
 			}
 		}
 		
-		#endregion Metodos privados
+#endregion Metodos privados
 	}
 }

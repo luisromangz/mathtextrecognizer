@@ -73,8 +73,8 @@ namespace MathTextLibrary.BitmapProcesses
 			float [,] im;
 			int i,j;
 
-			nrows=image.GetUpperBound(1)+3;
-			ncols=image.GetUpperBound(0)+3;
+			nrows=image.GetLength(0)+2;
+			ncols=image.GetLength(1)+2;
 
 			im = new float[nrows,ncols];
 			for (i=0; i<nrows-2; i++)

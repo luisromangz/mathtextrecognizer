@@ -24,8 +24,7 @@ namespace CustomGtkWidgets.ImageArea
 		/// <summary>
 		/// Constructor por defecto de ImageArea.
 		/// </summary>
-		public ImageArea()
-		    : base()
+		public ImageArea() : base()
 		{		
 			AddEvents((int)(Gdk.EventMask.ButtonPressMask
 							|Gdk.EventMask.ButtonReleaseMask
@@ -107,54 +106,55 @@ namespace CustomGtkWidgets.ImageArea
 				// Según el modo de ajuste seleccionado, actuamos de una u 
 				// otra manera.
 				switch(mode)
-				{									
-					case(ImageAreaMode.Strecht):
-					    // Ajuste de la imagen a las dimensiones del control.
-					    zoom = 0;
+				{
+				case(ImageAreaMode.Strecht):
+				    // Ajuste de la imagen a las dimensiones del control.
+				    zoom = 0;
+					
+					scaled = image.ScaleSimple(sx,sy, InterpType.Bilinear);
+					
+					GdkWindow.DrawPixbuf(
+						new Gdk.GC(GdkWindow),
+						scaled,
+						0,0,
+						0,0,
+						sx,sx,
+						RgbDither.None,0,0);
+					
 						
-						scaled = image.ScaleSimple(sx,sy, InterpType.Bilinear);
+					break;
+					
+					
+				case(ImageAreaMode.Zoom):
+				    // Aquí tenemos que ajustar solamente a la demensión
+				    // mayor, tenemos que calcular esto y luego multiplicar
+				    // la otra dimensión por el factor obtenido para mantener
+				    // la proporción entre alto y ancho de la imagen.
+				    
+					int sizeX,sizeY;
+					int dx=0,dy=0;
+					if(((sx+1.0f)/(sy+1.0f))<((image.Width+1.0f)/(1.0f+image.Height)))
+					{							    					
+						sizeX=sx;
 						
-						GdkWindow.DrawPixbuf(
-							new Gdk.GC(GdkWindow),
-							scaled,
-							0,0,
-							0,0,
-							sx,sx,
-							RgbDither.None,0,0);
+						sizeY=(int)(image.Height*((float)sx)/image.Width);
+						dy=(sy-sizeY)/2;
+					}
+					else
+					{								
+						sizeY=sy;
 						
-							
-						break;
-						
-						
-					case(ImageAreaMode.Zoom):
-					    // Aquí tenemos que ajustar solamente a la demensión
-					    // mayor, tenemos que calcular esto y luego multiplicar
-					    // la otra dimensión por el factor obtenido para mantener
-					    // la proporción entre alto y ancho de la imagen.
+						sizeX=(int)(image.Width*((float)sy)/image.Height);
+						dx=(sx-sizeX)/2;
+					}
+					
+					Zoom = ((float)image.Width+1f) / ((float)(sx+1f));
+					
+					if(sizeX >= 5 && sizeY >= 5)
+					{					    
+						scaled = image.ScaleSimple(sizeX,sizeY, InterpType.Bilinear);			
 					    
-						int sizeX,sizeY;
-						int dx=0,dy=0;
-						if(((sx+1.0f)/(sy+1.0f))<((image.Width+1.0f)/(1.0f+image.Height)))
-						{							    					
-							sizeX=sx;
-							
-							sizeY=(int)(image.Height*((float)sx)/image.Width);
-							dy=(sy-sizeY)/2;
-						}
-						else
-						{								
-							sizeY=sy;
-							
-							sizeX=(int)(image.Width*((float)sy)/image.Height);
-							dx=(sx-sizeX)/2;
-						}
-						
-						Zoom = ((float)image.Width+1f) / ((float)(sx+1f));
-						
-						// Finalmente, dibujamos la imagen.
-						
-						scaled = image.ScaleSimple(sizeX,sizeY, InterpType.Bilinear);
-						
+					
 						GdkWindow.DrawPixbuf(
 							new Gdk.GC(GdkWindow),
 							scaled,
@@ -162,8 +162,8 @@ namespace CustomGtkWidgets.ImageArea
 							dx,dy,
 							sizeX,sizeY,
 							RgbDither.None,0,0);
-						
-						break;
+					}
+					break;
 				}			
 				
 			}

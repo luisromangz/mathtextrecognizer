@@ -25,9 +25,10 @@ namespace MathTextBatchLearner
 					"Crear nueva base de datos de caracteres matemáticos");
 					
 			
-			//assistant.AddStep(new DatabaseTypeStep(assistant));
-			//assistant.AddStep(new FileSelectionStep(assistant));
-			assistant.AddStep(new BitmapProcessesStep(assistant));
+			assistant.AddStep(new DatabaseTypeStep(assistant));
+			FileSelectionStep fileSelection = new FileSelectionStep(assistant);
+			assistant.AddStep(fileSelection);
+			assistant.AddStep(new BitmapProcessesStep(assistant,fileSelection.ImagesStore));
 			                                          
 			
 			assistant.Run();

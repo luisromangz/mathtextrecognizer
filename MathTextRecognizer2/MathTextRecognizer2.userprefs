@@ -2,17 +2,20 @@
 <UserCombinePreferences filename="/home/luis/carrera/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
     <File filename="Bienvenido" />
-    <File filename="./MathTextLibrary/Databases/MathTextDatabase.cs" />
     <File filename="./MathTextBatchLearner/Assistant/BitmapProcessesStep.cs" />
+    <File filename="./MathTextBatchLearner/MainClass.cs" />
   </Files>
   <Views>
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
       <TreeView>
         <Node expanded="True">
-          <Node name="CustomGtkWidgets" expanded="True" />
+          <Node name="CustomGtkWidgets" expanded="True">
+            <Node name="ImageArea" expanded="True" />
+          </Node>
           <Node name="MathTextBatchLearner" expanded="True">
             <Node name="Resources" expanded="True" />
             <Node name="Assistant" expanded="True">
+              <Node name="BitmapProcessHelpers" expanded="True" />
               <Node name="BitmapProcessesStep.cs" expanded="False" selected="True" />
             </Node>
           </Node>
@@ -20,6 +23,7 @@
           <Node name="MathTextLibrary" expanded="True">
             <Node name="BitmapProcesses" expanded="True" />
             <Node name="Databases" expanded="True" />
+            <Node name="Utils" expanded="True" />
           </Node>
           <Node name="MathTextRecognizer" expanded="True" />
         </Node>

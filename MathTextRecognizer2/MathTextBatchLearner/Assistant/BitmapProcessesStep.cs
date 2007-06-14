@@ -1,4 +1,3 @@
-
 using System;
 using System.IO;
 using System.Reflection;
@@ -6,11 +5,13 @@ using System.Collections.Generic;
 
 using Gtk;
 
+using CustomGtkWidgets.ImageArea;
 using CustomGtkWidgets.CommonDialogs;
 
 using MathTextBatchLearner.Assistant.BitmapProcessesHelpers;
 
 using MathTextLibrary.BitmapProcesses;
+using MathTextLibrary.Utils;
 
 namespace MathTextBatchLearner.Assistant
 {
@@ -22,7 +23,7 @@ namespace MathTextBatchLearner.Assistant
 	public class BitmapProcessesStep : PanelAssistantStep
 	{
 	
-		#region Controles de Glade
+#region Controles de Glade
 		
 		[Glade.WidgetAttribute]
 		private Frame bitmapProcessesStepFrame;
@@ -51,22 +52,34 @@ namespace MathTextBatchLearner.Assistant
 		[Glade.WidgetAttribute]
 		private VButtonBox processBtnBox;
 		
-		#endregion Controles de Glade
+		[Glade.WidgetAttribute]
+		private Frame originFrame;
 		
-		#region Atributos
+		[Glade.WidgetAttribute]
+		private Frame processedFrame;
+		
+		[Glade.WidgetAttribute]
+		private Frame imagesFrame;
+		
+		[Glade.WidgetAttribute]
+		private TreeView imagesTV;
+		
+#endregion Controles de Glade
+		
+#region Atributos
 		
 		private NodeView processesView;
 		
 		private Dictionary<Type,string> bitmapProcessesTypes;
 		
+		private ImageArea originIA;
+		private ImageArea processedIA;		
 		
+#endregion Atributos
 		
-		#endregion Atributos
+#region Constructor
 		
-		#region Constructor
-		
-		public BitmapProcessesStep(PanelAssistant assistant) 
-			: base(assistant)
+		public BitmapProcessesStep(PanelAssistant assistant, ListStore imagesStore) : base(assistant)
 		{
 			Glade.XML gxml =
 				new Glade.XML(null,"gui.glade","bitmapProcessesStepFrame",null);
@@ -75,32 +88,47 @@ namespace MathTextBatchLearner.Assistant
 			
 			SetRootWidget(bitmapProcessesStepFrame);
 			
-			InitializeWidgets();
+			InitializeWidgets(imagesStore);
 			
 			RetrieveBitmapProcessesTypes();
 		}
 		
-		#endregion Constructor
+#endregion Constructor
 		
-		#region Metodos públicos
+#region Metodos públicos
 		
 		public override bool HasErrors ()
 		{
 			errors = "";
 			
-			
-			
 			return errors.Length > 0;
 		}
 		
-		#endregion Metodos públicos
+#endregion Metodos públicos
 		
-		#region Metodos privados
+#region Metodos privados
 		
-		private void InitializeWidgets()
+		private void CreateProcessedPreview(Gdk.Pixbuf p)
+		{
+			// Creamos una matriz a partir del pixbuf, y le 
+			// aplicamos los procesados.
+			float[,] m = ImageUtils.CreateMatrixFromPixbuf(p);
+			
+			foreach(BitmapProcessNode node in processesView.NodeStore)
+			{
+				m = node.Process.Apply(m);
+			}
+			
+			Gdk.Pixbuf processedPixbuf = ImageUtils.CreatePixbufFromMatrix(m);
+			
+			// Asignamos la imagen a su control.
+			processedIA.Image = processedPixbuf;			
+		}		
+		
+		private void InitializeWidgets(ListStore imagesStore)
 		{
 			NodeStore store = new NodeStore(typeof(BitmapProcessNode));
-			processesView =  new NodeView(store);
+			processesView =  new NodeView(store);			
 			
 			processesView.ShowExpanders = false;
 			
@@ -118,8 +146,28 @@ namespace MathTextBatchLearner.Assistant
 			
 			bitmapsProcessSW.Add(processesView);
 			
+			originIA = new ImageArea();
+			processedIA = new ImageArea();
+
+			originIA.ImageMode = ImageAreaMode.Zoom;
+			processedIA.ImageMode = ImageAreaMode.Zoom;
+					
+			originFrame.Add(originIA);
+			processedFrame.Add(processedIA);
 			
+			imagesTV.Model = imagesStore;
 			
+			imagesTV.AppendColumn("Imagen",new CellRendererText(),"text",1);
+			
+			imagesTV.Selection.Changed += OnImagesTVSelectionChanged;
+		
+			bitmapProcessesStepFrame.Shown += OnBitmapProcessesStepFrameShown;
+			
+		}
+		
+		private void OnBitmapProcessesStepFrameShown(object sender, EventArgs a)
+		{
+			previewHB.Visible = false;
 		}
 		
 		private void OnDownProcessBtnClicked(object sender, EventArgs a)
@@ -138,6 +186,8 @@ namespace MathTextBatchLearner.Assistant
 			processesView.NodeSelection.SelectNode(node);
 			TreePath path = processesView.Selection.GetSelectedRows()[0];
 			processesView.ScrollToCell(path,null, true,0f,0);
+			
+			processesView.ColumnsAutosize();
 		}
 		
 		private void OnAddProcessBtnClicked(object sender, EventArgs a)
@@ -188,6 +238,33 @@ namespace MathTextBatchLearner.Assistant
 					                         bitmapProcessesTypes[t]);
 				
 				processesView.QueueDraw();
+				processesView.ColumnsAutosize();
+			}
+		}
+		
+		private void OnImagesTVSelectionChanged(object sender, EventArgs a)
+		{
+			// Comprobamos que hay filas seleccionadas.
+			if(imagesTV.Selection.CountSelectedRows() > 0)
+			{
+				// Recuperamos la ruta de la imagen, y la cargamos en el
+				// en la imagen original.
+				TreeIter iter;
+				imagesTV.Selection.GetSelected(out iter);
+				// Recuperamos la ruta de la imagen.
+				string path =(string)(imagesTV.Model.GetValue(iter,2));
+				
+				Gdk.Pixbuf p = new Gdk.Pixbuf(path);
+				
+				originIA.Image = p;
+				
+				CreateProcessedPreview(p);
+				
+			}
+			else
+			{
+				originIA.Image = null;
+				processedIA.Image = null;
 			}
 		}
 		
@@ -196,15 +273,20 @@ namespace MathTextBatchLearner.Assistant
 			// Si tenemos previsualización, la ocultamos, y si no, la mostramos.
 			if(previewTB.Active)
 			{
-				previewHB.Visible = false;
-				bitmapsProcessSW.Visible = true;
-				processBtnBox.Visible = true;
+				processBtnBox.Sensitive = false;				
+				bitmapsProcessSW.Visible = false;
+				previewHB.Visible = true;
+				
 			}
 			else
 			{
-				processBtnBox.Visible = false;
-				previewHB.Visible = true;
-				bitmapsProcessSW.Visible = false;
+				
+				
+				previewHB.Visible = false;
+				bitmapsProcessSW.Visible = true;
+				processBtnBox.Sensitive = true;
+				
+				imagesTV.Selection.UnselectAll();
 			}
 		}
 		
@@ -251,6 +333,7 @@ namespace MathTextBatchLearner.Assistant
 			// Eliminamos el nodo
 			TreeNode node = (TreeNode)processesView.NodeSelection.SelectedNode;
 			processesView.NodeStore.RemoveNode(node);
+			processesView.ColumnsAutosize();
 		}
 		
 		private void OnUpProcessBtnClicked(object e, EventArgs a)
@@ -294,66 +377,14 @@ namespace MathTextBatchLearner.Assistant
 		{		
 			object[] attributes =
 				t.GetCustomAttributes(typeof(BitmapProcessDescription),true);
+			
 			BitmapProcessDescription bd =
 				(BitmapProcessDescription)attributes[0];
 			return bd.Description;
 		}
 		
 		
-		#endregion Metodos privados
-	}
-	
-	
-	/// <summary>
-	/// Esta clase represnta los nodos de la vista de los procesados.
-	/// </summary>
-	public class BitmapProcessNode
-		: TreeNode
-	{
-		private string description;
+#endregion Metodos privados
 		
-		private BitmapProcess process;
-		
-		
-		/// <summary>
-		/// El constructor de la clase toma un tipo, y creará una instancia
-		/// de una subclase de <c>BitmapProcess</c>.
-		/// </summary>
-		public BitmapProcessNode(Type t, string description)
-		{		
-			this.description = description;
-			
-			process =
-				(BitmapProcess)(t.GetConstructor(new Type[]{}).Invoke(null));
-			
-		}		
-		
-		[TreeNodeValue(Column=0)]
-		public string ProcessDescription
-		{
-			get
-			{
-				return description;
-			}
-		}
-		
-		[TreeNodeValue(Column=1)]
-		public string ProcessValues
-		{
-			get
-			{
-				return process.Values;
-			}
-		}
-			
-		public BitmapProcess Process
-		{
-				
-			get
-			{
-				return process;
-			}
-		
-		}
 	}
 }
