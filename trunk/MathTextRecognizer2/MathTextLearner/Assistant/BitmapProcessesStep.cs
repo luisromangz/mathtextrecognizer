@@ -8,12 +8,12 @@ using Gtk;
 using CustomGtkWidgets.ImageArea;
 using CustomGtkWidgets.CommonDialogs;
 
-using MathTextBatchLearner.Assistant.BitmapProcessesHelpers;
+using MathTextLearner.Assistant.BitmapProcessHelpers;
 
 using MathTextLibrary.BitmapProcesses;
 using MathTextLibrary.Utils;
 
-namespace MathTextBatchLearner.Assistant
+namespace MathTextLearner.Assistant
 {
 	/// <summary>
 	/// Esta clase implementa el panel que permite seleccionar que procesado de
@@ -82,7 +82,7 @@ namespace MathTextBatchLearner.Assistant
 		public BitmapProcessesStep(PanelAssistant assistant, ListStore imagesStore) : base(assistant)
 		{
 			Glade.XML gxml =
-				new Glade.XML(null,"gui.glade","bitmapProcessesStepFrame",null);
+				new Glade.XML(null,"databaseAssistant.glade","bitmapProcessesStepFrame",null);
 				
 			gxml.Autoconnect(this);			
 			

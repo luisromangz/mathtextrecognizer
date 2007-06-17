@@ -60,8 +60,10 @@ namespace MathTextLibrary.Controllers
 		/// <summary>
 		/// Metodo para lanzar el evento StepFinished con mayor comodidad.
 		/// </summary>
-		protected void OnStepFinished(){
-			if(StepFinished!=null){
+		protected void OnStepFinished()
+		{
+			if(StepFinished!=null)
+			{
 				StepFinished(this,EventArgs.Empty);
 			}			
 		}
@@ -69,8 +71,10 @@ namespace MathTextLibrary.Controllers
 		/// <summary>
 		/// Metodo para lanzar el evento OutputCreated con mayor comodidad.
 		/// </summary>
-		protected void OnOutputCreated(){
-			if(OutputCreated!=null){
+		protected void OnOutputCreated()
+		{
+			if(OutputCreated!=null)
+			{
 				OutputCreated(this,EventArgs.Empty);
 			}
 		}
@@ -79,8 +83,10 @@ namespace MathTextLibrary.Controllers
 		/// Propiedad de solo lectura que nos permite recuperar la salida
 		/// MathML generada a partir de la formula.
 		/// </summary>
-		public string MathMLOutput {			
-			get{
+		public string MathMLOutput
+		{			
+			get
+			{
 				return mathMLPOutput;				
 			}
 		}
@@ -89,8 +95,10 @@ namespace MathTextLibrary.Controllers
 		/// Propiedad de solo lectura que nos permite recuperar la salida
 		/// LaTeX generada a partir de la formula.
 		/// </summary>
-		public string LaTeXOutput{			
-			get{
+		public string LaTeXOutput
+		{			
+			get
+			{
 				return latexOutput;				
 			}
 		}
@@ -99,12 +107,14 @@ namespace MathTextLibrary.Controllers
 		/// Propiedad que nos permite establecer y recuperar la imagen que contiene la
 		/// formula, una vez procesada y siendo la raiz de un arbol de imagenes.
 		/// </summary>
-		public MathTextBitmap StartImage{
-			get{
+		public MathTextBitmap StartImage
+		{
+			get
+			{
 				return startImage;
 			}
-			set{	
-				//TODO Añadir control de que se haya procesado la imagen previamente
+			set
+			{					
 				startImage=value;
 			}			
 		}		
@@ -113,7 +123,8 @@ namespace MathTextLibrary.Controllers
 		/// Este metodo es el encargado de llamar a los distintos procesados de arboles,
 		/// y generar las salidas LaTeX y MathML.
 		/// </summary>
-		public void MakeOutput(){			
+		public void MakeOutput()
+		{			
 		
 			//Cada uno de los pasos nos trata el arbol de images de forma que 
 			//cambia su estructura, para que sea mas facil generar una salida

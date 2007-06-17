@@ -11,7 +11,7 @@ using CustomGtkWidgets.CommonDialogs;
 
 using MathTextLibrary.Databases;
 
-namespace MathTextBatchLearner.Assistant
+namespace MathTextLearner.Assistant
 {
 	/// <summary>
 	/// Esta clase implementa el panel que permite seleccionar el 
@@ -46,7 +46,7 @@ namespace MathTextBatchLearner.Assistant
 			: base(assistant)
 		{
 			Glade.XML gxml =
-				new Glade.XML(null,"gui.glade","databaseTypeFrame",null);
+				new Glade.XML(null,"databaseAssistant.glade","databaseTypeFrame",null);
 				
 			gxml.Autoconnect(this);
 			

@@ -2,27 +2,36 @@
 <UserCombinePreferences filename="/home/luis/carrera/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
     <File filename="Bienvenido" />
-    <File filename="./MathTextBatchLearner/Assistant/BitmapProcessesStep.cs" />
-    <File filename="./MathTextBatchLearner/MainClass.cs" />
+    <File filename="./MathTextLibrary/Databases/MathTextDatabase.cs" />
+    <File filename="./MathTextLibrary/Databases/Caracteristic/CaracteristicDatabase.cs" />
+    <File filename="./MathTextLibrary/Controllers/MathTextRecognizerController.cs" />
+    <File filename="./MathTextLibrary/Databases/Momentum/MomentumDatabase.cs" />
+    <File filename="./MathTextLibrary/Databases/MathTextDatabaseEvents.cs" />
+    <File filename="./MathTextLearner/MainWindow.cs" />
+    <File filename="./MathTextLearner/Assistant/BitmapProcessesStep.cs" />
+    <File filename="./MathTextLearner/Assistant/BitmapProcessHelpers/ProcessSelectorDialog.cs" />
+    <File filename="./MathTextLearner/Assistant/BitmapProcessHelpers/ProcessEditorWidget.cs" />
+    <File filename="./MathTextLearner/Assistant/NewDatabaseAssistant.cs" />
   </Files>
   <Views>
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
       <TreeView>
-        <Node expanded="True">
+        <Node expanded="True" selected="True">
           <Node name="CustomGtkWidgets" expanded="True">
-            <Node name="ImageArea" expanded="True" />
+            <Node name="CommonDialogs" expanded="True" />
           </Node>
-          <Node name="MathTextBatchLearner" expanded="True">
+          <Node name="MathTextLearner" expanded="True">
             <Node name="Resources" expanded="True" />
             <Node name="Assistant" expanded="True">
               <Node name="BitmapProcessHelpers" expanded="True" />
-              <Node name="BitmapProcessesStep.cs" expanded="False" selected="True" />
             </Node>
           </Node>
-          <Node name="MathTextLearner" expanded="True" />
           <Node name="MathTextLibrary" expanded="True">
-            <Node name="BitmapProcesses" expanded="True" />
-            <Node name="Databases" expanded="True" />
+            <Node name="Controllers" expanded="True" />
+            <Node name="Databases" expanded="True">
+              <Node name="Caracteristic" expanded="True" />
+              <Node name="Momentum" expanded="True" />
+            </Node>
             <Node name="Utils" expanded="True" />
           </Node>
           <Node name="MathTextRecognizer" expanded="True" />
@@ -34,9 +43,9 @@
         <Node expanded="True">
           <Option id="ShowProjects" value="False" />
           <Option id="NestedNamespaces" value="False" />
+          <Option id="GroupByAccess" value="False" />
           <Option id="PublicApiOnly" value="False" />
           <Option id="GroupByType" value="True" />
-          <Option id="GroupByAccess" value="False" />
         </Node>
       </TreeView>
     </ViewMemento>
@@ -54,7 +63,7 @@
   <Properties>
     <Properties>
       <Property key="ActiveConfiguration" value="Debug" />
-      <Property key="ActiveWindow" value="/home/luis/carrera/pfc/MathTextRecognizer2/MathTextBatchLearner/Assistant/BitmapProcessesStep.cs" />
+      <Property key="ActiveWindow" value="/home/luis/carrera/pfc/MathTextRecognizer2/MathTextLearner/Assistant/NewDatabaseAssistant.cs" />
     </Properties>
   </Properties>
 </UserCombinePreferences>

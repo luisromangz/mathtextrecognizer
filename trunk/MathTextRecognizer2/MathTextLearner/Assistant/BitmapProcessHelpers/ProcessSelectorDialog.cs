@@ -7,7 +7,7 @@ using Gtk;
 
 using CustomGtkWidgets.CommonDialogs;
 
-namespace MathTextBatchLearner.Assistant.BitmapProcessesHelpers
+namespace MathTextLearner.Assistant.BitmapProcessHelpers
 {
 	/// <summary>
 	/// Esta clase implementa el panel que permite seleccionar
@@ -42,7 +42,7 @@ namespace MathTextBatchLearner.Assistant.BitmapProcessesHelpers
 		public ProcessSelectorDialog(Window parent, Dictionary<Type,string> processTypes)			
 		{
 			Glade.XML gxml =
-				new Glade.XML(null,"gui.glade","processSelectorDialog",null);
+				new Glade.XML(null,"databaseAssistant.glade","processSelectorDialog",null);
 				
 			gxml.Autoconnect(this);				
 			
