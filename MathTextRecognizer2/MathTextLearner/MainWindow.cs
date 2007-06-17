@@ -20,6 +20,7 @@ using CustomGtkWidgets.ImageArea;
 using CustomGtkWidgets.CommonDialogs;
 
 using MathTextLibrary;
+using MathTextLibrary.Databases;
 using MathTextLibrary.Databases.Caracteristic;
 
 namespace MathTextLearner
@@ -96,7 +97,7 @@ namespace MathTextLearner
 		
 		#region Otros atributos
 		
-		private CaracteristicDatabase database;
+		private MathTextDatabase database;
 		
 		private MathTextBitmap mtb;
 		private MathSymbol symbol;
@@ -141,8 +142,8 @@ namespace MathTextLearner
 			database.SymbolLearned += 
 				new SymbolLearnedEventHandler(OnSymbolLearned);
 				
-			database.LearningCaracteristicChecked +=
-				new BinaryCaracteristicCheckedEventHandler(OnCaracteristicChecked);
+			database.RecognizingStepDone +=
+				new ProcessingStepDoneEventHandler(OnCaracteristicChecked);
 			
 			imageAreaOriginal = new ImageArea();
 			imageAreaOriginal.ImageMode = ImageAreaMode.Zoom;
@@ -171,7 +172,7 @@ namespace MathTextLearner
 		private void OnMenuDatabaseClicked(object sender, EventArgs arg)
 		{			
 			ShowDBSaveQuestionDialog();
-			database=new CaracteristicDatabase();			
+			database = new CaracteristicDatabase();			
 			SetTitle("Nueva base de datos",false);
 			LogLine("¡Nueva base de datos creada con éxito!");
 			
@@ -221,16 +222,17 @@ namespace MathTextLearner
 		/// Metodo que maneja el evento provocado al comprobarse una caracteristica binaria 
 		/// durante el proceso de aprendizaje.
 		/// </summary>
-		private void OnCaracteristicChecked(object sender, BinaryCaracteristicCheckedEventArgs arg)
+		private void OnCaracteristicChecked(object sender, ProcessingStepDoneEventArgs arg)
 		{
+			// TODO Refactorizar las bases de datos para MathTextDatabase tenga los eventos
 			Application.Invoke(sender,arg,OnCaracteristicCheckedThread);	
 		}
 		
 		private void OnCaracteristicCheckedThread(object sender, EventArgs a)
 		{
-			BinaryCaracteristicCheckedEventArgs arg=(BinaryCaracteristicCheckedEventArgs) a;
+			ProcessingStepDoneEventArgs arg = (ProcessingStepDoneEventArgs) a;
 			btnNext.Sensitive=true;
-			LogLine(arg.Caracteristic.GetType()+": "+arg.Result);
+			LogLine(arg.Process.GetType()+": "+arg.Result);
 		}
 		
 		/// <summary>

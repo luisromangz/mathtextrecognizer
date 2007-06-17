@@ -8,11 +8,12 @@ using Gtk;
 
 using CustomGtkWidgets.CommonDialogs;
 
-using MathTextBatchLearner.Assistant;
+using MathTextLearner.Assistant;
+using MathTextLearner.Assistant.BitmapProcessHelpers;
 
 using MathTextLibrary.BitmapProcesses;
 
-namespace MathTextBatchLearner.Assistant.BitmapProcessesHelpers
+namespace MathTextLearner.Assistant.BitmapProcessHelpers
 {
 	/// <summary>
 	/// Esta clase representa el diálogo encargado de editar las propiedades de
@@ -46,7 +47,7 @@ namespace MathTextBatchLearner.Assistant.BitmapProcessesHelpers
 		                            string desc)
 		{
 			Glade.XML xml =
-				new Glade.XML(null,"gui.glade","processEditorDialog",null);
+				new Glade.XML(null,"databaseAssistant.glade","processEditorDialog",null);
 			
 			xml.Autoconnect(this);
 			

@@ -4,8 +4,9 @@ using System;
 using System.Threading;
 
 using MathTextLibrary;
+using MathTextLibrary.Databases;
+
 using MathTextLibrary.Databases.Caracteristic;
-using MathTextLibrary.Databases.Caracteristic.Caracteristics;
 
 namespace MathTextLibrary.Controllers
 {
@@ -43,7 +44,7 @@ namespace MathTextLibrary.Controllers
 	public class MathTextRecognizerController{			
 		
 		//La base de datos que usaremos para reconocer los caracteres.
-		private CaracteristicDatabase database;
+		private MathTextDatabase database;
 		
 		//El modo de ejecucion paso a paso del proceso.
 		private MathTextRecognizerControllerStepMode stepByStep;		
@@ -82,11 +83,12 @@ namespace MathTextLibrary.Controllers
 		/// reconocedor.
 		/// </summary>
 		public MathTextRecognizerController(){
+			// TODO  Hay que hacer que la base de datos no se ponga por defecto.
 			database=new CaracteristicDatabase();
 			
 			//Creamos una base de datos vacia en principio
-			database.RecognizingCaracteristicChecked+=
-				new BinaryCaracteristicCheckedEventHandler(OnDatabaseCaracteristicChecked);				
+			database.RecognizingStepDone+=
+				new ProcessingStepDoneEventHandler(OnProcessingStepDone);				
 			
 			stepByStep=MathTextRecognizerControllerStepMode.UntilEnd;
 			stepMutex=new Mutex();
@@ -138,10 +140,12 @@ namespace MathTextLibrary.Controllers
 		/// </summary>
 		/// <param name="sender">El objeto que envio el evento.</param>
 		/// <param name="args">Los argumentos del evento.</param>
-		private void OnDatabaseCaracteristicChecked(object sender, BinaryCaracteristicCheckedEventArgs args){
+		private void OnProcessingStepDone(object sender,
+		                                  ProcessingStepDoneEventArgs args)
+		{
 			//Lo que hacemos es notificar a la interfaz de que una determinada caracteristica binaria
 			//ha tomado un valor, y que caracteres son similares.
-			OnLogMessageSend(args.Caracteristic.GetType()+": "+args.Result);
+			OnLogMessageSend(args.Process.GetType()+": "+args.Result);
 			string similar="";	
 			if(args.SimilarSymbols!=null){
 				foreach(MathSymbol ms in args.SimilarSymbols){

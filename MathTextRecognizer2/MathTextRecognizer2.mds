@@ -1,25 +1,22 @@
 <Combine name="MathTextRecognizer2" fileversion="2.0" outputpath="./build/bin/" MakePkgConfig="True" MakeLibPC="True">
-  <Configurations active="Debug">
+  <Configurations active="Release">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="MathTextLearner" configuration="Debug" />
       <Entry build="True" name="CustomGtkWidgets" configuration="Debug" />
-      <Entry build="True" name="MathTextBatchLearner" configuration="Debug" />
       <Entry build="True" name="MathTextLibrary" configuration="Debug" />
       <Entry build="True" name="MathTextRecognizer" configuration="Debug" />
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="MathTextLearner" configuration="Release" />
       <Entry build="True" name="CustomGtkWidgets" configuration="Release" />
-      <Entry build="True" name="MathTextBatchLearner" configuration="Release" />
       <Entry build="True" name="MathTextLibrary" configuration="Release" />
       <Entry build="True" name="MathTextRecognizer" configuration="Release" />
     </Configuration>
   </Configurations>
-  <StartMode startupentry="MathTextBatchLearner" single="True">
+  <StartMode startupentry="MathTextLearner" single="True">
     <Execute type="None" entry="MathTextLearner" />
     <Execute type="None" entry="MathTextRecognizer" />
     <Execute type="None" entry="CustomGtkWidgets" />
-    <Execute type="None" entry="MathTextBatchLearner" />
     <Execute type="None" entry="MathTextLibrary" />
     <Execute type="None" entry="MathTextRecognizer" />
   </StartMode>
@@ -27,7 +24,6 @@
   <Entries>
     <Entry filename="./MathTextLearner/MathTextLearner.mdp" />
     <Entry filename="./CustomGtkWidgets/CustomGtkWidgets.mdp" />
-    <Entry filename="./MathTextBatchLearner/MathTextBatchLearner.mdp" />
     <Entry filename="./MathTextLibrary/MathTextLibrary.mdp" />
     <Entry filename="./MathTextRecognizer/MathTextRecognizer.mdp" />
   </Entries>

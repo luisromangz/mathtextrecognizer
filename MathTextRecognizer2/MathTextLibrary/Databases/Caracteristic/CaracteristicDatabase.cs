@@ -16,8 +16,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 	/// de nuevos caracteres en la misma y realizar busquedas.
 	/// </summary>
 	[DatabaseDescription("Base de datos basada en características binarias")]
-	public class CaracteristicDatabase
-		: MathTextDatabase
+	public class CaracteristicDatabase : MathTextDatabase
 	{
 		#region Atributos
 		
@@ -32,75 +31,29 @@ namespace MathTextLibrary.Databases.Caracteristic
 		/// el que guardamos la informacion de caracteristicas.
 		private BinaryCaracteristicNode rootNode;
 		
-		// Para ver si tenemos que ir paso a paso
-		private bool stepByStep; 
+		
 
-		// Para garantizar la exclusion mutua al usar hilos sobre esta clase.
-		private Mutex stepByStepMutex;			
+			
 		
 		#endregion Atributos
 		
-		#region Eventos 
 		
-		/// <summary>
-		/// Este evento se lanza para indicar que se ha comprobado una 
-		/// caracteristica binaria mientras se esta aprendiendo un caracter en 
-		/// la base de datos.
-		/// </summary>
-		public event BinaryCaracteristicCheckedEventHandler LearningCaracteristicChecked;
 		
-		/// <summary>
-		/// Este evento se lanza para indicar que se ha comprobado una 
-		/// caracteristica binaria mientras se esta intentando reconocer un
-		/// caracter en la base de datos.
-		/// </summary>
-		public event BinaryCaracteristicCheckedEventHandler RecognizingCaracteristicChecked;
-		
-		/// <summary>
-		/// Este evento se lanza cuando se ha aprendindo un nuevo simbolo en la
-		/// base de datos.
-		/// </summary>
-		public event SymbolLearnedEventHandler SymbolLearned;		
-		
-		#endregion Eventos
-		
-		#region Propiedades
-		
-		/// <summary>
-		/// Propiedad que permite establecer y recuperar el modo de ejecucion 
-		/// para el proceso de busqueda o aprendizaje en la base de datos.
-		/// </summary>
-		public bool StepByStep
-		{
-			get
-			{
-				return stepByStep;
-			}
-			set
-			{
-				lock(stepByStepMutex)
-				{
-					stepByStep=value;
-				}
-			}
-		}		
-		
-		#endregion Propiedades
-		
+				
 		#region Métodos públicos
 		
 		/// <summary>
 		/// Constructor de <c>CaracteristicDatabase</c>. Crea una base de datos
 		/// vacia, sin ningun simbolo aprendido.
 		/// </summary>
-		public CaracteristicDatabase()
+		public CaracteristicDatabase() : base()
 		{	
             caracteristics=CaracteristicFactory.CreateCaracteristicList();
           
 			rootNode=new BinaryCaracteristicNode();
 
-			stepByStep=false;
-			stepByStepMutex=new Mutex();
+			
+			
 			
 			caracteristicHash=new Hashtable();
 		}
@@ -115,7 +68,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 		/// <param name="symbol">
 		/// El simbolo que representa a la imagen.
 		///</param>
-		public void Learn(MathTextBitmap bitmap,MathSymbol symbol)
+		public override void Learn(MathTextBitmap bitmap,MathSymbol symbol)
 		{
 			BinaryCaracteristicNode nodo=rootNode;
 			bool caracteristicValue;	
@@ -141,14 +94,14 @@ namespace MathTextLibrary.Databases.Caracteristic
 					}					
 					nodo=nodo.FalseTree;					
 				}	
-				OnLearningCaracteristicChecked(
-				     new BinaryCaracteristicCheckedEventArgs(
-				     		bc,bitmap,caracteristicValue));
 				
-				bool aux;
+				this.OnLearningStepDoneInvoke(
+				                              new ProcessingStepDoneEventArgs(bc,bitmap,caracteristicValue));
+				
+				bool aux = false;
 				lock(stepByStepMutex)
 				{
-					aux=stepByStep;
+					aux = stepByStep;
 				}
 				
 				if(aux)
@@ -160,18 +113,12 @@ namespace MathTextLibrary.Databases.Caracteristic
 		
 			
 			nodo.Symbol=symbol;					
-			OnSymbolLearned();
+			OnSymbolLearnedInvoke();
 		}
 		
-		/// <summary>
-		/// Permite abrir un fichero xml en el que tenemos almacenada la base de
-		/// datos de caracteristicas binarias.
-		/// </summary>
-		/// <param name="path">
-		/// La ruta del archivo que queremos cargar.
-		/// </param>
-		public void LoadXml(string path)
+		public override void LoadXml(string path)
 		{
+			// TODO Refactorizar carga de bases de datos.
 			//Cargamos el archivo deserializando el contenido.
 			XmlSerializer serializer=new XmlSerializer(
 				typeof(BinaryCaracteristicNode),new Type[]{typeof(MathSymbol)});
@@ -197,7 +144,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 		/// El simbolo asociado a la imagen, si fue encontrada. Si no, un 
 		/// <c>MathSymbol.NullSymbol</c>.
 		/// </returns>
-		public MathSymbol Recognize(MathTextBitmap image)
+		public override MathSymbol Recognize(MathTextBitmap image)
 		{
 			MathSymbol res=MathSymbol.NullSymbol;
 			BinaryCaracteristicNode nodo=rootNode;
@@ -238,11 +185,11 @@ namespace MathTextLibrary.Databases.Caracteristic
 				 //Avisamos de que hemos dado un paso
 				 if(nodo!=null)
 				 {
-					OnRecognizingCaracteristicChecked(new BinaryCaracteristicCheckedEventArgs(bc,image,caracteristicValue,nodo.ChildrenSymbols));
+					OnRecognizingStepDoneInvoke(new ProcessingStepDoneEventArgs(bc,image,caracteristicValue,nodo.ChildrenSymbols));
 				 }
 				 else
 				 {
-				 	OnRecognizingCaracteristicChecked(new BinaryCaracteristicCheckedEventArgs(bc,image,caracteristicValue));
+				 	OnRecognizingStepDoneInvoke(new ProcessingStepDoneEventArgs(bc,image,caracteristicValue));
 				 }
 				
 				 
@@ -278,7 +225,9 @@ namespace MathTextLibrary.Databases.Caracteristic
 		/// <param name="path">
 		/// La ruta en la que queremos guardar la base de datos.
 		/// </param>
-		public void XmlSave(string path){			
+		public override void XmlSave(string path)
+		{	
+			// TODO Refactorizar guardado de bases de datos.
 			// Usamos serializacion xml para generar el xml a partir del arbol
 			// de caracteristicas.
 			XmlSerializer serializer=new XmlSerializer(
@@ -412,42 +361,6 @@ namespace MathTextLibrary.Databases.Caracteristic
 			}
 			return res;
 		
-		}
-		
-		/// <summary>
-		/// Para lanzar el evento <c>LearningCaracteristicChecked</c> con
-		/// comodidad.
-		/// </summary>		
-		protected void OnLearningCaracteristicChecked(
-			BinaryCaracteristicCheckedEventArgs arg)
-		{
-			if(LearningCaracteristicChecked!=null)
-			{
-				LearningCaracteristicChecked(this,arg);
-			}		
-		}
-		
-		/// <summary>
-		/// Para lanzar el evento <c>RecognizingCaracteristicChecked</c> con
-		/// comodidad.
-		/// </summary>		
-		protected void OnRecognizingCaracteristicChecked(
-			BinaryCaracteristicCheckedEventArgs arg)
-		{
-			if(RecognizingCaracteristicChecked!=null)
-			{
-				RecognizingCaracteristicChecked(this,arg);
-			}		
-		}
-		
-		/// <summary>
-		/// Para lanzar el evento <c>SymbolLearned</c> con comodidad.
-		/// </summary>		
-		protected void OnSymbolLearned()
-		{
-			if(SymbolLearned!=null)
-				SymbolLearned(this,EventArgs.Empty);
-			   
 		}
 		
 		#endregion Métodos no públicos

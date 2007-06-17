@@ -17,7 +17,8 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics
 	/// de prioridad 5 aparecera antes en la lista de caracteristicas que otra
 	/// de prioridad 10.</para>
 	/// </remarks>	
-	public abstract class IBinaryCaracteristic:IComparable{
+	public abstract class IBinaryCaracteristic : IComparable, ISymbolProcess
+	{
 		protected int priority;
 		
 		public IBinaryCaracteristic()

@@ -6,9 +6,7 @@ using Gtk;
 
 using CustomGtkWidgets.CommonDialogs;
 
-using MathTextBatchLearner.Assistant;
-
-namespace MathTextBatchLearner.Assistant
+namespace MathTextLearner.Assistant
 {
 	/// <summary>
 	/// Esta clase implementa el panel que permite seleccionar
@@ -42,7 +40,7 @@ namespace MathTextBatchLearner.Assistant
 			: base(assistant)
 		{
 			Glade.XML gxml =
-				new Glade.XML(null,"gui.glade","fileSelectionStepFrame",null);
+				new Glade.XML(null,"databaseAssistant.glade","fileSelectionStepFrame",null);
 				
 			gxml.Autoconnect(this);
 			

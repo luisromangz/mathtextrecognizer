@@ -7,7 +7,7 @@ using Gtk;
 
 using MathTextLibrary.BitmapProcesses;
 
-namespace MathTextBatchLearner.Assistant.BitmapProcessesHelpers
+namespace MathTextLearner.Assistant.BitmapProcessHelpers
 {
 	/// <summary>
 	/// Este widget permite editar los valores de una propiedad,

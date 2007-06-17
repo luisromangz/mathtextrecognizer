@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 using Gtk;
 
@@ -39,7 +39,7 @@ namespace CustomGtkWidgets.CommonDialogs
 		
 		private int panelIdx;	
 				
-		private ArrayList steps;
+		private List<PanelAssistantStep> steps;
 		
 		#endregion Atributos
 		
@@ -71,7 +71,7 @@ namespace CustomGtkWidgets.CommonDialogs
 			
 			panelIdx = 0;			
 			
-			steps = new ArrayList();
+			steps = new List<PanelAssistantStep>();
 		}
 		
 		#endregion Constructores
@@ -87,6 +87,13 @@ namespace CustomGtkWidgets.CommonDialogs
 			get
 			{
 				return panelAssistant;
+			}
+		}
+		
+		public List<PanelAssistantStep> Steps
+		{
+			get{
+				return steps;
 			}
 		}
 		

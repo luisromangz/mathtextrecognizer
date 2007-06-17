@@ -8,13 +8,31 @@ namespace MathTextLibrary.Databases.Momentum
 {
 	
 	[DatabaseDescription("Base de datos basada en los momentos de los caracteres")]
-	public class MomentumDatabase
-		: MathTextDatabase
+	public class MomentumDatabase : MathTextDatabase
 	{
 		
-		public MomentumDatabase()
+		public MomentumDatabase() : base()
 		{
-		}		
+		}	
 		
+		public override void Learn(MathTextBitmap image, MathSymbol symbol)
+		{
+			
+		}
+		                          
+			
+		public override MathSymbol Recognize (MathTextBitmap image)
+		{
+			return null;
+		}
+		
+		public override void LoadXml (string path)
+		{
+			
+		}
+		
+		public override void XmlSave(string path)
+		{
+		}
 	}
 }
