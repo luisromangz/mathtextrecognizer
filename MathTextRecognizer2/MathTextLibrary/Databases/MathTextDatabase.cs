@@ -1,5 +1,6 @@
 using System;
-using System.Threading;
+using System.IO;
+using System.Xml.Serialization;
 using System.Collections.Generic;
 
 using MathTextLibrary.BitmapProcesses;
@@ -10,12 +11,9 @@ namespace MathTextLibrary.Databases
 	/// <summary>
 	/// Esta clase es la clase base para las distintas implementaciones de bases 
 	/// de datos en las que podemos reconocer caracteres matemáticos.
-	/// </summary>
-	[DatabaseDescription("Descripción por defecto")]
-	public abstract class MathTextDatabase
+	/// </summary>	
+	public class MathTextDatabase
 	{	
-
-
 #region Eventos 
 		
 		/// <summary>
@@ -39,25 +37,27 @@ namespace MathTextLibrary.Databases
 #endregion Eventos
 		
 #region Atributos
+		
 		private List<BitmapProcess> processes;
 		
-		// Para ver si tenemos que ir paso a paso
-		protected bool stepByStep; 
+		private DatabaseBase database;
 		
-		// Para garantizar la exclusion mutua al usar hilos 
-		protected Mutex stepByStepMutex;	
 #endregion Atributos
 		
-		
-		
-		
-		
+#region Constructores
 		public MathTextDatabase()
 		{
-			stepByStep=false;
-			stepByStepMutex=new Mutex();
-		}		
+			
+		}	
 		
+		public MathTextDatabase(DatabaseBase database)
+		{
+			this.database = database;
+		}	
+		
+#endregion Constructores;
+		
+				
 #region Propiedades
 		
 		/// <summary>
@@ -73,26 +73,32 @@ namespace MathTextLibrary.Databases
 			set{
 				processes = value;
 			}
+		}		
+
+		public DatabaseBase Database
+		{
+			get {
+				return database;
+			}
+			
+			set {
+				database = value;
+				// TODO linkar los eventos.
+			}
 		}
 		
-		/// <summary>
-		/// Propiedad que permite establecer y recuperar el modo de ejecucion 
-		/// para el proceso de busqueda o aprendizaje en la base de datos.
-		/// </summary>
 		public bool StepByStep
 		{
 			get
 			{
-				return stepByStep;
+				return database.StepByStep;
 			}
 			set
 			{
-				lock(stepByStepMutex)
-				{
-					stepByStep=value;
-				}
+				database.StepByStep = value;
 			}
-		}		
+		}
+		
 		
 #endregion Propiedades
 		
@@ -108,7 +114,10 @@ namespace MathTextLibrary.Databases
 		/// <param name="symbol">
 		/// El simbolo que representa a la imagen.
 		///</param>
-		public abstract void Learn(MathTextBitmap bitmap,MathSymbol symbol);
+		public void Learn(MathTextBitmap bitmap,MathSymbol symbol)
+		{
+			database.Learn(bitmap,symbol);
+		}
 		
 		/// <summary>
 		/// Permite abrir un fichero xml en el que esta almacenada la base de
@@ -117,15 +126,52 @@ namespace MathTextLibrary.Databases
 		/// <param name="path">
 		/// La ruta del archivo que queremos cargar.
 		/// </param>
-		public abstract void LoadXml(string path);
+		public static MathTextDatabase Load(string path)
+		{
+			// TODO carga generica de las bases de datos.
+			
+			//Cargamos el archivo deserializando el contenido.
+//			XmlSerializer serializer = 
+//				new XmlSerializer(
+//				                  typeof(BinaryCaracteristicNode),
+//				                  new Type[]{typeof(MathSymbol)});
+//			                                           
+//			using(StreamReader r = new StreamReader(path))
+//			{
+//				rootNode= (BinaryCaracteristicNode)serializer.Deserialize(r);
+//				r.Close();
+//			}			
+			
+			return null;
+		}
+			
+		public MathSymbol Recognize(MathTextBitmap image)
+		{
+			return database.Recognize(image);
+		}
 		
-		public abstract MathSymbol Recognize(MathTextBitmap image);
-		
-		public abstract void XmlSave(string path);
+		public void Save(string path)
+		{
+			// TODO Serializacion de la base de datos generalista
+			// Usamos serializacion xml para generar el xml a partir del arbol
+			// de caracteristicas.
+//			XmlSerializer serializer=
+//				new XmlSerializer(typeof(BinaryCaracteristicNode),
+//				                  new Type[]{typeof(MathSymbol)});
+//			
+//			using(StreamWriter w=new StreamWriter(path))
+//			{			
+//				serializer.Serialize(w,rootNode);
+//				w.Close();
+//			}
+		}
 		
 #endregion Metodos publicos
 		
 #region Metodos protegidos
+		
+		
+		
 
 		/// <summary>
 		/// Para lanzar el evento <c>LearningCaracteristicChecked</c> con
@@ -134,7 +180,7 @@ namespace MathTextLibrary.Databases
 		protected void OnLearningStepDoneInvoke(
 			ProcessingStepDoneEventArgs arg)
 		{
-			if(LearningStepDone!=null)
+			if(LearningStepDone != null)
 			{
 				LearningStepDone(this,arg);
 			}		
@@ -142,12 +188,15 @@ namespace MathTextLibrary.Databases
 		
 		/// <summary>
 		/// Para lanzar el evento <c>RecognizingCaracteristicChecked</c> con
-		/// comodidad.
-		/// </summary>		
+		/// comodidad.	
+		/// </summary>
+		/// <param name="arg">
+		/// Los argumentos pasados al manejador del evento.
+		/// </param>
 		protected void OnRecognizingStepDoneInvoke(
 			ProcessingStepDoneEventArgs arg)
 		{
-			if(RecognizingStepDone!=null)
+			if(RecognizingStepDone != null)
 			{
 				RecognizingStepDone(this,arg);
 			}		
@@ -163,29 +212,5 @@ namespace MathTextLibrary.Databases
 		
 #endregion Metodos protegidos
 	
-	}
-	
-	
-	/// <summary>
-	/// Esta clase define un atributo para ser usado como descripción para las bases 
-	/// de datos de caracteres matemáticos.
-	/// </summary>
-	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true) ] 
-	public class DatabaseDescription : Attribute
-	{
-		private string _description;
-		
-		public DatabaseDescription(string description)
-		{
-			_description = description;
-		}
-		
-		public string Description
-		{
-			get
-			{
-				return _description;
-			}
-		}
 	}
 }

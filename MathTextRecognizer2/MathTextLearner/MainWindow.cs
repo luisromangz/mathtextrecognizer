@@ -138,12 +138,12 @@ namespace MathTextLearner
 		{
 			mainWindow.Title=title+"Nueva base de datos";
 			
-			database=new CaracteristicDatabase();
+			database= new MathTextDatabase(new CaracteristicDatabase());
 			database.SymbolLearned += 
 				new SymbolLearnedEventHandler(OnSymbolLearned);
 				
-			database.RecognizingStepDone +=
-				new ProcessingStepDoneEventHandler(OnCaracteristicChecked);
+			database.LearningStepDone +=
+				new ProcessingStepDoneEventHandler(OnLearningStepDone);
 			
 			imageAreaOriginal = new ImageArea();
 			imageAreaOriginal.ImageMode = ImageAreaMode.Zoom;
@@ -172,7 +172,7 @@ namespace MathTextLearner
 		private void OnMenuDatabaseClicked(object sender, EventArgs arg)
 		{			
 			ShowDBSaveQuestionDialog();
-			database = new CaracteristicDatabase();			
+			database = new MathTextDatabase(new CaracteristicDatabase());			
 			SetTitle("Nueva base de datos",false);
 			LogLine("¡Nueva base de datos creada con éxito!");
 			
@@ -219,20 +219,23 @@ namespace MathTextLearner
 		
 		
 		/// <summary>
-		/// Metodo que maneja el evento provocado al comprobarse una caracteristica binaria 
-		/// durante el proceso de aprendizaje.
+		/// Metodo que maneja el evento provocado al completarse un paso
+		/// del proceso durante el aprendizaje.
 		/// </summary>
-		private void OnCaracteristicChecked(object sender, ProcessingStepDoneEventArgs arg)
+		private void OnLearningStepDone(object sender,
+		                                ProcessingStepDoneEventArgs arg)
 		{
-			// TODO Refactorizar las bases de datos para MathTextDatabase tenga los eventos
-			Application.Invoke(sender,arg,OnCaracteristicCheckedThread);	
+			// TODO Refactorizar las bases de datos para MathTextDatabase 
+			// tenga los eventos
+			Application.Invoke(sender,arg,OnLearningStepDoneThread);	
 		}
 		
-		private void OnCaracteristicCheckedThread(object sender, EventArgs a)
+		private void OnLearningStepDoneThread(object sender, EventArgs a)
 		{
+			
 			ProcessingStepDoneEventArgs arg = (ProcessingStepDoneEventArgs) a;
-			btnNext.Sensitive=true;
-			LogLine(arg.Process.GetType()+": "+arg.Result);
+			btnNext.Sensitive = true;
+			LogLine(arg.Process.GetType() + ": " + arg.Result);
 		}
 		
 		/// <summary>
@@ -394,11 +397,11 @@ namespace MathTextLearner
 		/// </summary>
 		private void OnBtnNextClicked(object sender, EventArgs arg)
 		{
-			if(learningThread==null){
-				database.StepByStep=true;
-				expanderLog.Expanded=true;
-				learningThread=new Thread(new ThreadStart(LearnProccess));	
-				learningThread.Priority=ThreadPriority.Highest;		
+			if(learningThread == null){
+				database.StepByStep = true;
+				expanderLog.Expanded = true;
+				learningThread = new Thread(new ThreadStart(LearnProccess));	
+				learningThread.Priority = ThreadPriority.Highest;		
 				learningThread.Start();						
 			}
 			else
@@ -406,7 +409,7 @@ namespace MathTextLearner
 				if(learningThread.IsAlive)
 				{
 					learningThread.Resume();
-					btnNext.Sensitive=false;				
+					btnNext.Sensitive = false;				
 				}
 			}				
 		}
@@ -477,7 +480,7 @@ namespace MathTextLearner
 				== ResponseType.Ok)
 			{
 				// El usuario acepta la apertura del archivo.
-				database.LoadXml(file);				
+				database = MathTextDatabase.Load(file);				
 					
 				this.SetTitle(file,false);
 				
@@ -542,7 +545,7 @@ namespace MathTextLearner
 				
 				if(save)
 				{				
-					database.XmlSave(file);
+					database.Save(file);
 						
 					OkDialog.Show(
 						mainWindow,

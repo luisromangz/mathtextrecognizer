@@ -18,10 +18,12 @@ namespace MathTextLibrary.Databases
 	/// <summary>
 	/// Esta clase se encarga de organizar varias bases de datos para reconocer
 	/// un símbolo mátematico en ellas.
-	/// Permite definir las prioridades dadas a cada base de datos a la hora de reconocer.
+	/// Permite definir las prioridades dadas a cada base de datos a la hora 
+	/// de reconocer.
 	/// </summary>
 	public class DatabaseManager
 	{
+		
 		
 		public DatabaseManager()
 		{
