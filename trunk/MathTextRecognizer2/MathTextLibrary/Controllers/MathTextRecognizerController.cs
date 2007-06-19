@@ -84,7 +84,7 @@ namespace MathTextLibrary.Controllers
 		/// </summary>
 		public MathTextRecognizerController(){
 			// TODO  Hay que hacer que la base de datos no se ponga por defecto.
-			database=new CaracteristicDatabase();
+			database= new MathTextDatabase(new CaracteristicDatabase());
 			
 			//Creamos una base de datos vacia en principio
 			database.RecognizingStepDone+=
@@ -178,23 +178,30 @@ namespace MathTextLibrary.Controllers
 		}
 		
 		/// <summary>
-		/// Cargamos la base de datos que vamos a utilizar para intentar reconocer
-		/// las imagenes como caracteres.
+		/// Cargamos la base de datos que vamos a utilizar para intentar 
+		/// reconocer las imagenes como caracteres.
 		/// </summary>
-		/// <param name="path">La ruta del fichero donde esta la base de datos.</param>
-		public void LoadDatabase(string path){
-			database.LoadXml(path);
+		/// <param name="path">
+		/// La ruta del fichero donde esta la base de datos.
+		/// </param>
+		public void LoadDatabase(string path)
+		{
+			
+			database = MathTextDatabase.Load(path);
 		}
 		
 		/// <summary>
-		/// Propiedad que permite establecer y recuperar la imagend de inicio que contiene
-		/// la formula que deseamos reconocer.
+		/// Propiedad que permite establecer y recuperar la imagen de inicio que
+		/// contiene la formula que deseamos reconocer.
 		/// </summary>
-		public MathTextBitmap StartImage{
-			get{
+		public MathTextBitmap StartImage
+		{
+			get
+			{				
 				return startImage; 			
 			}
-			set{
+			set
+			{
 				startImage=value;
 			}
 		}
@@ -203,7 +210,8 @@ namespace MathTextLibrary.Controllers
 		/// Este es el metodo que hay que llamar para comenzar/continuar el proceso
 		/// </summary>
 		/// <returns>Cierto si quedan aun pasos por ejecutar, falso en caso contrario.</returns>
-		public bool NextRecognizeStep(){
+		public bool NextRecognizeStep()
+		{
 		
 			bool res=true;
 			if(recognizeThread==null){

@@ -1,5 +1,5 @@
 <Project name="MathTextRecognizer" fileversion="2.0" newfilesearch="OnLoad" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
-  <Configurations active="Release">
+  <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
       <Output directory="./bin/Debug" assembly="MathTextRecognizer" />
       <Build debugmode="True" target="Exe" />

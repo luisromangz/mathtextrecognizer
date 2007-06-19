@@ -3,7 +3,6 @@ using System.IO;
 using System.Threading;
 using System.Reflection;
 using System.Collections;
-using System.Xml.Serialization;
 
 using MathTextLibrary.Databases.Caracteristic.Caracteristics;
 
@@ -16,7 +15,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 	/// de nuevos caracteres en la misma y realizar busquedas.
 	/// </summary>
 	[DatabaseDescription("Base de datos basada en características binarias")]
-	public class CaracteristicDatabase : MathTextDatabase
+	public class CaracteristicDatabase : DatabaseBase
 	{
 		#region Atributos
 		
@@ -29,16 +28,9 @@ namespace MathTextLibrary.Databases.Caracteristic
 		
 		// El nodo raiz del arbol binario de caracteristicas binarias en 
 		/// el que guardamos la informacion de caracteristicas.
-		private BinaryCaracteristicNode rootNode;
-		
-		
-
-			
+		private BinaryCaracteristicNode rootNode;		
 		
 		#endregion Atributos
-		
-		
-		
 				
 		#region Métodos públicos
 		
@@ -51,9 +43,6 @@ namespace MathTextLibrary.Databases.Caracteristic
             caracteristics=CaracteristicFactory.CreateCaracteristicList();
           
 			rootNode=new BinaryCaracteristicNode();
-
-			
-			
 			
 			caracteristicHash=new Hashtable();
 		}
@@ -95,8 +84,14 @@ namespace MathTextLibrary.Databases.Caracteristic
 					nodo=nodo.FalseTree;					
 				}	
 				
-				this.OnLearningStepDoneInvoke(
-				                              new ProcessingStepDoneEventArgs(bc,bitmap,caracteristicValue));
+				ProcessingStepDoneEventArgs a = 
+					new ProcessingStepDoneEventArgs(
+					                                bc,
+					                                bitmap,
+					                                caracteristicValue);
+					
+				this.OnLearningStepDoneInvoke(a);
+				
 				
 				bool aux = false;
 				lock(stepByStepMutex)
@@ -107,31 +102,14 @@ namespace MathTextLibrary.Databases.Caracteristic
 				if(aux)
 				{						
 					Thread.CurrentThread.Suspend();
-				}
-									
-			}			
-		
+				}									
+			}	
 			
 			nodo.Symbol=symbol;					
 			OnSymbolLearnedInvoke();
 		}
 		
-		public override void LoadXml(string path)
-		{
-			// TODO Refactorizar carga de bases de datos.
-			//Cargamos el archivo deserializando el contenido.
-			XmlSerializer serializer=new XmlSerializer(
-				typeof(BinaryCaracteristicNode),new Type[]{typeof(MathSymbol)});
-			
-			using(StreamReader r=new StreamReader(path))
-			{
-				rootNode= (BinaryCaracteristicNode)serializer.Deserialize(r);
-				r.Close();
-			}
-			
-			CreateHashTable();
-			
-		}
+		
 		
 		/// <summary>
 		/// Este metodo intenta recuperar el simbolo que representa a una imagen,
@@ -218,28 +196,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 
 		}
 		
-		/// <summary>
-		/// Permite guardar un fichero xml con la base de datos de
-		/// caracteristicas binarias.
-		/// </summary>
-		/// <param name="path">
-		/// La ruta en la que queremos guardar la base de datos.
-		/// </param>
-		public override void XmlSave(string path)
-		{	
-			// TODO Refactorizar guardado de bases de datos.
-			// Usamos serializacion xml para generar el xml a partir del arbol
-			// de caracteristicas.
-			XmlSerializer serializer=new XmlSerializer(
-				typeof(BinaryCaracteristicNode),new Type[]{typeof(MathSymbol)});
-			
-			using(StreamWriter w=new StreamWriter(path))
-			{			
-				serializer.Serialize(w,rootNode);
-				w.Close();
-			}
-			
-		}
+		
 		
 		#endregion Métodos públicos
 		
@@ -362,7 +319,6 @@ namespace MathTextLibrary.Databases.Caracteristic
 			return res;
 		
 		}
-		
 		#endregion Métodos no públicos
 		
 		
