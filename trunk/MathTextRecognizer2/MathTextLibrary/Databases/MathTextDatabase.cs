@@ -149,20 +149,27 @@ namespace MathTextLibrary.Databases
 			return database.Recognize(image);
 		}
 		
+		/// <summary>
+		/// Este metodo almacena la base de datos en el disco duro.
+		/// </summary>
+		/// <param name="path">
+		/// La ruta del archivo en la que se guardara la base de datos.
+		/// </param>
 		public void Save(string path)
-		{
-			// TODO Serializacion de la base de datos generalista
-			// Usamos serializacion xml para generar el xml a partir del arbol
-			// de caracteristicas.
-//			XmlSerializer serializer=
-//				new XmlSerializer(typeof(BinaryCaracteristicNode),
-//				                  new Type[]{typeof(MathSymbol)});
-//			
-//			using(StreamWriter w=new StreamWriter(path))
-//			{			
-//				serializer.Serialize(w,rootNode);
-//				w.Close();
-//			}
+		{		
+			// Obtenemos el tipo de la base de datos
+			Type databaseType = database.GetType();
+			
+			Type[] usedTypes = RetrieveDatabaseTypes(databaseType);
+			
+			XmlSerializer serializer=
+				new XmlSerializer(databaseType, usedTypes);
+			
+			using(StreamWriter w=new StreamWriter(path))
+			{			
+				serializer.Serialize(w,this);
+				w.Close();
+			}
 		}
 		
 #endregion Metodos publicos
@@ -201,6 +208,20 @@ namespace MathTextLibrary.Databases
 		
 #region Metodos privados
 		
+		private Type[] RetrieveDatabaseTypes(Type t)
+		{
+			object[] attrs = t.GetCustomAttributes(typeof(DatabaseInfo),true);
+			
+			Type[] usedTypes = (Type[])(attrs[0]);
+			
+			Type[] usedTypesAux = new Type[usedTypes.Length+1];
+			usedTypesAux[0] = t;
+			usedTypes.CopyTo(usedTypesAux,1);
+			
+			return usedTypesAux;
+		}
+		
+		
 		private void SetDatabase(DatabaseBase database)
 		{
 			this.database = database;
@@ -214,6 +235,8 @@ namespace MathTextLibrary.Databases
 			this.database.SymbolLearned +=
 				new SymbolLearnedEventHandler(OnSymbolLearned);
 		}
+		
+		
 		
 #endregion Metodos privados
 	
