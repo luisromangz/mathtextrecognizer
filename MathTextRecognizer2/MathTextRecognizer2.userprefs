@@ -1,17 +1,18 @@
 <?xml version="1.0"?>
 <UserCombinePreferences filename="/home/luis/carrera/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
+    <File filename="Bienvenido" />
     <File filename="./MathTextLibrary/Databases/MathTextDatabase.cs" />
-    <File filename="./MathTextLibrary/Databases/Caracteristic/CaracteristicDatabase.cs" />
-    <File filename="./MathTextLibrary/Controllers/MathTextRecognizerController.cs" />
     <File filename="./MathTextLibrary/Databases/DatabaseBase.cs" />
     <File filename="./MathTextLearner/MainWindow.cs" />
+    <File filename="./MathTextLibrary/Databases/DatabaseDescription.cs" />
   </Files>
   <Views>
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
       <TreeView>
-        <Node expanded="True" selected="True">
+        <Node expanded="True">
           <Node name="CustomGtkWidgets" expanded="True">
+            <Node name="Resources" expanded="True" />
             <Node name="CommonDialogs" expanded="True" />
           </Node>
           <Node name="MathTextLearner" expanded="True">
@@ -25,6 +26,7 @@
             <Node name="Databases" expanded="True">
               <Node name="Caracteristic" expanded="True" />
               <Node name="Momentum" expanded="True" />
+              <Node name="DatabaseBase.cs" expanded="False" selected="True" />
             </Node>
             <Node name="Utils" expanded="True" />
           </Node>
@@ -37,9 +39,9 @@
         <Node expanded="True">
           <Option id="ShowProjects" value="False" />
           <Option id="NestedNamespaces" value="False" />
+          <Option id="GroupByAccess" value="False" />
           <Option id="PublicApiOnly" value="False" />
           <Option id="GroupByType" value="True" />
-          <Option id="GroupByAccess" value="False" />
         </Node>
       </TreeView>
     </ViewMemento>
@@ -57,7 +59,7 @@
   <Properties>
     <Properties>
       <Property key="ActiveConfiguration" value="Debug" />
-      <Property key="ActiveWindow" value="/home/luis/carrera/pfc/MathTextRecognizer2/MathTextLearner/MainWindow.cs" />
+      <Property key="ActiveWindow" value="/home/luis/carrera/pfc/MathTextRecognizer2/MathTextLibrary/Databases/DatabaseDescription.cs" />
     </Properties>
   </Properties>
 </UserCombinePreferences>

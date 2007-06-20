@@ -14,7 +14,9 @@ namespace MathTextLibrary.Databases.Caracteristic
 	/// binarias para los caracteres aprendidos, asi como de realizar el añadido
 	/// de nuevos caracteres en la misma y realizar busquedas.
 	/// </summary>
-	[DatabaseDescription("Base de datos basada en características binarias")]
+	[DatabaseInfo("Base de datos basada en características binarias",
+	              UsedTypes=
+	              new Type[]{typeof(BinaryCaracteristicNode),typeof(MathSymbol)})]
 	public class CaracteristicDatabase : DatabaseBase
 	{
 		#region Atributos
