@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Reflection;
 using System.Xml.Serialization;
 using System.Collections.Generic;
 
@@ -127,21 +128,33 @@ namespace MathTextLibrary.Databases
 		/// </param>
 		public static MathTextDatabase Load(string path)
 		{
-			// TODO carga generica de las bases de datos.
-			
 			//Cargamos el archivo deserializando el contenido.
-//			XmlSerializer serializer = 
-//				new XmlSerializer(
-//				                  typeof(BinaryCaracteristicNode),
-//				                  new Type[]{typeof(MathSymbol)});
-//			                                           
-//			using(StreamReader r = new StreamReader(path))
-//			{
-//				rootNode= (BinaryCaracteristicNode)serializer.Deserialize(r);
-//				r.Close();
-//			}			
+
+			List<Type> types = new List<Type>();
 			
-			return null;
+			foreach(Type databaseType in RetrieveDatabaseTypes())
+			{
+				types.AddRange(RetrieveDatabaseUsedTypes(databaseType));
+			}
+			
+			types.AddRange(RetrieveProcessesTypes());
+			
+			Type[] usedTypes = new Type[types.Count];
+			
+			types.CopyTo(usedTypes);
+			
+			XmlSerializer serializer = new XmlSerializer(typeof(MathTextDatabase),			  
+			                                             usedTypes);
+			
+			MathTextDatabase db = null;
+			                                           
+			using(StreamReader r = new StreamReader(path))
+			{
+				db = (MathTextDatabase)serializer.Deserialize(r);
+				r.Close();
+			}			
+			
+			return db;
 		}
 			
 		public MathSymbol Recognize(MathTextBitmap image)
@@ -160,7 +173,15 @@ namespace MathTextLibrary.Databases
 			// Obtenemos el tipo de la base de datos
 			Type databaseType = database.GetType();
 			
-			Type[] usedTypes = RetrieveDatabaseTypes(databaseType);
+			List<Type> types = new List<Type>(); 
+			types.AddRange(RetrieveDatabaseUsedTypes(databaseType));
+			types.AddRange(RetrieveProcessesTypes());
+			
+
+			Type[] usedTypes = new Type[types.Count];
+			
+			types.CopyTo(usedTypes);
+			
 			
 			XmlSerializer serializer=
 				new XmlSerializer(databaseType, usedTypes);
@@ -208,19 +229,49 @@ namespace MathTextLibrary.Databases
 		
 #region Metodos privados
 		
-		private Type[] RetrieveDatabaseTypes(Type t)
+		private static List<Type> RetrieveDatabaseTypes()
+		{
+			List<Type> types = new List<Type>();
+			Assembly ass = Assembly.GetAssembly(typeof(DatabaseBase));
+			
+			foreach(Type bpt in ass.GetTypes())
+			{
+				if(bpt.BaseType == typeof(DatabaseBase))
+				{
+					types.Add(bpt);
+				}
+			}
+			
+			return types;
+		}
+		
+		private static List<Type> RetrieveDatabaseUsedTypes(Type t)
 		{
 			object[] attrs = t.GetCustomAttributes(typeof(DatabaseInfo),true);
 			
 			Type[] usedTypes = (Type[])(attrs[0]);
 			
-			Type[] usedTypesAux = new Type[usedTypes.Length+1];
-			usedTypesAux[0] = t;
-			usedTypes.CopyTo(usedTypesAux,1);
-			
-			return usedTypesAux;
+			List<Type> types = new List<Type>(usedTypes);
+			types.Add(t);
+						
+			return types;
 		}
 		
+		private static List<Type> RetrieveProcessesTypes()
+		{
+			List<Type> types = new List<Type>();
+			Assembly ass = Assembly.GetAssembly(typeof(BitmapProcess));
+			
+			foreach(Type bpt in ass.GetTypes())
+			{
+				if(bpt.BaseType == typeof(BitmapProcess))
+				{
+					types.Add(bpt);
+				}
+			}
+			
+			return types;
+		}		
 		
 		private void SetDatabase(DatabaseBase database)
 		{
