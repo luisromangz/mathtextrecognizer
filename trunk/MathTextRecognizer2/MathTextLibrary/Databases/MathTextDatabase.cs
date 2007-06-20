@@ -52,7 +52,7 @@ namespace MathTextLibrary.Databases
 		
 		public MathTextDatabase(DatabaseBase database)
 		{
-			this.database = database;
+			SetDatabase(database);
 		}	
 		
 #endregion Constructores;
@@ -82,8 +82,7 @@ namespace MathTextLibrary.Databases
 			}
 			
 			set {
-				database = value;
-				// TODO linkar los eventos.
+				SetDatabase(value);				
 			}
 		}
 		
@@ -169,16 +168,9 @@ namespace MathTextLibrary.Databases
 #endregion Metodos publicos
 		
 #region Metodos protegidos
-		
-		
-		
-
-		/// <summary>
-		/// Para lanzar el evento <c>LearningCaracteristicChecked</c> con
-		/// comodidad.
-		/// </summary>		
-		protected void OnLearningStepDoneInvoke(
-			ProcessingStepDoneEventArgs arg)
+			
+		protected void OnLearningStepDone(object sender,
+		                                  ProcessingStepDoneEventArgs arg)
 		{
 			if(LearningStepDone != null)
 			{
@@ -186,15 +178,9 @@ namespace MathTextLibrary.Databases
 			}		
 		}
 		
-		/// <summary>
-		/// Para lanzar el evento <c>RecognizingCaracteristicChecked</c> con
-		/// comodidad.	
-		/// </summary>
-		/// <param name="arg">
-		/// Los argumentos pasados al manejador del evento.
-		/// </param>
-		protected void OnRecognizingStepDoneInvoke(
-			ProcessingStepDoneEventArgs arg)
+		
+		protected void OnRecognizingStepDone(object sender,
+		                                     ProcessingStepDoneEventArgs arg)
 		{
 			if(RecognizingStepDone != null)
 			{
@@ -202,7 +188,8 @@ namespace MathTextLibrary.Databases
 			}		
 		}
 		
-		protected void OnSymbolLearnedInvoke()
+		protected void OnSymbolLearned(object sender,
+		                                     EventArgs args)
 		{
 			if(SymbolLearned != null)
 			{
@@ -211,6 +198,24 @@ namespace MathTextLibrary.Databases
 		}
 		
 #endregion Metodos protegidos
+		
+#region Metodos privados
+		
+		private void SetDatabase(DatabaseBase database)
+		{
+			this.database = database;
+			
+			this.database.LearningStepDone += 
+				new ProcessingStepDoneEventHandler(OnLearningStepDone);
+			
+			this.database.RecognizingStepDone +=
+				new ProcessingStepDoneEventHandler(OnRecognizingStepDone);
+			
+			this.database.SymbolLearned +=
+				new SymbolLearnedEventHandler(OnSymbolLearned);
+		}
+		
+#endregion Metodos privados
 	
 	}
 }

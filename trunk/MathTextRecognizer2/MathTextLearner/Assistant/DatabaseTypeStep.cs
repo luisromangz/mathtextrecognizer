@@ -106,12 +106,14 @@ namespace MathTextLearner.Assistant
 		
 		private List<Type> RetrieveDatabaseTypes()
 		{
-			Assembly ass = Assembly.GetAssembly(typeof(MathTextDatabase));
+			// Recuperamos el ensamblado donde esta DatabaseBase
+			Assembly ass = Assembly.GetAssembly(typeof(DatabaseBase));
 			List<Type> databaseTypes = new List<Type>();
 			
+			// Procesamos las clases que extienden DatabaseBase
 			foreach(Type t in ass.GetTypes())
 			{
-				if(t.BaseType == typeof(MathTextDatabase))
+				if(t.BaseType == typeof(DatabaseBase))
 				{
 					databaseTypes.Add(t);					
 				}
@@ -123,9 +125,11 @@ namespace MathTextLearner.Assistant
 		
 		private string RetrieveDescription(Type t)
 		{		
-			object[] attributes = t.GetCustomAttributes(typeof(DatabaseDescription),true);
-			DatabaseDescription dd = (DatabaseDescription)attributes[0];
-			return dd.Description;
+			object[] attributes = t.GetCustomAttributes(typeof(DatabaseInfo),
+			                                            true);
+			
+			DatabaseInfo info = (DatabaseInfo)attributes[0];
+			return info.Description;
 		}
 		
 		 
