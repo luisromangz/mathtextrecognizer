@@ -83,6 +83,11 @@ namespace MathTextLearner
 		[WidgetAttribute]
 		private IconView imagesIV;
 		
+		[WidgetAttribute]
+		private VBox imagesVB;
+		
+		[WidgetAttribute]
+		private ToolButton toolSaveAs;
 		
 		[WidgetAttribute]
 		private Button addImageBtn;
@@ -180,11 +185,18 @@ namespace MathTextLearner
 			OkDialog.Show(mainWindow,
 				          MessageType.Info,
 				          "Todos los carácteres fueron procesados.{0}",
-				          (conflicts>0?"Hubo "+conflicts+" conflictos":""));
+				          (conflicts>0?"Hubo "
+			               +conflicts
+			               +" conflictos entre caracteres.":""));
 				
 			mtb = null;
 			
+			// Reinciamos el contador de conflictos.
+			conflicts = 0;
+			
 			buttonsHB.Sensitive = false;
+			
+			imagesVB.Sensitive = true;
 		}
 		
 		/// <summary>
@@ -410,6 +422,29 @@ namespace MathTextLearner
 		private void OnImagesIVSelectionChanged(object s, EventArgs a)
 		{
 			removeImageBtn.Sensitive = imagesIV.SelectedItems.Length > 0;
+			
+			TreeIter selectedIter;
+			
+			if(imagesIV.SelectedItems.Length > 0)
+			{
+			
+				TreePath selectedImagePath = imagesIV.SelectedItems[0];
+
+				imagesStore.GetIter(out selectedIter, selectedImagePath);
+				
+				Gdk.Pixbuf orig = (Gdk.Pixbuf)(imagesStore.GetValue(selectedIter,1));
+				
+				mtb = new MathTextBitmap(orig);
+				mtb.ProcessImage(database.Processes);
+				
+				imageAreaOriginal.Image = orig;
+				imageAreaProcessed.Image = mtb.ProcessedBitmap;
+			}
+			else
+			{
+				imageAreaOriginal.Image = null;
+				imageAreaProcessed.Image = null;
+			}
 		}
 		
 		private void OnLearningProccessFailed(object sender, EventArgs a)
@@ -423,6 +458,8 @@ namespace MathTextLearner
 			LogLine(msg);
 			ResetWidgets();
 			
+			// Indicamos que ha habido un conflicto.
+			conflicts++;
 			
 			OkDialog.Show(mainWindow, MessageType.Error,msg);
 			
@@ -518,6 +555,8 @@ namespace MathTextLearner
 				
 				LoadNewImages(assistant.Images);
 				
+				nextImageBtn.Sensitive = true;
+				
 				SetTitle("Nueva base de datos",false);
 				LogLine("¡Nueva base de datos creada con éxito!");
 			}
@@ -527,6 +566,7 @@ namespace MathTextLearner
 			}
 			
 			assistant.Destroy();
+			
 			
 			
 		}
@@ -542,17 +582,9 @@ namespace MathTextLearner
 				                     
 			imagesIV.ScrollToPath(selectedImagePath);
 			imagesIV.SelectPath(selectedImagePath);
-			TreeIter selectedIter;
-
-			imagesStore.GetIter(out selectedIter, selectedImagePath);
 			
-			Gdk.Pixbuf orig = (Gdk.Pixbuf)(imagesStore.GetValue(selectedIter,1));
 			
-			mtb = new MathTextBitmap(orig);
-			mtb.ProcessImage(database.Processes);
-			
-			imageAreaOriginal.Image = orig;
-			imageAreaProcessed.Image = mtb.ProcessedBitmap;
+			imagesVB.Sensitive = false;
 			
 		}
 			
@@ -588,6 +620,9 @@ namespace MathTextLearner
 			LogLine(msg);	
 			OkDialog.Show(mainWindow, MessageType.Info, msg);
 			
+			databaseModified = true;
+			menuSaveAs.Sensitive = true;
+			toolSaveAs.Sensitive = true;
 			
 			PrepareForNewImage();
 			
@@ -628,16 +663,15 @@ namespace MathTextLearner
 			nextImageBtn.Sensitive = true;
 			
 			TreeIter iter;
-			imagesStore.GetIterFirst(out iter);
-			
-			imagesStore.Remove(ref iter);
+			imagesStore.GetIterFirst(out iter);			
+			imagesStore.Remove(ref iter);   
 			
 			if(imagesStore.IterNChildren() == 0)
 			{
 				
 				AllImagesLearned();
 				
-				              
+				           
 			}
 			
 		}
@@ -649,8 +683,6 @@ namespace MathTextLearner
 				== ResponseType.Ok)
 			{				
 				string ext = Path.GetExtension(file);
-				
-				OkDialog.Show(mainWindow, MessageType.Other, ext);
 				
 				if(!(	ext==".xml" 
 					|| 	ext==".XML"
@@ -681,7 +713,7 @@ namespace MathTextLearner
 					OkDialog.Show(
 						mainWindow,
 						MessageType.Info,
-						"Base de datos guardada correctamente en {0}",
+						"Base de datos guardada correctamente en «{0}»",
 						Path.GetFileName(file));
 						
 					LogLine(
@@ -689,6 +721,8 @@ namespace MathTextLearner
 						Path.GetFileName(file));
 						
 					databaseModified=false;
+					menuSaveAs.Sensitive = false;
+					toolSaveAs.Sensitive = false;
 					
 					SetTitle(file,false);	
 				}
@@ -705,7 +739,8 @@ namespace MathTextLearner
 			database.LearningStepDone +=
 				new ProcessingStepDoneEventHandler(OnLearningStepDone);
 			
-			imagesHB.Sensitive = true;
+			
+			
 			
 			Type type = database.Database.GetType();
 			object[] attrs = type.GetCustomAttributes(typeof(DatabaseInfo),
@@ -717,6 +752,23 @@ namespace MathTextLearner
 				+ info.Description;
 			
 			mtb = null;
+			
+
+			toolSaveAs.Sensitive = false;
+			menuSaveAs.Sensitive = false;
+			
+			imagesHB.Sensitive = true;			
+			imagesVB.Sensitive = true;
+			
+			imagesStore.Clear();
+			
+			buttonsHB.Sensitive = true;
+			
+			hboxSymbolWidgets.Sensitive = false;
+			vboxNextButtons.Sensitive =false;
+			
+			entrySymbol.Text = "";
+			comboSymbolType.Active = -1;
 			
 		}
 		

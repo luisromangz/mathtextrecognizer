@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace MathTextLibrary.TreeMaker
 {
@@ -19,7 +19,7 @@ namespace MathTextLibrary.TreeMaker
 		
 		// en los constructores se garantiza que la lista nunca es null, como
 		// minimo es una lista vacia
-		IList children;
+		List<RecognizedTreeNode> children;
 		
 		MathSymbol symbol;
 		
@@ -31,14 +31,15 @@ namespace MathTextLibrary.TreeMaker
 		/// <param name="children">Hijos del nodo</param>
 		/// <exception cref="System.ApplicationException">Lanzada si
 		/// la imagen <c>mtb</c> es <c>null</c></exception>
-		public RecognizedTreeNode(MathTextBitmap mtb, IList children)
+		public RecognizedTreeNode(MathTextBitmap mtb,
+		                          List<RecognizedTreeNode> children)
 		{
 			if(mtb==null)
 				throw new ApplicationException("¡Sin imagen en el constructor!");
 			this.image=mtb;
 			this.symbol=mtb.Symbol;
 			if(children==null)
-				children=new ArrayList();
+				children=new List<RecognizedTreeNode>();
 			else
 				this.children=children;
 		}
@@ -52,14 +53,15 @@ namespace MathTextLibrary.TreeMaker
 		/// <param name="children">Hijos del nodo</param>
 		/// <exception cref="System.ApplicationException">Lanzada si
 		/// el simbolo <c>symbol</c> es <c>null</c></exception>
-		public RecognizedTreeNode(MathSymbol symbol, IList children)
+		public RecognizedTreeNode(MathSymbol symbol,
+		                          List<RecognizedTreeNode> children)
 		{
 			if(symbol==null)
 				throw new ApplicationException("¡Sin simbolo en el constructor!");
 			this.image=null;
 			this.symbol=symbol;
 			if(children==null)
-				children=new ArrayList();
+				children=new List<RecognizedTreeNode>();
 			else
 				this.children=children;
 		}
@@ -67,7 +69,7 @@ namespace MathTextLibrary.TreeMaker
 		/// <summary>
 		/// Propiedad que permite recuperar la lista de hijos de un nodo.
 		/// </summary>
-		public IList Children
+		public List<RecognizedTreeNode> Children
 		{
 			get{
 				return children;

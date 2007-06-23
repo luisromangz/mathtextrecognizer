@@ -1,5 +1,5 @@
 // created on 28/12/2005 at 13:23
-
+using System.Collections.Generic;
 
 namespace MathTextLibrary.BitmapSegmenters{
 	/// <summary>
@@ -7,7 +7,8 @@ namespace MathTextLibrary.BitmapSegmenters{
 	/// clases que implementan metodos para descomponer 
 	/// formulas en sus distintas partes.
 	/// </summary>
-	public interface IBitmapSegmenter{
+	public interface IBitmapSegmenter
+	{
 		
 		/// <summary>
 		/// El metodo que sera invocado para intentar descomponer
@@ -18,7 +19,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 		/// Un array con las distintas partes en que se
 		/// ha descompuesto la imagen.
 		/// </returns>
-		MathTextBitmap [] Segment(MathTextBitmap mtb);
+		List<MathTextBitmap> Segment(MathTextBitmap mtb);
 	}
 
 	

@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace MathTextLibrary.TreeMaker.Steps
 {
@@ -21,7 +21,7 @@ namespace MathTextLibrary.TreeMaker.Steps
 		public RecognizedTreeNode ApplyStep(RecognizedTreeNode tree)
 		{
 			bool fraction=false;
-			ArrayList newChildren=new ArrayList();
+			List<RecognizedTreeNode> newChildren=new List<RecognizedTreeNode>();
 			
 			for(int i=0; i<tree.Children.Count; i++)
 			{

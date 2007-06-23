@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 using MathTextLibrary.Projection;
 using MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers;
@@ -22,15 +23,18 @@ namespace MathTextLibrary.BitmapSegmenters
 		/// </summary>
 		/// <param name="mtb">La imagen a segmentar.</param>
 		/// <returns>Un array con las subimageners en que se divede la original.</returns>
-		public MathTextBitmap [] Segment(MathTextBitmap mtb)
+		public List<MathTextBitmap> Segment(MathTextBitmap mtb)
 		{
-			IBitmapSegmenter segmenter=new AllHolesProjectionBitmapSegmenter(ProjectionMode.Vertical);
-			MathTextBitmap[] segments=segmenter.Segment(mtb);
+			IBitmapSegmenter segmenter=
+				new AllHolesProjectionBitmapSegmenter(ProjectionMode.Vertical);
 			
-			if(segments.Length>=3)
+			List<MathTextBitmap> segments=segmenter.Segment(mtb);
+			
+			if(segments.Count>=3)
 			{
 				int x1,y1,x2,y2;
-				ImageBoxerHelper.BoxImage(mtb.BinaryzedImage,out x1,out y1,out x2,out y2);
+				ImageBoxerHelper.BoxImage(mtb.BinaryzedImage,
+				                          out x1,out y1,out x2,out y2);
 				int width=x2-x1+1;
 				
 				// buscamos la raya de fraccion
@@ -52,7 +56,7 @@ namespace MathTextLibrary.BitmapSegmenters
 				}
 				else
 				{
-					segments=new MathTextBitmap[1];
+					segments= new List<MathTextBitmap>();
 				}
 			}
 			

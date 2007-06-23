@@ -1,7 +1,7 @@
 // created on 29/12/2005 at 13:26
 
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 using MathTextLibrary;
 using MathTextLibrary.Projection;
@@ -21,7 +21,7 @@ namespace MathTextLibrary.BitmapSegmenters
 			:base(mode){}
 			
 			
-		protected override int GetImageCutThreshold(IList holes)
+		protected override int GetImageCutThreshold(List<Hole> holes)
 		{
 			int [] histoHoles = CreateHolesHistogram(holes);
 			int	i;

@@ -3,36 +3,20 @@
   <Files>
     <File filename="Bienvenido" />
     <File filename="./MathTextLearner/MainWindow.cs" />
-    <File filename="./MathTextLibrary/Databases/Caracteristic/Caracteristics/Helpers/CountBlackNeighboursHelper.cs" />
-    <File filename="./MathTextLibrary/Databases/Caracteristic/Caracteristics/Helpers/CountPixelsWithXNeighboursHelper.cs" />
-    <File filename="./MathTextLibrary/BitmapProcesses/BitmapZhangSuenHoltThinner.cs" />
-    <File filename="./MathTextLibrary/BitmapProcesses/BitmapZhangSuenStentifordHoltThinner.cs" />
+    <File filename="./MathTextLibrary/Databases/MathTextDatabase.cs" />
   </Files>
   <Views>
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
       <TreeView>
         <Node expanded="True">
-          <Node name="CustomGtkWidgets" expanded="True">
-            <Node name="Resources" expanded="True" />
-            <Node name="CommonDialogs" expanded="True" />
-          </Node>
           <Node name="MathTextLearner" expanded="True">
             <Node name="Resources" expanded="True" />
-            <Node name="Assistant" expanded="True">
-              <Node name="BitmapProcessHelpers" expanded="True" />
-            </Node>
           </Node>
           <Node name="MathTextLibrary" expanded="True">
-            <Node name="BitmapProcesses" expanded="True">
-              <Node name="BitmapZhangSuenStentifordHoltThinner.cs" expanded="False" selected="True" />
-            </Node>
             <Node name="Databases" expanded="True">
               <Node name="Caracteristic" expanded="True" />
+              <Node name="MathTextDatabase.cs" expanded="False" selected="True" />
             </Node>
-            <Node name="Utils" expanded="True" />
-          </Node>
-          <Node name="MathTextRecognizer" expanded="True">
-            <Node name="Resources" expanded="True" />
           </Node>
         </Node>
       </TreeView>
@@ -42,9 +26,9 @@
         <Node expanded="True">
           <Option id="ShowProjects" value="False" />
           <Option id="NestedNamespaces" value="False" />
+          <Option id="GroupByAccess" value="False" />
           <Option id="PublicApiOnly" value="False" />
           <Option id="GroupByType" value="True" />
-          <Option id="GroupByAccess" value="False" />
         </Node>
       </TreeView>
     </ViewMemento>
@@ -62,7 +46,7 @@
   <Properties>
     <Properties>
       <Property key="ActiveConfiguration" value="Debug" />
-      <Property key="ActiveWindow" value="/home/luis/carrera/pfc/MathTextRecognizer2/MathTextLibrary/BitmapProcesses/BitmapZhangSuenStentifordHoltThinner.cs" />
+      <Property key="ActiveWindow" value="/home/luis/carrera/pfc/MathTextRecognizer2/MathTextLibrary/Databases/MathTextDatabase.cs" />
     </Properties>
   </Properties>
 </UserCombinePreferences>

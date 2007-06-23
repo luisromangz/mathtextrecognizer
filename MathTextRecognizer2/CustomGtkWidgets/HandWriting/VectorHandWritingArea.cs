@@ -1,6 +1,6 @@
 using System;
 using Gtk;
-using System.Collections;
+using System.Collections.Generic;
 
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -12,8 +12,8 @@ namespace CustomGtkWidgets.HandWriting
 	public class VectorHandWritingArea : IHandWritingArea
 	{	
 		//Lista de objetos object
-		private ArrayList strokes;
-		private ArrayList lastStroke;	
+		private List<List<Point>> strokes;
+		private List<Point> lastStroke;	
 		
 		
 		private Color background;
@@ -31,7 +31,7 @@ namespace CustomGtkWidgets.HandWriting
 
 		protected override void InitializeWidget()
 		{
-			strokes=new ArrayList();
+			strokes=new List<List<Point>>();
 			
 			mouseButtonPressed=false;
 			
@@ -74,7 +74,7 @@ namespace CustomGtkWidgets.HandWriting
 					g.SmoothingMode=smoothingMode;
 					g.Clear(background);
 					
-					foreach(ArrayList stroke in strokes)
+					foreach(List<Point> stroke in strokes)
 					{
 						DrawStroke(g,stroke);					
 					}				
@@ -113,7 +113,7 @@ namespace CustomGtkWidgets.HandWriting
 				g.SmoothingMode=smoothingMode;
 				g.Clear(background);
 				
-				foreach(ArrayList stroke in strokes)
+				foreach(List<Point> stroke in strokes)
 				{
 					DrawStroke(g,stroke);					
 				}
@@ -128,7 +128,7 @@ namespace CustomGtkWidgets.HandWriting
 		}		
 		
 				
-		private void DrawStroke(Graphics g,ArrayList stroke)
+		private void DrawStroke(Graphics g, List<Point> stroke)
 		{
 			Point[] arraystroke=new Point[stroke.Count];
 			//Creo un array a partir de una lista
@@ -149,7 +149,7 @@ namespace CustomGtkWidgets.HandWriting
 				oldX=(int)arg.X;
 				oldY=(int)arg.Y;	
 				
-				lastStroke=new ArrayList();
+				lastStroke=new List<Point>();
 				lastStroke.Add(new Point((int)arg.X,(int)arg.Y));
 			}
 			

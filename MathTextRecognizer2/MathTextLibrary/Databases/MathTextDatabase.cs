@@ -87,6 +87,7 @@ namespace MathTextLibrary.Databases
 			}
 		}
 		
+		[XmlIgnore]
 		public bool StepByStep
 		{
 			get
@@ -128,23 +129,51 @@ namespace MathTextLibrary.Databases
 		/// </param>
 		public static MathTextDatabase Load(string path)
 		{
-			//Cargamos el archivo deserializando el contenido.
 
-			List<Type> types = new List<Type>();
+			XmlAttributeOverrides attrOverrides = 
+            new XmlAttributeOverrides();
+			XmlAttributes attrs = new XmlAttributes();
+        
 			
-			foreach(Type databaseType in RetrieveDatabaseTypes())
+			Assembly ass = Assembly.GetAssembly(typeof(DatabaseBase));
+			
+			XmlElementAttribute attr;
+			
+			foreach(Type t in ass.GetTypes())
 			{
-				types.AddRange(RetrieveDatabaseUsedTypes(databaseType));
+				if(t.BaseType == typeof(DatabaseBase))
+				{
+					attr = new XmlElementAttribute();
+					attr.ElementName = t.Name;
+					attr.Type = t;
+					
+					attrs.XmlElements.Add(attr);
+				}
+			}			
+
+			attrOverrides.Add(typeof(MathTextDatabase), 
+			                  "Database", attrs);
+			
+			attrs = new XmlAttributes();
+			
+			ass = Assembly.GetAssembly(typeof(BitmapProcess));
+			foreach(Type t in ass.GetTypes())
+			{
+				if(t.BaseType == typeof(BitmapProcess))
+				{
+					attr = new XmlElementAttribute();
+					attr.ElementName = t.Name;
+					attr.Type = t;
+					
+					attrs.XmlElements.Add(attr);	
+					 
+				}
 			}
+			attrOverrides.Add(typeof(MathTextDatabase), 
+			                  "Processes", attrs);
 			
-			types.AddRange(RetrieveProcessesTypes());
-			
-			Type[] usedTypes = new Type[types.Count];
-			
-			types.CopyTo(usedTypes);
-			
-			XmlSerializer serializer = new XmlSerializer(typeof(MathTextDatabase),			  
-			                                             usedTypes);
+			XmlSerializer serializer=
+				new XmlSerializer(typeof(MathTextDatabase),attrOverrides);	
 			
 			MathTextDatabase db = null;
 			                                           
@@ -162,6 +191,7 @@ namespace MathTextLibrary.Databases
 			return database.Recognize(image);
 		}
 		
+		
 		/// <summary>
 		/// Este metodo almacena la base de datos en el disco duro.
 		/// </summary>
@@ -169,22 +199,41 @@ namespace MathTextLibrary.Databases
 		/// La ruta del archivo en la que se guardara la base de datos.
 		/// </param>
 		public void Save(string path)
-		{		
-			// Obtenemos el tipo de la base de datos
-			Type databaseType = database.GetType();
+		{			
 			
-			List<Type> types = new List<Type>(); 
-			types.AddRange(RetrieveDatabaseUsedTypes(databaseType));
-			types.AddRange(RetrieveProcessesTypes());
+			XmlAttributeOverrides attrOverrides = 
+            new XmlAttributeOverrides();
+			XmlAttributes attrs = new XmlAttributes();
+        
+			XmlElementAttribute attr = new XmlElementAttribute();
+			attr.ElementName = database.GetType().Name;
+			attr.Type = database.GetType();
 			
+			attrs.XmlElements.Add(attr);
 
-			Type[] usedTypes = new Type[types.Count];
+			attrOverrides.Add(typeof(MathTextDatabase), 
+			                  "Database", attrs);
 			
-			types.CopyTo(usedTypes);
+			attrs = new XmlAttributes();
 			
+			Assembly ass = Assembly.GetAssembly(typeof(BitmapProcess));
+			foreach(Type t in ass.GetTypes())
+			{
+				if(t.BaseType == typeof(BitmapProcess))
+				{
+					attr = new XmlElementAttribute();
+					attr.ElementName = t.Name;
+					attr.Type = t;
+					
+					attrs.XmlElements.Add(attr);	
+					 
+				}
+			}
+			attrOverrides.Add(typeof(MathTextDatabase), 
+			                  "Processes", attrs);
 			
 			XmlSerializer serializer=
-				new XmlSerializer(databaseType, usedTypes);
+				new XmlSerializer(typeof(MathTextDatabase),attrOverrides);			
 			
 			using(StreamWriter w=new StreamWriter(path))
 			{			
@@ -249,12 +298,9 @@ namespace MathTextLibrary.Databases
 		{
 			object[] attrs = t.GetCustomAttributes(typeof(DatabaseInfo),true);
 			
-			Type[] usedTypes = (Type[])(attrs[0]);
-			
-			List<Type> types = new List<Type>(usedTypes);
-			types.Add(t);
-						
-			return types;
+
+			DatabaseInfo info = (DatabaseInfo)(attrs[0]);
+			return new List<Type>(info.UsedTypes);
 		}
 		
 		private static List<Type> RetrieveProcessesTypes()

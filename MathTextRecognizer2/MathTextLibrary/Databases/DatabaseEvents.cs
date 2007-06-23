@@ -1,6 +1,6 @@
 // created on 27/12/2005 at 21:50
 using System;
-using System.Collections;
+using System.Collections.Generic;
 using MathTextLibrary.Databases.Caracteristic.Caracteristics;
 
 namespace MathTextLibrary.Databases
@@ -33,7 +33,7 @@ namespace MathTextLibrary.Databases
 		private ISymbolProcess process;
 		private MathTextBitmap image;
 		private bool result;
-		private IList similarSymbols;  	
+		private List<MathSymbol> similarSymbols;  	
 	
 		/// <summary>
 		/// Constructor de la clase <c>ProcessingStepDoneEventArgs</c>.
@@ -53,7 +53,7 @@ namespace MathTextLibrary.Databases
 		public ProcessingStepDoneEventArgs(ISymbolProcess process,
 		                                   MathTextBitmap image,
 		                                   bool result,	
-		                                   IList similarSymbols) : base()
+		                                   List<MathSymbol> similarSymbols) : base()
 		{			
 			this.image = image;
 			this.process = process;
@@ -78,7 +78,7 @@ namespace MathTextLibrary.Databases
 		/// Propiedad de solo lectura que permite obtener la lista de simbolos similares
 		/// respecto a la propiedad comprobada (y anteriores).
 		/// </summary>
-		public IList SimilarSymbols
+		public List<MathSymbol> SimilarSymbols
 		{
 			get
 			{				

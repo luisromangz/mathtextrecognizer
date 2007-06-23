@@ -35,7 +35,7 @@ namespace MathTextLibrary
 		private float [,] binaryzedImage;
 		
 		// Hijos de la imagen productos de la segmentación
-		private MathTextBitmap [] children;
+		private List<MathTextBitmap> children;
 		
 		// A partir de qué proyección se ha obtenido la imagen
 		private ProjectionMode fromProjection;
@@ -168,7 +168,7 @@ namespace MathTextLibrary
 		/// Accede a los hijos de la imagen actual que se hayan obtenido
 		/// mediante segmentacion.
 		/// </summary>
-		public MathTextBitmap [] Children
+		public List<MathTextBitmap> Children
 		{			
 			get{
 				return children;
@@ -289,12 +289,11 @@ namespace MathTextLibrary
 		{
 			if(children==null)
 			{							
-				Console.WriteLine(this.fromProjection);
 				children = HorizontalSegmentation();
 			
-				if(children != null && children.Length>1)
+				if(children != null && children.Count>1)
 				{
-					OnChildrenAddedLauncher(children);	
+					OnChildrenAddedInvoker(children);	
 				}
 				
 				/*
@@ -360,23 +359,21 @@ namespace MathTextLibrary
 		/// para el segmentado horizontal y <c>FractionVerticalBitmapSegmenter</c>
 		/// para el segmentado vertical.
 		/// </remarks>
-		/// <seealso cref="BitmapSegmenters.AllHolesProjectionBitmapSegmenter" />
-		/// <seealso cref="BitmapSegmenters.FractionVerticalBitmapSegmenter" />
-		private MathTextBitmap[] HorizontalSegmentation()
+		private List<MathTextBitmap> HorizontalSegmentation()
 		{
 			IBitmapSegmenter segmenter;
-			MathTextBitmap [] childrenTemp;
+			List<MathTextBitmap> childrenTemp;
 			
 			segmenter = new AllHolesProjectionBitmapSegmenter(ProjectionMode.Horizontal);
 					
 			childrenTemp=segmenter.Segment(this);
 			
-			if(childrenTemp.Length < 2)
+			if(childrenTemp.Count < 2)
 			{ 
 				//Segmentacion sin exito :/
 				segmenter=new FractionVerticalBitmapSegmenter();
 				childrenTemp=segmenter.Segment(this);
-				if(childrenTemp.Length < 2)
+				if(childrenTemp.Count < 2)
 				{
 					childrenTemp=null;
 					//throw new Exception("Umm no se ha podido segmentar else");							
@@ -389,11 +386,12 @@ namespace MathTextLibrary
 		/// Metodo que se llama cuando se añaden hijos a la imagen para
 		/// notificar al controlador.
 		/// </summary>
-		protected void OnChildrenAddedLauncher(MathTextBitmap[] children)
+		protected void OnChildrenAddedInvoker(List<MathTextBitmap> children)
 		{
 			if(ChildrenAdded != null)
 			{
-				ChildrenAdded(this,new MathTextBitmapChildrenAddedEventArgs(children));
+				ChildrenAdded(this,
+				              new MathTextBitmapChildrenAddedEventArgs(children));
 			}		
 		}
 		
@@ -416,19 +414,19 @@ namespace MathTextLibrary
 		/// <remmarks>
 		/// Este método no se usa actualmente.
 		/// </remmarks>
-		private MathTextBitmap[] VerticalSegmentation()
+		private List<MathTextBitmap> VerticalSegmentation()
 		{
 			IBitmapSegmenter segmenter;
-			MathTextBitmap [] childrenTemp;
+			List<MathTextBitmap> childrenTemp;
 			segmenter=new FractionVerticalBitmapSegmenter();
-			childrenTemp=segmenter.Segment(this);
+			childrenTemp = segmenter.Segment(this);
 			
-			if(childrenTemp.Length<2)
+			if(childrenTemp.Count < 2)
 			{ 
 				// Segmentacion sin exito :/
 				segmenter=new DifferentialProjectionBitmapSegmenter(ProjectionMode.Horizontal);
-				childrenTemp=segmenter.Segment(this);
-				if(childrenTemp.Length<2)
+				childrenTemp = segmenter.Segment(this);
+				if(childrenTemp.Count < 2)
 				{
 					childrenTemp=null;
 					//throw new Exception("Umm no se ha podido segmentar");							

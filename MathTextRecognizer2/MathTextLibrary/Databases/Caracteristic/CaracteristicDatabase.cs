@@ -1,8 +1,9 @@
 using System;
 using System.IO;
 using System.Threading;
+using System.Xml.Serialization;
 using System.Reflection;
-using System.Collections;
+using System.Collections.Generic;
 
 using MathTextLibrary.Databases.Caracteristic.Caracteristics;
 
@@ -14,23 +15,23 @@ namespace MathTextLibrary.Databases.Caracteristic
 	/// binarias para los caracteres aprendidos, asi como de realizar el añadido
 	/// de nuevos caracteres en la misma y realizar busquedas.
 	/// </summary>
-	[DatabaseInfo("Base de datos basada en características binarias",
-	              UsedTypes=
-	              new Type[]{typeof(BinaryCaracteristicNode),typeof(MathSymbol)})]
+	[DatabaseInfo("Base de datos basada en características binarias")]	
+	[XmlInclude(typeof(MathSymbol))]
+	[XmlInclude(typeof(BinaryCaracteristicNode))]
 	public class CaracteristicDatabase : DatabaseBase
 	{
 		#region Atributos
 		
 		// Tabla hash para el metodo alternativo de reconocimiento de caracteres
 		// basado en distancia.
-		private Hashtable caracteristicHash;
+		private Dictionary<List<bool>,MathSymbol> caracteristicHash;
 		
 		// Lista de caracteristicas binarias que se aplican sobre las imagenes.
-		private IList caracteristics;
+		private static List<IBinaryCaracteristic> caracteristics;
 		
 		// El nodo raiz del arbol binario de caracteristicas binarias en 
-		/// el que guardamos la informacion de caracteristicas.
-		private BinaryCaracteristicNode rootNode;		
+		/// el que guardamos la informacion de caracteristicas.	
+		private BinaryCaracteristicNode rootNode;
 		
 		#endregion Atributos
 				
@@ -42,11 +43,11 @@ namespace MathTextLibrary.Databases.Caracteristic
 		/// </summary>
 		public CaracteristicDatabase() : base()
 		{	
-            caracteristics=CaracteristicFactory.CreateCaracteristicList();
+           
           
 			rootNode=new BinaryCaracteristicNode();
 			
-			caracteristicHash=new Hashtable();
+			caracteristicHash=new Dictionary<List<bool>,MathSymbol>();
 		}
 		
 		/// <summary>
@@ -61,6 +62,9 @@ namespace MathTextLibrary.Databases.Caracteristic
 		///</param>
 		public override void Learn(MathTextBitmap bitmap,MathSymbol symbol)
 		{
+			if(caracteristics == null)
+				caracteristics=CaracteristicFactory.CreateCaracteristicList();
+			
 			BinaryCaracteristicNode nodo=rootNode;
 			bool caracteristicValue;	
 			
@@ -126,6 +130,9 @@ namespace MathTextLibrary.Databases.Caracteristic
 		/// </returns>
 		public override MathSymbol Recognize(MathTextBitmap image)
 		{
+			if(caracteristics == null)
+				caracteristics=CaracteristicFactory.CreateCaracteristicList();
+			
 			MathSymbol res=MathSymbol.NullSymbol;
 			BinaryCaracteristicNode nodo=rootNode;
 			IBinaryCaracteristic bc;
@@ -133,7 +140,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 			bool existe=true; 
 			bool caracteristicValue;
 			
-			ArrayList vector=new ArrayList();
+			List<bool> vector=new List<bool>();
 			
 			for(int i=0;i<caracteristics.Count && existe;i++)
 			{
@@ -173,10 +180,10 @@ namespace MathTextLibrary.Databases.Caracteristic
 				 }
 				
 				 
-				 bool aux;
+				bool aux;
 				lock(stepByStepMutex)
 				{
-					aux=stepByStep;
+						aux=stepByStep;
 				}
 				if(aux)
 				{						
@@ -215,7 +222,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 		/// El vector de caracteristicas binarias de otro simbolo.
 		/// </param>
 		/// <returns>La «distacia» entre los dos vectores.</returns>
-		private int BoolVectorDistance(IList vector1, IList vector2)
+		private int BoolVectorDistance(List<bool> vector1, List<bool> vector2)
 		{
 			int count=0;
 			
@@ -236,9 +243,9 @@ namespace MathTextLibrary.Databases.Caracteristic
 		/// </summary>
 		private void CreateHashTable()
 		{
-			caracteristicHash=new Hashtable();
+			caracteristicHash=new Dictionary<List<bool>,MathSymbol>();
 			Console.WriteLine("Creando hash");
-			CreateHashTableAux(rootNode,new bool[]{});
+			CreateHashTableAux(rootNode,new List<bool>());
 			Console.WriteLine("Fin hash");
 			
 		}
@@ -253,10 +260,11 @@ namespace MathTextLibrary.Databases.Caracteristic
 		/// <param name="vector">
 		/// El vector de caracteristicas que vamos generando.
 		/// </param>
-		private void CreateHashTableAux(BinaryCaracteristicNode node, IList vector)
+		private void CreateHashTableAux(BinaryCaracteristicNode node,
+		                                List<bool> vector)
 		{
 			
-			ArrayList newVector; 
+			List<bool> newVector; 
 			
 			if(node.Symbol!=null)
 			{
@@ -268,14 +276,14 @@ namespace MathTextLibrary.Databases.Caracteristic
 			{				
 				if(node.FalseTree!=null)
 				{
-					newVector = new ArrayList(vector);
+					newVector = new List<bool>(vector);
 					newVector.Add(false);
 					CreateHashTableAux(node.FalseTree,newVector);			
 				}
 				
 				if(node.TrueTree!=null)
 				{
-					newVector = new ArrayList(vector);
+					newVector = new List<bool>(vector);
 					newVector.Add(true);
 					CreateHashTableAux(node.TrueTree,newVector);
 				}
@@ -293,18 +301,18 @@ namespace MathTextLibrary.Databases.Caracteristic
 		/// <returns>
 		/// El simbolo mas cercano que tenemos en la base de datos.
 		/// </returns>
-		private MathSymbol NearestSymbol(IList vector)
+		private MathSymbol NearestSymbol(List<bool> vector)
 		{
 			
 			int minDiff=Int32.MaxValue;
 			MathSymbol res;
-			IList key=null;
+			List<bool> key=null;
 			
-			foreach(IList s in caracteristicHash.Keys)
+			foreach(List<bool> s in caracteristicHash.Keys)
 			{
-				if(BoolVectorDistance(vector,s)<minDiff)
+				if(BoolVectorDistance(vector,s) < minDiff)
 				{
-					minDiff=BoolVectorDistance(vector,s);
+					minDiff = BoolVectorDistance(vector,s);
 					key=s;
 				}
 			}		
@@ -323,7 +331,15 @@ namespace MathTextLibrary.Databases.Caracteristic
 		}
 		#endregion Métodos no públicos
 		
-		
-		
+		public virtual BinaryCaracteristicNode CaracteristicNode 
+		{
+			get {
+				return rootNode;
+			}
+			set
+			{
+				rootNode = value;
+			}
+		}
 	}
 }

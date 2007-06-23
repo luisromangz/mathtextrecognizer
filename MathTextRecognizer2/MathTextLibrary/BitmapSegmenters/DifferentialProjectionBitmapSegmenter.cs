@@ -2,7 +2,7 @@
 
 using System;
 
-using System.Collections;
+using System.Collections.Generic;
 
 using MathTextLibrary;
 using MathTextLibrary.Projection;
@@ -21,7 +21,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 			:base(mode){}
 			
 			
-		protected override int GetImageCutThreshold(IList holes)
+		protected override int GetImageCutThreshold(List<Hole> holes)
 		{
 			int i;			
 			int threshold=0;		
@@ -38,8 +38,6 @@ namespace MathTextLibrary.BitmapSegmenters{
 			}
 
 			threshold-=difference/2;
-			//Console.WriteLine("Difference:" +maxDifference);
-			
 			
 			return threshold;	
 		

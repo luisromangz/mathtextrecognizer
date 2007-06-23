@@ -1,6 +1,6 @@
 // created on 28/12/2005 at 13:26
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 using Gdk;
 
@@ -37,12 +37,11 @@ namespace MathTextLibrary.BitmapSegmenters{
 		/// </summary>
 		/// <param name="image">La imagen que queremos segmentar.</param>
 		/// <returns>Un array con las tres partes de la imagen en que divide este segmentador.</returns>
-		public MathTextBitmap [] Segment(MathTextBitmap image)
+		public List<MathTextBitmap> Segment(MathTextBitmap image)
 		{		
 			
-			Console.WriteLine("Usando puntos de corte: {0} y {1}",hole1,hole2);
-			
-			ArrayList holes=new ArrayList();
+	
+			List<Hole> holes=new List<Hole>();
 			holes.Add(new Hole(0,0));
 			holes.Add(new Hole(hole1,hole1));
 			holes.Add(new Hole(hole2,hole2));
@@ -57,27 +56,32 @@ namespace MathTextLibrary.BitmapSegmenters{
 		/// <param name="image">La imagen que se va a segmentar.</param>
 		/// <param name="holes">Los huecos que se van a considerar para segmentar.</param>
 		/// <returns>Un array con las subimagenes que forman la imagen de entrada.</returns>
-		private MathTextBitmap []ImageCut(MathTextBitmap image, IList holes){			
-			ArrayList newBitmaps=new ArrayList();
+		private List<MathTextBitmap> ImageCut(MathTextBitmap image,
+		                                   List<Hole> holes){		
+			
+			List<MathTextBitmap> newBitmaps=new List<MathTextBitmap>();
 			MathTextBitmap newBitmap;
 			int start,size;
 			int xpos=image.Position.X;
 			int ypos=image.Position.Y;
 			for(int i=0;i<holes.Count-1;i++){
 				//El texto esta entre el final de un hole, y el inicio del siguiente;
-				start=((Hole)holes[i]).EndPixel;
-				size=((Hole)holes[i+1]).StartPixel-start+1;
+				start = holes[i].EndPixel;
+				size = holes[i+1].StartPixel-start+1;
 				
 				int edge1,edge2;
 				
 				GetEdges(image,start,size,out edge1,out edge2);
 				
-				if(mode==ProjectionMode.Horizontal){
+				if(mode == ProjectionMode.Horizontal)
+				{
 					newBitmap=new MathTextBitmap(
 						image.SubImage(start,edge1,size,edge2-edge1+1),
 						new Point(start+xpos,ypos+edge1),
 						mode);
-				}else{
+				}
+				else
+				{
 					newBitmap=new MathTextBitmap(
 						image.SubImage(edge1,start,edge2-edge1+1,size),
 						new Point(xpos+edge1,start+ypos),
@@ -88,7 +92,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 			}		
 			
 			
-			return (MathTextBitmap [])(newBitmaps.ToArray(typeof(MathTextBitmap)));
+			return newBitmaps;
 		}
 
 		/// <summary>

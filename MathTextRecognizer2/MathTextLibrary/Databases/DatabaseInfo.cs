@@ -36,24 +36,17 @@ namespace MathTextLibrary.Databases
 				description = value;
 			}
 		}
-		
-		/// <summary>
-		/// Esta propiedad permite recuperar los tipos usados en la base
-		/// de datos, para conocerlos en el momento de serializar la base
-		/// de datos.
-		/// </summary>
-		public Type[] UsedTypes
-		{
-			get
-			{
+
+		public virtual System.Type[] UsedTypes {
+			get {
 				return usedTypes;
 			}
-			
-			set
-			{
-				usedTypes = value;
+			set{
+				usedTypes=value;
 			}
 		}
+		
+		
 		
 	}
 }
