@@ -20,7 +20,7 @@ namespace MathTextLearner.Assistant
 	public class DatabaseTypeStep : PanelAssistantStep
 	{
 	
-		#region Controles de Glade
+#region Controles de Glade
 		
 		[Glade.WidgetAttribute]
 		private Frame databaseTypeFrame;		
@@ -28,9 +28,9 @@ namespace MathTextLearner.Assistant
 		[Glade.WidgetAttribute]
 		private VBox optionsVB;
 				
-		#endregion Controles de Glade
+#endregion Controles de Glade
 		
-		#region Atributos
+#region Atributos
 		
 		private ListStore fileStore;
 		
@@ -38,9 +38,9 @@ namespace MathTextLearner.Assistant
 		
 		private Dictionary<RadioButton,Type> databaseTypeMap;
 		
-		#endregion Atributos
+#endregion Atributos
 		
-		#region Constructor
+#region Constructor
 		
 		public DatabaseTypeStep(PanelAssistant assistant) 
 			: base(assistant)
@@ -57,9 +57,29 @@ namespace MathTextLearner.Assistant
 			InitializeWidgets();
 		}
 		
-		#endregion Constructor
+#endregion Constructor
 		
-		#region Metodos públicos
+#region Propiedades
+		
+		/// <summary>
+		/// Permite recuperar los procesos selecionados.
+		/// </summary>
+		public DatabaseBase Database
+		{
+			get
+			{
+				DatabaseBase res = null;
+				
+				res = 
+					(DatabaseBase)selectedType.GetConstructor(new Type[0]).Invoke(null);
+				
+				return res;
+			}
+		}
+		
+#endregion Propiedades
+		
+#region Metodos públicos
 		
 		public override bool HasErrors ()
 		{
@@ -73,9 +93,9 @@ namespace MathTextLearner.Assistant
 			return errors.Length > 0;
 		}
 		
-		#endregion Metodos públicos
+#endregion Metodos públicos
 		
-		#region Metodos privados
+#region Metodos privados
 		
 		private void InitializeWidgets()
 		{
@@ -133,7 +153,6 @@ namespace MathTextLearner.Assistant
 		}
 		
 		 
-		
-		#endregion Metodos privados
+#endregion Metodos privados
 	}
 }

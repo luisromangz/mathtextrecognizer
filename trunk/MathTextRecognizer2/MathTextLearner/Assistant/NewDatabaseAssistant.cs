@@ -35,6 +35,9 @@ namespace MathTextLearner.Assistant
 		
 #region Propiedades 
 		
+		/// <summary>
+		/// Permite recuperar la base de datos creada por el asistente.
+		/// </summary>
 		public MathTextDatabase Database
 		{
 			get{
@@ -42,7 +45,12 @@ namespace MathTextLearner.Assistant
 			}
 		}
 		
-		public List<Gdk.Pixbuf> Images{
+		/// <summary>
+		/// Permite recuperar las imagenes para aprender seleccionadas en 
+		/// el asistente.
+		/// </summary>
+		public List<Gdk.Pixbuf> Images
+		{
 			get{
 				return RetrieveImages();
 			}
@@ -53,13 +61,18 @@ namespace MathTextLearner.Assistant
 		
 		private MathTextDatabase CreateDatabase()
 		{
-			// TODO Implementar la creacion de bases de datos con el asistente.
-			return null;
+			MathTextDatabase mtd = new MathTextDatabase();
+			
+			mtd.Database = databaseStep.Database;
+			mtd.Processes = processesStep.Processes;
+			
+			return mtd;
 		}
 		
 		private List<Gdk.Pixbuf> RetrieveImages()
 		{
-			return null;
+			
+			return fileStep.Images;
 		}
 
 #endregion Metodos privados

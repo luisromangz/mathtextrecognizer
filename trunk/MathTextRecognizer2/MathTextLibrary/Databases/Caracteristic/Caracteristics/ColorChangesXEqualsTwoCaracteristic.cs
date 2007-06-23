@@ -18,7 +18,8 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics
 
 		public override bool Apply(MathTextBitmap image)
 		{
-			if(CountColorChangesHelper.NumColorChangesRow(image, image.ProcessedImageSize/2) == 2) 
+			if(CountColorChangesHelper.NumColorChangesRow(image, 
+			                                              image.ProcessedImage.GetLength(0)/2) == 2) 
 			{
 				return true;
 			}

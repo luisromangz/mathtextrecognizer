@@ -34,42 +34,31 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 		{
 			int n=0;
 			float[,] im=image.ProcessedImage;
-			int size=image.ProcessedImageSize;
-			int mitad = size/2;
+			int sizeR = im.GetLength(0);
+			int sizeC = im.GetLength(1);
+			int mitadR = sizeR/2;
+			int mitadC = sizeC/2;
 			
-			if(size%2 == 0)
-			{
-				switch(h) {
-					case(Half.Top):
-						n=NumPixelsInArea(im,MathTextBitmap.Black,0,0,size-1,mitad-1);
-						break;
-					case(Half.Bottom):
-						n=NumPixelsInArea(im,MathTextBitmap.Black,0,mitad,size-1,size-1);
-						break;
-					case(Half.Left):
-						n=NumPixelsInArea(im,MathTextBitmap.Black,0,0,mitad-1,size-1);
-						break;
-					case(Half.Right):
-						n=NumPixelsInArea(im,MathTextBitmap.Black,mitad,0,size-1,size-1);
-						break;
-				}
-			}
-			else
-			{
-				switch(h) {
-					case(Half.Top):
-						n=NumPixelsInArea(im,MathTextBitmap.Black,0,0,size-1,mitad);
-						break;
-					case(Half.Bottom):
-						n=NumPixelsInArea(im,MathTextBitmap.Black,0,mitad,size-1,size-1);
-						break;
-					case(Half.Left):
-						n=NumPixelsInArea(im,MathTextBitmap.Black,0,0,mitad,size-1);
-						break;
-					case(Half.Right):
-						n=NumPixelsInArea(im,MathTextBitmap.Black,mitad,0,size-1,size-1);
-						break;
-				}
+			if(sizeR%2 == 0)
+				mitadR--;
+			
+			if(sizeC%2== 0)
+				mitadC--;
+			
+		
+			switch(h) {
+				case(Half.Top):
+					n=NumPixelsInArea(im,MathTextBitmap.Black,0,0,sizeR-1,mitadC);
+					break;
+				case(Half.Bottom):
+					n=NumPixelsInArea(im,MathTextBitmap.Black,0,mitadC,sizeR-1,sizeC-1);
+					break;
+				case(Half.Left):
+					n=NumPixelsInArea(im,MathTextBitmap.Black,0,0,mitadR,sizeC-1);
+					break;
+				case(Half.Right):
+					n=NumPixelsInArea(im,MathTextBitmap.Black,mitadR,0,sizeR-1,sizeC-1);
+					break;
 			}
 			
 			return n;			
@@ -90,42 +79,31 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 		{
 			int n=0;
 			float[,] im=image.ProcessedImage;
-			int size=image.ProcessedImageSize;
-			int mitad = size/2;
+			int sizeR = im.GetLength(0);
+			int sizeC = im.GetLength(1);
+			int mitadR = sizeR/2;
+			int mitadC = sizeC/2;
 			
-			if(size%2 == 0)
-			{
-				switch(q) {
-					case(Quadrant.NW):
-						n=NumPixelsInArea(im,MathTextBitmap.Black,0,0,mitad-1,mitad-1);
-						break;
-					case(Quadrant.NE):
-						n=NumPixelsInArea(im,MathTextBitmap.Black,mitad,0,size-1,mitad-1);
-						break;
-					case(Quadrant.SW):
-						n=NumPixelsInArea(im,MathTextBitmap.Black,0,mitad,mitad-1,size-1);
-						break;
-					case(Quadrant.SE):
-						n=NumPixelsInArea(im,MathTextBitmap.Black,mitad,mitad,size-1,size-1);
-						break;
-				}
-			}
-			else	// si el tamaño de la imagen es impar hacemos que la fila
-			{		// y columna central se cuenten por duplicado
-				switch(q) {
-					case(Quadrant.NW):
-						n=NumPixelsInArea(im,MathTextBitmap.Black,0,0,mitad,mitad);
-						break;
-					case(Quadrant.NE):
-						n=NumPixelsInArea(im,MathTextBitmap.Black,mitad,0,size-1,mitad);
-						break;
-					case(Quadrant.SW):
-						n=NumPixelsInArea(im,MathTextBitmap.Black,0,mitad,mitad,size-1);
-						break;
-					case(Quadrant.SE):
-						n=NumPixelsInArea(im,MathTextBitmap.Black,mitad,mitad,size-1,size-1);
-						break;
-				}
+			if(sizeR%2 == 0)
+				mitadR--;
+			
+			if(sizeC%2== 0)
+				mitadC--;
+			
+			switch(q) {
+				case(Quadrant.NW):
+					n=NumPixelsInArea(im,MathTextBitmap.Black,0,0,mitadR,mitadC);
+					break;
+				case(Quadrant.NE):
+					n=NumPixelsInArea(im,MathTextBitmap.Black,mitadR,0,sizeR-1,mitadC);
+					break;
+				case(Quadrant.SW):
+					n=NumPixelsInArea(im,MathTextBitmap.Black,0,mitadC,mitadR,sizeC-1);
+					break;
+				case(Quadrant.SE):
+					n=NumPixelsInArea(im,MathTextBitmap.Black,mitadR,mitadC,sizeR-1,sizeC-1);
+					break;
+				
 			}
 			
 			return n;

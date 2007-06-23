@@ -19,6 +19,11 @@ namespace MathTextLibrary.Databases
 			this.description = description;
 		}
 		
+		
+		/// <summary>
+		/// Esta propiedad permite recupera la descripcion de una base 
+		/// de datos de caracteres matematicos.
+		/// </summary>
 		public string Description
 		{
 			get
@@ -32,12 +37,18 @@ namespace MathTextLibrary.Databases
 			}
 		}
 		
+		/// <summary>
+		/// Esta propiedad permite recuperar los tipos usados en la base
+		/// de datos, para conocerlos en el momento de serializar la base
+		/// de datos.
+		/// </summary>
 		public Type[] UsedTypes
 		{
 			get
 			{
 				return usedTypes;
 			}
+			
 			set
 			{
 				usedTypes = value;

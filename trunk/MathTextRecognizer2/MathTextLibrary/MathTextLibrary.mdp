@@ -82,7 +82,7 @@
     <File name="./Databases/Caracteristic/Caracteristics/TreePointsEqualsZeroCaracteristic.cs" subtype="Code" buildaction="Compile" />
     <File name="./Databases/Caracteristic/Caracteristics/TwiceTallerThanWiderCaracteristic.cs" subtype="Code" buildaction="Compile" />
     <File name="./Databases/Caracteristic/Caracteristics/WiderThanTallerCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/Helpers/CountBlackNeighbours.cs" subtype="Code" buildaction="Compile" />
+    <File name="./Databases/Caracteristic/Caracteristics/Helpers/CountBlackNeighboursHelper.cs" subtype="Code" buildaction="Compile" />
     <File name="./Databases/Caracteristic/Caracteristics/Helpers/CountColorChangesHelper.cs" subtype="Code" buildaction="Compile" />
     <File name="./Databases/Caracteristic/Caracteristics/Helpers/CountNumberOfBlackPixelsHelper.cs" subtype="Code" buildaction="Compile" />
     <File name="./Databases/Caracteristic/Caracteristics/Helpers/CountNumberOfHolesHelper.cs" subtype="Code" buildaction="Compile" />

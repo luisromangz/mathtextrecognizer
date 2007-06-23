@@ -22,13 +22,15 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 		public static int numPixelsXNeighbours(MathTextBitmap image, int neighbours)
 		{
 			int count=0;
-			int size=image.ProcessedImageSize;
+			
 			float[,] im=image.ProcessedImage;
+			int sizeR = im.GetLength(0);
+			int sizeC = im.GetLength(1);
 
-			for(int i=0;i<size;i++)
-				for(int j=0;j<size;j++)
+			for(int i=0;i<sizeR;i++)
+				for(int j=0;j<sizeC;j++)
 					if(im[i,j]==MathTextBitmap.Black
-							&& CountBlackNeighboursHelper.BlackNeighbours(im,i,j,size,size)==neighbours)
+							&& CountBlackNeighboursHelper.BlackNeighbours(im,i,j,sizeR,sizeC)==neighbours)
 						count++;
 
 			return count;
@@ -45,13 +47,15 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 		public static int numPixelsXOrMoreNeighbours(MathTextBitmap image, int neighbours)
 		{
 			int count=0;
-			int size=image.ProcessedImageSize;
+			
 			float[,] im=image.ProcessedImage;
+			int sizeR=im.GetLength(0);
+			int sizeC = im.GetLength(1);
 
-			for(int i=0;i<size;i++)
-				for(int j=0;j<size;j++)
+			for(int i=0;i<sizeR;i++)
+				for(int j=0;j<sizeC;j++)
 					if(im[i,j]==MathTextBitmap.Black
-							&& CountBlackNeighboursHelper.BlackNeighbours(im,i,j,size,size)>=neighbours)
+							&& CountBlackNeighboursHelper.BlackNeighbours(im,i,j,sizeR,sizeC)>=neighbours)
 						count++;
 			
 			return count;

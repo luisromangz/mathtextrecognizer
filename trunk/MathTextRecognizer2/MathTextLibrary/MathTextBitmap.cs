@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 using Gdk;
 
@@ -15,7 +15,7 @@ namespace MathTextLibrary
 	/// </summary>
 	public class MathTextBitmap
 	{
-		#region Constantes
+#region Constantes
 		
 		/// <summary>
 		/// El valor que representa al color negro en los <c>MathTextBitmap</c>.
@@ -27,9 +27,9 @@ namespace MathTextLibrary
 		/// </summary>
 		public const float White=1;
 		
-		#endregion Atributos privados
+#endregion Atributos privados
 		
-		#region Atributos privados
+#region Atributos privados
 		
 		// Imagen sólo binarizada
 		private float [,] binaryzedImage;
@@ -62,16 +62,16 @@ namespace MathTextLibrary
 		// Anchura de la imagen sin procesar
 		private int width;
 		
-		#endregion Atributos no públicos
+#endregion Atributos no públicos
 		
-		#region Eventos
+#region Eventos
 
 		public event MathTextBitmapChildrenAddedEventHandler ChildrenAdded;
 		public event MathTextBitmapSymbolChangedEventHandler SymbolChanged;
 		
-		#endregion Eventos
+#endregion Eventos
 		
-		#region Constructores
+#region Constructores
 		
 		/// <summary>
 		/// Constructor de un nuevo <c>MathTextBitmap</c> a partir de un
@@ -89,8 +89,6 @@ namespace MathTextLibrary
 			fromProjection = ProjectionMode.None;	
 			width = b.Width;
 			height = b.Height;
-
-			ProcessImage();
 		}	
 		
 		/// <summary>
@@ -109,8 +107,6 @@ namespace MathTextLibrary
 			
 			width = image.GetLength(0);
 			height = image.GetLength(1);
-
-			ProcessImage();
 		}
 		
 		#endregion Constructores
@@ -240,16 +236,7 @@ namespace MathTextLibrary
 			}
 		}
 		
-		/// <summary>
-		/// Permite recuperar el tamaño de la imagen procesada.
-		/// </summary>
-		public int ProcessedImageSize
-		{
-			get
-			{
-				return processedImageSize;
-			}
-		}
+		
 		
 		/// <summary>
 		/// Propiedad de acceso y modificacion del simbolo asociado a la imagen.
@@ -286,9 +273,9 @@ namespace MathTextLibrary
 			}	
 		}
 		
-		#endregion Propiedades
+#endregion Propiedades
 		
-		#region Metodos públicos
+#region Metodos públicos
 
 		/// <summary>
 		/// Intenta dividir la imagen por segmentacion. En caso de tener exito
@@ -320,6 +307,20 @@ namespace MathTextLibrary
 					children = HorizontalSegmentation();
 				}
 				*/
+			}
+		}		
+
+		/// <summary>
+		/// Procesa la imagen actual mediante binarizacion, encuadre,
+		/// normalizacion y adelgazamiento.
+		/// </summary>
+		public void ProcessImage(List<BitmapProcess> processes)
+		{			
+			processedImage = image;
+			
+			foreach(BitmapProcess process in processes)
+			{
+				processedImage = process.Apply(processedImage);
 			}
 		}
 		
@@ -406,53 +407,7 @@ namespace MathTextLibrary
 			{
 				SymbolChanged(this,EventArgs.Empty);			
 			}
-		}
-
-		/// <summary>
-		/// Procesa la imagen actual mediante binarizacion, encuadre,
-		/// normalizacion y adelgazamiento.
-		/// </summary>
-		private void ProcessImage()
-		{			
-			
-			
-			BitmapProcess thresholder = 
-				new BitmapFixedThresholder(220);
-				
-			binaryzedImage = thresholder.Apply(image);			
-			
-			
-				
-			// Encuadre de la imagen en el minimo cuadrado que la contiene
-			BitmapFramer framer = new BitmapFramer();
-			processedImage = framer.Apply(binaryzedImage);			
-			
-			// Redimensionado de la imagen a 50x50 pixeles
-			BitmapScaler scaler = new BitmapScaler(50);			
-			processedImage = scaler.Apply(processedImage);
-			
-			// Necesitamos binarizar de nuevo (aunque con un umbral menor)
-			// debido a que el normalizado introduce escala de grises
-			thresholder = new BitmapFixedThresholder(180);
-			processedImage = thresholder.Apply(processedImage);
-			
-			
-			
-			// Volvemos a encuadrar y guardamos el tamaño definitivo de
-			// la imagen procesada
-			processedImage = framer.Apply(processedImage);
-			processedImageSize=processedImage.GetLength(0);			
-			
-			// Adelgazamos la imagen procesada
-			// el algoritmo de ZhangSuenHolt es el que mejores resultados
-			// empiricos ha dado
-			BitmapProcess thinner = new BitmapZhangSuenHoltThinner(true);
-			// IBitmapThinner thinner=new BitmapStentifordThinner(false);
-			// IBitmapThinner thinner=new BitmapZhangSuenStentifordHoltThinner();
-			processedImage = thinner.Apply(processedImage);
-		}
-		
-		
+		}		
 		
 		/// <summary>
 		/// Intenta segmentar la imagen en vertical y si no tiene exito

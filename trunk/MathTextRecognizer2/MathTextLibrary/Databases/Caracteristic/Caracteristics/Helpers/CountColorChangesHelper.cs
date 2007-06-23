@@ -28,9 +28,9 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 			float[,] im=image.ProcessedImage;
 			int nChanges=0;
 
-			for(int i=1; i<image.ProcessedImageSize; i++) 
+			for(int i=1; i<im.GetLength(0); i++) 
 			{
-				if(im[i,row]!=im[i-1,row])
+				if(im[row,i]!=im[row,i-1])
 				{
 					nChanges++;
 				}
@@ -50,9 +50,10 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 			float[,] im=image.ProcessedImage;
 			int nChanges=0;
 
-			for(int i=1; i<image.ProcessedImageSize; i++) 
+			for(int i=1; i<im.GetLength(1); i++) 
 			{
-				if(im[column,i]!=im[column,i-1])
+				
+				if(im[i,column]!=im[i-1,column])
 				{
 					nChanges++;
 				}

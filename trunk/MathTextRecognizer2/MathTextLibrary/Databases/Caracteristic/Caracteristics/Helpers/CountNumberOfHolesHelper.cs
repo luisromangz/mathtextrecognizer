@@ -33,9 +33,12 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 		public static int NumWhiteZones(MathTextBitmap image, bool bigholes)
 		{
 			float[,] im=image.ProcessedImage;
-			int size=image.ProcessedImageSize;
+			
+			int sizeC = im.GetLength(1);
+			int sizeR = im.GetLength(0);
+			
 			//Contiene las etiquetas de cada pixel
-			int[,] label = new int[size,size];
+			int[,] label = new int[sizeR,sizeC];
 			//Contiene las listas con las equivalencias entre etiquetas
 			Hashtable equiv = new Hashtable();
 						
@@ -47,8 +50,10 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 				label[0,0]=aux;
 			}
 			
+			
+			
 			/*Se analiza el resto de la primera fila*/
-			for(int i=1;i<size;i++)
+			for(int i=1;i<sizeR;i++)
 			{
 				if (im[i,0]==MathTextBitmap.White && im[i-1,0]==MathTextBitmap.White)
 				{
@@ -60,8 +65,10 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 				}
 			}
 			
+			
+			
 			/*Se analiza el resto de la primera columna*/
-			for(int i=1;i<size;i++)
+			for(int i=1;i<sizeC;i++)
 			{
 				if (im[0,i]==MathTextBitmap.White && im[0,i-1]==MathTextBitmap.White)
 				{
@@ -74,12 +81,13 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 			}
 
 			/*Finalmente el resto*/
-			for(int i=1;i<size;i++)
-				for(int j=1;j<size;j++)
+			for(int i=1;i<sizeR;i++)
+				for(int j=1;j<sizeC;j++)
 				{
 					if(im[i,j]==MathTextBitmap.White)
 					{
-						if(im[i-1,j]==MathTextBitmap.White && im[i,j-1]==MathTextBitmap.White)
+						if(im[i-1,j]==MathTextBitmap.White 
+						   && im[i,j-1]==MathTextBitmap.White)
 						{
 							label[i,j]=label[i-1,j];
 							AddLabelsToEquiv(equiv,label[i-1,j],label[i,j-1]);
@@ -122,8 +130,8 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 			*/
 
 			/*Ahora hay que tratar las equivalencias*/
-			for(int i=0;i<size;i++)
-				for(int j=0;j<size;j++)
+			for(int i=0;i<sizeR;i++)
+				for(int j=0;j<sizeC;j++)
 					label[i,j]=MinLabel(equiv,label[i,j]);
 			
 			int numetiq=0;
@@ -132,9 +140,9 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 			{
 				// Contamos el número de píxeles de cada agujero */
 				Hashtable bigHolesAux = new Hashtable();
-				for(int i=0;i<size;i++)
+				for(int i=0;i<sizeR;i++)
 				{
-					for(int j=0;j<size;j++)
+					for(int j=0;j<sizeC;j++)
 					{
 						if(bigHolesAux.ContainsKey(label[i,j]))
 						{
@@ -160,8 +168,8 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 			{
 				/* Contamos el número de etiquetas de TODOS los agujeros */
 				IList differentLabels = new ArrayList();
-				for(int i=0;i<size;i++)
-					for(int j=0;j<size;j++) 
+				for(int i=0;i<sizeR;i++)
+					for(int j=0;j<sizeC;j++) 
 					{
 						if(!differentLabels.Contains(label[i,j])) 
 						{

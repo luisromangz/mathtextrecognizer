@@ -106,6 +106,26 @@ namespace MathTextLearner.Assistant
 		
 #endregion Metodos públicos
 		
+#region Propiedades
+		
+		public List<BitmapProcess> Processes
+		{
+			get
+			{
+				// Construimos una lista con los procesos a partir de los nodos.
+				List<BitmapProcess> res = new List<BitmapProcess>();
+				foreach(BitmapProcessNode node in processesView.NodeStore)
+				{
+					res.Add(node.Process);
+				}
+				
+				return res;
+			}
+		}
+		
+		
+#endregion Propiedades
+		
 #region Metodos privados
 		
 		private void CreateProcessedPreview(Gdk.Pixbuf p)

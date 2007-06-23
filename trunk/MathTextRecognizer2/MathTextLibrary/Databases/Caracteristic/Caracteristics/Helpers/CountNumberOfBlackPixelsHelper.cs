@@ -24,7 +24,7 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 			float[,] im=image.ProcessedImage;
 			int nBlackPixels=0;
 
-			for(int i=0; i<image.ProcessedImageSize; i++) 
+			for(int i=0; i<im.GetLength(0); i++) 
 			{
 				if(im[i,row] == MathTextBitmap.Black)
 				{
@@ -47,7 +47,7 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 			float[,] im=image.ProcessedImage;
 			int nBlackPixels=0;
 
-			for(int i=0; i<image.ProcessedImageSize; i++) 
+			for(int i=0; i<im.GetLength(1); i++) 
 			{
 				if(im[column,i] == MathTextBitmap.Black)
 				{
