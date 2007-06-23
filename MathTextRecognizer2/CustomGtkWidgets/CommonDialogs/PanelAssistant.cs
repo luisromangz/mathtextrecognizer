@@ -90,6 +90,10 @@ namespace CustomGtkWidgets.CommonDialogs
 			}
 		}
 		
+		/// <summary>
+		/// Permite recuperar la lista de paneles almancenados en el
+		/// asistente.
+		/// </summary>
 		public List<PanelAssistantStep> Steps
 		{
 			get{
@@ -103,7 +107,7 @@ namespace CustomGtkWidgets.CommonDialogs
 		
 		public void AddStep(PanelAssistantStep step)
 		{
-			// We will add a step to the dialog;
+			// Añadimos un paso al asistente.
 			
 			steps.Add(step);
 			stepsHBox.Add(step.StepWidget);
@@ -118,13 +122,13 @@ namespace CustomGtkWidgets.CommonDialogs
 		}
 		
 		/// <summary>
-		/// Este método permite mostrar el diálogo, esperando a que el asistente responda
-		/// un resultado.
+		/// Este método permite mostrar el diálogo, esperando a que el asistente
+		/// responda un resultado.
 		/// </summary>
 		public ResponseType Run()
 		{
-			// Así no salimos si pulsamos un botón del asistente que no sea cancelar
-			// o aceptar.
+			// Así no salimos si pulsamos un botón del asistente que no sea 
+			// cancelar o aceptar.
 			ResponseType res = ResponseType.None;
 			
 			while(res == ResponseType.None)
@@ -141,7 +145,7 @@ namespace CustomGtkWidgets.CommonDialogs
 		
 		private void OnAcceptButtonClicked(object sender, EventArgs a)
 		{
-			
+			panelAssistant.Respond(ResponseType.Ok);
 		}
 		
 		private void OnBackButtonClicked(object sender, EventArgs a)
@@ -154,7 +158,7 @@ namespace CustomGtkWidgets.CommonDialogs
 		
 		private void OnCancelButtonClicked(object sender, EventArgs a)
 		{
-			
+			panelAssistant.Respond(ResponseType.Cancel);
 		}
 		
 		private void OnNextButtonClicked(object sender, EventArgs a)

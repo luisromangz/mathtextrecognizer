@@ -73,9 +73,9 @@ namespace MathTextLibrary.BitmapProcesses
 			float[,] newImage=new float[width,height];
 
 			float brightness;
-			for(int i = 0; i < height - 2; i++)
+			for(int i = 0; i < width - 2; i++)
 			{
-				for(int j = 0; j < width - 2; j++)
+				for(int j = 0; j < height - 2; j++)
 				{
 										
 					brightness = image[i, j];
@@ -84,15 +84,15 @@ namespace MathTextLibrary.BitmapProcesses
 				}
 			}
 			
-			for(int i=0;i<height;i++) 
+			for(int i=0;i< width;i++) 
 			{
 				newImage[i,0]=1;
-				newImage[i,width-1]=1;
+				newImage[i,height-1]=1;
 			}
-			for(int j=0;j<width;j++)
+			for(int j=0;j< height;j++)
 			{
 				newImage[0,j]=1;
-				newImage[height-1,j]=1;
+				newImage[width-1,j]=1;
 			}
 			return newImage;
 		}
@@ -118,9 +118,9 @@ namespace MathTextLibrary.BitmapProcesses
 			float [,] res = new float[width - 2 , height -2];
 
 			
-			for(int i=0;i<height-2; i++)
+			for(int i=0;i<width-2; i++)
 			{
-				for(int j=0;j<width-2; j++)
+				for(int j=0;j<height-2; j++)
 				{
 					res[i,j] = newImage[i + 1,j + 1];
 				}
@@ -145,9 +145,9 @@ namespace MathTextLibrary.BitmapProcesses
 				throw new Exception("LA CLONACION DE ARRAYS SOLO COPIA LA REFERENCIA!");
 
 			/* BLACK = 1, WHITE = 0. */
-			for(i=0;i<height;i++)
+			for(i=0;i<width;i++)
 			{
-				for (j=0;j<width;j++)
+				for (j=0;j<height;j++)
 				{
 					if(image[i,j]>0)
 						image[i,j]=0;
@@ -162,9 +162,9 @@ namespace MathTextLibrary.BitmapProcesses
 			{
 				again=false;
 
-				for(i=1;i<height-1;i++)
+				for(i=1;i<width-1;i++)
 				{
-					for(j=1;j<width-1;j++)
+					for(j=1;j<height-1;j++)
 					{
 						if (image[i,j]==1) 
 						{
@@ -196,9 +196,9 @@ namespace MathTextLibrary.BitmapProcesses
 			}
 
 			/* Restore levels */
-			for(i=1;i<height-1;i++) 
+			for(i=1;i<width-1;i++) 
 			{
-				for(j=1;j<width-1;j++)
+				for(j=1;j<height-1;j++)
 				{
 					if(image[i,j]>0)
 						image[i,j]=0;
@@ -222,9 +222,9 @@ namespace MathTextLibrary.BitmapProcesses
 
 			if(direction==NORTH)
 			{
-				for(i=1;i<height-1;i++)
+				for(i=1;i<width-1;i++)
 				{
-					for(j=1;j<width-1;j++)
+					for(j=1;j<height-1;j++)
 					{
 						NW=image[i-1,j-1]!=0; N=image[i-1,j]!=0; NE=image[i-1,j+1]!=0;
 						W=image[i,j-1]!=0; C=image[i,j]!=0; E=image[i,j+1]!=0;
@@ -264,8 +264,8 @@ namespace MathTextLibrary.BitmapProcesses
 			int i,j;
 			
 			/* Borrar los pxeles marcados*/
-			for(i=1;i<height-1;i++)
-				for(j=1;j<width-1;j++)
+			for(i=1;i<width-1;i++)
+				for(j=1;j<height-1;j++)
 					if(tmp[i,j]!=0)
 					{
 						image[i,j]=0;

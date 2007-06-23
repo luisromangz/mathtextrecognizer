@@ -8,10 +8,9 @@
 using System;
 using System.IO;
 using System.Threading;
-using System.Drawing;
+using System.Collections.Generic;
 
 using Gtk;
-using Gdk;
 using Glade;
 
 using CustomGtkWidgets;
@@ -20,8 +19,11 @@ using CustomGtkWidgets.ImageArea;
 using CustomGtkWidgets.CommonDialogs;
 
 using MathTextLibrary;
+using MathTextLibrary.Utils;
 using MathTextLibrary.Databases;
 using MathTextLibrary.Databases.Caracteristic;
+
+using MathTextLearner.Assistant;
 
 namespace MathTextLearner
 {
@@ -31,7 +33,7 @@ namespace MathTextLearner
 	/// </summary>
 	public class MainWindow
 	{
-		#region Glade widgets
+#region Glade widgets
 		//Aqui se declaran los controles de la interfaz.		
 		[WidgetAttribute]
 		private Gtk.Window mainWindow;
@@ -44,9 +46,6 @@ namespace MathTextLearner
 		
 		[WidgetAttribute]
 		private MenuItem menuSaveAs;
-		
-		[WidgetAttribute]
-		private ImageMenuItem menuLoadImage;
 		
 		[WidgetAttribute]
 		private MenuItem menuOpen;
@@ -82,20 +81,43 @@ namespace MathTextLearner
 		private Expander expanderLog;
 		
 		[WidgetAttribute]
-		private ToolButton toolLoadImage;
+		private IconView imagesIV;
 		
-		#endregion Glade widgets	
 		
-		#region Otros widgets
+		[WidgetAttribute]
+		private Button addImageBtn;
+		
+		[WidgetAttribute]
+		private Button removeImageBtn;
+		
+		[WidgetAttribute]
+		private Button nextImageBtn;
+		
+		[WidgetAttribute]
+		private HBox imagesHB;
+		
+		[WidgetAttribute]
+		private HBox buttonsHB;
+		
+		[WidgetAttribute]
+		private Label databaseInfoLabel;
+		
+#endregion Glade widgets	
+		
+#region Otros widgets
+		
+		private int conflicts;
 		
 		private LogView logView;
+		
+		private ListStore imagesStore;
 				
 		private ImageArea imageAreaOriginal;
 		private ImageArea imageAreaProcessed;
 		
-		#endregion Otros widgets
+#endregion Otros widgets
 		
-		#region Otros atributos
+#region Otros atributos
 		
 		private MathTextDatabase database;
 		
@@ -104,11 +126,11 @@ namespace MathTextLearner
 		
 		private Thread learningThread;
 		
-		private const string title="Aprendedor de carácteres matemáticos - ";
+		private const string title="Aprendedor de carácteres matemáticos";
 		
-		private bool databaseModified;
+		private bool databaseModified;	
 		
-		#endregion Otros atributos
+#endregion Otros atributos
 		
 		public static void Main(string[] args)
 		{			
@@ -131,74 +153,7 @@ namespace MathTextLearner
 			Application.Run();
 		}
 		
-		/// <summary>
-		/// Inicializa los controles de la ventana.
-		/// </summary>
-		private void Initialize()
-		{
-			mainWindow.Title=title+"Nueva base de datos";
-			
-			database= new MathTextDatabase(new CaracteristicDatabase());
-			database.SymbolLearned += 
-				new SymbolLearnedEventHandler(OnSymbolLearned);
-				
-			database.LearningStepDone +=
-				new ProcessingStepDoneEventHandler(OnLearningStepDone);
-			
-			imageAreaOriginal = new ImageArea();
-			imageAreaOriginal.ImageMode = ImageAreaMode.Zoom;
-			frameOriginal.Add(imageAreaOriginal);
-			
-			imageAreaProcessed = new ImageArea();
-			imageAreaProcessed.ImageMode = ImageAreaMode.Zoom;			
-			frameProcessed.Add(imageAreaProcessed);			
-			
-			toolLoadImage.IconWidget = new Gtk.Image(ImageResources.ImageLoadIcon22);
-			menuLoadImage.Image =  new Gtk.Image(ImageResources.ImageLoadIcon16);
-			
-				
-			logView = new LogView();
-			expanderLog.Add(logView);
-			
-			
-			mainWindow.ShowAll();		
-			
-		}		
-		
-		/// <summary>
-		/// Manejador del evento provocado al hacer click en el boton de abrir una
-		/// base de datos nueva.
-		/// </summary>
-		private void OnMenuDatabaseClicked(object sender, EventArgs arg)
-		{			
-			ShowDBSaveQuestionDialog();
-			database = new MathTextDatabase(new CaracteristicDatabase());			
-			SetTitle("Nueva base de datos",false);
-			LogLine("¡Nueva base de datos creada con éxito!");
-			
-		}
-		
-		/// <summary>
-		/// Metodo que maneja el evento provocado al aprenderse un simbolo en la
-		/// base de datos.
-		/// </summary>
-		private void OnSymbolLearned(object sender,EventArgs arg)
-		{
-			Application.Invoke(OnSymbolLearnedThread);
-		}
-		
-		private void OnSymbolLearnedThread(object sender,EventArgs arg)
-		{
-			ResetWidgets();
-			string msg="!Símbolo aprendido con éxito!";
-			
-			SetTitle(null,true);
-				
-			LogLine(msg);	
-			OkDialog.Show(mainWindow, MessageType.Info, msg);
-			
-		}
-		
+#region Metodos publicos
 		/// <summary>
 		/// Metodo para restaurar la interfaz a su estado inicial tras haber
 		/// aprendidio un caracter.
@@ -209,90 +164,127 @@ namespace MathTextLearner
 			toolbar.Sensitive = true;
 			entrySymbol.Text = "";
 			comboSymbolType.Active = -1;
-			menuOpen.Sensitive = true;
-			menuLoadImage.Sensitive = true;
+			menuOpen.Sensitive = true;			
 			menuSaveAs.Sensitive = true;
 			menuDatabase.Sensitive = true;
 			imageAreaOriginal.Image = null;
 			imageAreaProcessed.Image = null;
 		}
 		
+#endregion Metodos publicos
 		
-		/// <summary>
-		/// Metodo que maneja el evento provocado al completarse un paso
-		/// del proceso durante el aprendizaje.
-		/// </summary>
-		private void OnLearningStepDone(object sender,
-		                                ProcessingStepDoneEventArgs arg)
-		{
-			// TODO Refactorizar las bases de datos para MathTextDatabase 
-			// tenga los eventos
-			Application.Invoke(sender,arg,OnLearningStepDoneThread);	
-		}
+#region Metodos privados
 		
-		private void OnLearningStepDoneThread(object sender, EventArgs a)
+		private void AllImagesLearned()
 		{
+			OkDialog.Show(mainWindow,
+				          MessageType.Info,
+				          "Todos los carácteres fueron procesados.{0}",
+				          (conflicts>0?"Hubo "+conflicts+" conflictos":""));
+				
+			mtb = null;
 			
-			ProcessingStepDoneEventArgs arg = (ProcessingStepDoneEventArgs) a;
-			btnNext.Sensitive = true;
-			LogLine(arg.Process.GetType() + ": " + arg.Result);
+			buttonsHB.Sensitive = false;
 		}
 		
 		/// <summary>
-		/// Metodo que maneja el evento provocado al hacer click en la opción 
-		/// de menu  "Abrir una base de datos"
+		/// Inicializa los controles de la ventana.
 		/// </summary>
-		private void OnMenuOpenClicked(object sender, EventArgs arg)
+		private void Initialize()
 		{
-			OpenDatabase();
-		}
-		
-		/// <summary>
-		/// Metodo que maneja el evento que se provoca cuando se hace click en la opcion de menu
-		/// de guardar la base de datos.
-		/// </summary>
-		private void OnMenuSaveAsClicked(object sender, EventArgs arg)
-		{
-			SaveDatabase();
-		}
-		
-		/// <summary>
-		/// Metodo que maneja el evento provocado al hacer click en la opcion de menu "acerca de".
-		/// </summary>
-		private void OnMenuAboutClicked(object sender, EventArgs arg)
-		{
-			AppInfoDialog.Show(
-				mainWindow,
-				"Aprendedor de carácteres matemáticos",
-				"Esta aplicación permite aprender un carácter y añadirlo a"+
-				" una base de datos de carácteres nueva o creada previamente.");	
+			mainWindow.Title=title;		
 			
-		}
+			
+			
+			imageAreaOriginal = new ImageArea();
+			imageAreaOriginal.ImageMode = ImageAreaMode.Zoom;
+			frameOriginal.Add(imageAreaOriginal);
+			
+			imageAreaProcessed = new ImageArea();
+			imageAreaProcessed.ImageMode = ImageAreaMode.Zoom;			
+			frameProcessed.Add(imageAreaProcessed);		
+				
+			logView = new LogView();
+			expanderLog.Add(logView);
+			
+			// La imagen reducida en la primera columna
+			imagesIV.PixbufColumn = 0;
+			
+			imagesStore = new ListStore(typeof(Gdk.Pixbuf), typeof(Gdk.Pixbuf)); 
+			imagesIV.Model = imagesStore;
+			
+			mainWindow.ShowAll();		
+			
+		}		
 		
 		/// <summary>
-		/// Metodo que gestiona el evento que se provoca el cerrar la ventana.
+		/// Metodo que invoca el proceso de aprendizaje de simbolos de la base de datos.
 		/// </summary>
-		private void OnMainWindowDeleted(object sender,DeleteEventArgs arg)
-		{			
-			OnExit();
-		}
-		
-		
-		/// <summary>
-		/// Metodo que gestiona el cierre de la aplicacion.
-		/// </summary>
-		private void OnExit()
+		private void LearnProccess()
 		{
-			ShowDBSaveQuestionDialog();
-			imageAreaOriginal.Image=null;
-			imageAreaProcessed.Image=null;
 			try
 			{
-				learningThread.Abort();					
+				database.Learn(mtb, symbol);
+				databaseModified=true;
+				SetTitle(null,true);
 			}
-			catch(Exception)
-			{}
-			Application.Quit();			
+			catch(ExistingSymbolException e)
+			{
+				Application.Invoke(e,
+					new LearningFailedArgs(e.ExistingSymbol),
+					OnLearningProccessFailed);
+			}		
+		}
+		
+		private void LoadNewImage(Gdk.Pixbuf image)
+		{
+			Gdk.Pixbuf smallImage = ImageUtils.MakeThumbnail(image, 48);
+			TreeIter iter = imagesStore.AppendValues(smallImage, image);
+			
+			imagesIV.ScrollToPath(imagesStore.GetPath(iter));			
+			imagesIV.SelectPath(imagesStore.GetPath(iter));
+			
+			buttonsHB.Sensitive = true;
+		}
+		
+		private void LoadNewImages(List<Gdk.Pixbuf> images)
+		{
+			Gdk.Pixbuf scaledDown;
+			foreach(Gdk.Pixbuf p in images)
+			{
+				LoadNewImage(p);
+			}
+		}
+		
+		/// <summary>
+		/// Metodo que permite añadir un mensaje a la zona de texto de
+		/// mensajes de informacion en una nueva línea.
+		/// </summary>
+		/// <param name="message">
+		/// El mensaje que se mostrará.
+		/// </param>
+		private void LogLine(string message, params object [] args)
+		{			
+			logView.LogLine(message, args);
+				
+		}		
+		
+		private void OnAddImageBtnClicked(object sender, EventArgs arg)
+		{
+			string filename;
+			
+			if(ImageLoadDialog.Show(mainWindow , out filename) 
+				== ResponseType.Ok)
+			{								
+				Gdk.Pixbuf b = new Gdk.Pixbuf(filename);	
+
+				LoadNewImage(b);	
+				
+				LogLine("¡Archivo de imagen «{0}» añadido correctamente!",
+				        filename);
+				
+				
+			}
 		}
 		
 		/// <summary>
@@ -338,8 +330,7 @@ namespace MathTextLearner
 				//NO hay errores de validación
 				vboxNextButtons.Sensitive=true;
 				hboxSymbolWidgets.Sensitive=false;		
-				menuDatabase.Sensitive=false;
-				menuLoadImage.Sensitive=false;
+				menuDatabase.Sensitive=false;				
 				menuSaveAs.Sensitive=false;
 				menuOpen.Sensitive=false;
 				learningThread=null;
@@ -358,38 +349,6 @@ namespace MathTextLearner
 				LogLine(errorMsg);
 			}			
 		
-		}
-		
-		/// <summary>
-		/// Metodo que invoca el proceso de aprendizaje de simbolos de la base de datos.
-		/// </summary>
-		private void LearnProccess()
-		{
-			try
-			{
-				database.Learn(mtb,symbol);
-				databaseModified=true;
-				SetTitle(null,true);
-			}
-			catch(ExistingSymbolException e)
-			{
-				Application.Invoke(e,
-					new LearningFailedArgs(e.ExistingSymbol),
-					OnLearningProccessFailed);
-			}		
-		}
-		
-		public void OnLearningProccessFailed(object sender, EventArgs a)
-		{
-			
-			string msg="!Ya hay un símbolo, «"+(a as LearningFailedArgs).ExistingSymbol 
-					+"», con las mismas caracteristicas binarias en la base de datos!";	
-								
-			LogLine(msg);
-			ResetWidgets();
-			
-			
-			OkDialog.Show(mainWindow, MessageType.Error,msg);
 		}
 		
 		/// <summary>
@@ -432,7 +391,89 @@ namespace MathTextLearner
 		}
 		
 		/// <summary>
-		/// Gestor del evento provocado al hacer click en la opcion de menu de "Salir".
+		/// Metodo que gestiona el cierre de la aplicacion.
+		/// </summary>
+		private void OnExit()
+		{
+			ShowDBSaveQuestionDialog();
+			imageAreaOriginal.Image=null;
+			imageAreaProcessed.Image=null;
+			try
+			{
+				learningThread.Abort();					
+			}
+			catch(Exception)
+			{}
+			Application.Quit();			
+		}
+		
+		private void OnImagesIVSelectionChanged(object s, EventArgs a)
+		{
+			removeImageBtn.Sensitive = imagesIV.SelectedItems.Length > 0;
+		}
+		
+		private void OnLearningProccessFailed(object sender, EventArgs a)
+		{
+			
+			string msg=
+				"!Ya hay un símbolo, «"
+				+(a as LearningFailedArgs).ExistingSymbol 
+				+"», con las mismas caracteristicas binarias en la base de datos!";	
+								
+			LogLine(msg);
+			ResetWidgets();
+			
+			
+			OkDialog.Show(mainWindow, MessageType.Error,msg);
+			
+			PrepareForNewImage();
+		}
+		
+		/// <summary>
+		/// Metodo que maneja el evento provocado al completarse un paso
+		/// del proceso durante el aprendizaje.
+		/// </summary>
+		private void OnLearningStepDone(object sender,
+		                                ProcessingStepDoneEventArgs arg)
+		{
+			// TODO Refactorizar las bases de datos para MathTextDatabase 
+			// tenga los eventos
+			Application.Invoke(sender,arg,OnLearningStepDoneThread);	
+		}
+		
+		private void OnLearningStepDoneThread(object sender, EventArgs a)
+		{
+			
+			ProcessingStepDoneEventArgs arg = (ProcessingStepDoneEventArgs) a;
+			btnNext.Sensitive = true;
+			LogLine(arg.Process.GetType() + ": " + arg.Result);
+		}	
+		
+		/// <summary>
+		/// Metodo que gestiona el evento que se provoca el cerrar la ventana.
+		/// </summary>
+		private void OnMainWindowDeleted(object sender,DeleteEventArgs arg)
+		{			
+			OnExit();
+		}
+		
+		/// <summary>
+		/// Metodo que maneja el evento provocado al hacer click en la opcion de menu "acerca de".
+		/// </summary>
+		private void OnMenuAboutClicked(object sender, EventArgs arg)
+		{
+			AppInfoDialog.Show(
+				mainWindow,
+				"Aprendedor de carácteres matemáticos",
+				"Esta aplicación permite aprender un carácter y añadirlo a"+
+				" una base de datos de carácteres nueva o creada previamente.");	
+			
+		}
+		
+		
+		/// <summary>
+		/// Gestor del evento provocado al hacer click en la opcion de menu de
+		/// "Salir".
 		/// </summary>
 		private void OnMenuExitClicked(object sender,EventArgs arg)
 		{
@@ -440,25 +481,116 @@ namespace MathTextLearner
 		}
 		
 		/// <summary>
-		/// Gestor del evento que se provoca al hacer click en el botón
-		/// "Cargar imagen".
+		/// Metodo que maneja el evento provocado al hacer click en la opción 
+		/// de menu  "Abrir una base de datos"
 		/// </summary>
-		private void OnLoadImageClicked(object sender, EventArgs arg)
+		private void OnMenuOpenClicked(object sender, EventArgs arg)
 		{
-			string filename;
+			OpenDatabase();
+		}
+		
+		/// <summary>
+		/// Metodo que maneja el evento que se provoca cuando se hace click en la opcion de menu
+		/// de guardar la base de datos.
+		/// </summary>
+		private void OnMenuSaveAsClicked(object sender, EventArgs arg)
+		{
+			SaveDatabase();
+		}
+		
+		
+		/// <summary>
+		/// Manejador del evento provocado al hacer click en el boton de abrir una
+		/// base de datos nueva.
+		/// </summary>
+		private void OnNewDatabaseClicked(object sender, EventArgs arg)
+		{			
+			ShowDBSaveQuestionDialog();
 			
-			if(ImageLoadDialog.Show(mainWindow , out filename) 
-				== ResponseType.Ok)
-			{								
-				Pixbuf b = new Pixbuf(filename);				
-				imageAreaOriginal.Image = b;
+			NewDatabaseAsisstant assistant = 
+				new NewDatabaseAsisstant(mainWindow);
+			
+			ResponseType res = assistant.Run();
+			
+			if(res == ResponseType.Ok)
+			{
+				SetDatabase(assistant.Database);
 				
-				mtb = new MathTextBitmap(b);
-				imageAreaProcessed.Image = mtb.ProcessedBitmap;
-				hboxSymbolWidgets.Sensitive = true;
+				LoadNewImages(assistant.Images);
 				
-				LogLine("¡Archivo de imagen «"+filename+"» cargado correctamente!");
+				SetTitle("Nueva base de datos",false);
+				LogLine("¡Nueva base de datos creada con éxito!");
 			}
+			else
+			{
+				LogLine("Creación de base de datos cancelada");
+			}
+			
+			assistant.Destroy();
+			
+			
+		}
+		
+		private void OnNextImageBtnClicked(object sender, EventArgs arg)
+		{
+			nextImageBtn.Sensitive = false;
+			hboxSymbolWidgets.Sensitive = true;
+			
+			TreeIter iter;
+			imagesStore.GetIterFirst(out iter);
+			TreePath selectedImagePath = imagesStore.GetPath(iter);			
+				                     
+			imagesIV.ScrollToPath(selectedImagePath);
+			imagesIV.SelectPath(selectedImagePath);
+			TreeIter selectedIter;
+
+			imagesStore.GetIter(out selectedIter, selectedImagePath);
+			
+			Gdk.Pixbuf orig = (Gdk.Pixbuf)(imagesStore.GetValue(selectedIter,1));
+			
+			mtb = new MathTextBitmap(orig);
+			mtb.ProcessImage(database.Processes);
+			
+			imageAreaOriginal.Image = orig;
+			imageAreaProcessed.Image = mtb.ProcessedBitmap;
+			
+		}
+			
+		
+		private void OnRemoveImageBtnClicked(object sender, EventArgs arg)
+		{
+			TreeIter iter;
+			imagesStore.GetIter(out iter,imagesIV.SelectedItems[0]);
+			
+			imagesStore.Remove(ref iter);
+			
+			if(imagesStore.IterNChildren() == 0)
+				buttonsHB.Sensitive = false;
+					
+		}
+		
+		/// <summary>
+		/// Metodo que maneja el evento provocado al aprenderse un simbolo en la
+		/// base de datos.
+		/// </summary>
+		private void OnSymbolLearned(object sender,EventArgs arg)
+		{
+			Application.Invoke(OnSymbolLearnedThread);
+		}
+		
+		private void OnSymbolLearnedThread(object sender,EventArgs arg)
+		{
+			ResetWidgets();
+			string msg="!Símbolo aprendido con éxito!";
+			
+			SetTitle(null,true);
+				
+			LogLine(msg);	
+			OkDialog.Show(mainWindow, MessageType.Info, msg);
+			
+			
+			PrepareForNewImage();
+			
 		}
 		
 		/// <summary>
@@ -480,7 +612,7 @@ namespace MathTextLearner
 				== ResponseType.Ok)
 			{
 				// El usuario acepta la apertura del archivo.
-				database = MathTextDatabase.Load(file);				
+				SetDatabase(MathTextDatabase.Load(file));				
 					
 				this.SetTitle(file,false);
 				
@@ -489,27 +621,26 @@ namespace MathTextLearner
 			}
 		}
 		
-		/// <summary>
-		/// Metodo para facilitar el mostrar el cuadro de dialogo de confirmacion 
-		/// de guardar la base de datos.
-		/// </summary>
-		private void ShowDBSaveQuestionDialog()
+		private void PrepareForNewImage()
 		{
-			if(databaseModified)
+			hboxSymbolWidgets.Sensitive = false;
+			vboxNextButtons.Sensitive =false;
+			nextImageBtn.Sensitive = true;
+			
+			TreeIter iter;
+			imagesStore.GetIterFirst(out iter);
+			
+			imagesStore.Remove(ref iter);
+			
+			if(imagesStore.IterNChildren() == 0)
 			{
-				// Solo guardamos si el usuario quiere, y habiamos modificado.
-				ResponseType result = 
-					ConfirmDialog.Show(
-						mainWindow,
-						"¿Desea guardar los cambios en la base de datos?");
-					
-				if(result == ResponseType.Yes)
-				{
-					SaveDatabase();
-				}
+				
+				AllImagesLearned();
+				
+				              
 			}
-		}	
-		
+			
+		}
 		
 		private void SaveDatabase()
 		{
@@ -564,19 +695,30 @@ namespace MathTextLearner
 			}
 		}
 		
-		
-		/// <summary>
-		/// Metodo que permite añadir un mensaje a la zona de texto de
-		/// mensajes de informacion en una nueva línea.
-		/// </summary>
-		/// <param name="message">
-		/// El mensaje que se mostrará.
-		/// </param>
-		private void LogLine(string message, params object [] args)
-		{			
-			logView.LogLine(message, args);
+		private void SetDatabase(MathTextDatabase database)
+		{
+			this.database = database; 
+			
+			database.SymbolLearned += 
+				new SymbolLearnedEventHandler(OnSymbolLearned);
 				
-		}		
+			database.LearningStepDone +=
+				new ProcessingStepDoneEventHandler(OnLearningStepDone);
+			
+			imagesHB.Sensitive = true;
+			
+			Type type = database.Database.GetType();
+			object[] attrs = type.GetCustomAttributes(typeof(DatabaseInfo),
+			                                          true);
+			
+			DatabaseInfo info = (DatabaseInfo)(attrs[0]);
+			
+			databaseInfoLabel.Text="Tipo de base de datos: "
+				+ info.Description;
+			
+			mtb = null;
+			
+		}
 		
 		/// <summary>
 		/// Este método permite cambiar el título de la venta de forma sencilla.
@@ -594,14 +736,42 @@ namespace MathTextLearner
 			    // Si tenemos base de datos, ponemos su nombre en el titulo.				
 				
 				mainWindow.Title=
-					title + Path.GetFileName(databaseName) +(modified?" (Modificada)":"");
+					title
+						+ " - "
+						+ Path.GetFileName(databaseName) 
+						+(modified?" (Modificada)":"");
 			}
 			else
 			{
-				mainWindow.Title=title+ "Nueva base de datos " +(modified?" (Modificada)":"");
+				mainWindow.Title=
+					title
+						+" - "
+						+ "Nueva base de datos " 
+						+(modified?" (Modificada)":"");
 			}
 		}
+		
+		/// <summary>
+		/// Metodo para facilitar el mostrar el cuadro de dialogo de confirmacion 
+		/// de guardar la base de datos.
+		/// </summary>
+		private void ShowDBSaveQuestionDialog()
+		{
+			if(databaseModified)
+			{
+				// Solo guardamos si el usuario quiere, y habiamos modificado.
+				ResponseType result = 
+					ConfirmDialog.Show(
+						mainWindow,
+						"¿Desea guardar los cambios en la base de datos?");
+					
+				if(result == ResponseType.Yes)
+				{
+					SaveDatabase();
+				}
+			}
+		}	
+#endregion Metodos privados
+		
 	}
-	
-	
 }

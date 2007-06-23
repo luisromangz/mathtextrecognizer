@@ -1,10 +1,13 @@
 
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 using Gtk;
 
 using CustomGtkWidgets.CommonDialogs;
+
+using MathTextLibrary.Utils;
 
 namespace MathTextLearner.Assistant
 {
@@ -78,6 +81,25 @@ namespace MathTextLearner.Assistant
 			}
 		}
 		
+		public List<Gdk.Pixbuf> Images
+		{
+			get
+			{
+				List<Gdk.Pixbuf> res = new List<Gdk.Pixbuf>();
+				foreach(object[] values in fileStore)
+				{
+					// Extremos la cadena de la ruta del modelo del iconview.
+					string path = (string) (values[2]);
+					
+					Gdk.Pixbuf p = new Gdk.Pixbuf(path);
+					
+					res.Add(p);
+				}
+				
+				return res;
+			}
+		}
+		
 #endregion Propiedades
 		
 #region Metodos privados
@@ -88,22 +110,8 @@ namespace MathTextLearner.Assistant
 			
 			// Creamos la imagen.
 			Gdk.Pixbuf image = new Gdk.Pixbuf(fileName);
-			float scaleX, scaleY;
-			
-			// La escalamos para que no se distorsione.
-			if(image.Width > image.Height)
-			{
-				scaleX = 1;
-				scaleY = (float)(image.Height)/image.Width;
-			}
-			else
-			{
-				scaleX = (float)(image.Width)/image.Height;
-				scaleY = 1;
-			}
-			
-			image = image.ScaleSimple(
-				(int)(48*scaleX), (int)(48*scaleY), Gdk.InterpType.Bilinear);
+						
+			image = ImageUtils.MakeThumbnail(image, 48);
 			
 			TreeIter iter = 
 				fileStore.AppendValues(

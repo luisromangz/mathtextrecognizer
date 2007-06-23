@@ -12,9 +12,12 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 		{			
 		}
 
-		public static int BlackNeighbours(float[,] image, int x, int y, int width, int height)
+		public static int BlackNeighbours(float[,] image,
+		                                  int x, int y, int width, int height)
 		{
 			int res=0;
+			
+			Console.WriteLine("x :"+x+" y:"+y+" width:"+width+" height:"+height);
 			
 			if(x-1>=0 && y-1 >= 0 && image[x-1,y-1]==MathTextBitmap.Black)
 				res++;

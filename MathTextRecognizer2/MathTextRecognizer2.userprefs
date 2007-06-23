@@ -2,10 +2,11 @@
 <UserCombinePreferences filename="/home/luis/carrera/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
     <File filename="Bienvenido" />
-    <File filename="./MathTextLibrary/Databases/MathTextDatabase.cs" />
-    <File filename="./MathTextLibrary/Databases/DatabaseBase.cs" />
     <File filename="./MathTextLearner/MainWindow.cs" />
-    <File filename="./MathTextLibrary/Databases/DatabaseInfo.cs" />
+    <File filename="./MathTextLibrary/Databases/Caracteristic/Caracteristics/Helpers/CountBlackNeighboursHelper.cs" />
+    <File filename="./MathTextLibrary/Databases/Caracteristic/Caracteristics/Helpers/CountPixelsWithXNeighboursHelper.cs" />
+    <File filename="./MathTextLibrary/BitmapProcesses/BitmapZhangSuenHoltThinner.cs" />
+    <File filename="./MathTextLibrary/BitmapProcesses/BitmapZhangSuenStentifordHoltThinner.cs" />
   </Files>
   <Views>
     <ViewMemento Id="MonoDevelop.Ide.Gui.Pads.ProjectPad">
@@ -22,15 +23,17 @@
             </Node>
           </Node>
           <Node name="MathTextLibrary" expanded="True">
-            <Node name="Controllers" expanded="True" />
+            <Node name="BitmapProcesses" expanded="True">
+              <Node name="BitmapZhangSuenStentifordHoltThinner.cs" expanded="False" selected="True" />
+            </Node>
             <Node name="Databases" expanded="True">
               <Node name="Caracteristic" expanded="True" />
-              <Node name="Momentum" expanded="True" />
-              <Node name="MathTextDatabase.cs" expanded="False" selected="True" />
             </Node>
             <Node name="Utils" expanded="True" />
           </Node>
-          <Node name="MathTextRecognizer" expanded="True" />
+          <Node name="MathTextRecognizer" expanded="True">
+            <Node name="Resources" expanded="True" />
+          </Node>
         </Node>
       </TreeView>
     </ViewMemento>
@@ -59,7 +62,7 @@
   <Properties>
     <Properties>
       <Property key="ActiveConfiguration" value="Debug" />
-      <Property key="ActiveWindow" value="/home/luis/carrera/pfc/MathTextRecognizer2/MathTextLibrary/Databases/MathTextDatabase.cs" />
+      <Property key="ActiveWindow" value="/home/luis/carrera/pfc/MathTextRecognizer2/MathTextLibrary/BitmapProcesses/BitmapZhangSuenStentifordHoltThinner.cs" />
     </Properties>
   </Properties>
 </UserCombinePreferences>
