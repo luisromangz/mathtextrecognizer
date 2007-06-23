@@ -1,11 +1,12 @@
 using System;
+using System.Xml.Serialization;
 
 namespace MathTextLibrary
 {
 	/// <summary>
 	/// Esta clase encapsula un símbolo como un texto y el 
 	/// tipo al que corresponde.
-	/// </summary>
+	/// </summary>	
 	public class MathSymbol
 	{
 		// Texto del simbolo

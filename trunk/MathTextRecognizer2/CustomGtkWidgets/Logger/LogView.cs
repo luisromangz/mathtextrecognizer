@@ -92,7 +92,6 @@ namespace CustomGtkWidgets.Logger
 		    if(lsd.Run() == ResponseType.Ok)
 		    {
 		    	string filename = lsd.Filename;
-		    	Console.WriteLine("Archivo: "+lsd.Filename);
 		    	
 		    	// Si no tiene extensión se la añadimos.
 		    	

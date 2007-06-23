@@ -2,7 +2,9 @@
 
 using System;
 using System.Threading;
+using System.Xml.Serialization;
 using System.Collections.Generic;
+
 
 using MathTextLibrary.BitmapProcesses;
 
@@ -50,6 +52,7 @@ namespace MathTextLibrary.Databases
 		
 #endregion Atributos
 		
+		
 		public DatabaseBase()
 		{
 			stepByStep=false;
@@ -63,6 +66,7 @@ namespace MathTextLibrary.Databases
 		/// Propiedad que permite establecer y recuperar el modo de ejecucion 
 		/// para el proceso de busqueda o aprendizaje en la base de datos.
 		/// </summary>
+		[XmlIgnore]
 		public bool StepByStep
 		{
 			get

@@ -1,6 +1,6 @@
 // created on 28/12/2005 at 13:26
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 using Gdk;
 
@@ -14,7 +14,8 @@ namespace MathTextLibrary.BitmapSegmenters{
 	/// de todos los segmentadores de imagenes que usan la proyeccion de la 
 	/// misma para descomponerla en partes mas pequeas.
 	/// </summary>
-	public abstract class ProjectionBitmapSegmenter:IBitmapSegmenter{
+	public abstract class ProjectionBitmapSegmenter : IBitmapSegmenter
+	{
 		
 		
 		private ProjectionMode mode;
@@ -23,7 +24,8 @@ namespace MathTextLibrary.BitmapSegmenters{
 		/// Constructor de la clase <code>ProjectionBitmapSegmenter</code>.
 		/// </summary>
 		/// <param name="mode">El modo que se usara para obtener la proyeccion (horizontal,vertical).</param>
-		public ProjectionBitmapSegmenter(ProjectionMode mode){
+		public ProjectionBitmapSegmenter(ProjectionMode mode)
+		{
 			this.mode=mode;		
 		}
 		
@@ -38,11 +40,12 @@ namespace MathTextLibrary.BitmapSegmenters{
 		/// Un array con las distintas partes en que hemos descompuesto
 		/// la imagen de entrada.
 		/// </returns>
-		public MathTextBitmap [] Segment(MathTextBitmap image){
+		public List<MathTextBitmap> Segment(MathTextBitmap image)
+		{
 		
 			//Creamos la proyeccion
 			BitmapProjection proj=BitmapProjection.CreateProjection(mode,image);
-			IList holes=proj.Holes;
+			List<Hole> holes=proj.Holes;
 			//Buscamos el maximo hueco
 			
 			
@@ -53,7 +56,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 			//Eliminamos los huecos que tengan menor tamaño que el umbral
 			int i=1;
 			while(i<holes.Count-1){
-				//Console.WriteLine(((Hole)holes[i]).Size);
+
 				if(((Hole)holes[i]).Size<threshold){
 					holes.Remove(holes[i]);				
 				}else{
@@ -70,17 +73,21 @@ namespace MathTextLibrary.BitmapSegmenters{
 		/// </summary>
 		/// <param name="holes">La lista que contiene los huecos.</param>
 		/// <returns>Un array donde a[i] es el numero de huecos de tamao i.</returns>
-		protected int [] CreateHolesHistogram(IList holes){
+		protected int [] CreateHolesHistogram(List<Hole> holes)
+		{
 			int maxTam=0;
-			foreach(Hole h in holes){
-				if(h.Size>maxTam){
+			foreach(Hole h in holes)
+			{
+				if(h.Size>maxTam)
+				{
 					maxTam=h.Size;
 				}
 			}			
 			
 			int [] histoHoles =new int [maxTam+1];
 			
-			foreach(Hole h in holes){
+			foreach(Hole h in holes)
+			{
 				histoHoles[h.Size]++;			
 			}
 			
@@ -94,7 +101,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 		/// </summary>
 		/// <param name="holes"></param>
 		/// <returns></returns>
-		protected abstract int GetImageCutThreshold(IList holes);			
+		protected abstract int GetImageCutThreshold(List<Hole> holes);			
 
 		/// <summary>
 		/// Metodo que obtiene las subimagenes a partir de los huecos.
@@ -104,13 +111,20 @@ namespace MathTextLibrary.BitmapSegmenters{
 		/// Los huecos considerados para separar las partes de la imagen.
 		/// </param>
 		/// <returns>Un array con las subimagenes obtenidas al segmentar.</returns>
-		private MathTextBitmap []ImageCut(MathTextBitmap image, IList holes){			
-			ArrayList newBitmaps=new ArrayList();
+		private List<MathTextBitmap> ImageCut(MathTextBitmap image,
+		                                      List<Hole> holes)
+		{
+			
+			List<MathTextBitmap> newBitmaps=new List<MathTextBitmap>();
+			
 			MathTextBitmap newBitmap;
+			
 			int start,size;
 			int xpos=image.Position.X;
 			int ypos=image.Position.Y;
-			for(int i=0;i<holes.Count-1;i++){
+			
+			for(int i=0;i<holes.Count-1;i++)
+			{
 				//El texto esta entre el final de un hueco, y el inicio del siguiente;
 				start=((Hole)holes[i]).EndPixel;
 				size=((Hole)holes[i+1]).StartPixel-start+1;
@@ -119,12 +133,15 @@ namespace MathTextLibrary.BitmapSegmenters{
 				
 				GetEdges(image,start,size,out edge1,out edge2);
 				
-				if(mode==ProjectionMode.Horizontal){
+				if(mode==ProjectionMode.Horizontal)
+				{
 					newBitmap=new MathTextBitmap(
 						image.SubImage(start,edge1,size,edge2-edge1+1),
 						new Point(start+xpos,ypos+edge1),
 						mode);
-				}else{
+				}
+				else
+				{
 					newBitmap=new MathTextBitmap(
 						image.SubImage(edge1,start,edge2-edge1+1,size),
 						new Point(xpos+edge1,start+ypos),
@@ -135,7 +152,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 			}		
 			
 			
-			return (MathTextBitmap [])(newBitmaps.ToArray(typeof(MathTextBitmap)));
+			return newBitmaps;
 		}
 
 		/// <summary>

@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 {
@@ -40,7 +40,7 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 			//Contiene las etiquetas de cada pixel
 			int[,] label = new int[sizeR,sizeC];
 			//Contiene las listas con las equivalencias entre etiquetas
-			Hashtable equiv = new Hashtable();
+			Dictionary<int, List<int>> equiv = new Dictionary<int, List<int>> ();
 						
 			int aux=1;
 			
@@ -139,7 +139,8 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 			if(bigholes)
 			{
 				// Contamos el número de píxeles de cada agujero */
-				Hashtable bigHolesAux = new Hashtable();
+				Dictionary<int, int> bigHolesAux = new Dictionary<int, int>();
+				
 				for(int i=0;i<sizeR;i++)
 				{
 					for(int j=0;j<sizeC;j++)
@@ -167,7 +168,7 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 			else
 			{
 				/* Contamos el número de etiquetas de TODOS los agujeros */
-				IList differentLabels = new ArrayList();
+				List<int> differentLabels = new List<int>();
 				for(int i=0;i<sizeR;i++)
 					for(int j=0;j<sizeC;j++) 
 					{
@@ -189,9 +190,10 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 		/// <param name="equiv">Equivalencias de etiquetas</param>
 		/// <param name="label1">Etiqueta</param>
 		/// <param name="label2">Etiqueta a añadir</param>
-		private static void AddLabelsToEquiv(Hashtable equiv, int label1, int label2)
+		private static void AddLabelsToEquiv(Dictionary<int, List<int>> equiv, 
+			                                 int label1, int label2)
 		{
-			ArrayList aux=new ArrayList();
+			List<int> aux=new List<int>();
 			
 			AddLabelsToEquivAux(equiv, aux, label1, label2);
 			AddLabelsToEquivAux(equiv, aux, label2, label1);
@@ -210,12 +212,14 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 		/// <param name="aux">Lista auxiliar creada en <c>AddLabelsToEquiv()</c></param>
 		/// <param name="label1">Etiqueta</param>
 		/// <param name="label2">Etiqueta a añadir</param>
-		private static void AddLabelsToEquivAux(Hashtable equiv, IList aux, int label1, int label2)
+		private static void AddLabelsToEquivAux(Dictionary<int, List<int>>  equiv, 
+			                                    List<int> aux, 
+			                                    int label1, int label2)
 		{
 			aux.Add(label2);
 			if(equiv.ContainsKey(label1))
 			{
-				ArrayList l=(ArrayList)equiv[label1];
+				List<int> l = equiv[label1];
 				foreach(int i in l)
 				{
 					if(!aux.Contains(i))
@@ -224,7 +228,7 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 			}
 			else
 			{
-				ArrayList l=new ArrayList();
+				List<int> l=new List<int>();
 				l.Add(label2);
 				equiv.Add(label1, l);
 			}
@@ -237,18 +241,20 @@ namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 		/// <param name="equiv">Equivalencias de etiquetas</param>
 		/// <param name="label">Etiqueta</param>
 		/// <returns>Mínima etiqueta equivalente a <c>label</c></returns>
-		private static int MinLabel(Hashtable equiv, int label)
+		private static int MinLabel(Dictionary<int, List<int>>  equiv, int label)
 		{
 			int min=int.MaxValue;
 			
 			if(equiv.ContainsKey(label))
 			{
-				ArrayList l=(ArrayList)equiv[label];
+				List<int> l = equiv[label];
 				foreach(int etiq in l)
+				{
 					if (etiq < min)
 					{
 						min = etiq;
 					}
+				}
 			}
 			else
 				min=label;

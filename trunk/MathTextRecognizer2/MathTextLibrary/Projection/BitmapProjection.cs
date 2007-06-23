@@ -1,6 +1,6 @@
 // created on 15/12/2005 at 14:43
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 using Gdk;
 
@@ -33,7 +33,7 @@ namespace MathTextLibrary.Projection
 		/// <summary>
 		/// Una lista con los huecos que presenta la proyeccion.
 		/// </summary>
-		protected ArrayList holes;
+		protected List<Hole> holes;
 		/// <summary>
 		/// Metodo fabrica para construir los distintos tipos de 
 		/// proyeccion disponibles.
@@ -70,7 +70,7 @@ namespace MathTextLibrary.Projection
 		/// <summary>
 		/// Permite obtener la lista de huecos presentes en la proyeccion.
 		/// </summary>
-		public IList Holes
+		public List<Hole> Holes
 		{
 			get
 			{
@@ -88,7 +88,7 @@ namespace MathTextLibrary.Projection
 		/// </summary>
 		private void CreateHoles()
 		{
-			holes=new ArrayList();					
+			holes=new List<Hole>();					
 			for(int i=0;i<projection.Length;i++)
 			{
 				if(projection[i]==0)

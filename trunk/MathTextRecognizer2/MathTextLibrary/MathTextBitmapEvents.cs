@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 
 namespace MathTextLibrary
 {
@@ -13,15 +14,15 @@ namespace MathTextLibrary
 	/// </summary>
 	public class MathTextBitmapChildrenAddedEventArgs : EventArgs
 	{
-		private MathTextBitmap [] children;
+		private List<MathTextBitmap> children;
 
-		public MathTextBitmapChildrenAddedEventArgs(MathTextBitmap [] children)
+		public MathTextBitmapChildrenAddedEventArgs(List<MathTextBitmap> children)
 			: base()
 		{
 			this.children = children;           		
 		}
 
-		public MathTextBitmap[] Children
+		public List<MathTextBitmap> Children
 		{
 			get{
 				return children;  

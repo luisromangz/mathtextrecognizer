@@ -253,9 +253,6 @@ namespace MathTextRecognizerGUI
 			
 			MarkImage(arg.MathTextBitmap);
 			
-			Console.WriteLine(arg.MathTextBitmap.Position);
-			
-			
 			
 			SelectProccesedNode();			
 			

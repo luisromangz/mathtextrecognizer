@@ -275,7 +275,7 @@ namespace MathTextLibrary.Controllers
 				OnLogMessageSend("La imágen no pudo ser reconocida como un simbolo por la base de datos");
 				node.CreateChildren();
 				
-				if(node.Children!=null && node.Children.Length>1){
+				if(node.Children!=null && node.Children.Count>1){
 					OnLogMessageSend("La imágen se ha segmentado correctamente");
 				}else{
 					OnLogMessageSend("La imágen no pudo ser segmentada, el símbolo queda sin reconocer");
@@ -289,7 +289,7 @@ namespace MathTextLibrary.Controllers
 				recognizeThread.Suspend();
 			}
 			
-			if(node.Children !=null && node.Children.Length>1){				
+			if(node.Children !=null && node.Children.Count>1){				
 				//Si solo conseguimos un hijo, es la propia imagen, asi que nada
 				foreach(MathTextBitmap child in node.Children){
 					RecognizerTreeBuild(child);						

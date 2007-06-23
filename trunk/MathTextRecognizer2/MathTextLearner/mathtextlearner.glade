@@ -166,6 +166,7 @@
         </child>
         <child>
           <widget class="GtkAlignment" id="alignment10">
+            <property name="height_request">22</property>
             <property name="visible">True</property>
             <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
             <property name="xalign">0</property>
@@ -173,6 +174,7 @@
             <property name="left_padding">6</property>
             <child>
               <widget class="GtkHBox" id="hbox2">
+                <property name="height_request">20</property>
                 <property name="visible">True</property>
                 <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                 <property name="spacing">3</property>
@@ -197,6 +199,7 @@
             </child>
           </widget>
           <packing>
+            <property name="expand">False</property>
             <property name="position">2</property>
           </packing>
         </child>
@@ -207,7 +210,7 @@
             <property name="sensitive">False</property>
             <property name="border_width">4</property>
             <child>
-              <widget class="GtkVBox" id="vbox2">
+              <widget class="GtkVBox" id="imagesVB">
                 <property name="visible">True</property>
                 <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
                 <child>

@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 using System.Xml.Serialization;
 using MathTextLibrary.Databases.Caracteristic.Caracteristics;
@@ -61,11 +61,11 @@ namespace MathTextLibrary.Databases.Caracteristic
 		/// un conjunto de simbolos similares segun comprobemos caracteristicas.
 		/// </summary>
 		[XmlIgnoreAttribute]
-		public IList ChildrenSymbols
+		public List<MathSymbol> ChildrenSymbols
 		{
 			get
 			{
-				ArrayList res=new ArrayList();
+				List<MathSymbol> res=new List<MathSymbol>();
 				
 				if(symbol!=null)
 					res.Add(symbol);

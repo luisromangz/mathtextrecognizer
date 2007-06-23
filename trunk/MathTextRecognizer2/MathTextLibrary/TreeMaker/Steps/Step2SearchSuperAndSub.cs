@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace MathTextLibrary.TreeMaker.Steps
 {
@@ -22,7 +22,7 @@ namespace MathTextLibrary.TreeMaker.Steps
 		
 		public RecognizedTreeNode ApplyStep(RecognizedTreeNode tree)
 		{
-			ArrayList newChildren=new ArrayList();
+			List<RecognizedTreeNode> newChildren=new List<RecognizedTreeNode>();
 			RecognizedTreeNode first, second;
 			
 			if(tree.Symbol.SymbolType==MathSymbolType.Fraction)
@@ -85,7 +85,9 @@ namespace MathTextLibrary.TreeMaker.Steps
 		/// <param name="first">Base del superindice</param>
 		/// <param name="second">Superindice</param>
 		/// <param name="newChildren">Lista de nuevos hijos</param>
-		protected void AddSuperNode(RecognizedTreeNode first, RecognizedTreeNode second, IList newChildren)
+		protected void AddSuperNode(RecognizedTreeNode first,
+		                            RecognizedTreeNode second,
+		                            List<RecognizedTreeNode> newChildren)
 		{
 			MathSymbol supSymbol=new MathSymbol("sup",MathSymbolType.Superindex);
 			newChildren.Add(CreateSymbolNode(supSymbol,first,second));
@@ -98,7 +100,9 @@ namespace MathTextLibrary.TreeMaker.Steps
 		/// <param name="first">Base del subindice</param>
 		/// <param name="second">Subindice</param>
 		/// <param name="newChildren">Lista de nuevos hijos</param>
-		protected void AddSubNode(RecognizedTreeNode first, RecognizedTreeNode second, IList newChildren)
+		protected void AddSubNode(RecognizedTreeNode first, 
+		                          RecognizedTreeNode second, 
+		                          List<RecognizedTreeNode> newChildren)
 		{
 			MathSymbol subSymbol=new MathSymbol("sub",MathSymbolType.Subindex);
 			newChildren.Add(CreateSymbolNode(subSymbol,first,second));
@@ -113,7 +117,7 @@ namespace MathTextLibrary.TreeMaker.Steps
 		/// <param name="second">Subindice</param>
 		private RecognizedTreeNode CreateSymbolNode(MathSymbol symbol, RecognizedTreeNode first, RecognizedTreeNode second)
 		{
-			ArrayList children=new ArrayList();
+			List<RecognizedTreeNode> children=new List<RecognizedTreeNode>();
 			children.Add(first);
 			children.Add(second);
 			return new RecognizedTreeNode(symbol, children);

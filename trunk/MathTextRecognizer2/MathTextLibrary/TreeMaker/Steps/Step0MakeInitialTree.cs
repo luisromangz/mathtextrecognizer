@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace MathTextLibrary.TreeMaker.Steps
 {
@@ -20,7 +20,7 @@ namespace MathTextLibrary.TreeMaker.Steps
 		
 		public RecognizedTreeNode ApplyStep(MathTextBitmap mtb)
 		{
-			ArrayList children=new ArrayList();
+			List<RecognizedTreeNode> children=new List<RecognizedTreeNode>();
 			if(mtb.Children!=null)
 			{
 				foreach(MathTextBitmap child in mtb.Children)

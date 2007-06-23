@@ -1,6 +1,6 @@
 using System;
 using Gtk;
-using System.Collections;
+using System.Collections.Generic;
 
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -220,12 +220,12 @@ namespace CustomGtkWidgets.HandWriting
 		
 			private Pen pencil;
 			
-			private ArrayList points;
+			private List<Point> points;
 			private Point[] arrayPoints;
 			
 			public Stroke(Pen p)
 			{
-				points=new ArrayList();
+				points=new List<Point>();
 				pencil=p;
 			}
 			
