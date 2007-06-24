@@ -1,0 +1,6 @@
+Name: MathTextLibrary
+Description: MathTextLibrary
+Version: 0.1
+
+Requires: 
+Libs: -r:@prefix@/lib/@PACKAGE@/MathTextLibrary.dll
