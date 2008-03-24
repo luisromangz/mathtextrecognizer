@@ -10,8 +10,10 @@ namespace MathTextLibrary.Databases
 {
 	
 	/// <summary>
-	/// Esta clase es la clase base para las distintas implementaciones de bases 
-	/// de datos en las que podemos reconocer caracteres matemáticos.
+	/// Esta clase encapsula las distintas implementaciones de bases de datos
+	/// de caracteres, definiendo además los parámetros de procesado de imagenes
+	/// que se usaron al definir dicha base de datos, y que por lo tanto es necesario
+	/// aplicar a las imagenes a reconocer para obtener resultados consistentes.
 	/// </summary>	
 	public class MathTextDatabase
 	{	
@@ -76,6 +78,10 @@ namespace MathTextLibrary.Databases
 			}
 		}		
 
+		/// <summary>
+		/// Permite establecer y recuperar la base de datos de información de
+		/// caracteres asociada a este objeto.
+		/// </summary>
 		public DatabaseBase Database
 		{
 			get {
@@ -86,20 +92,6 @@ namespace MathTextLibrary.Databases
 				SetDatabase(value);				
 			}
 		}
-		
-		[XmlIgnore]
-		public bool StepByStep
-		{
-			get
-			{
-				return database.StepByStep;
-			}
-			set
-			{
-				database.StepByStep = value;
-			}
-		}
-		
 		
 #endregion Propiedades
 		
@@ -130,8 +122,7 @@ namespace MathTextLibrary.Databases
 		public static MathTextDatabase Load(string path)
 		{
 
-			XmlAttributeOverrides attrOverrides = 
-            new XmlAttributeOverrides();
+			XmlAttributeOverrides attrOverrides = new XmlAttributeOverrides();
 			XmlAttributes attrs = new XmlAttributes();
         
 			
@@ -151,8 +142,7 @@ namespace MathTextLibrary.Databases
 				}
 			}			
 
-			attrOverrides.Add(typeof(MathTextDatabase), 
-			                  "Database", attrs);
+			attrOverrides.Add(typeof(MathTextDatabase), "Database", attrs);
 			
 			attrs = new XmlAttributes();
 			
@@ -169,8 +159,7 @@ namespace MathTextLibrary.Databases
 					 
 				}
 			}
-			attrOverrides.Add(typeof(MathTextDatabase), 
-			                  "Processes", attrs);
+			attrOverrides.Add(typeof(MathTextDatabase), "Processes", attrs);
 			
 			XmlSerializer serializer=
 				new XmlSerializer(typeof(MathTextDatabase),attrOverrides);	
@@ -186,6 +175,15 @@ namespace MathTextLibrary.Databases
 			return db;
 		}
 			
+		/// <summary>
+		/// Reconoce una imagen dada una imagen.
+		/// </summary>
+		/// <param name="image">
+		/// La imagen a intentar asociar al caracter.
+		/// </param>
+		/// <returns>
+		/// El simbolo que se ha podido asociar a la imagen.
+		/// </returns>
 		public MathSymbol Recognize(MathTextBitmap image)
 		{
 			return database.Recognize(image);

@@ -97,18 +97,6 @@ namespace MathTextLibrary.Databases.Caracteristic
 					                                caracteristicValue);
 					
 				this.OnLearningStepDoneInvoke(a);
-				
-				
-				bool aux = false;
-				lock(stepByStepMutex)
-				{
-					aux = stepByStep;
-				}
-				
-				if(aux)
-				{						
-					Thread.CurrentThread.Suspend();
-				}									
 			}	
 			
 			nodo.Symbol=symbol;					
@@ -148,25 +136,22 @@ namespace MathTextLibrary.Databases.Caracteristic
 
 				if(caracteristicValue=bc.Apply(image))
 				{
-				//	if(existe){
+				
 						if(nodo.TrueTree==null)
 						{
 							existe=false;
 						}					
 						nodo=nodo.TrueTree;
-				//	}
-				//	vector.Add(true);
+			
 				}
 				else
 				{
-				//	if(existe){
+				
 						 if(nodo.FalseTree==null)
 						 {
 							 existe=false;
 						 }					
 						 nodo=nodo.FalseTree;
-				//	 }
-				//	 vector.Add(false);
 				 }		
 				
 				 //Avisamos de que hemos dado un paso
@@ -178,28 +163,12 @@ namespace MathTextLibrary.Databases.Caracteristic
 				 {
 				 	OnRecognizingStepDoneInvoke(new ProcessingStepDoneEventArgs(bc,image,caracteristicValue));
 				 }
-				
-				 
-				bool aux;
-				lock(stepByStepMutex)
-				{
-						aux=stepByStep;
-				}
-				if(aux)
-				{						
-					Thread.CurrentThread.Suspend();
-				}	
 			}
 			
 			if(existe)
 			{
 				res=nodo.Symbol;
-			}
-			//Descomentar para usar el la busqueda en la tabla hash si se falla al buscar en el arbol.
-			/*else{
-				res=NearestSymbol(vector);
-				
-			}*/
+			}			
 			
 			return res;
 

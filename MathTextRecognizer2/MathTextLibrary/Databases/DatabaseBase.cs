@@ -42,47 +42,6 @@ namespace MathTextLibrary.Databases
 		
 #endregion Eventos
 		
-#region Atributos		
-		
-		// Para ver si tenemos que ir paso a paso
-		protected bool stepByStep; 
-		
-		// Para garantizar la exclusion mutua al usar hilos 
-		protected Mutex stepByStepMutex;	
-		
-#endregion Atributos
-		
-		
-		public DatabaseBase()
-		{
-			stepByStep=false;
-			stepByStepMutex=new Mutex();
-		}	
-		
-#region Propiedades		
-		
-		
-		/// <summary>
-		/// Propiedad que permite establecer y recuperar el modo de ejecucion 
-		/// para el proceso de busqueda o aprendizaje en la base de datos.
-		/// </summary>
-		[XmlIgnore]
-		public bool StepByStep
-		{
-			get
-			{
-				return stepByStep;
-			}
-			set
-			{
-				lock(stepByStepMutex)
-				{
-					stepByStep=value;
-				}
-			}
-		}		
-		
-#endregion Propiedades
 		
 #region Metodos publicos
 

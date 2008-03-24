@@ -1,105 +1,104 @@
 <Project name="MathTextLibrary" fileversion="2.0" newfilesearch="OnLoad" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="DotNetProjectConfiguration">
-      <Output directory="./bin/Debug" assembly="MathTextLibrary" />
+      <Output directory="bin/Debug" assembly="MathTextLibrary" />
       <Build debugmode="True" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
-      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="True" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" win32Icon="./" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="True" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" win32Icon="." ctype="CSharpCompilerParameters" />
     </Configuration>
     <Configuration name="Release" ctype="DotNetProjectConfiguration">
-      <Output directory="./bin/Release" assembly="MathTextLibrary" />
+      <Output directory="bin/Release" assembly="MathTextLibrary" />
       <Build debugmode="False" target="Library" />
       <Execution runwithwarnings="True" consolepause="False" runtime="MsNet" clr-version="Net_2_0" />
-      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="True" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" win32Icon="./" ctype="CSharpCompilerParameters" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="True" generateoverflowchecks="True" mainclass="" generatexmldocumentation="False" win32Icon="." ctype="CSharpCompilerParameters" />
     </Configuration>
   </Configurations>
   <Contents>
-    <File name="./AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="./MathSymbol.cs" subtype="Code" buildaction="Compile" />
-    <File name="./MathTextBitmap.cs" subtype="Code" buildaction="Compile" />
-    <File name="./MathTextBitmapEvents.cs" subtype="Code" buildaction="Compile" />
-    <File name="./BitmapProcesses/BitmapFixedThresholder.cs" subtype="Code" buildaction="Compile" />
-    <File name="./BitmapProcesses/BitmapFramer.cs" subtype="Code" buildaction="Compile" />
-    <File name="./BitmapProcesses/BitmapScaler.cs" subtype="Code" buildaction="Compile" />
-    <File name="./BitmapProcesses/BitmapStentifordThinner.cs" subtype="Code" buildaction="Compile" />
-    <File name="./BitmapProcesses/BitmapTwoPeaksThresholder.cs" subtype="Code" buildaction="Compile" />
-    <File name="./BitmapProcesses/BitmapZhangSuenHoltThinner.cs" subtype="Code" buildaction="Compile" />
-    <File name="./BitmapProcesses/BitmapZhangSuenStentifordHoltThinner.cs" subtype="Code" buildaction="Compile" />
-    <File name="./BitmapSegmenters/AllHolesProjectionBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
-    <File name="./BitmapSegmenters/DifferentialProjectionBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
-    <File name="./BitmapSegmenters/FractionVerticalBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
-    <File name="./BitmapSegmenters/IBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
-    <File name="./BitmapSegmenters/MostFrequentHoleProjectionBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
-    <File name="./BitmapSegmenters/ProjectionBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
-    <File name="./BitmapSegmenters/TwoHolesBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Controllers/ControllerEvents.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Controllers/MathTextOutputController.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Controllers/MathTextRecognizerController.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Output/LaTeXGenerator.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Output/MathMLGenerator.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Projection/Hole.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Projection/HorizontalBitmapProjection.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Projection/ProjectionMode.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Projection/VerticalBitmapProjection.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TreeMaker/RecognizedTreeNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TreeMaker/Steps/ITreeMakerStep.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TreeMaker/Steps/Step0MakeInitialTree.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TreeMaker/Steps/Step1SearchFractions.cs" subtype="Code" buildaction="Compile" />
-    <File name="./TreeMaker/Steps/Step2SearchSuperAndSub.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Projection/BitmapProjection.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Utils" subtype="Directory" buildaction="Compile" />
-    <File name="./Utils/ImageUtils.cs" subtype="Code" buildaction="Compile" />
-    <File name="./BitmapProcesses/BitmapProcess.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases" subtype="Directory" buildaction="Compile" />
-    <File name="./Databases/Caracteristic" subtype="Directory" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/CaracteristicDatabase.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/ColorChangesXAboveFourCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/ColorChangesXBelowTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/ColorChangesXEqualsFourCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/ColorChangesXEqualsTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/ColorChangesYAboveFourCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/ColorChangesYBelowTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/ColorChangesYEqualsFourCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/ColorChangesYEqualsTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/EndingPointsEqualsOneCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/EndingPointsEqualsThreeCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/EndingPointsEqualsTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/EndingPointsEqualsZeroCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/IBinaryCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/NumberBigHolesEqualsOneCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/NumberBigHolesEqualsTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/NumberBigHolesEqualsZeroCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/PixelsLeftHalfCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/PixelsNortheastQuadrantCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/PixelsNorthwestQuadrantCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/PixelsSoutheastQuadrantCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/PixelsSouthwestQuadrantCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/PixelsTopHalfCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/ThriceTallerThanWiderCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/TreePointsEqualsOneCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/TreePointsEqualsThreeCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/TreePointsEqualsTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/TreePointsEqualsZeroCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/TwiceTallerThanWiderCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/WiderThanTallerCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/Helpers/CountBlackNeighboursHelper.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/Helpers/CountColorChangesHelper.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/Helpers/CountNumberOfBlackPixelsHelper.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/Helpers/CountNumberOfHolesHelper.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/Helpers/CountPixelsHelper.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/Helpers/CountPixelsWithXNeighboursHelper.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/Caracteristics/Helpers/ImageBoxerHelper.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/MathTextDatabase.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Momentum" subtype="Directory" buildaction="Compile" />
-    <File name="./Databases/Momentum/MomentumDatabase.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/DatabaseManager.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/BinaryCaracteristicNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/Caracteristic/CaracteristicFactory.cs" subtype="Code" buildaction="Compile" />
-    <File name="./bin/Debug/MathTextLibrary.dll.mdb" subtype="Code" buildaction="Exclude" />
-    <File name="./Databases/DatabaseEvents.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/ISymbolProcess.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/DatabaseBase.cs" subtype="Code" buildaction="Compile" />
-    <File name="./Databases/DatabaseInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="MathSymbol.cs" subtype="Code" buildaction="Compile" />
+    <File name="MathTextBitmap.cs" subtype="Code" buildaction="Compile" />
+    <File name="MathTextBitmapEvents.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapProcesses/BitmapFixedThresholder.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapProcesses/BitmapFramer.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapProcesses/BitmapScaler.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapProcesses/BitmapStentifordThinner.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapProcesses/BitmapTwoPeaksThresholder.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapProcesses/BitmapZhangSuenHoltThinner.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapProcesses/BitmapZhangSuenStentifordHoltThinner.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapSegmenters/AllHolesProjectionBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapSegmenters/DifferentialProjectionBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapSegmenters/FractionVerticalBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapSegmenters/IBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapSegmenters/MostFrequentHoleProjectionBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapSegmenters/ProjectionBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapSegmenters/TwoHolesBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
+    <File name="Controllers/ControllerEvents.cs" subtype="Code" buildaction="Compile" />
+    <File name="Controllers/MathTextOutputController.cs" subtype="Code" buildaction="Compile" />
+    <File name="Controllers/MathTextRecognizerController.cs" subtype="Code" buildaction="Compile" />
+    <File name="Output/LaTeXGenerator.cs" subtype="Code" buildaction="Compile" />
+    <File name="Output/MathMLGenerator.cs" subtype="Code" buildaction="Compile" />
+    <File name="Projection/Hole.cs" subtype="Code" buildaction="Compile" />
+    <File name="Projection/HorizontalBitmapProjection.cs" subtype="Code" buildaction="Compile" />
+    <File name="Projection/ProjectionMode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Projection/VerticalBitmapProjection.cs" subtype="Code" buildaction="Compile" />
+    <File name="TreeMaker/RecognizedTreeNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="TreeMaker/Steps/ITreeMakerStep.cs" subtype="Code" buildaction="Compile" />
+    <File name="TreeMaker/Steps/Step0MakeInitialTree.cs" subtype="Code" buildaction="Compile" />
+    <File name="TreeMaker/Steps/Step1SearchFractions.cs" subtype="Code" buildaction="Compile" />
+    <File name="TreeMaker/Steps/Step2SearchSuperAndSub.cs" subtype="Code" buildaction="Compile" />
+    <File name="Projection/BitmapProjection.cs" subtype="Code" buildaction="Compile" />
+    <File name="Utils" subtype="Directory" buildaction="Compile" />
+    <File name="Utils/ImageUtils.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapProcesses/BitmapProcess.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases" subtype="Directory" buildaction="Compile" />
+    <File name="Databases/Caracteristic" subtype="Directory" buildaction="Compile" />
+    <File name="Databases/Caracteristic/CaracteristicDatabase.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/ColorChangesXAboveFourCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/ColorChangesXBelowTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/ColorChangesXEqualsFourCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/ColorChangesXEqualsTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/ColorChangesYAboveFourCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/ColorChangesYBelowTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/ColorChangesYEqualsFourCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/ColorChangesYEqualsTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/EndingPointsEqualsOneCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/EndingPointsEqualsThreeCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/EndingPointsEqualsTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/EndingPointsEqualsZeroCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/IBinaryCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/NumberBigHolesEqualsOneCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/NumberBigHolesEqualsTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/NumberBigHolesEqualsZeroCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/PixelsLeftHalfCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/PixelsNortheastQuadrantCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/PixelsNorthwestQuadrantCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/PixelsSoutheastQuadrantCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/PixelsSouthwestQuadrantCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/PixelsTopHalfCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/ThriceTallerThanWiderCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/TreePointsEqualsOneCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/TreePointsEqualsThreeCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/TreePointsEqualsTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/TreePointsEqualsZeroCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/TwiceTallerThanWiderCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/WiderThanTallerCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/Helpers/CountBlackNeighboursHelper.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/Helpers/CountColorChangesHelper.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/Helpers/CountNumberOfBlackPixelsHelper.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/Helpers/CountNumberOfHolesHelper.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/Helpers/CountPixelsHelper.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/Helpers/CountPixelsWithXNeighboursHelper.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/Caracteristics/Helpers/ImageBoxerHelper.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/MathTextDatabase.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Momentum" subtype="Directory" buildaction="Compile" />
+    <File name="Databases/Momentum/MomentumDatabase.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/DatabaseManager.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/BinaryCaracteristicNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Caracteristic/CaracteristicFactory.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/DatabaseEvents.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/ISymbolProcess.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/DatabaseBase.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/DatabaseInfo.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

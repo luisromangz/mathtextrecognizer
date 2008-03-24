@@ -17,6 +17,9 @@ namespace MathTextLibrary
 		
 		// Simbolo nulo
 		private static MathSymbol nullSymbol;
+		
+		// Uso del simbolo, para propositos estadisticos
+		private int usage;
 
 		/// <summary>
 		/// El constructor por defecto de <c>MathSymbol</c>.
@@ -90,6 +93,27 @@ namespace MathTextLibrary
 				}				
 				type=value; 
 			}
+		}
+
+		/// <summary>
+		/// Permite recuperar el numero de veces que se ha usado el simbolo,
+		/// para proporcionar una medida de la probabilidad de que sea este simbolo
+		/// en caso de conflicto al reconocer.
+		/// </summary>
+		public int Usage
+		{
+			get
+			{
+				return usage;
+			}
+		}
+		
+		/// <summary>
+		/// Incrementa al uso del simbolo.
+		/// </summary>
+		public void IncreaseUsage()
+		{
+			this.usage++;
 		}
 		
 		/// <summary>
