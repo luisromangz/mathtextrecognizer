@@ -1,0 +1,1 @@
+Part of the MathTextRecognizer2 project, this software's purpose is to create character information databases using a given method.
