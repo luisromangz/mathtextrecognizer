@@ -1,1 +1,1 @@
-The MathTextRecognizer project aims to create a reliable formula (in an image format) to LaTeX/MathMl software converter.
+The MathTextRecognizer project aims to create a reliable formula (in an image format) to LaTeX/MathML software converter.
