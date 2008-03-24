@@ -166,14 +166,6 @@ namespace MathTextLibrary.Controllers
 				lock(stepMutex){
 					stepByStep=value;
 				}
-				
-				//Si vamos a ir paso a paso por la comprobacion de caracteristicas,
-				//lo establecemos aqui
-				if(stepByStep==MathTextRecognizerControllerStepMode.NodeByNodeWithCaracteristicCheck){
-					database.StepByStep=true;			
-				}else{
-					database.StepByStep=false;
-				}
 			}
 		}
 		

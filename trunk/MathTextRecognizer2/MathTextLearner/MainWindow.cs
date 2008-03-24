@@ -33,6 +33,7 @@ namespace MathTextLearner
 	/// </summary>
 	public class MainWindow
 	{
+		
 #region Glade widgets
 		//Aqui se declaran los controles de la interfaz.		
 		[WidgetAttribute]
@@ -135,11 +136,15 @@ namespace MathTextLearner
 		
 		private bool databaseModified;	
 		
+		// Indica si el proceso de reconocimiento debe realizarse paso a paso
+		private bool stepByStep; 
+		
+		
 #endregion Otros atributos
 		
 		public static void Main(string[] args)
 		{			
-			new MainWindow();
+			new MainWindow();			
 		}
 		
 		/// <summary>
@@ -369,7 +374,7 @@ namespace MathTextLearner
 		private void OnBtnNextClicked(object sender, EventArgs arg)
 		{
 			if(learningThread == null){
-				database.StepByStep = true;
+				stepByStep = true;
 				expanderLog.Expanded = true;
 				learningThread = new Thread(new ThreadStart(LearnProccess));	
 				learningThread.Priority = ThreadPriority.Highest;		
@@ -391,7 +396,7 @@ namespace MathTextLearner
 		/// </summary>
 		private void OnBtnTilEndClicked(object sender, EventArgs arg)
 		{
-			database.StepByStep=false;
+			stepByStep=false;
 			if(learningThread!=null)
 			{
 				learningThread.Resume();
@@ -785,8 +790,8 @@ namespace MathTextLearner
 		{
 			if(databaseName!=null)
 			{
-			    // Si tenemos base de datos, ponemos su nombre en el titulo.				
-				
+			    // Si tenemos base de datos, ponemos su nombre en el titulo.			
+			
 				mainWindow.Title=
 					title
 						+ " - "

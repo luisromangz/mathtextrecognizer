@@ -52,7 +52,8 @@ namespace MathTextLearner.Assistant.BitmapProcessHelpers
 			types = new Type[processTypes.Count];
 			processTypes.Keys.CopyTo(types,0);
 			
-			InitializeWidgets(processTypes);
+			InitializeWidgets(processTypes);		
+			
 		}
 		
 		#endregion Constructor
@@ -95,21 +96,22 @@ namespace MathTextLearner.Assistant.BitmapProcessHelpers
 		
 		private void InitializeWidgets(Dictionary<Type,string> processes)
 		{	
-			
-			bitmapProcessCmb.RemoveText(0);				
-			
+			// Por defecto tiene un elemento sin texto que mejor eliminamos.
+			bitmapProcessCmb.RemoveText(0);
 			
 			foreach (string desc in processes.Values)
 			{
 				bitmapProcessCmb.AppendText(desc);				
 			}
+			
+			
 		}
 		
 		private void OnBitmapProcessCmbChanged(object e, EventArgs a)
 		{
 			// El tipo a devolver es el que tiene su indice seleccionado.
-			
-			selectedProcess = types[bitmapProcessCmb.Active];
+			if(bitmapProcessCmb.Active >= 0)
+				selectedProcess = types[bitmapProcessCmb.Active];
 		}
 		
 		private void OnOkBtnClicked(object e, EventArgs a)
