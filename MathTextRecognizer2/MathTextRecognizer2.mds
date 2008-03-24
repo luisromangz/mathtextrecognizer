@@ -20,6 +20,7 @@
     <Execute type="None" entry="MathTextLibrary" />
     <Execute type="None" entry="MathTextRecognizer" />
   </StartMode>
+  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="NoChangeLog" />
   <DeployTargets />
   <Entries>
     <Entry filename="MathTextLearner/MathTextLearner.mdp" />
