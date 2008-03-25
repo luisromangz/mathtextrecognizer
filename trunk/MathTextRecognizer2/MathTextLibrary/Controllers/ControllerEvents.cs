@@ -1,6 +1,8 @@
 // created on 02/01/2006 at 13:20
 using System;
 
+using MathTextLibrary.Bitmap;
+
 namespace MathTextLibrary.Controllers
 {
 

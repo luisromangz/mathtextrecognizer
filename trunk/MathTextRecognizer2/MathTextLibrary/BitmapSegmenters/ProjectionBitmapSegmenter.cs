@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using Gdk;
 
-using MathTextLibrary;
+using MathTextLibrary.Bitmap;
 using MathTextLibrary.Projection;
 
 namespace MathTextLibrary.BitmapSegmenters{
@@ -12,7 +12,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 	/// <summary>
 	/// La clase abstracta <c>ProjectionBitmapSegmenter</c> representa la base
 	/// de todos los segmentadores de imagenes que usan la proyeccion de la 
-	/// misma para descomponerla en partes mas pequeas.
+	/// misma para descomponerla en partes mas pequeñas.
 	/// </summary>
 	public abstract class ProjectionBitmapSegmenter : IBitmapSegmenter
 	{

@@ -2,6 +2,8 @@
 
 using System;
 
+using MathTextLibrary.Bitmap;
+using MathTextLibrary.Symbol;
 using MathTextLibrary.Databases;
 
 namespace MathTextLibrary.Databases.Momentum

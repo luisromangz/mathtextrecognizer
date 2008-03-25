@@ -27,7 +27,8 @@ namespace MathTextLearner.Assistant
 		private Button removeButton;
 		
 		[Glade.WidgetAttribute]
-		private IconView filesIconView;			
+		private IconView filesIconView;
+
 		
 #endregion Controles de Glade
 		
@@ -39,6 +40,13 @@ namespace MathTextLearner.Assistant
 		
 #region Constructor
 		
+		/// <summary>
+		/// Crea una instancia del panel de seleccion de ficheros del
+		/// asistente de creacion de nuevas basesd de datos de reconocimiento.
+		/// </summary>
+		/// <param name="assistant">
+		/// El asistente al que pertenece el nuevo panel.
+		/// </param>
 		public FileSelectionStep(PanelAssistant assistant) 
 			: base(assistant)
 		{
@@ -55,7 +63,12 @@ namespace MathTextLearner.Assistant
 #endregion Constructor
 		
 #region Metodos públicos
-		
+		/// <summary>
+		/// Indica si existen errores de validación en el panel del asistente.
+		/// </summary>
+		/// <returns>
+		/// «true» si hay errores, «false» en caso contrario.
+		/// </returns>
 		public override bool HasErrors ()
 		{
 			errors = "";
@@ -72,7 +85,10 @@ namespace MathTextLearner.Assistant
 #endregion Metodos públicos
 		
 #region Propiedades
-		
+		/// <value>
+		/// Permite recuperar el contenedor de información acerca de las
+		/// imagenes.
+		/// </value>
 		public ListStore ImagesStore
 		{
 			get
@@ -81,6 +97,9 @@ namespace MathTextLearner.Assistant
 			}
 		}
 		
+		/// <value>
+		/// Permite recuperar las imagenes añadidas.
+		/// </value>
 		public List<Gdk.Pixbuf> Images
 		{
 			get
@@ -103,7 +122,13 @@ namespace MathTextLearner.Assistant
 #endregion Propiedades
 		
 #region Metodos privados
-		
+		/// <summary>
+		/// Añade un icono representando un archivo de imagen a la vista
+		/// de iconos del panel.
+		/// </summary>
+		/// <param name="fileName">
+		/// La ruta del archivo que se añade al conjunto de archivos.
+		/// </param>
 		private void AddIcon(string fileName)
 		{
 			// Aqui añadimos un icono al IconView.
@@ -122,18 +147,23 @@ namespace MathTextLearner.Assistant
 			filesIconView.SelectPath(fileStore.GetPath(iter));
 		}
 		
+		/// <summary>
+		/// Muestra una venta de información para el archivo representado 
+		/// por un icono de la vista de archivos.
+		/// </summary>
 		private void FilesIconViewItemActivated()
 		{
 			if(filesIconView.SelectedItems.Length > 0)
 			{ 
+				// Recuperamos el elemento del IconView que se ha seleccionado
 				TreeIter iter;
 				fileStore.GetIter(out iter, filesIconView.SelectedItems[0]);
 				
+				// Recuperamos el archivo asociado al icono
 				string filepath = fileStore.GetValue(iter,2) as string;
 				Gdk.Pixbuf p = new Gdk.Pixbuf(filepath);
 				
-				
-				
+				// Mostramos la ventana de informacióndel archivo
 				OkDialog.Show(
 					this.Assistant.Window,
 					MessageType.Info,
@@ -145,20 +175,26 @@ namespace MathTextLearner.Assistant
 			}
 		}
 		
+		/// <summary>
+		/// Inicializa algunos controles del panel del asistente.
+		/// </summary>
 		private void InitializeWidgets()
 		{
 			// El control de vista de icono mostrará
 			// La imagen, el nombre del fichero y tambien almacenará 
 			// la ruta completa.
-			fileStore = 
-				new ListStore(typeof(Gdk.Pixbuf), typeof(string), typeof(string));
+			// La asociación de estos campos en el IconView se define en
+			// el propio archivo de Glade.
+			fileStore = new ListStore(typeof(Gdk.Pixbuf), 
+			                          typeof(string), 
+			                          typeof(string));
 				
-			filesIconView.Model = fileStore;
-			filesIconView.PixbufColumn = 0;
-			filesIconView.TextColumn = 1;
-			
+			filesIconView.Model = fileStore;		
 		}
 				
+		/// <summary>
+		/// Maneja el uso del boton de añidir imagen.
+		/// </summary>
 		private void OnAddImageButtonClicked(object o, EventArgs a)
 		{
 			// Añadiremos una imagen a la lista.
@@ -170,6 +206,9 @@ namespace MathTextLearner.Assistant
 			}
 		}
 		
+		/// <summary>
+		/// Maneja el uso del boton de añadir las imagenes de una carpeta.
+		/// </summary>
 		private void OnAddFolderButtonClicked(object o, EventArgs a)
 		{
 			// Selccionamos la carpeta
@@ -225,16 +264,28 @@ namespace MathTextLearner.Assistant
 			}			
 		}
 		
+		/// <summary>
+		/// Maneja el evento de activación (doble click) de un icono.
+		/// </summary>
 		private void OnFilesIconViewItemActivated(object o, ItemActivatedArgs a)
 		{
 			FilesIconViewItemActivated();
 		}
 		
+		/// <summary>
+		/// Maneja el evento de cambio de la selección de un icono de la vista
+		/// de iconos
+		/// </summary>
 		private void OnFilesIconViewSelectionChanged(object o, EventArgs a)
 		{
-			removeButton.Sensitive = filesIconView.SelectedItems.Length > 0;
+			bool hasSelection = filesIconView.SelectedItems.Length > 0;
+			removeButton.Sensitive = hasSelection;
 		}
 		
+		/// <summary>
+		/// Maneja el evento de uso del boton de eliminar un icono de la vista
+		/// de iconos.
+		/// </summary>
 		private void OnRemoveButtonClicked(object o, EventArgs a)
 		{
 			TreeIter iter;

@@ -15,9 +15,6 @@
   </Configurations>
   <Contents>
     <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="MathSymbol.cs" subtype="Code" buildaction="Compile" />
-    <File name="MathTextBitmap.cs" subtype="Code" buildaction="Compile" />
-    <File name="MathTextBitmapEvents.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapProcesses/BitmapFixedThresholder.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapProcesses/BitmapFramer.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapProcesses/BitmapScaler.cs" subtype="Code" buildaction="Compile" />
@@ -43,9 +40,9 @@
     <File name="Projection/VerticalBitmapProjection.cs" subtype="Code" buildaction="Compile" />
     <File name="TreeMaker/RecognizedTreeNode.cs" subtype="Code" buildaction="Compile" />
     <File name="TreeMaker/Steps/ITreeMakerStep.cs" subtype="Code" buildaction="Compile" />
-    <File name="TreeMaker/Steps/Step0MakeInitialTree.cs" subtype="Code" buildaction="Compile" />
-    <File name="TreeMaker/Steps/Step1SearchFractions.cs" subtype="Code" buildaction="Compile" />
-    <File name="TreeMaker/Steps/Step2SearchSuperAndSub.cs" subtype="Code" buildaction="Compile" />
+    <File name="TreeMaker/Steps/MakeInitialTree.cs" subtype="Code" buildaction="Compile" />
+    <File name="TreeMaker/Steps/SearchFractions.cs" subtype="Code" buildaction="Compile" />
+    <File name="TreeMaker/Steps/SearchSuperAndSub.cs" subtype="Code" buildaction="Compile" />
     <File name="Projection/BitmapProjection.cs" subtype="Code" buildaction="Compile" />
     <File name="Utils" subtype="Directory" buildaction="Compile" />
     <File name="Utils/ImageUtils.cs" subtype="Code" buildaction="Compile" />
@@ -99,11 +96,19 @@
     <File name="Databases/ISymbolProcess.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/DatabaseBase.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/DatabaseInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Bitmap" subtype="Directory" buildaction="Compile" />
+    <File name="Bitmap/MathTextBitmap.cs" subtype="Code" buildaction="Compile" />
+    <File name="Bitmap/MathTextBitmapEvents.cs" subtype="Code" buildaction="Compile" />
+    <File name="Symbol" subtype="Directory" buildaction="Compile" />
+    <File name="Symbol/MathSymbol.cs" subtype="Code" buildaction="Compile" />
+    <File name="Utils/ConfigFileUtils.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+    <ProjectReference type="Gac" localcopy="True" refto="nunit.core, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <ProjectReference type="Gac" localcopy="True" refto="nunit.framework, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
   </References>
   <DeployTargets />
 </Project>

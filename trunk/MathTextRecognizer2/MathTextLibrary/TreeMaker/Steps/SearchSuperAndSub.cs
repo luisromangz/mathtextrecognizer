@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 
+using MathTextLibrary.Bitmap;
+using MathTextLibrary.Symbol;
+
 namespace MathTextLibrary.TreeMaker.Steps
 {
 	/// <summary>
@@ -14,9 +17,9 @@ namespace MathTextLibrary.TreeMaker.Steps
 	/// exactamente dos hijos: el primero es la base y el segundo el super
 	/// o subindice.
 	/// </remarks>
-	public class Step2SearchSuperAndSub
+	public class SearchSuperAndSub
 	{
-		public Step2SearchSuperAndSub()
+		public SearchSuperAndSub()
 		{
 		}
 		

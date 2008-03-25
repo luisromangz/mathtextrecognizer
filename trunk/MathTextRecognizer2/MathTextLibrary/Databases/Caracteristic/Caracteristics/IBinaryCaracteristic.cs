@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
+using MathTextLibrary.Bitmap;
+
 namespace MathTextLibrary.Databases.Caracteristic.Caracteristics
 {
 	

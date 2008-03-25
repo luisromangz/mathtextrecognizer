@@ -1,6 +1,7 @@
-
 using System;
+
 using MathTextLibrary;
+using MathTextLibrary.Bitmap;
 
 namespace MathTextLibrary.BitmapProcesses
 {

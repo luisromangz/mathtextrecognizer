@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 
+using MathTextLibrary.Bitmap;
+using MathTextLibrary.Symbol;
+
 namespace MathTextLibrary.TreeMaker.Steps
 {
 	/// <summary>
@@ -12,9 +15,9 @@ namespace MathTextLibrary.TreeMaker.Steps
 	/// simbolo <c>MathSymbolType.Fraction</c> que tendra exactamente dos
 	/// hijos: el primero es el numerador y el segundo el denominador.
 	/// </remarks>
-	public class Step1SearchFractions: ITreeMakerStep
+	public class SearchFractions: ITreeMakerStep
 	{
-		public Step1SearchFractions()
+		public SearchFractions()
 		{
 		}
 		

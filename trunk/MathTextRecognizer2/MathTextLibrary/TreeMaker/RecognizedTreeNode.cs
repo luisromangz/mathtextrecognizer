@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 
+using MathTextLibrary.Bitmap;
+using MathTextLibrary.Symbol;
+
 namespace MathTextLibrary.TreeMaker
 {
 	/// <summary>

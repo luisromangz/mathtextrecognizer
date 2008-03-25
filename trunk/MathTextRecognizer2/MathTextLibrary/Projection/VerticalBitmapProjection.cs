@@ -3,6 +3,8 @@ using System;
 
 using Gdk;
 
+using MathTextLibrary.Bitmap;
+
 namespace MathTextLibrary.Projection
 {
 	/// <summary>

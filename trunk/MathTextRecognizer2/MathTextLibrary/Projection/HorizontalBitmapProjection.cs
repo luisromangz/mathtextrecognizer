@@ -4,6 +4,7 @@ using System;
 using Gdk;
 
 using MathTextLibrary;
+using MathTextLibrary.Bitmap;
 
 namespace MathTextLibrary.Projection
 {

@@ -19,6 +19,8 @@ using CustomGtkWidgets.ImageArea;
 using CustomGtkWidgets.CommonDialogs;
 
 using MathTextLibrary;
+using MathTextLibrary.Bitmap;
+using MathTextLibrary.Symbol;
 using MathTextLibrary.Utils;
 using MathTextLibrary.Databases;
 using MathTextLibrary.Databases.Caracteristic;
@@ -478,8 +480,7 @@ namespace MathTextLearner
 		private void OnLearningStepDone(object sender,
 		                                ProcessingStepDoneEventArgs arg)
 		{
-			// TODO Refactorizar las bases de datos para MathTextDatabase 
-			// tenga los eventos
+			
 			Application.Invoke(sender,arg,OnLearningStepDoneThread);	
 		}
 		

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 using Gdk;
 
+using MathTextLibrary.Bitmap;
+
 namespace MathTextLibrary.Projection
 {
 	/// <summary>

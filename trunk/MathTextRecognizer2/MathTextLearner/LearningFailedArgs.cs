@@ -2,6 +2,7 @@
 using System;
 
 using MathTextLibrary;
+using MathTextLibrary.Symbol;
 
 namespace MathTextLearner
 {

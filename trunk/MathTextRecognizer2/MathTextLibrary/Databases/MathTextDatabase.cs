@@ -4,6 +4,8 @@ using System.Reflection;
 using System.Xml.Serialization;
 using System.Collections.Generic;
 
+using MathTextLibrary.Bitmap;
+using MathTextLibrary.Symbol;
 using MathTextLibrary.BitmapProcesses;
 
 namespace MathTextLibrary.Databases

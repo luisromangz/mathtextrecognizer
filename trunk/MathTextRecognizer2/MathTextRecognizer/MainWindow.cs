@@ -19,6 +19,8 @@ using CustomGtkWidgets.ImageArea;
 using CustomGtkWidgets.CommonDialogs;
 
 using MathTextLibrary;
+using MathTextLibrary.Bitmap;
+using MathTextLibrary.Symbol;
 using MathTextLibrary.Controllers;
 using MathTextLibrary.Databases.Caracteristic.Caracteristics;
 

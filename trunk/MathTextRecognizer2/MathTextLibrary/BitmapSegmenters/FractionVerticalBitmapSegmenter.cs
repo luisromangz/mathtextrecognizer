@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 
+using MathTextLibrary.Bitmap;
 using MathTextLibrary.Projection;
 using MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers;
 

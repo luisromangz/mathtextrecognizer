@@ -3,11 +3,12 @@ using System.Collections.Generic;
 
 using Gdk;
 
+using MathTextLibrary.Symbol;
 using MathTextLibrary.Projection;
 using MathTextLibrary.BitmapProcesses;
 using MathTextLibrary.BitmapSegmenters;
 
-namespace MathTextLibrary
+namespace MathTextLibrary.Bitmap
 {
 	/// <summary>
 	/// Abstrae una imagen y multiples operaciones que se pueden realizar

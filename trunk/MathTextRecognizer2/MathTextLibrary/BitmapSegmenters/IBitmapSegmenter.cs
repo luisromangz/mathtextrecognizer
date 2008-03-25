@@ -1,6 +1,8 @@
 // created on 28/12/2005 at 13:23
 using System.Collections.Generic;
 
+using MathTextLibrary.Bitmap;
+
 namespace MathTextLibrary.BitmapSegmenters{
 	/// <summary>
 	/// Esta interfaz define los metodos comunes a todas las
