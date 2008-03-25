@@ -1,5 +1,6 @@
 using System;
 
+using MathTextLibrary.Bitmap;
 using MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers;
 
 namespace MathTextLibrary.Databases.Caracteristic.Caracteristics

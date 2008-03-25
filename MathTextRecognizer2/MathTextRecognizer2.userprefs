@@ -1,20 +1,13 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
     <File name="Bienvenido" />
-    <File name="MathTextLibrary/Databases/DatabaseBase.cs" line="44" column="3" />
-    <File name="MathTextLearner/MainWindow.cs" line="156" column="4" />
-    <File name="MathTextLearner/Assistant/BitmapProcessHelpers/ProcessSelectorDialog.cs" line="117" column="42" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
-      <Node expanded="True" selected="True">
+      <Node expanded="True">
         <Node name="MathTextLibrary" expanded="True">
-          <Node name="Controllers" expanded="True" />
-          <Node name="Databases" expanded="True">
-            <Node name="Caracteristic" expanded="True" />
-          </Node>
+          <Node name="Databases" selected="True" />
         </Node>
-        <Node name="MathTextRecognizer" expanded="True" />
       </Node>
     </ViewMemento>
     <ViewMemento id="ClassPad">
@@ -25,7 +18,7 @@
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextLearner/Assistant/BitmapProcessHelpers/ProcessSelectorDialog.cs" />
+    <Property key="ActiveWindow" value="Bienvenido" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>

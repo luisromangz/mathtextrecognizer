@@ -1,7 +1,7 @@
 using System;
 using System.Xml.Serialization;
 
-namespace MathTextLibrary
+namespace MathTextLibrary.Symbol
 {
 	/// <summary>
 	/// Esta clase encapsula un símbolo como un texto y el 

@@ -4,8 +4,9 @@ using System;
 using System.Threading;
 
 using MathTextLibrary;
+using MathTextLibrary.Bitmap;
+using MathTextLibrary.Symbol;
 using MathTextLibrary.Databases;
-
 using MathTextLibrary.Databases.Caracteristic;
 
 namespace MathTextLibrary.Controllers
@@ -82,17 +83,15 @@ namespace MathTextLibrary.Controllers
 		/// en las posibles implementaciones distintas de la interfaz de usuario del
 		/// reconocedor.
 		/// </summary>
-		public MathTextRecognizerController(){
-			// TODO  Hay que hacer que la base de datos no se ponga por defecto.
-			database= new MathTextDatabase(new CaracteristicDatabase());
+		public MathTextRecognizerController(){			
 			
 			//Creamos una base de datos vacia en principio
 			database.RecognizingStepDone+=
 				new ProcessingStepDoneEventHandler(OnProcessingStepDone);				
 			
-			stepByStep=MathTextRecognizerControllerStepMode.UntilEnd;
-			stepMutex=new Mutex();
-			resumeMutex=new Mutex();	
+			stepByStep = MathTextRecognizerControllerStepMode.UntilEnd;
+			stepMutex = new Mutex();
+			resumeMutex = new Mutex();	
 		}
 	
 		/// <summary>

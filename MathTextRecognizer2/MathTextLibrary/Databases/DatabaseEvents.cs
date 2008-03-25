@@ -1,6 +1,9 @@
 // created on 27/12/2005 at 21:50
 using System;
 using System.Collections.Generic;
+
+using MathTextLibrary.Bitmap;
+using MathTextLibrary.Symbol;
 using MathTextLibrary.Databases.Caracteristic.Caracteristics;
 
 namespace MathTextLibrary.Databases

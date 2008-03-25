@@ -2,8 +2,11 @@
 using System;
 using System.IO;
 using System.Text;
-using MathTextLibrary.TreeMaker;
+
 using MathTextLibrary;
+using MathTextLibrary.Symbol;
+using MathTextLibrary.TreeMaker;
+
 
 namespace MathTextLibrary.Output
 {

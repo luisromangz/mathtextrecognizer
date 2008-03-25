@@ -4,6 +4,7 @@ using System;
 using Gtk;
 
 using MathTextLibrary;
+using MathTextLibrary.Bitmap;
 
 namespace MathTextRecognizerGUI
 {

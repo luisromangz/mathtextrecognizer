@@ -12,7 +12,8 @@ using System.IO;
 using System.Threading;
 
 using MathTextLibrary;
-//using MathTextLibrary.Databases.Caracteristic.Caracteristics;
+using MathTextLibrary.Bitmap;
+
 using MathTextLibrary.TreeMaker;
 using MathTextLibrary.TreeMaker.Steps;
 using MathTextLibrary.Output;
@@ -129,16 +130,16 @@ namespace MathTextLibrary.Controllers
 			//Cada uno de los pasos nos trata el arbol de images de forma que 
 			//cambia su estructura, para que sea mas facil generar una salida
 			//de forma recursiva.
-			Step0MakeInitialTree step0=new Step0MakeInitialTree();			
+			MakeInitialTree step0=new MakeInitialTree();			
 			RecognizedTreeNode raiz=step0.ApplyStep(startImage);			
 			OnStepFinished();
 			
 		
-			Step1SearchFractions step1=new Step1SearchFractions();
+			SearchFractions step1=new SearchFractions();
 			raiz=step1.ApplyStep(raiz);			
 			OnStepFinished();
 		
-			Step2SearchSuperAndSub step2=new Step2SearchSuperAndSub();
+			SearchSuperAndSub step2=new SearchSuperAndSub();
 			raiz=step2.ApplyStep(raiz);			
 			OnStepFinished();
 		

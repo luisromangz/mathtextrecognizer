@@ -1,5 +1,7 @@
 using System;
 
+using MathTextLibrary.Bitmap;
+
 namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 {
 	/// <summary>

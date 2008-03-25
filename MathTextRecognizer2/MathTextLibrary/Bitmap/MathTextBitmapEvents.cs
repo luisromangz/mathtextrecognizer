@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MathTextLibrary
+namespace MathTextLibrary.Bitmap
 {
 	public delegate void MathTextBitmapChildrenAddedEventHandler(object sender, MathTextBitmapChildrenAddedEventArgs arg);
 

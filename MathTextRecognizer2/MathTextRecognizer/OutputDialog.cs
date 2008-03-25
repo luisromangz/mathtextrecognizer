@@ -8,6 +8,7 @@ using Gtk;
 using Glade;
 
 using MathTextLibrary;
+using MathTextLibrary.Bitmap;
 using MathTextLibrary.Controllers;
 using MathTextLibrary.Databases.Caracteristic.Caracteristics;
 

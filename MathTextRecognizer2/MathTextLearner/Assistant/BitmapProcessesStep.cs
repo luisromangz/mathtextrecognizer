@@ -41,14 +41,14 @@ namespace MathTextLearner.Assistant
 		private Button editProcessBtn;
 		
 		[Glade.WidgetAttribute]
+		private Button makeDefaultBtn;
+		
+		[Glade.WidgetAttribute]
 		private ScrolledWindow bitmapsProcessSW;
 			
 		[Glade.WidgetAttribute]
 		private HBox previewHB;
-		
-		[Glade.WidgetAttribute]
-		private ToggleButton previewTB;
-		
+				
 		[Glade.WidgetAttribute]
 		private VButtonBox processBtnBox;
 		
@@ -97,6 +97,12 @@ namespace MathTextLearner.Assistant
 		
 #region Metodos públicos
 		
+		/// <summary>
+		/// Indica si hay errores de validación en el paso del asistente.
+		/// </summary>
+		/// <returns>
+		/// «true» si hay errores, «false» en caso contrario.
+		/// </returns>
 		public override bool HasErrors ()
 		{
 			errors = "";
@@ -108,6 +114,10 @@ namespace MathTextLearner.Assistant
 		
 #region Propiedades
 		
+		/// <value>
+		/// Permite obtener la lista de procesos que se aplicará a las imagenes
+		/// procesadas usando esta base de datos. 
+		/// </value>
 		public List<BitmapProcess> Processes
 		{
 			get
@@ -128,6 +138,12 @@ namespace MathTextLearner.Assistant
 		
 #region Metodos privados
 		
+		/// <summary>
+		/// Establece las vistas de una imagen para su previsualizacion.
+		/// </summary>
+		/// <param name="p">
+		/// La imagen que se quiere previsualizar
+		/// </param>
 		private void CreateProcessedPreview(Gdk.Pixbuf p)
 		{
 			// Creamos una matriz a partir del pixbuf, y le 
@@ -145,6 +161,13 @@ namespace MathTextLearner.Assistant
 			processedIA.Image = processedPixbuf;			
 		}		
 		
+		/// <summary>
+		/// Inicializa los controles del panel del asistente.
+		/// </summary>
+		/// <param name="imagesStore">
+		/// El almacén de imagenes creado en el paso anterior, para que las
+		/// imagenes sean seleccionables en la vista de previsualización.
+		/// </param>
 		private void InitializeWidgets(ListStore imagesStore)
 		{
 			NodeStore store = new NodeStore(typeof(BitmapProcessNode));
@@ -156,11 +179,11 @@ namespace MathTextLearner.Assistant
 			
 			processesView.NodeSelection.Changed += OnProcessesSelectionChanged;
 			
-			processesView.AppendColumn("Proceso", 
+			processesView.AppendColumn("Algoritmo", 
 			                           new CellRendererText(),
 			                           "text",0);
 			
-			processesView.AppendColumn("Valores",
+			processesView.AppendColumn("Parámetros",
 			                           new CellRendererText(),
 			                           "text",1);		
 			
@@ -181,15 +204,21 @@ namespace MathTextLearner.Assistant
 			
 			imagesTV.Selection.Changed += OnImagesTVSelectionChanged;
 		
-			bitmapProcessesStepFrame.Shown += OnBitmapProcessesStepFrameShown;
+			LoadDefaults();
 			
 		}
 		
-		private void OnBitmapProcessesStepFrameShown(object sender, EventArgs a)
+		/// <summary>
+		/// Carga la seleccion de algoritmos de procesado por defecto.
+		/// </summary>
+		private void LoadDefaults()
 		{
-			previewHB.Visible = false;
+			//TODO Cargar la seleccion de algoritmos de procesado por defecto
 		}
 		
+		/// <summary>
+		/// Maneja el uso del boton de bajar un algoritmo en la lista.
+		/// </summary>
 		private void OnDownProcessBtnClicked(object sender, EventArgs a)
 		{
 			// Obtenemos el indice del nodo seleccionado.
@@ -210,6 +239,10 @@ namespace MathTextLearner.Assistant
 			processesView.ColumnsAutosize();
 		}
 		
+		/// <summary>
+		/// Maneja el evento del uso del boton de añadir un nuevo algoritmo
+		/// a la lista de procesados de imagenes.
+		/// </summary>
 		private void OnAddProcessBtnClicked(object sender, EventArgs a)
 		{
 			
@@ -242,6 +275,9 @@ namespace MathTextLearner.Assistant
 			dlg.Destroy();		                                
 		}
 		
+		/// <summary>
+		/// Maneja el uso del boton de editar los parametros de un algoritmo.
+		/// </summary>
 		private void OnEditProcessBtnClicked(object e, EventArgs a)
 		{
 
@@ -262,6 +298,10 @@ namespace MathTextLearner.Assistant
 			}
 		}
 		
+		/// <summary>
+		/// Maneja la seleccion de una imagen para crear su vista de
+		/// previsualizacion.
+		/// </summary>
 		private void OnImagesTVSelectionChanged(object sender, EventArgs a)
 		{
 			// Comprobamos que hay filas seleccionadas.
@@ -286,30 +326,32 @@ namespace MathTextLearner.Assistant
 				originIA.Image = null;
 				processedIA.Image = null;
 			}
-		}
+		}	
 		
-		private void OnPreviewTBToggled(object sender, EventArgs a)
+		/// <summary>
+		/// Maneja el uso del boton encargado de guardar la seleccion actual de 
+		/// procesados como seleccion por defecto.
+		/// </summary>
+		/// <param name="e">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnMakeDefaultBtnClicked(object e, EventArgs args)
 		{
-			// Si tenemos previsualización, la ocultamos, y si no, la mostramos.
-			if(previewTB.Active)
-			{
-				processBtnBox.Sensitive = false;				
-				bitmapsProcessSW.Visible = false;
-				previewHB.Visible = true;
-				
-			}
-			else
-			{
-				
-				
-				previewHB.Visible = false;
-				bitmapsProcessSW.Visible = true;
-				processBtnBox.Sensitive = true;
-				
-				imagesTV.Selection.UnselectAll();
-			}
+			//TODO Guardar la seleccion de algoritmos de procesado
 		}
-		
+			
+		/// <summary>
+		/// Maneja el cambio de la seleccion en la lista de algoritmos.
+		/// </summary>
+		/// <param name="e">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="a">
+		/// A <see cref="EventArgs"/>
+		/// </param>
 		private void OnProcessesSelectionChanged(object e, EventArgs a)
 		{
 			
@@ -348,6 +390,15 @@ namespace MathTextLearner.Assistant
 				&& node.ProcessValues != "";
 		}
 		
+		/// <summary>
+		/// Maneja el uso del boton para elminar algoritmos de la lista.
+		/// </summary>
+		/// <param name="e">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="a">
+		/// A <see cref="EventArgs"/>
+		/// </param>
 		private void OnRemoveProcessBtnClicked(object e, EventArgs a)
 		{
 			// Eliminamos el nodo
@@ -356,6 +407,9 @@ namespace MathTextLearner.Assistant
 			processesView.ColumnsAutosize();
 		}
 		
+		/// <summary>
+		/// Maneja el uso del boton para subir procesados en la lista.
+		/// </summary>
 		private void OnUpProcessBtnClicked(object e, EventArgs a)
 		{			
 			// Obtenemos el indice del nodo seleccionado.
@@ -375,6 +429,10 @@ namespace MathTextLearner.Assistant
 			processesView.ScrollToCell(path,null, true,0f,0);
 		}
 		
+		/// <summary>
+		/// Recupera los tipos que implementan algoritmos de procesado de
+		/// imagenes.
+		/// </summary>
 		private void RetrieveBitmapProcessesTypes()
 		{
 			bitmapProcessesTypes =  new Dictionary<System.Type,string>();
@@ -393,6 +451,16 @@ namespace MathTextLearner.Assistant
 			
 		}
 		
+		/// <summary>
+		/// Obtiene la descripcion de un algoritmo de procesado de imagenes,
+		/// usando reflexion sobre el tipo.
+		/// </summary>
+		/// <param name="t">
+		/// El tipo en el que se implementa el algoritmo.
+		/// </param>
+		/// <returns>
+		/// Una cadena de texto con la descripción.
+		/// </returns>
 		private string RetrieveDescription(Type t)
 		{		
 			object[] attributes =

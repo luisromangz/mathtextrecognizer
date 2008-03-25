@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using MathTextLibrary.Bitmap;
+
 namespace MathTextLibrary.TreeMaker.Steps
 {
 	/// <summary>
@@ -12,9 +14,9 @@ namespace MathTextLibrary.TreeMaker.Steps
 	/// el paso inicial debe convertir el arbol de <c>MathTextBitmap</c>
 	/// producido por la segmentacion en un arbol de <c>RecognizedTreeNode</c>.
 	/// </remarks>
-	public class Step0MakeInitialTree
+	public class MakeInitialTree
 	{
-		public Step0MakeInitialTree()
+		public MakeInitialTree()
 		{
 		}
 		

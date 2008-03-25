@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 
+using MathTextLibrary.Bitmap;
+
 namespace MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers
 {
 	/// <summary>

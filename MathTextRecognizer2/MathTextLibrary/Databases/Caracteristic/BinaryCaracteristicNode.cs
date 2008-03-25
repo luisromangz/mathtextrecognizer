@@ -1,7 +1,9 @@
 using System;
+using System.Xml.Serialization;
 using System.Collections.Generic;
 
-using System.Xml.Serialization;
+using MathTextLibrary.Bitmap;
+using MathTextLibrary.Symbol;
 using MathTextLibrary.Databases.Caracteristic.Caracteristics;
 
 namespace MathTextLibrary.Databases.Caracteristic

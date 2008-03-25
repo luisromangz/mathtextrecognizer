@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Gdk;
 
 using MathTextLibrary;
+using MathTextLibrary.Bitmap;
 using MathTextLibrary.Projection;
 
 namespace MathTextLibrary.BitmapSegmenters{

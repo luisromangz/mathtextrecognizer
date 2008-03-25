@@ -1,6 +1,7 @@
 using System;
-using MathTextLibrary;
 
+using MathTextLibrary;
+using MathTextLibrary.Bitmap;
 using MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers;
 
 namespace MathTextLibrary.BitmapProcesses
