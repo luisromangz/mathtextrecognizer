@@ -27,7 +27,10 @@ namespace MathTextLibrary.Utils
 		/// </returns>
 		public static string GetConfigFilePath(string appName)
 		{
-			return null;
+			string path = 
+				Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+			
+			return String.Format("{0}/.{1}", path, appName.ToLowerInvariant());
 		}
 	}
 }

@@ -5,6 +5,8 @@
 using System;
 using NUnit.Framework;
 
+using MathTextLibrary.Utils;
+
 namespace MathTextLibrary
 {
 	
@@ -14,8 +16,13 @@ namespace MathTextLibrary
 	{
 		
 		[Test()]
-		public void TestCase()
+		public void LuisLinuxConfigFilePathTest()
 		{
+			string path = ConfigFileUtils.GetConfigFilePath("MathTextLearner");
+			
+			Assert.AreEqual("/home/luis/.mathtextlearner",
+			                path,
+			                "La ruta del archivo no es la esperada");
 		}
 	}
 }
