@@ -1,0 +1,5 @@
+=Ideas=
+
+This page shows ideas and random thoughts that may be useful now or in the future :D
+
+ * A visual way to define a grammar for formulas should be defined. This would allow to define "cut lines" which the matching software should use to divide an image. In the image, you should define areas in which a given operator, a children formula, or nothing, is expected which would have to appear in a given image. Also, we would have to be able to define how the operators and children formulas are translated into LaTeX and MathML.
