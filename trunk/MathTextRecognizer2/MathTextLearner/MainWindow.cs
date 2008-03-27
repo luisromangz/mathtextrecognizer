@@ -241,18 +241,11 @@ namespace MathTextLearner
 		/// </summary>
 		private void LearnProccess()
 		{
-			try
-			{
-				database.Learn(mtb, symbol);
-				databaseModified=true;
-				SetTitle(null,true);
-			}
-			catch(ExistingSymbolException e)
-			{
-				Application.Invoke(e,
-					new LearningFailedArgs(e.ExistingSymbol),
-					OnLearningProccessFailed);
-			}		
+			
+			database.Learn(mtb, symbol);
+			databaseModified=true;
+			SetTitle(null,true);
+			
 		}
 		
 		private void LoadNewImage(Gdk.Pixbuf image)
@@ -453,26 +446,7 @@ namespace MathTextLearner
 				imageAreaProcessed.Image = null;
 			}
 		}
-		
-		private void OnLearningProccessFailed(object sender, EventArgs a)
-		{
-			
-			string msg=
-				"!Ya hay un símbolo, «"
-				+(a as LearningFailedArgs).ExistingSymbol 
-				+"», con las mismas caracteristicas binarias en la base de datos!";	
-								
-			LogLine(msg);
-			ResetWidgets();
-			
-			// Indicamos que ha habido un conflicto.
-			conflicts++;
-			
-			OkDialog.Show(mainWindow, MessageType.Error,msg);
-			
-			PrepareForNewImage();
-		}
-		
+	
 		/// <summary>
 		/// Metodo que maneja el evento provocado al completarse un paso
 		/// del proceso durante el aprendizaje.

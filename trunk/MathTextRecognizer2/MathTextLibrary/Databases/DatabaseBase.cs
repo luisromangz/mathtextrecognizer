@@ -58,7 +58,17 @@ namespace MathTextLibrary.Databases
 		///</param>
 		public abstract void Learn(MathTextBitmap bitmap,MathSymbol symbol);
 				
-		public abstract MathSymbol Recognize(MathTextBitmap image);
+		/// <summary>
+		/// Busca una imagen en la base de datos.
+		/// </summary>
+		/// <param name="image">
+		/// La imagen que se procesará y buscará en la base de datos.
+		/// </param>
+		/// <returns>
+		/// Una lista con todos los simbolos que coincidan con los parametros
+		/// asociados a la imagen.
+		/// </returns>
+		public abstract List<MathSymbol> Recognize(MathTextBitmap image);
 		
 #endregion Metodos publicos
 		

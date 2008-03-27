@@ -14,14 +14,15 @@ namespace MathTextLibrary.Databases.Caracteristic
 	/// </summary>
 	public class BinaryCaracteristicNode
 	{
-		//La rama en la que una determinada caracteristica se cumple.
+		// La rama en la que una determinada caracteristica se cumple.
 		private BinaryCaracteristicNode trueTree;
 		
-		//La rama en la que una determinada caracteristica se incumple.
+		// La rama en la que una determinada caracteristica se incumple.
 		private BinaryCaracteristicNode falseTree;
 		
-		//El simbolo asociado al nodo, solo en el caso de que sea una hoja.
-		private MathSymbol symbol;		
+		// Los simbolos asociados al nodo, en el caso de que el simbolo sea 
+		// una hoja.
+		private List<MathSymbol> symbols;		
 		
 		/// <summary>
 		/// El constructor de <c>BinaryCaracteristicNode</c>.
@@ -31,30 +32,42 @@ namespace MathTextLibrary.Databases.Caracteristic
 		}
 
 		/// <summary>
-		/// Esta propiedad permite recupera y establecer el simbolo asociado
-		/// al nodo.
+		/// Esta propiedad permite asignar y recuperar los simbolos asociados
+		/// a un nodo.
 		/// </summary>
-		public MathSymbol Symbol
+		public List<MathSymbol> Symbols
 		{
 			get
 			{				
-				return symbol;
+				return symbols;
+			}			
+		}
+		
+		/// <summary>
+		/// Permite saber si el nodo tiene simbolos asociados.
+		/// </summary>
+		public bool HasSymbols
+		{
+			get
+			{
+				return symbols!=null && symbols.Count > 0;
 			}
-			
-			set
-			{			
-				if(symbol==null)
-				{
-					symbol=value;					
-				}
-				else
-				{
-					throw new ExistingSymbolException("Ya hay un caracter reconocido aqui :S",symbol);
-				}				
-			}				
 		}
 
-	
+		/// <summary>
+		/// Permite añadir un simbolo al nodo.
+		/// </summary>
+		/// <param name="symbol">
+		/// El simbolo a añadir
+		/// </param>
+		public void AddSymbol(MathSymbol symbol)
+		{
+			if(symbols==null)
+				symbols = new List<MathSymbol>();
+			
+			if (!this.symbols.Contains(symbol))
+				this.symbols.Add(symbol);
+		}
 		
 		
 		/// <summary>
@@ -69,8 +82,8 @@ namespace MathTextLibrary.Databases.Caracteristic
 			{
 				List<MathSymbol> res=new List<MathSymbol>();
 				
-				if(symbol!=null)
-					res.Add(symbol);
+				if(symbols!=null)
+					res.AddRange(symbols);
 
 				if(trueTree!=null)
 					res.AddRange(trueTree.ChildrenSymbols);
@@ -110,54 +123,4 @@ namespace MathTextLibrary.Databases.Caracteristic
 			}
 		}
 	}
-	
-	/// <summary>
-	/// Una excepcion que se lanzara cuando queremos guardar en la 
-	/// base de datos un caracter cuyas informacion coincide con otro
-	/// ya almacenado.
-	/// </summary>
-	public class ExistingSymbolException : Exception
-	{
-		private MathSymbol existing;
-		
-		/// <summary>
-		/// Constructor de ExistingSymbolException.
-		/// </summary>
-		/// <param name="existing">
-		/// El simbolo que esta presente en la base de datos y coincide.
-		/// </param>
-		public ExistingSymbolException(MathSymbol existing)
-			: this("",existing)
-		{
-		
-		}
-		
-		/// <summary>
-		/// Constructor de ExistingSymbolException.
-		/// </summary>
-		/// <param name="msg">
-		/// Un mensaje a enviar junto con la excepcion.
-		/// </param>
-		/// <param name="existing">
-		/// El simbolo que esta presente en la base de datos y coincide.
-		/// </param>
-		public ExistingSymbolException(string msg,MathSymbol existing)
-			: base(msg)
-		{
-			this.existing=existing;
-		}
-		
-		/// <summary>
-		/// Propiedad de solo lectura que nos permite recuperar el simbolo
-		/// coincidente de la base de datos.
-		/// </summary>
-		public MathSymbol ExistingSymbol
-		{
-			get
-			{
-				return existing;
-			}
-		}
-	}
-	
 }
