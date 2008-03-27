@@ -2,6 +2,7 @@
 
 using System;
 using System.Threading;
+using System.Collections.Generic;
 
 using MathTextLibrary;
 using MathTextLibrary.Bitmap;
@@ -259,24 +260,40 @@ namespace MathTextLibrary.Controllers
 			MathSymbol associatedSymbol;
 			
 			//Lanzamos el reconocedor de caracteres.
-			associatedSymbol=database.Recognize(node);
-			node.Symbol=associatedSymbol;
+			List<MathSymbol> associatedSymbols =database.Recognize(node);
+			
+			// Decidimos que símbolo de los  posiblemente devuelto usuaremos.			
+			associatedSymbol = ChooseSymbol(associatedSymbols);
+						
+			// Asociamos el símbolo al nodo.
+			node.Symbol=associatedSymbol;	
 			//Si no hemos reconocido nada, pues intentaremos segmentar el caracter.
-			if(associatedSymbol.SymbolType==MathSymbolType.NotRecognized){			
-				OnLogMessageSend("La imágen no pudo ser reconocida como un simbolo por la base de datos");
+			if(associatedSymbol.SymbolType == MathSymbolType.NotRecognized)
+			{			
+				OnLogMessageSend("La imagen no pudo ser reconocida como un simbolo por la base de datos");
+				
 				node.CreateChildren();
 				
-				if(node.Children!=null && node.Children.Count>1){
-					OnLogMessageSend("La imágen se ha segmentado correctamente");
-				}else{
-					OnLogMessageSend("La imágen no pudo ser segmentada, el símbolo queda sin reconocer");
+				if(node.Children!=null && node.Children.Count > 1)
+				{
+					OnLogMessageSend("La imagen se ha segmentado correctamente");
 				}
-			}else{
-				OnLogMessageSend("Símbolo reconocido por la base de datos como «"+associatedSymbol.Text+"»");
+				else
+				{
+					OnLogMessageSend("La imagen no pudo ser segmentada, el símbolo queda sin reconocer");
+				}
+			}
+			else
+			{
+				OnLogMessageSend("Símbolo reconocido por la base de datos como «"
+				                 +associatedSymbol.Text+"»");
 			}
 			
+					
+			
 			//Paramos aqui, lo que sigue es la llamada al procesamiento de los nodos hijos
-			if(modeAux != MathTextRecognizerControllerStepMode.UntilEnd){				
+			if(modeAux != MathTextRecognizerControllerStepMode.UntilEnd)
+			{				
 				recognizeThread.Suspend();
 			}
 			
@@ -285,6 +302,34 @@ namespace MathTextLibrary.Controllers
 				foreach(MathTextBitmap child in node.Children){
 					RecognizerTreeBuild(child);						
 				}
+			}
+		}
+		
+	
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="symbols">
+		/// A <see cref="List`1"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="MathSymbol"/>
+		/// </returns>
+		private MathSymbol ChooseSymbol(List<MathSymbol> symbols)
+		{
+			if(symbols.Count == 0)
+			{
+				//TODO Aprender caracteres no reconocidos
+				return MathSymbol.NullSymbol;
+			}
+			else if(symbols.Count==1)
+			{
+				return symbols[0];
+			}
+			else
+			{
+				//TODO Seleccion entre varios caracteres
+				throw new NotImplementedException("TODO seleccion entre varios caracteres");
 			}
 		}
 	}

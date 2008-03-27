@@ -1,6 +1,7 @@
 //Creado por: Luis Román Gutiérrez a las 13:48 de 06/07/2007
 
 using System;
+using System.Collections.Generic;
 
 using MathTextLibrary.Bitmap;
 using MathTextLibrary.Symbol;
@@ -25,7 +26,7 @@ namespace MathTextLibrary.Databases.Momentum
 		}
 		                          
 			
-		public override MathSymbol Recognize (MathTextBitmap image)
+		public override List<MathSymbol> Recognize (MathTextBitmap image)
 		{
 			return null;
 		}

@@ -104,11 +104,11 @@ namespace MathTextLibrary.Databases
 		/// datos.
 		/// </summary>
 		/// <param name="bitmap">
-		/// La imagen que aprenderemos.
+		/// La imagen que queremos añadir a la base de datos.
 		/// </param>
 		/// <param name="symbol">
 		/// El simbolo que representa a la imagen.
-		///</param>
+		/// </param>
 		public void Learn(MathTextBitmap bitmap,MathSymbol symbol)
 		{
 			database.Learn(bitmap,symbol);
@@ -184,9 +184,9 @@ namespace MathTextLibrary.Databases
 		/// La imagen a intentar asociar al caracter.
 		/// </param>
 		/// <returns>
-		/// El simbolo que se ha podido asociar a la imagen.
+		/// Los símbolos que se han podido asociar a la imagen.
 		/// </returns>
-		public MathSymbol Recognize(MathTextBitmap image)
+		public List<MathSymbol> Recognize(MathTextBitmap image)
 		{
 			return database.Recognize(image);
 		}
@@ -265,8 +265,7 @@ namespace MathTextLibrary.Databases
 			}		
 		}
 		
-		protected void OnSymbolLearned(object sender,
-		                                     EventArgs args)
+		protected void OnSymbolLearned(object sender, EventArgs args)
 		{
 			if(SymbolLearned != null)
 			{
