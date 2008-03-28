@@ -36,6 +36,8 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <StartAction>Project</StartAction>
+    <StartProgram>C:\Program Files\Mono-1.9\bin\mono.exe</StartProgram>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'Debug' ">
     <RegisterForComInterop>False</RegisterForComInterop>

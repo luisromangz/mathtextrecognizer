@@ -1,10 +1,11 @@
-// ConfigFileUtils.cs created with MonoDevelop
+﻿// ConfigFileUtils.cs created with MonoDevelop
 // User: luis at 18:21 25/03/2008
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
 //
 
 using System;
+using System.IO;
 
 namespace MathTextLibrary.Utils
 {
@@ -28,9 +29,12 @@ namespace MathTextLibrary.Utils
 		public static string GetConfigFilePath(string appName)
 		{
 			string path = 
-				Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+				Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 			
-			return String.Format("{0}/.{1}", path, appName.ToLowerInvariant());
+			return String.Format("{0}{1}.{2}", 
+			                     path, 
+			                     Path.DirectorySeparatorChar,
+			                     appName.ToLowerInvariant());
 		}
 	}
 }
