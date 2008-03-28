@@ -27,6 +27,8 @@
     <File name="Assistant/BitmapProcessHelpers/ProcessEditorWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Assistant/BitmapProcessHelpers/ProcessSelectorDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Assistant/databaseAssistant.glade" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Config" subtype="Directory" buildaction="Compile" />
+    <File name="Config/LearnerConfig.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="glade-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
@@ -34,6 +36,7 @@
     <ProjectReference type="Project" localcopy="True" refto="CustomGtkWidgets" />
     <ProjectReference type="Project" localcopy="True" refto="MathTextLibrary" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   </References>
   <DeployTargets />
 </Project>

@@ -89,7 +89,6 @@
     <File name="Databases/MathTextDatabase.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Momentum" subtype="Directory" buildaction="Compile" />
     <File name="Databases/Momentum/MomentumDatabase.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/DatabaseManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Caracteristic/BinaryCaracteristicNode.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Caracteristic/CaracteristicFactory.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/DatabaseEvents.cs" subtype="Code" buildaction="Compile" />
