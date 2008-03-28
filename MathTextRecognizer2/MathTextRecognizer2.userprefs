@@ -1,32 +1,42 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
     <File name="Bienvenido" />
-    <File name="MathTextLibrary/Tests/UtilsTests.cs" line="21" column="7" />
+    <File name="MathTextLibrary/Tests/CharacteristicDatabaseTests.cs" line="26" column="4" />
+    <File name="MathTextLibrary/Tests/UtilsTests.cs" line="1" column="1" />
+    <File name="MathTextLibrary/Databases/DatabaseInfo.cs" line="1" column="1" />
+    <File name="MathTextLibrary/Databases/ISymbolProcess.cs" line="13" column="1" />
+    <File name="MathTextLibrary/BitmapProcesses/BitmapFixedThresholder.cs" line="22" column="45" />
+    <File name="MathTextLearner/Assistant/BitmapProcessHelpers/ProcessEditorWidget.cs" line="103" column="1" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
-      <Node expanded="True" selected="True">
-        <Node name="MathTextLearner" expanded="True" />
-        <Node name="MathTextLibrary" expanded="True">
-          <Node name="Tests" expanded="True" />
+      <Node expanded="True">
+        <Node name="MathTextLearner" expanded="True">
+          <Node name="Assistant" expanded="True">
+            <Node name="BitmapProcessHelpers" expanded="True">
+              <Node name="ProcessEditorWidget.cs" selected="True" />
+            </Node>
+          </Node>
         </Node>
+        <Node name="MathTextLibrary" expanded="True" />
       </Node>
     </ViewMemento>
     <ViewMemento id="ClassPad">
       <Node expanded="True" />
     </ViewMemento>
     <ViewMemento id="MonoDevelop.NUnit.TestPad">
-      <Node expanded="True">
+      <Node expanded="True" selected="True">
         <Node name="MathTextLibrary" expanded="True">
           <Node name="MathTextLibrary" expanded="True">
-            <Node name="UtilsTests" expanded="True" selected="True" />
+            <Node name="CharacteristicDatabaseTests" expanded="True" />
+            <Node name="UtilsTests" expanded="True" />
           </Node>
         </Node>
       </Node>
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextLibrary/Tests/UtilsTests.cs" />
+    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextLearner/Assistant/BitmapProcessHelpers/ProcessEditorWidget.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>

@@ -11,6 +11,11 @@
       <Entry build="True" name="CustomGtkWidgets" configuration="Release" />
       <Entry build="True" name="MathTextLibrary" configuration="Release" />
       <Entry build="True" name="MathTextRecognizer" configuration="Release" />
+      <UnitTestInformation>
+        <Test Path="">
+          <Options EnableFilter="False" Exclude="False" ctype="NUnitCategoryOptions" />
+        </Test>
+      </UnitTestInformation>
     </Configuration>
   </Configurations>
   <StartMode startupentry="MathTextLearner" single="True">

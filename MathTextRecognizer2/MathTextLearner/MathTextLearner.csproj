@@ -1,0 +1,74 @@
+﻿
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{66835C24-8A59-45A8-93C4-EA5E1827D3D9}</ProjectGuid>
+    <RootNamespace>
+    </RootNamespace>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputType>Exe</OutputType>
+    <AssemblyName>MathTextLearner</AssemblyName>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <RootNamespace>
+    </RootNamespace>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>
+    </DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputType>Exe</OutputType>
+    <AssemblyName>MathTextLearner</AssemblyName>
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>false</DebugSymbols>
+    <RootNamespace>
+    </RootNamespace>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>
+    </DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="glade-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CustomGtkWidgets\CustomGtkWidgets.csproj">
+      <Name>CustomGtkWidgets</Name>
+      <Project>{856EB745-5912-471F-8F3A-7F135BE343BA}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\MathTextLibrary\MathTextLibrary.csproj">
+      <Name>MathTextLibrary</Name>
+      <Project>{56121D73-A56B-4DD6-AE5E-1B4AF3EC9894}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="MainWindow.cs" />
+    <Compile Include="LearningFailedArgs.cs" />
+    <Compile Include="Assistant\BitmapProcessesStep.cs" />
+    <Compile Include="Assistant\DatabaseTypeStep.cs" />
+    <Compile Include="Assistant\FileSelectionStep.cs" />
+    <Compile Include="Assistant\NewDatabaseAssistant.cs" />
+    <Compile Include="Assistant\BitmapProcessHelpers\BitmapProcessNode.cs" />
+    <Compile Include="Assistant\BitmapProcessHelpers\ProcessEditorDialog.cs" />
+    <Compile Include="Assistant\BitmapProcessHelpers\ProcessEditorWidget.cs" />
+    <Compile Include="Assistant\BitmapProcessHelpers\ProcessSelectorDialog.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="mathtextlearner.glade" />
+    <EmbeddedResource Include="Assistant\databaseAssistant.glade">
+      <LogicalName>databaseAssistant.glade</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>

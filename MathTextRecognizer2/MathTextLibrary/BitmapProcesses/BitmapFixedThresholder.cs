@@ -19,7 +19,7 @@ namespace MathTextLibrary.BitmapProcesses
 		/// <summary>
 		/// El constructor de la clases BitmapFixedThresholdThresholder.
 		/// </summary>		
-		public BitmapFixedThresholder()	: this(50)
+		public BitmapFixedThresholder()	: this(220)
 		{
 						
 		}
