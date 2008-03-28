@@ -1,4 +1,4 @@
-//Creado por: Luis Román Gutiérrez a las 17:36 de 06/10/2007
+﻿//Creado por: Luis Román Gutiérrez a las 17:36 de 06/10/2007
 
 using System;
 using System.Reflection;
@@ -163,8 +163,9 @@ namespace MathTextLearner.Assistant.BitmapProcessHelpers
 		{
 			layout.Add(new Label(desc.Description+":"));		
 			
+			
 					
-			pinButton spin = new SpinButton(0,1000,1);
+			SpinButton spin = new Gtk.SpinButton(0,1000,1);
 			spin.Numeric = false;
 			
 			if(desc.Min != -1 && desc.Max != -1)
