@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
@@ -341,6 +341,7 @@ namespace MathTextLearner.Assistant
 		private void OnMakeDefaultBtnClicked(object e, EventArgs args)
 		{
 			//TODO Guardar la seleccion de algoritmos de procesado
+			Console.WriteLine(ConfigFileUtils.GetConfigFilePath("MathTextLearner"));
 		}
 			
 		/// <summary>
