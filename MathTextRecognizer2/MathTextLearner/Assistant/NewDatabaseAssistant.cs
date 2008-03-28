@@ -21,7 +21,8 @@ namespace MathTextLearner.Assistant
 		private FileSelectionStep fileStep;
 		private BitmapProcessesStep processesStep;
 		
-		public NewDatabaseAsisstant(Window parent) : base(parent, "Asistente de nueva base de dato de caracteres")
+		public NewDatabaseAsisstant(Window parent) : 
+			base(parent, "Asistente de nueva base de datos de carácteres")
 		{
 			databaseStep = new DatabaseTypeStep(this);
 			fileStep = new FileSelectionStep(this);

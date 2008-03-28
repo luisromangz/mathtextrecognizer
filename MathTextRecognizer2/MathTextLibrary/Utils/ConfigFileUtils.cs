@@ -31,7 +31,7 @@ namespace MathTextLibrary.Utils
 			string path = 
 				Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 			
-			return String.Format("{0}{1}.{2}", 
+			return String.Format("{0}{1}{2}", 
 			                     path, 
 			                     Path.DirectorySeparatorChar,
 			                     appName.ToLowerInvariant());

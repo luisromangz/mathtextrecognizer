@@ -8,6 +8,7 @@ using Gtk;
 using CustomGtkWidgets.ImageArea;
 using CustomGtkWidgets.CommonDialogs;
 
+using MathTextLearner.Config;
 using MathTextLearner.Assistant.BitmapProcessHelpers;
 
 using MathTextLibrary.BitmapProcesses;
@@ -79,18 +80,22 @@ namespace MathTextLearner.Assistant
 		
 #region Constructor
 		
-		public BitmapProcessesStep(PanelAssistant assistant, ListStore imagesStore) : base(assistant)
+		public BitmapProcessesStep(PanelAssistant assistant,
+		                           ListStore imagesStore) : base(assistant)
 		{
-			Glade.XML gxml =
-				new Glade.XML(null,"databaseAssistant.glade","bitmapProcessesStepFrame",null);
+			Glade.XML gxml = new Glade.XML(null,
+			                               "databaseAssistant.glade",
+			                               "bitmapProcessesStepFrame",
+			                               null);
 				
 			gxml.Autoconnect(this);			
 			
 			SetRootWidget(bitmapProcessesStepFrame);
 			
+			RetrieveBitmapProcessesTypes();
+			
 			InitializeWidgets(imagesStore);
 			
-			RetrieveBitmapProcessesTypes();
 		}
 		
 #endregion Constructor
@@ -213,7 +218,14 @@ namespace MathTextLearner.Assistant
 		/// </summary>
 		private void LoadDefaults()
 		{
-			//TODO Cargar la seleccion de algoritmos de procesado por defecto
+			// Obtenemos los algoritmos por defecto.
+			List<BitmapProcess> defaults =
+				LearnerConfig.Instance.DefaultProcesses;
+			
+			foreach(BitmapProcess process in defaults)
+			{
+				AddProcess(process);
+			}
 		}
 		
 		/// <summary>
@@ -259,20 +271,48 @@ namespace MathTextLearner.Assistant
 				// Hemos seleccionado un proceso.				
 				Type t = dlg.SelectedProcess;
 				
-				BitmapProcessNode node = 
-					new BitmapProcessNode(
-					                      t,
-					                      bitmapProcessesTypes[t]);
-				                                               
-				processesView.NodeStore.AddNode(node);
-
-				processesView.NodeSelection.SelectNode(node);  
-				
-				TreePath path = processesView.Selection.GetSelectedRows()[0];
-				processesView.ScrollToCell(path,null, true,0f,0);
+				AddProcess(t);
 			}
 					                               
 			dlg.Destroy();		                                
+		}
+		
+		/// <summary>
+		/// Añade un algoritmo a la lista.
+		/// </summary>
+		/// <param name="t">
+		/// El tipo del proceso a añadir.
+		/// </param>
+		private void AddProcess(Type t)
+		{
+			BitmapProcessNode node = new BitmapProcessNode(t,
+			                                               bitmapProcessesTypes[t]);
+				                                               
+			processesView.NodeStore.AddNode(node);
+
+			processesView.NodeSelection.SelectNode(node);  
+			
+			TreePath path = processesView.Selection.GetSelectedRows()[0];
+			processesView.ScrollToCell(path,null, true,0f,0);
+		}
+		
+		/// <summary>
+		/// Añade un algoritmo de procesado a la lista.
+		/// </summary>
+		/// <param name="p">
+		/// A <see cref="BitmapProcess"/>
+		/// </param>
+		private void AddProcess(BitmapProcess p)
+		{
+			BitmapProcessNode node = 
+				new BitmapProcessNode(p, bitmapProcessesTypes[p.GetType()]);
+				                                               
+			processesView.NodeStore.AddNode(node);
+
+			processesView.NodeSelection.SelectNode(node);  
+			
+			TreePath path = processesView.Selection.GetSelectedRows()[0];
+			processesView.ScrollToCell(path,null, true,0f,0);
 		}
 		
 		/// <summary>
@@ -287,11 +327,9 @@ namespace MathTextLearner.Assistant
 			if(node != null)
 			{
 				Type t = node.Process.GetType();
-				ResponseType res = 
-					ProcessEditorDialog.Show(
-					                         Assistant.Window,
-					                         node.Process,
-					                         bitmapProcessesTypes[t]);
+				ProcessEditorDialog.Show(Assistant.Window,
+				                         node.Process,
+				                         bitmapProcessesTypes[t]);
 				
 				processesView.QueueDraw();
 				processesView.ColumnsAutosize();
@@ -311,15 +349,8 @@ namespace MathTextLearner.Assistant
 				// en la imagen original.
 				TreeIter iter;
 				imagesTV.Selection.GetSelected(out iter);
-				// Recuperamos la ruta de la imagen.
-				string path =(string)(imagesTV.Model.GetValue(iter,2));
 				
-				Gdk.Pixbuf p = new Gdk.Pixbuf(path);
-				
-				originIA.Image = p;
-				
-				CreateProcessedPreview(p);
-				
+				UpdatePreview(iter);
 			}
 			else
 			{
@@ -327,6 +358,25 @@ namespace MathTextLearner.Assistant
 				processedIA.Image = null;
 			}
 		}	
+		
+		/// <summary>
+		/// Actualiza la previsualizacion de la imagen con los algoritmos
+		/// seleccionados.
+		/// </summary>
+		/// <param name="image">
+		/// El elemento de la lista que representa a la imagen.
+		/// </param>
+		private void UpdatePreview(TreeIter image)
+		{
+			// Recuperamos la ruta de la imagen.
+			string path =(string)(imagesTV.Model.GetValue(image,2));
+			
+			Gdk.Pixbuf p = new Gdk.Pixbuf(path);
+			
+			originIA.Image = p;
+			
+			CreateProcessedPreview(p);
+		}
 		
 		/// <summary>
 		/// Maneja el uso del boton encargado de guardar la seleccion actual de 
@@ -340,8 +390,15 @@ namespace MathTextLearner.Assistant
 		/// </param>
 		private void OnMakeDefaultBtnClicked(object e, EventArgs args)
 		{
-			//TODO Guardar la seleccion de algoritmos de procesado
-			Console.WriteLine(ConfigFileUtils.GetConfigFilePath("MathTextLearner"));
+			ResponseType res = ConfirmDialog.Show(this.Assistant.Window,
+			                                      "Se va a cambiar la configuración por defecto, ¿desea continuar?");
+			
+			if(res == ResponseType.Yes)
+			{
+				// Guardamos la seleccion actual como la por defecto.
+				LearnerConfig.Instance.DefaultProcesses = this.Processes;
+				LearnerConfig.Instance.Save();
+			}
 		}
 			
 		/// <summary>
@@ -390,6 +447,44 @@ namespace MathTextLearner.Assistant
 				selectedIdx >= 0 
 				&& node.ProcessValues != "";
 		}
+		
+		/// <summary>
+		/// Maneja el cambio de pestañas.
+		/// </summary>
+		/// <param name="e">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="arg">
+		/// A <see cref="SelectPageArgs"/>
+		/// </param>
+		private void OnProcessesNotebookSwitchPage(object e,
+		                                           SwitchPageArgs arg)
+		{
+			// Si vamos a la página delas previsualizaciones,
+			// recargamos la imagen por si hemos cambiado los algoritmos
+			// en la otra pagina.
+			
+			if(arg.PageNum == 1)
+			{
+				if(imagesTV.Selection.CountSelectedRows()==0)		
+				{	
+					// Si no hay seleccion seleccionamos el primero
+					TreeIter firstIter; 
+					imagesTV.Model.GetIterFirst(out firstIter);
+					imagesTV.Selection.SelectIter(firstIter);
+				}
+				else
+				{
+					// Actualizamos la previsualización de la seleccion 
+					// actual.
+					TreeIter selected;
+					imagesTV.Selection.GetSelected(out selected);
+					UpdatePreview(selected);
+					
+				}
+			}
+		}
+		                                   
 		
 		/// <summary>
 		/// Maneja el uso del boton para elminar algoritmos de la lista.
