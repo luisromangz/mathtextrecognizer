@@ -10,8 +10,9 @@ using MathTextLibrary.BitmapProcesses;
 namespace MathTextLearner.Assistant.BitmapProcessHelpers
 {
 	/// <summary>
-	/// Este widget permite editar los valores de una propiedad,
-	/// cambiando según el tipo de esta dinámicamente.
+	/// Este widget permite editar los valores de un parametro de un
+	/// algorimo de procesado de imagenes, generando el control adecuado
+	/// a cada caso.
 	/// </summary>
 	public class ProcessEditorWidget : Alignment
 	{
@@ -20,6 +21,16 @@ namespace MathTextLearner.Assistant.BitmapProcessHelpers
 		private BitmapProcess process;
 		private HBox layout;
 		
+		/// <summary>
+		/// Constructor de la clase <c>ProcessEditorWidget</c>, es privado 
+		/// porque la usamos con una factoria estatica.
+		/// </summary>
+		/// <param name="process">
+		/// El algoritmo de proceso de imagenes al que pertenece la propiedad.
+		/// </param>
+		/// <param name="info">
+		/// El parametro del algoritmo que el control editará.
+		/// </param>
 		private ProcessEditorWidget(BitmapProcess process, PropertyInfo info) 
 			: base(0f,0.5f,0f,1.0f)
 		{
@@ -27,6 +38,13 @@ namespace MathTextLearner.Assistant.BitmapProcessHelpers
 			this.process = process;		
 		}
 		
+		/// <summary>
+		/// Inicializa el control.
+		/// </summary>
+		/// <returns>
+		/// <c>true</c> si el parametro a editar tiene descripcion,
+		/// <c>false</c> en caso contrario.
+		/// </returns>
 		private bool InitializeWidget()
 		{
 			layout = new HBox();
@@ -46,7 +64,7 @@ namespace MathTextLearner.Assistant.BitmapProcessHelpers
 			}
 			catch(Exception)
 			{
-				
+				return false;
 			}
 			
 			if(desc != null)
@@ -70,20 +88,22 @@ namespace MathTextLearner.Assistant.BitmapProcessHelpers
 				return true;
 				
 			}
-			else
-			{
-				return false;
-			}
+			
+			return  false;
 			
 		}
 		
+		/// <summary>
+		/// Aplica el cambio en la propiedad, estableciendo el valor
+		/// establecido en el control.
+		/// </summary>
 		public void Apply()
 		{
 			if(info.PropertyType ==  typeof(int))
 			{
 				SpinButton spin = widget as SpinButton;
 				
-				info.SetValue(process, spin.ValueAsInt,null);
+				info.SetValue(process, (int)spin.Value,null);
 			}
 			else if (info.PropertyType == typeof(bool))
 			{
@@ -93,7 +113,20 @@ namespace MathTextLearner.Assistant.BitmapProcessHelpers
 			}
 		}
 			
-		
+		/// <summary>
+		/// Crea un control para editar una propiedad de un algoritmo de
+		/// procesado de imagenes.
+		/// </summary>
+		/// <param name="process">
+		/// El algoritmo al que pertenece la propiedad a editar.
+		/// </param>
+		/// <param name="info">
+		/// Informacion acerca de la propiedad a editar.
+		/// </param>
+		/// <returns>
+		/// El control, si la información del parametro contenia su descripcion,
+		/// y este pudo ser creado, <c>null</c> en otro caso.
+		/// </returns>
 		public static ProcessEditorWidget Create(BitmapProcess process,
 		                                         PropertyInfo info)
 		{
@@ -104,6 +137,12 @@ namespace MathTextLearner.Assistant.BitmapProcessHelpers
 				return null;
 		}
 		
+		/// <summary>
+		/// Crea el control para los parametros de tipo <c>bool</c>.
+		/// </summary>
+		/// <param name="desc">
+		/// La descripcion del parametro.
+		/// </param>
 		private void CreateBoolWidget(BitmapProcessPropertyDescription desc)
 		{
 			CheckButton check = new CheckButton(desc.Description);
@@ -113,12 +152,19 @@ namespace MathTextLearner.Assistant.BitmapProcessHelpers
 			widget = check;
 					
 		}
-		                              
+		   
+		/// <summary>
+		/// Crea el control para los parametros de tipo <c>int</c>.
+		/// </summary>
+		/// <param name="desc">
+		/// A <see cref="BitmapProcessPropertyDescription"/>
+		/// </param>
 		private void CreateIntWidget(BitmapProcessPropertyDescription desc)
 		{
-			layout.Add(new Label(desc.Description+":"));
+			layout.Add(new Label(desc.Description+":"));		
+			
 					
-			SpinButton spin = new SpinButton(0,1000,1);
+			pinButton spin = new SpinButton(0,1000,1);
 			spin.Numeric = false;
 			
 			if(desc.Min != -1 && desc.Max != -1)
@@ -132,6 +178,7 @@ namespace MathTextLearner.Assistant.BitmapProcessHelpers
 			spin.Value=val;
 			
 			widget = spin;
+			
 		}
 	
 					                           

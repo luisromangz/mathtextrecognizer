@@ -1,0 +1,135 @@
+﻿
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{56121D73-A56B-4DD6-AE5E-1B4AF3EC9894}</ProjectGuid>
+    <RootNamespace>
+    </RootNamespace>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputType>Library</OutputType>
+    <AssemblyName>MathTextLibrary</AssemblyName>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <RootNamespace>
+    </RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>
+    </DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <ApplicationIcon>.</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputType>Library</OutputType>
+    <AssemblyName>MathTextLibrary</AssemblyName>
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>false</DebugSymbols>
+    <RootNamespace>
+    </RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>
+    </DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <ApplicationIcon>.</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="nunit.core, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <Reference Include="nunit.framework, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="BitmapProcesses\BitmapFixedThresholder.cs" />
+    <Compile Include="BitmapProcesses\BitmapFramer.cs" />
+    <Compile Include="BitmapProcesses\BitmapScaler.cs" />
+    <Compile Include="BitmapProcesses\BitmapStentifordThinner.cs" />
+    <Compile Include="BitmapProcesses\BitmapTwoPeaksThresholder.cs" />
+    <Compile Include="BitmapProcesses\BitmapZhangSuenHoltThinner.cs" />
+    <Compile Include="BitmapProcesses\BitmapZhangSuenStentifordHoltThinner.cs" />
+    <Compile Include="BitmapSegmenters\AllHolesProjectionBitmapSegmenter.cs" />
+    <Compile Include="BitmapSegmenters\DifferentialProjectionBitmapSegmenter.cs" />
+    <Compile Include="BitmapSegmenters\FractionVerticalBitmapSegmenter.cs" />
+    <Compile Include="BitmapSegmenters\IBitmapSegmenter.cs" />
+    <Compile Include="BitmapSegmenters\MostFrequentHoleProjectionBitmapSegmenter.cs" />
+    <Compile Include="BitmapSegmenters\ProjectionBitmapSegmenter.cs" />
+    <Compile Include="BitmapSegmenters\TwoHolesBitmapSegmenter.cs" />
+    <Compile Include="Controllers\ControllerEvents.cs" />
+    <Compile Include="Controllers\MathTextOutputController.cs" />
+    <Compile Include="Controllers\MathTextRecognizerController.cs" />
+    <Compile Include="Output\LaTeXGenerator.cs" />
+    <Compile Include="Output\MathMLGenerator.cs" />
+    <Compile Include="Projection\Hole.cs" />
+    <Compile Include="Projection\HorizontalBitmapProjection.cs" />
+    <Compile Include="Projection\ProjectionMode.cs" />
+    <Compile Include="Projection\VerticalBitmapProjection.cs" />
+    <Compile Include="TreeMaker\RecognizedTreeNode.cs" />
+    <Compile Include="TreeMaker\Steps\ITreeMakerStep.cs" />
+    <Compile Include="TreeMaker\Steps\MakeInitialTree.cs" />
+    <Compile Include="TreeMaker\Steps\SearchFractions.cs" />
+    <Compile Include="TreeMaker\Steps\SearchSuperAndSub.cs" />
+    <Compile Include="Projection\BitmapProjection.cs" />
+    <Compile Include="Utils\ImageUtils.cs" />
+    <Compile Include="BitmapProcesses\BitmapProcess.cs" />
+    <Compile Include="Databases\Caracteristic\CaracteristicDatabase.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\ColorChangesXAboveFourCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\ColorChangesXBelowTwoCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\ColorChangesXEqualsFourCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\ColorChangesXEqualsTwoCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\ColorChangesYAboveFourCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\ColorChangesYBelowTwoCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\ColorChangesYEqualsFourCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\ColorChangesYEqualsTwoCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\EndingPointsEqualsOneCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\EndingPointsEqualsThreeCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\EndingPointsEqualsTwoCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\EndingPointsEqualsZeroCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\IBinaryCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\NumberBigHolesEqualsOneCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\NumberBigHolesEqualsTwoCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\NumberBigHolesEqualsZeroCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\PixelsLeftHalfCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\PixelsNortheastQuadrantCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\PixelsNorthwestQuadrantCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\PixelsSoutheastQuadrantCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\PixelsSouthwestQuadrantCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\PixelsTopHalfCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\ThriceTallerThanWiderCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\TreePointsEqualsOneCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\TreePointsEqualsThreeCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\TreePointsEqualsTwoCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\TreePointsEqualsZeroCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\TwiceTallerThanWiderCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\WiderThanTallerCaracteristic.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\Helpers\CountBlackNeighboursHelper.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\Helpers\CountColorChangesHelper.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\Helpers\CountNumberOfBlackPixelsHelper.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\Helpers\CountNumberOfHolesHelper.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\Helpers\CountPixelsHelper.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\Helpers\CountPixelsWithXNeighboursHelper.cs" />
+    <Compile Include="Databases\Caracteristic\Caracteristics\Helpers\ImageBoxerHelper.cs" />
+    <Compile Include="Databases\MathTextDatabase.cs" />
+    <Compile Include="Databases\Momentum\MomentumDatabase.cs" />
+    <Compile Include="Databases\DatabaseManager.cs" />
+    <Compile Include="Databases\Caracteristic\BinaryCaracteristicNode.cs" />
+    <Compile Include="Databases\Caracteristic\CaracteristicFactory.cs" />
+    <Compile Include="Databases\DatabaseEvents.cs" />
+    <Compile Include="Databases\ISymbolProcess.cs" />
+    <Compile Include="Databases\DatabaseBase.cs" />
+    <Compile Include="Databases\DatabaseInfo.cs" />
+    <Compile Include="Bitmap\MathTextBitmap.cs" />
+    <Compile Include="Bitmap\MathTextBitmapEvents.cs" />
+    <Compile Include="Symbol\MathSymbol.cs" />
+    <Compile Include="Utils\ConfigFileUtils.cs" />
+    <Compile Include="Tests\UtilsTests.cs" />
+    <Compile Include="Tests\CharacteristicDatabaseTests.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>

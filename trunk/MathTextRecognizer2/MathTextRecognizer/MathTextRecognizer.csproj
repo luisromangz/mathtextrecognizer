@@ -1,0 +1,65 @@
+﻿
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{D47E943F-9F84-49D5-9A56-FEF904FF1598}</ProjectGuid>
+    <RootNamespace>
+    </RootNamespace>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputType>Exe</OutputType>
+    <AssemblyName>MathTextRecognizer</AssemblyName>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <RootNamespace>
+    </RootNamespace>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>
+    </DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputType>Exe</OutputType>
+    <AssemblyName>MathTextRecognizer</AssemblyName>
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>false</DebugSymbols>
+    <RootNamespace>
+    </RootNamespace>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>
+    </DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glade-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MathTextLibrary\MathTextLibrary.csproj">
+      <Project>{56121D73-A56B-4DD6-AE5E-1B4AF3EC9894}</Project>
+      <Name>MathTextLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CustomGtkWidgets\CustomGtkWidgets.csproj">
+      <Project>{856EB745-5912-471F-8F3A-7F135BE343BA}</Project>
+      <Name>CustomGtkWidgets</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="MTBNode.cs" />
+    <Compile Include="MainWindow.cs" />
+    <Compile Include="OutputDialog.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="mathtextrecognizer.glade" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>

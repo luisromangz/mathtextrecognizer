@@ -7,7 +7,7 @@ namespace MathTextLibrary.Symbol
 	/// Esta clase encapsula un símbolo como un texto y el 
 	/// tipo al que corresponde.
 	/// </summary>	
-	public class MathSymbol : IComparable<MathSymbol>
+	public class MathSymbol
 	{
 		// Texto del simbolo
 		private string text;
@@ -124,13 +124,16 @@ namespace MathTextLibrary.Symbol
 			return text;
 		}
 		
-		public int CompareTo (MathSymbol x)
+		public override bool Equals (object o)
 		{
-			if(x.text == this.text && x.type == this.type)
-				return 0;
-			else
-				return 1;
+			if(o.GetType() != typeof(MathSymbol))
+				return false;
+			
+			MathSymbol symbol = (MathSymbol) o;
+			
+			return this.text == symbol.text;
 		}
+
 
 	}
 	

@@ -1,0 +1,78 @@
+﻿
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{856EB745-5912-471F-8F3A-7F135BE343BA}</ProjectGuid>
+    <RootNamespace>
+    </RootNamespace>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputType>Library</OutputType>
+    <AssemblyName>CustomGtkWidgets</AssemblyName>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
+    <RootNamespace>
+    </RootNamespace>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>
+    </DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputType>Library</OutputType>
+    <AssemblyName>CustomGtkWidgets</AssemblyName>
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>false</DebugSymbols>
+    <RootNamespace>
+    </RootNamespace>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>
+    </DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glade-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-dotnet, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="System.Data" />
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="HandWriting\RasterHandWritingArea.cs" />
+    <Compile Include="HandWriting\VectorHandWritingArea.cs" />
+    <Compile Include="HandWriting\IHandWritingArea.cs" />
+    <Compile Include="Logger\LogView.cs" />
+    <Compile Include="Logger\LogSaveDialog.cs" />
+    <Compile Include="ImageArea\ImageArea.cs" />
+    <Compile Include="ImageArea\ImageAreaMode.cs" />
+    <Compile Include="CommonDialogs\DatabaseOpenDialog.cs" />
+    <Compile Include="CommonDialogs\AppInfoDialog.cs" />
+    <Compile Include="CommonDialogs\ConfirmDialog.cs" />
+    <Compile Include="CommonDialogs\OkDialog.cs" />
+    <Compile Include="CommonDialogs\ImageLoadDialog.cs" />
+    <Compile Include="CommonDialogs\DatabaseSaveDialog.cs" />
+    <Compile Include="CommonDialogs\FolderOpenDialog.cs" />
+    <Compile Include="CommonDialogs\PanelAssistant.cs" />
+    <Compile Include="CommonDialogs\PanelAssistantStep.cs" />
+    <Compile Include="ImageResources.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="gui.glade" />
+    <EmbeddedResource Include="..\Common\Artwork\insert-image16.png">
+      <Link>insert-image16.png</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Common\Artwork\insert-image22.png">
+      <Link>insert-image22.png</Link>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+</Project>
