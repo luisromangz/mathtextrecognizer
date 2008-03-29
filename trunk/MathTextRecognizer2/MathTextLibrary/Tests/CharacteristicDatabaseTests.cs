@@ -22,9 +22,9 @@ namespace MathTextLibrary
 		[Test()]
 		public void RepeatedSymbolNotAdded()
 		{
-			CaracteristicDatabase database = new CaracteristicDatabase();
+			CharacteristicDatabase database = new CharacteristicDatabase();
 			
-			database.CaracteristicNode = new BinaryCaracteristicNode();
+			database.CaracteristicNode = new CharacteristicNode();
 			
 			database.CaracteristicNode.AddSymbol(new MathSymbol("hola",MathSymbolType.Operator));
 			int count1 = database.CaracteristicNode.Symbols.Count;

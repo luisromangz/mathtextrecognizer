@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 using MathTextLibrary.Bitmap;
 using MathTextLibrary.Symbol;
+
+using MathTextLibrary.Databases;
 using MathTextLibrary.Databases.Caracteristic.Caracteristics;
 
 namespace MathTextLibrary.Databases.Caracteristic
@@ -12,13 +14,13 @@ namespace MathTextLibrary.Databases.Caracteristic
 	/// La clase <c>BinaryCaracteristicNode</c> representa un nodo de un arbol
 	/// binario de caracteristicas.
 	/// </summary>
-	public class BinaryCaracteristicNode
+	public class CharacteristicNode
 	{
 		// La rama en la que una determinada caracteristica se cumple.
-		private BinaryCaracteristicNode trueTree;
+		private CharacteristicNode trueTree;
 		
 		// La rama en la que una determinada caracteristica se incumple.
-		private BinaryCaracteristicNode falseTree;
+		private CharacteristicNode falseTree;
 		
 		// Los simbolos asociados al nodo, en el caso de que el simbolo sea 
 		// una hoja.
@@ -27,7 +29,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 		/// <summary>
 		/// El constructor de <c>BinaryCaracteristicNode</c>.
 		/// </summary>
-		public BinaryCaracteristicNode()
+		public CharacteristicNode()
 		{
 		}
 
@@ -67,6 +69,8 @@ namespace MathTextLibrary.Databases.Caracteristic
 			
 			if (!this.symbols.Contains(symbol))
 				this.symbols.Add(symbol);
+			else
+				throw new DuplicateSymbolException(symbol);
 		}
 		
 		
@@ -99,7 +103,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 		/// Esta propiedad permite establecer y recuperar la rama del arbol
 		/// en la que una determinada caracteristica binaria se cumple.
 		/// </summary>
-		public BinaryCaracteristicNode TrueTree
+		public CharacteristicNode TrueTree
 		{
 			get{				
 				return trueTree;			
@@ -113,7 +117,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 		/// Esta propiedad permite establecer y recuperar la rama del arbol
 		/// en la que una determinada caracteristica binaria se cumple.
 		/// </summary>
-		public BinaryCaracteristicNode FalseTree
+		public CharacteristicNode FalseTree
 		{
 			get{				
 				return falseTree;			
