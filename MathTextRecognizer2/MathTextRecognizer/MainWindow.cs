@@ -22,7 +22,7 @@ using MathTextLibrary;
 using MathTextLibrary.Bitmap;
 using MathTextLibrary.Symbol;
 using MathTextLibrary.Controllers;
-using MathTextLibrary.Databases.Caracteristic.Caracteristics;
+using MathTextLibrary.Databases.Characteristic.Characteristics;
 
 
 namespace MathTextRecognizerGUI
@@ -519,7 +519,7 @@ namespace MathTextRecognizerGUI
 			expLog.Expanded = true;
 			
 			controller.StepMode = 
-			    MathTextRecognizerControllerStepMode.NodeByNodeWithCaracteristicCheck;		    
+			    MathTextRecognizerControllerStepMode.NodeByNodeWithCharacteristicCheck;		    
 			
 			NextStep();
 		}

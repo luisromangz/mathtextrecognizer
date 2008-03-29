@@ -5,7 +5,7 @@ using System;
 using NUnit.Framework;
 
 using MathTextLibrary.Symbol;
-using MathTextLibrary.Databases.Caracteristic;
+using MathTextLibrary.Databases.Characteristic;
 
 namespace MathTextLibrary
 {
@@ -24,13 +24,13 @@ namespace MathTextLibrary
 		{
 			CharacteristicDatabase database = new CharacteristicDatabase();
 			
-			database.CaracteristicNode = new CharacteristicNode();
+			database.CharacteristicNode = new CharacteristicNode();
 			
-			database.CaracteristicNode.AddSymbol(new MathSymbol("hola",MathSymbolType.Operator));
-			int count1 = database.CaracteristicNode.Symbols.Count;
+			database.CharacteristicNode.AddSymbol(new MathSymbol("hola",MathSymbolType.Operator));
+			int count1 = database.CharacteristicNode.Symbols.Count;
 			
-			database.CaracteristicNode.AddSymbol(new MathSymbol("hola",MathSymbolType.Number));
-			int count2 = database.CaracteristicNode.Symbols.Count;
+			database.CharacteristicNode.AddSymbol(new MathSymbol("hola",MathSymbolType.Number));
+			int count2 = database.CharacteristicNode.Symbols.Count;
 			
 			Assert.AreEqual(count1, count2,"Se añadio el simbolo repetido");
 		}

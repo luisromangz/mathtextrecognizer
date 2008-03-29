@@ -8,7 +8,7 @@ using MathTextLibrary;
 using MathTextLibrary.Bitmap;
 using MathTextLibrary.Symbol;
 using MathTextLibrary.Databases;
-using MathTextLibrary.Databases.Caracteristic;
+using MathTextLibrary.Databases.Characteristic;
 
 namespace MathTextLibrary.Controllers
 {
@@ -24,7 +24,7 @@ namespace MathTextLibrary.Controllers
 		/// deteniendose en la comprobacion de las caracteristicas binarias
 		/// de la imagen.
 		/// </summary>
-		NodeByNodeWithCaracteristicCheck,		
+		NodeByNodeWithCharacteristicCheck,		
 		
 		/// <summary>
 		/// Representa el modo de paso a paso por nodo segmentado de la imagen.
@@ -136,7 +136,7 @@ namespace MathTextLibrary.Controllers
 		}
 		
 		/// <summary>
-		/// Manejador del evento RecognizingCaracteristicChecked de la base de datos de caracteres.
+		/// Manejador del evento RecognizingCharacteristicChecked de la base de datos de caracteres.
 		/// </summary>
 		/// <param name="sender">El objeto que envio el evento.</param>
 		/// <param name="args">Los argumentos del evento.</param>

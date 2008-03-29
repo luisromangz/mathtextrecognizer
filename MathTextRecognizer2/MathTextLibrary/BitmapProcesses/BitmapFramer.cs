@@ -2,7 +2,7 @@ using System;
 
 using MathTextLibrary;
 using MathTextLibrary.Bitmap;
-using MathTextLibrary.Databases.Caracteristic.Caracteristics.Helpers;
+using MathTextLibrary.Databases.Characteristic.Characteristics.Helpers;
 
 namespace MathTextLibrary.BitmapProcesses
 {
