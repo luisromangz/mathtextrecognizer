@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 using MathTextLibrary.Bitmap;
 using MathTextLibrary.Symbol;
-using MathTextLibrary.Databases.Caracteristic.Caracteristics;
+using MathTextLibrary.Databases.Characteristic.Characteristics;
 
 namespace MathTextLibrary.Databases
 {

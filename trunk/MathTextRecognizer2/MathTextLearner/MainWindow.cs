@@ -23,7 +23,7 @@ using MathTextLibrary.Bitmap;
 using MathTextLibrary.Symbol;
 using MathTextLibrary.Utils;
 using MathTextLibrary.Databases;
-using MathTextLibrary.Databases.Caracteristic;
+using MathTextLibrary.Databases.Characteristic;
 
 using MathTextLearner.Assistant;
 

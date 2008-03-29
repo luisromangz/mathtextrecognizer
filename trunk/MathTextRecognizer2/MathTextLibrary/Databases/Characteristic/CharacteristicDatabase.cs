@@ -7,10 +7,10 @@ using System.Collections.Generic;
 
 using MathTextLibrary.Bitmap;
 using MathTextLibrary.Symbol;
-using MathTextLibrary.Databases.Caracteristic.Caracteristics;
+using MathTextLibrary.Databases.Characteristic.Characteristics;
 
 
-namespace MathTextLibrary.Databases.Caracteristic
+namespace MathTextLibrary.Databases.Characteristic
 {	
 	/// <summary>
 	/// Esta clase se encarga de mantener una base de datos de caracteristicas
@@ -29,7 +29,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 		private Dictionary<List<bool>,CharacteristicNode> caracteristicHash;
 		
 		// Lista de caracteristicas binarias que se aplican sobre las imagenes.
-		private static List<IBinaryCaracteristic> caracteristics;
+		private static List<IBinaryCharacteristic> caracteristics;
 		
 		// El nodo raiz del arbol binario de caracteristicas binarias en 
 		/// el que guardamos la informacion de caracteristicas.	
@@ -40,7 +40,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 		#region Métodos públicos
 		
 		/// <summary>
-		/// Constructor de <c>CaracteristicDatabase</c>. Crea una base de datos
+		/// Constructor de <c>CharacteristicDatabase</c>. Crea una base de datos
 		/// vacia, sin ningun simbolo aprendido.
 		/// </summary>
 		public CharacteristicDatabase() : base()
@@ -69,14 +69,14 @@ namespace MathTextLibrary.Databases.Caracteristic
 		public override void Learn(MathTextBitmap bitmap,MathSymbol symbol)
 		{
 			if(caracteristics == null)
-				caracteristics=CharacteristicFactory.CreateCaracteristicList();
+				caracteristics=CharacteristicFactory.CreateCharacteristicList();
 			
 			CharacteristicNode node=rootNode;
 			bool caracteristicValue;	
 			
 			// Recorremos las caracteristicas, y vamos creando el arbol segun
 			// vamos necesitando nodos.
-			foreach(IBinaryCaracteristic bc in caracteristics)
+			foreach(IBinaryCharacteristic bc in caracteristics)
 			{					
 				if(caracteristicValue=bc.Apply(bitmap))
 				{
@@ -123,11 +123,11 @@ namespace MathTextLibrary.Databases.Caracteristic
 		public override List<MathSymbol> Recognize(MathTextBitmap image)
 		{
 			if(caracteristics == null)
-				caracteristics=CharacteristicFactory.CreateCaracteristicList();
+				caracteristics=CharacteristicFactory.CreateCharacteristicList();
 			
 			List<MathSymbol> res = new List<MathSymbol>();
 			CharacteristicNode nodo=rootNode;
-			IBinaryCaracteristic bc;
+			IBinaryCharacteristic bc;
 			
 			bool existe=true; 
 			bool caracteristicValue;
@@ -136,7 +136,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 			
 			for(int i=0;i<caracteristics.Count && existe;i++)
 			{
-				bc=(IBinaryCaracteristic)(caracteristics[i]);				
+				bc=(IBinaryCharacteristic)(caracteristics[i]);				
 
 				if(caracteristicValue=bc.Apply(image))
 				{
@@ -302,7 +302,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 		}
 		#endregion Métodos no públicos
 		
-		public virtual CharacteristicNode CaracteristicNode 
+		public virtual CharacteristicNode CharacteristicNode 
 		{
 			get {
 				return rootNode;

@@ -6,12 +6,12 @@ using MathTextLibrary.Bitmap;
 using MathTextLibrary.Symbol;
 
 using MathTextLibrary.Databases;
-using MathTextLibrary.Databases.Caracteristic.Caracteristics;
+using MathTextLibrary.Databases.Characteristic.Characteristics;
 
-namespace MathTextLibrary.Databases.Caracteristic
+namespace MathTextLibrary.Databases.Characteristic
 {	
 	/// <summary>
-	/// La clase <c>BinaryCaracteristicNode</c> representa un nodo de un arbol
+	/// La clase <c>BinaryCharacteristicNode</c> representa un nodo de un arbol
 	/// binario de caracteristicas.
 	/// </summary>
 	public class CharacteristicNode
@@ -27,7 +27,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 		private List<MathSymbol> symbols;		
 		
 		/// <summary>
-		/// El constructor de <c>BinaryCaracteristicNode</c>.
+		/// El constructor de <c>BinaryCharacteristicNode</c>.
 		/// </summary>
 		public CharacteristicNode()
 		{

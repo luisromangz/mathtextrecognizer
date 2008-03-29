@@ -75,7 +75,7 @@ namespace MathTextLibrary.Databases
 #region Metodos protegidos
 		
 		/// <summary>
-		/// Para lanzar el evento <c>LearningCaracteristicChecked</c> con
+		/// Para lanzar el evento <c>LearningCharacteristicChecked</c> con
 		/// comodidad.
 		/// </summary>		
 		protected void OnLearningStepDoneInvoke(
@@ -88,7 +88,7 @@ namespace MathTextLibrary.Databases
 		}
 		
 		/// <summary>
-		/// Para lanzar el evento <c>RecognizingCaracteristicChecked</c> con
+		/// Para lanzar el evento <c>RecognizingCharacteristicChecked</c> con
 		/// comodidad.	
 		/// </summary>
 		/// <param name="arg">

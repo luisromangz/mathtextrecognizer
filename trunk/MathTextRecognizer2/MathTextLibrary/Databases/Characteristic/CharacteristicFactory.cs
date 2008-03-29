@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-using MathTextLibrary.Databases.Caracteristic.Caracteristics;
+using MathTextLibrary.Databases.Characteristic.Characteristics;
 
-namespace MathTextLibrary.Databases.Caracteristic
+namespace MathTextLibrary.Databases.Characteristic
 {
 	
 	
@@ -15,19 +15,19 @@ namespace MathTextLibrary.Databases.Caracteristic
 	/// </summary>
 	/// <remarks>
 	/// Las caracteristicas se crean por reflexion: se obtienen todas las
-	/// clases hijas de <c>IBinaryCaracteristic</c> disponibles, de forma
+	/// clases hijas de <c>IBinaryCharacteristic</c> disponibles, de forma
 	/// dinamica.
 	/// </remarks>
-	public class CaracteristicFactory
+	public class CharacteristicFactory
 	{		
 		/// <summary>
 		/// Crea una nueva caracteristica del tipo indicado.
 		/// </summary>
 		/// <param name="t">Tipo de la caracteristica deseada</param>
-		/// <returns>Caracteristica del tipo deseado</returns>
-		public static IBinaryCaracteristic CreateCaracteristic(Type t)
+		/// <returns>Characteristica del tipo deseado</returns>
+		public static IBinaryCharacteristic CreateCharacteristic(Type t)
 		{
-			return (IBinaryCaracteristic) (t.GetConstructor(new Type[]{}).Invoke(null));
+			return (IBinaryCharacteristic) (t.GetConstructor(new Type[]{}).Invoke(null));
 		}
 
 		/// <summary>
@@ -35,18 +35,18 @@ namespace MathTextLibrary.Databases.Caracteristic
 		/// el sistema.
 		/// </summary>
 		/// <returns>Lista de todas las clases que implementan
-		/// <c>IBinaryCaracteristic</c></returns>
-		public static List<IBinaryCaracteristic> CreateCaracteristicList() 
+		/// <c>IBinaryCharacteristic</c></returns>
+		public static List<IBinaryCharacteristic> CreateCharacteristicList() 
 		{
-			List<IBinaryCaracteristic> caracteristics=new  List<IBinaryCaracteristic>();
+			List<IBinaryCharacteristic> caracteristics=new  List<IBinaryCharacteristic>();
 			
-			Assembly a=Assembly.GetAssembly(typeof(IBinaryCaracteristic));
+			Assembly a=Assembly.GetAssembly(typeof(IBinaryCharacteristic));
 			
 			foreach(Type t in a.GetTypes())
 			{
-				if(t.BaseType == typeof(IBinaryCaracteristic))
+				if(t.BaseType == typeof(IBinaryCharacteristic))
 				{
-					caracteristics.Add(CaracteristicFactory.CreateCaracteristic(t));														
+					caracteristics.Add(CharacteristicFactory.CreateCharacteristic(t));														
 				}				
 			}
 			
