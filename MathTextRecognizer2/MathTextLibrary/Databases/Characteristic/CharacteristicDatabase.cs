@@ -19,21 +19,21 @@ namespace MathTextLibrary.Databases.Caracteristic
 	/// </summary>
 	[DatabaseInfo("Base de datos basada en características binarias")]	
 	[XmlInclude(typeof(MathSymbol))]
-	[XmlInclude(typeof(BinaryCaracteristicNode))]
-	public class CaracteristicDatabase : DatabaseBase
+	[XmlInclude(typeof(CharacteristicNode))]
+	public class CharacteristicDatabase : DatabaseBase
 	{
 		#region Atributos
 		
 		// Tabla hash para el metodo alternativo de reconocimiento de caracteres
 		// basado en distancia.
-		private Dictionary<List<bool>,BinaryCaracteristicNode> caracteristicHash;
+		private Dictionary<List<bool>,CharacteristicNode> caracteristicHash;
 		
 		// Lista de caracteristicas binarias que se aplican sobre las imagenes.
 		private static List<IBinaryCaracteristic> caracteristics;
 		
 		// El nodo raiz del arbol binario de caracteristicas binarias en 
 		/// el que guardamos la informacion de caracteristicas.	
-		private BinaryCaracteristicNode rootNode;
+		private CharacteristicNode rootNode;
 		
 		#endregion Atributos
 				
@@ -43,19 +43,22 @@ namespace MathTextLibrary.Databases.Caracteristic
 		/// Constructor de <c>CaracteristicDatabase</c>. Crea una base de datos
 		/// vacia, sin ningun simbolo aprendido.
 		/// </summary>
-		public CaracteristicDatabase() : base()
+		public CharacteristicDatabase() : base()
 		{	
            
           
-			rootNode=new BinaryCaracteristicNode();
+			rootNode=new CharacteristicNode();
 			
 			caracteristicHash = 
-				new Dictionary<List<bool>,BinaryCaracteristicNode>();
+				new Dictionary<List<bool>,CharacteristicNode>();
 		}
 		
 		/// <summary>
 		/// Con este metodos almacenamos un nuevo simbolo en la base de
 		/// datos.
+		/// 
+		/// Lanza <c>DuplicateSymbolException</c> si ya existe un simbolo
+		/// con la misma etiqueta y caracteristicas binarias en la base de datos.
 		/// </summary>
 		/// <param name="bitmap">
 		/// La imagen cuyas caracteristicas aprenderemos.
@@ -66,9 +69,9 @@ namespace MathTextLibrary.Databases.Caracteristic
 		public override void Learn(MathTextBitmap bitmap,MathSymbol symbol)
 		{
 			if(caracteristics == null)
-				caracteristics=CaracteristicFactory.CreateCaracteristicList();
+				caracteristics=CharacteristicFactory.CreateCaracteristicList();
 			
-			BinaryCaracteristicNode node=rootNode;
+			CharacteristicNode node=rootNode;
 			bool caracteristicValue;	
 			
 			// Recorremos las caracteristicas, y vamos creando el arbol segun
@@ -79,7 +82,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 				{
 					if(node.TrueTree==null)
 					{
-						node.TrueTree=new BinaryCaracteristicNode();						
+						node.TrueTree=new CharacteristicNode();						
 					}
 					
 					node=node.TrueTree;					
@@ -88,7 +91,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 				{
 					if(node.FalseTree==null)
 					{
-						node.FalseTree=new BinaryCaracteristicNode();						
+						node.FalseTree=new CharacteristicNode();						
 					}					
 					node=node.FalseTree;					
 				}	
@@ -120,10 +123,10 @@ namespace MathTextLibrary.Databases.Caracteristic
 		public override List<MathSymbol> Recognize(MathTextBitmap image)
 		{
 			if(caracteristics == null)
-				caracteristics=CaracteristicFactory.CreateCaracteristicList();
+				caracteristics=CharacteristicFactory.CreateCaracteristicList();
 			
 			List<MathSymbol> res = new List<MathSymbol>();
-			BinaryCaracteristicNode nodo=rootNode;
+			CharacteristicNode nodo=rootNode;
 			IBinaryCaracteristic bc;
 			
 			bool existe=true; 
@@ -214,7 +217,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 		private void CreateHashTable()
 		{
 			caracteristicHash = 
-				new Dictionary<List<bool>,BinaryCaracteristicNode>();
+				new Dictionary<List<bool>,CharacteristicNode>();
 			Console.WriteLine("Creando hash");
 			CreateHashTableAux(rootNode,new List<bool>());
 			Console.WriteLine("Fin hash");
@@ -231,7 +234,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 		/// <param name="vector">
 		/// El vector de caracteristicas que vamos generando.
 		/// </param>
-		private void CreateHashTableAux(BinaryCaracteristicNode node,
+		private void CreateHashTableAux(CharacteristicNode node,
 		                                List<bool> vector)
 		{
 			
@@ -299,7 +302,7 @@ namespace MathTextLibrary.Databases.Caracteristic
 		}
 		#endregion Métodos no públicos
 		
-		public virtual BinaryCaracteristicNode CaracteristicNode 
+		public virtual CharacteristicNode CaracteristicNode 
 		{
 			get {
 				return rootNode;

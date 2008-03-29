@@ -237,17 +237,33 @@ namespace MathTextLearner
 		}		
 		
 		/// <summary>
-		/// Metodo que invoca el proceso de aprendizaje de simbolos de la base de datos.
+		/// Metodo que invoca el proceso de aprendizaje de simbolos de la base
+		///  de datos.
 		/// </summary>
 		private void LearnProccess()
 		{
-			
-			database.Learn(mtb, symbol);
-			databaseModified=true;
-			SetTitle(null,true);
-			
+			try
+			{
+				// Lanzamos la excepcion para que no se modifique
+				// la base de datos
+				database.Learn(mtb, symbol);
+				databaseModified=true;
+				SetTitle(null,true);
+			}
+			catch(DuplicateSymbolException e)
+			{
+				Application.Invoke(e,
+					new LearningFailedArgs(e.DuplicatedSymbol),
+					OnLearningProccessFailedThread);
+			}		
 		}
 		
+		/// <summary>
+		/// Carga una nueva imagen en la lista.
+		/// </summary>
+		/// <param name="image">
+		/// La imagen a cargar.
+		/// </param>
 		private void LoadNewImage(Gdk.Pixbuf image)
 		{
 			Gdk.Pixbuf smallImage = ImageUtils.MakeThumbnail(image, 48);
@@ -259,6 +275,12 @@ namespace MathTextLearner
 			buttonsHB.Sensitive = true;
 		}
 		
+		/// <summary>
+		/// Carga un conjunto de imagenes en la lista.
+		/// </summary>
+		/// <param name="images">
+		/// La lista que contiene el conjunto de imagenes a cambiar.
+		/// </param>
 		private void LoadNewImages(List<Gdk.Pixbuf> images)
 		{
 			Gdk.Pixbuf scaledDown;
@@ -281,6 +303,15 @@ namespace MathTextLearner
 				
 		}		
 		
+		/// <summary>
+		/// Maneja el uso del boton de añadir imagenes.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="arg">
+		/// A <see cref="EventArgs"/>
+		/// </param>
 		private void OnAddImageBtnClicked(object sender, EventArgs arg)
 		{
 			string filename;
@@ -419,6 +450,26 @@ namespace MathTextLearner
 			Application.Quit();			
 		}
 		
+		private void OnLearningProccessFailedThread(object sender, 
+		                                              EventArgs a)
+		{
+			
+			string msg=
+				"!Ya hay un símbolo, «"
+				+(a as LearningFailedArgs).DuplicateSymbol 
+				+"», con las mismas propiedades en la base de datos!";	
+								
+			LogLine(msg);
+			ResetWidgets();
+			
+			// Indicamos que ha habido un conflicto.
+			conflicts++;
+			
+			OkDialog.Show(mainWindow, MessageType.Error,msg);
+			
+			PrepareForNewImage();
+		}
+		
 		private void OnImagesIVSelectionChanged(object s, EventArgs a)
 		{
 			removeImageBtn.Sensitive = imagesIV.SelectedItems.Length > 0;
@@ -451,11 +502,19 @@ namespace MathTextLearner
 		/// Metodo que maneja el evento provocado al completarse un paso
 		/// del proceso durante el aprendizaje.
 		/// </summary>
-		private void OnLearningStepDone(object sender,
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="arg">
+		/// A <see cref="ProcessingStepDoneEventArgs"/>
+		/// </param>
+		private void OnLearningStepDone(object sender, 
 		                                ProcessingStepDoneEventArgs arg)
 		{
 			
-			Application.Invoke(sender,arg,OnLearningStepDoneThread);	
+			Application.Invoke(sender, 
+			                   arg, 
+			                   OnLearningStepDoneThread);	
 		}
 		
 		private void OnLearningStepDoneThread(object sender, EventArgs a)
@@ -804,6 +863,34 @@ namespace MathTextLearner
 			}
 		}	
 #endregion Metodos privados
+		
+	}
+	
+	/// <summary>
+	/// Encapsula el simbolo duplicado para poder pasarlo como argumento
+	/// al manejador del evento en el hilo de la interfaz.
+	/// </summary>
+	class LearningFailedArgs : EventArgs
+	{
+		
+		private MathSymbol duplicateSymbol;
+		
+		public LearningFailedArgs(MathSymbol symbol)
+		{
+			duplicateSymbol = symbol;
+		}
+		
+		/// <summary>
+		/// Permite obtener el simbolo duplicado que genero el fallo.
+		/// </summary>
+		public MathSymbol DuplicateSymbol
+		{
+			get 
+			{
+				return duplicateSymbol;
+			}
+		}
+		
 		
 	}
 }

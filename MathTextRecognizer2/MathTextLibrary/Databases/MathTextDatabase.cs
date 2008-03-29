@@ -102,6 +102,9 @@ namespace MathTextLibrary.Databases
 		/// <summary>
 		/// Con este metodos almacenamos un nuevo simbolo en la base de
 		/// datos.
+		/// 
+		/// Lanza <c>DuplicateSymbolException</c> si ya hay un simbolo con las
+		/// mismas propiedades y etiqueta en la base de datos.
 		/// </summary>
 		/// <param name="bitmap">
 		/// La imagen que queremos añadir a la base de datos.
