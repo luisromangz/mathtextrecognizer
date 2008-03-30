@@ -50,35 +50,35 @@
     <File name="Databases" subtype="Directory" buildaction="Compile" />
     <File name="Databases/Characteristic" subtype="Directory" buildaction="Compile" />
     <File name="Databases/Characteristic/CharacteristicDatabase.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/ColorChangesXAboveFourCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/ColorChangesXBelowTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/ColorChangesXEqualsFourCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/ColorChangesXEqualsTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/ColorChangesYAboveFourCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/ColorChangesYBelowTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/ColorChangesYEqualsFourCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/ColorChangesYEqualsTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/EndingPointsEqualsOneCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/EndingPointsEqualsThreeCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/EndingPointsEqualsTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/EndingPointsEqualsZeroCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/IBinaryCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/NumberBigHolesEqualsOneCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/NumberBigHolesEqualsTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/NumberBigHolesEqualsZeroCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/PixelsLeftHalfCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/PixelsNortheastQuadrantCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/PixelsNorthwestQuadrantCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/PixelsSoutheastQuadrantCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/PixelsSouthwestQuadrantCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/PixelsTopHalfCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/ThriceTallerThanWiderCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/TreePointsEqualsOneCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/TreePointsEqualsThreeCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/TreePointsEqualsTwoCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/TreePointsEqualsZeroCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/TwiceTallerThanWiderCaracteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/WiderThanTallerCaracteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/ColorChangesXAboveFourCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/ColorChangesXBelowTwoCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/ColorChangesXEqualsFourCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/ColorChangesXEqualsTwoCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/ColorChangesYAboveFourCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/ColorChangesYBelowTwoCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/ColorChangesYEqualsFourCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/ColorChangesYEqualsTwoCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/EndingPointsEqualsOneCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/EndingPointsEqualsThreeCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/EndingPointsEqualsTwoCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/EndingPointsEqualsZeroCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/IBinaryCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/NumberBigHolesEqualsOneCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/NumberBigHolesEqualsTwoCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/NumberBigHolesEqualsZeroCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/PixelsLeftHalfCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/PixelsNortheastQuadrantCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/PixelsNorthwestQuadrantCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/PixelsSoutheastQuadrantCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/PixelsSouthwestQuadrantCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/PixelsTopHalfCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/ThriceTallerThanWiderCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/TreePointsEqualsOneCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/TreePointsEqualsThreeCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/TreePointsEqualsTwoCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/TreePointsEqualsZeroCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/TwiceTallerThanWiderCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/WiderThanTallerCharacteristic.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Characteristic/Characteristics/Helpers/CountBlackNeighboursHelper.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Characteristic/Characteristics/Helpers/CountColorChangesHelper.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Characteristic/Characteristics/Helpers/CountNumberOfBlackPixelsHelper.cs" subtype="Code" buildaction="Compile" />
@@ -94,7 +94,7 @@
     <File name="Databases/DatabaseEvents.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/ISymbolProcess.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/DatabaseBase.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/DatabaseInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/DatabaseTypeInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Bitmap" subtype="Directory" buildaction="Compile" />
     <File name="Bitmap/MathTextBitmap.cs" subtype="Code" buildaction="Compile" />
     <File name="Bitmap/MathTextBitmapEvents.cs" subtype="Code" buildaction="Compile" />

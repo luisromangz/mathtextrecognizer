@@ -5,6 +5,8 @@ using System;
 using NUnit.Framework;
 
 using MathTextLibrary.Symbol;
+
+using MathTextLibrary.Databases;
 using MathTextLibrary.Databases.Characteristic;
 
 namespace MathTextLibrary
@@ -26,13 +28,30 @@ namespace MathTextLibrary
 			
 			database.CharacteristicNode = new CharacteristicNode();
 			
-			database.CharacteristicNode.AddSymbol(new MathSymbol("hola",MathSymbolType.Operator));
+			try {
+				database.CharacteristicNode.AddSymbol(new MathSymbol("hola",MathSymbolType.Operator));
+			}
+			catch(DuplicateSymbolException e)
+			{
+				
+			}
 			int count1 = database.CharacteristicNode.Symbols.Count;
 			
-			database.CharacteristicNode.AddSymbol(new MathSymbol("hola",MathSymbolType.Number));
-			int count2 = database.CharacteristicNode.Symbols.Count;
+			bool exception=false;
 			
-			Assert.AreEqual(count1, count2,"Se añadio el simbolo repetido");
+			try {
+				database.CharacteristicNode.AddSymbol(new MathSymbol("hola",MathSymbolType.Operator));
+			}
+			catch(DuplicateSymbolException e)
+			{
+				exception=true;
+			}
+			int count2 = database.CharacteristicNode.Symbols.Count;count2 = database.CharacteristicNode.Symbols.Count;
+			
+			
+				
+			
+			Assert.IsTrue(exception,"No se lanzo la excepcion del elemento duplicado");
 		}
 	}
 }

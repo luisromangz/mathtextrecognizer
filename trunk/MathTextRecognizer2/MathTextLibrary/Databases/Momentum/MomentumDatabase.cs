@@ -10,7 +10,7 @@ using MathTextLibrary.Databases;
 namespace MathTextLibrary.Databases.Momentum
 {
 	
-	[DatabaseInfo("Base de datos basada en los momentos de los caracteres",
+	[DatabaseTypeInfo("Base de datos basada en los momentos de los caracteres",
 	              UsedTypes = 
 	              new Type[]{typeof(MathSymbol)})]
 	public class MomentumDatabase : DatabaseBase

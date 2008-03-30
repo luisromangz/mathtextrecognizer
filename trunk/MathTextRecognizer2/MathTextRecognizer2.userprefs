@@ -1,36 +1,42 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
-  <Files />
+  <Files>
+    <File name="Bienvenido" />
+    <File name="MathTextLibrary/Databases/Characteristic/CharacteristicDatabase.cs" line="291" column="6" />
+    <File name="MathTextLibrary/Databases/Characteristic/CharacteristicFactory.cs" line="41" column="47" />
+    <File name="MathTextLibrary/Databases/DatabaseEvents.cs" line="70" column="27" />
+    <File name="MathTextLibrary/Tests/UtilsTests.cs" line="23" column="33" />
+    <File name="MathTextLibrary/Tests/CharacteristicDatabaseTests.cs" line="17" column="34" />
+  </Files>
   <Views>
     <ViewMemento id="ProjectPad">
       <Node expanded="True">
-        <Node name="CustomGtkWidgets" expanded="True">
-          <Node name="CommonDialogs" expanded="True">
-            <Node name="DatabaseSaveDialog.cs" selected="True" />
-          </Node>
-        </Node>
-        <Node name="MathTextLearner" expanded="True">
-          <Node name="References" expanded="True" />
-          <Node name="Assistant" expanded="True">
-            <Node name="BitmapProcessHelpers" expanded="True" />
-          </Node>
-          <Node name="Config" expanded="True" />
-        </Node>
         <Node name="MathTextLibrary" expanded="True">
-          <Node name="BitmapProcesses" expanded="True" />
-          <Node name="Databases" expanded="True" />
-          <Node name="Utils" expanded="True" />
+          <Node name="Tests" expanded="True">
+            <Node name="CharacteristicDatabaseTests.cs" selected="True" />
+          </Node>
         </Node>
       </Node>
     </ViewMemento>
     <ViewMemento id="ClassPad">
-      <Node expanded="True" />
+      <Node expanded="True">
+        <Node name="MathTextLearner" expanded="True" selected="True">
+          <Node name="MathTextLearner" expanded="True" />
+        </Node>
+      </Node>
     </ViewMemento>
     <ViewMemento id="MonoDevelop.NUnit.TestPad">
-      <Node expanded="True" />
+      <Node expanded="True" selected="True">
+        <Node name="MathTextLibrary" expanded="True">
+          <Node name="MathTextLibrary" expanded="True">
+            <Node name="CharacteristicDatabaseTests" expanded="True" />
+            <Node name="UtilsTests" expanded="True" />
+          </Node>
+        </Node>
+      </Node>
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="" />
+    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextLibrary/Tests/CharacteristicDatabaseTests.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>

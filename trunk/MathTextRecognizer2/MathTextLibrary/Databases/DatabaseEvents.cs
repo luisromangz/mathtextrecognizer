@@ -41,7 +41,7 @@ namespace MathTextLibrary.Databases
 		/// <summary>
 		/// Constructor de la clase <c>ProcessingStepDoneEventArgs</c>.
 		/// </summary>
-		/// <param name="caracteristic">
+		/// <param name="process">
 		/// El proceso que se ha completado.
 		/// </param>
 		/// <param name="image">
@@ -67,7 +67,7 @@ namespace MathTextLibrary.Databases
 		/// <summary>
 		/// Constructor de la clase <c>ProcessingStepDoneEventArgs</c>.
 		/// </summary>
-		/// <param name="caracteristic">El proceso que se ha completado.</param>
+		/// <param name="process">El proceso que se ha completado.</param>
 		/// <param name="image">La imagen a la que se le ha aplicado el proceso.</param>
 		/// <param name="result">El resultado del proceso.</param>
 		public ProcessingStepDoneEventArgs(ISymbolProcess process,

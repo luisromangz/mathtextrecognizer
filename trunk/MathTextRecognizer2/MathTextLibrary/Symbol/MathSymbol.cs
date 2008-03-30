@@ -7,6 +7,7 @@ namespace MathTextLibrary.Symbol
 	/// Esta clase encapsula un símbolo como un texto y el 
 	/// tipo al que corresponde.
 	/// </summary>	
+	
 	public class MathSymbol
 	{
 		// Texto del simbolo

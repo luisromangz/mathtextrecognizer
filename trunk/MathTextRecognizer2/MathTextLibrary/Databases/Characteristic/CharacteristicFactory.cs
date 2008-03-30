@@ -38,7 +38,7 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// <c>IBinaryCharacteristic</c></returns>
 		public static List<IBinaryCharacteristic> CreateCharacteristicList() 
 		{
-			List<IBinaryCharacteristic> caracteristics=new  List<IBinaryCharacteristic>();
+			List<IBinaryCharacteristic> characteristics=new  List<IBinaryCharacteristic>();
 			
 			Assembly a=Assembly.GetAssembly(typeof(IBinaryCharacteristic));
 			
@@ -46,13 +46,13 @@ namespace MathTextLibrary.Databases.Characteristic
 			{
 				if(t.BaseType == typeof(IBinaryCharacteristic))
 				{
-					caracteristics.Add(CharacteristicFactory.CreateCharacteristic(t));														
+					characteristics.Add(CharacteristicFactory.CreateCharacteristic(t));														
 				}				
 			}
 			
-			caracteristics.Sort();		
+			characteristics.Sort();		
 
-			return caracteristics;
+			return characteristics;
 		}
 	}
 }
