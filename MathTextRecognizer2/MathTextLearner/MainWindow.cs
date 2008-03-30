@@ -72,7 +72,7 @@ namespace MathTextLearner
 		private Button btnNext;
 		
 		[WidgetAttribute]
-		private VButtonBox vboxNextButtons;
+		private HBox nextButtonsHB;
 		
 		[WidgetAttribute]
 		private ComboBox comboSymbolType;
@@ -172,7 +172,7 @@ namespace MathTextLearner
 		/// </summary>
 		public void ResetWidgets()
 		{
-			vboxNextButtons.Sensitive = false;
+			nextButtonsHB.Sensitive = false;
 			toolbar.Sensitive = true;
 			entrySymbol.Text = "";
 			comboSymbolType.Active = -1;
@@ -371,7 +371,7 @@ namespace MathTextLearner
 			if(errorMsg=="")
 			{
 				//NO hay errores de validación
-				vboxNextButtons.Sensitive=true;
+				nextButtonsHB.Sensitive=true;
 				hboxSymbolWidgets.Sensitive=false;		
 				menuDatabase.Sensitive=false;				
 				menuSaveAs.Sensitive=false;
@@ -698,7 +698,7 @@ namespace MathTextLearner
 		private void PrepareForNewImage()
 		{
 			hboxSymbolWidgets.Sensitive = false;
-			vboxNextButtons.Sensitive =false;
+			nextButtonsHB.Sensitive =false;
 			nextImageBtn.Sensitive = true;
 			
 			TreeIter iter;
@@ -782,10 +782,10 @@ namespace MathTextLearner
 			
 			
 			Type type = database.Database.GetType();
-			object[] attrs = type.GetCustomAttributes(typeof(DatabaseInfo),
+			object[] attrs = type.GetCustomAttributes(typeof(DatabaseTypeInfo),
 			                                          true);
 			
-			DatabaseInfo info = (DatabaseInfo)(attrs[0]);
+			DatabaseTypeInfo info = (DatabaseTypeInfo)(attrs[0]);
 			
 			databaseInfoLabel.Text="Tipo de base de datos: "
 				+ info.Description;
@@ -804,7 +804,7 @@ namespace MathTextLearner
 			buttonsHB.Sensitive = true;
 			
 			hboxSymbolWidgets.Sensitive = false;
-			vboxNextButtons.Sensitive =false;
+			nextButtonsHB.Sensitive =false;
 			
 			entrySymbol.Text = "";
 			comboSymbolType.Active = -1;

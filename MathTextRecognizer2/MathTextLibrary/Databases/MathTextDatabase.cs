@@ -298,10 +298,10 @@ namespace MathTextLibrary.Databases
 		
 		private static List<Type> RetrieveDatabaseUsedTypes(Type t)
 		{
-			object[] attrs = t.GetCustomAttributes(typeof(DatabaseInfo),true);
+			object[] attrs = t.GetCustomAttributes(typeof(DatabaseTypeInfo),true);
 			
 
-			DatabaseInfo info = (DatabaseInfo)(attrs[0]);
+			DatabaseTypeInfo info = (DatabaseTypeInfo)(attrs[0]);
 			return new List<Type>(info.UsedTypes);
 		}
 		

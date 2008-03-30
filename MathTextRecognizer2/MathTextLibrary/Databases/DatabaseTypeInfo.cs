@@ -9,12 +9,12 @@ namespace MathTextLibrary.Databases
 	/// bases de datos de caracteres matemáticos.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true) ] 
-	public class DatabaseInfo : Attribute
+	public class DatabaseTypeInfo : Attribute
 	{
 		private string description;
 		private Type[] usedTypes;
 		
-		public DatabaseInfo(string description)
+		public DatabaseTypeInfo(string description)
 		{
 			this.description = description;
 		}

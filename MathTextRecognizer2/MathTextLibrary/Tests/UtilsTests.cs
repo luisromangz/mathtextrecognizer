@@ -20,7 +20,7 @@ namespace MathTextLibrary
 		{
 			string path = ConfigFileUtils.GetConfigFilePath("MathTextLearner");
 			
-			Assert.AreEqual("/home/luis/.mathtextlearner",
+			Assert.AreEqual("/home/luis/.config/mathtextlearner",
 			                path,
 			                "La ruta del archivo no es la esperada");
 		}

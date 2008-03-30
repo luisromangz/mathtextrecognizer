@@ -42,7 +42,11 @@ namespace MathTextLibrary.Databases.Characteristic
 			get
 			{				
 				return symbols;
-			}			
+			}
+			set
+			{
+				symbols = value;
+			}
 		}
 		
 		/// <summary>

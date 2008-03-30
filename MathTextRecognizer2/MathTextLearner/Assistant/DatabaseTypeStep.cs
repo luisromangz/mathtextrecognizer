@@ -145,10 +145,10 @@ namespace MathTextLearner.Assistant
 		
 		private string RetrieveDescription(Type t)
 		{		
-			object[] attributes = t.GetCustomAttributes(typeof(DatabaseInfo),
+			object[] attributes = t.GetCustomAttributes(typeof(DatabaseTypeInfo),
 			                                            true);
 			
-			DatabaseInfo info = (DatabaseInfo)attributes[0];
+			DatabaseTypeInfo info = (DatabaseTypeInfo)attributes[0];
 			return info.Description;
 		}
 		

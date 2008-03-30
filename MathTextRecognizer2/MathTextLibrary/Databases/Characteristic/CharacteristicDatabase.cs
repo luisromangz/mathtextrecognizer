@@ -17,7 +17,7 @@ namespace MathTextLibrary.Databases.Characteristic
 	/// binarias para los caracteres aprendidos, asi como de realizar el añadido
 	/// de nuevos caracteres en la misma y realizar busquedas.
 	/// </summary>
-	[DatabaseInfo("Base de datos basada en características binarias")]	
+	[DatabaseTypeInfo("Base de datos basada en características binarias")]	
 	[XmlInclude(typeof(MathSymbol))]
 	[XmlInclude(typeof(CharacteristicNode))]
 	public class CharacteristicDatabase : DatabaseBase
@@ -26,10 +26,10 @@ namespace MathTextLibrary.Databases.Characteristic
 		
 		// Tabla hash para el metodo alternativo de reconocimiento de caracteres
 		// basado en distancia.
-		private Dictionary<List<bool>,CharacteristicNode> caracteristicHash;
+		private Dictionary<List<bool>,CharacteristicNode> characteristicHash;
 		
 		// Lista de caracteristicas binarias que se aplican sobre las imagenes.
-		private static List<IBinaryCharacteristic> caracteristics;
+		private static List<IBinaryCharacteristic> characteristics;
 		
 		// El nodo raiz del arbol binario de caracteristicas binarias en 
 		/// el que guardamos la informacion de caracteristicas.	
@@ -49,7 +49,7 @@ namespace MathTextLibrary.Databases.Characteristic
           
 			rootNode=new CharacteristicNode();
 			
-			caracteristicHash = 
+			characteristicHash = 
 				new Dictionary<List<bool>,CharacteristicNode>();
 		}
 		
@@ -68,17 +68,17 @@ namespace MathTextLibrary.Databases.Characteristic
 		///</param>
 		public override void Learn(MathTextBitmap bitmap,MathSymbol symbol)
 		{
-			if(caracteristics == null)
-				caracteristics=CharacteristicFactory.CreateCharacteristicList();
+			if(characteristics == null)
+				characteristics=CharacteristicFactory.CreateCharacteristicList();
 			
 			CharacteristicNode node=rootNode;
-			bool caracteristicValue;	
+			bool characteristicValue;	
 			
 			// Recorremos las caracteristicas, y vamos creando el arbol segun
 			// vamos necesitando nodos.
-			foreach(IBinaryCharacteristic bc in caracteristics)
+			foreach(IBinaryCharacteristic bc in characteristics)
 			{					
-				if(caracteristicValue=bc.Apply(bitmap))
+				if(characteristicValue=bc.Apply(bitmap))
 				{
 					if(node.TrueTree==null)
 					{
@@ -99,7 +99,7 @@ namespace MathTextLibrary.Databases.Characteristic
 				ProcessingStepDoneEventArgs a = 
 					new ProcessingStepDoneEventArgs(bc,
 					                                bitmap,
-					                                caracteristicValue);
+					                                characteristicValue);
 					
 				this.OnLearningStepDoneInvoke(a);
 			}	
@@ -122,28 +122,28 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// </returns>
 		public override List<MathSymbol> Recognize(MathTextBitmap image)
 		{
-			if(caracteristics == null)
-				caracteristics=CharacteristicFactory.CreateCharacteristicList();
+			if(characteristics == null)
+				characteristics=CharacteristicFactory.CreateCharacteristicList();
 			
 			List<MathSymbol> res = new List<MathSymbol>();
 			CharacteristicNode nodo=rootNode;
 			IBinaryCharacteristic bc;
 			
-			bool existe=true; 
-			bool caracteristicValue;
+			bool exists=true; 
+			bool characteristicValue;
 			
 			List<bool> vector=new List<bool>();
 			
-			for(int i=0;i<caracteristics.Count && existe;i++)
+			for(int i=0;i<characteristics.Count && exists;i++)
 			{
-				bc=(IBinaryCharacteristic)(caracteristics[i]);				
+				bc=(IBinaryCharacteristic)(characteristics[i]);				
 
-				if(caracteristicValue=bc.Apply(image))
+				if(characteristicValue=bc.Apply(image))
 				{
 				
 						if(nodo.TrueTree==null)
 						{
-							existe=false;
+							exists=false;
 						}					
 						nodo=nodo.TrueTree;
 			
@@ -153,7 +153,7 @@ namespace MathTextLibrary.Databases.Characteristic
 				
 						 if(nodo.FalseTree==null)
 						 {
-							 existe=false;
+							 exists=false;
 						 }					
 						 nodo=nodo.FalseTree;
 				 }		
@@ -161,15 +161,15 @@ namespace MathTextLibrary.Databases.Characteristic
 				 //Avisamos de que hemos dado un paso
 				 if(nodo!=null)
 				 {
-					OnRecognizingStepDoneInvoke(new ProcessingStepDoneEventArgs(bc,image,caracteristicValue,nodo.ChildrenSymbols));
+					OnRecognizingStepDoneInvoke(new ProcessingStepDoneEventArgs(bc,image,characteristicValue,nodo.ChildrenSymbols));
 				 }
 				 else
 				 {
-				 	OnRecognizingStepDoneInvoke(new ProcessingStepDoneEventArgs(bc,image,caracteristicValue));
+				 	OnRecognizingStepDoneInvoke(new ProcessingStepDoneEventArgs(bc,image,characteristicValue));
 				 }
 			}
 			
-			if(existe)
+			if(exists)
 			{
 				res=nodo.Symbols;
 			}			
@@ -216,7 +216,7 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// </summary>
 		private void CreateHashTable()
 		{
-			caracteristicHash = 
+			characteristicHash = 
 				new Dictionary<List<bool>,CharacteristicNode>();
 			Console.WriteLine("Creando hash");
 			CreateHashTableAux(rootNode,new List<bool>());
@@ -244,7 +244,7 @@ namespace MathTextLibrary.Databases.Characteristic
 			{
 				// Hemos llegado a una hoja, añadimos una entrada en la tabla.
 				Console.WriteLine(vector.Count);
-				caracteristicHash.Add(vector,node);
+				characteristicHash.Add(vector,node);
 			}
 			else
 			{				
@@ -282,7 +282,7 @@ namespace MathTextLibrary.Databases.Characteristic
 			List<MathSymbol> res = new List<MathSymbol>();
 			List<bool> key=null;
 			
-			foreach(List<bool> s in caracteristicHash.Keys)
+			foreach(List<bool> s in characteristicHash.Keys)
 			{
 				if(BoolVectorDistance(vector,s) < minDiff)
 				{
@@ -294,7 +294,7 @@ namespace MathTextLibrary.Databases.Characteristic
 			if(key!=null && minDiff < 3)
 			{
 				
-				res=caracteristicHash[key].Symbols;
+				res=characteristicHash[key].Symbols;
 			}
 			
 			return res;
