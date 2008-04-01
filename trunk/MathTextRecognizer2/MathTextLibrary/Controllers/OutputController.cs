@@ -25,7 +25,7 @@ namespace MathTextLibrary.Controllers
 	/// MathML y LaTeX, ofreciendo una fachada a la interfaz de usuario, y proporcionando
 	/// abstracion de los procesos subyacentes a la misma.
 	/// </summary>
-	public class MathTextOutputController
+	public class OutputController
 	{
 		//La salida en MathML
 		private string mathMLPOutput;
@@ -53,7 +53,7 @@ namespace MathTextLibrary.Controllers
 		/// dese la interfaz de usuario desde la que se quiera ofrecer la 
 		/// salida en texto.
 		/// </summary>
-		public MathTextOutputController()
+		public OutputController()
 		{
 			
 		}	

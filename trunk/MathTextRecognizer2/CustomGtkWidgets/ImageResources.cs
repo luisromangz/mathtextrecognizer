@@ -27,5 +27,21 @@ namespace CustomGtkWidgets
 				return Pixbuf.LoadFromResource("insert-image16.png");
 			}
 		}	
+		
+		public static Pixbuf DatabaseIcon22
+		{
+			get
+			{
+				return Pixbuf.LoadFromResource("database22.png");
+			}
+		}	
+		
+		public static Pixbuf DatabaseIcon16
+		{
+			get
+			{
+				return Pixbuf.LoadFromResource("database16.png");
+			}
+		}	
 	}
 }

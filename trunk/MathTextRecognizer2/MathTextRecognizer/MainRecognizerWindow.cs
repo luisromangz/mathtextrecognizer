@@ -31,7 +31,7 @@ namespace MathTextRecognizerGUI
 	/// Esta clase representa la ventana principal de la aplicacion de
 	/// reconocimiento de formulas.
 	/// </summary>
-	public class MainWindow
+	public class MainRecognizerWindow
 	{
 		#region Glade-Widgets
 		[WidgetAttribute]
@@ -47,7 +47,7 @@ namespace MathTextRecognizerGUI
 		private Frame frameNodeProcessed;
 		
 		[WidgetAttribute]
-		private Button btnNextC;
+		private Button btnNextStep;
 		
 		[WidgetAttribute]
 		private Button btnNextNode;
@@ -56,13 +56,13 @@ namespace MathTextRecognizerGUI
 		private Button btnTilEnd;
 		
 		[WidgetAttribute]		
-		private ToolButton toolLoad;
+		private ToolButton toolLoadImage;
 		
 		[WidgetAttribute]		
 		private ToolButton toolLatex;
 		
 		[WidgetAttribute]		
-		private ToolButton toolOpen;	
+		private ToolButton toolDatabase;	
 		
 		[WidgetAttribute]
 		private ScrolledWindow scrolledtree;
@@ -80,7 +80,7 @@ namespace MathTextRecognizerGUI
 		private ImageMenuItem menuNewSession;
 		
 		[WidgetAttribute]
-		private ImageMenuItem menuOpenDatabase;
+		private ImageMenuItem menuOpenDatabaseManager;
 		
 		[WidgetAttribute]
 		private ImageMenuItem menuMakeOutput;
@@ -106,7 +106,7 @@ namespace MathTextRecognizerGUI
 		private ImageArea imageAreaNode;
 		private ImageArea imageAreaProcessed;
 		
-		private MathTextRecognizerController controller;		
+		private RecognizerController controller;		
 		
 		private LogView logView;
 		
@@ -119,26 +119,25 @@ namespace MathTextRecognizerGUI
 		#endregion Otros atributos
 		
 		public static void Main(string[] args)
-		{
-			new MainWindow();
+		{			
+			Application.Init();
+			new MainRecognizerWindow();			
+			Application.Run();
 		}
 		
 		/// <summary>
-		/// El constructor de <code>MainClass</code>.
+		/// El constructor de <code>MainWindow</code>.
 		/// </summary>
-		public MainWindow()
+		public MainRecognizerWindow()
 		{
-		
-			Application.Init();
-			Glade.XML gxml = new Glade.XML (null, "mathtextrecognizer.glade",
-			                                 "mainWindow", null);
-			gxml.Autoconnect (this);
+			Glade.XML gxml = new Glade.XML (null, 
+			                                "mathtextrecognizer.glade",
+			                                "mainWindow",
+			                                null);
+			gxml.Autoconnect (this);			
+			this.Initialize();			
+			OnOpenDatabaseManagerClicked(this,EventArgs.Empty);
 			
-			Initialize();
-			
-			OnOpenDatabaseClicked(this,EventArgs.Empty);
-			
-			Application.Run();
 		}
 		
 		/// <summary>
@@ -147,20 +146,20 @@ namespace MathTextRecognizerGUI
 		private void Initialize()
 		{		
 		
-			controller=new MathTextRecognizerController();
+			controller = new RecognizerController();
 			
 			// Asignamos los eventos que indican que se han alcanzado hitos
 			// en el reconocimiento de un cáracter.
-			controller.LogMessageSent+=
+			controller.LogMessageSent +=
 			    new ControllerLogMessageSentEventHandler(OnMessageLog);
 			    		
-			controller.RecognizeProcessFinished+=
+			controller.RecognizeProcessFinished +=
 			    new ControllerProcessFinishedEventHandler(OnRecognizeProcessFinished);
 			    
-			controller.BitmapBeingRecognized+=
+			controller.BitmapBeingRecognized +=
 			    new ControllerBitmapBeingRecognizedEventHandler(OnBitmapBeingRecognized);
 			    
-			store=new NodeStore(typeof(MTBNode));
+			store = new NodeStore(typeof(MTBNode));
 			
 			// Creamos el NodeView, podría hacerse en el fichero de Glade,
 			// aunque alguna razón habría por la que se hizo así.
@@ -173,7 +172,7 @@ namespace MathTextRecognizerGUI
 			// nodo en el árbol.
 			treeview.Selection.Changed += OnTreeviewSelectionChanged;
 				
-			mainWindow.Title = title + "Nueva base de datos";
+			mainWindow.Title = title + "Sin imagen";
 			
 			imageAreaOriginal = new ImageArea();
 			imageAreaOriginal.ImageMode = ImageAreaMode.Zoom;
@@ -192,8 +191,13 @@ namespace MathTextRecognizerGUI
 			
 			frameNodeProcessed.Add(imageAreaProcessed);
 			
+			// Ponemos iconos personalizados en los botones
 			menuLoadImage.Image = new Gtk.Image(ImageResources.ImageLoadIcon16);
-			toolLoad.IconWidget = new Gtk.Image(ImageResources.ImageLoadIcon22);
+			toolLoadImage.IconWidget = new Gtk.Image(ImageResources.ImageLoadIcon22);
+			
+			menuOpenDatabaseManager.Image = new Gtk.Image(ImageResources.DatabaseIcon16);
+			toolDatabase.IconWidget = new Gtk.Image(ImageResources.DatabaseIcon22);
+			
 			// Creamos el cuadro de registro.
 			logView = new LogView();
 			expLog.Add(logView);		
@@ -361,11 +365,11 @@ namespace MathTextRecognizerGUI
 			toolLatex.Sensitive=true;
 			
 			menuLoadImage.Sensitive=true;
-			menuOpenDatabase.Sensitive=true;
+			menuOpenDatabaseManager.Sensitive=true;
 			menuMakeOutput.Sensitive=true;
 			
-			toolLoad.Sensitive=true;
-			toolOpen.Sensitive=true;
+			toolLoadImage.Sensitive=true;
+			toolDatabase.Sensitive=true;
 			
 			imageAreaOriginal.Image = null;
 			
@@ -415,17 +419,17 @@ namespace MathTextRecognizerGUI
 		/// <summary>
 		///	Manejo del evento provocado al hacer click en el boton "Abrir base de datos". 
 		/// </summary>
-		private void OnOpenDatabaseClicked(object sender, EventArgs arg)
+		private void OnOpenDatabaseManagerClicked(object sender, EventArgs arg)
 		{		
 			string filename;	
 			
 			if(DatabaseOpenDialog.Show(mainWindow, out filename)
 				== ResponseType.Ok)
 			{				
-				controller.LoadDatabase(filename);
-				mainWindow.Title=title + Path.GetFileName(filename);
+				// Añadimos la base de datos al controlador.
+				controller.LoadDatabase(filename);				
 				ClearLog();
-				Log("Base de datos en «{0}» cargada correctamente!", filename);
+				Log("!Base de datos en «{0}» cargada correctamente!", filename);
 			}
 		}
 		
@@ -449,7 +453,7 @@ namespace MathTextRecognizerGUI
 		/// <summary>
 		/// Manejo del evento provocado al hacer click en el boton "Cargar imagen".
 		/// </summary>
-		private void OnLoadClicked(object sender, EventArgs arg)
+		private void OnLoadImageClicked(object sender, EventArgs arg)
 		{
 			
 			ResponseType res = ResponseType.Yes;
@@ -475,9 +479,9 @@ namespace MathTextRecognizerGUI
 		/// Manejo del evento provocado al hacer click en el botón
 		/// "Nueva sesion".
 		/// </summary>
-		private void OnNewDatabaseClicked(object sender, EventArgs arg)
+		private void OnNewSessionClicked(object sender, EventArgs arg)
 		{			
-			new MainWindow();
+			new MainRecognizerWindow();
 		}
 		
 		/// <summary>
@@ -487,9 +491,9 @@ namespace MathTextRecognizerGUI
 		private void NextStep()
 		{			
 			
-			toolOpen.Sensitive=false;
-			toolLoad.Sensitive=false;
-			menuOpenDatabase.Sensitive=false;
+			toolDatabase.Sensitive=false;
+			toolLoadImage.Sensitive=false;
+			menuOpenDatabaseManager.Sensitive=false;
 			menuLoadImage.Sensitive=false;
 			controller.NextRecognizeStep();
 			
@@ -505,7 +509,7 @@ namespace MathTextRecognizerGUI
 			expLog.Expanded = true;
 			
 			controller.StepMode =
-				 MathTextRecognizerControllerStepMode.NodeByNode;
+				 RecognizerControllerStepMode.NodeByNode;
 				
 			NextStep();
 		}
@@ -514,12 +518,12 @@ namespace MathTextRecognizerGUI
 		/// Metodo que maneja el evento lanzado al hacerse click sobre el 
 		/// boton "Siguiente caracteristica".
 		/// </summary>
-		private void OnBtnNextCaractClicked(object sender, EventArgs arg)
+		private void OnBtnNextStepClicked(object sender, EventArgs arg)
 		{		    
 			expLog.Expanded = true;
 			
 			controller.StepMode = 
-			    MathTextRecognizerControllerStepMode.NodeByNodeWithCharacteristicCheck;		    
+			    RecognizerControllerStepMode.StepByStep;		    
 			
 			NextStep();
 		}
@@ -532,7 +536,7 @@ namespace MathTextRecognizerGUI
 		{
 			alignNextButtons.Sensitive=false;
 			controller.StepMode = 
-				MathTextRecognizerControllerStepMode.UntilEnd;
+				RecognizerControllerStepMode.UntilEnd;
 			
 			NextStep();
 		}
@@ -568,16 +572,19 @@ namespace MathTextRecognizerGUI
 			
 			if(ImageLoadDialog.Show(mainWindow, out filename)
 				== ResponseType.Ok)
-			{								
+			{			
+				// Cargamos la imagen desde disco
 				imageOriginal = new Pixbuf(filename);				
 				imageAreaOriginal.Image=imageOriginal;				
 				store.Clear();
 				
+				// Generamos el MaxtTextBitmap inical, y lo añadimos como
+				// un nodo al arbol.
 				MathTextBitmap mtb = new MathTextBitmap(imageOriginal);			
 				MTBNode node = 
-					new MTBNode(
-						Path.GetFileNameWithoutExtension(filename), 
-						mtb, treeview);
+					new MTBNode(Path.GetFileNameWithoutExtension(filename),
+					            mtb,
+				                treeview);
 				    
 				store.AddNode(node);
 				controller.StartImage=mtb;
@@ -592,6 +599,10 @@ namespace MathTextRecognizerGUI
 				menuMakeOutput.Sensitive=false;
 				
 				Log("¡Archivo de imagen «"+filename+"» cargado correctamente!");
+
+				this.mainWindow.Title = 
+					title + System.IO.Path.GetFileName(filename);
+				
 				alignNextButtons.Sensitive=true;
 			}
 		}
