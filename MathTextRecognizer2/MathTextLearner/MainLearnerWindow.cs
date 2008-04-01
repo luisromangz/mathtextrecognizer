@@ -7,6 +7,7 @@
  
 using System;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Collections.Generic;
 
@@ -33,7 +34,7 @@ namespace MathTextLearner
 	/// Esta clase representa la ventana principal de la aplicacion de
 	/// aprendizaje de caracteres en la base de datos.
 	/// </summary>
-	public class MainWindow
+	public class MainLearnerWindow
 	{
 		
 #region Glade widgets
@@ -143,29 +144,33 @@ namespace MathTextLearner
 		
 		
 #endregion Otros atributos
-		
+
+#region Metodos publicos
 		public static void Main(string[] args)
-		{			
-			new MainWindow();			
+		{	
+			Application.Init();		
+			new MainLearnerWindow();	
+			Application.Run();
 		}
 		
 		/// <summary>
 		/// El constructor de <code>MainWindow</code>.
 		/// </summary>
-		public MainWindow()
-		{
+		public MainLearnerWindow()
+		{			
 			
-			Application.Init();
-			Glade.XML gxml = new Glade.XML (null, 
-				"mathtextlearner.glade", "mainWindow", null);
+			Glade.XML gxml = new Glade.XML (null,
+			                                "mathtextlearner.glade", 
+			                                "mainWindow", 
+			                                null);
 				
 			gxml.Autoconnect (this);
 			
 			Initialize();
-			Application.Run();
+		
 		}
 		
-#region Metodos publicos
+
 		/// <summary>
 		/// Metodo para restaurar la interfaz a su estado inicial tras haber
 		/// aprendidio un caracter.
@@ -187,14 +192,36 @@ namespace MathTextLearner
 		
 #region Metodos privados
 		
+		/// <summary>
+		/// Muestra el mensaje que indica como termino el proceso de aprendizaje, 
+		/// e inicicializa contadores y otras variables relacionadas
+		/// con el proceso de aprendizaje actual.
+		/// </summary>
 		private void AllImagesLearned()
 		{
+			
+			string conflictsMessage ="";
+			
+			// Generamos la cadena que informa de los conflictos
+			switch(conflicts)
+			{
+				case 0:
+					break;
+				case 1:
+					conflictsMessage = "Hubo un conflicto entre caracteres";
+					break;
+				default:
+					conflictsMessage = 
+						String.Format("Hubo {0} conflictos entre caracteres.",
+						              conflicts);
+					break;
+			}
+			
+			// Informamos al usuario.
 			OkDialog.Show(mainWindow,
 				          MessageType.Info,
 				          "Todos los carácteres fueron procesados.{0}",
-				          (conflicts>0?"Hubo "
-			               +conflicts
-			               +" conflictos entre caracteres.":""));
+				          conflictsMessage);
 				
 			mtb = null;
 			
@@ -232,8 +259,7 @@ namespace MathTextLearner
 			imagesStore = new ListStore(typeof(Gdk.Pixbuf), typeof(Gdk.Pixbuf)); 
 			imagesIV.Model = imagesStore;
 			
-			mainWindow.ShowAll();		
-			
+			mainWindow.ShowAll();			
 		}		
 		
 		/// <summary>
@@ -610,6 +636,7 @@ namespace MathTextLearner
 			
 		}
 		
+		
 		private void OnNextImageBtnClicked(object sender, EventArgs arg)
 		{
 			nextImageBtn.Sensitive = false;
@@ -674,6 +701,8 @@ namespace MathTextLearner
 		{
 			OpenDatabase();
 		}
+		
+		
 		
 		private void OpenDatabase()
 		{			

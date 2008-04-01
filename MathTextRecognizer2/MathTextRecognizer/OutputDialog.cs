@@ -30,7 +30,7 @@ namespace MathTextRecognizerGUI
 		[WidgetAttribute]
 		private ComboBox comboOutputType;
 		
-		private MathTextOutputController controller;
+		private OutputController controller;
 		
 		private FileChooserDialog fileSaveDialog;
 		
@@ -47,7 +47,7 @@ namespace MathTextRecognizerGUI
 			
 			gxml.Autoconnect (this);			
 			
-			controller=new MathTextOutputController();
+			controller=new OutputController();
 			controller.StartImage=rootBitmap;
 			controller.OutputCreated+=new ControllerProcessFinishedEventHandler(OnOutputCreated);
 						

@@ -17,14 +17,13 @@ namespace MathTextLibrary.Controllers
 	/// Enumeracion que indica el tipo de paso a paso con el que se
 	/// van a realizar los procesos de cada controlador.
 	/// </summary>
-	public enum MathTextRecognizerControllerStepMode
+	public enum RecognizerControllerStepMode
 	{
 		/// <summary>
-		/// Representa el modo de nodo a nod de la imagen,
-		/// deteniendose en la comprobacion de las caracteristicas binarias
-		/// de la imagen.
+		/// Representa el modo de nodo a nodo de la imagen, deteniendose
+		/// en cada parametro a procesar de la misma.
 		/// </summary>
-		NodeByNodeWithCharacteristicCheck,		
+		StepByStep,		
 		
 		/// <summary>
 		/// Representa el modo de paso a paso por nodo segmentado de la imagen.
@@ -43,18 +42,13 @@ namespace MathTextLibrary.Controllers
 	/// fachada a las posibles interfaces de usuario para abstraerlas de este 
 	/// cometido.
 	/// </summary>
-	public class MathTextRecognizerController{			
+	public class RecognizerController{			
 		
 		//La base de datos que usaremos para reconocer los caracteres.
-		private MathTextDatabase database;
+		private List<MathTextDatabase> databases;
 		
 		//El modo de ejecucion paso a paso del proceso.
-		private MathTextRecognizerControllerStepMode stepByStep;		
-		
-		//Semaforos para garantizar la exclusion mutua, necesarios por el uso de
-		//varios hilos sobre algunos recursos compartidos.
-		private Mutex stepMutex;
-		private Mutex resumeMutex;
+		private RecognizerControllerStepMode stepByStep;		
 		
 		/// <summary>
 		/// Evento usado para enviar un mensaje de informacion a la interfaz.
@@ -84,15 +78,13 @@ namespace MathTextLibrary.Controllers
 		/// en las posibles implementaciones distintas de la interfaz de usuario del
 		/// reconocedor.
 		/// </summary>
-		public MathTextRecognizerController(){			
+		public RecognizerController()
+		{			
 			
-			//Creamos una base de datos vacia en principio
-			database.RecognizingStepDone+=
-				new ProcessingStepDoneEventHandler(OnProcessingStepDone);				
+			databases = new List<MathTextDatabase>();
+						
 			
-			stepByStep = MathTextRecognizerControllerStepMode.UntilEnd;
-			stepMutex = new Mutex();
-			resumeMutex = new Mutex();	
+			stepByStep = RecognizerControllerStepMode.UntilEnd;	
 		}
 	
 		/// <summary>
@@ -115,7 +107,7 @@ namespace MathTextLibrary.Controllers
 		/// <param name="msg">
 		/// El mensaje que queremos pasar como argumento al manejador del evento.
 		/// </param>		
-		protected void OnLogMessageSend(string msg)
+		protected void OnLogMessageSent(string msg)
 		{
 			if(LogMessageSent!=null)
 			{
@@ -145,27 +137,27 @@ namespace MathTextLibrary.Controllers
 		{
 			//Lo que hacemos es notificar a la interfaz de que una determinada caracteristica binaria
 			//ha tomado un valor, y que caracteres son similares.
-			OnLogMessageSend(args.Process.GetType()+": "+args.Result);
+			OnLogMessageSent(args.Process.GetType()+": "+args.Result);
 			string similar="";	
 			if(args.SimilarSymbols!=null){
 				foreach(MathSymbol ms in args.SimilarSymbols){
 					similar+="«"+ms.Text+"»,";
 				}
-				OnLogMessageSend("Caracteres similares: "+similar.TrimEnd(new char[]{','}));
+				OnLogMessageSent("Caracteres similares: "+similar.TrimEnd(new char[]{','}));
 			}
 		}
 		
 		/// <summary>
 		/// Propiedad para establecer el modo de ejecucion paso a paso del procesado.
 		/// </summary>
-		public MathTextRecognizerControllerStepMode StepMode{
-			get{
+		public RecognizerControllerStepMode StepMode{
+			get
+			{
 				return stepByStep;
 			}
-			set{
-				lock(stepMutex){
-					stepByStep=value;
-				}
+			set
+			{				
+				stepByStep=value;				
 			}
 		}
 		
@@ -179,7 +171,12 @@ namespace MathTextLibrary.Controllers
 		public void LoadDatabase(string path)
 		{
 			
-			database = MathTextDatabase.Load(path);
+			MathTextDatabase database = MathTextDatabase.Load(path);
+			
+			database.RecognizingStepDone+=
+				new ProcessingStepDoneEventHandler(OnProcessingStepDone);
+			
+			databases.Add(database);
 		}
 		
 		/// <summary>
@@ -215,13 +212,14 @@ namespace MathTextLibrary.Controllers
 				//modo paso a paso. Si hemos querido cambiar el modo de paso a paso lo habremos
 				//hecho en la interfaz mediante la propiedad que aqui ofrecemos.
 				//Por tanto lo unico que tenemos que hacer es despertar el hilo.	
-				lock(resumeMutex){
-					if(recognizeThread.ThreadState==ThreadState.Suspended){
-						recognizeThread.Resume();
-						
-					}else if(recognizeThread.ThreadState==ThreadState.Stopped){
-						res=false;
-					}
+				
+				if(recognizeThread.ThreadState==ThreadState.Suspended)
+				{
+					recognizeThread.Resume();					
+				}
+				else if(recognizeThread.ThreadState==ThreadState.Stopped)
+				{
+					res=false;
 				}
 			}
 			return res;		
@@ -246,21 +244,35 @@ namespace MathTextLibrary.Controllers
 		private void RecognizerTreeBuild(MathTextBitmap node){			
 			
 			//Para proteger el paso actual de un cambio de modo intermedio
-			MathTextRecognizerControllerStepMode modeAux;
-			lock(stepMutex){
-				modeAux=stepByStep;
-			}
+			RecognizerControllerStepMode modeAux;
+			
+			modeAux=stepByStep;
 			
 			OnBitmapBeingRecognized(node);
 		
-			OnLogMessageSend("Tratando la subimagen situada a partir de "+node.Position);
+			OnLogMessageSent("Tratando la subimagen situada a partir de "+node.Position);
 						
 			//Si no logramos reconocer nada, es el simbolo nulo, tambien sera
 			//el simbolo nulo aunque hayamos podido crearle hijos.
 			MathSymbol associatedSymbol;
 			
-			//Lanzamos el reconocedor de caracteres.
-			List<MathSymbol> associatedSymbols =database.Recognize(node);
+			// Lanzamos el reconocedor de caracteres para cada una de
+			// las bases de datos.
+			List<MathSymbol> associatedSymbols = new List<MathSymbol>();
+			foreach(MathTextDatabase database in databases)
+			{
+				// Añadimos los caracteres reconocidos por la base de datos
+				foreach (MathSymbol symbol in database.Recognize(node))
+				{
+					if(!associatedSymbols.Contains(symbol))
+					{
+						// Solo añadimos si no esta ya el simbolo.
+						associatedSymbols.Add(symbol);
+					}
+				}				
+			}		
+			
+			
 			
 			// Decidimos que símbolo de los  posiblemente devuelto usuaremos.			
 			associatedSymbol = ChooseSymbol(associatedSymbols);
@@ -270,29 +282,29 @@ namespace MathTextLibrary.Controllers
 			//Si no hemos reconocido nada, pues intentaremos segmentar el caracter.
 			if(associatedSymbol.SymbolType == MathSymbolType.NotRecognized)
 			{			
-				OnLogMessageSend("La imagen no pudo ser reconocida como un simbolo por la base de datos");
+				OnLogMessageSent("La imagen no pudo ser reconocida como un simbolo por la base de datos");
 				
 				node.CreateChildren();
 				
 				if(node.Children!=null && node.Children.Count > 1)
 				{
-					OnLogMessageSend("La imagen se ha segmentado correctamente");
+					OnLogMessageSent("La imagen se ha segmentado correctamente");
 				}
 				else
 				{
-					OnLogMessageSend("La imagen no pudo ser segmentada, el símbolo queda sin reconocer");
+					OnLogMessageSent("La imagen no pudo ser segmentada, el símbolo queda sin reconocer");
 				}
 			}
 			else
 			{
-				OnLogMessageSend("Símbolo reconocido por la base de datos como «"
+				OnLogMessageSent("Símbolo reconocido por la base de datos como «"
 				                 +associatedSymbol.Text+"»");
 			}
 			
 					
 			
 			//Paramos aqui, lo que sigue es la llamada al procesamiento de los nodos hijos
-			if(modeAux != MathTextRecognizerControllerStepMode.UntilEnd)
+			if(modeAux != RecognizerControllerStepMode.UntilEnd)
 			{				
 				recognizeThread.Suspend();
 			}
@@ -307,7 +319,8 @@ namespace MathTextLibrary.Controllers
 		
 	
 		/// <summary>
-		/// 
+		/// Permite al usuario elegir entre varios caracteres que se hayan 
+		/// reconocido para una imagen.
 		/// </summary>
 		/// <param name="symbols">
 		/// A <see cref="List`1"/>

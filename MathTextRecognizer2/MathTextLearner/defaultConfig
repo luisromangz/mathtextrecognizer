@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LearnerConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BitmapFixedThresholder>
+    <Threshold>208</Threshold>
+  </BitmapFixedThresholder>
+  <BitmapFramer />
+  <BitmapScaler>
+    <NewSize>50</NewSize>
+  </BitmapScaler>
+  <BitmapFixedThresholder>
+    <Threshold>220</Threshold>
+  </BitmapFixedThresholder>
+  <BitmapZhangSuenStentifordHoltThinner />
+</LearnerConfig>
