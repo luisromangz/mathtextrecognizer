@@ -1,1 +1,4 @@
 Part of the MathTextRecognizer2 project, this software's purpose is to create character information databases using a given method.
+
+=Características=
+ * La configuración se almacena usando la clase [LearnerConfig].
