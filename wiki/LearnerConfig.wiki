@@ -3,4 +3,4 @@ This class is used to store and manage [MathTextLearner]'s configuration.
 
 Basically it offers storage for a list of instances of [BitmapProcess], representing the different algorithms which can be used to process the image in order to prepare it before being recognized.
 
-This class has also the responsibility of persisting those settings. For doing so, it uses the [ConfigFileUtils] class for a path for the [MathTextLearner] application, and then uses it to retrieve and store the settings (the later only when requested). If no config file is found, a embedded text file in the [MathTextLeaner] assembly is used instead of it.
+This class has also the responsibility of persisting those settings. For doing so, it uses the [ConfigFileUtils] class for a path for the [MathTextLearner] application, and then uses it to retrieve and store the settings (the later only when requested). If no config file is found, a embedded text file in the [MathTextLearner] assembly is used instead of it.
