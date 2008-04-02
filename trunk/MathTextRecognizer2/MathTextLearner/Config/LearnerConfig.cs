@@ -61,18 +61,6 @@ namespace MathTextLearner.Config
 		}
 		
 		/// <summary>
-		/// Crea la configuración por defecto para el programa 
-		/// </summary>
-		private static void CreateDefaultConfig()
-		{
-			// TODO Crear la configuracion inicial, de verdad.
-			config = new LearnerConfig();
-			
-			config.DefaultProcesses.Add(new BitmapFixedThresholder());
-			config.Save();
-		}
-		
-		/// <summary>
 		/// Carga la configuracion desde el archivo de configuracion
 		/// de la aplicacion.
 		/// </summary>
@@ -84,18 +72,25 @@ namespace MathTextLearner.Config
 			
 			string path = ConfigFileUtils.GetConfigFilePath("MathTextLearner");
 			
+			Stream configStream;
+			
 			if(File.Exists(path))
 			{			                                           
-				using(StreamReader r = new StreamReader(path))
-				{
-					config = (LearnerConfig)serializer.Deserialize(r);
-					r.Close();
-				}
+				configStream = new FileStream(path,FileMode.Open);
 			}
 			else
 			{
-				CreateDefaultConfig();
+				// Cargamos la configuración por defecto, cargandola desde
+				// un archivo de recursos.				
+				Assembly runningAssembly =Assembly.GetExecutingAssembly();
+				configStream = runningAssembly.GetManifestResourceStream("defaultConfig");			
+				
 			}
+			
+			// Deserializamos
+			config = (LearnerConfig)serializer.Deserialize(configStream);					
+			configStream.Close();
+			
 		}
 		
 		/// <summary>

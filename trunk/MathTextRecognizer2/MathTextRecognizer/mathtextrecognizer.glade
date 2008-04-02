@@ -36,6 +36,21 @@
                       </widget>
                     </child>
                     <child>
+                      <widget class="GtkImageMenuItem" id="menuLoadImage">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">_Cargar imagen</property>
+                        <property name="use_underline">True</property>
+                        <signal name="activate" handler="OnLoadImageClicked"/>
+                        <child internal-child="image">
+                          <widget class="GtkImage" id="image39">
+                            <property name="visible">True</property>
+                            <property name="stock">gtk-select-color</property>
+                            <property name="icon_size">1</property>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
                       <widget class="GtkSeparatorMenuItem" id="separatormenuitem1">
                         <property name="visible">True</property>
                       </widget>
@@ -97,32 +112,6 @@
               </widget>
             </child>
             <child>
-              <widget class="GtkMenuItem" id="menuImagen">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">_Imagen</property>
-                <property name="use_underline">True</property>
-                <child>
-                  <widget class="GtkMenu" id="menuImagen_menu">
-                    <child>
-                      <widget class="GtkImageMenuItem" id="menuLoadImage">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">_Cargar imagen</property>
-                        <property name="use_underline">True</property>
-                        <signal name="activate" handler="OnLoadImageClicked"/>
-                        <child internal-child="image">
-                          <widget class="GtkImage" id="image39">
-                            <property name="visible">True</property>
-                            <property name="stock">gtk-select-color</property>
-                            <property name="icon_size">1</property>
-                          </widget>
-                        </child>
-                      </widget>
-                    </child>
-                  </widget>
-                </child>
-              </widget>
-            </child>
-            <child>
               <widget class="GtkMenuItem" id="menuAyuda">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">A_yuda</property>
@@ -161,6 +150,10 @@
             <child>
               <widget class="GtkToolButton" id="toolNew">
                 <property name="visible">True</property>
+                <property name="has_tooltip">True</property>
+                <property name="tooltip_text">Abrir nueva sesión de reconocimiento</property>
+                <property name="resize_mode">GTK_RESIZE_QUEUE</property>
+                <property name="label" translatable="yes">Abrir nueva sesión de reconocimiento</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-new</property>
                 <signal name="clicked" handler="OnNewSessionClicked"/>
@@ -172,7 +165,9 @@
             <child>
               <widget class="GtkToolButton" id="toolDatabase">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">Gestor de bases de datos</property>
+                <property name="has_tooltip">True</property>
+                <property name="tooltip_text">Abrir el gestor de bases de datos</property>
+                <property name="label" translatable="yes">Abrir gestor de bases de datos</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-open</property>
                 <signal name="clicked" handler="OnOpenDatabaseManagerClicked"/>
@@ -185,6 +180,9 @@
             <child>
               <widget class="GtkToolButton" id="toolLoadImage">
                 <property name="visible">True</property>
+                <property name="has_tooltip">True</property>
+                <property name="tooltip_text">Abrir imagen para reconocer</property>
+                <property name="label" translatable="yes">Abrir imagen para procesar</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-select-color</property>
                 <signal name="clicked" handler="OnLoadImageClicked"/>
@@ -197,6 +195,9 @@
               <widget class="GtkToolButton" id="toolLatex">
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
+                <property name="has_tooltip">True</property>
+                <property name="tooltip_text">Transformar resultado</property>
+                <property name="label" translatable="yes">Convertir resultado</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-convert</property>
                 <signal name="clicked" handler="OnLatexClicked"/>
@@ -213,6 +214,9 @@
           </packing>
         </child>
         <child>
+          <placeholder/>
+        </child>
+        <child>
           <widget class="GtkHPaned" id="hpaned1">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
@@ -224,7 +228,7 @@
                 <property name="border_width">5</property>
                 <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
                 <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-                <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+                <property name="shadow_type">GTK_SHADOW_IN</property>
                 <child>
                   <placeholder/>
                 </child>
@@ -244,13 +248,14 @@
                     <property name="visible">True</property>
                     <property name="border_width">5</property>
                     <property name="label_xalign">0</property>
+                    <property name="shadow_type">GTK_SHADOW_IN</property>
                     <child>
                       <placeholder/>
                     </child>
                     <child>
                       <widget class="GtkLabel" id="label10">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">Original</property>
+                        <property name="label" translatable="yes">Imagen original</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
@@ -271,6 +276,7 @@
                         <property name="width_request">240</property>
                         <property name="visible">True</property>
                         <property name="label_xalign">0</property>
+                        <property name="shadow_type">GTK_SHADOW_IN</property>
                         <child>
                           <placeholder/>
                         </child>
@@ -291,6 +297,7 @@
                         <property name="width_request">240</property>
                         <property name="visible">True</property>
                         <property name="label_xalign">0</property>
+                        <property name="shadow_type">GTK_SHADOW_IN</property>
                         <child>
                           <placeholder/>
                         </child>
@@ -473,7 +480,7 @@
             </child>
           </widget>
           <packing>
-            <property name="position">2</property>
+            <property name="position">3</property>
           </packing>
         </child>
         <child>
@@ -495,7 +502,7 @@
           </widget>
           <packing>
             <property name="expand">False</property>
-            <property name="position">3</property>
+            <property name="position">4</property>
           </packing>
         </child>
       </widget>
@@ -679,10 +686,19 @@ MathML</property>
           <widget class="GtkHBox" id="hbox4">
             <property name="visible">True</property>
             <child>
-              <widget class="GtkTreeView" id="databasesTV">
+              <widget class="GtkScrolledWindow" id="scrolledwindow1">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="tooltip_column">2</property>
+                <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                <property name="shadow_type">GTK_SHADOW_IN</property>
+                <child>
+                  <widget class="GtkTreeView" id="databasesTV">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="tooltip_column">2</property>
+                  </widget>
+                </child>
               </widget>
             </child>
             <child>
