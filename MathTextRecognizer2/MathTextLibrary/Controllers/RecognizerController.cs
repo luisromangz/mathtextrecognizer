@@ -135,20 +135,23 @@ namespace MathTextLibrary.Controllers
 		private void OnProcessingStepDone(object sender,
 		                                  ProcessingStepDoneEventArgs args)
 		{
-			//Lo que hacemos es notificar a la interfaz de que una determinada caracteristica binaria
-			//ha tomado un valor, y que caracteres son similares.
+			// Lo que hacemos es notificar a la interfaz de que una determinada 
+			// caracteristica binaria ha tomado un valor, y que caracteres son
+			// similares.
 			OnLogMessageSent(args.Process.GetType()+": "+args.Result);
 			string similar="";	
 			if(args.SimilarSymbols!=null){
 				foreach(MathSymbol ms in args.SimilarSymbols){
-					similar+="«"+ms.Text+"»,";
-				}
+					similar += String.Format("«{0}»,", ms.Text);
+				}				
+				
 				OnLogMessageSent("Caracteres similares: "+similar.TrimEnd(new char[]{','}));
 			}
 		}
 		
 		/// <value>
-		/// Propiedad para establecer el modo de ejecucion paso a paso del procesado.
+		/// Propiedad para establecer el modo de ejecucion paso a paso del
+		/// procesado.
 		/// </value>
 		public RecognizerControllerStepMode StepMode{
 			get

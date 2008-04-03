@@ -1,48 +1,53 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
-  <Files>
-    <File name="Bienvenido" />
-    <File name="MathTextLearner/Config/LearnerConfig.cs" line="93" column="4" />
-    <File name="CustomGtkWidgets/ImageResources.cs" line="1" column="1" />
-  </Files>
+  <Files />
   <Views>
     <ViewMemento id="ProjectPad">
-      <Node expanded="True">
-        <Node name="CustomGtkWidgets" expanded="True" />
-        <Node name="MathTextLearner" expanded="True">
+      <Node expanded="True" selected="True">
+        <Node name="CustomGtkWidgets" expanded="True">
+          <Node name="References" expanded="True" />
           <Node name="Resources" expanded="True" />
+          <Node name="CommonDialogs" expanded="True" />
+          <Node name="HandWriting" expanded="True" />
+          <Node name="ImageArea" expanded="True" />
+          <Node name="Logger" expanded="True" />
+        </Node>
+        <Node name="MathTextLearner" expanded="True">
+          <Node name="Assistant" expanded="True">
+            <Node name="BitmapProcessHelpers" expanded="True" />
+          </Node>
           <Node name="Config" expanded="True" />
         </Node>
         <Node name="MathTextLibrary" expanded="True">
-          <Node name="Tests" expanded="True" />
+          <Node name="Bitmap" expanded="True" />
+          <Node name="BitmapProcesses" expanded="True" />
+          <Node name="Controllers" expanded="True" />
+          <Node name="Databases" expanded="True">
+            <Node name="Characteristic" expanded="True">
+              <Node name="Characteristics" expanded="True" />
+            </Node>
+          </Node>
+          <Node name="Projection" expanded="True" />
+          <Node name="Symbol" expanded="True" />
+          <Node name="TreeMaker" expanded="True" />
         </Node>
-        <Node name="MathTextRecognizer" expanded="True" selected="True" />
+        <Node name="MathTextRecognizer" expanded="True">
+          <Node name="DatabaseManager" expanded="True" />
+          <Node name="Output" expanded="True" />
+        </Node>
       </Node>
     </ViewMemento>
     <ViewMemento id="ClassPad">
       <Node expanded="True">
-        <Node name="MathTextLearner" expanded="True">
-          <Node name="MathTextLearner" expanded="True" />
-        </Node>
-        <Node name="MathTextLibrary" expanded="True">
-          <Node name="MathTextLibrary" expanded="True" />
-        </Node>
+        <Node name="MathTextLearner" expanded="True" />
+        <Node name="MathTextLibrary" selected="True" />
       </Node>
     </ViewMemento>
     <ViewMemento id="MonoDevelop.NUnit.TestPad">
-      <Node expanded="True">
-        <Node name="MathTextLearner" expanded="True">
-          <Node name="MathTextLearner" expanded="True">
-            <Node name="LearningConfigTests" expanded="True" selected="True" />
-          </Node>
-        </Node>
-        <Node name="MathTextLibrary" expanded="True">
-          <Node name="MathTextLibrary" expanded="True" />
-        </Node>
-      </Node>
+      <Node expanded="True" />
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="Bienvenido" />
+    <Property key="ActiveWindow" value="" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>
