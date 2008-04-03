@@ -115,7 +115,7 @@ namespace MathTextLibrary.BitmapProcesses
 		}
 
 		/// <summary>
-		/// Crea una nueva imagen a�diendo filas en blanco arriba y abajo.
+		/// Crea una nueva imagen añadiendo filas en blanco arriba y abajo.
 		/// </summary>
 		/// <param name="image">
 		/// Una matriz bidemiensional con la imagen la que queremos añadir filas.
@@ -126,7 +126,7 @@ namespace MathTextLibrary.BitmapProcesses
 		/// <param name="height">La altura del contenido.</param>
 		/// <param name="width">La anchura del contenido.</param>
 		/// <returns>
-		/// Una matriz bidimensional con la imagen con las filas a�didas.
+		/// Una matriz bidimensional con la imagen con las filas añadidas.
 		/// </returns>
 		private float [,] CreateNewImageRows(float[,] image, int pad, int y1,
 			int x1, int height, int width)
@@ -134,15 +134,15 @@ namespace MathTextLibrary.BitmapProcesses
 			int newWidth=width+2;
 			int newHeight=width+2;
 			
-			// La nueva altura es la antigua mas dos, porque a�dimos una
+			// La nueva altura es la antigua mas dos, porque añadimos una
 			// fila en blanco como borde la nueva anchura es igual a la altura
 			float[,] newImage = new float[newWidth,newHeight];
 			
-			for(int i=0;i<newWidth;i++)
+			for(int i=0; i<newWidth; i++)
 			{
-				for(int j=0;j<newHeight;j++)
+				for(int j=0; j<newHeight; j++)
 				{
-					newImage[i,j]=MathTextBitmap.White;
+					newImage[i, j]=MathTextBitmap.White;
 				}
 			}
 			
@@ -150,13 +150,22 @@ namespace MathTextLibrary.BitmapProcesses
 			{
 				for(int j=0;j<height;j++)
 				{
-					int centerV=j+(int)Math.Ceiling(((double)pad)/2.0)+1;
-					newImage[i+1,centerV]=image[i+x1,j+y1];
+					int centerV = j + (int)Math.Ceiling(((double)pad)/2.0)+1;
+					newImage[i+1, centerV]=image[i+x1, j+y1];
 				}
 			}			
 						
 			return newImage;
 		}
+
+		/// <value>
+		/// Contiene la cadena con los parametros de la clase en forma de cadena.
+		/// </value>
+		public override string Values 
+		{
+			get { return ""; }
+		}
+
 
 	}
 }

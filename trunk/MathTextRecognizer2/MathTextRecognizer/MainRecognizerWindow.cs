@@ -24,6 +24,7 @@ using MathTextLibrary.Symbol;
 using MathTextLibrary.Controllers;
 using MathTextLibrary.Databases.Characteristic.Characteristics;
 
+using MathTextRecognizer.DatabaseManager;
 
 namespace MathTextRecognizer
 {
@@ -421,16 +422,7 @@ namespace MathTextRecognizer
 		/// </summary>
 		private void OnOpenDatabaseManagerClicked(object sender, EventArgs arg)
 		{		
-			string filename;	
-			
-			if(DatabaseOpenDialog.Show(mainWindow, out filename)
-				== ResponseType.Ok)
-			{				
-				// Añadimos la base de datos al controlador.
-				controller.LoadDatabase(filename);				
-				ClearLog();
-				Log("!Base de datos en «{0}» cargada correctamente!", filename);
-			}
+			DatabaseManagerDialog.Show(this.mainWindow);
 		}
 		
 		/// <summary>

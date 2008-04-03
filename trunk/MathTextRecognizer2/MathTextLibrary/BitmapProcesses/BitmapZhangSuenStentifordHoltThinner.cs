@@ -553,17 +553,17 @@ namespace MathTextLibrary.BitmapProcesses
 			int i,j;
 			bool N, S, E, W, NE, NW, SE, SW, C;
 
-			if(direction==NORTH)
+			if(direction == NORTH)
 			{
-				for(i=1;i<width-1;i++)
+				for(i=1; i<width-1; i++)
 				{
-					for(j=1;j<height-1;j++)
+					for(j=1; j<height-1; j++)
 					{
 						NW=image[i-1,j-1]!=0; N=image[i-1,j]!=0; NE=image[i-1,j+1]!=0;
 						W=image[i,j-1]!=0; C=image[i,j]!=0; E=image[i,j+1]!=0;
 						SW=image[i+1,j-1]!=0; S=image[i+1,j]!=0; SE=image[i+1,j+1]!=0;
 
-						if(direction==NORTH)
+						if(direction == NORTH)
 						{
 							if(C && !(N && 
 									((E && !NE && !SW && (!W || !S)) || 
@@ -572,7 +572,7 @@ namespace MathTextLibrary.BitmapProcesses
 							else
 								tmp[i,j]=1;
 						} 
-						else if(direction==SOUTH)
+						else if(direction == SOUTH)
 						{
 							if(C && !(S && 
 									((E && !SE && !NW && (!W || !N)) || 
@@ -585,5 +585,15 @@ namespace MathTextLibrary.BitmapProcesses
 				}
 			}
 		}
+		
+		/// <value>
+		/// Contiene los valores de los parametros del algoritmo en forma de
+		/// cadena.
+		/// </value>
+		public override string Values
+		{
+			get { return ""; }
+		}
+
 	}
 }

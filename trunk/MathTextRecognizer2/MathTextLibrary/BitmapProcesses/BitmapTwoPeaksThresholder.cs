@@ -104,5 +104,14 @@ namespace MathTextLibrary.BitmapProcesses
 			
 			return res;
 		}
+
+		/// <value>
+		/// Contiene los valores de los parametros del algoritmo como cadenas.
+		/// </value>
+		public override string Values 
+		{
+			get { return ""; }
+		}
+
 	}
 }
