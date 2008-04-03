@@ -80,10 +80,9 @@ namespace MathTextLibrary.Controllers
 			}
 		}
 		
-		/// <summary>
-		/// Propiedad de solo lectura que nos permite recuperar la salida
-		/// MathML generada a partir de la formula.
-		/// </summary>
+		/// <value>
+		/// Contiener la salida MathML generada a partir de la formula.
+		/// </value>
 		public string MathMLOutput
 		{			
 			get
@@ -92,10 +91,10 @@ namespace MathTextLibrary.Controllers
 			}
 		}
 		
-		/// <summary>
+		/// <value>
 		/// Propiedad de solo lectura que nos permite recuperar la salida
 		/// LaTeX generada a partir de la formula.
-		/// </summary>
+		/// </value>
 		public string LaTeXOutput
 		{			
 			get
@@ -104,10 +103,10 @@ namespace MathTextLibrary.Controllers
 			}
 		}
 		
-		/// <summary>
+		/// <value>
 		/// Propiedad que nos permite establecer y recuperar la imagen que contiene la
 		/// formula, una vez procesada y siendo la raiz de un arbol de imagenes.
-		/// </summary>
+		/// </value>
 		public MathTextBitmap StartImage
 		{
 			get

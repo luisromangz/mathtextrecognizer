@@ -65,10 +65,10 @@ namespace MathTextLibrary.Databases
 				
 #region Propiedades
 		
-		/// <summary>
-		/// Esta propiedad permite establecer y recuperar la lista de los
+		/// <value>
+		/// Contiene la lista de los
 		/// procesos de imagenes usados en la base de datos.
-		/// </summary>
+		/// </value>
 		public List<BitmapProcess> Processes 
 		{
 			get {
@@ -80,10 +80,10 @@ namespace MathTextLibrary.Databases
 			}
 		}		
 
-		/// <summary>
-		/// Permite establecer y recuperar la base de datos de información de
+		/// <value>
+		/// Contiene la base de datos de información de
 		/// caracteres asociada a este objeto.
-		/// </summary>
+		/// </value>
 		public DatabaseBase Database
 		{
 			get {

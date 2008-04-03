@@ -82,6 +82,9 @@ namespace MathTextLearner.Assistant.BitmapProcessHelpers
 			
 		#region Propiedades
 		
+		/// <value>
+		/// El tipo de algoritmo de procesado de imagenes seleccionado.
+		/// </value>
 		public System.Type SelectedProcess
 		{
 			get

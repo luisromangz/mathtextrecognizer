@@ -36,9 +36,9 @@ namespace MathTextLearner.Assistant
 		
 #region Propiedades 
 		
-		/// <summary>
-		/// Permite recuperar la base de datos creada por el asistente.
-		/// </summary>
+		/// <value>
+		/// Contiene la base de datos creada por el asistente.
+		/// </value>
 		public MathTextDatabase Database
 		{
 			get{
@@ -46,10 +46,10 @@ namespace MathTextLearner.Assistant
 			}
 		}
 		
-		/// <summary>
-		/// Permite recuperar las imagenes para aprender seleccionadas en 
+		/// <value>
+		/// Contiene las imagenes para aprender seleccionadas en 
 		/// el asistente.
-		/// </summary>
+		/// </value>
 		public List<Gdk.Pixbuf> Images
 		{
 			get{

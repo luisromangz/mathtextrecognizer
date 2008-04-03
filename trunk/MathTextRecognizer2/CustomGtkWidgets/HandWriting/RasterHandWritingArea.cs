@@ -86,8 +86,9 @@ namespace CustomGtkWidgets.HandWriting
 			}				
 		}
 
-		//Esto es una propiedad, basicamente es como tener un metodo set, get o los dos,
-		//con la gracia de que se usa como si fuese un atributo.		
+		/// <value>
+		/// Contiene la imagen que se muestra en el widget.
+		/// </value>		
 		public override Bitmap Bitmap
 		{
 			get

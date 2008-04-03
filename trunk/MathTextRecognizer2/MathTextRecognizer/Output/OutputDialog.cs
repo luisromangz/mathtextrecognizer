@@ -13,7 +13,7 @@ using MathTextLibrary.Controllers;
 using MathTextLibrary.Databases.Characteristic.Characteristics;
 
 
-namespace MathTextRecognizerGUI
+namespace MathTextRecognizer.Output
 {
 	/// <summary>
 	/// Esta clase representa la venta que muestra las salidas

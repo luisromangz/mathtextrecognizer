@@ -28,10 +28,10 @@ namespace MathTextLearner.Config
 			processes = new List<BitmapProcess>();
 		}
 		
-		/// <summary>
+		/// <value>
 		/// Permite recuperar y establecer los algoritmos de procesado por
 		/// defecto de la aplicacion.
-		/// </summary>		
+		/// </value>		
 		public List<BitmapProcess> DefaultProcesses
 		{
 			get
@@ -47,9 +47,9 @@ namespace MathTextLearner.Config
 		
 		
 		
-		/// <summary>
+		/// <value>
 		/// Permite recuperar la instancia de configuración.
-		/// </summary>
+		/// </value>
 		public static LearnerConfig Instance
 		{
 			get

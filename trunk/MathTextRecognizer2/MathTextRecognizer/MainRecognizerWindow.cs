@@ -25,7 +25,7 @@ using MathTextLibrary.Controllers;
 using MathTextLibrary.Databases.Characteristic.Characteristics;
 
 
-namespace MathTextRecognizerGUI
+namespace MathTextRecognizer
 {
 	/// <summary>
 	/// Esta clase representa la ventana principal de la aplicacion de
@@ -112,7 +112,7 @@ namespace MathTextRecognizerGUI
 		
 		private const string title="Reconocedor de carácteres matemáticos - ";	
 		
-		private MTBNode currentNode;		
+		private FormulaNode currentNode;		
 		
 		private MathTextBitmap rootBitmap;
 		
@@ -159,7 +159,7 @@ namespace MathTextRecognizerGUI
 			controller.BitmapBeingRecognized +=
 			    new ControllerBitmapBeingRecognizedEventHandler(OnBitmapBeingRecognized);
 			    
-			store = new NodeStore(typeof(MTBNode));
+			store = new NodeStore(typeof(FormulaNode));
 			
 			// Creamos el NodeView, podría hacerse en el fichero de Glade,
 			// aunque alguna razón habría por la que se hizo así.
@@ -219,8 +219,8 @@ namespace MathTextRecognizerGUI
 				// Recuperamos el TreePath del nodo seleccionado.
 				TreePath path = treeview.Selection.GetSelectedRows()[0];
 				
-				MTBNode node=
-				    (MTBNode)(store.GetNode(path));
+				FormulaNode node=
+				    (FormulaNode)(store.GetNode(path));
 				
 				imageAreaNode.Image=node.MathTextBitmap.Bitmap;
 				imageAreaProcessed.Image=node.MathTextBitmap.ProcessedBitmap;
@@ -270,28 +270,28 @@ namespace MathTextRecognizerGUI
 			if(currentNode == null)
 			{
 				// Elegimos en nodo raíz.
-				currentNode = store.GetNode(new TreePath("0")) as MTBNode;
+				currentNode = store.GetNode(new TreePath("0")) as FormulaNode;
 			}
 			else if (currentNode.ChildCount > 0)
 			{
 				// Si tiene hijos nos vamos al primero de ellos.
-				currentNode = currentNode[0] as MTBNode;
+				currentNode = currentNode[0] as FormulaNode;
 			}
 			else if (currentNode.Parent.ChildCount == currentNode.Parent.IndexOf(currentNode)+1)
 			{
 				// Si es el último hijo de un padre, nos vamos al siguiente tio.
-				currentNode = currentNode.Parent as MTBNode;
+				currentNode = currentNode.Parent as FormulaNode;
 				int idx = currentNode.Parent.IndexOf(currentNode)+1;
 				
 				if(idx < currentNode.Parent.ChildCount)
-					currentNode = currentNode.Parent[idx] as MTBNode;
+					currentNode = currentNode.Parent[idx] as FormulaNode;
 								
 			}
 			else
 			{
 				// Si no es el último, simplemente nos vamos al hermano
 				int idx = currentNode.Parent.IndexOf(currentNode)+1;
-				currentNode = currentNode.Parent[idx] as MTBNode;
+				currentNode = currentNode.Parent[idx] as FormulaNode;
 			}
 			
 			
@@ -434,16 +434,19 @@ namespace MathTextRecognizerGUI
 		}
 		
 		/// <summary>
-		/// Manejo del evento provocado al pulsar en el boton de crear la salida de texto.
+		/// Manejo del evento provocado al pulsar en el boton de crear la salida
+		/// de texto.
 		/// </summary>
 		private void OnLatexClicked(object sender, EventArgs arg)
 		{
-			OutputDialog outputDialog=new OutputDialog(rootBitmap);
+			Output.OutputDialog outputDialog = 
+				new Output.OutputDialog(rootBitmap);
 			outputDialog.Run();
 		}
 		
 		/// <summary>
-		/// Manejo del evento provocado al hacer click en la opcion "Salir" del menu.
+		/// Manejo del evento provocado al hacer click en la opcion "Salir"
+		/// del menu.
 		/// </summary>
 		private void OnExitClicked(object sender, EventArgs arg)
 		{
@@ -451,7 +454,8 @@ namespace MathTextRecognizerGUI
 		}
 		
 		/// <summary>
-		/// Manejo del evento provocado al hacer click en el boton "Cargar imagen".
+		/// Manejo del evento provocado al hacer click en el boton 
+		/// "Cargar imagen".
 		/// </summary>
 		private void OnLoadImageClicked(object sender, EventArgs arg)
 		{
@@ -581,8 +585,8 @@ namespace MathTextRecognizerGUI
 				// Generamos el MaxtTextBitmap inical, y lo añadimos como
 				// un nodo al arbol.
 				MathTextBitmap mtb = new MathTextBitmap(imageOriginal);			
-				MTBNode node = 
-					new MTBNode(Path.GetFileNameWithoutExtension(filename),
+				FormulaNode node = 
+					new FormulaNode(Path.GetFileNameWithoutExtension(filename),
 					            mtb,
 				                treeview);
 				    

@@ -33,10 +33,9 @@ namespace MathTextLibrary.Databases.Characteristic
 		{
 		}
 
-		/// <summary>
-		/// Esta propiedad permite asignar y recuperar los simbolos asociados
-		/// a un nodo.
-		/// </summary>
+		/// <value>
+		/// Contiene los simbolos asociados a un nodo.
+		/// </value>
 		public List<MathSymbol> Symbols
 		{
 			get
@@ -49,9 +48,9 @@ namespace MathTextLibrary.Databases.Characteristic
 			}
 		}
 		
-		/// <summary>
+		/// <value>
 		/// Permite saber si el nodo tiene simbolos asociados.
-		/// </summary>
+		/// </value>
 		public bool HasSymbols
 		{
 			get
@@ -78,11 +77,11 @@ namespace MathTextLibrary.Databases.Characteristic
 		}
 		
 		
-		/// <summary>
-		/// Esta propiedad nos permite recuperar el conjunto de simbolos que se encuentran
+		/// <value>
+		/// Contiene el conjunto de simbolos que se encuentran
 		/// por debajo del nodo sobre el que se invoca, de forma que podemos obtener
 		/// un conjunto de simbolos similares segun comprobemos caracteristicas.
-		/// </summary>
+		/// </value>
 		[XmlIgnoreAttribute]
 		public List<MathSymbol> ChildrenSymbols
 		{
@@ -103,10 +102,10 @@ namespace MathTextLibrary.Databases.Characteristic
 			}
 		}
 		
-		/// <summary>
-		/// Esta propiedad permite establecer y recuperar la rama del arbol
-		/// en la que una determinada caracteristica binaria se cumple.
-		/// </summary>
+		/// <value>
+		/// Contiene la rama del arbol en la que la caracteristica binaria
+		/// se cumple.
+		/// </value>
 		public CharacteristicNode TrueTree
 		{
 			get{				
@@ -117,10 +116,10 @@ namespace MathTextLibrary.Databases.Characteristic
 			}
 		}
 		
-		/// <summary>
-		/// Esta propiedad permite establecer y recuperar la rama del arbol
-		/// en la que una determinada caracteristica binaria se cumple.
-		/// </summary>
+		/// <value>
+		/// Contiene la rama del arbol en la que estan los simbolos en los que
+		/// esta caracteristica binaria no se cumple.
+		/// </value>
 		public CharacteristicNode FalseTree
 		{
 			get{				

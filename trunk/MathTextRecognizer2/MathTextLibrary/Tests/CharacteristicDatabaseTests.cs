@@ -26,27 +26,27 @@ namespace MathTextLibrary
 		{
 			CharacteristicDatabase database = new CharacteristicDatabase();
 			
-			database.CharacteristicNode = new CharacteristicNode();
+			database.RootNode = new CharacteristicNode();
 			
 			try {
-				database.CharacteristicNode.AddSymbol(new MathSymbol("hola",MathSymbolType.Operator));
+				database.RootNode.AddSymbol(new MathSymbol("hola",MathSymbolType.Operator));
 			}
 			catch(DuplicateSymbolException e)
 			{
 				
 			}
-			int count1 = database.CharacteristicNode.Symbols.Count;
+			int count1 = database.RootNode.Symbols.Count;
 			
 			bool exception=false;
 			
 			try {
-				database.CharacteristicNode.AddSymbol(new MathSymbol("hola",MathSymbolType.Operator));
+				database.RootNode.AddSymbol(new MathSymbol("hola",MathSymbolType.Operator));
 			}
 			catch(DuplicateSymbolException e)
 			{
 				exception=true;
 			}
-			int count2 = database.CharacteristicNode.Symbols.Count;count2 = database.CharacteristicNode.Symbols.Count;
+			int count2 = database.RootNode.Symbols.Count;count2 = database.RootNode.Symbols.Count;
 			
 			
 				

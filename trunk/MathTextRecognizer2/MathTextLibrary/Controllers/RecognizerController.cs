@@ -147,9 +147,9 @@ namespace MathTextLibrary.Controllers
 			}
 		}
 		
-		/// <summary>
+		/// <value>
 		/// Propiedad para establecer el modo de ejecucion paso a paso del procesado.
-		/// </summary>
+		/// </value>
 		public RecognizerControllerStepMode StepMode{
 			get
 			{
@@ -179,10 +179,10 @@ namespace MathTextLibrary.Controllers
 			databases.Add(database);
 		}
 		
-		/// <summary>
-		/// Propiedad que permite establecer y recuperar la imagen de inicio que
+		/// <value>
+		/// Contiene la imagen de inicio que
 		/// contiene la formula que deseamos reconocer.
-		/// </summary>
+		/// </value>
 		public MathTextBitmap StartImage
 		{
 			get

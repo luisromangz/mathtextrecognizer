@@ -15,10 +15,14 @@
   </Configurations>
   <Contents>
     <File name="AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
-    <File name="MTBNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="FormulaNode.cs" subtype="Code" buildaction="Compile" />
     <File name="MainRecognizerWindow.cs" subtype="Code" buildaction="Compile" />
-    <File name="OutputDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="mathtextrecognizer.glade" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="Output" subtype="Directory" buildaction="Compile" />
+    <File name="Output/OutputDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="DatabaseManager" subtype="Directory" buildaction="Compile" />
+    <File name="DatabaseManager/DatabaseManagerDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="DatabaseManager/DatabaseFileInfo.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

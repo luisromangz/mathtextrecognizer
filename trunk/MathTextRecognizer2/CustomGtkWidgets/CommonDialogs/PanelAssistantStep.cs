@@ -29,9 +29,9 @@ namespace CustomGtkWidgets.CommonDialogs
 		
 		#region Propiedades
 		
-		/// <summary>
+		/// <value>
 		/// Permite recuperar el asistente al que pertenece el panel.
-		/// </summary>
+		/// </value>
 		public PanelAssistant Assistant
 		{
 			get
@@ -40,9 +40,9 @@ namespace CustomGtkWidgets.CommonDialogs
 			}
 		}
 		
-		/// <summary>
+		/// <value>
 		/// Permite recuperar los errores de validación del paso del asistente.
-		/// </summary>
+		/// </value>
 		public string Errors
 		{
 			get
@@ -51,10 +51,10 @@ namespace CustomGtkWidgets.CommonDialogs
 			}
 		}
 		
-		/// <summary>
+		/// <value>
 		/// El widget que muestra los controles del «paso» del 
 		/// asistente.
-		/// </summary>
+		/// </value>
 		public Widget StepWidget
 		{
 			get

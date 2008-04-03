@@ -72,17 +72,17 @@ namespace CustomGtkWidgets.HandWriting{
 
 		public abstract void UndoLastStroke();
 
-		//Esto es una propiedad, basicamente es como tener un metodo set, get o los dos,
-		//con la gracia de que se usa como si fuese un atributo.		
+		/// <value>
+		/// Contiene la imagen del widget;
+		/// </value>	
 		public abstract Bitmap Bitmap{
 			get;
 		
 		}
 		
-		//Otra propiedad, con un uso más clasico. Lo bueno de las propiedades es que
-		//se usan como atributos, pero permiten meter codigo para por ejemplo gestion 
-		//de errores, concurrencia etc.
-		
+		/// <value>
+		/// Contiene el modo de suavizado que usa el widget.
+		/// </value>
 		public SmoothingMode SmoothingMode{
 			get{
 				return smoothingMode;				
@@ -95,6 +95,9 @@ namespace CustomGtkWidgets.HandWriting{
 		
 		}
 		
+		/// <value>
+		/// Contiene el estilo de linea que usa el control.
+		/// </value>
 		public Pen LineStyle{
 			get{
 				return foreground;

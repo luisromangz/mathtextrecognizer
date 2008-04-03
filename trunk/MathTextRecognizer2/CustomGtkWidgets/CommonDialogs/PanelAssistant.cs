@@ -78,10 +78,10 @@ namespace CustomGtkWidgets.CommonDialogs
 		
 		#region Propiedades
 		
-		/// <summary>
+		/// <value>
 		/// Permite recuperar la ventana en la que se muestra el 
-		/// asistente.
-		/// </summary>
+		/// value.
+		/// </value>
 		public Window Window
 		{
 			get
@@ -90,10 +90,10 @@ namespace CustomGtkWidgets.CommonDialogs
 			}
 		}
 		
-		/// <summary>
+		/// <value>
 		/// Permite recuperar la lista de paneles almancenados en el
 		/// asistente.
-		/// </summary>
+		/// </value>
 		public List<PanelAssistantStep> Steps
 		{
 			get{

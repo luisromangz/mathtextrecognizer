@@ -22,6 +22,9 @@ namespace MathTextLibrary.Bitmap
 			this.children = children;           		
 		}
 
+		/// <value>
+		/// Contiene las subimagenes en que se dividió la imagen.
+		/// </value>
 		public List<MathTextBitmap> Children
 		{
 			get{

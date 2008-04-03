@@ -5,10 +5,10 @@ using Gdk;
 namespace CustomGtkWidgets
 {
 	
-	/// <summary>
+	/// <value>
 	/// This class serves as a repository for the icons and images used
 	/// in all the interfaces.
-	/// </summary>
+	/// </value>
 	public class ImageResources
 	{		
 		

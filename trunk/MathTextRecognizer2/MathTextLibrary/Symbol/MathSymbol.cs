@@ -44,9 +44,9 @@ namespace MathTextLibrary.Symbol
 			this.type=type;
 		}		
 		
-		/// <summary>
+		/// <value>
 		/// El símbolo que se usa cuando no se ha podido reconocer.
-		/// </summary>
+		/// </value>
 		public static MathSymbol NullSymbol
 		{
 			get
@@ -61,9 +61,9 @@ namespace MathTextLibrary.Symbol
 			}
 		}
 		
-		/// <summary>
+		/// <value>
 		/// La etiqueta del símbolo.
-		/// </summary>
+		/// </value>
 		public string Text
 		{
 			get
@@ -77,9 +77,9 @@ namespace MathTextLibrary.Symbol
 			}
 		}
 		
-		/// <summary>
+		/// <value>
 		/// El tipo del símbolo.
-		/// </summary>
+		/// </value>
 		public MathSymbolType SymbolType
 		{
 			get
@@ -96,11 +96,11 @@ namespace MathTextLibrary.Symbol
 			}
 		}
 
-		/// <summary>
+		/// <value>
 		/// Permite recuperar el numero de veces que se ha usado el simbolo,
 		/// para proporcionar una medida de la probabilidad de que sea este simbolo
 		/// en caso de conflicto al reconocer.
-		/// </summary>
+		/// </value>
 		public int Usage
 		{
 			get
