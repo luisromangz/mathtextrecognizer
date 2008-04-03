@@ -23,9 +23,9 @@ namespace MathTextLibrary.Databases
 			duplicatedSymbol = symbol;
 		}
 
-		/// <summary>
-		/// Permite recuperar el simbolo duplicado.
-		/// </summary>
+		/// <value>
+		/// Contiene el simbolo duplicado.
+		/// </value>
 		public MathSymbol DuplicatedSymbol 
 		{
 			get 

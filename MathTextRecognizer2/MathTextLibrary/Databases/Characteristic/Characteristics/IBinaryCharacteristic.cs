@@ -28,6 +28,10 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 						
 		}
 		
+		/// <value>
+		/// Contiene la prioridad de la caracteristica, que influye en el orden
+		/// en que se aplican.
+		/// </value>
 		public int Priority
 		{
 			get

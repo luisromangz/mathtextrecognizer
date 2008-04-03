@@ -43,6 +43,10 @@ namespace MathTextLibrary.BitmapProcesses
 			this.removeStair = removeStair;
 		}
 		
+		/// <value>
+		/// Contiene la cadena que representa los parametros del algoritmo y 
+		/// sus valores.
+		/// </value>
 		public override string Values
 		{
 			get 
@@ -51,6 +55,10 @@ namespace MathTextLibrary.BitmapProcesses
 			}
 		}
 
+		/// <value>
+		/// Contiene el valor que indica si se deben eliminar las escaleras
+		/// de la imagen al aplicar el algoritmo.
+		/// </value>
 		[BitmapProcessPropertyDescription("Eliminar escaleras")]
 		public virtual bool RemoveStair {
 			get {

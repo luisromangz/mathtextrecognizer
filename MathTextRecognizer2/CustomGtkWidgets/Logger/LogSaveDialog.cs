@@ -58,9 +58,9 @@ namespace CustomGtkWidgets.Logger
 		
 		#region Propiedades
 		
-		/// <summary>
+		/// <value>
 		/// Esta propiedad permite recuperar el nombre de archivo seleccionado para guardar.
-		/// </summary>
+		/// </value>
 		public string Filename
 		{
 			get
@@ -75,6 +75,7 @@ namespace CustomGtkWidgets.Logger
 		
 		/// <summary>
 		/// Este método destruye el cuadro de diálogo, cerrandolo.
+		/// </summary>
 		public void Destroy()
 		{
 			logSaveDialog.Destroy();

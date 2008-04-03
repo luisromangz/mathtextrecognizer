@@ -55,9 +55,9 @@ namespace MathTextLearner.Assistant.BitmapProcessHelpers
 			
 		}
 		
-		/// <summary>
-		/// Permite recuperar la descripcion del algoritmo de procesado.
-		/// </summary>
+		/// <value>
+		/// Contiene la descripcion del algoritmo de procesado.
+		/// </value>
 		[TreeNodeValue(Column=0)]
 		public string ProcessDescription
 		{
@@ -67,10 +67,10 @@ namespace MathTextLearner.Assistant.BitmapProcessHelpers
 			}
 		}
 		
-		/// <summary>
-		/// Permite recuperar los valores de los parametros del algoritmo,
+		/// <value>
+		/// Contiene los valores de los parametros del algoritmo,
 		/// en forma de cadena formateada.
-		/// </summary>
+		/// </value>
 		[TreeNodeValue(Column=1)]
 		public string ProcessValues
 		{
@@ -81,7 +81,7 @@ namespace MathTextLearner.Assistant.BitmapProcessHelpers
 		}
 			
 		/// <value>
-		/// Permite recuperar el algoritmo de preocesado de imagenes
+		/// El algoritmo de procesado de imagenes.
 		/// </value>
 		public BitmapProcess Process
 		{				

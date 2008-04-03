@@ -20,10 +20,10 @@ namespace MathTextLibrary.BitmapProcesses
 
 		#region Propiedades		
 		
-		/// <summary>
+		/// <value>
 		/// Propiedad para establecer y recuperar el tamaño final de las
 		/// imagenes procesadas con una instancia de esta clase.
-		/// </summary>
+		/// </value>
 		[BitmapProcessPropertyDescription("Tamaño final")]
 		public int NewSize
 		{
@@ -37,6 +37,9 @@ namespace MathTextLibrary.BitmapProcesses
 			}
 		}
 		
+		/// <value>
+		/// Contiene la cadena con los parametros del algoritmo formateados.
+		/// </value>
 		public override string Values 
 		{
 			get { return "Tamaño: "+normalizedSize; }

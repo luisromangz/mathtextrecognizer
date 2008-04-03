@@ -20,10 +20,10 @@ namespace MathTextLibrary.Databases
 		}
 		
 		
-		/// <summary>
-		/// Esta propiedad permite recupera la descripcion de una base 
-		/// de datos de caracteres matematicos.
-		/// </summary>
+		/// <value>
+		/// Contiene la descripcion de una base de datos de caracteres
+		/// matematicos.
+		/// </value>
 		public string Description
 		{
 			get
@@ -37,6 +37,9 @@ namespace MathTextLibrary.Databases
 			}
 		}
 
+		/// <value>
+		/// Contiene los tipos usados por la base de datos.
+		/// </value>
 		public virtual System.Type[] UsedTypes {
 			get {
 				return usedTypes;

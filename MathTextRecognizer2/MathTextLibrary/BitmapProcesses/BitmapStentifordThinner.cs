@@ -41,6 +41,9 @@ namespace MathTextLibrary.BitmapProcesses
             this.presmooth=presmooth;
 		}
 		
+		/// <value>
+		/// Contiene la cadena con los parametros del algoritmo formateado.
+		/// </value>
 		public override string Values
 		{
 			get
@@ -49,6 +52,10 @@ namespace MathTextLibrary.BitmapProcesses
 			}
 		}
 
+		/// <value>
+		/// Contiene el valor que indica si se usara el pre-suavizado al
+		/// aplicar el algoritmo.
+		/// </value>
 		[BitmapProcessPropertyDescription("Pre-suavizado")]
 		public virtual bool PreSmoothing {
 			get {

@@ -69,9 +69,9 @@ namespace MathTextLibrary.Projection
 			return res;
 		}
 		
-		/// <summary>
-		/// Permite obtener la lista de huecos presentes en la proyeccion.
-		/// </summary>
+		/// <value>
+		/// Contiene la lista de huecos presentes en la proyeccion.
+		/// </value>
 		public List<Hole> Holes
 		{
 			get
@@ -116,10 +116,9 @@ namespace MathTextLibrary.Projection
 		{		
 			CreateProjection(image);
 		}
-		/// <summary>
-		/// Propiedad de solo lectura que permite obtener el tamaño de la
-		/// proyección.
-		/// </summary>
+		/// <value>
+		/// Contiene el tamaño de la proyección.
+		/// </value>
 		public int Size
 		{
 			get

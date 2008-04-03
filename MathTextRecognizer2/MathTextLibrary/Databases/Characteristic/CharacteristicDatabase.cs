@@ -302,7 +302,10 @@ namespace MathTextLibrary.Databases.Characteristic
 		}
 		#endregion Métodos no públicos
 		
-		public virtual CharacteristicNode CharacteristicNode 
+		/// <value>
+		/// Contiene el nodo raiz de la base de datos de caracteristicas.
+		/// </value>
+		public virtual CharacteristicNode RootNode 
 		{
 			get {
 				return rootNode;

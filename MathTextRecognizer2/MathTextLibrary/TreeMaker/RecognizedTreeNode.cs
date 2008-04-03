@@ -69,9 +69,9 @@ namespace MathTextLibrary.TreeMaker
 				this.children=children;
 		}
 
-		/// <summary>
+		/// <value>
 		/// Propiedad que permite recuperar la lista de hijos de un nodo.
-		/// </summary>
+		/// </value>
 		public List<RecognizedTreeNode> Children
 		{
 			get{
@@ -79,10 +79,10 @@ namespace MathTextLibrary.TreeMaker
 			}		
 		}
 
-		/// <summary>
+		/// <value>
 		/// Propiedad que permite recuperar la imagen de la que se obtuvo el nodo
 		/// del arbol.
-		/// </summary>
+		/// </value>
 		public MathTextBitmap Image
 		{
 			get{
@@ -90,11 +90,11 @@ namespace MathTextLibrary.TreeMaker
 			}		
 		}
 		
-		/// <summary>
+		/// <value>
 		/// Si el nodo tiene simbolo (<code>symbol!=null</code>) entonces se
 		/// devuelve este. En caso contrario se devuelve el simbolo de la imagen
 		/// asociada al nodo.
-		/// </summary>
+		/// </value>
 		public MathSymbol Symbol
 		{
 			get{
@@ -105,9 +105,9 @@ namespace MathTextLibrary.TreeMaker
 			}
 		}
 		
-		/// <summary>
-		/// Acceso al hijo <c>i</c> del nodo.
-		/// </summary>
+		/// <value>
+		/// Contiene el hijo <c>i</c> del nodo.
+		/// </value>
 		public RecognizedTreeNode this[int i]
 		{
 			get{

@@ -29,9 +29,9 @@ namespace MathTextLibrary.Projection
 			endPixel=end;				
 		}	
 
-		/// <summary>
-		/// Esta propiedad de solo lectura permite recuperar el pixel final del hueco.
-		/// </summary>
+		/// <value>
+		/// Contiene el pixel final del hueco.
+		/// </value>
 		public int EndPixel
 		{
 			get
@@ -40,9 +40,9 @@ namespace MathTextLibrary.Projection
 			}
 		}
 		
-		/// <summary>
-		/// Esta propiedad de solo lectura permite recuperar el pixel de inicio del hueco.
-		/// </summary>
+		/// <value>
+		/// Contiene el pixel de inicio del hueco.
+		/// </value>
 		public int StartPixel
 		{
 			get
@@ -52,9 +52,9 @@ namespace MathTextLibrary.Projection
 			
 		}
 
-		/// <summary>
-		/// Esta propiedad de solo lectura permite recuperar el pixel de inicio del hueco.
-		/// </summary>
+		/// <value>
+		/// Contiene el tamaño del hueco.
+		/// </value>
 		public int Size
 		{
 			get

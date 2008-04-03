@@ -71,6 +71,9 @@ namespace MathTextLibrary.BitmapProcesses
 			return res;
 		}
 		
+		/// <value>
+		/// Contiene la cadena con los parametros del algormo formateado.
+		/// </value>
 		public override string Values 
 		{
 			get 
@@ -79,6 +82,9 @@ namespace MathTextLibrary.BitmapProcesses
 			}
 		}
 
+		/// <value>
+		/// Contiene el valor del limite considerado al binarizar.
+		/// </value>
 		[BitmapProcessPropertyDescription("Umbral",Max = 255, Min = 0)]
 		public virtual int Threshold
 		{

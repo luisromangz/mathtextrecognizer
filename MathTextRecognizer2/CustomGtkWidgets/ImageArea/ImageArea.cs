@@ -35,10 +35,10 @@ namespace CustomGtkWidgets.ImageArea
 			ShowAll();
 		}
 
-        /// <summary>
+        /// <value>
         /// Propiedad para establecer o recuperar el modo de ajuste que se
         /// usará para la imagen al representarla en el control.
-        /// </summary>
+        /// </value>
 		public ImageAreaMode ImageMode
 		{
 			get
@@ -52,9 +52,10 @@ namespace CustomGtkWidgets.ImageArea
 			}	
 		}
 		
-		/// <summary>
+		/// <value>
 		/// Permite recuperar el escalado de la imagen.
 		/// Si el modo es <c>Stretch</c>, devuelve siempre 0.
+		/// </value>
 		public float Zoom
 		{
 			get
@@ -74,10 +75,10 @@ namespace CustomGtkWidgets.ImageArea
 			}
 		}
 		
-		/// <summary>
+		/// <value>
 		/// Propiedad para establecer o recuperar la imagen representada en el
 		/// control.
-		/// </summary>
+		/// </value>
 		public Pixbuf Image
 		{
 			get

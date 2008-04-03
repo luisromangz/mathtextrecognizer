@@ -61,17 +61,16 @@ namespace MathTextLearner.Assistant
 		
 #region Propiedades
 		
-		/// <summary>
+		/// <value>
 		/// Permite recuperar los procesos selecionados.
-		/// </summary>
+		/// </value>
 		public DatabaseBase Database
 		{
 			get
 			{
 				DatabaseBase res = null;
 				
-				res = 
-					(DatabaseBase)selectedType.GetConstructor(new Type[0]).Invoke(null);
+				res = (DatabaseBase)selectedType.GetConstructor(new Type[0]).Invoke(null);
 				
 				return res;
 			}
@@ -97,6 +96,9 @@ namespace MathTextLearner.Assistant
 		
 #region Metodos privados
 		
+		/// <summary>
+		/// Inicializa los controles del paso del asistente.
+		/// </summary>
 		private void InitializeWidgets()
 		{
 			RadioButton group = new RadioButton("group");	
@@ -124,6 +126,13 @@ namespace MathTextLearner.Assistant
 			selectedType = databaseTypeMap[button];
 		}
 		
+		/// <summary>
+		/// Carga las clases que son bases de datos de caracteres, es decir
+		/// heredan de <c>DatabaseBase</c>.
+		/// </summary>
+		/// <returns>
+		/// Una lista con los tipos que cumplen dicha propiedad.
+		/// </returns>
 		private List<Type> RetrieveDatabaseTypes()
 		{
 			// Recuperamos el ensamblado donde esta DatabaseBase
@@ -143,6 +152,15 @@ namespace MathTextLearner.Assistant
 			return databaseTypes;
 		}
 		
+		/// <summary>
+		/// Extrae la descripción asociada a un tipo de base de datos.
+		/// </summary>
+		/// <param name="t">
+		/// El tipo de la base de datos de caracteres.
+		/// </param>
+		/// <returns>
+		/// Una cadena con la descripcion del tipo.
+		/// </returns>
 		private string RetrieveDescription(Type t)
 		{		
 			object[] attributes = t.GetCustomAttributes(typeof(DatabaseTypeInfo),

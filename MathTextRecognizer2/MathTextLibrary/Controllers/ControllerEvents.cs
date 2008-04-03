@@ -42,10 +42,9 @@ namespace MathTextLibrary.Controllers
 			b=bitmap;
 		}
 		
-		/// <summary>
-		/// Propiedad para acceder a la imagen que pasamos como argumento del evento.
-		/// Es una propiedad de solo lectura.
-		/// </summary>
+		/// <value>
+		/// Contiene la imagen que pasamos como argumento del evento.
+		/// </value>
 		public MathTextBitmap MathTextBitmap
 		{
 			get
@@ -75,9 +74,9 @@ namespace MathTextLibrary.Controllers
 	        this.message=message;    
 	    }	
 	
-	    /// <summary>
-		/// Propiedad de sólo lectura para recuperar el mensaje enviado.
-		/// </summary>
+	    /// <value>
+		/// Contiene el mensaje enviado.
+		/// </value>
 	    public string Message
 	    {
 	        get

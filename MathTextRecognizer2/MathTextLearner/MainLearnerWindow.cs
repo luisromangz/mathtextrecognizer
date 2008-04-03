@@ -909,9 +909,9 @@ namespace MathTextLearner
 			duplicateSymbol = symbol;
 		}
 		
-		/// <summary>
-		/// Permite obtener el simbolo duplicado que genero el fallo.
-		/// </summary>
+		/// <value>
+		/// El simbolo duplicado que genero el fallo.
+		/// </value>
 		public MathSymbol DuplicateSymbol
 		{
 			get 

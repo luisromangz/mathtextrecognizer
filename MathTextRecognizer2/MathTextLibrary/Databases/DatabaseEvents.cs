@@ -35,7 +35,7 @@ namespace MathTextLibrary.Databases
 	
 		private ISymbolProcess process;
 		private MathTextBitmap image;
-		private bool result;
+		private object result;
 		private List<MathSymbol> similarSymbols;  	
 	
 		/// <summary>
@@ -55,7 +55,7 @@ namespace MathTextLibrary.Databases
 		/// </param>
 		public ProcessingStepDoneEventArgs(ISymbolProcess process,
 		                                   MathTextBitmap image,
-		                                   bool result,	
+		                                   object result,	
 		                                   List<MathSymbol> similarSymbols) : base()
 		{			
 			this.image = image;
@@ -77,10 +77,10 @@ namespace MathTextLibrary.Databases
 		
 		}
 		
-		/// <summary>
-		/// Propiedad de solo lectura que permite obtener la lista de simbolos similares
+		/// <value>
+		/// Contiene la lista de simbolos similares
 		/// respecto a la propiedad comprobada (y anteriores).
-		/// </summary>
+		/// </value>
 		public List<MathSymbol> SimilarSymbols
 		{
 			get
@@ -89,9 +89,9 @@ namespace MathTextLibrary.Databases
 			}
 		}
 		
-		/// <summary>
-		/// Propiedad de solo lectura que permite obtener el proceso realizado.
-		/// </summary>
+		/// <value>
+		/// Contiene la instancia del algoritmo de procesado utilizado.
+		/// </value>
 		public ISymbolProcess Process
 		{
 			get
@@ -101,23 +101,20 @@ namespace MathTextLibrary.Databases
 		}
 		
 		
-		/// <summary>
-		/// Propiedad de solo lectura que permite obtener el resultado de la comprobacion
-		/// de la caracteristica binaria.
-		/// </summary>
-		public bool Result
+		/// <value>
+		/// Contiener el resultado de la aplicacion del paso del algoritmo.
+		/// </value>
+		public object Result
 		{
 			get
 			{
 				return result;
-			}
-		
+			}		
 		}
 		
-		/// <summary>
-		/// Propiedad de solo lectura que permite obtner la imagen a la que se le ha aplicado
-		/// la caracteristica binaria.
-		/// </summary>
+		/// <value>
+		/// Contiene la imagen a la que se le ha aplicado el algoritmo.
+		/// </value>
 		public MathTextBitmap Image
 		{
 			get 

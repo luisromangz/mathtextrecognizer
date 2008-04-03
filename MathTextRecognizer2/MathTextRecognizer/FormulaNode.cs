@@ -6,16 +6,15 @@ using Gtk;
 using MathTextLibrary;
 using MathTextLibrary.Bitmap;
 
-namespace MathTextRecognizerGUI
+namespace MathTextRecognizer
 {
 	
 	/// <summary>
-	/// La clase <code>MTBNode</code> especializa
-	/// la clase <code>TreeNode</code> para poder a los nodos del arbol que mostramos
-	/// en la interfaz un objeto <code>MathTextBitmap</code> que represente la imagen
-	/// correspondiente al nodo.
+	/// La clase <code>FormulaNode</code> especializa la clase <c>TreeNode</c> 
+	/// para poder a los nodos del arbol que mostramos en la interfaz un objeto
+	/// <c>MathTextBitmap</c> que represente la imagen correspondiente al nodo.
 	/// </summary>	
-	public class MTBNode : TreeNode
+	public class FormulaNode : TreeNode
 	{
 	
 		private string name;
@@ -23,7 +22,7 @@ namespace MathTextRecognizerGUI
 		private NodeView view;
 		
 		/// <summary>
-		/// El constructor de <code>MTBNode</code>
+		/// El constructor de <code>FormulaNode</code>
 		/// </summary>
 		/// <param name="name">
 		/// El texto que aparecera en el nodo.
@@ -34,7 +33,7 @@ namespace MathTextRecognizerGUI
 		/// <param name="view">
 		/// El árbol al que añadimos el nodo.
 		/// </param>		
-		public MTBNode(string name, MathTextBitmap bitmap, NodeView view)
+		public FormulaNode(string name, MathTextBitmap bitmap, NodeView view)
 		    : base()
 		{
 			this.name=name;
@@ -49,9 +48,9 @@ namespace MathTextRecognizerGUI
 			    new MathTextBitmapSymbolChangedEventHandler(OnSymbolChanged);
 		}
 		
-		/// <summary>
-		/// Propiedad de solo lectura que permite obtener el texto del nodo.
-		/// </summary>
+		/// <value>
+		/// Contiene el texto del nodo.
+		/// </value>
 		[TreeNodeValue (Column=0)]
 		public string Text
 		{
@@ -61,9 +60,9 @@ namespace MathTextRecognizerGUI
 			}		
 		}
 		  
-		/// <summary>
-		/// Propiedad de solo lectura que permite obtener la imagen asociada al nodo.
-		/// </summary>
+		/// <value>
+		/// Contiene la imagen asociada al nodo.
+		/// </value>
 		public MathTextBitmap MathTextBitmap
 		{
 			get
@@ -79,6 +78,7 @@ namespace MathTextRecognizerGUI
 		private void OnSymbolChanged(object sender,EventArgs arg)
 		{
 			this.name = this.name+": «"+bitmap.Symbol.Text+"»";
+			this.name = String.Format("{0}: «{1}»", this.name, bitmap.Symbol.Text);
 			this.view.QueueDraw(); 
 		}
 		
@@ -89,12 +89,12 @@ namespace MathTextRecognizerGUI
 		/// </summary>
 		private void OnChildrenAdded(object sender, MathTextBitmapChildrenAddedEventArgs arg)
 		{			
-			MTBNode node;
+			FormulaNode node;
 			int i=0;
 			foreach(MathTextBitmap child in arg.Children)			
 			{		
 				i++;					
-				node=new MTBNode("Subimagen "+i, child, view);
+				node=new FormulaNode("Subimagen "+i, child, view);
 				AddChild(node);			
 			}
 			

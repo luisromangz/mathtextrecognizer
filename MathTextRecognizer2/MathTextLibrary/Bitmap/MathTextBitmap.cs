@@ -114,9 +114,9 @@ namespace MathTextLibrary.Bitmap
 		
 		#region Propiedades
 		
-		/// <summary>
-		/// Permite recuperar el valor de un pixel de la imagen.
-		/// </example>
+		/// <value>
+		/// Contiene el valor de un pixel de la imagen.
+		/// </value>
 		public float this[int i,int j]
 		{
 			get
@@ -125,14 +125,13 @@ namespace MathTextLibrary.Bitmap
 			}
 		}
 		
-		/// <summary>
-		/// Obtiene el <c>Bitmap</c> que representa a la imagen binarizada
+		/// <value>
+		/// Contiene el <c>Pixbuf</c> que representa a la imagen binarizada
 		/// mediante el metodo <c>MathTextBitmap.CreateBitmapFromGrayImage()</c>.
-		/// </summary>
+		/// </value>
 		/// <remarks>
 		/// El bitmap creado estara en escala de grises.
 		/// </remarks>
-		/// <seealso cref="System.Drawing.Bitmap"/>
 		public Pixbuf BinaryzedBitmap
 		{
 			get
@@ -141,9 +140,9 @@ namespace MathTextLibrary.Bitmap
 			}
 		}
 		
-		/// <summary>
-		/// Devuelve la imagen binarizada como un array de float.
-		/// </summary>
+		/// <value>
+		/// Contiene la imagen binarizada como un array de float.
+		/// </value>
 		public float[,] BinaryzedImage
 		{
 			get{
@@ -151,9 +150,9 @@ namespace MathTextLibrary.Bitmap
 			}
 		}
 		
-		/// <summary>
-		/// Obtiene el <c>Pixbuf</c> que representa a la imagen sin procesar.
-		/// </summary>
+		/// <value>
+		/// Contiene el <c>Pixbuf</c> que representa a la imagen sin procesar.
+		/// </value>
 		/// <remarks>
 		/// El bitmap creado estara en escala de grises.
 		/// </remarks>		
@@ -165,10 +164,10 @@ namespace MathTextLibrary.Bitmap
 			}	
 		}
 		
-		/// <summary>
-		/// Accede a los hijos de la imagen actual que se hayan obtenido
+		/// <value>
+		/// Contiene los hijos de la imagen actual que se hayan obtenido
 		/// mediante segmentacion.
-		/// </summary>
+		/// </value>
 		public List<MathTextBitmap> Children
 		{			
 			get{
@@ -176,10 +175,9 @@ namespace MathTextLibrary.Bitmap
 			}			
 		}	
 		
-		/// <summary>
-		/// Accede a la posición de la esquina superior izquierda de la imagen
-		/// actual dentro de la imagen inicial.
-		/// </summary>
+		/// <value>
+		/// Contiene el modo de proyeccion desde que originó la imagen.
+		/// </value>
 		public ProjectionMode FromProjection
 		{
 			get
@@ -188,9 +186,9 @@ namespace MathTextLibrary.Bitmap
 			}		
 		}	
 		
-		/// <summary>
-		/// Accede a la altura de la imagen sin procesar.
-		/// </summary>
+		/// <value>
+		/// Contienela altura de la imagen sin procesar.
+		/// </value>
 		public int Height
 		{
 			get
@@ -199,10 +197,10 @@ namespace MathTextLibrary.Bitmap
 			}
 		}
 		
-		/// <summary>
-		/// Accede a la posición de la esquina superior izquierda de la imágen
+		/// <value>
+		/// Contienela posición de la esquina superior izquierda de la imagen
 		/// actual dentro de la imagen inicial.
-		/// </summary>
+		/// </value>
 		public Point Position
 		{
 			get
@@ -211,13 +209,12 @@ namespace MathTextLibrary.Bitmap
 			}
 		}	
 		
-		/// <summary>
-		/// Obtiene el <c>Bitmap</c> que representa a la imagen procesada.
-		/// </summary>
+		/// <value>
+		/// Contiene el <c>Pixbuf</c> que representa a la imagen procesada.
+		/// </value>
 		/// <remarks>
 		/// El bitmap creado estara en escala de grises.
 		/// </remarks>
-		/// <seealso cref="System.Drawing.Bitmap"/>
 		public Pixbuf ProcessedBitmap
 		{
 			get
@@ -226,9 +223,9 @@ namespace MathTextLibrary.Bitmap
 			}
 		}		
 
-		/// <summary>
-		/// Devuelve la imagen procesada como un array de float.
-		/// </summary>
+		/// <value>
+		/// Contiene la imagen procesada como un array de float.
+		/// </value>
 		public float[,] ProcessedImage
 		{
 			get
@@ -239,9 +236,9 @@ namespace MathTextLibrary.Bitmap
 		
 		
 		
-		/// <summary>
-		/// Propiedad de acceso y modificacion del simbolo asociado a la imagen.
-		/// </summary>
+		/// <value>
+		/// Contiene el simbolo asociado a la imagen.
+		/// </value>
 		/// <remarks>
 		/// Al modificar el simbolo se llama al metodo
 		/// <c>MathTextBitmap.OnSymbolChanged()</c> salvo si el tipo del nuevo
@@ -263,9 +260,9 @@ namespace MathTextLibrary.Bitmap
 			}
 		}
 		
-		/// <summary>
-		/// Accede a la anchura de la imagen sin procesar.
-		/// </summary>
+		/// <value>
+		/// Contiene la anchura de la imagen sin procesar.
+		/// </value>
 		public int Width
 		{
 			get
