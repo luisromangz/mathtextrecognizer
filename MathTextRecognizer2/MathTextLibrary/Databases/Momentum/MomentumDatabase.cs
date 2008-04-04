@@ -3,6 +3,8 @@
 using System;
 using System.Collections.Generic;
 
+using System.Xml.Serialization;
+
 using MathTextLibrary.Bitmap;
 using MathTextLibrary.Symbol;
 using MathTextLibrary.Databases;
@@ -11,8 +13,8 @@ namespace MathTextLibrary.Databases.Momentum
 {
 	
 	[DatabaseTypeInfo("Base de datos basada en los momentos de los caracteres",
-	              UsedTypes = 
-	              new Type[]{typeof(MathSymbol)})]
+	                  "Momentos")]
+	[XmlInclude(typeof(MathSymbol))]
 	public class MomentumDatabase : DatabaseBase
 	{
 		

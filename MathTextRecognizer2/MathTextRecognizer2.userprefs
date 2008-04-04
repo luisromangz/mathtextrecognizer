@@ -1,36 +1,19 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
-  <Files />
+  <Files>
+    <File name="Bienvenido" />
+    <File name="MathTextRecognizer/DatabaseManager/DatabaseManagerDialog.cs" line="142" column="3" />
+    <File name="MathTextRecognizer/MainRecognizerWindow.cs" line="425" column="48" />
+  </Files>
   <Views>
     <ViewMemento id="ProjectPad">
       <Node expanded="True" selected="True">
-        <Node name="CustomGtkWidgets" expanded="True">
-          <Node name="References" expanded="True" />
-          <Node name="Resources" expanded="True" />
-          <Node name="CommonDialogs" expanded="True" />
-          <Node name="HandWriting" expanded="True" />
-          <Node name="ImageArea" expanded="True" />
-          <Node name="Logger" expanded="True" />
-        </Node>
-        <Node name="MathTextLearner" expanded="True">
-          <Node name="Assistant" expanded="True">
-            <Node name="BitmapProcessHelpers" expanded="True" />
-          </Node>
-          <Node name="Config" expanded="True" />
-        </Node>
+        <Node name="CustomGtkWidgets" expanded="True" />
         <Node name="MathTextLibrary" expanded="True">
-          <Node name="Bitmap" expanded="True" />
           <Node name="BitmapProcesses" expanded="True" />
           <Node name="Controllers" expanded="True" />
-          <Node name="Databases" expanded="True">
-            <Node name="Characteristic" expanded="True">
-              <Node name="Characteristics" expanded="True" />
-            </Node>
-          </Node>
-          <Node name="Projection" expanded="True" />
-          <Node name="Symbol" expanded="True" />
-          <Node name="TreeMaker" expanded="True" />
         </Node>
         <Node name="MathTextRecognizer" expanded="True">
+          <Node name="Resources" expanded="True" />
           <Node name="DatabaseManager" expanded="True" />
           <Node name="Output" expanded="True" />
         </Node>
@@ -38,7 +21,6 @@
     </ViewMemento>
     <ViewMemento id="ClassPad">
       <Node expanded="True">
-        <Node name="MathTextLearner" expanded="True" />
         <Node name="MathTextLibrary" selected="True" />
       </Node>
     </ViewMemento>
@@ -47,7 +29,7 @@
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="" />
+    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer/DatabaseManager/DatabaseManagerDialog.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>

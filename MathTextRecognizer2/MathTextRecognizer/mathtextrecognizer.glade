@@ -672,6 +672,8 @@ MathML</property>
     </child>
   </widget>
   <widget class="GtkDialog" id="databaseManagerDialog">
+    <property name="width_request">378</property>
+    <property name="height_request">261</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Gestor de base de datos</property>
     <property name="resizable">False</property>

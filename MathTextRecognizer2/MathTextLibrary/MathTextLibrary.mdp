@@ -94,7 +94,6 @@
     <File name="Databases/DatabaseEvents.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/ISymbolProcess.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/DatabaseBase.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/DatabaseTypeInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Bitmap" subtype="Directory" buildaction="Compile" />
     <File name="Bitmap/MathTextBitmap.cs" subtype="Code" buildaction="Compile" />
     <File name="Bitmap/MathTextBitmapEvents.cs" subtype="Code" buildaction="Compile" />

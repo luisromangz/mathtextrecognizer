@@ -21,7 +21,7 @@ namespace MathTextRecognizer.DatabaseManager
 		}
 		
 		/// <value>
-		/// Permite recuperar la base de datos contenida en el archivo de 
+		/// Contiene la base de datos del archivo de 
 		/// base de datos representado por la instancia de <c>DatabaseFileInfo</c>
 		/// </value>		
 		public MathTextDatabase Database 
@@ -30,16 +30,24 @@ namespace MathTextRecognizer.DatabaseManager
 			{
 				return database;
 			}
+			set
+			{
+				database = value;
+			}
 		}
 
 		/// <value>
-		/// Permite establecer y recuperar la ruta de la base de datos.
+		/// Contiene la ruta de la base de datos.
 		/// </value>
 		public string Path
 		{
 			get
 			{
 				return path;
+			}
+			set
+			{
+				path = value;
 			}
 		}
 	}
