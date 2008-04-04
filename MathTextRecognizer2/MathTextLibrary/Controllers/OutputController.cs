@@ -40,13 +40,13 @@ namespace MathTextLibrary.Controllers
 		/// Este evento se lanza al terminar uno de los distintos pasos en los que
 		/// se divide el procesado del arbol de imagenes para ofrecer la salida textual.
 		/// </summary>
-		public event ControllerProcessFinishedEventHandler StepFinished;
+		public event ProcessFinishedHandler StepFinished;
 		
 		/// <summary>
 		/// Este evento se lanza al terminar el procesado del arbol de imagenes, 
 		/// y haberse obtenido la representacion LaTeX y MathML.
 		/// </summary>
-		public event ControllerProcessFinishedEventHandler OutputCreated;
+		public event ProcessFinishedHandler OutputCreated;
 		
 		/// <summary>
 		/// Constructor de la clase MathTextOutputController, sera invocado

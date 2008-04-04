@@ -12,11 +12,13 @@ namespace MathTextLibrary.Databases
 	public class DatabaseTypeInfo : Attribute
 	{
 		private string description;
-		private Type[] usedTypes;
+		private string shortDescription;
 		
-		public DatabaseTypeInfo(string description)
+		
+		public DatabaseTypeInfo(string description, string shortDescription)
 		{
 			this.description = description;
+			this.shortDescription = shortDescription;
 		}
 		
 		
@@ -38,15 +40,18 @@ namespace MathTextLibrary.Databases
 		}
 
 		/// <value>
-		/// Contiene los tipos usados por la base de datos.
+		/// Contiene la descripcion corta del tipo de base de datos.
 		/// </value>
-		public virtual System.Type[] UsedTypes {
-			get {
-				return usedTypes;
+		public string ShortDescription {
+			get 
+			{
+				return shortDescription;
 			}
-			set{
-				usedTypes=value;
-			}
+
+			set
+			{
+				shortDescription = value;
+			}				
 		}
 		
 		

@@ -7,6 +7,7 @@
  
 using System;
 using System.IO;
+using System.Diagnostics;
 using System.Threading;
 
 using Gtk;
@@ -89,6 +90,9 @@ namespace MathTextRecognizer
 		[WidgetAttribute]
 		private ImageMenuItem menuLoadImage;
 		
+		[WidgetAttribute]
+		private HBox messageInfoHB;		
+		
 		#endregion Glade-Widgets
 		
 		#region Otros atributos
@@ -117,6 +121,8 @@ namespace MathTextRecognizer
 		
 		private MathTextBitmap rootBitmap;
 		
+		private DatabaseManagerDialog databaseManagerDialog;
+		
 		#endregion Otros atributos
 		
 		public static void Main(string[] args)
@@ -137,6 +143,11 @@ namespace MathTextRecognizer
 			                                null);
 			gxml.Autoconnect (this);			
 			this.Initialize();			
+			
+			databaseManagerDialog = new DatabaseManagerDialog(this.mainWindow);
+			databaseManagerDialog.DatabaseListChanged += 
+				new EventHandler(OnDatabaseManagerDialogDatabaseListChanged);
+			
 			OnOpenDatabaseManagerClicked(this,EventArgs.Empty);
 			
 		}
@@ -151,14 +162,13 @@ namespace MathTextRecognizer
 			
 			// Asignamos los eventos que indican que se han alcanzado hitos
 			// en el reconocimiento de un cáracter.
-			controller.LogMessageSent +=
-			    new ControllerLogMessageSentEventHandler(OnMessageLog);
+			controller.MessageLogSent += new MessageLogSentHandler(OnMessageLog);
 			    		
 			controller.RecognizeProcessFinished +=
-			    new ControllerProcessFinishedEventHandler(OnRecognizeProcessFinished);
+			    new ProcessFinishedHandler(OnRecognizeProcessFinished);
 			    
 			controller.BitmapBeingRecognized +=
-			    new ControllerBitmapBeingRecognizedEventHandler(OnBitmapBeingRecognized);
+			    new BitmapBeingRecognizedHandler(OnBitmapBeingRecognized);
 			    
 			store = new NodeStore(typeof(FormulaNode));
 			
@@ -227,8 +237,10 @@ namespace MathTextRecognizer
 				imageAreaProcessed.Image=node.MathTextBitmap.ProcessedBitmap;
 				
 				// Esto por si acaso
-				if(node.MathTextBitmap.Symbol.SymbolType==MathSymbolType.NotRecognized)	
+				if(node.MathTextBitmap.Symbol.SymbolType==
+				   MathSymbolType.NotRecognized)	
 				{			
+					// TODO Guardar el archivo solo si se va a aprender.
 					node.MathTextBitmap.Bitmap.Save(node.Text+".png","png");
 				}
 				
@@ -245,21 +257,19 @@ namespace MathTextRecognizer
 		/// <param name="sender">El objeto que provoca el evento.</param>
 		/// <param name="arg">El argumento del evento.</param>
 		private void OnBitmapBeingRecognized(object sender, 
-		    ControllerBitmapBeingRecognizedEventArgs arg)
+		                                     BitmapBeingRecognizedArgs arg)
 		{
 			Gtk.Application.Invoke(sender, arg, OnBitmapBeingRecognizedThreadSafe);		
 		}
 		
 		private void OnBitmapBeingRecognizedThreadSafe(object sender, EventArgs a)
 		{		
-		    ControllerBitmapBeingRecognizedEventArgs arg = 
-		        a as ControllerBitmapBeingRecognizedEventArgs;
+		    BitmapBeingRecognizedArgs arg = a as BitmapBeingRecognizedArgs;
 		    
 		    imageAreaNode.Image=arg.MathTextBitmap.Bitmap;
 			imageAreaProcessed.Image=arg.MathTextBitmap.ProcessedBitmap;
 			
-			MarkImage(arg.MathTextBitmap);
-			
+			MarkImage(arg.MathTextBitmap);			
 			
 			SelectProccesedNode();			
 			
@@ -383,7 +393,7 @@ namespace MathTextRecognizer
 		/// </summary>
 		/// <param name="sender">El objeto que provoca el evento.</param>
 		/// <param name="msg">El mensaje que deseamos mostrar.</param>
-		private void OnMessageLog(object sender,MessageLogSentEventArgs a)
+		private void OnMessageLog(object sender,MessageLogSentArgs a)
 		{
 		    // Llamamos a través de invoke para que funcione bien.			
 			Application.Invoke(sender, a,OnMessageLogThreadSafe);
@@ -391,7 +401,7 @@ namespace MathTextRecognizer
 		
 		private void OnMessageLogThreadSafe(object sender, EventArgs a)
 		{		   
-		    Log(((MessageLogSentEventArgs)a).Message);
+		    Log(((MessageLogSentArgs)a).Message);
 		}
 		
 		/// <summary>
@@ -418,11 +428,12 @@ namespace MathTextRecognizer
 		}
 		
 		/// <summary>
-		///	Manejo del evento provocado al hacer click en el boton "Abrir base de datos". 
+		///	Manejo del evento provocado al hacer click en el boton 
+		/// "Abrir base de datos". 
 		/// </summary>
 		private void OnOpenDatabaseManagerClicked(object sender, EventArgs arg)
-		{		
-			DatabaseManagerDialog.Show(this.mainWindow);
+		{	
+			databaseManagerDialog.Run();
 		}
 		
 		/// <summary>
@@ -477,7 +488,7 @@ namespace MathTextRecognizer
 		/// </summary>
 		private void OnNewSessionClicked(object sender, EventArgs arg)
 		{			
-			new MainRecognizerWindow();
+			Process newSession =  Process.Start(System.Environment.CommandLine);			
 		}
 		
 		/// <summary>
@@ -552,10 +563,8 @@ namespace MathTextRecognizer
 		/// Método que permite borrar la zona de informacion de proceso.
 		/// </summary>
 		private void ClearLog()
-		{
-			
-			logView.ClearLog();
-			
+		{			
+			logView.ClearLog();			
 		}
 		
 		/// <summary>
@@ -619,7 +628,24 @@ namespace MathTextRecognizer
 			imageAreaProcessed.Image=null;
 			
 			Application.Quit();			
-		}		
+		}	
+		
+		/// <summary>
+		/// Maneja el evento producido al cambiar la lista de bases de datos usadas
+		/// para reconocer. 
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnDatabaseManagerDialogDatabaseListChanged(object sender,
+		                                                        EventArgs args)
+		{
+			messageInfoHB.Visible = 
+				databaseManagerDialog.DatabaseFilesInfo.Count ==0;
+		}
 		
 		
 	}

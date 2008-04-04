@@ -25,19 +25,19 @@ namespace MathTextLibrary.Databases
 		/// Este evento se lanza para indicar que se completado un paso
 		/// mientras se esta aprendiendo un caracter en la base de datos.
 		/// </summary>
-		public event ProcessingStepDoneEventHandler LearningStepDone;
+		public event ProcessingStepDoneHandler LearningStepDone;
 		
 		/// <summary>
 		/// Este evento se lanza para indicar que se completado un paso 
 		/// mientras se esta reconociendo un caracter en la base de datos.
 		/// </summary>
-		public event ProcessingStepDoneEventHandler RecognizingStepDone;
+		public event ProcessingStepDoneHandler RecognizingStepDone;
 		
 		/// <summary>
 		/// Este evento se lanza cuando se ha aprendindo un nuevo simbolo en la
 		/// base de datos.
 		/// </summary>
-		public event SymbolLearnedEventHandler SymbolLearned;		
+		public event SymbolLearnedHandler SymbolLearned;		
 		
 #endregion Eventos
 		
@@ -46,6 +46,8 @@ namespace MathTextLibrary.Databases
 		private List<BitmapProcess> processes;
 		
 		private DatabaseBase database;
+		
+		private string description;
 		
 #endregion Atributos
 		
@@ -92,6 +94,48 @@ namespace MathTextLibrary.Databases
 			
 			set {
 				SetDatabase(value);				
+			}
+		}
+
+		/// <value>
+		/// Contiene la descripcion de la base de datos.
+		/// </value>
+		public string Description 
+		{
+			get 
+			{
+				return description;
+			}
+			set
+			{
+				description = value;
+			}
+		}
+		
+		
+		public string  DatabaseTypeDescription
+		{
+			get
+			{
+				object[] attributes = 
+					database.GetType().GetCustomAttributes(typeof(DatabaseTypeInfo),
+					                                       true);
+			
+				DatabaseTypeInfo info = (DatabaseTypeInfo)attributes[0];
+				return info.Description;
+			}
+		}
+		
+		public string  DatabaseTypeShortDescription
+		{
+			get
+			{
+				object[] attributes = 
+					database.GetType().GetCustomAttributes(typeof(DatabaseTypeInfo),
+					                                       true);
+			
+				DatabaseTypeInfo info = (DatabaseTypeInfo)attributes[0];
+				return info.ShortDescription;
 			}
 		}
 		
@@ -187,8 +231,7 @@ namespace MathTextLibrary.Databases
 		
 #region Metodos protegidos
 			
-		protected void OnLearningStepDone(object sender,
-		                                  ProcessingStepDoneEventArgs arg)
+		protected void OnLearningStepDone(object sender, ProcessingStepDoneArgs arg)
 		{
 			if(LearningStepDone != null)
 			{
@@ -198,7 +241,7 @@ namespace MathTextLibrary.Databases
 		
 		
 		protected void OnRecognizingStepDone(object sender,
-		                                     ProcessingStepDoneEventArgs arg)
+		                                     ProcessingStepDoneArgs arg)
 		{
 			if(RecognizingStepDone != null)
 			{
@@ -267,13 +310,13 @@ namespace MathTextLibrary.Databases
 			this.database = database;
 			
 			this.database.LearningStepDone += 
-				new ProcessingStepDoneEventHandler(OnLearningStepDone);
+				new ProcessingStepDoneHandler(OnLearningStepDone);
 			
 			this.database.RecognizingStepDone +=
-				new ProcessingStepDoneEventHandler(OnRecognizingStepDone);
+				new ProcessingStepDoneHandler(OnRecognizingStepDone);
 			
 			this.database.SymbolLearned +=
-				new SymbolLearnedEventHandler(OnSymbolLearned);
+				new SymbolLearnedHandler(OnSymbolLearned);
 		}
 		
 		/// <summary>

@@ -67,8 +67,8 @@ namespace MathTextLibrary.Bitmap
 		
 #region Eventos
 
-		public event MathTextBitmapChildrenAddedEventHandler ChildrenAdded;
-		public event MathTextBitmapSymbolChangedEventHandler SymbolChanged;
+		public event ChildrenAddedHandler ChildrenAdded;
+		public event SymbolChangedHandler SymbolChanged;
 		
 #endregion Eventos
 		
@@ -388,8 +388,7 @@ namespace MathTextLibrary.Bitmap
 		{
 			if(ChildrenAdded != null)
 			{
-				ChildrenAdded(this,
-				              new MathTextBitmapChildrenAddedEventArgs(children));
+				ChildrenAdded(this,new ChildrenAddedArgs(children));
 			}		
 		}
 		

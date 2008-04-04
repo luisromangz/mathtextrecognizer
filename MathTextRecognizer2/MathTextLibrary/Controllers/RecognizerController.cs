@@ -53,19 +53,19 @@ namespace MathTextLibrary.Controllers
 		/// <summary>
 		/// Evento usado para enviar un mensaje de informacion a la interfaz.
 		/// </summary>
-		public event ControllerLogMessageSentEventHandler LogMessageSent;
+		public event MessageLogSentHandler MessageLogSent;
 		
 		/// <summary>
 		/// Evento usado para notificar a la interfaz de que se ha terminado de
 		/// realizar un proceso.
 		/// </summary>
-		public event ControllerProcessFinishedEventHandler RecognizeProcessFinished;
+		public event ProcessFinishedHandler RecognizeProcessFinished;
 		
 		/// <summary>
-		/// Evento usado para notificar a la interfaz de que se ha comenzado a trabajar
-		/// con un nueva pieza de la imagen.
+		/// Evento usado para notificar a la interfaz de que se ha comenzado
+		/// a trabajar con un nueva pieza de la imagen.
 		/// </summary>
-		public event ControllerBitmapBeingRecognizedEventHandler BitmapBeingRecognized;
+		public event BitmapBeingRecognizedHandler BitmapBeingRecognized;
 		
 		//La imagen raiz que contiene la formula completa que deseamos reconocer.
 		private MathTextBitmap startImage;
@@ -96,8 +96,7 @@ namespace MathTextLibrary.Controllers
 		/// </param>		
 		protected void OnBitmapBeingRecognized(MathTextBitmap bitmap){
 			if(BitmapBeingRecognized!=null){
-				BitmapBeingRecognized(this,
-					new ControllerBitmapBeingRecognizedEventArgs(bitmap));
+				BitmapBeingRecognized(this,new BitmapBeingRecognizedArgs(bitmap));
 			}
 		}			
 		
@@ -109,9 +108,9 @@ namespace MathTextLibrary.Controllers
 		/// </param>		
 		protected void OnLogMessageSent(string msg)
 		{
-			if(LogMessageSent!=null)
+			if(MessageLogSent!=null)
 			{
-				LogMessageSent(this,new MessageLogSentEventArgs(msg));
+				MessageLogSent(this,new MessageLogSentArgs(msg));
 			}
 		}
 		
@@ -133,7 +132,7 @@ namespace MathTextLibrary.Controllers
 		/// <param name="sender">El objeto que envio el evento.</param>
 		/// <param name="args">Los argumentos del evento.</param>
 		private void OnProcessingStepDone(object sender,
-		                                  ProcessingStepDoneEventArgs args)
+		                                  ProcessingStepDoneArgs args)
 		{
 			// Lo que hacemos es notificar a la interfaz de que una determinada 
 			// caracteristica binaria ha tomado un valor, y que caracteres son
@@ -177,7 +176,7 @@ namespace MathTextLibrary.Controllers
 			MathTextDatabase database = MathTextDatabase.Load(path);
 			
 			database.RecognizingStepDone+=
-				new ProcessingStepDoneEventHandler(OnProcessingStepDone);
+				new ProcessingStepDoneHandler(OnProcessingStepDone);
 			
 			databases.Add(database);
 		}

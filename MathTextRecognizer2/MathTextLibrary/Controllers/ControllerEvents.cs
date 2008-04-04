@@ -10,25 +10,27 @@ namespace MathTextLibrary.Controllers
 	/// Delegado para los manejadores de eventos que se envian cuando el controlador
 	/// desea enviar un mensaje para que sea mostrada en la interfaz.
 	/// </summary>
-	public delegate void ControllerLogMessageSentEventHandler(object sender, MessageLogSentEventArgs logMsg);
+	public delegate void MessageLogSentHandler(object sender,
+	                                           MessageLogSentArgs logMsg);
 
 	/// <summary>
 	/// Delegado para los manejadores de eventos que se envian cuando un controlador
 	/// desea notificar que ha finalizado un determinado proceso.
 	/// </summary>
-	public delegate void ControllerProcessFinishedEventHandler(object sender, EventArgs arg);
+	public delegate void ProcessFinishedHandler(object sender, EventArgs arg);
 	
 	/// <summary>
-	/// Delegado para los manejadores de los eventos enviados por los controladores cuando
-	/// desean notificar que han comenzado a procesar una nueva imagen.
+	/// Delegado para los manejadores de los eventos enviados por los controladores 
+	/// cuando desean notificar que han comenzado a procesar una nueva imagen.
 	/// </summary>
-	public delegate void ControllerBitmapBeingRecognizedEventHandler(object sender,ControllerBitmapBeingRecognizedEventArgs arg);
+	public delegate void BitmapBeingRecognizedHandler(object sender,
+	                                                  BitmapBeingRecognizedArgs arg);
 
 	/// <summary>
 	/// Esta clase encapsula los argumentos enviados en los eventos manejados por
-	/// ControllerBitmapBeingRecognizedEventHandler.
+	/// BitmapBeingRecognizedHandler.
 	/// </summary>
-	public class ControllerBitmapBeingRecognizedEventArgs:EventArgs
+	public class BitmapBeingRecognizedArgs : EventArgs
 	{
 		private MathTextBitmap b;
 		
@@ -36,7 +38,7 @@ namespace MathTextLibrary.Controllers
 		/// Constructor de la clase.
 		/// </summary>
 		/// <param name="bitmap">La imagen que se ha comenzado a reconocer.</param>
-		public ControllerBitmapBeingRecognizedEventArgs(MathTextBitmap bitmap)
+		public BitmapBeingRecognizedArgs(MathTextBitmap bitmap)
 			:base()
 	    {
 			b=bitmap;
@@ -58,7 +60,7 @@ namespace MathTextLibrary.Controllers
 	/// Clase que implementa los argumentos necesarios en la transimisión de un
 	/// mensaje indicando que un paso del reconocimiento se ha producido.
 	/// </summary>
-	public class MessageLogSentEventArgs : EventArgs
+	public class MessageLogSentArgs : EventArgs
 	{
 	    private string message;
 	    
@@ -68,7 +70,7 @@ namespace MathTextLibrary.Controllers
 		/// <param name = "message">
 		/// El mensaje que se transmite.
 		/// </param>
-	    public MessageLogSentEventArgs(string message)
+	    public MessageLogSentArgs(string message)
 	        : base()
 	    {
 	        this.message=message;    

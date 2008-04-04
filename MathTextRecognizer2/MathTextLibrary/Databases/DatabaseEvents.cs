@@ -14,23 +14,22 @@ namespace MathTextLibrary.Databases
 	/// que informan de la comprobacion de caracteristicas binarias al aprender
 	/// o recuperar un simbolo de la base de datos de caracteristicas.
 	/// </summary>
-	public delegate void ProcessingStepDoneEventHandler(
-		object sender,
-	    ProcessingStepDoneEventArgs arg);
+	public delegate void ProcessingStepDoneHandler(object sender,
+	                                               ProcessingStepDoneArgs arg);
 	
 	
 	/// <summary>
 	/// Delegado que establece el tipo de los metodos que manejaran el evento que
 	/// informa de que se ha aprendido un simbolo en la base de datos de caracteres.
 	/// </summary>
-	public delegate void SymbolLearnedEventHandler(object sender,EventArgs arg);
+	public delegate void SymbolLearnedHandler(object sender,EventArgs arg);
 		
 	/// <summary>
 	/// Clase que especializa <c>EventArgs</c> para ofrecer informacion adicional
 	/// a los manejadores de los eventos encargados de escuchar cuando se ha dado
 	/// un paso en el reconocimiento de un caracter. 
 	/// </summary>
-	public class ProcessingStepDoneEventArgs: EventArgs
+	public class ProcessingStepDoneArgs: EventArgs
 	{	
 	
 		private ISymbolProcess process;
@@ -39,7 +38,7 @@ namespace MathTextLibrary.Databases
 		private List<MathSymbol> similarSymbols;  	
 	
 		/// <summary>
-		/// Constructor de la clase <c>ProcessingStepDoneEventArgs</c>.
+		/// Constructor de la clase <c>ProcessingStepDoneArgs</c>.
 		/// </summary>
 		/// <param name="process">
 		/// El proceso que se ha completado.
@@ -53,7 +52,7 @@ namespace MathTextLibrary.Databases
 		/// <param name="similarSymbols">
 		/// La lista de simbolos similares a respecto al proceso realizado.
 		/// </param>
-		public ProcessingStepDoneEventArgs(ISymbolProcess process,
+		public ProcessingStepDoneArgs(ISymbolProcess process,
 		                                   MathTextBitmap image,
 		                                   object result,	
 		                                   List<MathSymbol> similarSymbols) : base()
@@ -65,14 +64,14 @@ namespace MathTextLibrary.Databases
 		}
 		
 		/// <summary>
-		/// Constructor de la clase <c>ProcessingStepDoneEventArgs</c>.
+		/// Constructor de la clase <c>ProcessingStepDoneArgs</c>.
 		/// </summary>
 		/// <param name="process">El proceso que se ha completado.</param>
 		/// <param name="image">La imagen a la que se le ha aplicado el proceso.</param>
 		/// <param name="result">El resultado del proceso.</param>
-		public ProcessingStepDoneEventArgs(ISymbolProcess process,
-		                                   MathTextBitmap image,	
-		                                   bool result)			
+		public ProcessingStepDoneArgs(ISymbolProcess process,
+		                              MathTextBitmap image,	
+		                              bool result)			
 			: this(process, image, result, null){
 		
 		}
