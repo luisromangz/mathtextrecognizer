@@ -15,8 +15,7 @@ namespace MathTextLibrary.Databases
 	/// <summary>
 	/// Esta clase es la clase base para las distintas implementaciones de bases 
 	/// de datos en las que podemos reconocer caracteres matemáticos.
-	/// </summary>
-	[DatabaseTypeInfo("Descripción por defecto")]
+	/// </summary>	
 	public abstract class DatabaseBase
 	{	
 
@@ -68,7 +67,8 @@ namespace MathTextLibrary.Databases
 		/// Una lista con todos los simbolos que coincidan con los parametros
 		/// asociados a la imagen.
 		/// </returns>
-		public abstract List<MathSymbol> Recognize(MathTextBitmap image);
+		public abstract List<MathSymbol> Recognize(MathTextBitmap image);	
+		
 		
 #endregion Metodos publicos
 		

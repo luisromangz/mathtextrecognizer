@@ -17,7 +17,8 @@ namespace MathTextLibrary.Databases.Characteristic
 	/// binarias para los caracteres aprendidos, asi como de realizar el añadido
 	/// de nuevos caracteres en la misma y realizar busquedas.
 	/// </summary>
-	[DatabaseTypeInfo("Base de datos basada en características binarias")]	
+	[DatabaseTypeInfo("Base de datos basada en características binarias",
+	                  "Características binarias")]	
 	[XmlInclude(typeof(MathSymbol))]
 	[XmlInclude(typeof(CharacteristicNode))]
 	public class CharacteristicDatabase : DatabaseBase

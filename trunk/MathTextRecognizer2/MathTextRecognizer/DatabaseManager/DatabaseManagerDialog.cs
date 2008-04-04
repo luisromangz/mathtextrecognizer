@@ -120,7 +120,30 @@ namespace MathTextRecognizer.DatabaseManager
 		/// </param>
 		private void AddDatabase(string databasePath)
 		{
-			// TODO Añadir la base de datos a la lista.
+			
+			MathTextDatabase database = MathTextDatabase.Load(databasePath);
+			if(database == null)
+			{
+				// No se abrio un archivo de base de datos, informamos.
+				OkDialog.Show(this.databaseManagerDialog,
+				              MessageType.Warning,
+				              "El archivo «{0}» no contiene una base de datos "+
+				              "correcta, y no se pudo abrir",
+				              databasePath);
+				return;
+			}
+			else
+			{
+				DatabaseFileInfo databaseInfo = new DatabaseFileInfo();
+				databaseInfo.Database = database;
+				databaseInfo.Path = databasePath;
+				
+				((ListStore)(databasesTV.Model)).AppendValues(System.IO.Path.GetFileName(databasePath),
+				                                              "meh",
+				                                              databaseInfo);
+				                                              
+			}
+			
 		}
 		
 		/// <summary>
@@ -136,8 +159,20 @@ namespace MathTextRecognizer.DatabaseManager
 			
 			gladeXML.Autoconnect(this);
 			
-			this.databaseManagerDialog.AddActionWidget(closeBtn, 
-			                                           ResponseType.Close);			
+			databaseManagerDialog.AddActionWidget(closeBtn, ResponseType.Close);	
+			
+			// Creamos el modelo de la lista de bases de datos,
+			// para que contenga el tipo de la base de datos, el archivo que
+			// la contiene, y el objecto DatabaseFileInfo asociado.
+			databasesTV.Model = new ListStore(typeof(string),
+			                                  typeof(string), 
+			                                  typeof(DatabaseFileInfo));
+			
+			
+			databasesTV.AppendColumn ("Archivo", new CellRendererText (), "text", 0);
+			databasesTV.AppendColumn ("Tipo", new CellRendererText (), "text", 1);
+			
+			databasesTV.Columns[0].Sizing = TreeViewColumnSizing.Autosize;
 		}
 		
 		/// <summary>

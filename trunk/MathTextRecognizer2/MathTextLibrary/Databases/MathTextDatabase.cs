@@ -126,55 +126,22 @@ namespace MathTextLibrary.Databases
 		/// </param>
 		public static MathTextDatabase Load(string path)
 		{
-
-			XmlAttributeOverrides attrOverrides = new XmlAttributeOverrides();
-			XmlAttributes attrs = new XmlAttributes();
-        
-			
-			Assembly ass = Assembly.GetAssembly(typeof(DatabaseBase));
-			
-			XmlElementAttribute attr;
-			
-			foreach(Type t in ass.GetTypes())
-			{
-				if(t.BaseType == typeof(DatabaseBase))
-				{
-					attr = new XmlElementAttribute();
-					attr.ElementName = t.Name;
-					attr.Type = t;
-					
-					attrs.XmlElements.Add(attr);
-				}
-			}			
-
-			attrOverrides.Add(typeof(MathTextDatabase), "Database", attrs);
-			
-			attrs = new XmlAttributes();
-			
-			ass = Assembly.GetAssembly(typeof(BitmapProcess));
-			foreach(Type t in ass.GetTypes())
-			{
-				if(t.BaseType == typeof(BitmapProcess))
-				{
-					attr = new XmlElementAttribute();
-					attr.ElementName = t.Name;
-					attr.Type = t;
-					
-					attrs.XmlElements.Add(attr);	
-					 
-				}
-			}
-			attrOverrides.Add(typeof(MathTextDatabase), "Processes", attrs);
-			
 			XmlSerializer serializer=
-				new XmlSerializer(typeof(MathTextDatabase),attrOverrides);	
+				new XmlSerializer(typeof(MathTextDatabase),
+				                  MathTextDatabase.GetXmlAttributeOverrides());	
 			
 			MathTextDatabase db = null;
 			                                           
 			using(StreamReader r = new StreamReader(path))
 			{
-				db = (MathTextDatabase)serializer.Deserialize(r);
-				r.Close();
+				try{
+					db = (MathTextDatabase)serializer.Deserialize(r);
+					r.Close();
+				}
+				catch(System.Xml.XmlException)
+				{
+					// Nada.
+				}
 			}			
 			
 			return db;
@@ -202,41 +169,12 @@ namespace MathTextLibrary.Databases
 		/// La ruta del archivo en la que se guardara la base de datos.
 		/// </param>
 		public void Save(string path)
-		{			
+		{					
 			
-			XmlAttributeOverrides attrOverrides = 
-            new XmlAttributeOverrides();
-			XmlAttributes attrs = new XmlAttributes();
-        
-			XmlElementAttribute attr = new XmlElementAttribute();
-			attr.ElementName = database.GetType().Name;
-			attr.Type = database.GetType();
-			
-			attrs.XmlElements.Add(attr);
-
-			attrOverrides.Add(typeof(MathTextDatabase), 
-			                  "Database", attrs);
-			
-			attrs = new XmlAttributes();
-			
-			Assembly ass = Assembly.GetAssembly(typeof(BitmapProcess));
-			foreach(Type t in ass.GetTypes())
-			{
-				if(t.BaseType == typeof(BitmapProcess))
-				{
-					attr = new XmlElementAttribute();
-					attr.ElementName = t.Name;
-					attr.Type = t;
-					
-					attrs.XmlElements.Add(attr);	
-					 
-				}
-			}
-			attrOverrides.Add(typeof(MathTextDatabase), 
-			                  "Processes", attrs);
 			
 			XmlSerializer serializer=
-				new XmlSerializer(typeof(MathTextDatabase),attrOverrides);			
+				new XmlSerializer(typeof(MathTextDatabase),
+				                  MathTextDatabase.GetXmlAttributeOverrides());			
 			
 			using(StreamWriter w=new StreamWriter(path))
 			{			
@@ -280,6 +218,12 @@ namespace MathTextLibrary.Databases
 		
 #region Metodos privados
 		
+		/// <summary>
+		/// Recupera los tipos de bases de datos disponibles.
+		/// </summary>
+		/// <returns>
+		/// Una lista con los tipos de bases de datos.
+		/// </returns>
 		private static List<Type> RetrieveDatabaseTypes()
 		{
 			List<Type> types = new List<Type>();
@@ -295,16 +239,7 @@ namespace MathTextLibrary.Databases
 			
 			return types;
 		}
-		
-		private static List<Type> RetrieveDatabaseUsedTypes(Type t)
-		{
-			object[] attrs = t.GetCustomAttributes(typeof(DatabaseTypeInfo),true);
-			
-
-			DatabaseTypeInfo info = (DatabaseTypeInfo)(attrs[0]);
-			return new List<Type>(info.UsedTypes);
-		}
-		
+				
 		private static List<Type> RetrieveProcessesTypes()
 		{
 			List<Type> types = new List<Type>();
@@ -321,6 +256,12 @@ namespace MathTextLibrary.Databases
 			return types;
 		}		
 		
+		/// <summary>
+		/// Establece la base de datos, asignando los eventos convenientemente.
+		/// </summary>
+		/// <param name="database">
+		/// La base de datos que contiene este objeto.
+		/// </param>
 		private void SetDatabase(DatabaseBase database)
 		{
 			this.database = database;
@@ -333,6 +274,57 @@ namespace MathTextLibrary.Databases
 			
 			this.database.SymbolLearned +=
 				new SymbolLearnedEventHandler(OnSymbolLearned);
+		}
+		
+		/// <summary>
+		/// Genera los atributos de serialización necesarios para que funcione
+		/// bien.
+		/// </summary>
+		/// <returns>
+		/// Una instancia de <see cref="XmlAttributeOverrides"/>.
+		/// </returns>
+		private static XmlAttributeOverrides GetXmlAttributeOverrides()
+		{
+			XmlAttributeOverrides attrOverrides = new XmlAttributeOverrides();
+			XmlAttributes attrs = new XmlAttributes();
+        
+			
+			Assembly ass = Assembly.GetAssembly(typeof(DatabaseBase));
+			
+			XmlElementAttribute attr;
+			
+			foreach(Type t in ass.GetTypes())
+			{
+				if(t.BaseType == typeof(DatabaseBase))
+				{
+					attr = new XmlElementAttribute();
+					attr.ElementName = t.Name;
+					attr.Type = t;
+					
+					attrs.XmlElements.Add(attr);
+				}
+			}			
+
+			attrOverrides.Add(typeof(MathTextDatabase), "Database", attrs);
+			
+			attrs = new XmlAttributes();
+			
+			ass = Assembly.GetAssembly(typeof(BitmapProcess));
+			foreach(Type t in ass.GetTypes())
+			{
+				if(t.BaseType == typeof(BitmapProcess))
+				{
+					attr = new XmlElementAttribute();
+					attr.ElementName = t.Name;
+					attr.Type = t;
+					
+					attrs.XmlElements.Add(attr);	
+					 
+				}
+			}
+			attrOverrides.Add(typeof(MathTextDatabase), "Processes", attrs);
+			
+			return attrOverrides;
 		}
 		
 		
