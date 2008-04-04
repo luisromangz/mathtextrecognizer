@@ -26,19 +26,19 @@ namespace MathTextLibrary.Databases
 		/// Este evento se lanza para indicar que se completado un paso
 		/// mientras se esta aprendiendo un caracter en la base de datos.
 		/// </summary>
-		public event ProcessingStepDoneEventHandler LearningStepDone;
+		public event ProcessingStepDoneHandler LearningStepDone;
 		
 		/// <summary>
 		/// Este evento se lanza para indicar que se completado un paso 
 		/// mientras se esta reconociendo un caracter en la base de datos.
 		/// </summary>
-		public event ProcessingStepDoneEventHandler RecognizingStepDone;
+		public event ProcessingStepDoneHandler RecognizingStepDone;
 		
 		/// <summary>
 		/// Este evento se lanza cuando se ha aprendindo un nuevo simbolo en la
 		/// base de datos.
 		/// </summary>
-		public event SymbolLearnedEventHandler SymbolLearned;		
+		public event SymbolLearnedHandler SymbolLearned;		
 		
 #endregion Eventos
 		
@@ -67,8 +67,7 @@ namespace MathTextLibrary.Databases
 		/// Una lista con todos los simbolos que coincidan con los parametros
 		/// asociados a la imagen.
 		/// </returns>
-		public abstract List<MathSymbol> Recognize(MathTextBitmap image);	
-		
+		public abstract List<MathSymbol> Recognize(MathTextBitmap image);
 		
 #endregion Metodos publicos
 		
@@ -78,8 +77,7 @@ namespace MathTextLibrary.Databases
 		/// Para lanzar el evento <c>LearningCharacteristicChecked</c> con
 		/// comodidad.
 		/// </summary>		
-		protected void OnLearningStepDoneInvoke(
-			ProcessingStepDoneEventArgs arg)
+		protected void OnLearningStepDoneInvoke(ProcessingStepDoneArgs arg)
 		{
 			if(LearningStepDone != null)
 			{
@@ -94,8 +92,7 @@ namespace MathTextLibrary.Databases
 		/// <param name="arg">
 		/// Los argumentos pasados al manejador del evento.
 		/// </param>
-		protected void OnRecognizingStepDoneInvoke(
-			ProcessingStepDoneEventArgs arg)
+		protected void OnRecognizingStepDoneInvoke(ProcessingStepDoneArgs arg)
 		{
 			if(RecognizingStepDone != null)
 			{

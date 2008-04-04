@@ -109,7 +109,7 @@ namespace MathTextLearner
 		private HBox buttonsHB;
 		
 		[WidgetAttribute]
-		private Label databaseInfoLabel;
+		private HBox messageInfoHB;
 		
 #endregion Glade widgets	
 		
@@ -532,10 +532,9 @@ namespace MathTextLearner
 		/// A <see cref="System.Object"/>
 		/// </param>
 		/// <param name="arg">
-		/// A <see cref="ProcessingStepDoneEventArgs"/>
+		/// A <see cref="ProcessingStepDoneArgs"/>
 		/// </param>
-		private void OnLearningStepDone(object sender, 
-		                                ProcessingStepDoneEventArgs arg)
+		private void OnLearningStepDone(object sender, ProcessingStepDoneArgs arg)
 		{
 			
 			Application.Invoke(sender, 
@@ -546,9 +545,9 @@ namespace MathTextLearner
 		private void OnLearningStepDoneThread(object sender, EventArgs a)
 		{
 			
-			ProcessingStepDoneEventArgs arg = (ProcessingStepDoneEventArgs) a;
+			ProcessingStepDoneArgs arg = (ProcessingStepDoneArgs) a;
 			btnNext.Sensitive = true;
-			LogLine(arg.Process.GetType() + ": " + arg.Result);
+			LogLine("{0}: {1}", arg.Process.GetType(), arg.Result);
 		}	
 		
 		/// <summary>
@@ -715,7 +714,20 @@ namespace MathTextLearner
 				== ResponseType.Ok)
 			{
 				// El usuario acepta la apertura del archivo.
-				SetDatabase(MathTextDatabase.Load(file));				
+				MathTextDatabase database = MathTextDatabase.Load(file);
+				if(database == null)
+				{
+					// No se abrio un archivo de base de datos, informamos.
+					OkDialog.Show(this.mainWindow,
+					              MessageType.Warning,
+					              "El archivo «{0}» no contiene una base de datos "+
+					              "correcta, y no se pudo abrir.",
+					              file);
+					
+					return;
+				}
+				
+				SetDatabase(database);				
 					
 				this.SetTitle(file,false);
 				
@@ -801,23 +813,12 @@ namespace MathTextLearner
 		{
 			this.database = database; 
 			
-			database.SymbolLearned += 
-				new SymbolLearnedEventHandler(OnSymbolLearned);
+			database.SymbolLearned += new SymbolLearnedHandler(OnSymbolLearned);
 				
 			database.LearningStepDone +=
-				new ProcessingStepDoneEventHandler(OnLearningStepDone);
+				new ProcessingStepDoneHandler(OnLearningStepDone);
 			
-			
-			
-			
-			Type type = database.Database.GetType();
-			object[] attrs = type.GetCustomAttributes(typeof(DatabaseTypeInfo),
-			                                          true);
-			
-			DatabaseTypeInfo info = (DatabaseTypeInfo)(attrs[0]);
-			
-			databaseInfoLabel.Text="Tipo de base de datos: "
-				+ info.Description;
+			messageInfoHB.Visible = false;
 			
 			mtb = null;
 			

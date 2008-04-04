@@ -49,7 +49,7 @@ namespace MathTextRecognizer.Output
 			
 			controller=new OutputController();
 			controller.StartImage=rootBitmap;
-			controller.OutputCreated+=new ControllerProcessFinishedEventHandler(OnOutputCreated);
+			controller.OutputCreated+=new ProcessFinishedHandler(OnOutputCreated);
 						
 			controller.MakeOutput();
 		}

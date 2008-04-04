@@ -4,19 +4,19 @@ using System.Collections.Generic;
 
 namespace MathTextLibrary.Bitmap
 {
-	public delegate void MathTextBitmapChildrenAddedEventHandler(object sender, MathTextBitmapChildrenAddedEventArgs arg);
+	public delegate void ChildrenAddedHandler(object sender, ChildrenAddedArgs arg);
 
-	public delegate void MathTextBitmapSymbolChangedEventHandler(object sender, EventArgs arg);
+	public delegate void SymbolChangedHandler(object sender, EventArgs arg);
 	
 	/// <summary>
 	/// Esta clase se usa para pasar un array de <c>MathTextBitmap</c> como
-	/// argumento en el evento <c>MathTextBitmapSymbolChangedEventHandler</c>.
+	/// argumento en el evento <c>SymbolChangedEventHandler</c>.
 	/// </summary>
-	public class MathTextBitmapChildrenAddedEventArgs : EventArgs
+	public class ChildrenAddedArgs : EventArgs
 	{
 		private List<MathTextBitmap> children;
 
-		public MathTextBitmapChildrenAddedEventArgs(List<MathTextBitmap> children)
+		public ChildrenAddedArgs(List<MathTextBitmap> children)
 			: base()
 		{
 			this.children = children;           		

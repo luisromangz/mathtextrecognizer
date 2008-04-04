@@ -97,10 +97,9 @@ namespace MathTextLibrary.Databases.Characteristic
 					node=node.FalseTree;					
 				}	
 				
-				ProcessingStepDoneEventArgs a = 
-					new ProcessingStepDoneEventArgs(bc,
-					                                bitmap,
-					                                characteristicValue);
+				ProcessingStepDoneArgs a = new ProcessingStepDoneArgs(bc,
+				                                                      bitmap,
+				                                                      characteristicValue);
 					
 				this.OnLearningStepDoneInvoke(a);
 			}	
@@ -159,15 +158,23 @@ namespace MathTextLibrary.Databases.Characteristic
 						 nodo=nodo.FalseTree;
 				 }		
 				
+				 ProcessingStepDoneArgs args; 
 				 //Avisamos de que hemos dado un paso
 				 if(nodo!=null)
 				 {
-					OnRecognizingStepDoneInvoke(new ProcessingStepDoneEventArgs(bc,image,characteristicValue,nodo.ChildrenSymbols));
+					args =new ProcessingStepDoneArgs(bc,
+					                                 image,
+					                                 characteristicValue,
+					                                 nodo.ChildrenSymbols);
 				 }
 				 else
 				 {
-				 	OnRecognizingStepDoneInvoke(new ProcessingStepDoneEventArgs(bc,image,characteristicValue));
+				 	args =new ProcessingStepDoneArgs(bc,
+					                                 image,
+					                                 characteristicValue);
 				 }
+				
+				 OnRecognizingStepDoneInvoke(args);
 			}
 			
 			if(exists)

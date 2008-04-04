@@ -2,6 +2,7 @@
 // User: luis at 16:10 03/04/2008
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 
 using Gtk;
@@ -41,11 +42,22 @@ namespace MathTextRecognizer.DatabaseManager
 		
 		private List<DatabaseFileInfo> databaseFilesInfo; 
 		
-		protected DatabaseManagerDialog(Window parentWindow)
+		private ListStore databasesLS;
+		
+		public event EventHandler DatabaseListChanged;
+		
+		public DatabaseManagerDialog(Window parentWindow)
 		{
 			InitializeWidgets();
 			
 			databaseManagerDialog.TransientFor = parentWindow;
+			
+			databaseFilesInfo =  new List<DatabaseFileInfo>();
+			
+			databasesLS.RowDeleted += 
+				new RowDeletedHandler(OnDatabasesLSRowsChanged);
+			databasesLS.RowInserted +=
+				new RowInsertedHandler(OnDatabasesLSRowsChanged);
 		}
 		
 #region Propiedades
@@ -55,8 +67,7 @@ namespace MathTextRecognizer.DatabaseManager
 		/// gestionadas en el manager.
 		/// </value>
 		public List<DatabaseFileInfo> DatabaseFilesInfo
-		{
-			
+		{			
 			get
 			{
 				return databaseFilesInfo;
@@ -64,16 +75,15 @@ namespace MathTextRecognizer.DatabaseManager
 			set
 			{
 				databaseFilesInfo = value;
+				foreach(DatabaseFileInfo info in databaseFilesInfo)
+				{
+					AddDatabaseInfo(info);
+				}
 			}
 		}
 		
-	
-#endregion Propiedades
-		
-#region Metodos publicos
-		
 		/// <value>
-		/// Permite recuperar las bases de datos referenciadas en el manager.
+		/// Contiene las bases de datos referenciadas en el manager.
 		/// </value>
 		/// <returns>
 		/// Una lista con las bases de datos.
@@ -93,19 +103,27 @@ namespace MathTextRecognizer.DatabaseManager
 			}
 		}
 		
+	
+#endregion Propiedades
+		
+#region Metodos publicos
+		
+		
+		
 		/// <summary>
-		/// Muestra el manager de bases de datos.
+		/// Muestra el dialogo, esperando a terminar la funcion a que se devuelva
+		/// un valor.
 		/// </summary>
 		/// <returns>
-		/// A <see cref="ResponseType"/>
+		/// La respuesta del dialogo.
 		/// </returns>
-		public static ResponseType Show(Window parentWindow)
+		public ResponseType Run()
 		{
-			DatabaseManagerDialog dialog =  
-				new DatabaseManagerDialog(parentWindow);			
-			
-			return (ResponseType) (dialog.databaseManagerDialog.Run());
+			return (ResponseType)(this.databaseManagerDialog.Run());
 		}
+		
+	
+		
 #endregion Metodos publicos
 	
 	
@@ -128,23 +146,74 @@ namespace MathTextRecognizer.DatabaseManager
 				OkDialog.Show(this.databaseManagerDialog,
 				              MessageType.Warning,
 				              "El archivo «{0}» no contiene una base de datos "+
-				              "correcta, y no se pudo abrir",
+				              "correcta, y no se pudo abrir.",
 				              databasePath);
 				return;
 			}
+			
+			DatabaseFileInfo databaseInfo = new DatabaseFileInfo();
+			databaseInfo.Database = database;
+			databaseInfo.Path = databasePath;
+			
+			if(!databaseFilesInfo.Contains(databaseInfo))
+			{
+				
+			
+				TreeIter newItem =
+					databasesLS.AppendValues(Path.GetFileName(databasePath),
+					                         database.DatabaseTypeShortDescription,
+					                         databasePath,
+					                         databaseInfo);
+				
+				// Seleccionamos la fila añadida.
+				databasesTV.Selection.SelectIter(newItem);
+				TreePath newPath = databasesLS.GetPath(newItem);
+				databasesTV.ScrollToCell(newPath,
+				                         databasesTV.Columns[0],
+				                         true,
+				                         1.0f,
+				                         0.0f);
+				
+				// Lo añadimos a la coleccion.
+				databaseFilesInfo.Add(databaseInfo);
+			}
 			else
 			{
-				DatabaseFileInfo databaseInfo = new DatabaseFileInfo();
-				databaseInfo.Database = database;
-				databaseInfo.Path = databasePath;
-				
-				((ListStore)(databasesTV.Model)).AppendValues(System.IO.Path.GetFileName(databasePath),
-				                                              "meh",
-				                                              databaseInfo);
-				                                              
+				OkDialog.Show(this.databaseManagerDialog,
+				              MessageType.Info,
+				              "La base de datos del fichero «{0}» ya se encuentra"
+				              + " en la lista y no se añadirá de nuevo.",
+				              Path.GetFileName(databasePath));
+			}
+		}
+		
+		/// <summary>
+		/// Añade la informacion de una base de datos a la lista.
+		/// </summary>
+		/// <param name="databaseInfo">
+		/// La informacion de base de datos a añadir.
+		/// </param>
+		private void AddDatabaseInfo(DatabaseFileInfo databaseInfo)
+		{
+			if (databaseInfo.Database == null)
+			{
+				// No se abrio un archivo de base de datos, informamos.
+				OkDialog.Show(this.databaseManagerDialog,
+				              MessageType.Warning,
+				              "El archivo «{0}» no contiene una base de datos "+
+				              "correcta, y no se pudo abrir.",
+				              databaseInfo.Path);
+				return;
 			}
 			
+			databasesLS.AppendValues(Path.GetFileName(databaseInfo.Path),
+			                         databaseInfo.Database.DatabaseTypeShortDescription,
+			                         databaseInfo.Path,
+			                         databaseInfo);  
 		}
+		
+		
+		
 		
 		/// <summary>
 		/// Inicializa los controles del dialogo.
@@ -164,15 +233,27 @@ namespace MathTextRecognizer.DatabaseManager
 			// Creamos el modelo de la lista de bases de datos,
 			// para que contenga el tipo de la base de datos, el archivo que
 			// la contiene, y el objecto DatabaseFileInfo asociado.
-			databasesTV.Model = new ListStore(typeof(string),
-			                                  typeof(string), 
-			                                  typeof(DatabaseFileInfo));
+			databasesLS =  new ListStore(typeof(string),
+			                             typeof(string), 
+			                             typeof(string),
+			                             typeof(DatabaseFileInfo));
+			databasesTV.Model = databasesLS;
 			
 			
-			databasesTV.AppendColumn ("Archivo", new CellRendererText (), "text", 0);
-			databasesTV.AppendColumn ("Tipo", new CellRendererText (), "text", 1);
+			databasesTV.AppendColumn ("Archivo", 
+			                          new CellRendererText (), 
+			                          "text", 
+			                          0);
+			
+			databasesTV.AppendColumn ("Tipo", 
+			                          new CellRendererText (), 
+			                          "text", 
+			                          1);			
 			
 			databasesTV.Columns[0].Sizing = TreeViewColumnSizing.Autosize;
+			
+			databasesTV.Selection.Changed += 
+				new EventHandler(OnDatabasesTVSelectionChanged);
 		}
 		
 		/// <summary>
@@ -236,7 +317,15 @@ namespace MathTextRecognizer.DatabaseManager
 		/// </param>
 		private void OnRemoveBtnClicked(object sender, EventArgs args)
 		{
-			
+			TreeIter selectedIter;
+			databasesTV.Selection.GetSelected(out selectedIter);
+
+			// Recuperamos la informacion y la eliminamos de la lista y el modelo.
+			DatabaseFileInfo databaseInfo = 
+				(DatabaseFileInfo) (databasesLS.GetValue(selectedIter, 3));
+
+			databasesLS.Remove(ref selectedIter);
+			databaseFilesInfo.Remove(databaseInfo);
 		}
 		
 		/// Maneja el evento producido al pulsar el boton guardar la selección
@@ -252,6 +341,38 @@ namespace MathTextRecognizer.DatabaseManager
 		{
 			
 		}
+		
+		/// <summary>
+		/// Maneja el cambio de las filas de la lista de bases de datos.
+		/// </summary>
+		/// <param name="?">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnDatabasesLSRowsChanged(object sender, EventArgs args)
+		{
+			DatabaseListChanged(this, EventArgs.Empty);
+		}
+		
+		/// <summary>
+		/// Maneja el cambio en la seleccion de la lista.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnDatabasesTVSelectionChanged(object sender, EventArgs args)
+		{
+			// Cambiamos la sensitividad de los botones.
+			bool buttonsSensitive = databasesTV.Selection.CountSelectedRows() > 0;
+			removeBtn.Sensitive = buttonsSensitive;
+			propertiesBtn.Sensitive = buttonsSensitive;
+		}
+			
 		
 #endregion Metodos privados
 	}

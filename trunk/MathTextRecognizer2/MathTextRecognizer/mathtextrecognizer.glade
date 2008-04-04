@@ -214,7 +214,45 @@
           </packing>
         </child>
         <child>
-          <placeholder/>
+          <widget class="GtkAlignment" id="alignment8">
+            <property name="visible">True</property>
+            <property name="left_padding">6</property>
+            <child>
+              <widget class="GtkHBox" id="messageInfoHB">
+                <property name="height_request">25</property>
+                <property name="visible">True</property>
+                <property name="spacing">3</property>
+                <child>
+                  <widget class="GtkImage" id="image5">
+                    <property name="visible">True</property>
+                    <property name="stock">gtk-dialog-warning</property>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="label11">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">No hay bases de datos  de carácteres para reconocer, el gestor de bases de datos y seleccione al menos una.</property>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+              </widget>
+            </child>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">2</property>
+          </packing>
         </child>
         <child>
           <widget class="GtkHPaned" id="hpaned1">
@@ -699,6 +737,7 @@ MathML</property>
                   <widget class="GtkTreeView" id="databasesTV">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="has_tooltip">True</property>
                     <property name="tooltip_column">2</property>
                   </widget>
                 </child>

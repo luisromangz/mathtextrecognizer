@@ -41,11 +41,9 @@ namespace MathTextRecognizer
 			
 			this.view = view;
 			
-			this.bitmap.ChildrenAdded +=
-			    new MathTextBitmapChildrenAddedEventHandler(OnChildrenAdded);
+			bitmap.ChildrenAdded += new ChildrenAddedHandler(OnChildrenAdded);
 			
-			this.bitmap.SymbolChanged +=
-			    new MathTextBitmapSymbolChangedEventHandler(OnSymbolChanged);
+			bitmap.SymbolChanged += new SymbolChangedHandler(OnSymbolChanged);
 		}
 		
 		/// <value>
@@ -87,7 +85,7 @@ namespace MathTextRecognizer
 		/// <code>MathTextBitmap</code> tras
 		/// segmentar para que el cambio se refleje en la interfaz.
 		/// </summary>
-		private void OnChildrenAdded(object sender, MathTextBitmapChildrenAddedEventArgs arg)
+		private void OnChildrenAdded(object sender, ChildrenAddedArgs arg)
 		{			
 			FormulaNode node;
 			int i=0;
