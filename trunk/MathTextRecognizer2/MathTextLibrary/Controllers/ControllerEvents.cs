@@ -1,5 +1,6 @@
 // created on 02/01/2006 at 13:20
 using System;
+using System.Collections.Generic;
 
 using MathTextLibrary.Bitmap;
 
@@ -56,6 +57,8 @@ namespace MathTextLibrary.Controllers
 		}
 	}
 	
+	
+	
 	/// <summary>
 	/// Clase que implementa los argumentos necesarios en la transimisión de un
 	/// mensaje indicando que un paso del reconocimiento se ha producido.
@@ -87,4 +90,6 @@ namespace MathTextLibrary.Controllers
 	        }
 	    }
 	}
+	
+	
 }

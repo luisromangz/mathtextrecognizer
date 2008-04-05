@@ -135,17 +135,21 @@ namespace MathTextLibrary.BitmapSegmenters{
 				
 				if(mode==ProjectionMode.Horizontal)
 				{
-					newBitmap=new MathTextBitmap(
-						image.SubImage(start,edge1,size,edge2-edge1+1),
-						new Point(start+xpos,ypos+edge1),
-						mode);
+					newBitmap=new MathTextBitmap(image.SubImage(start,
+					                                            edge1,
+					                                            size,
+					                                            edge2-edge1+1),
+					                             new Point(start+xpos,
+					                                       ypos+edge1));
 				}
 				else
 				{
-					newBitmap=new MathTextBitmap(
-						image.SubImage(edge1,start,edge2-edge1+1,size),
-						new Point(xpos+edge1,start+ypos),
-						mode);
+					newBitmap=new MathTextBitmap(image.SubImage(edge1,
+					                                            start,
+					                                            edge2-edge1+1,
+					                                            size),
+					                             new Point(xpos+edge1,
+					                                       start+ypos));
 				}
 				
 				newBitmaps.Add(newBitmap);
@@ -174,7 +178,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 				
 				for(i=0;i<image.Height && edge1<0;i++){
 					for	(j=0;j<size && edge1<0;j++){
-						if(image.BinaryzedImage[j+start,i]==MathTextBitmap.Black){
+						if(image[j+start,i]!=MathTextBitmap.White){
 							edge1=i-1;
 						}
 					}
@@ -182,7 +186,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 				
 				for(i=image.Height-1;i>=edge1 && edge2<0;i--){
 					for	(j=0;j<size && edge2<0;j++){
-						if(image.BinaryzedImage[j+start,i]==MathTextBitmap.Black){
+						if(image[j+start,i]!=MathTextBitmap.White){
 							edge2=i+1;
 						}
 					}					
@@ -191,7 +195,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 			}else{
 				for(i=0;i<image.Width && edge1<0;i++){
 					for	(j=0;j<size && edge1<0;j++){
-						if(image.BinaryzedImage[i,j+start]==MathTextBitmap.Black){
+						if(image[i,j+start]!=MathTextBitmap.White){
 							edge1=i-1;
 						}
 					}
@@ -199,7 +203,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 				
 				for(i=image.Width-1;i>=edge1 && edge2<0;i--){
 					for	(j=0;j<size && edge2<0;j++){
-						if(image.BinaryzedImage[i,j+start]==MathTextBitmap.Black){
+						if(image[i,j+start]!=MathTextBitmap.White){
 							edge2=i+1;
 						}
 					}					

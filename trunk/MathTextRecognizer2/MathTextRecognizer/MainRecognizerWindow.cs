@@ -26,6 +26,7 @@ using MathTextLibrary.Controllers;
 using MathTextLibrary.Databases.Characteristic.Characteristics;
 
 using MathTextRecognizer.DatabaseManager;
+using MathTextRecognizer.Controllers;
 
 namespace MathTextRecognizer
 {
@@ -91,7 +92,10 @@ namespace MathTextRecognizer
 		private ImageMenuItem menuLoadImage;
 		
 		[WidgetAttribute]
-		private HBox messageInfoHB;		
+		private HBox messageInfoHB;
+		
+		[WidgetAttribute]
+		private ToolButton toolNewSession;
 		
 		#endregion Glade-Widgets
 		
@@ -111,17 +115,21 @@ namespace MathTextRecognizer
 		private ImageArea imageAreaNode;
 		private ImageArea imageAreaProcessed;
 		
-		private RecognizerController controller;		
+		private SegmentingAndSymbolMatchingController controller;		
 		
 		private LogView logView;
 		
-		private const string title="Reconocedor de carácteres matemáticos - ";	
+		private const string title="Reconocedor de caracteres matemáticos - ";	
 		
 		private FormulaNode currentNode;		
 		
 		private MathTextBitmap rootBitmap;
 		
 		private DatabaseManagerDialog databaseManagerDialog;
+		
+		private Thread recognizingThread;
+		
+		private ControllerStepMode stepMode;
 		
 		#endregion Otros atributos
 		
@@ -148,8 +156,10 @@ namespace MathTextRecognizer
 			databaseManagerDialog.DatabaseListChanged += 
 				new EventHandler(OnDatabaseManagerDialogDatabaseListChanged);
 			
-			OnOpenDatabaseManagerClicked(this,EventArgs.Empty);
-			
+			// Asignamos la configuracion inicial al dialogo de gestion de
+			// bases de datos.			
+			databaseManagerDialog.DatabaseFilesInfo = 
+				Config.RecognizerConfig.Instance.DatabaseFilesInfo;
 		}
 		
 		/// <summary>
@@ -158,7 +168,7 @@ namespace MathTextRecognizer
 		private void Initialize()
 		{		
 		
-			controller = new RecognizerController();
+			controller = new SegmentingAndSymbolMatchingController();
 			
 			// Asignamos los eventos que indican que se han alcanzado hitos
 			// en el reconocimiento de un cáracter.
@@ -203,11 +213,14 @@ namespace MathTextRecognizer
 			frameNodeProcessed.Add(imageAreaProcessed);
 			
 			// Ponemos iconos personalizados en los botones
-			menuLoadImage.Image = new Gtk.Image(ImageResources.ImageLoadIcon16);
-			toolLoadImage.IconWidget = new Gtk.Image(ImageResources.ImageLoadIcon22);
+			menuLoadImage.Image = ImageResources.LoadIcon("insert-image16");
+			toolLoadImage.IconWidget = ImageResources.LoadIcon("insert-image22");
 			
-			menuOpenDatabaseManager.Image = new Gtk.Image(ImageResources.DatabaseIcon16);
-			toolDatabase.IconWidget = new Gtk.Image(ImageResources.DatabaseIcon22);
+			menuOpenDatabaseManager.Image = ImageResources.LoadIcon("database16");
+			toolDatabase.IconWidget = ImageResources.LoadIcon("database22");
+			
+			toolNewSession.IconWidget = ImageResources.LoadIcon("window-new22");
+			menuNewSession.Image = ImageResources.LoadIcon("window-new16");
 			
 			// Creamos el cuadro de registro.
 			logView = new LogView();
@@ -266,8 +279,8 @@ namespace MathTextRecognizer
 		{		
 		    BitmapBeingRecognizedArgs arg = a as BitmapBeingRecognizedArgs;
 		    
-		    imageAreaNode.Image=arg.MathTextBitmap.Bitmap;
-			imageAreaProcessed.Image=arg.MathTextBitmap.ProcessedBitmap;
+		    imageAreaNode.Image = arg.MathTextBitmap.Bitmap;
+			imageAreaProcessed.Image = arg.MathTextBitmap.ProcessedBitmap;
 			
 			MarkImage(arg.MathTextBitmap);			
 			
@@ -288,7 +301,8 @@ namespace MathTextRecognizer
 				// Si tiene hijos nos vamos al primero de ellos.
 				currentNode = currentNode[0] as FormulaNode;
 			}
-			else if (currentNode.Parent.ChildCount == currentNode.Parent.IndexOf(currentNode)+1)
+			else if (currentNode.Parent != null 
+			         &&currentNode.Parent.ChildCount == currentNode.Parent.IndexOf(currentNode)+1)
 			{
 				// Si es el último hijo de un padre, nos vamos al siguiente tio.
 				currentNode = currentNode.Parent as FormulaNode;
@@ -298,7 +312,7 @@ namespace MathTextRecognizer
 					currentNode = currentNode.Parent[idx] as FormulaNode;
 								
 			}
-			else
+			else if (currentNode.Parent != null)
 			{
 				// Si no es el último, simplemente nos vamos al hermano
 				int idx = currentNode.Parent.IndexOf(currentNode)+1;
@@ -422,7 +436,7 @@ namespace MathTextRecognizer
 		{
 			AppInfoDialog.Show(
 				mainWindow,
-				"Reconocedor de carácteres matemáticos",
+				"Reconocedor de caracteres matemáticos",
 				"Este programa se encarga de el reconocimiento del las "
 				+ "fórmulas contenidas en imágenes,y su posterior conversión.");
 		}
@@ -434,6 +448,8 @@ namespace MathTextRecognizer
 		private void OnOpenDatabaseManagerClicked(object sender, EventArgs arg)
 		{	
 			databaseManagerDialog.Run();
+			
+			
 		}
 		
 		/// <summary>
@@ -476,9 +492,7 @@ namespace MathTextRecognizer
 			if(res==ResponseType.Yes)
 			{			
 				LoadImage();
-			}	
-			
-			
+			}
 		}
 		
 			
@@ -502,7 +516,15 @@ namespace MathTextRecognizer
 			toolLoadImage.Sensitive=false;
 			menuOpenDatabaseManager.Sensitive=false;
 			menuLoadImage.Sensitive=false;
-			controller.NextRecognizeStep();
+			
+			if(recognizingThread == null)
+			{
+				recognizingThread =
+					new Thread(new ThreadStart(controller.RecognizeProcess));
+				recognizingThread.Start();
+				
+				controller.Databases = databaseManagerDialog.Databases;
+			}
 			
 			mainWindow.QueueDraw();
 		}
@@ -515,8 +537,7 @@ namespace MathTextRecognizer
 		{		    
 			expLog.Expanded = true;
 			
-			controller.StepMode =
-				 RecognizerControllerStepMode.NodeByNode;
+			stepMode = ControllerStepMode.NodeByNode;
 				
 			NextStep();
 		}
@@ -529,8 +550,7 @@ namespace MathTextRecognizer
 		{		    
 			expLog.Expanded = true;
 			
-			controller.StepMode = 
-			    RecognizerControllerStepMode.StepByStep;		    
+			stepMode = ControllerStepMode.StepByStep;		    
 			
 			NextStep();
 		}
@@ -542,8 +562,7 @@ namespace MathTextRecognizer
 		private void OnBtnTilEndClicked(object sender, EventArgs arg)
 		{
 			alignNextButtons.Sensitive=false;
-			controller.StepMode = 
-				RecognizerControllerStepMode.UntilEnd;
+			stepMode = ControllerStepMode.UntilEnd;
 			
 			NextStep();
 		}
@@ -592,7 +611,7 @@ namespace MathTextRecognizer
 				                treeview);
 				    
 				store.AddNode(node);
-				controller.StartImage=mtb;
+				controller.StartNode = node;
 				rootBitmap=mtb;
 				
 				currentNode = null;

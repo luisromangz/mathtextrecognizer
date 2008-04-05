@@ -7,9 +7,12 @@ using System.Collections.Generic;
 
 using Gtk;
 
+using CustomGtkWidgets;
 using CustomGtkWidgets.CommonDialogs;
 
 using MathTextLibrary.Databases;
+
+using MathTextRecognizer.Config;
 
 namespace MathTextRecognizer.DatabaseManager
 {
@@ -254,6 +257,8 @@ namespace MathTextRecognizer.DatabaseManager
 			
 			databasesTV.Selection.Changed += 
 				new EventHandler(OnDatabasesTVSelectionChanged);
+			
+			databaseManagerDialog.Icon = ImageResources.LoadPixbuf("database16");			
 		}
 		
 		/// <summary>
@@ -339,7 +344,15 @@ namespace MathTextRecognizer.DatabaseManager
 		/// </param>
 		private void OnMakeDefaultBtnClicked(object sender, EventArgs args)
 		{
+			ResponseType res = ConfirmDialog.Show(this.databaseManagerDialog,
+			                                      "Se va a cambiar la configuración por defecto, ¿desea continuar?");
 			
+			if(res == ResponseType.Yes)
+			{
+				// Guardamos la seleccion actual como la por defecto.
+				RecognizerConfig.Instance.DatabaseFilesInfo=DatabaseFilesInfo;
+				RecognizerConfig.Instance.Save();
+			}
 		}
 		
 		/// <summary>

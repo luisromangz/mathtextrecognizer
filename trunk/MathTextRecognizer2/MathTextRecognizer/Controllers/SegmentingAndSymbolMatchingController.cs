@@ -10,45 +10,20 @@ using MathTextLibrary.Symbol;
 using MathTextLibrary.Databases;
 using MathTextLibrary.Databases.Characteristic;
 
-namespace MathTextLibrary.Controllers
+using MathTextLibrary.Controllers;
+
+namespace MathTextRecognizer.Controllers
 {
-
 	/// <summary>
-	/// Enumeracion que indica el tipo de paso a paso con el que se
-	/// van a realizar los procesos de cada controlador.
+	/// La clase SegmentingAndSymbolMatchingController realiza las funciones de 
+	/// control de los procesos de segmentación de imagenes y asignación
+	/// de las mismas a un simbolo matematico determinado.
 	/// </summary>
-	public enum RecognizerControllerStepMode
-	{
-		/// <summary>
-		/// Representa el modo de nodo a nodo de la imagen, deteniendose
-		/// en cada parametro a procesar de la misma.
-		/// </summary>
-		StepByStep,		
-		
-		/// <summary>
-		/// Representa el modo de paso a paso por nodo segmentado de la imagen.
-		/// </summary>
-		NodeByNode,
-		
-		/// <summary>
-		/// Representa el modo de ejecucion sin detenerse en pasos intermedios.
-		/// </summary>
-		UntilEnd
-	}
-
-	/// <summary>
-	/// La clase MathTextRecognizerController realiza las funciones de control
-	/// de los procesos de reconocimiento de formulas matematicas, ofreciendo una 
-	/// fachada a las posibles interfaces de usuario para abstraerlas de este 
-	/// cometido.
-	/// </summary>
-	public class RecognizerController{			
+	public class SegmentingAndSymbolMatchingController
+	{			
 		
 		//La base de datos que usaremos para reconocer los caracteres.
 		private List<MathTextDatabase> databases;
-		
-		//El modo de ejecucion paso a paso del proceso.
-		private RecognizerControllerStepMode stepByStep;		
 		
 		/// <summary>
 		/// Evento usado para enviar un mensaje de informacion a la interfaz.
@@ -68,23 +43,16 @@ namespace MathTextLibrary.Controllers
 		public event BitmapBeingRecognizedHandler BitmapBeingRecognized;
 		
 		//La imagen raiz que contiene la formula completa que deseamos reconocer.
-		private MathTextBitmap startImage;
-		
-		//El hilo que hemos usado para implementar la ejecucion paso a paso.		
-		private Thread recognizeThread;
+		private FormulaNode startNode;
 		
 		/// <summary>
 		/// Constructor de la clase MathTextRecognizerController, debe ser invocado
 		/// en las posibles implementaciones distintas de la interfaz de usuario del
 		/// reconocedor.
 		/// </summary>
-		public RecognizerController()
-		{			
-			
-			databases = new List<MathTextDatabase>();
-						
-			
-			stepByStep = RecognizerControllerStepMode.UntilEnd;	
+		public SegmentingAndSymbolMatchingController()
+		{						
+			databases = new List<MathTextDatabase>();						
 		}
 	
 		/// <summary>
@@ -94,8 +62,10 @@ namespace MathTextLibrary.Controllers
 		/// La imagen que hemos comenzado a reconocer, que sera enviada como
 		/// argumentod del evento.
 		/// </param>		
-		protected void OnBitmapBeingRecognized(MathTextBitmap bitmap){
-			if(BitmapBeingRecognized!=null){
+		protected void OnBitmapBeingRecognized(MathTextBitmap bitmap)
+		{
+			if(BitmapBeingRecognized!=null)
+			{
 				BitmapBeingRecognized(this,new BitmapBeingRecognizedArgs(bitmap));
 			}
 		}			
@@ -106,11 +76,11 @@ namespace MathTextLibrary.Controllers
 		/// <param name="msg">
 		/// El mensaje que queremos pasar como argumento al manejador del evento.
 		/// </param>		
-		protected void OnLogMessageSent(string msg)
+		protected void OnMessageLogSent(string msg, params object [] args)
 		{
 			if(MessageLogSent!=null)
 			{
-				MessageLogSent(this,new MessageLogSentArgs(msg));
+				MessageLogSent(this,new MessageLogSentArgs(String.Format(msg,args)));
 			}
 		}
 		
@@ -137,29 +107,15 @@ namespace MathTextLibrary.Controllers
 			// Lo que hacemos es notificar a la interfaz de que una determinada 
 			// caracteristica binaria ha tomado un valor, y que caracteres son
 			// similares.
-			OnLogMessageSent(args.Process.GetType()+": "+args.Result);
+			OnMessageLogSent("{0}: {1}",args.Process.GetType(), args.Result);
 			string similar="";	
 			if(args.SimilarSymbols!=null){
 				foreach(MathSymbol ms in args.SimilarSymbols){
 					similar += String.Format("«{0}»,", ms.Text);
 				}				
 				
-				OnLogMessageSent("Caracteres similares: "+similar.TrimEnd(new char[]{','}));
-			}
-		}
-		
-		/// <value>
-		/// Propiedad para establecer el modo de ejecucion paso a paso del
-		/// procesado.
-		/// </value>
-		public RecognizerControllerStepMode StepMode{
-			get
-			{
-				return stepByStep;
-			}
-			set
-			{				
-				stepByStep=value;				
+				OnMessageLogSent("Caracteres similares: {}",
+				                 similar.TrimEnd(new char[]{','}));
 			}
 		}
 		
@@ -185,74 +141,60 @@ namespace MathTextLibrary.Controllers
 		/// Contiene la imagen de inicio que
 		/// contiene la formula que deseamos reconocer.
 		/// </value>
-		public MathTextBitmap StartImage
+		public FormulaNode StartNode
 		{
 			get
 			{				
-				return startImage; 			
+				return startNode; 			
 			}
 			set
 			{
-				startImage=value;
+				startNode=value;
+			}
+		}
+
+		/// <value>
+		/// Contiene las bases de datos que usa el controlador para reconocer.
+		/// </value>
+		public List<MathTextDatabase> Databases {
+			get {
+				return databases;
+			}
+			
+			set
+			{
+				databases = value;
+				foreach(MathTextDatabase database in value)
+				{
+					database.RecognizingStepDone+=
+						new ProcessingStepDoneHandler(OnProcessingStepDone);
+				}
 			}
 		}
 		
 		/// <summary>
-		/// Este es el metodo que hay que llamar para comenzar/continuar el proceso
+		/// Metodo que realiza el procesado de las imagenes
 		/// </summary>
-		/// <returns>Cierto si quedan aun pasos por ejecutar, falso en caso contrario.</returns>
-		public bool NextRecognizeStep()
+		public void RecognizeProcess()
 		{
-		
-			bool res=true;
-			if(recognizeThread==null){
-				recognizeThread=new Thread(new ThreadStart(RecognizeProcess));
-				recognizeThread.Priority=ThreadPriority.Highest;
-				recognizeThread.Start();								
-			}else{
-				//Si hemos llegado a aqui, es porque el hilo esta en ejecucion y en algun
-				//modo paso a paso. Si hemos querido cambiar el modo de paso a paso lo habremos
-				//hecho en la interfaz mediante la propiedad que aqui ofrecemos.
-				//Por tanto lo unico que tenemos que hacer es despertar el hilo.	
-				
-				if(recognizeThread.ThreadState==ThreadState.Suspended)
-				{
-					recognizeThread.Resume();					
-				}
-				else if(recognizeThread.ThreadState==ThreadState.Stopped)
-				{
-					res=false;
-				}
-			}
-			return res;		
-		}
-		
-		/// <summary>
-		/// Metodo cuya ejecucion se realiza en un hilo separado.
-		/// </summary>
-		private void RecognizeProcess(){
-		   	RecognizerTreeBuild(startImage);
+		   	RecognizerTreeBuild(startNode);
 		   	OnRecognizeProcessFinished();
-		   	recognizeThread=null;
 		}
 		
 		/// <summary>
 		/// Con este metodo cramos un arbol de imagenes, de forma recursiva.
-		/// Primero intentamos reconocer la imagen como un caracter, si no es posible,
-		/// la intentamos segmentar. Si ninguno de estos procesos es posible, la imagen no
-		/// pudo ser reconocida.
+		/// Primero intentamos reconocer la imagen como un caracter, si no es 
+		/// posible, la intentamos segmentar. Si ninguno de estos procesos es 
+		/// posible, la imagen nopudo ser reconocida.
 		/// </summary>
-		/// <param name="node">La imagen que vamos a tratar de reconocer/segmentar.</param>
-		private void RecognizerTreeBuild(MathTextBitmap node){			
-			
-			//Para proteger el paso actual de un cambio de modo intermedio
-			RecognizerControllerStepMode modeAux;
-			
-			modeAux=stepByStep;
-			
-			OnBitmapBeingRecognized(node);
-		
-			OnLogMessageSent("Tratando la subimagen situada a partir de "+node.Position);
+		/// <param name="node">
+		/// El nodo donde esta la imagen sobre la que trabajaremos.
+		/// </param>
+		private void RecognizerTreeBuild(FormulaNode node)
+		{			
+			MathTextBitmap bitmap = node.MathTextBitmap;
+			OnMessageLogSent("Tratando la subimagen situada a partir de {0}",
+			                 bitmap.Position);
 						
 			//Si no logramos reconocer nada, es el simbolo nulo, tambien sera
 			//el simbolo nulo aunque hayamos podido crearle hijos.
@@ -263,8 +205,10 @@ namespace MathTextLibrary.Controllers
 			List<MathSymbol> associatedSymbols = new List<MathSymbol>();
 			foreach(MathTextDatabase database in databases)
 			{
+				bitmap.ProcessImage(database.Processes);
+				OnBitmapBeingRecognized(bitmap);
 				// Añadimos los caracteres reconocidos por la base de datos
-				foreach (MathSymbol symbol in database.Recognize(node))
+				foreach (MathSymbol symbol in database.Recognize(bitmap))
 				{
 					if(!associatedSymbols.Contains(symbol))
 					{
@@ -280,42 +224,37 @@ namespace MathTextLibrary.Controllers
 			associatedSymbol = ChooseSymbol(associatedSymbols);
 						
 			// Asociamos el símbolo al nodo.
-			node.Symbol=associatedSymbol;	
+			bitmap.Symbol=associatedSymbol;	
+			
 			//Si no hemos reconocido nada, pues intentaremos segmentar el caracter.
 			if(associatedSymbol.SymbolType == MathSymbolType.NotRecognized)
 			{			
-				OnLogMessageSent("La imagen no pudo ser reconocida como un simbolo por la base de datos");
+				OnMessageLogSent("La imagen no pudo ser reconocida como un "
+				                 + "simbolo por la base de datos");
 				
-				node.CreateChildren();
+				List<MathTextBitmap> children = CreateChildren(bitmap);
 				
-				if(node.Children!=null && node.Children.Count > 1)
+				if(children.Count > 1)
 				{
-					OnLogMessageSent("La imagen se ha segmentado correctamente");
+					OnMessageLogSent("La imagen se ha segmentado correctamente");
+					
+					//Si solo conseguimos un hijo, es la propia imagen, asi que nada
+					foreach(MathTextBitmap child in children)
+					{
+						FormulaNode childNode = node.AddChild(child);
+						RecognizerTreeBuild(childNode);						
+					}
 				}
 				else
 				{
-					OnLogMessageSent("La imagen no pudo ser segmentada, el símbolo queda sin reconocer");
+					OnMessageLogSent("La imagen no pudo ser segmentada, el "
+					                 + "símbolo queda sin reconocer");
 				}
 			}
 			else
 			{
-				OnLogMessageSent("Símbolo reconocido por la base de datos como «"
-				                 +associatedSymbol.Text+"»");
-			}
-			
-					
-			
-			//Paramos aqui, lo que sigue es la llamada al procesamiento de los nodos hijos
-			if(modeAux != RecognizerControllerStepMode.UntilEnd)
-			{				
-				recognizeThread.Suspend();
-			}
-			
-			if(node.Children !=null && node.Children.Count>1){				
-				//Si solo conseguimos un hijo, es la propia imagen, asi que nada
-				foreach(MathTextBitmap child in node.Children){
-					RecognizerTreeBuild(child);						
-				}
+				OnMessageLogSent("Símbolo reconocido por la base de datos como «{0}»",
+				                 associatedSymbol.Text);
 			}
 		}
 		
@@ -346,6 +285,20 @@ namespace MathTextLibrary.Controllers
 				//TODO Seleccion entre varios caracteres
 				throw new NotImplementedException("TODO seleccion entre varios caracteres");
 			}
+		}
+		
+		/// <summary>
+		/// Segmenta una imagen.
+		/// </summary>
+		/// <param name="image">
+		/// La imagen a segmentar.
+		/// </param>
+		/// <returns>
+		/// Una lista con las imagenes que se han obtenido.
+		/// </returns>
+		private List<MathTextBitmap> CreateChildren(MathTextBitmap image)
+		{
+			return new List<MathTextBitmap>();
 		}
 	}
 }

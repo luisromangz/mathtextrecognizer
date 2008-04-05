@@ -24,14 +24,11 @@
     <File name="BitmapProcesses/BitmapZhangSuenStentifordHoltThinner.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapSegmenters/AllHolesProjectionBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapSegmenters/DifferentialProjectionBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
-    <File name="BitmapSegmenters/FractionVerticalBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapSegmenters/IBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapSegmenters/MostFrequentHoleProjectionBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapSegmenters/ProjectionBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapSegmenters/TwoHolesBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
     <File name="Controllers/ControllerEvents.cs" subtype="Code" buildaction="Compile" />
-    <File name="Controllers/OutputController.cs" subtype="Code" buildaction="Compile" />
-    <File name="Controllers/RecognizerController.cs" subtype="Code" buildaction="Compile" />
     <File name="Output/LaTeXGenerator.cs" subtype="Code" buildaction="Compile" />
     <File name="Output/MathMLGenerator.cs" subtype="Code" buildaction="Compile" />
     <File name="Projection/Hole.cs" subtype="Code" buildaction="Compile" />
@@ -107,6 +104,7 @@
     <File name="BitmapProcesses/BitmapProcessPropertyDescription.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapProcesses/BitmapProcessDescription.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/DatabaseTypeInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Controllers/ControllerStepMode.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

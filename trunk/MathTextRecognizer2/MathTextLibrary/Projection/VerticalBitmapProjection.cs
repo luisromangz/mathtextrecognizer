@@ -33,7 +33,7 @@ namespace MathTextLibrary.Projection
 			{
 				for(int j=0;j<image.Width;j++)
 				{
-					if(image.BinaryzedImage[j,i]==MathTextBitmap.Black)
+					if(image[j,i]!=MathTextBitmap.White)
 					{
 						projection[i]++;	
 					}

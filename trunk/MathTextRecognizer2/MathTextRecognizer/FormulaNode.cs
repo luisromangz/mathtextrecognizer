@@ -1,10 +1,14 @@
 // created on 03/01/2006 at 16:01
 
 using System;
+using System.Collections.Generic;
+
 using Gtk;
 
 using MathTextLibrary;
 using MathTextLibrary.Bitmap;
+
+using MathTextLibrary.Controllers;
 
 namespace MathTextRecognizer
 {
@@ -40,8 +44,6 @@ namespace MathTextRecognizer
 			this.bitmap=bitmap;
 			
 			this.view = view;
-			
-			bitmap.ChildrenAdded += new ChildrenAddedHandler(OnChildrenAdded);
 			
 			bitmap.SymbolChanged += new SymbolChangedHandler(OnSymbolChanged);
 		}
@@ -81,24 +83,27 @@ namespace MathTextRecognizer
 		}
 		
 		/// <summary>
-		/// Método que maneja el evento provocado al añdirse los hijos al 
-		/// <code>MathTextBitmap</code> tras
-		/// segmentar para que el cambio se refleje en la interfaz.
+		/// Añade un nodo hijo al nodo.
 		/// </summary>
-		private void OnChildrenAdded(object sender, ChildrenAddedArgs arg)
+		/// <param name="childBitmap">
+		/// A <see cref="MathTextBitmap"/>
+		/// </param>
+		/// <returns>
+		/// El nodo añadido.
+		/// </returns>
+		public FormulaNode AddChild(MathTextBitmap childBitmap)
 		{			
-			FormulaNode node;
-			int i=0;
-			foreach(MathTextBitmap child in arg.Children)			
-			{		
-				i++;					
-				node=new FormulaNode("Subimagen "+i, child, view);
-				AddChild(node);			
-			}
+			FormulaNode node = new FormulaNode(String.Format("Subimagen {0}",
+			                                                 this.ChildCount+1),
+			                                   childBitmap,
+			                                   view);
+				
+			this.AddChild(node);
 			
 			view.ExpandAll();
 			view.QueueDraw();
 			
+			return node;
 		}
 	}
 }

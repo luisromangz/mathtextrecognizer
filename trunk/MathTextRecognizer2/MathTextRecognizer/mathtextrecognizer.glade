@@ -148,7 +148,7 @@
             <property name="visible">True</property>
             <property name="toolbar_style">GTK_TOOLBAR_BOTH_HORIZ</property>
             <child>
-              <widget class="GtkToolButton" id="toolNew">
+              <widget class="GtkToolButton" id="toolNewSession">
                 <property name="visible">True</property>
                 <property name="has_tooltip">True</property>
                 <property name="tooltip_text">Abrir nueva sesión de reconocimiento</property>
@@ -235,7 +235,7 @@
                 <child>
                   <widget class="GtkLabel" id="label11">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">No hay bases de datos  de carácteres para reconocer, el gestor de bases de datos y seleccione al menos una.</property>
+                    <property name="label" translatable="yes">No hay bases de datos  de caracteres para reconocer, el gestor de bases de datos y seleccione al menos una.</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
