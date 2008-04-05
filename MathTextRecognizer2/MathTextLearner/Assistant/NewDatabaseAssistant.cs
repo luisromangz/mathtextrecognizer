@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 using Gtk;
 
+using CustomGtkWidgets;
 using CustomGtkWidgets.CommonDialogs;
 
 using MathTextLibrary.Databases;
@@ -22,7 +23,7 @@ namespace MathTextLearner.Assistant
 		private BitmapProcessesStep processesStep;
 		
 		public NewDatabaseAsisstant(Window parent) : 
-			base(parent, "Asistente de nueva base de datos de carácteres")
+			base(parent, "Asistente de nueva base de datos de caracteres")
 		{
 			databaseStep = new DatabaseTypeStep(this);
 			fileStep = new FileSelectionStep(this);
@@ -37,6 +38,8 @@ namespace MathTextLearner.Assistant
 			{
 				panel.StepWidget.SetSizeRequest(500,250);
 			}
+			
+			this.Window.Icon = ImageResources.LoadPixbuf("database-new16");
 		}
 		
 #region Propiedades 

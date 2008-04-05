@@ -43,7 +43,7 @@ namespace MathTextLearner
 		private Gtk.Window mainWindow;
 		
 		[WidgetAttribute]
-		private MenuItem menuDatabase;
+		private ImageMenuItem menuDatabase;
 		
 		[WidgetAttribute]
 		private MenuItem menuLoad;
@@ -56,6 +56,9 @@ namespace MathTextLearner
 		
 		[WidgetAttribute]
 		private Toolbar toolbar;
+		
+		[WidgetAttribute]
+		private ToolButton toolNewDatabase;
 		
 		[WidgetAttribute]
 		private Button btnLearn;
@@ -135,7 +138,7 @@ namespace MathTextLearner
 		
 		private Thread learningThread;
 		
-		private const string title="Aprendedor de carácteres matemáticos";
+		private const string title="Aprendedor de caracteres matemáticos";
 		
 		private bool databaseModified;	
 		
@@ -220,7 +223,7 @@ namespace MathTextLearner
 			// Informamos al usuario.
 			OkDialog.Show(mainWindow,
 				          MessageType.Info,
-				          "Todos los carácteres fueron procesados.{0}",
+				          "Todos los caracteres fueron procesados.{0}",
 				          conflictsMessage);
 				
 			mtb = null;
@@ -238,9 +241,7 @@ namespace MathTextLearner
 		/// </summary>
 		private void Initialize()
 		{
-			mainWindow.Title=title;		
-			
-			
+			mainWindow.Title=title;	
 			
 			imageAreaOriginal = new ImageArea();
 			imageAreaOriginal.ImageMode = ImageAreaMode.Zoom;
@@ -259,6 +260,10 @@ namespace MathTextLearner
 			imagesStore = new ListStore(typeof(Gdk.Pixbuf), typeof(Gdk.Pixbuf)); 
 			imagesIV.Model = imagesStore;
 			
+			toolNewDatabase.IconWidget =ImageResources.LoadIcon("database-new22");
+			
+			menuDatabase.Image =ImageResources.LoadIcon("database-new16");
+				
 			mainWindow.ShowAll();			
 		}		
 		
@@ -565,9 +570,9 @@ namespace MathTextLearner
 		{
 			AppInfoDialog.Show(
 				mainWindow,
-				"Aprendedor de carácteres matemáticos",
-				"Esta aplicación permite aprender un carácter y añadirlo a"+
-				" una base de datos de carácteres nueva o creada previamente.");	
+				"Aprendedor de caracteres matemáticos",
+				"Esta aplicación permite aprender un caracter y añadirlo a"+
+				" una base de datos de caracteres nueva o creada previamente.");	
 			
 		}
 		

@@ -38,9 +38,6 @@ namespace MathTextLibrary.Bitmap
 		// Hijos de la imagen productos de la segmentación
 		private List<MathTextBitmap> children;
 		
-		// A partir de qué proyección se ha obtenido la imagen
-		private ProjectionMode fromProjection;
-		
 		// Altura de la imagen sin procesar
 		private int height;
 		
@@ -66,8 +63,7 @@ namespace MathTextLibrary.Bitmap
 #endregion Atributos no públicos
 		
 #region Eventos
-
-		public event ChildrenAddedHandler ChildrenAdded;
+		
 		public event SymbolChangedHandler SymbolChanged;
 		
 #endregion Eventos
@@ -86,25 +82,23 @@ namespace MathTextLibrary.Bitmap
 		public MathTextBitmap(Pixbuf b)
 		{
 			this.position = new Point(0,0);
-			image = Utils.ImageUtils.CreateMatrixFromPixbuf(b);		
-			fromProjection = ProjectionMode.None;	
+			image = Utils.ImageUtils.CreateMatrixFromPixbuf(b);	
 			width = b.Width;
 			height = b.Height;
 		}	
 		
 		/// <summary>
 		/// Constructor de un nuevo <c>MathTextBitmap</c> a partir de un
-		/// array de float, una posicion y un modo de proyeccion.
+		/// array de float y su posicion y un modo de proyeccion.
 		/// </summary>
 		/// <remarks>
 		/// El array se clona para evitar efectos laterales. La imagen se
 		/// procesa mediante el metodo <c>ProcessImage()</c>. 
 		/// </remarks>
-		public MathTextBitmap(float [,] image, Point pos, ProjectionMode pM)
+		public MathTextBitmap(float [,] image, Point pos)
 		{
 			this.image=(float [,])(image.Clone());
-			this.position=pos;			
-			this.fromProjection=pM;	
+			this.position=pos;
 			
 			width = image.GetLength(0);
 			height = image.GetLength(1);
@@ -124,32 +118,7 @@ namespace MathTextLibrary.Bitmap
 				return image[i,j];
 			}
 		}
-		
-		/// <value>
-		/// Contiene el <c>Pixbuf</c> que representa a la imagen binarizada
-		/// mediante el metodo <c>MathTextBitmap.CreateBitmapFromGrayImage()</c>.
-		/// </value>
-		/// <remarks>
-		/// El bitmap creado estara en escala de grises.
-		/// </remarks>
-		public Pixbuf BinaryzedBitmap
-		{
-			get
-			{			
-				return Utils.ImageUtils.CreatePixbufFromMatrix(binaryzedImage);
-			}
-		}
-		
-		/// <value>
-		/// Contiene la imagen binarizada como un array de float.
-		/// </value>
-		public float[,] BinaryzedImage
-		{
-			get{
-				return binaryzedImage;
-			}
-		}
-		
+				
 		/// <value>
 		/// Contiene el <c>Pixbuf</c> que representa a la imagen sin procesar.
 		/// </value>
@@ -173,17 +142,6 @@ namespace MathTextLibrary.Bitmap
 			get{
 				return children;
 			}			
-		}	
-		
-		/// <value>
-		/// Contiene el modo de proyeccion desde que originó la imagen.
-		/// </value>
-		public ProjectionMode FromProjection
-		{
-			get
-			{
-				return fromProjection;			
-			}		
 		}	
 		
 		/// <value>
@@ -275,37 +233,7 @@ namespace MathTextLibrary.Bitmap
 		
 #region Metodos públicos
 
-		/// <summary>
-		/// Intenta dividir la imagen por segmentacion. En caso de tener exito
-		/// se actualizan los hijos de la imagen actual.
-		/// </summary>
-		/// <remarks>
-		/// Siempre se intenta segmentar la imagen actual en horizontal,
-		/// y si esto no tiene exito entonces se intenta segmentar en vertical.
-		/// </remarks>
-		public void CreateChildren()
-		{
-			if(children==null)
-			{							
-				children = HorizontalSegmentation();
-			
-				if(children != null && children.Count>1)
-				{
-					OnChildrenAddedInvoker(children);	
-				}
-				
-				/*
-				// antiguo metodo de segmentacion: si la imagen actual se habia
-				// obtenido por segmentacion horizontal, empezamos intentando
-				// segmentar en vertical, y viceversa
-				if(fromProjection==ProjectionMode.Horizontal){
-					children = VerticalSegmentation();
-				}else{
-					children = HorizontalSegmentation();
-				}
-				*/
-			}
-		}		
+		
 
 		/// <summary>
 		/// Procesa la imagen actual mediante binarizacion, encuadre,
@@ -346,51 +274,7 @@ namespace MathTextLibrary.Bitmap
 
 		#endregion Métodos públicos
 		
-		#region Métodos no públicos
-		
-		/// <summary>
-		/// Intenta segmentar la imagen en horizontal y si no tiene exito
-		/// prueba en vertical.
-		/// </summary>
-		/// <remarks>
-		/// Actualmente se usa el segmentador <c>AllHolesProjectionBitmapSegmenter</c>
-		/// para el segmentado horizontal y <c>FractionVerticalBitmapSegmenter</c>
-		/// para el segmentado vertical.
-		/// </remarks>
-		private List<MathTextBitmap> HorizontalSegmentation()
-		{
-			IBitmapSegmenter segmenter;
-			List<MathTextBitmap> childrenTemp;
-			
-			segmenter = new AllHolesProjectionBitmapSegmenter(ProjectionMode.Horizontal);
-					
-			childrenTemp=segmenter.Segment(this);
-			
-			if(childrenTemp.Count < 2)
-			{ 
-				//Segmentacion sin exito :/
-				segmenter=new FractionVerticalBitmapSegmenter();
-				childrenTemp=segmenter.Segment(this);
-				if(childrenTemp.Count < 2)
-				{
-					childrenTemp=null;
-					//throw new Exception("Umm no se ha podido segmentar else");							
-				}
-			}
-			return childrenTemp;
-		}
-		
-		/// <summary>
-		/// Metodo que se llama cuando se añaden hijos a la imagen para
-		/// notificar al controlador.
-		/// </summary>
-		protected void OnChildrenAddedInvoker(List<MathTextBitmap> children)
-		{
-			if(ChildrenAdded != null)
-			{
-				ChildrenAdded(this,new ChildrenAddedArgs(children));
-			}		
-		}
+		#region Métodos no públicos		
 		
 		/// <summary>
 		/// Metodo que se llama cuando se modifica el simbolo de la imagen 
@@ -402,34 +286,6 @@ namespace MathTextLibrary.Bitmap
 			{
 				SymbolChanged(this,EventArgs.Empty);			
 			}
-		}		
-		
-		/// <summary>
-		/// Intenta segmentar la imagen en vertical y si no tiene exito
-		/// prueba en horizontal.
-		/// </summary>
-		/// <remmarks>
-		/// Este método no se usa actualmente.
-		/// </remmarks>
-		private List<MathTextBitmap> VerticalSegmentation()
-		{
-			IBitmapSegmenter segmenter;
-			List<MathTextBitmap> childrenTemp;
-			segmenter=new FractionVerticalBitmapSegmenter();
-			childrenTemp = segmenter.Segment(this);
-			
-			if(childrenTemp.Count < 2)
-			{ 
-				// Segmentacion sin exito :/
-				segmenter=new DifferentialProjectionBitmapSegmenter(ProjectionMode.Horizontal);
-				childrenTemp = segmenter.Segment(this);
-				if(childrenTemp.Count < 2)
-				{
-					childrenTemp=null;
-					//throw new Exception("Umm no se ha podido segmentar");							
-				}
-			}
-			return childrenTemp;
 		}
 		
 		#endregion Métodos no públicos

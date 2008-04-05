@@ -1,35 +1,45 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
-    <File name="MathTextRecognizer/DatabaseManager/DatabaseManagerDialog.cs" line="149" column="4" />
-    <File name="MathTextRecognizer/DatabaseManager/DatabaseFileInfo.cs" line="70" column="64" />
+    <File name="MathTextRecognizer/MainRecognizerWindow.cs" line="157" column="22" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
-      <Node expanded="True" selected="True">
-        <Node name="MathTextLearner" expanded="True" />
+      <Node expanded="True">
+        <Node name="MathTextLearner" expanded="True">
+          <Node name="Config" expanded="True" />
+        </Node>
         <Node name="MathTextLibrary" expanded="True">
           <Node name="Bitmap" expanded="True" />
+          <Node name="BitmapSegmenters" expanded="True" />
           <Node name="Controllers" expanded="True" />
-          <Node name="Databases" expanded="True">
-            <Node name="Characteristic" expanded="True" />
-          </Node>
+          <Node name="Databases" expanded="True" />
+          <Node name="Projection" expanded="True" />
+          <Node name="Utils" expanded="True" />
         </Node>
         <Node name="MathTextRecognizer" expanded="True">
-          <Node name="Resources" expanded="True" />
-          <Node name="DatabaseManager" expanded="True" />
+          <Node name="Config" expanded="True" />
+          <Node name="Controllers" expanded="True" />
           <Node name="Output" expanded="True" />
+          <Node name="MainRecognizerWindow.cs" selected="True" />
         </Node>
       </Node>
     </ViewMemento>
     <ViewMemento id="ClassPad">
-      <Node expanded="True" />
+      <Node expanded="True" selected="True">
+        <Node name="MathTextLearner" expanded="True">
+          <Node name="MathTextLearner" expanded="True" />
+        </Node>
+        <Node name="MathTextRecognizer" expanded="True">
+          <Node name="MathTextRecognizer" expanded="True" />
+        </Node>
+      </Node>
     </ViewMemento>
     <ViewMemento id="MonoDevelop.NUnit.TestPad">
       <Node expanded="True" />
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer/DatabaseManager/DatabaseManagerDialog.cs" />
+    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer/MainRecognizerWindow.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>

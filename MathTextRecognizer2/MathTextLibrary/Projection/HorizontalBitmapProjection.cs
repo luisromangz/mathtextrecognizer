@@ -30,18 +30,12 @@ namespace MathTextLibrary.Projection
 		/// </param>
 		protected override void CreateProjection(MathTextBitmap image)
 		{	
-			
-			Console.WriteLine("{0}x{1}",image.Width,image.Height);
-			Console.WriteLine("{0}x{1}",
-			                  image.BinaryzedImage.GetLength(0),
-			                  image.BinaryzedImage.GetLength(1));
-			
 			projection=new int [image.Width];
 			for(int i=0;i<image.Width;i++)
 			{
 				for(int j=0;j<image.Height;j++)
 				{
-					if(image.BinaryzedImage[i,j]==MathTextBitmap.Black)
+					if(image[i,j]!=MathTextBitmap.White)
 					{
 						projection[i]++;	
 					}

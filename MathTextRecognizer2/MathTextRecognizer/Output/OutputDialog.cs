@@ -12,6 +12,7 @@ using MathTextLibrary.Bitmap;
 using MathTextLibrary.Controllers;
 using MathTextLibrary.Databases.Characteristic.Characteristics;
 
+using MathTextRecognizer.Controllers;
 
 namespace MathTextRecognizer.Output
 {

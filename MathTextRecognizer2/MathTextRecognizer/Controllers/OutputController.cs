@@ -18,7 +18,9 @@ using MathTextLibrary.TreeMaker;
 using MathTextLibrary.TreeMaker.Steps;
 using MathTextLibrary.Output;
 
-namespace MathTextLibrary.Controllers
+using MathTextLibrary.Controllers;
+
+namespace MathTextRecognizer.Controllers
 {
 	/// <summary>
 	/// Esta clase realiza funciones de controlador para el proceso de generar la salida

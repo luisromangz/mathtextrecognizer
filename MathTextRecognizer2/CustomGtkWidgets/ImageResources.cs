@@ -12,36 +12,36 @@ namespace CustomGtkWidgets
 	public class ImageResources
 	{		
 		
-		public static Pixbuf ImageLoadIcon22
+		/// <summary>
+		/// Obtains an ImageWidget for a resource icon.
+		/// </summary>
+		/// <param name="resource">
+		/// The wanted resouce's name.
+		/// </param>
+		/// <returns>
+		/// An <c>Image</c> GTK widget.
+		/// </returns>
+		public static Gtk.Image LoadIcon(string resource)
 		{
-			get
-			{
-				return Pixbuf.LoadFromResource("insert-image22.png");
-			}
+			
+			return new Gtk.Image(Pixbuf.LoadFromResource(resource+".png"));
+			
 		}	
 		
-		public static Pixbuf ImageLoadIcon16
+		/// <summary>
+		/// Obtains an Pixbuf for a resource icon.
+		/// </summary>
+		/// <param name="resource">
+		/// The wanted resouce's name.
+		/// </param>
+		/// <returns>
+		/// An <c>Gdk.Pixbuf</c> image
+		/// </returns>
+		public static Gdk.Pixbuf LoadPixbuf(string resource)
 		{
-			get
-			{
-				return Pixbuf.LoadFromResource("insert-image16.png");
-			}
-		}	
-		
-		public static Pixbuf DatabaseIcon22
-		{
-			get
-			{
-				return Pixbuf.LoadFromResource("database22.png");
-			}
-		}	
-		
-		public static Pixbuf DatabaseIcon16
-		{
-			get
-			{
-				return Pixbuf.LoadFromResource("database16.png");
-			}
+			
+			return Pixbuf.LoadFromResource(resource+".png");
+			
 		}	
 	}
 }
