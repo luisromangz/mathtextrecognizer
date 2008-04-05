@@ -21,7 +21,7 @@ namespace MathTextLearner.Assistant
 #region Controles de Glade
 		
 		[Glade.WidgetAttribute]
-		private Frame fileSelectionStepFrame;
+		private VBox fileRootWidget;
 		
 		[Glade.WidgetAttribute]
 		private Button removeButton;
@@ -51,40 +51,20 @@ namespace MathTextLearner.Assistant
 			: base(assistant)
 		{
 			Glade.XML gxml =
-				new Glade.XML(null,"databaseAssistant.glade","fileSelectionStepFrame",null);
+				new Glade.XML(null,"databaseAssistant.glade","fileRootWidget",null);
 				
 			gxml.Autoconnect(this);
 			
-			SetRootWidget(fileSelectionStepFrame);
+			SetRootWidget(fileRootWidget);
 			
 			InitializeWidgets();
 		}
 		
 #endregion Constructor
 		
-#region Metodos públicos
-		/// <summary>
-		/// Indica si existen errores de validación en el panel del asistente.
-		/// </summary>
-		/// <returns>
-		/// «true» si hay errores, «false» en caso contrario.
-		/// </returns>
-		public override bool HasErrors ()
-		{
-			errors = "";
-			
-			if(fileStore.IterNChildren() == 0)
-			{
-				errors += "· Debe añadir archivos de imagen para ser procesados.\n";
-			}
-			
-			
-			return errors.Length > 0;
-		}
-		
-#endregion Metodos públicos
-		
+	
 #region Propiedades
+		
 		/// <value>
 		/// Permite recuperar el contenedor de información acerca de las
 		/// imagenes.
@@ -294,13 +274,27 @@ namespace MathTextLearner.Assistant
 			// Primero pedimos confirmación
 			if(ConfirmDialog.Show(
 					this.Assistant.Window,
-					"¿Desea eliminar de la lista la imagen\n«{0}»?",
-					fileStore.GetValue(iter,2))
+					"¿Desea eliminar la imagen «{0}» de la lista?",
+					fileStore.GetValue(iter,1))
 				== ResponseType.Yes)
 			{
 				fileStore.Remove(ref iter);
 			}
 		}
+		
+		/// <summary>
+		/// Calcula los errores del paso del asistente;
+		/// </summary>
+		protected override void ComputeErrors ()
+		{
+			errors = "";
+				
+			if(fileStore.IterNChildren() == 0)
+			{
+				errors += "· Tienes que añadir archivos de imagen para ser procesados.\n";
+			}
+		}
+
 		
 #endregion Metodos privados
 	}

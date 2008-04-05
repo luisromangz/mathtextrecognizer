@@ -112,32 +112,51 @@ namespace MathTextLibrary.Databases
 			}
 		}
 		
-		
+		/// <value>
+		/// Contiene la descripcion del tipo de base de datos usada.
+		/// </value>
 		public string  DatabaseTypeDescription
 		{
 			get
 			{
+				Type databaseType = database.GetType();
 				object[] attributes = 
-					database.GetType().GetCustomAttributes(typeof(DatabaseTypeInfo),
-					                                       true);
+					databaseType.GetCustomAttributes(typeof(DatabaseTypeInfo),
+					                                 true);
 			
 				DatabaseTypeInfo info = (DatabaseTypeInfo)attributes[0];
 				return info.Description;
 			}
 		}
 		
+		/// <value>
+		/// Contiene la descripción corta del tipo de base de datos usada.
+		/// </value>
 		public string  DatabaseTypeShortDescription
 		{
 			get
 			{
+				Type databaseType = database.GetType();
 				object[] attributes = 
-					database.GetType().GetCustomAttributes(typeof(DatabaseTypeInfo),
-					                                       true);
+					databaseType.GetCustomAttributes(typeof(DatabaseTypeInfo),
+					                                 true);
 			
 				DatabaseTypeInfo info = (DatabaseTypeInfo)attributes[0];
 				return info.ShortDescription;
 			}
 		}
+		
+		/// <value>
+		/// Contiene los simbolos almacenados en la base de datos.
+		/// </value>
+		public List<MathSymbol> SymbolsContained
+		{
+			get
+			{
+				return database.SymbolsContained;
+			}
+		}
+	
 		
 #endregion Propiedades
 		
@@ -202,7 +221,7 @@ namespace MathTextLibrary.Databases
 		/// </returns>
 		public List<MathSymbol> Recognize(MathTextBitmap image)
 		{
-			return database.Recognize(image);
+			return database.Match(image);
 		}
 		
 		

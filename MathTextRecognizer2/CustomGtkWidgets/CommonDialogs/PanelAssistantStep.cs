@@ -52,6 +52,18 @@ namespace CustomGtkWidgets.CommonDialogs
 		}
 		
 		/// <value>
+		/// Contiene un valor que indica si hay errores de validacion.
+		/// </value>
+		public bool HasErrors
+		{
+			get
+			{
+				ComputeErrors();
+				return errors.Length > 0;
+			}
+		}
+		
+		/// <value>
 		/// El widget que muestra los controles del «paso» del 
 		/// asistente.
 		/// </value>
@@ -74,19 +86,15 @@ namespace CustomGtkWidgets.CommonDialogs
 			this.rootWidget = rootWidget; 
 		}
 		
+		/// <summary>
+		/// Calcula los errores del paso del asistente.
+		/// </summary>
+		protected abstract void ComputeErrors();
+		
 		#endregion Metodos protegidos
 		
 		#region Metodos publicos
 		
-		/// <summary>
-		/// Permite comprobar si los datos del paso del asistente son
-		/// completos o correctos.
-		/// </summary>
-		/// <returns>
-		/// <c>true</c> si los datos son correctos según el criterio definido.
-		/// <c>false</c> en caso contrario.
-		/// </returns>
-		public abstract bool HasErrors();	
 		
 			
 		

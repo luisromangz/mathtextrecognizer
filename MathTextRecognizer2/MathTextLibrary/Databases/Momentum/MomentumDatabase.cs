@@ -22,15 +22,45 @@ namespace MathTextLibrary.Databases.Momentum
 		{
 		}	
 		
+		/// <summary>
+		/// Aprende un simbolo en la base de datos.
+		/// </summary>
+		/// <param name="image">
+		/// La imagen que representa al simbolo.
+		/// </param>
+		/// <param name="symbol">
+		/// El simbolo.
+		/// </param>
 		public override void Learn(MathTextBitmap image, MathSymbol symbol)
 		{
 			
 		}
 		                          
-			
-		public override List<MathSymbol> Recognize (MathTextBitmap image)
+		/// <summary>
+		/// Este método intenta asignar a una imagen un simbolo segun los parametros
+		/// almacenados para la misma.
+		/// </summary>
+		/// <param name="image">
+		/// La imagen que a la que queremos asociar un simbolo.
+		/// </param>
+		/// <returns>
+		/// Una lista de simbolos cuyos parametros coinciden con los de la 
+		/// imagen.
+		/// </returns>
+		public override List<MathSymbol> Match (MathTextBitmap image)
 		{
 			return null;
 		}
+		
+		/// <value>
+		/// Contiene los simbolos almacenados en la base de datos.
+		/// </value>
+		public override List<MathSymbol> SymbolsContained {
+			get 
+			{ 
+				return null;
+			}
+		}
+
 	}
 }

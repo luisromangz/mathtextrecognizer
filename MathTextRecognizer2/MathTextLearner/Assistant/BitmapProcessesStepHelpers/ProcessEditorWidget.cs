@@ -7,7 +7,7 @@ using Gtk;
 
 using MathTextLibrary.BitmapProcesses;
 
-namespace MathTextLearner.Assistant.BitmapProcessHelpers
+namespace MathTextLearner.Assistant.BitmapProcessesStepHelpers
 {
 	/// <summary>
 	/// Este widget permite editar los valores de un parametro de un

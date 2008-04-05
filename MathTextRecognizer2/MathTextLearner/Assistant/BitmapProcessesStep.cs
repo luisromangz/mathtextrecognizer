@@ -9,7 +9,7 @@ using CustomGtkWidgets.ImageArea;
 using CustomGtkWidgets.CommonDialogs;
 
 using MathTextLearner.Config;
-using MathTextLearner.Assistant.BitmapProcessHelpers;
+using MathTextLearner.Assistant.BitmapProcessesStepHelpers;
 
 using MathTextLibrary.BitmapProcesses;
 using MathTextLibrary.Utils;
@@ -27,7 +27,7 @@ namespace MathTextLearner.Assistant
 #region Controles de Glade
 		
 		[Glade.WidgetAttribute]
-		private Frame bitmapProcessesStepFrame;
+		private VBox processesRootWidget;
 		
 		[Glade.WidgetAttribute]
 		private Button removeProcessBtn;		
@@ -85,12 +85,12 @@ namespace MathTextLearner.Assistant
 		{
 			Glade.XML gxml = new Glade.XML(null,
 			                               "databaseAssistant.glade",
-			                               "bitmapProcessesStepFrame",
+			                               "processesRootWidget",
 			                               null);
 				
 			gxml.Autoconnect(this);			
 			
-			SetRootWidget(bitmapProcessesStepFrame);
+			SetRootWidget(processesRootWidget);
 			
 			RetrieveBitmapProcessesTypes();
 			
@@ -102,18 +102,7 @@ namespace MathTextLearner.Assistant
 		
 #region Metodos públicos
 		
-		/// <summary>
-		/// Indica si hay errores de validación en el paso del asistente.
-		/// </summary>
-		/// <returns>
-		/// «true» si hay errores, «false» en caso contrario.
-		/// </returns>
-		public override bool HasErrors ()
-		{
-			errors = "";
-			
-			return errors.Length > 0;
-		}
+		
 		
 #endregion Metodos públicos
 		
@@ -567,6 +556,14 @@ namespace MathTextLearner.Assistant
 			return bd.Description;
 		}
 		
+		/// <summary>
+		/// Calcula los errores del paso del asistente.
+		/// </summary>
+		protected override void ComputeErrors ()
+		{
+			errors = "";
+		}
+
 		
 #endregion Metodos privados
 		

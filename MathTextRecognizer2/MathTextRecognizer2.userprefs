@@ -1,18 +1,17 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
-    <File name="MathTextLibrary/Databases/Characteristic/CharacteristicDatabase.cs" line="22" column="34" />
-    <File name="MathTextLibrary/Databases/DatabaseBase.cs" line="77" column="16" />
-    <File name="MathTextLibrary/Databases/Momentum/MomentumDatabase.cs" line="6" column="32" />
-    <File name="MathTextRecognizer/DatabaseManager/DatabaseFileInfo.cs" line="18" column="3" />
+    <File name="MathTextRecognizer/DatabaseManager/DatabaseManagerDialog.cs" line="149" column="4" />
+    <File name="MathTextRecognizer/DatabaseManager/DatabaseFileInfo.cs" line="70" column="64" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
       <Node expanded="True" selected="True">
+        <Node name="MathTextLearner" expanded="True" />
         <Node name="MathTextLibrary" expanded="True">
+          <Node name="Bitmap" expanded="True" />
           <Node name="Controllers" expanded="True" />
           <Node name="Databases" expanded="True">
             <Node name="Characteristic" expanded="True" />
-            <Node name="Momentum" expanded="True" />
           </Node>
         </Node>
         <Node name="MathTextRecognizer" expanded="True">
@@ -30,7 +29,7 @@
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer/DatabaseManager/DatabaseFileInfo.cs" />
+    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer/DatabaseManager/DatabaseManagerDialog.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>

@@ -32,6 +32,11 @@ namespace MathTextLearner.Assistant
 			this.AddStep(fileStep);
 			this.AddStep(processesStep);
 			
+			
+			foreach(PanelAssistantStep panel in Steps)
+			{
+				panel.StepWidget.SetSizeRequest(500,250);
+			}
 		}
 		
 #region Propiedades 

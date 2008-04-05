@@ -6,7 +6,7 @@ using Gtk;
 
 using MathTextLibrary.BitmapProcesses;
 
-namespace MathTextLearner.Assistant.BitmapProcessHelpers
+namespace MathTextLearner.Assistant.BitmapProcessesStepHelpers
 {
 	/// <summary>
 	/// Esta clase represnta los nodos de la vista de los procesados.

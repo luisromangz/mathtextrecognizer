@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.3 on Fri Mar 28 19:36:21 2008 -->
+<!--Generated with glade3 3.4.3 on Sat Apr  5 01:47:18 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="fileSelectionStep">
     <child>
-      <widget class="GtkFrame" id="fileSelectionStepFrame">
-        <property name="width_request">460</property>
-        <property name="height_request">256</property>
+      <widget class="GtkVBox" id="fileRootWidget">
         <property name="visible">True</property>
-        <property name="label_xalign">0</property>
-        <property name="shadow_type">GTK_SHADOW_NONE</property>
+        <child>
+          <widget class="GtkLabel" id="label3">
+            <property name="visible">True</property>
+            <property name="xalign">0</property>
+            <property name="xpad">5</property>
+            <property name="label" translatable="yes">Elija las imágenes que formarán parte de la base de datos que se va a crear</property>
+            <property name="wrap">True</property>
+            <property name="width_chars">64</property>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="padding">5</property>
+          </packing>
+        </child>
         <child>
           <widget class="GtkHBox" id="hbox3">
             <property name="visible">True</property>
@@ -176,18 +186,8 @@
               </packing>
             </child>
           </widget>
-        </child>
-        <child>
-          <widget class="GtkLabel" id="label3">
-            <property name="visible">True</property>
-            <property name="xalign">0</property>
-            <property name="ypad">6</property>
-            <property name="label" translatable="yes">Elija las imágenes que formarán parte de la base de datos que se va a crear</property>
-            <property name="wrap">True</property>
-            <property name="width_chars">64</property>
-          </widget>
           <packing>
-            <property name="type">label_item</property>
+            <property name="position">1</property>
           </packing>
         </child>
       </widget>
@@ -195,55 +195,38 @@
   </widget>
   <widget class="GtkWindow" id="databaseTypeStep">
     <child>
-      <widget class="GtkFrame" id="databaseTypeFrame">
-        <property name="width_request">460</property>
-        <property name="height_request">256</property>
+      <widget class="GtkVBox" id="typeRootWidget">
         <property name="visible">True</property>
-        <property name="label_xalign">0</property>
-        <property name="shadow_type">GTK_SHADOW_NONE</property>
-        <child>
-          <widget class="GtkFrame" id="frame1">
-            <property name="visible">True</property>
-            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-            <property name="label_xalign">0</property>
-            <property name="shadow_type">GTK_SHADOW_NONE</property>
-            <child>
-              <widget class="GtkAlignment" id="alignment7">
-                <property name="visible">True</property>
-                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                <property name="yalign">0</property>
-                <property name="yscale">0</property>
-                <child>
-                  <widget class="GtkVBox" id="optionsVB">
-                    <property name="visible">True</property>
-                    <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                  </widget>
-                </child>
-              </widget>
-            </child>
-            <child>
-              <widget class="GtkLabel" id="label9">
-                <property name="visible">True</property>
-                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
-                <property name="label" translatable="yes">Tipo:</property>
-                <property name="use_markup">True</property>
-              </widget>
-              <packing>
-                <property name="type">label_item</property>
-              </packing>
-            </child>
-          </widget>
-        </child>
         <child>
           <widget class="GtkLabel" id="label12">
             <property name="visible">True</property>
-            <property name="ypad">6</property>
+            <property name="xalign">0</property>
+            <property name="xpad">5</property>
             <property name="label" translatable="yes">Selecciona el tipo de base de datos que desea crear:</property>
             <property name="use_markup">True</property>
             <property name="width_chars">0</property>
           </widget>
           <packing>
-            <property name="type">label_item</property>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="padding">5</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkAlignment" id="alignment7">
+            <property name="visible">True</property>
+            <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+            <property name="yalign">0</property>
+            <property name="yscale">0</property>
+            <child>
+              <widget class="GtkVBox" id="optionsVB">
+                <property name="visible">True</property>
+                <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+              </widget>
+            </child>
+          </widget>
+          <packing>
+            <property name="position">1</property>
           </packing>
         </child>
       </widget>
@@ -251,12 +234,24 @@
   </widget>
   <widget class="GtkWindow" id="bitmapProcessesStep">
     <child>
-      <widget class="GtkFrame" id="bitmapProcessesStepFrame">
-        <property name="width_request">460</property>
-        <property name="height_request">256</property>
+      <widget class="GtkVBox" id="processesRootWidget">
         <property name="visible">True</property>
-        <property name="label_xalign">0</property>
-        <property name="shadow_type">GTK_SHADOW_NONE</property>
+        <child>
+          <widget class="GtkLabel" id="label14">
+            <property name="visible">True</property>
+            <property name="xalign">0</property>
+            <property name="xpad">5</property>
+            <property name="label">Aquí puede seleccionar que algoritmos y en que orden se aplicarán a las imágenes para aprender y reconocer en con esta base de datos.</property>
+            <property name="wrap">True</property>
+            <property name="wrap_mode">PANGO_WRAP_WORD_CHAR</property>
+            <property name="width_chars">70</property>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="padding">5</property>
+          </packing>
+        </child>
         <child>
           <widget class="GtkNotebook" id="processesNotebook">
             <property name="visible">True</property>
@@ -661,7 +656,7 @@
                         </child>
                       </widget>
                       <packing>
-                        <property name="position">126</property>
+                        <property name="position">145</property>
                       </packing>
                     </child>
                   </widget>
@@ -683,19 +678,8 @@
               </packing>
             </child>
           </widget>
-        </child>
-        <child>
-          <widget class="GtkLabel" id="label14">
-            <property name="visible">True</property>
-            <property name="xalign">0</property>
-            <property name="ypad">6</property>
-            <property name="label">Aquí puede seleccionar que algoritmos y en que orden se aplicarán a las imágenes para aprender y reconocer en con esta base de datos.</property>
-            <property name="wrap">True</property>
-            <property name="wrap_mode">PANGO_WRAP_WORD_CHAR</property>
-            <property name="width_chars">70</property>
-          </widget>
           <packing>
-            <property name="type">label_item</property>
+            <property name="position">1</property>
           </packing>
         </child>
       </widget>
@@ -723,6 +707,7 @@
               <widget class="GtkLabel" id="label5">
                 <property name="visible">True</property>
                 <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                <property name="xalign">0</property>
                 <property name="label" translatable="yes">Selecciona el tipo de procesado a añadir a la lista:</property>
               </widget>
               <packing>

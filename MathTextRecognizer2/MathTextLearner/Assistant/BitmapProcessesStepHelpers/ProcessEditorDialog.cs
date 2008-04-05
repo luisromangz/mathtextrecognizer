@@ -9,11 +9,10 @@ using Gtk;
 using CustomGtkWidgets.CommonDialogs;
 
 using MathTextLearner.Assistant;
-using MathTextLearner.Assistant.BitmapProcessHelpers;
 
 using MathTextLibrary.BitmapProcesses;
 
-namespace MathTextLearner.Assistant.BitmapProcessHelpers
+namespace MathTextLearner.Assistant.BitmapProcessesStepHelpers
 {
 	/// <summary>
 	/// Esta clase representa el diálogo encargado de editar las propiedades de

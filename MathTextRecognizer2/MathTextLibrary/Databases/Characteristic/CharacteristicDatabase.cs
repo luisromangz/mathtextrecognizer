@@ -36,9 +36,24 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// el que guardamos la informacion de caracteristicas.	
 		private CharacteristicNode rootNode;
 		
-		#endregion Atributos
+#endregion Atributos
+		
+#region Propiedades
+		/// <value>
+		/// Contiene los simbolos almacenados en la base de datos.
+		/// </value>
+		public override List<MathSymbol> SymbolsContained 
+		{
+			get
+			{
+				return this.rootNode.ChildrenSymbols;
+			}
+		}	
+
+		
+#endregion Propiedades
 				
-		#region Métodos públicos
+#region Métodos públicos
 		
 		/// <summary>
 		/// Constructor de <c>CharacteristicDatabase</c>. Crea una base de datos
@@ -120,7 +135,7 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// <returns>
 		/// Los simbolos que se puedieron asociar con la imagen.
 		/// </returns>
-		public override List<MathSymbol> Recognize(MathTextBitmap image)
+		public override List<MathSymbol> Match(MathTextBitmap image)
 		{
 			if(characteristics == null)
 				characteristics=CharacteristicFactory.CreateCharacteristicList();
@@ -188,9 +203,10 @@ namespace MathTextLibrary.Databases.Characteristic
 		
 		
 		
-		#endregion Métodos públicos
+#endregion Métodos públicos
 		
-		#region Métodos no públicos
+		
+#region Métodos no públicos
 		
 		/// <summary>
 		/// Calcula la distancia entre dos vectores, usando para ello el numero 
@@ -308,7 +324,7 @@ namespace MathTextLibrary.Databases.Characteristic
 			return res;
 		
 		}
-		#endregion Métodos no públicos
+#endregion Métodos no públicos
 		
 		/// <value>
 		/// Contiene el nodo raiz de la base de datos de caracteristicas.

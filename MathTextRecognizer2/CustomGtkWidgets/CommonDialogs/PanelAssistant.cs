@@ -169,13 +169,12 @@ namespace CustomGtkWidgets.CommonDialogs
 		
 		private void SetIndex(int idx)
 		{
-			if(idx > panelIdx 
-				&& (steps[panelIdx] as PanelAssistantStep).HasErrors())
+			if(idx > panelIdx && ((PanelAssistantStep)(steps[panelIdx])).HasErrors)
 			{
 				OkDialog.Show(
 					panelAssistant,
 					MessageType.Warning,
-					"Antes de continuar, debe tener en cuenta que:\n\n{0}",
+					"Para continuar, soluciona los siguientes problemas:\n\n{0}",
 					(steps[panelIdx] as PanelAssistantStep).Errors);
 					
 			}
