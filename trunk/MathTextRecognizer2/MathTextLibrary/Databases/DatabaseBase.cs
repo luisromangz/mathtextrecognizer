@@ -67,7 +67,15 @@ namespace MathTextLibrary.Databases
 		/// Una lista con todos los simbolos que coincidan con los parametros
 		/// asociados a la imagen.
 		/// </returns>
-		public abstract List<MathSymbol> Recognize(MathTextBitmap image);
+		public abstract List<MathSymbol> Match(MathTextBitmap image);
+		
+		/// <value>
+		/// Contiene los simbolos almacenados en la base de datos.
+		/// </value>
+		public abstract List<MathSymbol> SymbolsContained
+		{
+			get;
+		}
 		
 #endregion Metodos publicos
 		
@@ -100,6 +108,10 @@ namespace MathTextLibrary.Databases
 			}		
 		}
 		
+		/// <summary>
+		/// Metodo para lanzar facilmente el evento que provocado al completarse
+		/// el aprendizaje de un nuevo simbolo.
+		/// </summary>
 		protected void OnSymbolLearnedInvoke()
 		{
 			if(SymbolLearned != null)

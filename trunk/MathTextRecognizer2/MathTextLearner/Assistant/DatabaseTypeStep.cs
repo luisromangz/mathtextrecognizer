@@ -23,10 +23,10 @@ namespace MathTextLearner.Assistant
 #region Controles de Glade
 		
 		[Glade.WidgetAttribute]
-		private Frame databaseTypeFrame;		
+		private VBox optionsVB;
 		
 		[Glade.WidgetAttribute]
-		private VBox optionsVB;
+		private VBox typeRootWidget;
 				
 #endregion Controles de Glade
 		
@@ -46,11 +46,11 @@ namespace MathTextLearner.Assistant
 			: base(assistant)
 		{
 			Glade.XML gxml =
-				new Glade.XML(null,"databaseAssistant.glade","databaseTypeFrame",null);
+				new Glade.XML(null,"databaseAssistant.glade","typeRootWidget",null);
 				
 			gxml.Autoconnect(this);
 			
-			SetRootWidget(databaseTypeFrame);
+			SetRootWidget(typeRootWidget);
 			
 			databaseTypeMap = new Dictionary<Gtk.RadioButton,System.Type>();
 			
@@ -78,21 +78,7 @@ namespace MathTextLearner.Assistant
 		
 #endregion Propiedades
 		
-#region Metodos públicos
-		
-		public override bool HasErrors ()
-		{
-			errors = "";			
-			
-			if(selectedType == null)
-			{
-				errors += "· Debe seleccionar el tipo de la base de datos a crear.";
-			}
-			
-			return errors.Length > 0;
-		}
-		
-#endregion Metodos públicos
+
 		
 #region Metodos privados
 		
@@ -108,9 +94,7 @@ namespace MathTextLearner.Assistant
 			foreach(Type t in databaseTypes)
 			{
 				RadioButton databaseRadio =  
-					new RadioButton(
-					                group,
-					                RetrieveDescription(t));
+					new RadioButton(group, RetrieveDescription(t));
 				
 				databaseRadio.Clicked += OnDatabaseTypeSelected; 
 
@@ -170,6 +154,19 @@ namespace MathTextLearner.Assistant
 			return info.Description;
 		}
 		
+		/// <summary>
+		/// Calcula los errores del paso del asistente.
+		/// </summary>
+		protected override void ComputeErrors ()
+		{
+			errors = "";			
+				
+			if(selectedType == null)
+			{
+				errors += "· Debes seleccionar el tipo de la base de datos a crear.";
+			}
+		}
+
 		 
 #endregion Metodos privados
 	}

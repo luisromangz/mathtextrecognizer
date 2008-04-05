@@ -7,7 +7,7 @@ using Gtk;
 
 using CustomGtkWidgets.CommonDialogs;
 
-namespace MathTextLearner.Assistant.BitmapProcessHelpers
+namespace MathTextLearner.Assistant.BitmapProcessesStepHelpers
 {
 	/// <summary>
 	/// Esta clase implementa el panel que permite seleccionar
