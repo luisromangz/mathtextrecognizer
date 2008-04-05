@@ -196,17 +196,18 @@ namespace MathTextLearner.Assistant
 			if(FolderOpenDialog.Show(this.Assistant.Window, out folderPath)
 				== ResponseType.Ok)
 			{
-				string [] files = Directory.GetFiles(folderPath);
 				
 				int added = 0;
+								
+				string []  extensions = 
+				     new string []{"*.jpg", "*.JPG","*.png","*.PNG"};
 				
-				// Recorremos los ficheros que hay en la carpeta
-				foreach(string file in files)
+				List<string> files = new List<string>();
+				
+				foreach (string extension in extensions)
 				{
-					// Lo ponemos en minuscula para facilitar la comparacion.
-					string ext = Path.GetExtension(file).ToLower();
-					if(	ext == ".png"
-						|| ext == ".jpg")
+					foreach (string file in Directory.GetFiles(folderPath, 
+					                                           extension))
 					{
 						// Si es png o jpg intentamos añadirlo.
 						try
@@ -220,7 +221,7 @@ namespace MathTextLearner.Assistant
 							// hacia honor a su contenido.
 						}
 					}
-				} 
+				}
 				
 				if(added > 0)
 				{
