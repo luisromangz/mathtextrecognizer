@@ -77,10 +77,10 @@ namespace MathTextLibrary.BitmapProcesses
 		/// </summary>
 		/// <param name="image">La imagen a procesar.</param>
 		/// <returns>La imagen con las filas y columnas añadidas.</returns>
-		private float[,] CreateAuxImage(float[,] image)
+		private FloatBitmap CreateAuxImage(FloatBitmap image)
 		{
 			// La nueva imagen tiene dos filas y dos columnas mas que la original
-			float[,] newImage=new float[width,height];
+			FloatBitmap newImage=new FloatBitmap(width,height);
 
 			float brightness;
 			for(int i = 0; i < width - 2; i++)
@@ -116,16 +116,16 @@ namespace MathTextLibrary.BitmapProcesses
 		/// <returns>
 		/// La imagen adelgazada.
 		/// </returns>
-		public override float[,] Apply(float[,] image)
+		public override FloatBitmap Apply(FloatBitmap image)
 		{
-			width = image.GetLength(0) + 2;
-			height = image.GetLength(1) + 2;
+			width = image.Width + 2;
+			height = image.Height + 2;
 
-			float[,] newImage = CreateAuxImage(image);
+			FloatBitmap newImage = CreateAuxImage(image);
 			
 			ZhangSuenHoltThinning(newImage);
 			
-			float [,] res = new float[width - 2 , height -2];
+			FloatBitmap res = new FloatBitmap(width - 2 , height -2);
 
 			
 			for(int i=0;i<width-2; i++)
@@ -145,15 +145,13 @@ namespace MathTextLibrary.BitmapProcesses
 		/// <param name="image">
 		/// La imagen a adelgazar.
 		/// </param>
-		private void ZhangSuenHoltThinning(float[,] image)
+		private void ZhangSuenHoltThinning(FloatBitmap image)
 		{
 			int i,j;
 			bool again=true;
 
-			float[,] tmp=(float[,])image.Clone();
-			if(tmp==image)
-				throw new Exception("LA CLONACION DE ARRAYS SOLO COPIA LA REFERENCIA!");
-
+			FloatBitmap tmp= new FloatBitmap(image);
+			
 			/* BLACK = 1, WHITE = 0. */
 			for(i=0;i<width;i++)
 			{
@@ -225,7 +223,7 @@ namespace MathTextLibrary.BitmapProcesses
 		/// <param name="image">La imagen sobre la que se efectua la eliminacion.</param>
 		/// <param name="tmp">Una imagen auxiliar para el proceso.</param>
 		/// <param name="direction">El sentido en que se aplica el proceso.</param>
-		private void Stair(float[,] image, float[,] tmp, int direction)
+		private void Stair(FloatBitmap image, FloatBitmap tmp, int direction)
 		{
 			int i,j;
 			bool N, S, E, W, NE, NW, SE, SW, C;
@@ -269,7 +267,7 @@ namespace MathTextLibrary.BitmapProcesses
 		/// </summary>
 		/// <param name="image">La imagen que procesamos.</param>
 		/// <param name="tmp">Una imagen auxiliar para el proceso.</param>
-		private void DeleteMarkedPixels(float[,] image, float[,] tmp)
+		private void DeleteMarkedPixels(FloatBitmap image, FloatBitmap tmp)
 		{
 			int i,j;
 			
@@ -310,7 +308,7 @@ namespace MathTextLibrary.BitmapProcesses
 		/// <param name="r">La coordenada Y del pixel.</param>
 		/// <param name="c">La coordenada X del pixel.</param>
 		/// <returns>Cierto si esta en el borde, falso e.o.c.</returns>
-		private bool Edge (float[,] image, int r, int c)
+		private bool Edge (FloatBitmap image, int r, int c)
 		{
 			if (image[r,c] == 0)
 				return false;

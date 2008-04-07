@@ -14,7 +14,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		{			
 		}
 
-		public static int BlackNeighbours(float[,] image,
+		public static int BlackNeighbours(FloatBitmap image,
 		                                  int x, int y, int width, int height)
 		{
 			int res=0;

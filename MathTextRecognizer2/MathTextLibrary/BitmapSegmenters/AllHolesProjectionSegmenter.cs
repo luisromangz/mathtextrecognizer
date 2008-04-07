@@ -14,10 +14,10 @@ namespace MathTextLibrary.BitmapSegmenters{
 	/// no eliminando ningun hueco y por tanto obteniendo por separado todos las 
 	/// partes separadas por huecos encontradas.
 	/// </summary>
-	public class AllHolesProjectionBitmapSegmenter: ProjectionBitmapSegmenter
+	public class AllHolesProjectionSegmenter: ProjectionSegmenter
 	{
 		
-		public AllHolesProjectionBitmapSegmenter(ProjectionMode mode):base(mode)
+		public AllHolesProjectionSegmenter(ProjectionMode mode):base(mode)
 		{
 		
 		}

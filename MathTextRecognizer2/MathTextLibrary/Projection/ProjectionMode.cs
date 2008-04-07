@@ -16,11 +16,6 @@ namespace MathTextLibrary.Projection
 		/// <summary>
 		/// La proyeccion se realiza sobre el eje Y.
 		/// </summary>
-		Vertical,
-		
-		/// <summary>
-		/// No se realiza proyeccion.
-		/// </summary>
-		None
+		Vertical
 	}
 }

@@ -31,7 +31,7 @@ namespace MathTextLibrary.BitmapProcesses
 		/// <returns>
 		/// Una matriz bisimensional con la imagen recuadrada.
 		/// </returns>
-		public override float[,] Apply(float [,] image)
+		public override FloatBitmap Apply(FloatBitmap image)
 		{
 			// Coordenadas del menor rectangulo que contiene la imagen
 			int x1, x2, y1, y2;
@@ -51,7 +51,7 @@ namespace MathTextLibrary.BitmapProcesses
 			int height= y2 - y1 + 1;
 			int width= x2 - x1 + 1;
 
-			float [,] framedImage=null;
+			FloatBitmap framedImage=null;
 
 			if(height >= width) 
 			{
@@ -62,9 +62,9 @@ namespace MathTextLibrary.BitmapProcesses
 			else 
 			{
 				relleno = (width - height);
-				framedImage = CreateNewImageRows(	image, relleno, 
-													y1, x1,
-													height, width);
+				framedImage = CreateNewImageRows(image, relleno, 
+				                                 y1, x1,
+				                                 height, width);
 			}
 
 			return framedImage;
@@ -82,7 +82,7 @@ namespace MathTextLibrary.BitmapProcesses
 		/// <returns> 
 		/// Una matriz bidimensional con la imagen con las columnas añadidas.
 		/// </returns>
-		private float [,] CreateNewImageColumns(float[,] image, int pad, int y1,
+		private FloatBitmap CreateNewImageColumns(FloatBitmap image, int pad, int y1,
 		                                          int x1, int height, int width)
 		{
 			// La nueva altura es la antigua mas dos, porque a�dimos una
@@ -91,7 +91,7 @@ namespace MathTextLibrary.BitmapProcesses
 			int newWidth=height+2;
 			int newHeight=height+2;			
 			
-			float[,] newImage = new float[newWidth,newHeight];
+			FloatBitmap newImage = new FloatBitmap(newWidth,newHeight);
 			
 			for(int i=0;i<newWidth;i++)
 			{
@@ -121,14 +121,18 @@ namespace MathTextLibrary.BitmapProcesses
 		/// Una matriz bidemiensional con la imagen la que queremos añadir filas.
 		/// </param>
 		/// <param name="pad">El ancho del relleno.</param>
-		/// <param name="y1">La coordenada Y de la esquina superior izquierda del contenido.</param>
-		/// <param name="x1">La coordenada X de la esquina superior izquierda del contenido.</param>
+		/// <param name="y1">
+		/// La coordenada Y de la esquina superior izquierda del contenido.
+		/// </param>
+		/// <param name="x1">
+		/// La coordenada X de la esquina superior izquierda del contenido.
+		/// </param>
 		/// <param name="height">La altura del contenido.</param>
 		/// <param name="width">La anchura del contenido.</param>
 		/// <returns>
 		/// Una matriz bidimensional con la imagen con las filas añadidas.
 		/// </returns>
-		private float [,] CreateNewImageRows(float[,] image, int pad, int y1,
+		private FloatBitmap CreateNewImageRows(FloatBitmap image, int pad, int y1,
 			int x1, int height, int width)
 		{
 			int newWidth=width+2;
@@ -136,7 +140,7 @@ namespace MathTextLibrary.BitmapProcesses
 			
 			// La nueva altura es la antigua mas dos, porque añadimos una
 			// fila en blanco como borde la nueva anchura es igual a la altura
-			float[,] newImage = new float[newWidth,newHeight];
+			FloatBitmap newImage = new FloatBitmap(newWidth,newHeight);
 			
 			for(int i=0; i<newWidth; i++)
 			{

@@ -29,10 +29,10 @@ namespace MathTextLibrary.BitmapProcesses
 		/// <returns>
 		/// La imagen binarizada.
 		/// </returns>
-		public override float[,] Apply(float [,] image)
+		public override FloatBitmap Apply(FloatBitmap image)
 		{
-			int nrows=image.GetLength(0);
-			int ncols=image.GetLength(1);
+			int nrows=image.Width;
+			int ncols=image.Height;
 
 			int i,j,k,  t= -1;
 			int [] hist =new int[256];
@@ -88,7 +88,7 @@ namespace MathTextLibrary.BitmapProcesses
 				}
 			}	
 		
-			float [,] res = new float[nrows, ncols];
+			FloatBitmap res = new FloatBitmap(nrows, ncols);
 			for (i=0; i<nrows; i++)
 			{
 				for (j=0; j<ncols; j++)

@@ -2,7 +2,7 @@ using System;
 
 using Gdk;
 
-using MathTextLibrary.Utils;
+using MathTextLibrary.Bitmap;
 
 namespace MathTextLibrary.BitmapProcesses
 {
@@ -77,13 +77,13 @@ namespace MathTextLibrary.BitmapProcesses
 		/// </summary>
 		/// <param name="image">La imagen que queremos escalar.</param>
 		/// <returns>La imagen escalada al tamaño establecido.</returns>
-		public override float[,] Apply(float[,] image) 
+		public override FloatBitmap Apply(FloatBitmap image) 
 		{
-			Pixbuf pb = ImageUtils.CreatePixbufFromMatrix(image);
+			Pixbuf pb = image.CreatePixbuf();
 				
 			pb = pb.ScaleSimple(normalizedSize, normalizedSize, InterpType.Bilinear);
 			
-			return ImageUtils.CreateMatrixFromPixbuf(pb);
+			return FloatBitmap.CreateFromPixbuf(pb);
 		}
 		
 		#endregion Métodos publicos

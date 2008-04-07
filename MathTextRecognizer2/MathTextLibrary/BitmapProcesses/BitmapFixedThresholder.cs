@@ -44,12 +44,12 @@ namespace MathTextLibrary.BitmapProcesses
 		/// <returns>
 		/// La imagen binarizada.
 		/// </returns>		
-		public override float[,] Apply(float [,] image)
+		public override FloatBitmap Apply(FloatBitmap image)
 		{
-			int nrows=image.GetLength(0);
-			int ncols=image.GetLength(1);
+			int nrows=image.Width;
+			int ncols=image.Height;
 			
-			float [,] res = new float[nrows, ncols];
+			FloatBitmap res = new FloatBitmap(nrows, ncols);
 			
 			float fthreshold = threshold / 255f;
 

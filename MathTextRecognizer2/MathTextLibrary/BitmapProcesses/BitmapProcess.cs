@@ -1,6 +1,8 @@
 
 using System;
 
+using MathTextLibrary.Bitmap;
+
 namespace MathTextLibrary.BitmapProcesses
 {
 	
@@ -16,7 +18,7 @@ namespace MathTextLibrary.BitmapProcesses
 		/// <returns>
 		/// La imagen con el procesamiento aplicado.
 		/// </returns>
-		public abstract float[,] Apply(float[,] image);	
+		public abstract FloatBitmap Apply(FloatBitmap image);	
 		
 		/// <value>
 		/// Permite recuperar la cadena formateada con los paremetros del

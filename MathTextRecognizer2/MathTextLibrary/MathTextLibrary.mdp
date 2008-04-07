@@ -22,12 +22,11 @@
     <File name="BitmapProcesses/BitmapTwoPeaksThresholder.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapProcesses/BitmapZhangSuenHoltThinner.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapProcesses/BitmapZhangSuenStentifordHoltThinner.cs" subtype="Code" buildaction="Compile" />
-    <File name="BitmapSegmenters/AllHolesProjectionBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
-    <File name="BitmapSegmenters/DifferentialProjectionBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapSegmenters/DifferentialProjectionSegmenter.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapSegmenters/IBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
-    <File name="BitmapSegmenters/MostFrequentHoleProjectionBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
-    <File name="BitmapSegmenters/ProjectionBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
-    <File name="BitmapSegmenters/TwoHolesBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapSegmenters/MostFrequentHoleProjectionSegmenter.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapSegmenters/ProjectionSegmenter.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapSegmenters/TwoHolesSegmenter.cs" subtype="Code" buildaction="Compile" />
     <File name="Controllers/ControllerEvents.cs" subtype="Code" buildaction="Compile" />
     <File name="Projection/Hole.cs" subtype="Code" buildaction="Compile" />
     <File name="Projection/HorizontalBitmapProjection.cs" subtype="Code" buildaction="Compile" />
@@ -99,6 +98,13 @@
     <File name="Databases/DatabaseTypeInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Controllers/ControllerStepMode.cs" subtype="Code" buildaction="Compile" />
     <File name="Output" subtype="Directory" buildaction="Compile" />
+    <File name="BitmapSegmenters/AllHolesProjectionSegmenter.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapSegmenters/ColumnsProjectionSegmenter.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapSegmenters/RowsProjectionSegmenter.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapSegmenters/WaterfallSegmenter.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapSegmenters/WaterfallSegmenterMode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Bitmap/FloatBitmap.cs" subtype="Code" buildaction="Compile" />
+    <File name="Tests/BitmapTests.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

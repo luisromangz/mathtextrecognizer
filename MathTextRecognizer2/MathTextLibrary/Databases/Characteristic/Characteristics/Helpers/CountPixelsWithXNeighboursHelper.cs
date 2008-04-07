@@ -25,9 +25,9 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		{
 			int count=0;
 			
-			float[,] im=image.ProcessedImage;
-			int sizeR = im.GetLength(0);
-			int sizeC = im.GetLength(1);
+			FloatBitmap im=image.ProcessedImage;
+			int sizeR = im.Width;
+			int sizeC = im.Height;
 
 			for(int i=0;i<sizeR;i++)
 				for(int j=0;j<sizeC;j++)
@@ -50,9 +50,9 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		{
 			int count=0;
 			
-			float[,] im=image.ProcessedImage;
-			int sizeR=im.GetLength(0);
-			int sizeC = im.GetLength(1);
+			FloatBitmap im=image.ProcessedImage;
+			int sizeR=im.Width;
+			int sizeC = im.Height;
 
 			for(int i=0;i<sizeR;i++)
 				for(int j=0;j<sizeC;j++)

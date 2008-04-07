@@ -14,7 +14,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 	/// de todos los segmentadores de imagenes que usan la proyeccion de la 
 	/// misma para descomponerla en partes mas pequeñas.
 	/// </summary>
-	public abstract class ProjectionBitmapSegmenter : IBitmapSegmenter
+	public abstract class ProjectionSegmenter : IBitmapSegmenter
 	{
 		
 		
@@ -24,7 +24,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 		/// Constructor de la clase <code>ProjectionBitmapSegmenter</code>.
 		/// </summary>
 		/// <param name="mode">El modo que se usara para obtener la proyeccion (horizontal,vertical).</param>
-		public ProjectionBitmapSegmenter(ProjectionMode mode)
+		public ProjectionSegmenter(ProjectionMode mode)
 		{
 			this.mode=mode;		
 		}
@@ -46,12 +46,10 @@ namespace MathTextLibrary.BitmapSegmenters{
 			//Creamos la proyeccion
 			BitmapProjection proj=BitmapProjection.CreateProjection(mode,image);
 			List<Hole> holes=proj.Holes;
-			//Buscamos el maximo hueco
-			
-			
+					
 			//Aqui decidimos a partir de que tamao de hueco vamos a cortar la imagen			
 						
-			int threshold=GetImageCutThreshold(holes);	
+			int threshold = GetImageCutThreshold(holes);	
 			
 			//Eliminamos los huecos que tengan menor tamaño que el umbral
 			int i=1;
@@ -135,7 +133,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 				
 				if(mode==ProjectionMode.Horizontal)
 				{
-					newBitmap=new MathTextBitmap(image.SubImage(start,
+					newBitmap=new MathTextBitmap(image.FloatImage.SubImage(start,
 					                                            edge1,
 					                                            size,
 					                                            edge2-edge1+1),
@@ -144,7 +142,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 				}
 				else
 				{
-					newBitmap=new MathTextBitmap(image.SubImage(edge1,
+					newBitmap=new MathTextBitmap(image.FloatImage.SubImage(edge1,
 					                                            start,
 					                                            edge2-edge1+1,
 					                                            size),

@@ -26,7 +26,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <param name="y2">Maxima coordenada vertical</param>
 		public static void BoxImage(MathTextBitmap image, out int x1, out int y1, out int x2, out int y2)
 		{
-			float[,] im=image.ProcessedImage;
+			FloatBitmap im = image.ProcessedImage;
 			
 			BoxImage(im,out x1,out y1,out x2,out y2);
 		}
@@ -41,7 +41,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <param name="y1">Minima coordenada vertical</param>
 		/// <param name="x2">Maxima coordenada horizontal</param>
 		/// <param name="y2">Maxima coordenada vertical</param>
-		public static void BoxImage(float[,] image, out int x1, out int y1, out int x2, out int y2)
+		public static void BoxImage(FloatBitmap image, out int x1, out int y1, out int x2, out int y2)
 		{
 			x1 = FindLeft(image);
 			y1 = FindTop(image);
@@ -58,10 +58,10 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// contiene los pixeles negros de la imagen</returns>
 		/// <exception "System.ApplicationException">Lanzada si no se encuentra
 		/// ningun pixel negro en la imagen</exception>
-		private static int FindTop(float [,] image) 
+		private static int FindTop(FloatBitmap image) 
 		{
-			int width=image.GetUpperBound(0)+1;
-			int height=image.GetUpperBound(1)+1;
+			int width=image.Width;
+			int height=image.Height;
 			
 			for(int i=0;i<height;i++)
 			{
@@ -86,10 +86,10 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// contiene los pixeles negros de la imagen</returns>
 		/// <exception "System.ApplicationException">Lanzada si no se encuentra
 		/// ningun pixel negro en la imagen</exception>
-		private static int FindBottom(float [,] image) 
+		private static int FindBottom(FloatBitmap image) 
 		{
-			int width=image.GetUpperBound(0)+1;
-			int height=image.GetUpperBound(1)+1;
+			int width=image.Width;
+			int height=image.Height;
 			
 			for(int i=height-1;i>=0;i--)
 			{
@@ -113,10 +113,10 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// contiene los pixeles negros de la imagen</returns>
 		/// <exception "System.ApplicationException">Lanzada si no se encuentra
 		/// ningun pixel negro en la imagen</exception>
-		private static int FindLeft(float [,] image) 
+		private static int FindLeft(FloatBitmap image) 
 		{
-			int width=image.GetUpperBound(0)+1;
-			int height=image.GetUpperBound(1)+1;
+			int width=image.Width;
+			int height=image.Height;
 
 			for(int i=0;i<width;i++)
 			{
@@ -140,10 +140,10 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// contiene los pixeles negros de la imagen</returns>
 		/// <exception "System.ApplicationException">Lanzada si no se encuentra
 		/// ningun pixel negro en la imagen</exception>
-		private static int FindRight(float [,] image) 
+		private static int FindRight(FloatBitmap image) 
 		{
-			int width=image.GetUpperBound(0)+1;
-			int height=image.GetUpperBound(1)+1;
+			int width=image.Width;
+			int height=image.Height;
 
 			for(int i=width-1;i>=0;i--)
 			{
