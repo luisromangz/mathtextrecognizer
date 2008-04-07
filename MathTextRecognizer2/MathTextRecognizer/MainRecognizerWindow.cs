@@ -213,14 +213,14 @@ namespace MathTextRecognizer
 			frameNodeProcessed.Add(imageAreaProcessed);
 			
 			// Ponemos iconos personalizados en los botones
-			menuLoadImage.Image = ImageResources.LoadIcon("insert-image16");
-			toolLoadImage.IconWidget = ImageResources.LoadIcon("insert-image22");
+			menuLoadImage.Image = ImageResources.LoadImage("insert-image16");
+			toolLoadImage.IconWidget = ImageResources.LoadImage("insert-image22");
 			
-			menuOpenDatabaseManager.Image = ImageResources.LoadIcon("database16");
-			toolDatabase.IconWidget = ImageResources.LoadIcon("database22");
+			menuOpenDatabaseManager.Image = ImageResources.LoadImage("database16");
+			toolDatabase.IconWidget = ImageResources.LoadImage("database22");
 			
-			toolNewSession.IconWidget = ImageResources.LoadIcon("window-new22");
-			menuNewSession.Image = ImageResources.LoadIcon("window-new16");
+			toolNewSession.IconWidget = ImageResources.LoadImage("window-new22");
+			menuNewSession.Image = ImageResources.LoadImage("window-new16");
 			
 			// Creamos el cuadro de registro.
 			logView = new LogView();
