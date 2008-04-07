@@ -29,7 +29,7 @@ namespace MathTextLibrary
 			database.RootNode = new CharacteristicNode();
 			
 			try {
-				database.RootNode.AddSymbol(new MathSymbol("hola",MathSymbolType.Operator));
+				database.RootNode.AddSymbol(new MathSymbol("hola"));
 			}
 			catch(DuplicateSymbolException e)
 			{
@@ -40,7 +40,7 @@ namespace MathTextLibrary
 			bool exception=false;
 			
 			try {
-				database.RootNode.AddSymbol(new MathSymbol("hola",MathSymbolType.Operator));
+				database.RootNode.AddSymbol(new MathSymbol("hola"));
 			}
 			catch(DuplicateSymbolException e)
 			{

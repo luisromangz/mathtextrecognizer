@@ -227,7 +227,7 @@ namespace MathTextRecognizer.Controllers
 			bitmap.Symbol=associatedSymbol;	
 			
 			//Si no hemos reconocido nada, pues intentaremos segmentar el caracter.
-			if(associatedSymbol.SymbolType == MathSymbolType.NotRecognized)
+			if(associatedSymbol == null)
 			{			
 				OnMessageLogSent("La imagen no pudo ser reconocida como un "
 				                 + "simbolo por la base de datos");
@@ -274,7 +274,7 @@ namespace MathTextRecognizer.Controllers
 			if(symbols.Count == 0)
 			{
 				//TODO Aprender caracteres no reconocidos
-				return MathSymbol.NullSymbol;
+				return null;
 			}
 			else if(symbols.Count==1)
 			{

@@ -79,9 +79,6 @@ namespace MathTextLearner
 		private HBox nextButtonsHB;
 		
 		[WidgetAttribute]
-		private ComboBox comboSymbolType;
-		
-		[WidgetAttribute]
 		private Entry entrySymbol;
 		
 		[WidgetAttribute]
@@ -183,7 +180,6 @@ namespace MathTextLearner
 			nextButtonsHB.Sensitive = false;
 			toolbar.Sensitive = true;
 			entrySymbol.Text = "";
-			comboSymbolType.Active = -1;
 			menuOpen.Sensitive = true;			
 			menuSaveAs.Sensitive = true;
 			menuDatabase.Sensitive = true;
@@ -376,27 +372,6 @@ namespace MathTextLearner
 			else
 			{
 				symbol.Text=entrySymbol.Text.Trim();
-			}			
-			
-			switch(comboSymbolType.Active){
-				case(0):
-					symbol.SymbolType=MathSymbolType.Identifier;
-					break;
-				case(1):
-					symbol.SymbolType=MathSymbolType.Number;
-					break;
-				case(2):
-					symbol.SymbolType=MathSymbolType.Operator;
-					break;
-				case(3):
-					symbol.SymbolType=MathSymbolType.LeftDelimiter;
-					break;
-				case(4):
-					symbol.SymbolType=MathSymbolType.RightDelimiter;
-					break;
-				default:					
-					errorMsg+=".- El tipo del símbolo no es correcto.\n";		
-					break;
 			}
 			
 			if(errorMsg=="")
@@ -842,8 +817,6 @@ namespace MathTextLearner
 			nextButtonsHB.Sensitive =false;
 			
 			entrySymbol.Text = "";
-			comboSymbolType.Active = -1;
-			
 		}
 		
 		/// <summary>

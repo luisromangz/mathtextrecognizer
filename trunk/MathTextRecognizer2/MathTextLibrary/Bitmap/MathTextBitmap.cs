@@ -192,8 +192,6 @@ namespace MathTextLibrary.Bitmap
 			}
 		}
 		
-		
-		
 		/// <value>
 		/// Contiene el simbolo asociado a la imagen.
 		/// </value>
@@ -210,11 +208,8 @@ namespace MathTextLibrary.Bitmap
 			}
 			set
 			{
-				symbol=value;
-				if(symbol.SymbolType!=MathSymbolType.NotRecognized)
-				{
-					OnSymbolChangedLauncher();
-				}
+				symbol=value;				
+				OnSymbolChangedLauncher();
 			}
 		}
 		
