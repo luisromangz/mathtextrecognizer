@@ -260,9 +260,9 @@ namespace MathTextLearner
 			imagesStore = new ListStore(typeof(Gdk.Pixbuf), typeof(Gdk.Pixbuf)); 
 			imagesIV.Model = imagesStore;
 			
-			toolNewDatabase.IconWidget =ImageResources.LoadIcon("database-new22");
+			toolNewDatabase.IconWidget =ImageResources.LoadImage("database-new22");
 			
-			menuDatabase.Image =ImageResources.LoadIcon("database-new16");
+			menuDatabase.Image =ImageResources.LoadImage("database-new16");
 				
 			mainWindow.ShowAll();			
 		}		

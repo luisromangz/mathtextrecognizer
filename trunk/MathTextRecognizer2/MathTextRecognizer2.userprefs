@@ -5,24 +5,30 @@
     <File name="CustomGtkWidgets/ImageResources.cs" line="32" column="24" />
     <File name="MathTextRecognizer/DatabaseManager/DatabaseManagerDialog.cs" line="261" column="73" />
     <File name="MathTextLearner/Assistant/NewDatabaseAssistant.cs" line="7" column="24" />
+    <File name="CustomGtkWidgets/CommonDialogs/FolderOpenDialog.cs" line="55" column="23" />
+    <File name="MathTextLearner/Assistant/FileSelectionStep.cs" line="203" column="10" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
-      <Node expanded="True">
-        <Node name="MathTextRecognizer" expanded="True" selected="True" />
+      <Node expanded="True" selected="True">
+        <Node name="CustomGtkWidgets" expanded="True">
+          <Node name="References" expanded="True" />
+          <Node name="CommonDialogs" expanded="True" />
+        </Node>
+        <Node name="MathTextLearner" expanded="True">
+          <Node name="Assistant" expanded="True" />
+        </Node>
       </Node>
     </ViewMemento>
     <ViewMemento id="ClassPad">
-      <Node expanded="True" selected="True">
-        <Node name="MathTextLearner" expanded="True" />
-      </Node>
+      <Node expanded="True" selected="True" />
     </ViewMemento>
     <ViewMemento id="MonoDevelop.NUnit.TestPad">
       <Node expanded="True" />
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextLearner/Assistant/NewDatabaseAssistant.cs" />
+    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextLearner/Assistant/FileSelectionStep.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>

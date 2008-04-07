@@ -21,7 +21,7 @@ namespace CustomGtkWidgets
 		/// <returns>
 		/// An <c>Image</c> GTK widget.
 		/// </returns>
-		public static Gtk.Image LoadIcon(string resource)
+		public static Gtk.Image LoadImage(string resource)
 		{
 			
 			return new Gtk.Image(Pixbuf.LoadFromResource(resource+".png"));
