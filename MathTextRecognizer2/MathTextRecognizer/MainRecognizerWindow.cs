@@ -6,6 +6,7 @@
  */
  
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Diagnostics;
 using System.Threading;
@@ -21,6 +22,7 @@ using CustomGtkWidgets.CommonDialogs;
 
 using MathTextLibrary;
 using MathTextLibrary.Bitmap;
+using MathTextLibrary.BitmapSegmenters;
 using MathTextLibrary.Symbol;
 using MathTextLibrary.Controllers;
 using MathTextLibrary.Databases.Characteristic.Characteristics;
@@ -136,7 +138,10 @@ namespace MathTextRecognizer
 		public static void Main(string[] args)
 		{			
 			Application.Init();
-			new MainRecognizerWindow();			
+			new MainRecognizerWindow();
+			
+			
+			
 			Application.Run();
 		}
 		
@@ -160,6 +165,26 @@ namespace MathTextRecognizer
 			// bases de datos.			
 			databaseManagerDialog.DatabaseFilesInfo = 
 				Config.RecognizerConfig.Instance.DatabaseFilesInfo;
+		
+			
+			
+			Pixbuf p = new Pixbuf("/home/luis/programacion/pfc/pruebas/waterfall/raiz.png");
+			MathTextBitmap bitmap = new MathTextBitmap(p);
+			
+			WaterfallSegmenter segmenter = 
+				new WaterfallSegmenter(WaterfallSegmenterMode.RightToLeft);
+			
+			List<MathTextBitmap> bitmaps = segmenter.Segment(bitmap);
+			
+			int i = 0;
+			
+			Console.WriteLine("meh {0}",bitmaps.Count);
+			foreach (MathTextBitmap b in bitmaps)
+			{
+				b.Bitmap.Save("/home/luis/programacion/pfc/pruebas/waterfall/meh.png",
+				              "png");
+				i++;
+			}
 		}
 		
 		/// <summary>

@@ -1,22 +1,20 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
     <File name="Bienvenido" />
+    <File name="MathTextLibrary/BitmapSegmenters/WaterfallSegmenter.cs" line="155" column="50" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
       <Node expanded="True">
         <Node name="MathTextLibrary" expanded="True">
-          <Node name="Bitmap" expanded="True">
-            <Node name="FloatBitmap.cs" selected="True" />
-          </Node>
-          <Node name="Databases" expanded="True">
-            <Node name="Characteristic" expanded="True">
-              <Node name="Characteristics" expanded="True">
-                <Node name="Helpers" expanded="True" />
-              </Node>
-            </Node>
+          <Node name="Bitmap" expanded="True" />
+          <Node name="BitmapSegmenters" expanded="True">
+            <Node name="WaterfallSegmenter.cs" selected="True" />
           </Node>
           <Node name="Tests" expanded="True" />
+        </Node>
+        <Node name="MathTextRecognizer" expanded="True">
+          <Node name="DatabaseManager" expanded="True" />
         </Node>
       </Node>
     </ViewMemento>
@@ -27,14 +25,16 @@
       <Node expanded="True">
         <Node name="MathTextLibrary" expanded="True">
           <Node name="MathTextLibrary" expanded="True">
-            <Node name="BitmapTests" selected="True" />
+            <Node name="WaterfallTests" expanded="True">
+              <Node name="WaterFallSegmenterTest" selected="True" />
+            </Node>
           </Node>
         </Node>
       </Node>
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="Bienvenido" />
+    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextLibrary/BitmapSegmenters/WaterfallSegmenter.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>
