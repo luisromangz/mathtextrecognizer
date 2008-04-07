@@ -44,7 +44,7 @@ namespace MathTextLibrary.BitmapSegmenters
 		/// </returns>
 		public List<MathTextBitmap> Segment (MathTextBitmap mtb)
 		{
-			WaterfallSegment(mtb);
+			return WaterfallSegment(mtb);
 		}
 		
 		private List<MathTextBitmap> WaterfallSegment(MathTextBitmap bitmap)
@@ -56,9 +56,9 @@ namespace MathTextLibrary.BitmapSegmenters
 			int x0=0;
 			int y0=0;
 			
-			bool startFound = false;
 			
-			List<int> points = new List<int>();
+			
+			List<Gdk.Point> points = new List<Gdk.Point>();
 			
 			// Aqui vamos a pintar la linea que divide las dos partes de la imagen.
 			FloatBitmap cutImage = new FloatBitmap(image.Width,image.Height);
@@ -66,19 +66,25 @@ namespace MathTextLibrary.BitmapSegmenters
 			// Buscamos por filas, desde abajo, para encontrar el primer pixel 
 			// negro mas cercano a la esquina (0,0).
 			int i,j,k;
+			bool startFound = false;
 			for(j=0; j<image.Height && !startFound; j++)
 			{
 				for(i=0; i<image.Width && !startFound;i++)
 				{
-					if(image[i,j] == MathTextBitmap.White)
+					
+					if(image[i,j] != MathTextBitmap.White)
 					{
 						for(k=0; k<j ;k++)
 						{
 							// Añadimos a la lista de puntos los puntos 
 							// entre el borde inferior y el punto en la fila
 							// inmediatamente inferior a la del punto negro.
-							points.Add(i);
-							points.Add(k);
+							
+							points.Add(new Gdk.Point(i,k));
+							
+							Console.WriteLine(i+" "+k);
+							
+							cutImage[i,k] = MathTextBitmap.Black;
 						}
 						
 						startFound = true;
@@ -86,8 +92,8 @@ namespace MathTextLibrary.BitmapSegmenters
 				}
 			}
 			
-			int x = points[points.Count-2];
-			int y = points[points.Count-1];
+			int x = points[points.Count-1].X;
+			int y = points[points.Count-1].Y;
 				
 			bool newPoints = true;
 			while(x < image.Width && y < image.Height && newPoints)
@@ -114,21 +120,38 @@ namespace MathTextLibrary.BitmapSegmenters
 					   && x + xd < image.Width
 					   && y + yd < image.Height
 					   && image[x+ xd, y+yd] == MathTextBitmap.White
-					   && !(points[points.Count-4] == x + xd 
-					        && points[points.Count-3] == y+yd))
+					   && !points.Contains(new Gdk.Point(x+xd, y +yd)))
 						
 					{
 						x = x +xd;
 						y = y + yd;
-						points.Add(x);
-						points.Add(y);
+						points.Add(new Gdk.Point(x,y));
+						
+						Console.WriteLine(x +" "+y);
+						
+						cutImage[x,y]= MathTextBitmap.Black;
 						
 						// Indicamos que hemos encontrado el valor.
 						notNewFound = false;
 					}
 				}
+				
+				newPoints = !notNewFound;
+			}
+			
+			if(!newPoints)
+			{
+				
+			}
+			else
+			{
+				
 			}
 				
+			
+			List<MathTextBitmap> bitmaps = new List<MathTextBitmap>();
+				bitmaps.Add(new MathTextBitmap(cutImage, new Gdk.Point(0,0)));
+			return bitmaps;
 		}
 		
 		/// <summary>
@@ -142,21 +165,22 @@ namespace MathTextLibrary.BitmapSegmenters
 		/// </returns>
 		private FloatBitmap Rotate(FloatBitmap bitmap)
 		{
-			FloatBitmapImage image;
+			FloatBitmap image = null;
 			switch(mode)
 			{
 				
 				case(WaterfallSegmenterMode.RightToLeft):
-					image = bitmap.Rotate90().Rotate90();
-					break;
-				case(WaterfallSegmenterMode.TopToBottom):
 					image = bitmap.Rotate90();
 					break;
+				case(WaterfallSegmenterMode.TopToBottom):
+					image = new FloatBitmap(bitmap);
+					break;
 				case(WaterfallSegmenterMode.BottomToTop):					
-					image = bitmap.Rotate90().Rotate90().Rotate90;
+					image = bitmap.Rotate90().Rotate90();
 					break;
 				default:
-					image = new FloatBitmap(bitmap);
+					image = bitmap.Rotate90().Rotate90().Rotate90();
+					break;
 			}
 			
 			return image;
