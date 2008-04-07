@@ -11,6 +11,7 @@ using CustomGtkWidgets.CommonDialogs;
 using MathTextLearner.Config;
 using MathTextLearner.Assistant.BitmapProcessesStepHelpers;
 
+using MathTextLibrary.Bitmap;
 using MathTextLibrary.BitmapProcesses;
 using MathTextLibrary.Utils;
 
@@ -142,14 +143,14 @@ namespace MathTextLearner.Assistant
 		{
 			// Creamos una matriz a partir del pixbuf, y le 
 			// aplicamos los procesados.
-			float[,] m = ImageUtils.CreateMatrixFromPixbuf(p);
+			FloatBitmap m = FloatBitmap.CreateFromPixbuf(p);
 			
 			foreach(BitmapProcessNode node in processesView.NodeStore)
 			{
 				m = node.Process.Apply(m);
 			}
 			
-			Gdk.Pixbuf processedPixbuf = ImageUtils.CreatePixbufFromMatrix(m);
+			Gdk.Pixbuf processedPixbuf = m.CreatePixbuf();
 			
 			// Asignamos la imagen a su control.
 			processedIA.Image = processedPixbuf;			

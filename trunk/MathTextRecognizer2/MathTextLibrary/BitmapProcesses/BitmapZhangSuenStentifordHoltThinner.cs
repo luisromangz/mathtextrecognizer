@@ -37,10 +37,10 @@ namespace MathTextLibrary.BitmapProcesses
 		/// </summary>
 		/// <param name="image">La imagen que vamos a adelgazar.</param>
 		/// <returns>La imagen con las columnas y filas aadidas.</returns>
-		private float[,] CreateAuxImage(float[,] image)
+		private FloatBitmap CreateAuxImage(FloatBitmap image)
 		{
 			// La nueva imagen tiene dos filas y dos columnas ms que la original
-			float[,] newImage=new float[width,height];
+			FloatBitmap newImage=new FloatBitmap(width,height);
 
 			for(int i=0;i<width-2;i++)
 				for(int j=0;j<height-2;j++)
@@ -66,13 +66,15 @@ namespace MathTextLibrary.BitmapProcesses
 		/// Este es el metodo a invocar para realizar el
 		/// adelgazamiento de la imagen.
 		/// </summary>
-		/// <param name="image"></param>
-		public override float[,] Apply(float[,] image)
+		/// <param name="image">
+		/// La imagen a ser procesada.
+		/// </param>
+		public override FloatBitmap Apply(FloatBitmap image)
 		{
-			width=image.GetLength(0)+2;
-			height=image.GetLength(1)+2;
+			width=image.Width+2;
+			height=image.Height+2;
 
-			float[,] newImage=CreateAuxImage(image);
+			FloatBitmap newImage=CreateAuxImage(image);
 
 			/* Pre_process */
 			PreSmooth(newImage);
@@ -80,7 +82,7 @@ namespace MathTextLibrary.BitmapProcesses
 			
 			ZhangSuenStentifordHoltThinning(newImage);
 
-			float [,] res = new float[width - 2 , height -2];
+			FloatBitmap res = new FloatBitmap(width - 2 , height -2);
 
 			
 			for(int i=0;i<width-2; i++)
@@ -94,12 +96,12 @@ namespace MathTextLibrary.BitmapProcesses
 			return res;
 		}
 
-		private void ZhangSuenStentifordHoltThinning(float[,] image)
+		private void ZhangSuenStentifordHoltThinning(FloatBitmap image)
 		{
 			int i,j,k;
 			bool again=true;
 
-			float[,] tmp=(float[,])image.Clone();
+			FloatBitmap tmp= new FloatBitmap(image);
 
 			/* BLACK = 1, WHITE = 0. */
 			for(i=0;i<width;i++)
@@ -174,7 +176,7 @@ namespace MathTextLibrary.BitmapProcesses
 						image[i,j] = MathTextBitmap.White;
 		}
 
-		private void Delete(float[,] image, float[,] tmp)
+		private void Delete(FloatBitmap image, FloatBitmap tmp)
 		{
 			int i,j;
 			
@@ -189,7 +191,7 @@ namespace MathTextLibrary.BitmapProcesses
 		}
 
 		/*	Number of neighboring 1 pixels */
-		private int Nays8(float[,] im, int r, int c)
+		private int Nays8(FloatBitmap im, int r, int c)
 		{
 			int i,j,k=0;
 
@@ -202,7 +204,7 @@ namespace MathTextLibrary.BitmapProcesses
 		}
 
 		/*	Number of neighboring 0 pixels */
-		private int Snays(float[,] im, int r, int c)
+		private int Snays(FloatBitmap im, int r, int c)
 		{
 			int i,j,k=0;
 
@@ -214,7 +216,7 @@ namespace MathTextLibrary.BitmapProcesses
 		}
 
 		/*	Connectivity by counting black-white transitions on the boundary */
-		private int Connectivity(float[,] im, int r, int c)
+		private int Connectivity(FloatBitmap im, int r, int c)
 		{
 			int N=0;
 
@@ -231,7 +233,7 @@ namespace MathTextLibrary.BitmapProcesses
 		}
 
 		/* Stentiford's boundary smoothing method */
-		private void PreSmooth(float[,] im)
+		private void PreSmooth(FloatBitmap im)
 		{
 			int i,j;
 
@@ -247,7 +249,7 @@ namespace MathTextLibrary.BitmapProcesses
 		}
 
 		/*	Stentiford's Acute Angle Emphasis	*/
-		private void Aae(float[,] im)
+		private void Aae(FloatBitmap im)
 		{
 			bool again = false;
 			int i,j, k;
@@ -272,7 +274,7 @@ namespace MathTextLibrary.BitmapProcesses
 		}
 
 		/*	Template matches for acute angle emphasis	*/
-		private void MatchDu(float[,] im, int r, int c, int k)
+		private void MatchDu(FloatBitmap im, int r, int c, int k)
 		{
 
 		/* D1 */
@@ -487,7 +489,7 @@ namespace MathTextLibrary.BitmapProcesses
 		}
 
 		/*	Yokoi's connectivity measure	*/
-		private int Yokoi (float [,] im, int r, int c)
+		private int Yokoi (FloatBitmap im, int r, int c)
 		{
 			int[] N=new int[9];
 			int i,k, i1, i2;
@@ -527,7 +529,7 @@ namespace MathTextLibrary.BitmapProcesses
 			}
 		}
 
-		private bool Edge(float[,] image, int r, int c)
+		private bool Edge(FloatBitmap image, int r, int c)
 		{
 			if (image[r,c] == 0)
 				return false;
@@ -548,7 +550,7 @@ namespace MathTextLibrary.BitmapProcesses
 			return t00 && t11 && !t01s;
 		}
 
-		private void Stair(float[,] image, float[,] tmp, int direction)
+		private void Stair(FloatBitmap image, FloatBitmap tmp, int direction)
 		{
 			int i,j;
 			bool N, S, E, W, NE, NW, SE, SW, C;

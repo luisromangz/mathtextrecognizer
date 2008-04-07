@@ -125,22 +125,7 @@ namespace MathTextLibrary.Projection
 			{
 				return projection.Length;
 			}		
-		}
-		
-		/// <summary>
-		/// Esta propiedad de solo lectura permite obtener la representación
-		/// gráfica de la proyección.
-		/// </summary>
-		/*public Pixbuf ProjectionImage		{
-			get
-			{
-				if(projBitmap==null)
-				{
-					projBitmap=CreateBitmap();
-				}
-				return projBitmap;
-			}
-		}*/
+		}
 		/// <summary>
 		/// Crea una imagen que representa la proyeccion.
 		/// </summary>

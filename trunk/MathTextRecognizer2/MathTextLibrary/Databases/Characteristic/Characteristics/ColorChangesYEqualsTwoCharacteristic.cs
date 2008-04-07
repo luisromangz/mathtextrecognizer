@@ -20,7 +20,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 		public override bool Apply(MathTextBitmap image)
 		{
 			if(CountColorChangesHelper.NumColorChangesColumn(image,
-			                                                 image.ProcessedImage.GetLength(1)/2) == 2) 
+			                                                 image.ProcessedImage.Height/2) == 2) 
 			{
 				return true;
 			}

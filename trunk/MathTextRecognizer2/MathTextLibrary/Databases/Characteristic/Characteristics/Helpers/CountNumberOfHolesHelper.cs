@@ -34,10 +34,10 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <returns>Numero de zonas blancas en la imagen</returns>
 		public static int NumWhiteZones(MathTextBitmap image, bool bigholes)
 		{
-			float[,] im=image.ProcessedImage;
+			FloatBitmap im=image.ProcessedImage;
 			
-			int sizeC = im.GetLength(1);
-			int sizeR = im.GetLength(0);
+			int sizeC = im.Height;
+			int sizeR = im.Width;
 			
 			//Contiene las etiquetas de cada pixel
 			int[,] label = new int[sizeR,sizeC];

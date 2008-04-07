@@ -75,17 +75,17 @@ namespace MathTextLibrary.BitmapProcesses
 		/// <returns>
 		/// La imagen adelgazada.
 		/// </returns>
-		public override float[,] Apply(float [,] image)
+		public override FloatBitmap Apply(FloatBitmap image)
 		{
 			//Seguimos el algoritmo que aparece en Parker, reescrito en CSharp
 			
-			float [,] im;
+			FloatBitmap im;
 			int i,j;
 
-			nrows=image.GetLength(0)+2;
-			ncols=image.GetLength(1)+2;
+			nrows=image.Width+2;
+			ncols=image.Height+2;
 
-			im = new float[nrows,ncols];
+			im = new FloatBitmap(nrows,ncols);
 			for (i=0; i<nrows-2; i++)
 				for (j=0; j<ncols-2; j++)
 					im[i+1,j+1] = image[i,j];
@@ -108,7 +108,7 @@ namespace MathTextLibrary.BitmapProcesses
 
 			ThinStentiford(im);
 			
-			float [,] res = new float[nrows - 2, ncols -2];
+			FloatBitmap res = new FloatBitmap(nrows - 2, ncols -2);
 
 			for (i=0; i<nrows-2; i++)
 			{
@@ -125,7 +125,7 @@ namespace MathTextLibrary.BitmapProcesses
 		/// Este metodo es el metodo auxiliar que realiza el adelgazamiento.
 		/// </summary>
 		/// <param name="im">La imagen a adelgazar.</param>
-		private void ThinStentiford (float[,] im)
+		private void ThinStentiford (FloatBitmap im)
 		{
 			int i,j;
 			bool again=true;
@@ -250,7 +250,7 @@ namespace MathTextLibrary.BitmapProcesses
 		/// <param name="r">La coordenada Y del pixel.</param>
 		/// <param name="c">La coordenada X del pixel.</param>
 		/// <returns></returns>
-		private int NumberAdjacents8 (float [,] im, int r, int c)
+		private int NumberAdjacents8 (FloatBitmap im, int r, int c)
 		{
 			int i,j,k=0;
 
@@ -276,7 +276,7 @@ namespace MathTextLibrary.BitmapProcesses
 		/// <param name="r">La coordenada Y del pixel.</param>
 		/// <param name="c">La coordenada X del pixel.</param>
 		/// <returns></returns>
-		private int Yokoi (float [,] im, int r, int c)
+		private int Yokoi (FloatBitmap im, int r, int c)
 		{
 			int[] N=new int[9];
 			int i,k, i1, i2;
@@ -318,7 +318,7 @@ namespace MathTextLibrary.BitmapProcesses
 		/// adelgazar con este metodo.
 		/// </summary>
 		/// <param name="im">La imagen a la que se aplicara el presuavizado.</param>
-		private void PreSmooth (float [,] im)
+		private void PreSmooth (FloatBitmap im)
 		{
 			int i,j;
 

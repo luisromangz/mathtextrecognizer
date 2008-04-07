@@ -34,9 +34,9 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		public static int NumBlackPixelsInHalf(MathTextBitmap image, Half h)
 		{
 			int n=0;
-			float[,] im=image.ProcessedImage;
-			int sizeR = im.GetLength(0);
-			int sizeC = im.GetLength(1);
+			FloatBitmap im=image.ProcessedImage;
+			int sizeR = im.Width;
+			int sizeC = im.Height;
 			int mitadR = sizeR/2;
 			int mitadC = sizeC/2;
 			
@@ -79,9 +79,9 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		public static int NumBlackPixelsInQuadrant(MathTextBitmap image, Quadrant q)
 		{
 			int n=0;
-			float[,] im=image.ProcessedImage;
-			int sizeR = im.GetLength(0);
-			int sizeC = im.GetLength(1);
+			FloatBitmap im=image.ProcessedImage;
+			int sizeR = im.Width;
+			int sizeC = im.Height;
 			int mitadR = sizeR/2;
 			int mitadC = sizeC/2;
 			
@@ -122,7 +122,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <param name="x2">Maxima coordenada horizontal</param>
 		/// <param name="y2">Maxima coordenada vertical</param>
 		/// <returns>Numero de pixeles de valor <c>value</c></returns>
-		protected static int NumPixelsInArea(float[,] image, float value,
+		protected static int NumPixelsInArea(FloatBitmap image, float value,
 		                                    int x1, int y1, int x2, int y2)
 		{
 			if(x1 > x2 || y1 > y2)

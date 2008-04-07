@@ -14,10 +14,10 @@ namespace MathTextLibrary.BitmapSegmenters{
 	/// de tamao menor al valor medio de la mayor diferencia entre dos tamaos de huecos consecutivos,
 	/// de forma que algunas zonas de la imagen quedan agrupadas sin segmentar.
 	/// </summary>
-	public class DifferentialProjectionBitmapSegmenter: ProjectionBitmapSegmenter
+	public class DifferentialProjectionSegmenter: ProjectionSegmenter
 	{
 		
-		public DifferentialProjectionBitmapSegmenter(ProjectionMode mode)
+		public DifferentialProjectionSegmenter(ProjectionMode mode)
 			:base(mode){}
 			
 			

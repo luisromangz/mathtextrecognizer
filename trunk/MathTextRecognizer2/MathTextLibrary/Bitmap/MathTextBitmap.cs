@@ -33,23 +33,21 @@ namespace MathTextLibrary.Bitmap
 #region Atributos privados
 		
 		// Imagen sólo binarizada
-		private float [,] binaryzedImage;
+		private FloatBitmap binaryzedImage;
 		
-		// Hijos de la imagen productos de la segmentación
-		private List<MathTextBitmap> children;
 		
 		// Altura de la imagen sin procesar
 		private int height;
 		
 		// La imagen como un array de float
-		private float [,] image;
+		private FloatBitmap image;
 		
 		// Posición de la esquina superior izquierda de la imagen
 		// en la imagen completa
 		private Point position;
 		
 		// Imagen con el preprocesamiento completo
-		private float [,] processedImage;
+		private FloatBitmap processedImage;
 		
 		// Tamaño de la imagen procesada
 		private int processedImageSize;
@@ -82,7 +80,7 @@ namespace MathTextLibrary.Bitmap
 		public MathTextBitmap(Pixbuf b)
 		{
 			this.position = new Point(0,0);
-			image = Utils.ImageUtils.CreateMatrixFromPixbuf(b);	
+			image = FloatBitmap.CreateFromPixbuf(b);	
 			width = b.Width;
 			height = b.Height;
 		}	
@@ -95,13 +93,13 @@ namespace MathTextLibrary.Bitmap
 		/// El array se clona para evitar efectos laterales. La imagen se
 		/// procesa mediante el metodo <c>ProcessImage()</c>. 
 		/// </remarks>
-		public MathTextBitmap(float [,] image, Point pos)
+		public MathTextBitmap(FloatBitmap image, Point pos)
 		{
-			this.image=(float [,])(image.Clone());
-			this.position=pos;
+			this.image =  image;
+			this.position = pos;
 			
-			width = image.GetLength(0);
-			height = image.GetLength(1);
+			width = image.Width;
+			height = image.Height;
 		}
 		
 		#endregion Constructores
@@ -129,20 +127,11 @@ namespace MathTextLibrary.Bitmap
 		{
 			get
 			{		
-				return Utils.ImageUtils.CreatePixbufFromMatrix(image);
+				return image.CreatePixbuf();
 			}	
 		}
 		
-		/// <value>
-		/// Contiene los hijos de la imagen actual que se hayan obtenido
-		/// mediante segmentacion.
-		/// </value>
-		public List<MathTextBitmap> Children
-		{			
-			get{
-				return children;
-			}			
-		}	
+		
 		
 		/// <value>
 		/// Contienela altura de la imagen sin procesar.
@@ -176,15 +165,16 @@ namespace MathTextLibrary.Bitmap
 		public Pixbuf ProcessedBitmap
 		{
 			get
-			{			
-				return Utils.ImageUtils.CreatePixbufFromMatrix(processedImage);
+			{		
+			
+				return processedImage.CreatePixbuf();
 			}
 		}		
 
 		/// <value>
 		/// Contiene la imagen procesada como un array de float.
 		/// </value>
-		public float[,] ProcessedImage
+		public FloatBitmap ProcessedImage
 		{
 			get
 			{
@@ -223,6 +213,12 @@ namespace MathTextLibrary.Bitmap
 				return width;
 			}	
 		}
+
+		public FloatBitmap FloatImage {
+			get {
+				return image;
+			}
+		}
 		
 #endregion Propiedades
 		
@@ -244,28 +240,7 @@ namespace MathTextLibrary.Bitmap
 			}
 		}
 		
-		/// <summary>
-		/// Devuelve la imagen procesada como un array de float.
-		/// </summary>
-		/// <param name="x">Minima posicion horizontal de la subimagen.</param>
-		/// <param name="y">Minima posicion vertical de la subimagen.</param>
-		/// <param name="width">Anchura de la subimagen medida desde <c>x</c></param>
-		/// <param name="height">Altura de la subimagen medida desde <c>y</c></param>
-		/// <returns>Array de float que representa la subimagen deseada.</returns>
-		public float[,] SubImage(int x,int y,int width,int height)
-		{
-			float[,] resImage=new float[width,height];
-			
-			for(int i = 0; i < width; i++)
-			{
-				for(int j = 0; j < height; j++)
-				{
-					resImage[i,j] = image[x + i, y + j];
-				}			
-			}
-			
-			return resImage;
-		}
+		
 
 		#endregion Métodos públicos
 		

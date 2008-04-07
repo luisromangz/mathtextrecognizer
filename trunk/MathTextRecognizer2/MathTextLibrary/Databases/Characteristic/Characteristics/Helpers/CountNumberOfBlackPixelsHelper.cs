@@ -23,10 +23,10 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <returns>Numero de pixeles negros</returns>
 		public static int NumBlackPixelsRow(MathTextBitmap image, int row) 
 		{
-			float[,] im=image.ProcessedImage;
+			FloatBitmap im=image.ProcessedImage;
 			int nBlackPixels=0;
 
-			for(int i=0; i<im.GetLength(0); i++) 
+			for(int i=0; i<im.Width; i++) 
 			{
 				if(im[i,row] == MathTextBitmap.Black)
 				{
@@ -46,10 +46,10 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <returns>Numero de pixeles negros</returns>
 		public static int NumBlackPixelsColumn(MathTextBitmap image, int column) 
 		{
-			float[,] im=image.ProcessedImage;
+			FloatBitmap im=image.ProcessedImage;
 			int nBlackPixels=0;
 
-			for(int i=0; i<im.GetLength(1); i++) 
+			for(int i=0; i<im.Height; i++) 
 			{
 				if(im[column,i] == MathTextBitmap.Black)
 				{

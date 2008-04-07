@@ -15,7 +15,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 	/// por dos huecos de una proyeccion obtenida anteriormente unicamente.
 	/// Se usa conjuntamente con el <code>FractionVerticalBitmapSegmenter</code>.
 	/// </summary>
-	public class TwoHolesBitmapSegmenter:IBitmapSegmenter
+	public class TwoHolesSegmenter:IBitmapSegmenter
 	{
 		private int hole1, hole2;
 		private ProjectionMode mode;
@@ -26,7 +26,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 		/// <param name="mode">El modo de proyeccion con que se obtuvieron los huecos.</param>
 		/// <param name="hole1">El primer hueco considerado para cortar.</param>
 		/// <param name="hole2">El segundo hueco considerado para cortar.</param>
-		public TwoHolesBitmapSegmenter(ProjectionMode mode,int hole1, int hole2)
+		public TwoHolesSegmenter(ProjectionMode mode,int hole1, int hole2)
 		{
 			this.mode=mode;
 			this.hole1=hole1;
@@ -39,9 +39,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 		/// <param name="image">La imagen que queremos segmentar.</param>
 		/// <returns>Un array con las tres partes de la imagen en que divide este segmentador.</returns>
 		public List<MathTextBitmap> Segment(MathTextBitmap image)
-		{		
-			
-	
+		{
 			List<Hole> holes=new List<Hole>();
 			holes.Add(new Hole(0,0));
 			holes.Add(new Hole(hole1,hole1));
@@ -77,13 +75,13 @@ namespace MathTextLibrary.BitmapSegmenters{
 				if(mode == ProjectionMode.Horizontal)
 				{
 					newBitmap=new MathTextBitmap(
-						image.SubImage(start,edge1,size,edge2-edge1+1),
+						image.FloatImage.SubImage(start,edge1,size,edge2-edge1+1),
 						new Point(start+xpos,ypos+edge1));
 				}
 				else
 				{
 					newBitmap=new MathTextBitmap(
-						image.SubImage(edge1,start,edge2-edge1+1,size),
+						image.FloatImage.SubImage(edge1,start,edge2-edge1+1,size),
 						new Point(xpos+edge1,start+ypos));
 				}
 				

@@ -14,10 +14,10 @@ namespace MathTextLibrary.BitmapSegmenters
 	/// huecos menores a aquel que se da mas veces, y por tanto agrupando algunas zonas
 	/// de la imagen.
 	/// </summary>
-	public class MostFrequentHoleProjectionBitmapSegmenter: ProjectionBitmapSegmenter
+	public class MostFrequentHoleProjectionSegmenter: ProjectionSegmenter
 	{
 		
-		public MostFrequentHoleProjectionBitmapSegmenter(ProjectionMode mode)
+		public MostFrequentHoleProjectionSegmenter(ProjectionMode mode)
 			:base(mode){}
 			
 			

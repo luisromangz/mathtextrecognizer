@@ -1,26 +1,22 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
-    <File name="MathTextLibrary/Symbol/MathSymbol.cs" line="14" column="23" />
-    <File name="MathTextLibrary/TreeMaker/Steps/SearchFractions.cs" line="65" column="43" />
-    <File name="MathTextLibrary/Bitmap/MathTextBitmap.cs" line="194" column="3" />
-    <File name="MathTextLibrary/Tests/CharacteristicDatabaseTests.cs" line="43" column="54" />
-    <File name="MathTextLearner/MainLearnerWindow.cs" line="819" column="26" />
-    <File name="MathTextRecognizer/Controllers/OutputController.cs" line="126" column="4" />
-    <File name="MathTextRecognizer/MainRecognizerWindow.cs" line="242" column="7" />
-    <File name="MathTextRecognizer/Controllers/SegmentingAndSymbolMatchingController.cs" line="277" column="17" />
+    <File name="Bienvenido" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
-      <Node expanded="True" selected="True">
-        <Node name="CustomGtkWidgets" expanded="True" />
-        <Node name="MathTextLearner" expanded="True" />
+      <Node expanded="True">
         <Node name="MathTextLibrary" expanded="True">
-          <Node name="Bitmap" expanded="True" />
-          <Node name="Symbol" expanded="True" />
+          <Node name="Bitmap" expanded="True">
+            <Node name="FloatBitmap.cs" selected="True" />
+          </Node>
+          <Node name="Databases" expanded="True">
+            <Node name="Characteristic" expanded="True">
+              <Node name="Characteristics" expanded="True">
+                <Node name="Helpers" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
           <Node name="Tests" expanded="True" />
-        </Node>
-        <Node name="MathTextRecognizer" expanded="True">
-          <Node name="Controllers" expanded="True" />
         </Node>
       </Node>
     </ViewMemento>
@@ -28,11 +24,17 @@
       <Node expanded="True" selected="True" />
     </ViewMemento>
     <ViewMemento id="MonoDevelop.NUnit.TestPad">
-      <Node expanded="True" />
+      <Node expanded="True">
+        <Node name="MathTextLibrary" expanded="True">
+          <Node name="MathTextLibrary" expanded="True">
+            <Node name="BitmapTests" selected="True" />
+          </Node>
+        </Node>
+      </Node>
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer/Controllers/OutputController.cs" />
+    <Property key="ActiveWindow" value="Bienvenido" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>
