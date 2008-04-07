@@ -14,10 +14,6 @@ using System.Threading;
 using MathTextLibrary;
 using MathTextLibrary.Bitmap;
 
-using MathTextLibrary.TreeMaker;
-using MathTextLibrary.TreeMaker.Steps;
-using MathTextLibrary.Output;
-
 using MathTextLibrary.Controllers;
 
 namespace MathTextRecognizer.Controllers
@@ -127,30 +123,7 @@ namespace MathTextRecognizer.Controllers
 		/// </summary>
 		public void MakeOutput()
 		{			
-		
-			//Cada uno de los pasos nos trata el arbol de images de forma que 
-			//cambia su estructura, para que sea mas facil generar una salida
-			//de forma recursiva.
-			MakeInitialTree step0=new MakeInitialTree();			
-			RecognizedTreeNode raiz=step0.ApplyStep(startImage);			
-			OnStepFinished();
 			
-		
-			SearchFractions step1=new SearchFractions();
-			raiz=step1.ApplyStep(raiz);			
-			OnStepFinished();
-		
-			SearchSuperAndSub step2=new SearchSuperAndSub();
-			raiz=step2.ApplyStep(raiz);			
-			OnStepFinished();
-		
-			//Una vez hemos transformado el arbol, procedemos a
-			//procesarlo recursivamente, para generar la salida textual.
-			MathMLGenerator mathmlgen=new MathMLGenerator(raiz);			
-			LaTeXGenerator latexgen=new LaTeXGenerator(raiz);			
-			mathMLPOutput=mathmlgen.ToString();
-			latexOutput=latexgen.ToString();			
-			OnOutputCreated();
 		}
 	}
 }

@@ -238,7 +238,8 @@ namespace MathTextRecognizer
 		private void OnTreeviewSelectionChanged(object sender, EventArgs arg)
 		{
 		    // Si hemos acabado el proceso y hemos seleccionado algo.
-			if(recognizementFinished && treeview.Selection.CountSelectedRows() > 0)
+			if(recognizementFinished
+			   && treeview.Selection.CountSelectedRows() > 0)
 			{
 				// Recuperamos el TreePath del nodo seleccionado.
 				TreePath path = treeview.Selection.GetSelectedRows()[0];
@@ -248,14 +249,6 @@ namespace MathTextRecognizer
 				
 				imageAreaNode.Image=node.MathTextBitmap.Bitmap;
 				imageAreaProcessed.Image=node.MathTextBitmap.ProcessedBitmap;
-				
-				// Esto por si acaso
-				if(node.MathTextBitmap.Symbol.SymbolType==
-				   MathSymbolType.NotRecognized)	
-				{			
-					// TODO Guardar el archivo solo si se va a aprender.
-					node.MathTextBitmap.Bitmap.Save(node.Text+".png","png");
-				}
 				
 				MarkImage(node.MathTextBitmap);
 				

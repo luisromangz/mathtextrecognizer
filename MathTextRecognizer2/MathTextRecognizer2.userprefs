@@ -1,22 +1,26 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
-    <File name="Bienvenido" />
-    <File name="MathTextRecognizer/MainRecognizerWindow.cs" line="227" column="17" />
-    <File name="CustomGtkWidgets/ImageResources.cs" line="32" column="24" />
-    <File name="MathTextRecognizer/DatabaseManager/DatabaseManagerDialog.cs" line="261" column="73" />
-    <File name="MathTextLearner/Assistant/NewDatabaseAssistant.cs" line="7" column="24" />
-    <File name="CustomGtkWidgets/CommonDialogs/FolderOpenDialog.cs" line="55" column="23" />
-    <File name="MathTextLearner/Assistant/FileSelectionStep.cs" line="203" column="10" />
+    <File name="MathTextLibrary/Symbol/MathSymbol.cs" line="14" column="23" />
+    <File name="MathTextLibrary/TreeMaker/Steps/SearchFractions.cs" line="65" column="43" />
+    <File name="MathTextLibrary/Bitmap/MathTextBitmap.cs" line="194" column="3" />
+    <File name="MathTextLibrary/Tests/CharacteristicDatabaseTests.cs" line="43" column="54" />
+    <File name="MathTextLearner/MainLearnerWindow.cs" line="819" column="26" />
+    <File name="MathTextRecognizer/Controllers/OutputController.cs" line="126" column="4" />
+    <File name="MathTextRecognizer/MainRecognizerWindow.cs" line="242" column="7" />
+    <File name="MathTextRecognizer/Controllers/SegmentingAndSymbolMatchingController.cs" line="277" column="17" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
       <Node expanded="True" selected="True">
-        <Node name="CustomGtkWidgets" expanded="True">
-          <Node name="References" expanded="True" />
-          <Node name="CommonDialogs" expanded="True" />
+        <Node name="CustomGtkWidgets" expanded="True" />
+        <Node name="MathTextLearner" expanded="True" />
+        <Node name="MathTextLibrary" expanded="True">
+          <Node name="Bitmap" expanded="True" />
+          <Node name="Symbol" expanded="True" />
+          <Node name="Tests" expanded="True" />
         </Node>
-        <Node name="MathTextLearner" expanded="True">
-          <Node name="Assistant" expanded="True" />
+        <Node name="MathTextRecognizer" expanded="True">
+          <Node name="Controllers" expanded="True" />
         </Node>
       </Node>
     </ViewMemento>
@@ -28,7 +32,7 @@
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextLearner/Assistant/FileSelectionStep.cs" />
+    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer/Controllers/OutputController.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>
