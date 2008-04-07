@@ -28,6 +28,14 @@ namespace MathTextLibrary.Bitmap
 		public FloatBitmap(int width, int height)
 		{
 			image = new float[width,height];
+			
+			for(int i= 0; i<width; i++)
+			{
+				for(int j=0; j<height; j++)
+				{
+					image[i,j] = MathTextBitmap.White;
+				}
+			}
 		}
 		
 		/// <summary>
