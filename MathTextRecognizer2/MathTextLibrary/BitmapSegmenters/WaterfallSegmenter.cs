@@ -96,47 +96,57 @@ namespace MathTextLibrary.BitmapSegmenters
 			int y = points[points.Count-1].Y;
 				
 			bool newPoints = true;
-			while(x < image.Width && y < image.Height && newPoints)
+			bool borderFound = false;
+			while(x < image.Width && y < image.Height && newPoints && !borderFound)
 			{
-				
-				
-				// Aqui almacenamos los posibles vectores..
-				int [] vectors = new int[]{0,1,1,1,1,0,1,-1,-1,1,-1,0,-1,-1,0,-1};
-					
-				bool notNewFound = true;
-				for ( k = 0; k < vectors.Length && notNewFound; k+=2)
+				if(x == image.Width -1
+				   || y == image.Height -1)
 				{
 					
-					int xd = vectors[k];
-					int yd = vectors[k+1];
-					// Vamos comprobando los casos
-					// Tenemos que:
-					// · No salirnos de los limites
-					// · El pixel ha de ser blanco.
-					// . No puede ser el anterior del actual, para no meternos
-					//   en un bucle.	
-					if(x + xd > 0
-					   && y + yd > 0
-					   && x + xd < image.Width
-					   && y + yd < image.Height
-					   && image[x+ xd, y+yd] == MathTextBitmap.White
-					   && !points.Contains(new Gdk.Point(x+xd, y +yd)))
-						
-					{
-						x = x +xd;
-						y = y + yd;
-						points.Add(new Gdk.Point(x,y));
-						
-						Console.WriteLine(x +" "+y);
-						
-						cutImage[x,y]= MathTextBitmap.Black;
-						
-						// Indicamos que hemos encontrado el valor.
-						notNewFound = false;
-					}
+					borderFound = true;					
+					
 				}
-				
-				newPoints = !notNewFound;
+				else
+				{
+					// Aqui almacenamos los posibles vectores..
+					int [] vectors = new int[]{0,1,1,1,1,0,1,-1,-1,1,-1,0,-1,-1,0,-1};
+						
+					bool notNewFound = true;
+					for ( k = 0; k < vectors.Length && notNewFound; k+=2)
+					{
+						
+						int xd = vectors[k];
+						int yd = vectors[k+1];
+						// Vamos comprobando los casos
+						// Tenemos que:
+						// · No salirnos de los limites
+						// · El pixel ha de ser blanco.
+						// . No puede ser el anterior del actual, para no meternos
+						//   en un bucle.	
+						if(x + xd > 0
+						   && y + yd > 0
+						   && x + xd < image.Width
+						   && y + yd < image.Height
+						   && image[x+ xd, y+yd] == MathTextBitmap.White
+						   && !points.Contains(new Gdk.Point(x+xd, y +yd)))
+							
+						{
+							x = x +xd;
+							y = y + yd;
+							points.Add(new Gdk.Point(x,y));
+							
+							Console.WriteLine(x +" "+y);
+							
+							cutImage[x,y]= MathTextBitmap.Black;
+							
+							// Indicamos que hemos encontrado el valor.
+							notNewFound = false;
+						}
+					}
+					
+					newPoints = !notNewFound;
+					
+				}
 			}
 			
 			if(!newPoints)
