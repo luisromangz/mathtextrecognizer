@@ -165,26 +165,6 @@ namespace MathTextRecognizer
 			// bases de datos.			
 			databaseManagerDialog.DatabaseFilesInfo = 
 				Config.RecognizerConfig.Instance.DatabaseFilesInfo;
-		
-			
-			
-			Pixbuf p = new Pixbuf("/home/luis/programacion/pfc/pruebas/waterfall/raiz.png");
-			MathTextBitmap bitmap = new MathTextBitmap(p);
-			
-			WaterfallSegmenter segmenter = 
-				new WaterfallSegmenter(WaterfallSegmenterMode.RightToLeft);
-			
-			List<MathTextBitmap> bitmaps = segmenter.Segment(bitmap);
-			
-			int i = 0;
-			
-			Console.WriteLine("meh {0}",bitmaps.Count);
-			foreach (MathTextBitmap b in bitmaps)
-			{
-				b.Bitmap.Save("/home/luis/programacion/pfc/pruebas/waterfall/meh.png",
-				              "png");
-				i++;
-			}
 		}
 		
 		/// <summary>

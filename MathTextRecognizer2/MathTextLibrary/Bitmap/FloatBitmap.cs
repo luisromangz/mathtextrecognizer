@@ -257,7 +257,37 @@ namespace MathTextLibrary.Bitmap
 			
 			return res;
 		}
+		
+		/// <summary>
+		/// Rellena una zona delimilitada de la imagen por un color, usando
+		/// ese color.
+		/// </summary>
+		/// <param name="x">
+		/// La coordenada x del punto inicial del relleno.
+		/// </param>
+		/// <param name="y">
+		/// La coordenada y del punto inicial del relleno.
+		/// </param>
+		/// <param name="color">
+		/// El color que delimita el relleno, y del que se rellena la imagen.
+		/// </param>
+		public void Fill(int x, int y, float color)
+		{
 
+			if(x>=0 
+			   && x<Width 
+			   && y>=0 
+			   && y<Height 
+			   && image[x,y]!=color)
+			{
+			   image[x,y] = color;
+			   
+			   Fill(x+1, y, color);
+			   Fill(x-1, y, color);
+			   Fill(x, y+1, color);
+			   Fill(x, y-1, color);
+			}
+		}
 	}
 	
 	

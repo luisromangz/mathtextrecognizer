@@ -49,15 +49,11 @@ namespace MathTextLibrary.BitmapSegmenters
 		
 		private List<MathTextBitmap> WaterfallSegment(MathTextBitmap bitmap)
 		{
+			
 			FloatBitmap image = Rotate(bitmap.FloatImage);
 			
 			// Buscamos un pixel blanco en el que empezar.
-			
-			int x0=0;
-			int y0=0;
-			
-			
-			
+					
 			List<Gdk.Point> points = new List<Gdk.Point>();
 			
 			// Aqui vamos a pintar la linea que divide las dos partes de la imagen.
@@ -149,23 +145,88 @@ namespace MathTextLibrary.BitmapSegmenters
 				}
 			}
 			
-			if(!newPoints)
-			{
-				
-			}
-			else
-			{
-				
-			}
-				
+			List<MathTextBitmap> children = new List<MathTextBitmap>();
 			
-			List<MathTextBitmap> bitmaps = new List<MathTextBitmap>();
-				bitmaps.Add(new MathTextBitmap(cutImage, new Gdk.Point(0,0)));
-			return bitmaps;
+			// Hemos encontrado el borde, cortamos la imagen.
+			if(borderFound)
+			{
+				
+				
+				// Primero encontramos un punto blanco.
+				bool whiteFound = false;
+				int x0 = 0, y0 = 0;
+				for(i = 0; i < cutImage.Width && !whiteFound; i++)
+				{
+					for(j = 0; j< cutImage.Height && !whiteFound; j++)
+					{
+						if(cutImage[i,j] != MathTextBitmap.Black)
+						{
+							// Mas que el primer blaco, buscamos el primer
+							// negro;
+							whiteFound = true;
+							x0 = i;
+							y0 = j;							
+						}
+					}
+				}
+				
+				// Tenemos que rotar la imagen de corte para alinearla con la orginal.				
+				cutImage = UndoRotate(cutImage);
+				
+				// Rellenamos la imagen de negro a partir del punto encontrado.
+				cutImage.Fill(x0, y0, MathTextBitmap.Black);
+								
+				// Recorremos la imagen de corte, y sacamos dos imagenes;
+				FloatBitmap res1 = new FloatBitmap(cutImage.Width, cutImage.Height);
+				FloatBitmap res2 = new FloatBitmap(cutImage.Width, cutImage.Height);
+				
+				FloatBitmap origImage = bitmap.FloatImage;
+				bool res1HasBlack = false;
+				bool res2HasBlack = false;
+				
+				for(i=0; i < cutImage.Width; i++)
+				{
+					for(j = 0; j< cutImage.Height; j++)
+					{
+						// Si estamos en la zona negra de la imagen de corte,
+						// copiamos en la primera imagen de resultado,
+						// y sino, en la segunda.
+						if(cutImage[i, j] == MathTextBitmap.Black)
+						{
+							res1[i,j] = origImage[i,j];
+							if (origImage[i,j]!=MathTextBitmap.White)
+							{
+								res1HasBlack = true;
+							}
+						}
+						else
+						{
+							res2[i,j] = origImage[i,j]; 
+							if (origImage[i,j]!=MathTextBitmap.White)
+							{
+								res2HasBlack = true;
+							}
+						}
+					}
+				}
+				
+				if(res1HasBlack && res2HasBlack)
+				{
+					// Si las dos imágenes tienen pixeles negros, hemos separado la
+					// imagen correctamente, sino, solo hemos rodeado algo
+					// que no fuimos capaces de segmentar.
+					children.Add(new MathTextBitmap(res1, new Gdk.Point(0,0)));
+					children.Add(new MathTextBitmap(res2, new Gdk.Point(0,0)));
+				}
+				
+			}
+			
+			return children;
+			
 		}
 		
 		/// <summary>
-		/// Gira la imagen para adecuarla al algorimto.
+		/// Gira la imagen para adecuarla al algoritmo.
 		/// </summary>
 		/// <param name="bitmap">
 		/// La imagen a rotar.
@@ -190,6 +251,38 @@ namespace MathTextLibrary.BitmapSegmenters
 					break;
 				default:
 					image = bitmap.Rotate90().Rotate90().Rotate90();
+					break;
+			}
+			
+			return image;
+		}
+		
+		/// <summary>
+		/// Deshace la rotacion hecha con el metodo <c>Rotate</c>.
+		/// </summary>
+		/// <param name="bitmap">
+		/// La imagen a rotar.
+		/// </param>
+		/// <returns>
+		/// La imagen girada.
+		/// </returns>
+		private FloatBitmap UndoRotate(FloatBitmap bitmap)
+		{
+			FloatBitmap image = null;
+			switch(mode)
+			{
+				
+				case(WaterfallSegmenterMode.RightToLeft):
+					image = bitmap.Rotate90().Rotate90().Rotate90();
+					break;
+				case(WaterfallSegmenterMode.TopToBottom):
+					image = new FloatBitmap(bitmap);
+					break;
+				case(WaterfallSegmenterMode.BottomToTop):					
+					image = bitmap.Rotate90().Rotate90();
+					break;
+				default:
+					image = bitmap.Rotate90();
 					break;
 			}
 			
