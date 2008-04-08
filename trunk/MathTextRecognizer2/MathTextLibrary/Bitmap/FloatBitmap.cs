@@ -260,35 +260,132 @@ namespace MathTextLibrary.Bitmap
 		
 		/// <summary>
 		/// Rellena una zona delimilitada de la imagen por un color, usando
-		/// ese color.
+		/// ese color. Usa un algoritmo de relleno ordenado.
 		/// </summary>
-		/// <param name="x">
+		/// <param name="x0">
 		/// La coordenada x del punto inicial del relleno.
 		/// </param>
-		/// <param name="y">
+		/// <param name="y0">
 		/// La coordenada y del punto inicial del relleno.
 		/// </param>
 		/// <param name="color">
 		/// El color que delimita el relleno, y del que se rellena la imagen.
 		/// </param>
-		public void Fill(int x, int y, float color)
+		public void Fill(int x0, int y0, float color)
 		{
+			Stack<int> p = new Stack<int>();
 
-			if(x>=0 
-			   && x<Width 
-			   && y>=0 
-			   && y<Height 
-			   && image[x,y]!=color)
+			bool upSeedFound;
+			bool downSeedFound;
+			bool leftUpSeedFound;
+			bool leftDownSeedFound;
+
+			p.Push(x0);
+			p.Push(y0);
+
+			int  x,y;
+			int  xleft,yleft;
+
+			do
 			{
-			   image[x,y] = color;
-			   
-			   Fill(x+1, y, color);
-			   Fill(x-1, y, color);
-			   Fill(x, y+1, color);
-			   Fill(x, y-1, color);
-			}
+				y=p.Pop();
+				x=p.Pop();
+
+				xleft=x-1;
+				yleft=y;
+
+				if(y+1 < Height)
+				{
+					leftUpSeedFound = (image[x,y+1] != color);
+				}
+				else
+				{
+					leftUpSeedFound = false;
+				}
+				if(y > 0){
+					leftDownSeedFound = (image[x,y-1] != color);
+				}
+				else{
+					leftDownSeedFound =false;
+				}
+
+				upSeedFound= false;
+				downSeedFound= false;
+
+				while(x< Width && image[x,y]!=color)
+				{
+					image[x,y] = color;
+					
+					if(y+1 < Height && 
+					   image[x,y+1]!=color && image[x,y+1]!=color)
+					{
+						if(!upSeedFound && y<Height-1)
+						{
+							p.Push(x);
+							p.Push(y+1);
+							upSeedFound=true;
+						}
+					}
+					else
+						upSeedFound=false;
+
+					if(y > 0 && image[x,y-1]!=color && image[x,y-1]!=color)
+					{
+						if(!downSeedFound && y>0)
+						{
+							p.Push(x);
+							p.Push(y-1);
+							
+							downSeedFound=true;
+						}
+					}
+					else
+					{
+					  downSeedFound=false;
+					}
+
+					x++;
+				}
+
+				while(xleft>=0 
+				      && yleft<Height 
+				      && yleft>=0				      
+				      && image[xleft,yleft]!=color)
+				{
+
+					image[xleft,yleft] =color ;
+
+					
+					if(yleft+1 < Height && image[xleft,yleft+1]!=color)
+					{
+
+						if(!leftUpSeedFound && yleft<Height-1)
+						{
+							p.Push(xleft);
+							p.Push(yleft+1);
+							
+		                    leftUpSeedFound=true;
+						}
+					}
+					else
+						leftUpSeedFound=false;
+
+					if(yleft > 0 && image[xleft,yleft-1]!=color)
+					{
+						if(!leftDownSeedFound && yleft>0)
+						{
+							p.Push(xleft);
+							p.Push(yleft-1);
+
+							leftDownSeedFound=true;
+						}
+					}
+					else
+					  leftDownSeedFound=false;
+
+					xleft--;
+				}
+			}while(p.Count > 0);
 		}
 	}
-	
-	
 }

@@ -9,6 +9,8 @@ using MathTextLibrary.Bitmap;
 using MathTextLibrary.Symbol;
 using MathTextLibrary.Databases;
 using MathTextLibrary.Databases.Characteristic;
+using MathTextLibrary.BitmapSegmenters;
+using MathTextLibrary.Projection;
 
 using MathTextLibrary.Controllers;
 
@@ -45,6 +47,8 @@ namespace MathTextRecognizer.Controllers
 		//La imagen raiz que contiene la formula completa que deseamos reconocer.
 		private FormulaNode startNode;
 		
+		private List<IBitmapSegmenter> segmenters;
+		
 		/// <summary>
 		/// Constructor de la clase MathTextRecognizerController, debe ser invocado
 		/// en las posibles implementaciones distintas de la interfaz de usuario del
@@ -52,7 +56,19 @@ namespace MathTextRecognizer.Controllers
 		/// </summary>
 		public SegmentingAndSymbolMatchingController()
 		{						
-			databases = new List<MathTextDatabase>();						
+			databases = new List<MathTextDatabase>();	
+			
+			segmenters = new List<IBitmapSegmenter>();
+			
+			// Añadimos los segmentadores a la lista, en orden de preferencia.
+			segmenters.Add(new AllHolesProjectionSegmenter(ProjectionMode.Horizontal));
+			segmenters.Add(new AllHolesProjectionSegmenter(ProjectionMode.Vertical));
+			
+			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.RightToLeft));
+			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.BottomToTop));
+			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.TopToBottom));
+			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.LeftToRight));			               
+			               
 		}
 	
 		/// <summary>
@@ -114,7 +130,7 @@ namespace MathTextRecognizer.Controllers
 					similar += String.Format("«{0}»,", ms.Text);
 				}				
 				
-				OnMessageLogSent("Caracteres similares: {}",
+				OnMessageLogSent("Caracteres similares: {0}",
 				                 similar.TrimEnd(new char[]{','}));
 			}
 		}
@@ -192,6 +208,9 @@ namespace MathTextRecognizer.Controllers
 		/// </param>
 		private void RecognizerTreeBuild(FormulaNode node)
 		{			
+			// Seleccionamos el nodo.
+			node.Select();
+			
 			MathTextBitmap bitmap = node.MathTextBitmap;
 			OnMessageLogSent("Tratando la subimagen situada a partir de {0}",
 			                 bitmap.Position);
@@ -207,6 +226,7 @@ namespace MathTextRecognizer.Controllers
 			{
 				bitmap.ProcessImage(database.Processes);
 				OnBitmapBeingRecognized(bitmap);
+				
 				// Añadimos los caracteres reconocidos por la base de datos
 				foreach (MathSymbol symbol in database.Recognize(bitmap))
 				{
@@ -230,7 +250,8 @@ namespace MathTextRecognizer.Controllers
 			if(associatedSymbol == null)
 			{			
 				OnMessageLogSent("La imagen no pudo ser reconocida como un "
-				                 + "simbolo por la base de datos");
+				                 + "simbolo por la base de datos, se tratará de "
+				                 + "segmentar");
 				
 				List<MathTextBitmap> children = CreateChildren(bitmap);
 				
@@ -273,7 +294,7 @@ namespace MathTextRecognizer.Controllers
 		{
 			if(symbols.Count == 0)
 			{
-				//TODO Aprender caracteres no reconocidos
+				// No pudo ser asignado.
 				return null;
 			}
 			else if(symbols.Count==1)
@@ -298,7 +319,24 @@ namespace MathTextRecognizer.Controllers
 		/// </returns>
 		private List<MathTextBitmap> CreateChildren(MathTextBitmap image)
 		{
-			return new List<MathTextBitmap>();
+			Console.WriteLine("otra imagen");
+			List<MathTextBitmap> children = new List<MathTextBitmap>();
+			
+			bool segmented = false;
+			for(int i=0; i< segmenters.Count && !segmented; i++)
+			{
+				// Intentamos segmentar.
+				children = segmenters[i].Segment(image);
+				
+				if(children.Count > 1)
+					segmented = true;
+				else if(children.Count == 1)
+				{
+					throw new Exception("MathTextBitmap incorrectly segmented");
+				}
+			}
+			
+			return children;
 		}
 	}
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Diagnostics;
 using System.Threading;
 
 using Gtk;
@@ -193,11 +192,11 @@ namespace MathTextRecognizer
 			treeview.AppendColumn ("Imagen", new CellRendererText (), "text", 0);
 			scrolledtree.Add(treeview);
 			
-			
 			// Asignamos el evento para cuando se produzca la selección de un
 			// nodo en el árbol.
 			treeview.Selection.Changed += OnTreeviewSelectionChanged;
-				
+			treeview.RowActivated += OnTreeviewRowActivated;
+			
 			mainWindow.Title = title + "Sin imagen";
 			
 			imageAreaOriginal = new ImageArea();
@@ -275,54 +274,7 @@ namespace MathTextRecognizer
 		
 		private void OnBitmapBeingRecognizedThreadSafe(object sender, EventArgs a)
 		{		
-		    BitmapBeingRecognizedArgs arg = a as BitmapBeingRecognizedArgs;
-		    
-		    imageAreaNode.Image = arg.MathTextBitmap.Bitmap;
-			imageAreaProcessed.Image = arg.MathTextBitmap.ProcessedBitmap;
-			
-			MarkImage(arg.MathTextBitmap);			
-			
-			SelectProccesedNode();			
-			
 			ClearLog();
-		}
-		
-		private void SelectProccesedNode()
-		{
-			if(currentNode == null)
-			{
-				// Elegimos en nodo raíz.
-				currentNode = store.GetNode(new TreePath("0")) as FormulaNode;
-			}
-			else if (currentNode.ChildCount > 0)
-			{
-				// Si tiene hijos nos vamos al primero de ellos.
-				currentNode = currentNode[0] as FormulaNode;
-			}
-			else if (currentNode.Parent != null 
-			         &&currentNode.Parent.ChildCount == currentNode.Parent.IndexOf(currentNode)+1)
-			{
-				// Si es el último hijo de un padre, nos vamos al siguiente tio.
-				currentNode = currentNode.Parent as FormulaNode;
-				int idx = currentNode.Parent.IndexOf(currentNode)+1;
-				
-				if(idx < currentNode.Parent.ChildCount)
-					currentNode = currentNode.Parent[idx] as FormulaNode;
-								
-			}
-			else if (currentNode.Parent != null)
-			{
-				// Si no es el último, simplemente nos vamos al hermano
-				int idx = currentNode.Parent.IndexOf(currentNode)+1;
-				currentNode = currentNode.Parent[idx] as FormulaNode;
-			}
-			
-			
-			treeview.NodeSelection.UnselectAll();
-			treeview.NodeSelection.SelectNode(currentNode);
-			
-			treeview.ScrollToCell(treeview.Selection.GetSelectedRows()[0],null,true,0,1);
-			
 		}
 		
 		/// <summary>
@@ -333,15 +285,7 @@ namespace MathTextRecognizer
 		private void MarkImage(MathTextBitmap mtb)
 		{
 			// TODO MarkImage Gdk style!
-			Pixbuf originalMarked= imageOriginal.Copy();
-			/*Graphics g=Graphics.FromImage(originalMarked);
-			
-			
-						
-			g.DrawRectangle(new Pen(Color.Red,15/zoom),
-				new Rectangle(mtb.Position,
-				new Size(mtb.Width-1,mtb.Height-1)));*/
-				
+			Pixbuf originalMarked= imageOriginal.Copy();			
 			
 			imageAreaOriginal.Image=originalMarked;
 		}
@@ -500,7 +444,8 @@ namespace MathTextRecognizer
 		/// </summary>
 		private void OnNewSessionClicked(object sender, EventArgs arg)
 		{			
-			Process newSession =  Process.Start(System.Environment.CommandLine);			
+			System.Diagnostics.Process newSession =  
+				System.Diagnostics.Process.Start(System.Environment.CommandLine);			
 		}
 		
 		/// <summary>
@@ -515,7 +460,8 @@ namespace MathTextRecognizer
 			menuOpenDatabaseManager.Sensitive=false;
 			menuLoadImage.Sensitive=false;
 			
-			if(recognizingThread == null)
+			if(recognizingThread == null 
+			   || recognizingThread.ThreadState == ThreadState.Stopped)
 			{
 				recognizingThread =
 					new Thread(new ThreadStart(controller.RecognizeProcess));
@@ -664,6 +610,39 @@ namespace MathTextRecognizer
 				databaseManagerDialog.DatabaseFilesInfo.Count ==0;
 		}
 		
-		
+		/// <summary>
+		/// Manejamos el evento producido al activar una fila.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="RowActivatedArgs"/>
+		/// </param>
+		private void OnTreeviewRowActivated(object sender,
+		                                    RowActivatedArgs args)
+		{	
+			FormulaNode activatedNode= 
+				(FormulaNode) (treeview.NodeStore.GetNode(args.Path));
+			
+			ResponseType res= 
+				ConfirmDialog.Show(this.mainWindow,
+				                   "¿Deseas guardar la imagen del nodo «{0}»?",
+				                   activatedNode.Name);
+			
+			if (res== ResponseType.Yes)
+			{
+				string filename="";
+				res = ImageSaveDialog.Show(this.mainWindow,out filename);
+				
+				if(res == ResponseType.Ok)
+				{
+					string extension = 
+						Path.GetExtension(filename).ToLower().Trim('.');
+					activatedNode.MathTextBitmap.Bitmap.Save(filename,extension);
+				}
+			}
+			
+		}
 	}
 }

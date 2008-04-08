@@ -23,17 +23,17 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 				res++;
 			if(x-1>=0 && image[x-1,y]==MathTextBitmap.Black)
 				res++;
-			if(x-1>=0 && y+1 <= height && image[x-1,y+1]==MathTextBitmap.Black)
+			if(x-1>=0 && y+1 < height && image[x-1,y+1]==MathTextBitmap.Black)
 				res++;			
 			if(y-1 >= 0 && image[x,y-1]==MathTextBitmap.Black)
 				res++;
-			if(y+1 <= height && image[x,y+1]==MathTextBitmap.Black)
+			if(y+1 < height && image[x,y+1]==MathTextBitmap.Black)
 				res++;			
-			if(x+1 <= width && y-1 >= 0 && image[x+1,y-1]==MathTextBitmap.Black)
+			if(x+1 < width && y-1 >= 0 && image[x+1,y-1]==MathTextBitmap.Black)
 				res++;
 			if(x+1 <= width && image[x+1,y]==MathTextBitmap.Black)
 				res++;
-			if(x+1 <= width && y-1 <= height && image[x+1,y+1]==MathTextBitmap.Black)
+			if(x+1 < width && y+1 < height && image[x+1,y+1]==MathTextBitmap.Black)
 				res++;
 			return res;
 			
