@@ -61,7 +61,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 					i++;
 				}
 			}		
-
+			
 			return ImageCut(image,holes);
 		}	
 		
@@ -153,25 +153,41 @@ namespace MathTextLibrary.BitmapSegmenters{
 				newBitmaps.Add(newBitmap);
 			}		
 			
+			if (newBitmaps.Count == 1)
+			{
+				newBitmaps.Clear();
+			}
+			
 			
 			return newBitmaps;
 		}
 
 		/// <summary>
-		/// Metodo auxiliar para obtner los bordes de cada subimagen para ajustarla en
-		/// la direccion en la que no estamos segmentando.
+		/// Metodo auxiliar para obtner los bordes de cada subimagen para 
+		/// ajustarla en la direccion en la que no estamos segmentando.
 		/// </summary>
-		/// <param name="image">La imagen a ajustar.</param>
-		/// <param name="start">El pixel de inicio de la zona segmentada a tratar.</param>
-		/// <param name="size">El tamao en pixeles de la zona segmentada a tratar.</param>
-		/// <param name="edge1">El borde mas cercano en el sentido que no segmentamos.</param>
-		/// <param name="edge2">El borde mas lejano en el sentido que no segmentamos.</param>
+		/// <param name="image">
+		/// La imagen a ajustar.
+		/// </param>
+		/// <param name="start">
+		/// El pixel de inicio de la zona segmentada a tratar.
+		/// </param>
+		/// <param name="size">
+		/// El tamao en pixeles de la zona segmentada a tratar.
+		/// </param>
+		/// <param name="edge1">
+		/// El borde mas cercano en el sentido que no segmentamos.
+		/// </param>
+		/// <param name="edge2">
+		/// El borde mas lejano en el sentido que no segmentamos.
+		/// </param>
 		private void GetEdges(MathTextBitmap image,int start, int size,
 			out int edge1,out int edge2){
 			
 			edge1=-1;
 			edge2=-1;
 			int i,j;
+			
 			if(mode==ProjectionMode.Horizontal){
 				
 				for(i=0;i<image.Height && edge1<0;i++){

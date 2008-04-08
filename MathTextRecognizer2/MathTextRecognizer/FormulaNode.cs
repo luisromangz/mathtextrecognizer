@@ -22,6 +22,7 @@ namespace MathTextRecognizer
 	{
 	
 		private string name;
+		private string text;
 		private MathTextBitmap bitmap;
 		private NodeView view;
 		
@@ -41,6 +42,7 @@ namespace MathTextRecognizer
 		    : base()
 		{
 			this.name=name;
+			this.text =name;
 			this.bitmap=bitmap;
 			
 			this.view = view;
@@ -56,7 +58,7 @@ namespace MathTextRecognizer
 		{
 			get
 			{
-				return name;
+				return text;
 			}		
 		}
 		  
@@ -70,6 +72,15 @@ namespace MathTextRecognizer
 				return bitmap;
 			}			
 		}
+
+		/// <value>
+		/// Contiene el nombre de la imagen del nodo.
+		/// </value>
+		public string Name {
+			get {
+				return name;
+			}
+		}
 		
 		/// <summary>
 		/// Metodo que maneja el evento provocado al asociarse un simbolo 
@@ -77,9 +88,14 @@ namespace MathTextRecognizer
 		/// </summary>
 		private void OnSymbolChanged(object sender,EventArgs arg)
 		{
-			this.name = this.name+": «"+bitmap.Symbol.Text+"»";
-			this.name = String.Format("{0}: «{1}»", this.name, bitmap.Symbol.Text);
-			this.view.QueueDraw(); 
+			// TODO Arreglar cambio del texto del nodo.
+			
+			if(bitmap.Symbol !=null)
+			{
+				// Si es nulo es pq no se reconoció.				
+				this.text = String.Format("{0}: «{1}»", this.name, bitmap.Symbol.Text);
+				this.view.QueueDraw();
+			}
 		}
 		
 		/// <summary>
@@ -104,6 +120,22 @@ namespace MathTextRecognizer
 			view.QueueDraw();
 			
 			return node;
+		}
+		
+		/// <summary>
+		/// Selecciona el nodo.
+		/// </summary>
+		public void Select()
+		{
+			Application.Invoke(new EventHandler(SelectThread));
+		}
+			
+		/// <summary>
+		/// Realiza la selecion del nodo en el hilo de la interfaz.
+		/// </summary>
+		private void SelectThread(object sender, EventArgs args)
+		{
+			view.NodeSelection.SelectNode(this);
 		}
 	}
 }

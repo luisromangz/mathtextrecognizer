@@ -1,6 +1,8 @@
+// ImageSaveDialog.cs created with MonoDevelop
+// User: luis at 21:20 08/04/2008
+
 
 using System;
-
 using Gtk;
 
 namespace CustomGtkWidgets.CommonDialogs
@@ -9,7 +11,7 @@ namespace CustomGtkWidgets.CommonDialogs
 	/// Esta clase implementa un diálogo para cargar imágenes que es
 	/// usado en todas las aplicaciones del proyecto.
 	/// </summary>
-	public class ImageLoadDialog
+	public class ImageSaveDialog
 	{
 		#region Atributos de glade
 		
@@ -27,12 +29,16 @@ namespace CustomGtkWidgets.CommonDialogs
 		/// <summary>
 		/// El constructor de la clase <c>ImageLoadDialog</c>.
 		/// </summary>
-		private ImageLoadDialog(Window parent)
+		private ImageSaveDialog(Window parent)
 		{
 			Glade.XML gxml =
 				new Glade.XML(null,"gui.glade","imageLoadDialog",null);
+			
+			
 				
 			gxml.Autoconnect(this);
+			
+			imageLoadDialog.Action = FileChooserAction.Save;
 			
 			imageLoadDialog.TransientFor = parent;
 			imageLoadDialog.Modal = true;
@@ -81,7 +87,7 @@ namespace CustomGtkWidgets.CommonDialogs
 		/// </param>
 		public static ResponseType Show(Window parent, out string filename)
 		{
-			ImageLoadDialog dialog = new ImageLoadDialog(parent);
+			ImageSaveDialog dialog = new ImageSaveDialog(parent);
 			ResponseType res = (ResponseType)dialog.imageLoadDialog.Run();
 			filename = dialog.imageLoadDialog.Filename;
 			dialog.imageLoadDialog.Destroy();

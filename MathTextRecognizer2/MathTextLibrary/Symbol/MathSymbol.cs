@@ -15,7 +15,7 @@ namespace MathTextLibrary.Symbol
 		
 		// Uso del simbolo, para propositos estadisticos
 		private int usage;
-
+		
 		/// <summary>
 		/// El constructor por defecto de <c>MathSymbol</c>.
 		/// </summary>

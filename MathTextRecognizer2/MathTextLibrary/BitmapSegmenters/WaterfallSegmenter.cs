@@ -49,12 +49,11 @@ namespace MathTextLibrary.BitmapSegmenters
 		
 		private List<MathTextBitmap> WaterfallSegment(MathTextBitmap bitmap)
 		{
-			
 			FloatBitmap image = Rotate(bitmap.FloatImage);
 			
 			// Buscamos un pixel blanco en el que empezar.
 					
-			List<Gdk.Point> points = new List<Gdk.Point>();
+			List<Point> points = new List<Point>();
 			
 			// Aqui vamos a pintar la linea que divide las dos partes de la imagen.
 			FloatBitmap cutImage = new FloatBitmap(image.Width,image.Height);
@@ -76,20 +75,16 @@ namespace MathTextLibrary.BitmapSegmenters
 							// entre el borde inferior y el punto en la fila
 							// inmediatamente inferior a la del punto negro.
 							
-							points.Add(new Gdk.Point(i,k));
-							
-							Console.WriteLine(i+" "+k);
-							
+							points.Add(new Point(i,k));
 							cutImage[i,k] = MathTextBitmap.Black;
-						}
-						
+						}						
 						startFound = true;
 					}					
 				}
 			}
 			
-			int x = points[points.Count-1].X;
-			int y = points[points.Count-1].Y;
+			int x = points[0].X;
+			int y = points[0].Y;
 				
 			bool newPoints = true;
 			bool borderFound = false;
@@ -97,15 +92,13 @@ namespace MathTextLibrary.BitmapSegmenters
 			{
 				if(x == image.Width -1
 				   || y == image.Height -1)
-				{
-					
-					borderFound = true;					
-					
+				{					
+					borderFound = true;
 				}
 				else
 				{
 					// Aqui almacenamos los posibles vectores..
-					int [] vectors = new int[]{0,1,1,1,1,0,1,-1,-1,1,-1,0,-1,-1,0,-1};
+					int [] vectors = new int[]{0,1, 1,1, 1,0,  -1,0, -1,1, -1,-1, 0,-1};
 						
 					bool notNewFound = true;
 					for ( k = 0; k < vectors.Length && notNewFound; k+=2)
@@ -119,20 +112,17 @@ namespace MathTextLibrary.BitmapSegmenters
 						// · El pixel ha de ser blanco.
 						// . No puede ser el anterior del actual, para no meternos
 						//   en un bucle.	
-						if(x + xd > 0
-						   && y + yd > 0
+						if(x + xd >= 0
+						   && y + yd >= 0
 						   && x + xd < image.Width
 						   && y + yd < image.Height
 						   && image[x+ xd, y+yd] == MathTextBitmap.White
-						   && !points.Contains(new Gdk.Point(x+xd, y +yd)))
+						   && !points.Contains(new Point(x +xd, y +yd)))
 							
 						{
 							x = x +xd;
 							y = y + yd;
-							points.Add(new Gdk.Point(x,y));
-							
-							Console.WriteLine(x +" "+y);
-							
+							points.Add(new Point(x,y));
 							cutImage[x,y]= MathTextBitmap.Black;
 							
 							// Indicamos que hemos encontrado el valor.
@@ -150,7 +140,6 @@ namespace MathTextLibrary.BitmapSegmenters
 			// Hemos encontrado el borde, cortamos la imagen.
 			if(borderFound)
 			{
-				
 				
 				// Primero encontramos un punto blanco.
 				bool whiteFound = false;
@@ -175,7 +164,7 @@ namespace MathTextLibrary.BitmapSegmenters
 				
 				// Rellenamos la imagen de negro a partir del punto encontrado.
 				cutImage.Fill(x0, y0, MathTextBitmap.Black);
-								
+				
 				// Recorremos la imagen de corte, y sacamos dos imagenes;
 				FloatBitmap res1 = new FloatBitmap(cutImage.Width, cutImage.Height);
 				FloatBitmap res2 = new FloatBitmap(cutImage.Width, cutImage.Height);
@@ -210,13 +199,15 @@ namespace MathTextLibrary.BitmapSegmenters
 					}
 				}
 				
+				// Si las dos imágenes tienen pixeles negros, hemos separado la
+				// imagen correctamente, sino, solo hemos rodeado algo
+				// que no fuimos capaces de segmentar.
+				// Si no, no segmenatamos nada, se devolverá la lista vacia.
 				if(res1HasBlack && res2HasBlack)
 				{
-					// Si las dos imágenes tienen pixeles negros, hemos separado la
-					// imagen correctamente, sino, solo hemos rodeado algo
-					// que no fuimos capaces de segmentar.
-					children.Add(new MathTextBitmap(res1, new Gdk.Point(0,0)));
-					children.Add(new MathTextBitmap(res2, new Gdk.Point(0,0)));
+					// Creamos las subimagenes con la posicion de la imagen padre.
+					children.Add(new MathTextBitmap(res1, bitmap.Position));
+					children.Add(new MathTextBitmap(res2, bitmap.Position));
 				}
 				
 			}
@@ -289,5 +280,41 @@ namespace MathTextLibrary.BitmapSegmenters
 			return image;
 		}
 		
+		private class Point
+		{
+			private int x;
+			
+			private int y;
+			
+			public Point(int x, int y)
+			{
+				this.x = x;
+				this.y = y;
+			}
+			
+			public int X
+			{
+				get
+				{
+					return x;
+				}
+			}
+			
+			public int Y
+			{
+				get
+				{
+					return y;
+				}
+			}
+				
+			public override bool Equals (object o)
+			{
+				Point p = (Point) o;
+				
+				return p.x == this.x && p.y == this.y;
+			}
+
+		}
 	}
 }
