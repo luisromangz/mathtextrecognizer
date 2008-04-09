@@ -196,6 +196,7 @@ namespace MathTextRecognizer
 			treeview.ShowExpanders = true;
 			treeview.AppendColumn ("Imagen", new CellRendererText (), "text", 0);
 			treeview.AppendColumn ("Etiqueta", new CellRendererText (), "text", 1);
+			treeview.AppendColumn ("Posición", new CellRendererText (), "text", 2);
 			scrolledtree.Add(treeview);
 			
 			// Asignamos el evento para cuando se produzca la selección de un

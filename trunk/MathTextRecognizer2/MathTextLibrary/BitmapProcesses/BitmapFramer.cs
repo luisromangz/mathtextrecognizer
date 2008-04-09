@@ -85,7 +85,7 @@ namespace MathTextLibrary.BitmapProcesses
 		private FloatBitmap CreateNewImageColumns(FloatBitmap image, int pad, int y1,
 		                                          int x1, int height, int width)
 		{
-			// La nueva altura es la antigua mas dos, porque a�dimos una
+			// La nueva altura es la antigua mas dos, porque añdimos una
 			// filas en blanco como borde
 			// la nueva anchura es igual a la altura
 			int newWidth=height+2;

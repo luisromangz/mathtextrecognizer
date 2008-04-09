@@ -47,7 +47,7 @@ namespace MathTextRecognizer.Controllers
 		//La imagen raiz que contiene la formula completa que deseamos reconocer.
 		private FormulaNode startNode;
 		
-		private List<IBitmapSegmenter> segmenters;
+		private List<BitmapSegmenter> segmenters;
 		
 		/// <summary>
 		/// Constructor de la clase MathTextRecognizerController, debe ser invocado
@@ -58,7 +58,7 @@ namespace MathTextRecognizer.Controllers
 		{						
 			databases = new List<MathTextDatabase>();	
 			
-			segmenters = new List<IBitmapSegmenter>();
+			segmenters = new List<BitmapSegmenter>();
 			
 			// Añadimos los segmentadores a la lista, en orden de preferencia.
 			segmenters.Add(new AllHolesProjectionSegmenter(ProjectionMode.Horizontal));

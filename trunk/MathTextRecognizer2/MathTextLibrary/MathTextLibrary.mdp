@@ -22,11 +22,8 @@
     <File name="BitmapProcesses/BitmapTwoPeaksThresholder.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapProcesses/BitmapZhangSuenHoltThinner.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapProcesses/BitmapZhangSuenStentifordHoltThinner.cs" subtype="Code" buildaction="Compile" />
-    <File name="BitmapSegmenters/DifferentialProjectionSegmenter.cs" subtype="Code" buildaction="Compile" />
-    <File name="BitmapSegmenters/IBitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
-    <File name="BitmapSegmenters/MostFrequentHoleProjectionSegmenter.cs" subtype="Code" buildaction="Compile" />
+    <File name="BitmapSegmenters/BitmapSegmenter.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapSegmenters/ProjectionSegmenter.cs" subtype="Code" buildaction="Compile" />
-    <File name="BitmapSegmenters/TwoHolesSegmenter.cs" subtype="Code" buildaction="Compile" />
     <File name="Controllers/ControllerEvents.cs" subtype="Code" buildaction="Compile" />
     <File name="Projection/Hole.cs" subtype="Code" buildaction="Compile" />
     <File name="Projection/HorizontalBitmapProjection.cs" subtype="Code" buildaction="Compile" />
@@ -99,8 +96,6 @@
     <File name="Controllers/ControllerStepMode.cs" subtype="Code" buildaction="Compile" />
     <File name="Output" subtype="Directory" buildaction="Compile" />
     <File name="BitmapSegmenters/AllHolesProjectionSegmenter.cs" subtype="Code" buildaction="Compile" />
-    <File name="BitmapSegmenters/ColumnsProjectionSegmenter.cs" subtype="Code" buildaction="Compile" />
-    <File name="BitmapSegmenters/RowsProjectionSegmenter.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapSegmenters/WaterfallSegmenter.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapSegmenters/WaterfallSegmenterMode.cs" subtype="Code" buildaction="Compile" />
     <File name="Bitmap/FloatBitmap.cs" subtype="Code" buildaction="Compile" />
