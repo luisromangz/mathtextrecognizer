@@ -1,21 +1,23 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
-    <File name="MathTextRecognizer/MainRecognizerWindow.cs" line="166" column="56" />
-    <File name="MathTextLibrary/BitmapSegmenters/WaterfallSegmenter.cs" line="60" column="4" />
+    <File name="MathTextRecognizer/MainRecognizerWindow.cs" line="316" column="53" />
+    <File name="MathTextRecognizer/Controllers/SegmentingAndSymbolMatchingController.cs" line="228" column="23" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
       <Node expanded="True" selected="True">
-        <Node name="CustomGtkWidgets" expanded="True">
-          <Node name="References" expanded="True" />
-          <Node name="Resources" expanded="True" />
-          <Node name="CommonDialogs" expanded="True" />
-        </Node>
+        <Node name="MathTextLearner" expanded="True" />
         <Node name="MathTextLibrary" expanded="True">
           <Node name="Bitmap" expanded="True" />
+          <Node name="BitmapProcesses" expanded="True" />
           <Node name="BitmapSegmenters" expanded="True" />
+          <Node name="Projection" expanded="True" />
+          <Node name="Tests" expanded="True" />
         </Node>
-        <Node name="MathTextRecognizer" expanded="True" />
+        <Node name="MathTextRecognizer" expanded="True">
+          <Node name="Resources" expanded="True" />
+          <Node name="Controllers" expanded="True" />
+        </Node>
       </Node>
     </ViewMemento>
     <ViewMemento id="ClassPad">
@@ -26,7 +28,7 @@
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextLibrary/BitmapSegmenters/WaterfallSegmenter.cs" />
+    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer/MainRecognizerWindow.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>

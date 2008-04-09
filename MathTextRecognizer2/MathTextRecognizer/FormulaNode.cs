@@ -25,6 +25,7 @@ namespace MathTextRecognizer
 		private string label;
 		private MathTextBitmap bitmap;
 		private NodeView view;
+		private string position;
 		
 		/// <summary>
 		/// El constructor de <code>FormulaNode</code>
@@ -44,6 +45,10 @@ namespace MathTextRecognizer
 			this.name=name;
 			this.label="";
 			this.bitmap=bitmap;
+			
+			position = String.Format("({0}, {1})",
+			                         bitmap.Position.X,
+			                         bitmap.Position.Y);
 			
 			this.view = view;
 			
@@ -81,6 +86,17 @@ namespace MathTextRecognizer
 		{
 			get {
 				return name;
+			}
+		}
+
+		/// <value>
+		/// Contiene la posicion del bitmap.
+		/// </value>
+		[TreeNodeValue (Column=2)]
+		public string Position 
+		{
+			get {
+				return position;
 			}
 		}
 		
@@ -121,6 +137,8 @@ namespace MathTextRecognizer
 			{
 				name = String.Format("{0}.{1}",this.name, this.ChildCount+1);
 			}
+			
+			
 			
 			FormulaNode node = new FormulaNode(name,
 			                                   childBitmap,

@@ -14,7 +14,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 	/// de todos los segmentadores de imagenes que usan la proyeccion de la 
 	/// misma para descomponerla en partes mas pequeñas.
 	/// </summary>
-	public abstract class ProjectionSegmenter : IBitmapSegmenter
+	public abstract class ProjectionSegmenter : BitmapSegmenter
 	{
 		
 		
@@ -40,7 +40,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 		/// Un array con las distintas partes en que hemos descompuesto
 		/// la imagen de entrada.
 		/// </returns>
-		public List<MathTextBitmap> Segment(MathTextBitmap image)
+		public override List<MathTextBitmap> Segment(MathTextBitmap image)
 		{
 		
 			//Creamos la proyeccion
@@ -115,8 +115,6 @@ namespace MathTextLibrary.BitmapSegmenters{
 			
 			List<MathTextBitmap> newBitmaps=new List<MathTextBitmap>();
 			
-			MathTextBitmap newBitmap;
-			
 			int start,size;
 			int xpos=image.Position.X;
 			int ypos=image.Position.Y;
@@ -127,29 +125,37 @@ namespace MathTextLibrary.BitmapSegmenters{
 				start=((Hole)holes[i]).EndPixel;
 				size=((Hole)holes[i+1]).StartPixel-start+1;
 				
-				int edge1,edge2;
-				
-				GetEdges(image,start,size,out edge1,out edge2);
-				
-				if(mode==ProjectionMode.Horizontal)
+				int x0,y0;
+				int width0, height0;
+				if(mode == ProjectionMode.Horizontal)
 				{
-					newBitmap=new MathTextBitmap(image.FloatImage.SubImage(start,
-					                                            edge1,
-					                                            size,
-					                                            edge2-edge1+1),
-					                             new Point(start+xpos,
-					                                       ypos+edge1));
+					x0 = start;
+					y0 = 0;
+					width0 = size;
+					height0 = image.Height;
 				}
 				else
 				{
-					newBitmap=new MathTextBitmap(image.FloatImage.SubImage(edge1,
-					                                            start,
-					                                            edge2-edge1+1,
-					                                            size),
-					                             new Point(xpos+edge1,
-					                                       start+ypos));
+					x0 = 0;
+					y0 = start;
+					width0 = image.Width;
+					height0 = size;
 				}
 				
+				// Recortamos
+				FloatBitmap cutImage= 
+					image.FloatImage.SubImage(x0, y0, width0,height0);
+				
+				// Encuadramos
+				Gdk.Point pd;
+				Gdk.Size sd;				
+				GetEdges(cutImage, out pd, out sd);
+				cutImage =  cutImage.SubImage(pd.X, pd.Y, sd.Width,sd.Height);
+				// Montamos el bitmap
+				MathTextBitmap newBitmap = new MathTextBitmap(cutImage,
+				                                              new Point(xpos + x0 +  pd.X,
+				                                                        ypos + y0+ pd.Y));
+					
 				newBitmaps.Add(newBitmap);
 			}		
 			
@@ -160,70 +166,6 @@ namespace MathTextLibrary.BitmapSegmenters{
 			
 			
 			return newBitmaps;
-		}
-
-		/// <summary>
-		/// Metodo auxiliar para obtner los bordes de cada subimagen para 
-		/// ajustarla en la direccion en la que no estamos segmentando.
-		/// </summary>
-		/// <param name="image">
-		/// La imagen a ajustar.
-		/// </param>
-		/// <param name="start">
-		/// El pixel de inicio de la zona segmentada a tratar.
-		/// </param>
-		/// <param name="size">
-		/// El tamao en pixeles de la zona segmentada a tratar.
-		/// </param>
-		/// <param name="edge1">
-		/// El borde mas cercano en el sentido que no segmentamos.
-		/// </param>
-		/// <param name="edge2">
-		/// El borde mas lejano en el sentido que no segmentamos.
-		/// </param>
-		private void GetEdges(MathTextBitmap image,int start, int size,
-			out int edge1,out int edge2){
-			
-			edge1=-1;
-			edge2=-1;
-			int i,j;
-			
-			if(mode==ProjectionMode.Horizontal){
-				
-				for(i=0;i<image.Height && edge1<0;i++){
-					for	(j=0;j<size && edge1<0;j++){
-						if(image[j+start,i]!=FloatBitmap.White){
-							edge1=i-1;
-						}
-					}
-				}					
-				
-				for(i=image.Height-1;i>=edge1 && edge2<0;i--){
-					for	(j=0;j<size && edge2<0;j++){
-						if(image[j+start,i]!=FloatBitmap.White){
-							edge2=i+1;
-						}
-					}					
-				}
-				
-			}else{
-				for(i=0;i<image.Width && edge1<0;i++){
-					for	(j=0;j<size && edge1<0;j++){
-						if(image[i,j+start]!=FloatBitmap.White){
-							edge1=i-1;
-						}
-					}
-				}					
-				
-				for(i=image.Width-1;i>=edge1 && edge2<0;i--){
-					for	(j=0;j<size && edge2<0;j++){
-						if(image[i,j+start]!=FloatBitmap.White){
-							edge2=i+1;
-						}
-					}					
-				}
-			}
-		
 		}
 	}
 

@@ -15,7 +15,7 @@ namespace MathTextLibrary.BitmapSegmenters
 	/// separar simbolos que no estan separados por huecos completamente
 	/// verticales u horizontales, sino con formas arbitrarias.
 	/// </summary>
-	public class WaterfallSegmenter : IBitmapSegmenter
+	public class WaterfallSegmenter : BitmapSegmenter
 	{
 		private WaterfallSegmenterMode mode;
 		
@@ -42,7 +42,7 @@ namespace MathTextLibrary.BitmapSegmenters
 		/// <returns>
 		/// A <see cref="List`1"/>
 		/// </returns>
-		public List<MathTextBitmap> Segment (MathTextBitmap mtb)
+		public override List<MathTextBitmap> Segment (MathTextBitmap mtb)
 		{
 			return WaterfallSegment(mtb);
 		}
@@ -205,11 +205,20 @@ namespace MathTextLibrary.BitmapSegmenters
 				// Si no, no segmenatamos nada, se devolverá la lista vacia.
 				if(res1HasBlack && res2HasBlack)
 				{
-					// Creamos las subimagenes con la posicion de la imagen padre.
-					children.Add(new MathTextBitmap(res1, bitmap.Position));
-					children.Add(new MathTextBitmap(res2, bitmap.Position));
-				}
-				
+					Gdk.Point pd;
+					Gdk.Size sd;					
+					GetEdges(res1, out pd, out sd);		
+					res1 = res1.SubImage(pd.X,pd.Y,sd.Width, sd.Height);
+					children.Add(new MathTextBitmap(res1, 
+					                                new Gdk.Point(bitmap.Position.X+pd.X,
+					                                              bitmap.Position.Y+pd.Y)));
+					
+					GetEdges(res2, out pd, out sd);		
+					res2 = res2.SubImage(pd.X,pd.Y,sd.Width, sd.Height);
+					children.Add(new MathTextBitmap(res2, 
+					                                new Gdk.Point(bitmap.Position.X+pd.X,
+					                                              bitmap.Position.Y+pd.Y)));
+				}				
 			}
 			
 			return children;
