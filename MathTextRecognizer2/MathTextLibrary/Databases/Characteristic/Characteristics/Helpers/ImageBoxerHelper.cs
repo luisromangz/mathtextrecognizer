@@ -26,7 +26,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <param name="y2">Maxima coordenada vertical</param>
 		public static void BoxImage(MathTextBitmap image, out int x1, out int y1, out int x2, out int y2)
 		{
-			FloatBitmap im = image.ProcessedImage;
+			FloatBitmap im = image.LastProcessedImage;
 			
 			BoxImage(im,out x1,out y1,out x2,out y2);
 		}
@@ -67,7 +67,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			{
 				for(int j=0;j<width;j++)
 				{
-					if(image[j,i]==MathTextBitmap.Black)
+					if(image[j,i]==FloatBitmap.Black)
 					{
 						return i;
 					}
@@ -95,7 +95,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			{
 				for(int j=0;j<width;j++)
 				{
-					if(image[j,i]==MathTextBitmap.Black)
+					if(image[j,i]==FloatBitmap.Black)
 					{
 						return i;
 					}
@@ -122,7 +122,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			{
 				for(int j=0;j<height;j++)
 				{
-					if(image[i,j]==MathTextBitmap.Black)
+					if(image[i,j]==FloatBitmap.Black)
 					{
 						return i;
 					}
@@ -149,7 +149,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			{
 				for(int j=0;j<height;j++)
 				{
-					if(image[i,j]==MathTextBitmap.Black)
+					if(image[i,j]==FloatBitmap.Black)
 					{
 						return i;
 					}

@@ -33,37 +33,12 @@ namespace MathTextLibrary.Projection
 			{
 				for(int j=0;j<image.Width;j++)
 				{
-					if(image[j,i]!=MathTextBitmap.White)
+					if(image[j,i]!=FloatBitmap.White)
 					{
 						projection[i]++;	
 					}
 				}						
 			}
 		}
-
-		/// <summary>
-		/// Crea una representacion grafica de la proyeccion vertical.
-		/// </summary>
-		/// <returns>Un <c>Bitmap</c> con la imagen que representa la proyeccion.</returns>
-		/*protected override Pixbuf CreateBitmap()
-		{
-			int max=-1;
-			foreach(int i in projection)
-			{
-				if(max<i){
-					max=i;
-				}		
-			}
-
-			Bitmap res=new Bitmap(max,projection.Length);
-			using(Graphics g=Graphics.FromImage(res)){
-				g.Clear(Color.White);
-				for(int j=0;j<projection.Length;j++){
-					g.DrawLine(Pens.Black,0,j,projection[j],j);					
-				}				
-			}
-			return res;
-		}*/
-	
 	}
 }

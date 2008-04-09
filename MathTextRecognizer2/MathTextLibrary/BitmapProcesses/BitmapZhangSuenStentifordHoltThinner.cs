@@ -173,7 +173,7 @@ namespace MathTextLibrary.BitmapProcesses
 					if(image[i,j] > 0)
 						image[i,j] = 0;
 					else
-						image[i,j] = MathTextBitmap.White;
+						image[i,j] = FloatBitmap.White;
 		}
 
 		private void Delete(FloatBitmap image, FloatBitmap tmp)

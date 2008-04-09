@@ -237,7 +237,7 @@ namespace MathTextLibrary.BitmapProcesses
 
 			for(i=1;i<nrows-1;i++)
 				for(j=1;j<ncols-1;j++)
-					if(im[i,j]>0) im[i,j]=MathTextBitmap.White;
+					if(im[i,j]>0) im[i,j]=FloatBitmap.White;
 
 			/* Display (im); */
 		}

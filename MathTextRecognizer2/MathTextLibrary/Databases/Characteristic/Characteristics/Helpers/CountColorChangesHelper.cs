@@ -27,7 +27,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <returns>Numero de cambios de color</returns>
 		public static int NumColorChangesRow(MathTextBitmap image, int row) 
 		{
-			FloatBitmap im=image.ProcessedImage;
+			FloatBitmap im=image.LastProcessedImage;
 			int nChanges=0;
 
 			for(int i=1; i<im.Height; i++) 
@@ -49,7 +49,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <returns>Numero de cambios de color</returns>
 		public static int NumColorChangesColumn(MathTextBitmap image, int column) 
 		{
-			FloatBitmap im=image.ProcessedImage;
+			FloatBitmap im=image.LastProcessedImage;
 			int nChanges=0;
 
 			for(int i=1; i<im.Width; i++) 

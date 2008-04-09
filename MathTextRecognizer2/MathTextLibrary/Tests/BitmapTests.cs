@@ -19,7 +19,7 @@ namespace MathTextLibrary
 		{
 			FloatBitmap bitmap = new FloatBitmap(5, 4);
 			
-			bitmap[3,1] = MathTextBitmap.White;
+			bitmap[3,1] = FloatBitmap.White;
 			
 			FloatBitmap rotatedBitmap = bitmap.Rotate90();
 			Assert.AreEqual("0, 0, 0, 0, 0, \n0, 1, 0, 0, 0, \n0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, \n",

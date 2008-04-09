@@ -59,11 +59,11 @@ namespace MathTextLibrary.BitmapProcesses
 				{
 					if (image[i,j] < fthreshold)
 					{
-						res[i,j] = MathTextBitmap.Black;
+						res[i,j] = FloatBitmap.Black;
 					}
 					else
 					{
-						res[i,j] = MathTextBitmap.White;
+						res[i,j] = FloatBitmap.White;
 					}
 				}
 			}

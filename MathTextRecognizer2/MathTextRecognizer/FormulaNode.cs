@@ -22,7 +22,7 @@ namespace MathTextRecognizer
 	{
 	
 		private string name;
-		private string text;
+		private string label;
 		private MathTextBitmap bitmap;
 		private NodeView view;
 		
@@ -42,7 +42,7 @@ namespace MathTextRecognizer
 		    : base()
 		{
 			this.name=name;
-			this.text =name;
+			this.label="";
 			this.bitmap=bitmap;
 			
 			this.view = view;
@@ -51,14 +51,14 @@ namespace MathTextRecognizer
 		}
 		
 		/// <value>
-		/// Contiene el texto del nodo.
+		/// Contiene la etiqueta del nodo.
 		/// </value>
-		[TreeNodeValue (Column=0)]
-		public string Text
+		[TreeNodeValue (Column=1)]
+		public string Label
 		{
 			get
 			{
-				return text;
+				return label;
 			}		
 		}
 		  
@@ -76,7 +76,9 @@ namespace MathTextRecognizer
 		/// <value>
 		/// Contiene el nombre de la imagen del nodo.
 		/// </value>
-		public string Name {
+		[TreeNodeValue (Column=0)]
+		public string Name 
+		{
 			get {
 				return name;
 			}
@@ -93,7 +95,7 @@ namespace MathTextRecognizer
 			if(bitmap.Symbol !=null)
 			{
 				// Si es nulo es pq no se reconoció.				
-				this.text = String.Format("{0}: «{1}»", this.name, bitmap.Symbol.Text);
+				this.label=bitmap.Symbol.Text;
 				this.view.QueueDraw();
 			}
 		}
@@ -108,9 +110,19 @@ namespace MathTextRecognizer
 		/// El nodo añadido.
 		/// </returns>
 		public FormulaNode AddChild(MathTextBitmap childBitmap)
-		{			
-			FormulaNode node = new FormulaNode(String.Format("Subimagen {0}",
-			                                                 this.ChildCount+1),
+		{		
+			string name="";
+			if(this.Parent ==null)
+			{
+				// Si no tiene padre
+				name = String.Format("Imagen {0}",this.ChildCount+1);
+			}
+			else
+			{
+				name = String.Format("{0}.{1}",this.name, this.ChildCount+1);
+			}
+			
+			FormulaNode node = new FormulaNode(name,
 			                                   childBitmap,
 			                                   view);
 				
@@ -136,6 +148,8 @@ namespace MathTextRecognizer
 		private void SelectThread(object sender, EventArgs args)
 		{
 			view.NodeSelection.SelectNode(this);
+			TreePath path = view.Selection.GetSelectedRows()[0];
+			view.ScrollToCell(path,view.Columns[0],true,1,0);
 		}
 	}
 }

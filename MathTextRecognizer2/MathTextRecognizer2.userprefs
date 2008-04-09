@@ -1,14 +1,21 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
-    <File name="Bienvenido" />
-    <File name="MathTextLibrary/BitmapSegmenters/WaterfallSegmenter.cs" line="18" column="4" />
+    <File name="MathTextRecognizer/MainRecognizerWindow.cs" line="166" column="56" />
+    <File name="MathTextLibrary/BitmapSegmenters/WaterfallSegmenter.cs" line="60" column="4" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
       <Node expanded="True" selected="True">
+        <Node name="CustomGtkWidgets" expanded="True">
+          <Node name="References" expanded="True" />
+          <Node name="Resources" expanded="True" />
+          <Node name="CommonDialogs" expanded="True" />
+        </Node>
         <Node name="MathTextLibrary" expanded="True">
+          <Node name="Bitmap" expanded="True" />
           <Node name="BitmapSegmenters" expanded="True" />
         </Node>
+        <Node name="MathTextRecognizer" expanded="True" />
       </Node>
     </ViewMemento>
     <ViewMemento id="ClassPad">

@@ -495,7 +495,7 @@ namespace MathTextLearner
 				mtb.ProcessImage(database.Processes);
 				
 				imageAreaOriginal.Image = orig;
-				imageAreaProcessed.Image = mtb.ProcessedBitmap;
+				imageAreaProcessed.Image = mtb.LastProcessedImage.CreatePixbuf();
 			}
 			else
 			{

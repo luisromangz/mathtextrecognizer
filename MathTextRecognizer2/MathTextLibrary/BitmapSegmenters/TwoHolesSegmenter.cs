@@ -111,7 +111,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 				
 				for(i=0;i<image.Height && edge1<0;i++){
 					for	(j=0;j<size && edge1<0;j++){
-						if(image[j+start,i]!=MathTextBitmap.White){
+						if(image[j+start,i]!=FloatBitmap.White){
 							edge1=i-1;
 						}
 					}
@@ -119,7 +119,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 				
 				for(i=image.Height-1;i>=edge1 && edge2<0;i--){
 					for	(j=0;j<size && edge2<0;j++){
-						if(image[j+start,i]!=MathTextBitmap.White){
+						if(image[j+start,i]!=FloatBitmap.White){
 							edge2=i+1;
 						}
 					}					
@@ -128,7 +128,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 			}else{
 				for(i=0;i<image.Width && edge1<0;i++){
 					for	(j=0;j<size && edge1<0;j++){
-						if(image[i,j+start]!=MathTextBitmap.White){
+						if(image[i,j+start]!=FloatBitmap.White){
 							edge1=i-1;
 						}
 					}
@@ -136,7 +136,7 @@ namespace MathTextLibrary.BitmapSegmenters{
 				
 				for(i=image.Width-1;i>=edge1 && edge2<0;i--){
 					for	(j=0;j<size && edge2<0;j++){
-						if(image[i,j+start]!=MathTextBitmap.White){
+						if(image[i,j+start]!=FloatBitmap.White){
 							edge2=i+1;
 						}
 					}					
