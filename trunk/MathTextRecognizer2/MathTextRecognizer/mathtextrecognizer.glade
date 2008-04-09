@@ -258,6 +258,8 @@
           <widget class="GtkHPaned" id="hpaned1">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="position">255</property>
+            <property name="position_set">True</property>
             <child>
               <widget class="GtkScrolledWindow" id="scrolledtree">
                 <property name="width_request">210</property>
@@ -284,6 +286,8 @@
                     <property name="width_request">200</property>
                     <property name="height_request">200</property>
                     <property name="visible">True</property>
+                    <property name="has_tooltip">True</property>
+                    <property name="tooltip_text">Muestra la imagen de partida</property>
                     <property name="border_width">5</property>
                     <property name="label_xalign">0</property>
                     <property name="shadow_type">GTK_SHADOW_IN</property>
@@ -313,6 +317,8 @@
                       <widget class="GtkFrame" id="frameNodeActual">
                         <property name="width_request">240</property>
                         <property name="visible">True</property>
+                        <property name="has_tooltip">True</property>
+                        <property name="tooltip_text">Muestra la imagen del nodo</property>
                         <property name="label_xalign">0</property>
                         <property name="shadow_type">GTK_SHADOW_IN</property>
                         <child>
@@ -337,7 +343,68 @@
                         <property name="label_xalign">0</property>
                         <property name="shadow_type">GTK_SHADOW_IN</property>
                         <child>
-                          <placeholder/>
+                          <widget class="GtkNotebook" id="processedImageNB">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="has_tooltip">True</property>
+                            <property name="tooltip_text">Muestra el nodo procesado según las distintas bases de datos</property>
+                            <property name="tab_pos">GTK_POS_BOTTOM</property>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="label17">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">page 1</property>
+                              </widget>
+                              <packing>
+                                <property name="type">tab</property>
+                                <property name="tab_fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="label18">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">page 2</property>
+                              </widget>
+                              <packing>
+                                <property name="type">tab</property>
+                                <property name="position">1</property>
+                                <property name="tab_fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="label19">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">page 3</property>
+                              </widget>
+                              <packing>
+                                <property name="type">tab</property>
+                                <property name="position">2</property>
+                                <property name="tab_fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="label20">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">page 4</property>
+                              </widget>
+                              <packing>
+                                <property name="type">tab</property>
+                                <property name="position">3</property>
+                                <property name="tab_fill">False</property>
+                              </packing>
+                            </child>
+                          </widget>
                         </child>
                         <child>
                           <widget class="GtkLabel" id="label2">
@@ -363,6 +430,8 @@
                   <widget class="GtkAlignment" id="alignNextButtons">
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
+                    <property name="has_tooltip">True</property>
+                    <property name="tooltip_text">El nodo procesado según cada base de datos</property>
                     <property name="xscale">0</property>
                     <child>
                       <widget class="GtkHBox" id="hbox3">

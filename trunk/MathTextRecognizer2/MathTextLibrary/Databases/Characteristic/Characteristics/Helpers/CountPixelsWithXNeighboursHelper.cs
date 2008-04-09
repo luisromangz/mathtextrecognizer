@@ -25,13 +25,13 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		{
 			int count=0;
 			
-			FloatBitmap im=image.ProcessedImage;
+			FloatBitmap im=image.LastProcessedImage;
 			int sizeR = im.Width;
 			int sizeC = im.Height;
 
 			for(int i=0;i<sizeR;i++)
 				for(int j=0;j<sizeC;j++)
-					if(im[i,j]==MathTextBitmap.Black
+					if(im[i,j]==FloatBitmap.Black
 							&& CountBlackNeighboursHelper.BlackNeighbours(im,i,j,sizeR,sizeC)==neighbours)
 						count++;
 
@@ -50,13 +50,13 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		{
 			int count=0;
 			
-			FloatBitmap im=image.ProcessedImage;
+			FloatBitmap im=image.LastProcessedImage;
 			int sizeR=im.Width;
 			int sizeC = im.Height;
 
 			for(int i=0;i<sizeR;i++)
 				for(int j=0;j<sizeC;j++)
-					if(im[i,j]==MathTextBitmap.Black
+					if(im[i,j]==FloatBitmap.Black
 							&& CountBlackNeighboursHelper.BlackNeighbours(im,i,j,sizeR,sizeC)>=neighbours)
 						count++;
 			

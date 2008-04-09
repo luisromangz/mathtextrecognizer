@@ -67,7 +67,7 @@ namespace MathTextLibrary.BitmapSegmenters
 				for(i=0; i<image.Width && !startFound;i++)
 				{
 					
-					if(image[i,j] != MathTextBitmap.White)
+					if(image[i,j] != FloatBitmap.White)
 					{
 						for(k=0; k<j ;k++)
 						{
@@ -76,7 +76,7 @@ namespace MathTextLibrary.BitmapSegmenters
 							// inmediatamente inferior a la del punto negro.
 							
 							points.Add(new Point(i,k));
-							cutImage[i,k] = MathTextBitmap.Black;
+							cutImage[i,k] = FloatBitmap.Black;
 						}						
 						startFound = true;
 					}					
@@ -116,14 +116,14 @@ namespace MathTextLibrary.BitmapSegmenters
 						   && y + yd >= 0
 						   && x + xd < image.Width
 						   && y + yd < image.Height
-						   && image[x+ xd, y+yd] == MathTextBitmap.White
+						   && image[x+ xd, y+yd] == FloatBitmap.White
 						   && !points.Contains(new Point(x +xd, y +yd)))
 							
 						{
 							x = x +xd;
 							y = y + yd;
 							points.Add(new Point(x,y));
-							cutImage[x,y]= MathTextBitmap.Black;
+							cutImage[x,y]= FloatBitmap.Black;
 							
 							// Indicamos que hemos encontrado el valor.
 							notNewFound = false;
@@ -148,7 +148,7 @@ namespace MathTextLibrary.BitmapSegmenters
 				{
 					for(j = 0; j< cutImage.Height && !whiteFound; j++)
 					{
-						if(cutImage[i,j] != MathTextBitmap.Black)
+						if(cutImage[i,j] != FloatBitmap.Black)
 						{
 							// Mas que el primer blaco, buscamos el primer
 							// negro;
@@ -163,7 +163,7 @@ namespace MathTextLibrary.BitmapSegmenters
 				cutImage = UndoRotate(cutImage);
 				
 				// Rellenamos la imagen de negro a partir del punto encontrado.
-				cutImage.Fill(x0, y0, MathTextBitmap.Black);
+				cutImage.Fill(x0, y0, FloatBitmap.Black);
 				
 				// Recorremos la imagen de corte, y sacamos dos imagenes;
 				FloatBitmap res1 = new FloatBitmap(cutImage.Width, cutImage.Height);
@@ -180,10 +180,10 @@ namespace MathTextLibrary.BitmapSegmenters
 						// Si estamos en la zona negra de la imagen de corte,
 						// copiamos en la primera imagen de resultado,
 						// y sino, en la segunda.
-						if(cutImage[i, j] == MathTextBitmap.Black)
+						if(cutImage[i, j] == FloatBitmap.Black)
 						{
 							res1[i,j] = origImage[i,j];
-							if (origImage[i,j]!=MathTextBitmap.White)
+							if (origImage[i,j]!=FloatBitmap.White)
 							{
 								res1HasBlack = true;
 							}
@@ -191,7 +191,7 @@ namespace MathTextLibrary.BitmapSegmenters
 						else
 						{
 							res2[i,j] = origImage[i,j]; 
-							if (origImage[i,j]!=MathTextBitmap.White)
+							if (origImage[i,j]!=FloatBitmap.White)
 							{
 								res2HasBlack = true;
 							}

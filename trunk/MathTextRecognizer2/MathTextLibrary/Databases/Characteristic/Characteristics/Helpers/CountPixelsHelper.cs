@@ -34,7 +34,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		public static int NumBlackPixelsInHalf(MathTextBitmap image, Half h)
 		{
 			int n=0;
-			FloatBitmap im=image.ProcessedImage;
+			FloatBitmap im=image.LastProcessedImage;
 			int sizeR = im.Width;
 			int sizeC = im.Height;
 			int mitadR = sizeR/2;
@@ -49,16 +49,16 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		
 			switch(h) {
 				case(Half.Top):
-					n=NumPixelsInArea(im,MathTextBitmap.Black,0,0,sizeR-1,mitadC);
+					n=NumPixelsInArea(im,FloatBitmap.Black,0,0,sizeR-1,mitadC);
 					break;
 				case(Half.Bottom):
-					n=NumPixelsInArea(im,MathTextBitmap.Black,0,mitadC,sizeR-1,sizeC-1);
+					n=NumPixelsInArea(im,FloatBitmap.Black,0,mitadC,sizeR-1,sizeC-1);
 					break;
 				case(Half.Left):
-					n=NumPixelsInArea(im,MathTextBitmap.Black,0,0,mitadR,sizeC-1);
+					n=NumPixelsInArea(im,FloatBitmap.Black,0,0,mitadR,sizeC-1);
 					break;
 				case(Half.Right):
-					n=NumPixelsInArea(im,MathTextBitmap.Black,mitadR,0,sizeR-1,sizeC-1);
+					n=NumPixelsInArea(im,FloatBitmap.Black,mitadR,0,sizeR-1,sizeC-1);
 					break;
 			}
 			
@@ -79,7 +79,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		public static int NumBlackPixelsInQuadrant(MathTextBitmap image, Quadrant q)
 		{
 			int n=0;
-			FloatBitmap im=image.ProcessedImage;
+			FloatBitmap im=image.LastProcessedImage;
 			int sizeR = im.Width;
 			int sizeC = im.Height;
 			int mitadR = sizeR/2;
@@ -93,16 +93,16 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			
 			switch(q) {
 				case(Quadrant.NW):
-					n=NumPixelsInArea(im,MathTextBitmap.Black,0,0,mitadR,mitadC);
+					n=NumPixelsInArea(im,FloatBitmap.Black,0,0,mitadR,mitadC);
 					break;
 				case(Quadrant.NE):
-					n=NumPixelsInArea(im,MathTextBitmap.Black,mitadR,0,sizeR-1,mitadC);
+					n=NumPixelsInArea(im,FloatBitmap.Black,mitadR,0,sizeR-1,mitadC);
 					break;
 				case(Quadrant.SW):
-					n=NumPixelsInArea(im,MathTextBitmap.Black,0,mitadC,mitadR,sizeC-1);
+					n=NumPixelsInArea(im,FloatBitmap.Black,0,mitadC,mitadR,sizeC-1);
 					break;
 				case(Quadrant.SE):
-					n=NumPixelsInArea(im,MathTextBitmap.Black,mitadR,mitadC,sizeR-1,sizeC-1);
+					n=NumPixelsInArea(im,FloatBitmap.Black,mitadR,mitadC,sizeR-1,sizeC-1);
 					break;
 				
 			}

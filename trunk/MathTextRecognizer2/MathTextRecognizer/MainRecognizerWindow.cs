@@ -51,6 +51,9 @@ namespace MathTextRecognizer
 		private Frame frameNodeProcessed;
 		
 		[WidgetAttribute]
+		private Notebook processedImageNB;
+		
+		[WidgetAttribute]
 		private Button btnNextStep;
 		
 		[WidgetAttribute]
@@ -114,7 +117,6 @@ namespace MathTextRecognizer
 		private Pixbuf imageOriginal;
 		
 		private ImageArea imageAreaNode;
-		private ImageArea imageAreaProcessed;
 		
 		private SegmentingAndSymbolMatchingController controller;		
 		
@@ -189,12 +191,16 @@ namespace MathTextRecognizer
 			// Creamos el NodeView, podría hacerse en el fichero de Glade,
 			// aunque alguna razón habría por la que se hizo así.
 			treeview=new NodeView(store);
+			treeview.RulesHint = true;
+			
+			treeview.ShowExpanders = true;
 			treeview.AppendColumn ("Imagen", new CellRendererText (), "text", 0);
+			treeview.AppendColumn ("Etiqueta", new CellRendererText (), "text", 1);
 			scrolledtree.Add(treeview);
 			
 			// Asignamos el evento para cuando se produzca la selección de un
 			// nodo en el árbol.
-			treeview.Selection.Changed += OnTreeviewSelectionChanged;
+			treeview.NodeSelection.Changed += OnTreeviewSelectionChanged;
 			treeview.RowActivated += OnTreeviewRowActivated;
 			
 			mainWindow.Title = title + "Sin imagen";
@@ -209,12 +215,6 @@ namespace MathTextRecognizer
 			imageAreaNode=new ImageArea();
 			imageAreaNode.ImageMode=ImageAreaMode.Zoom;			
 			frameNodeActual.Add(imageAreaNode);
-			
-			
-			imageAreaProcessed = new ImageArea();
-			imageAreaProcessed.ImageMode = ImageAreaMode.Zoom;
-			
-			frameNodeProcessed.Add(imageAreaProcessed);
 			
 			// Ponemos iconos personalizados en los botones
 			menuLoadImage.Image = ImageResources.LoadImage("insert-image16");
@@ -242,20 +242,40 @@ namespace MathTextRecognizer
 		private void OnTreeviewSelectionChanged(object sender, EventArgs arg)
 		{
 		    // Si hemos acabado el proceso y hemos seleccionado algo.
-			if(recognizementFinished
-			   && treeview.Selection.CountSelectedRows() > 0)
+			if(treeview.Selection.CountSelectedRows() > 0)
 			{
-				// Recuperamos el TreePath del nodo seleccionado.
-				TreePath path = treeview.Selection.GetSelectedRows()[0];
-				
 				FormulaNode node=
-				    (FormulaNode)(store.GetNode(path));
+					(FormulaNode)(treeview.NodeSelection.SelectedNode);
 				
-				imageAreaNode.Image=node.MathTextBitmap.Bitmap;
-				imageAreaProcessed.Image=node.MathTextBitmap.ProcessedBitmap;
+				imageAreaNode.Image=node.MathTextBitmap.Pixbuf;
+
+				// Vaciamos el notebook
+				while(processedImageNB.NPages > 0)
+					processedImageNB.RemovePage(0);
 				
-				MarkImage(node.MathTextBitmap);
+				if(recognizementFinished)
+				{
+					// Añadimos las imagenes procesasdas al notebook
+
+					// Solo mostramos los tabs si hay mas de una imagen procesada
+					processedImageNB.ShowTabs = 
+						node.MathTextBitmap.ProcessedImages.Count>1;
+					
+					// Si hemos terminado podemos hacer esto sin peligro.
+					foreach(Pixbuf p in node.MathTextBitmap.ProcessedPixbufs)
+					{
+						ImageArea imageAreaProcessed = new ImageArea();
+						imageAreaProcessed.Image=p;
+						imageAreaProcessed.ImageMode=ImageAreaMode.Zoom;
+						
+					
+						processedImageNB.AppendPage(imageAreaProcessed,
+						                            new Label(String.Format("BD {0}",
+						                                                    processedImageNB.NPages+1)));
+					}
+				}
 				
+				MarkImage(node.MathTextBitmap);				
 			}
 		
 		}
@@ -274,6 +294,31 @@ namespace MathTextRecognizer
 		
 		private void OnBitmapBeingRecognizedThreadSafe(object sender, EventArgs a)
 		{		
+			if(treeview.NodeSelection.SelectedNodes.Length>0)
+			{
+				// Si hay un simbolo seleccionado, 
+				// nos traemos sus imagenes procesadas.
+				
+				FormulaNode node = 
+					(FormulaNode)(treeview.NodeSelection.SelectedNode);
+			
+				
+				ImageArea imageAreaProcessed = new ImageArea();
+				imageAreaProcessed.Image=
+					node.MathTextBitmap.LastProcessedImage.CreatePixbuf();
+				imageAreaProcessed.ImageMode=ImageAreaMode.Zoom;
+				
+			
+				processedImageNB.AppendPage(imageAreaProcessed,
+				                            new Label(String.Format("BD {0}",
+				                                                    processedImageNB.NPages+1)));
+				
+				processedImageNB.Page=processedImageNB.NPages-1;
+				
+				// Solo mostramos los tabs si hay mas de una imagen procesada
+				processedImageNB.ShowTabs = 
+					node.MathTextBitmap.ProcessedImages.Count>1;
+			}
 			ClearLog();
 		}
 		
@@ -328,7 +373,12 @@ namespace MathTextRecognizer
 		{
 			alignNextButtons.Sensitive=false;
 			imageAreaNode.Image=null;
-			imageAreaProcessed.Image=null;
+			
+			
+			// Vaciamos el notebook.
+			while(processedImageNB.NPages > 0)
+				processedImageNB.RemovePage(0);
+			
 			toolLatex.Sensitive=true;
 			
 			menuLoadImage.Sensitive=true;
@@ -588,7 +638,6 @@ namespace MathTextRecognizer
 			
 			imageAreaOriginal.Image=null;
 			imageAreaNode.Image=null;
-			imageAreaProcessed.Image=null;
 			
 			Application.Quit();			
 		}	
@@ -639,7 +688,7 @@ namespace MathTextRecognizer
 				{
 					string extension = 
 						Path.GetExtension(filename).ToLower().Trim('.');
-					activatedNode.MathTextBitmap.Bitmap.Save(filename,extension);
+					activatedNode.MathTextBitmap.Pixbuf.Save(filename,extension);
 				}
 			}
 			

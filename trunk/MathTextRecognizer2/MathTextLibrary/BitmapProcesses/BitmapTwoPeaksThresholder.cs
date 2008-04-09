@@ -94,11 +94,11 @@ namespace MathTextLibrary.BitmapProcesses
 				for (j=0; j<ncols; j++)
 					if (image[i,j] < t)
 					{
-						res[i,j] = MathTextBitmap.Black;
+						res[i,j] = FloatBitmap.Black;
 					}
 					else
 					{
-						res[i,j] = MathTextBitmap.White;
+						res[i,j] = FloatBitmap.White;
 					}
 			}
 			

@@ -34,7 +34,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <returns>Numero de zonas blancas en la imagen</returns>
 		public static int NumWhiteZones(MathTextBitmap image, bool bigholes)
 		{
-			FloatBitmap im=image.ProcessedImage;
+			FloatBitmap im=image.LastProcessedImage;
 			
 			int sizeC = im.Height;
 			int sizeR = im.Width;
@@ -47,7 +47,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			int aux=1;
 			
 			/*Se analiza el primer elemento de la primera fila*/
-			if (im[0,0]==MathTextBitmap.White)
+			if (im[0,0] == FloatBitmap.White)
 			{
 				label[0,0]=aux;
 			}
@@ -57,11 +57,11 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			/*Se analiza el resto de la primera fila*/
 			for(int i=1;i<sizeR;i++)
 			{
-				if (im[i,0]==MathTextBitmap.White && im[i-1,0]==MathTextBitmap.White)
+				if (im[i,0]==FloatBitmap.White && im[i-1,0]==FloatBitmap.White)
 				{
 					label[i,0]=aux;
 				}
-				else if (im[i,0]==MathTextBitmap.White && im[i-1,0]!=MathTextBitmap.White)
+				else if (im[i,0]==FloatBitmap.White && im[i-1,0]!=FloatBitmap.White)
 				{
 					label[i,0]=++aux;
 				}
@@ -72,11 +72,11 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			/*Se analiza el resto de la primera columna*/
 			for(int i=1;i<sizeC;i++)
 			{
-				if (im[0,i]==MathTextBitmap.White && im[0,i-1]==MathTextBitmap.White)
+				if (im[0,i]==FloatBitmap.White && im[0,i-1]==FloatBitmap.White)
 				{
 					label[0,i]=aux;
 				}
-				else if (im[0,i]==MathTextBitmap.White && im[0,i-1]!=MathTextBitmap.White)
+				else if (im[0,i]==FloatBitmap.White && im[0,i-1]!=FloatBitmap.White)
 				{
 					label[0,i]=++aux;
 				}
@@ -86,19 +86,19 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			for(int i=1;i<sizeR;i++)
 				for(int j=1;j<sizeC;j++)
 				{
-					if(im[i,j]==MathTextBitmap.White)
+					if(im[i,j]==FloatBitmap.White)
 					{
-						if(im[i-1,j]==MathTextBitmap.White 
-						   && im[i,j-1]==MathTextBitmap.White)
+						if(im[i-1,j]==FloatBitmap.White 
+						   && im[i,j-1]==FloatBitmap.White)
 						{
 							label[i,j]=label[i-1,j];
 							AddLabelsToEquiv(equiv,label[i-1,j],label[i,j-1]);
 						}
-						else if(im[i-1,j]==MathTextBitmap.White)
+						else if(im[i-1,j]==FloatBitmap.White)
 						{
 							label[i,j]=label[i-1,j];
 						}
-						else if (im[i,j-1]==MathTextBitmap.White)
+						else if (im[i,j-1]==FloatBitmap.White)
 						{
 							label[i,j]=label[i,j-1];
 						}
@@ -109,27 +109,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 					}
 				}
 				
-			/*
-			// Pintar la lista de equivalencias de cada etiqueta
-			foreach(int l in equiv.Keys)
-			{
-				Console.Write(l + " = ");
-				foreach(int i in (ArrayList)equiv[l])
-					Console.Write(i+",");
-				Console.Write("\n");
-			}
-			*/
 			
-			/*
-			// Pinta el etiquetado to bonito
-			for(int i=0;i<size;i++)
-			{
-				for(int j=0;j<size;j++)
-					Console.Write(label[j,i]+",");
-				Console.Write("\n");
-			}
-			Console.Write("\n");
-			*/
 
 			/*Ahora hay que tratar las equivalencias*/
 			for(int i=0;i<sizeR;i++)

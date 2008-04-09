@@ -16,19 +16,8 @@ namespace MathTextLibrary.Bitmap
 	/// </summary>
 	public class MathTextBitmap
 	{
-#region Constantes
-		
-		/// <summary>
-		/// El valor que representa al color negro en los <c>MathTextBitmap</c>.
-		/// </summary>
-		public const float Black=0;
-		
-		/// <summary>
-		/// El valor que representa al color blanco en los <c>MathTextBitmap</c>.
-		/// </summary>
-		public const float White=1;
-		
-#endregion Atributos privados
+
+
 		
 #region Atributos privados
 		
@@ -47,10 +36,7 @@ namespace MathTextLibrary.Bitmap
 		private Point position;
 		
 		// Imagen con el preprocesamiento completo
-		private FloatBitmap processedImage;
-		
-		// Tamaño de la imagen procesada
-		private int processedImageSize;
+		private List<FloatBitmap> processedImages;
 		
 		// Simbolo por el que se ha reconocido la imagen
 		private MathSymbol symbol;
@@ -80,6 +66,9 @@ namespace MathTextLibrary.Bitmap
 		public MathTextBitmap(Pixbuf b)
 		{
 			this.position = new Point(0,0);
+			
+			processedImages = new List<FloatBitmap>();
+			
 			image = FloatBitmap.CreateFromPixbuf(b);	
 			width = b.Width;
 			height = b.Height;
@@ -97,6 +86,8 @@ namespace MathTextLibrary.Bitmap
 		{
 			this.image =  image;
 			this.position = pos;
+			
+			processedImages = new List<FloatBitmap>();
 			
 			width = image.Width;
 			height = image.Height;
@@ -123,7 +114,7 @@ namespace MathTextLibrary.Bitmap
 		/// <remarks>
 		/// El bitmap creado estara en escala de grises.
 		/// </remarks>		
-		public Pixbuf Bitmap
+		public Pixbuf Pixbuf
 		{
 			get
 			{		
@@ -157,28 +148,52 @@ namespace MathTextLibrary.Bitmap
 		}	
 		
 		/// <value>
-		/// Contiene el <c>Pixbuf</c> que representa a la imagen procesada.
+		/// Contiene los <c>Pixbuf</c> que representas a la imagen procesada.
+		/// segun las distintas bases de datos aplicadas.
 		/// </value>
 		/// <remarks>
-		/// El bitmap creado estara en escala de grises.
+		/// Los bitmaps 
 		/// </remarks>
-		public Pixbuf ProcessedBitmap
+		public List<Pixbuf> ProcessedPixbufs
 		{
 			get
-			{		
-			
-				return processedImage.CreatePixbuf();
+			{	
+				List<Pixbuf> pixbufs = new List<Pixbuf>();
+				foreach(FloatBitmap img in processedImages)
+				{
+					pixbufs.Add(img.CreatePixbuf());
+				}
+				
+				return pixbufs;
 			}
 		}		
-
+		
 		/// <value>
-		/// Contiene la imagen procesada como un array de float.
+		/// Contiene la ultima imagen procesada.
 		/// </value>
-		public FloatBitmap ProcessedImage
+		public FloatBitmap LastProcessedImage
 		{
 			get
 			{
-				return processedImage;
+				if (processedImages.Count == 0)
+				{
+					return null;
+				}
+				else
+				{
+					return processedImages[processedImages.Count-1];
+				}
+			}
+		}
+
+		/// <value>
+		/// Contiene las imagenes procesada como un array de float.
+		/// </value>
+		public List<FloatBitmap> ProcessedImages
+		{
+			get
+			{
+				return processedImages;
 			}
 		}
 		
@@ -232,12 +247,16 @@ namespace MathTextLibrary.Bitmap
 		/// </summary>
 		public void ProcessImage(List<BitmapProcess> processes)
 		{			
-			processedImage = image;
+			FloatBitmap processedImage = new FloatBitmap(image);
 			
 			foreach(BitmapProcess process in processes)
 			{
 				processedImage = process.Apply(processedImage);
 			}
+			
+			
+			processedImages.Add(processedImage);
+			
 		}
 		
 		

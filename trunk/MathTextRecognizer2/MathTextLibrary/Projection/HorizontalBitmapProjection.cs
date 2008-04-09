@@ -35,7 +35,7 @@ namespace MathTextLibrary.Projection
 			{
 				for(int j=0;j<image.Height;j++)
 				{
-					if(image[i,j]!=MathTextBitmap.White)
+					if(image[i,j]!=FloatBitmap.White)
 					{
 						projection[i]++;	
 					}

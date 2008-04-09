@@ -14,6 +14,18 @@ namespace MathTextLibrary.Bitmap
 	/// </summary>
 	public class FloatBitmap
 	{
+		
+		/// <summary>
+		/// El valor que representa al color negro en los <c>MathTextBitmap</c>.
+		/// </summary>
+		public const float Black=0;
+		
+		/// <summary>
+		/// El valor que representa al color blanco en los <c>MathTextBitmap</c>.
+		/// </summary>
+		public const float White=1;
+		
+		
 		float [,] image;
 		
 		/// <summary>
@@ -33,7 +45,7 @@ namespace MathTextLibrary.Bitmap
 			{
 				for(int j=0; j<height; j++)
 				{
-					image[i,j] = MathTextBitmap.White;
+					image[i,j] = FloatBitmap.White;
 				}
 			}
 		}

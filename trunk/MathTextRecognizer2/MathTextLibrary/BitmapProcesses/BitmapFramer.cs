@@ -97,7 +97,7 @@ namespace MathTextLibrary.BitmapProcesses
 			{
 				for(int j=0;j<newHeight;j++)
 				{
-					newImage[i,j]=MathTextBitmap.White;
+					newImage[i,j]= FloatBitmap.White;
 				}
 			}
 			
@@ -146,7 +146,7 @@ namespace MathTextLibrary.BitmapProcesses
 			{
 				for(int j=0; j<newHeight; j++)
 				{
-					newImage[i, j]=MathTextBitmap.White;
+					newImage[i, j]=FloatBitmap.White;
 				}
 			}
 			
