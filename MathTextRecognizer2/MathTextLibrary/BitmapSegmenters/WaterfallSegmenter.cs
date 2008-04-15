@@ -19,8 +19,6 @@ namespace MathTextLibrary.BitmapSegmenters
 	{
 		private WaterfallSegmenterMode mode;
 		
-		
-		
 		/// <summary>
 		/// Constructor de <c>WaterfallSegmenter</c>
 		/// </summary>

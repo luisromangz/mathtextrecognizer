@@ -90,16 +90,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="MainWindow.cs" />
-    <Compile Include="LearningFailedArgs.cs" />
     <Compile Include="Assistant\BitmapProcessesStep.cs" />
     <Compile Include="Assistant\DatabaseTypeStep.cs" />
     <Compile Include="Assistant\FileSelectionStep.cs" />
     <Compile Include="Assistant\NewDatabaseAssistant.cs" />
-    <Compile Include="Assistant\BitmapProcessHelpers\BitmapProcessNode.cs" />
-    <Compile Include="Assistant\BitmapProcessHelpers\ProcessEditorDialog.cs" />
-    <Compile Include="Assistant\BitmapProcessHelpers\ProcessEditorWidget.cs" />
-    <Compile Include="Assistant\BitmapProcessHelpers\ProcessSelectorDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="mathtextlearner.glade" />

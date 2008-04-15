@@ -1,22 +1,19 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
-    <File name="MathTextRecognizer/MainRecognizerWindow.cs" line="316" column="53" />
-    <File name="MathTextRecognizer/Controllers/SegmentingAndSymbolMatchingController.cs" line="228" column="23" />
+    <File name="MathTextRecognizer/Steps/FormulaNodeActionDialog.cs" line="50" column="4" />
+    <File name="MathTextRecognizer/Steps/SegmentingAndMatchingStepWidget.cs" line="89" column="41" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
-      <Node expanded="True" selected="True">
-        <Node name="MathTextLearner" expanded="True" />
-        <Node name="MathTextLibrary" expanded="True">
-          <Node name="Bitmap" expanded="True" />
-          <Node name="BitmapProcesses" expanded="True" />
-          <Node name="BitmapSegmenters" expanded="True" />
-          <Node name="Projection" expanded="True" />
-          <Node name="Tests" expanded="True" />
+      <Node expanded="True">
+        <Node name="CustomGtkWidgets" expanded="True">
+          <Node name="CommonDialogs" expanded="True" />
         </Node>
         <Node name="MathTextRecognizer" expanded="True">
-          <Node name="Resources" expanded="True" />
-          <Node name="Controllers" expanded="True" />
+          <Node name="DatabaseManager" expanded="True" />
+          <Node name="Steps" expanded="True">
+            <Node name="SegmentingAndMatchingStepWidget.cs" selected="True" />
+          </Node>
         </Node>
       </Node>
     </ViewMemento>
@@ -28,7 +25,7 @@
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer/MainRecognizerWindow.cs" />
+    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer/Steps/SegmentingAndMatchingStepWidget.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>
