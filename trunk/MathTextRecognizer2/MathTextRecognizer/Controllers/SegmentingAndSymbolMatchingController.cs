@@ -319,7 +319,6 @@ namespace MathTextRecognizer.Controllers
 		/// </returns>
 		private List<MathTextBitmap> CreateChildren(MathTextBitmap image)
 		{
-			Console.WriteLine("otra imagen");
 			List<MathTextBitmap> children = new List<MathTextBitmap>();
 			
 			bool segmented = false;

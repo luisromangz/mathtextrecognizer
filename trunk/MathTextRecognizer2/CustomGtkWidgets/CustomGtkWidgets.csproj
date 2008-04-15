@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="CommonDialogs\ImageSaveDialog.cs" />
     <Compile Include="HandWriting\RasterHandWritingArea.cs" />
     <Compile Include="HandWriting\VectorHandWritingArea.cs" />
     <Compile Include="HandWriting\IHandWritingArea.cs" />

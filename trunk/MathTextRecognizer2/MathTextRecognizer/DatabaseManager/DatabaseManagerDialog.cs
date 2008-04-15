@@ -125,6 +125,12 @@ namespace MathTextRecognizer.DatabaseManager
 			return (ResponseType)(this.databaseManagerDialog.Run());
 		}
 		
+		
+		public void Destroy()
+		{
+			databaseManagerDialog.Destroy();
+		}
+		
 	
 		
 #endregion Metodos publicos

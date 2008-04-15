@@ -26,8 +26,9 @@ using MathTextLibrary.Symbol;
 using MathTextLibrary.Controllers;
 using MathTextLibrary.Databases.Characteristic.Characteristics;
 
-using MathTextRecognizer.DatabaseManager;
+using MathTextRecognizer.Steps;
 using MathTextRecognizer.Controllers;
+using MathTextRecognizer.DatabaseManager;
 
 namespace MathTextRecognizer
 {
@@ -39,28 +40,7 @@ namespace MathTextRecognizer
 	{
 		#region Glade-Widgets
 		[WidgetAttribute]
-		private Gtk.Window mainWindow;
-		
-		[WidgetAttribute]
-		private Frame frameOriginal;
-		
-		[WidgetAttribute]
-		private Frame frameNodeActual;
-		
-		[WidgetAttribute]
-		private Frame frameNodeProcessed;
-		
-		[WidgetAttribute]
-		private Notebook processedImageNB;
-		
-		[WidgetAttribute]
-		private Button btnNextStep;
-		
-		[WidgetAttribute]
-		private Button btnNextNode;
-		
-		[WidgetAttribute]
-		private Button btnTilEnd;
+		private Gtk.Window mainWindow;		
 		
 		[WidgetAttribute]		
 		private ToolButton toolLoadImage;
@@ -69,19 +49,10 @@ namespace MathTextRecognizer
 		private ToolButton toolLatex;
 		
 		[WidgetAttribute]		
-		private ToolButton toolDatabase;	
-		
-		[WidgetAttribute]
-		private ScrolledWindow scrolledtree;
-		
-		[WidgetAttribute]
-		private Alignment alignNextButtons;
+		private ToolButton toolDatabase;
 		
 		[WidgetAttribute]
 		private Expander expLog;
-		
-		[WidgetAttribute]
-		private Toolbar toolbar;
 		
 		[WidgetAttribute]
 		private ImageMenuItem menuNewSession;
@@ -101,38 +72,28 @@ namespace MathTextRecognizer
 		[WidgetAttribute]
 		private ToolButton toolNewSession;
 		
+		[WidgetAttribute]
+		private Notebook recognizingStepsNB;
+		
 		#endregion Glade-Widgets
 		
 		#region Otros atributos
 		
-		private float zoom;
+		
 		
 		private bool recognizementFinished;
 		
-		private NodeStore store;
-		private NodeView treeview;	
-		
-		private ImageArea imageAreaOriginal;
-		
-		private Pixbuf imageOriginal;
-		
-		private ImageArea imageAreaNode;
-		
-		private SegmentingAndSymbolMatchingController controller;		
+		private SegmentingAndMatchingStepWidget segmentingAndMatchingStepWidget;
 		
 		private LogView logView;
 		
 		private const string title="Reconocedor de caracteres matemáticos - ";	
 		
-		private FormulaNode currentNode;		
 		
-		private MathTextBitmap rootBitmap;
 		
 		private DatabaseManagerDialog databaseManagerDialog;
 		
-		private Thread recognizingThread;
-		
-		private ControllerStepMode stepMode;
+
 		
 		#endregion Otros atributos
 		
@@ -168,54 +129,78 @@ namespace MathTextRecognizer
 				Config.RecognizerConfig.Instance.DatabaseFilesInfo;
 		}
 		
+		
+#region Propiedades
+		
+		/// <value>
+		/// Contiene el dialogo de gestion de bases de datos.
+		/// </value>
+		public DatabaseManagerDialog DatabaseManager
+		{
+			get
+			{
+				return databaseManagerDialog;
+			}
+		}
+		
+		/// <value>
+		/// Contiene el estado de expansión del visor del log.
+		/// </value>
+		public bool LogAreaExpanded
+		{
+			get
+			{
+				return expLog.Expanded;
+			}
+			set
+			{
+				expLog.Expanded = value;
+			}
+		}
+
+		/// <value>
+		/// Contiene la ventana de la aplicacion.
+		/// </value>
+		public Gtk.Window MainWindow 
+		{
+			get 
+			{
+				return mainWindow;
+			}
+		}
+		
+#endregion Propiedades
+		
+#region Metodos publicos
+		
+		/// <summary>
+		/// Método que permite borrar la zona de informacion de proceso.
+		/// </summary>
+		public void ClearLog()
+		{			
+			logView.ClearLog();			
+		}
+		
+		/// <summary>
+		/// Método usado para escribir un mensaje en la zona de información de proceso.
+		/// </summary>
+		/// <param name="message">El mensaje a escribir.</param>
+		public void Log(string message, params object[] args)
+		{			
+			logView.LogLine(message, args);
+		}
+		
+#endregion Metodos publicos
+		
+#region Metodos privados
+		
+		
 		/// <summary>
 		/// Para facilitar la inicializacion de los widgets.
 		/// </summary>
 		private void Initialize()
 		{		
-		
-			controller = new SegmentingAndSymbolMatchingController();
-			
-			// Asignamos los eventos que indican que se han alcanzado hitos
-			// en el reconocimiento de un cáracter.
-			controller.MessageLogSent += new MessageLogSentHandler(OnMessageLog);
-			    		
-			controller.RecognizeProcessFinished +=
-			    new ProcessFinishedHandler(OnRecognizeProcessFinished);
-			    
-			controller.BitmapBeingRecognized +=
-			    new BitmapBeingRecognizedHandler(OnBitmapBeingRecognized);
-			    
-			store = new NodeStore(typeof(FormulaNode));
-			
-			// Creamos el NodeView, podría hacerse en el fichero de Glade,
-			// aunque alguna razón habría por la que se hizo así.
-			treeview=new NodeView(store);
-			treeview.RulesHint = true;
-			
-			treeview.ShowExpanders = true;
-			treeview.AppendColumn ("Imagen", new CellRendererText (), "text", 0);
-			treeview.AppendColumn ("Etiqueta", new CellRendererText (), "text", 1);
-			treeview.AppendColumn ("Posición", new CellRendererText (), "text", 2);
-			scrolledtree.Add(treeview);
-			
-			// Asignamos el evento para cuando se produzca la selección de un
-			// nodo en el árbol.
-			treeview.NodeSelection.Changed += OnTreeviewSelectionChanged;
-			treeview.RowActivated += OnTreeviewRowActivated;
-			
 			mainWindow.Title = title + "Sin imagen";
-			
-			imageAreaOriginal = new ImageArea();
-			imageAreaOriginal.ImageMode = ImageAreaMode.Zoom;
-			imageAreaOriginal.ZoomChanged += OnImageAreaOriginalZoomChanged;
-			
-			frameOriginal.Add(imageAreaOriginal);
-			
-			
-			imageAreaNode=new ImageArea();
-			imageAreaNode.ImageMode=ImageAreaMode.Zoom;			
-			frameNodeActual.Add(imageAreaNode);
 			
 			// Ponemos iconos personalizados en los botones
 			menuLoadImage.Image = ImageResources.LoadImage("insert-image16");
@@ -229,187 +214,22 @@ namespace MathTextRecognizer
 			
 			// Creamos el cuadro de registro.
 			logView = new LogView();
-			expLog.Add(logView);		
+			expLog.Add(logView);	
+			
+			while(recognizingStepsNB.NPages > 0)
+			{
+				recognizingStepsNB.RemovePage(0);
+			}
+			
+			segmentingAndMatchingStepWidget = 
+				new SegmentingAndMatchingStepWidget(this);
+			
+			recognizingStepsNB.AppendPage(segmentingAndMatchingStepWidget.Widget,
+			                              new Label("Segmentación y reconocimiento de caracteres"));
 			
 			mainWindow.ShowAll();
 		}
 		
-		/// <summary>
-		/// Manejo del evento provocado cuando se hace click en un nodo de la 
-		/// vista de árbol.
-		/// </summary>
-		/// <param name="sender">El objeto que provoco el evento.</param>
-		/// <param name="arg">Los argumentos del evento.</param>
-		private void OnTreeviewSelectionChanged(object sender, EventArgs arg)
-		{
-		    // Si hemos acabado el proceso y hemos seleccionado algo.
-			if(treeview.Selection.CountSelectedRows() > 0)
-			{
-				FormulaNode node=
-					(FormulaNode)(treeview.NodeSelection.SelectedNode);
-				
-				imageAreaNode.Image=node.MathTextBitmap.Pixbuf;
-
-				// Vaciamos el notebook
-				while(processedImageNB.NPages > 0)
-					processedImageNB.RemovePage(0);
-				
-				if(recognizementFinished)
-				{
-					// Añadimos las imagenes procesasdas al notebook
-
-					// Solo mostramos los tabs si hay mas de una imagen procesada
-					processedImageNB.ShowTabs = 
-						node.MathTextBitmap.ProcessedImages.Count>1;
-					
-					// Si hemos terminado podemos hacer esto sin peligro.
-					foreach(Pixbuf p in node.MathTextBitmap.ProcessedPixbufs)
-					{
-						ImageArea imageAreaProcessed = new ImageArea();
-						imageAreaProcessed.Image=p;
-						imageAreaProcessed.ImageMode=ImageAreaMode.Zoom;
-						
-					
-						processedImageNB.AppendPage(imageAreaProcessed,
-						                            new Label(String.Format("BD {0}",
-						                                                    processedImageNB.NPages+1)));
-					}
-				}
-				
-				MarkImage(node.MathTextBitmap);				
-			}
-		
-		}
-		
-		/// <summary>
-		/// Manejo del evento que provocado por el controlador cuando comienza 
-		/// a tratar una nueva imagen.
-		/// </summary>
-		/// <param name="sender">El objeto que provoca el evento.</param>
-		/// <param name="arg">El argumento del evento.</param>
-		private void OnBitmapBeingRecognized(object sender, 
-		                                     BitmapBeingRecognizedArgs arg)
-		{
-			Gtk.Application.Invoke(sender, arg, OnBitmapBeingRecognizedThreadSafe);		
-		}
-		
-		private void OnBitmapBeingRecognizedThreadSafe(object sender, EventArgs a)
-		{		
-			if(treeview.NodeSelection.SelectedNodes.Length>0)
-			{
-				// Si hay un simbolo seleccionado, 
-				// nos traemos sus imagenes procesadas.
-				
-				FormulaNode node = 
-					(FormulaNode)(treeview.NodeSelection.SelectedNode);
-			
-				
-				ImageArea imageAreaProcessed = new ImageArea();
-				imageAreaProcessed.Image=
-					node.MathTextBitmap.LastProcessedImage.CreatePixbuf();
-				imageAreaProcessed.ImageMode=ImageAreaMode.Zoom;
-				
-			
-				processedImageNB.AppendPage(imageAreaProcessed,
-				                            new Label(String.Format("BD {0}",
-				                                                    processedImageNB.NPages+1)));
-				
-				processedImageNB.Page=processedImageNB.NPages-1;
-				
-				// Solo mostramos los tabs si hay mas de una imagen procesada
-				processedImageNB.ShowTabs = 
-					node.MathTextBitmap.ProcessedImages.Count>1;
-			}
-			ClearLog();
-		}
-		
-		/// <summary>
-		/// Metodo que se encarga de dibujar un recuadro sobre la imagen original
-		/// para señalar la zona que estamos tratando.
-		/// </summary>
-		/// <param name="mtb">La subimagen que estamos tratando.</param>
-		private void MarkImage(MathTextBitmap mtb)
-		{
-			// TODO MarkImage Gdk style!
-			Pixbuf originalMarked= imageOriginal.Copy();			
-			
-			imageAreaOriginal.Image=originalMarked;
-		}
-		
-		/// <summary>
-		/// Manejo del evento provocado por el controlador cuando finaliza el
-		/// proceso de reconocimiento.
-		/// </summary>
-		/// <param name="sender">El objeto que provoca el evento.</param>
-		/// <param name="arg">Los argumentos del evento.</param>
-		private void OnRecognizeProcessFinished(object sender, EventArgs arg)
-		{			
-		    // Llamamos a través de invoke para que funcione.
-			Gtk.Application.Invoke(OnRecognizeProccessFinishedThreadSafe);			
-		}
-		
-		private void OnRecognizeProccessFinishedThreadSafe(object sender, EventArgs a)
-		{
-		    ClearLog();
-			Log("¡Reconocimiento terminado!");
-			
-			OkDialog.Show(
-				mainWindow,
-				MessageType.Info,
-			    "¡Proceso de reconocimiento terminado!\n"
-			    + "Ahora puede revisar el resultado.");
-			    
-			    if(expLog.Expanded)
-			    	expLog.Expanded = false;
-						
-			ResetState();			
-			
-		}
-		
-		/// <summary>
-		/// Coloca los widgets al estado inicial para preparar la interfaz para trabajar
-		/// con una nueva imagen.
-		/// </summary>
-		private void ResetState()
-		{
-			alignNextButtons.Sensitive=false;
-			imageAreaNode.Image=null;
-			
-			
-			// Vaciamos el notebook.
-			while(processedImageNB.NPages > 0)
-				processedImageNB.RemovePage(0);
-			
-			toolLatex.Sensitive=true;
-			
-			menuLoadImage.Sensitive=true;
-			menuOpenDatabaseManager.Sensitive=true;
-			menuMakeOutput.Sensitive=true;
-			
-			toolLoadImage.Sensitive=true;
-			toolDatabase.Sensitive=true;
-			
-			imageAreaOriginal.Image = null;
-			
-			recognizementFinished=true;
-		}		
-		
-		/// <summary>
-		/// Maneja el evento del controlador que sirve para enviar un mensaje a 
-		/// la interfaz.
-		/// </summary>
-		/// <param name="sender">El objeto que provoca el evento.</param>
-		/// <param name="msg">El mensaje que deseamos mostrar.</param>
-		private void OnMessageLog(object sender,MessageLogSentArgs a)
-		{
-		    // Llamamos a través de invoke para que funcione bien.			
-			Application.Invoke(sender, a,OnMessageLogThreadSafe);
-		}
-		
-		private void OnMessageLogThreadSafe(object sender, EventArgs a)
-		{		   
-		    Log(((MessageLogSentArgs)a).Message);
-		}
 		
 		/// <summary>
 		/// Metodo que maneja el evento provocado al cerrar la ventana.
@@ -440,28 +260,17 @@ namespace MathTextRecognizer
 		/// </summary>
 		private void OnOpenDatabaseManagerClicked(object sender, EventArgs arg)
 		{	
-			databaseManagerDialog.Run();
-			
-			
+			databaseManagerDialog.Run();			
 		}
 		
-		/// <summary>
-		/// Manejo del evento provocado al pulsar en el boton de crear la salida
-		/// de texto.
-		/// </summary>
-		private void OnLatexClicked(object sender, EventArgs arg)
-		{
-			Output.OutputDialog outputDialog = 
-				new Output.OutputDialog(rootBitmap);
-			outputDialog.Run();
-		}
-		
+			
 		/// <summary>
 		/// Manejo del evento provocado al hacer click en la opcion "Salir"
 		/// del menu.
 		/// </summary>
 		private void OnExitClicked(object sender, EventArgs arg)
 		{
+			databaseManagerDialog.Destroy();
 			OnExit();
 		}
 		
@@ -499,87 +308,9 @@ namespace MathTextRecognizer
 				System.Diagnostics.Process.Start(System.Environment.CommandLine);			
 		}
 		
-		/// <summary>
-		/// Metodo que se invocara para indicar al controlador que deseamos
-		/// dar un nuevo paso de procesado.
-		/// </summary>
-		private void NextStep()
-		{			
-			
-			toolDatabase.Sensitive=false;
-			toolLoadImage.Sensitive=false;
-			menuOpenDatabaseManager.Sensitive=false;
-			menuLoadImage.Sensitive=false;
-			
-			if(recognizingThread == null 
-			   || recognizingThread.ThreadState == ThreadState.Stopped)
-			{
-				recognizingThread =
-					new Thread(new ThreadStart(controller.RecognizeProcess));
-				recognizingThread.Start();
-				
-				controller.Databases = databaseManagerDialog.Databases;
-			}
-			
-			mainWindow.QueueDraw();
-		}
-			
-		/// <summary>
-		/// Método que maneja el evento provocado al hacerse click sobre 
-		/// el boton "Siguente nodo".
-		/// </summary>
-		private void OnBtnNextNodeClicked(object sender, EventArgs arg)
-		{		    
-			expLog.Expanded = true;
-			
-			stepMode = ControllerStepMode.NodeByNode;
-				
-			NextStep();
-		}
-		
-		/// <summary>
-		/// Metodo que maneja el evento lanzado al hacerse click sobre el 
-		/// boton "Siguiente caracteristica".
-		/// </summary>
-		private void OnBtnNextStepClicked(object sender, EventArgs arg)
-		{		    
-			expLog.Expanded = true;
-			
-			stepMode = ControllerStepMode.StepByStep;		    
-			
-			NextStep();
-		}
-		
-		/// <summary>
-		/// Método que maneja el evento que se provoca al pulsar el botón
-		/// "Hasta el final".
-		/// </summary>
-		private void OnBtnTilEndClicked(object sender, EventArgs arg)
-		{
-			alignNextButtons.Sensitive=false;
-			stepMode = ControllerStepMode.UntilEnd;
-			
-			NextStep();
-		}
 		
 		
 		
-		/// <summary>
-		/// Método usado para escribir un mensaje en la zona de información de proceso.
-		/// </summary>
-		/// <param name="message">El mensaje a escribir.</param>
-		private void Log(string message, params object[] args)
-		{			
-			logView.LogLine(message, args);
-		}
-		
-		/// <summary>
-		/// Método que permite borrar la zona de informacion de proceso.
-		/// </summary>
-		private void ClearLog()
-		{			
-			logView.ClearLog();			
-		}
 		
 		/// <summary>
 		/// Metodo que maneja el evento provocado al cerrarse el dialogo de 
@@ -593,53 +324,26 @@ namespace MathTextRecognizer
 				== ResponseType.Ok)
 			{			
 				// Cargamos la imagen desde disco
-				imageOriginal = new Pixbuf(filename);				
-				imageAreaOriginal.Image=imageOriginal;				
-				store.Clear();
+					
+				segmentingAndMatchingStepWidget.SetInitialImage(filename);
 				
-				// Generamos el MaxtTextBitmap inical, y lo añadimos como
-				// un nodo al arbol.
-				MathTextBitmap mtb = new MathTextBitmap(imageOriginal);			
-				FormulaNode node = 
-					new FormulaNode(Path.GetFileNameWithoutExtension(filename),
-					            mtb,
-				                treeview);
-				    
-				store.AddNode(node);
-				controller.StartNode = node;
-				rootBitmap=mtb;
-				
-				currentNode = null;
-				
-				ClearLog();
-				
+				this.mainWindow.Title = 
+					title + System.IO.Path.GetFileName(filename);
+			
 				recognizementFinished=false;
 				toolLatex.Sensitive=false;
 				menuMakeOutput.Sensitive=false;
 				
-				Log("¡Archivo de imagen «"+filename+"» cargado correctamente!");
-
-				this.mainWindow.Title = 
-					title + System.IO.Path.GetFileName(filename);
-				
-				alignNextButtons.Sensitive=true;
 			}
 		}
 		
-		private void OnImageAreaOriginalZoomChanged(object sender, EventArgs a)
-		{
-			zoom = imageAreaOriginal.Zoom;			
-		}
+		
 
 		/// <summary>
 		/// Metodo que se encarga de gestionar la salida de la aplicacion.
 		/// </summary>
 		private void OnExit()
 		{
-			
-			imageAreaOriginal.Image=null;
-			imageAreaNode.Image=null;
-			
 			Application.Quit();			
 		}	
 		
@@ -660,39 +364,27 @@ namespace MathTextRecognizer
 				databaseManagerDialog.DatabaseFilesInfo.Count ==0;
 		}
 		
+		
+		
 		/// <summary>
-		/// Manejamos el evento producido al activar una fila.
+		/// Reiniciamos los valores de los widgets al estado inicial.
 		/// </summary>
-		/// <param name="sender">
-		/// A <see cref="System.Object"/>
-		/// </param>
-		/// <param name="args">
-		/// A <see cref="RowActivatedArgs"/>
-		/// </param>
-		private void OnTreeviewRowActivated(object sender,
-		                                    RowActivatedArgs args)
-		{	
-			FormulaNode activatedNode= 
-				(FormulaNode) (treeview.NodeStore.GetNode(args.Path));
+		private void ResetState()
+		{
+			toolLatex.Sensitive=true;
 			
-			ResponseType res= 
-				ConfirmDialog.Show(this.mainWindow,
-				                   "¿Deseas guardar la imagen del nodo «{0}»?",
-				                   activatedNode.Name);
+			menuLoadImage.Sensitive=true;
+			menuOpenDatabaseManager.Sensitive=true;
+			menuMakeOutput.Sensitive=true;
 			
-			if (res== ResponseType.Yes)
-			{
-				string filename="";
-				res = ImageSaveDialog.Show(this.mainWindow,out filename);
-				
-				if(res == ResponseType.Ok)
-				{
-					string extension = 
-						Path.GetExtension(filename).ToLower().Trim('.');
-					activatedNode.MathTextBitmap.Pixbuf.Save(filename,extension);
-				}
-			}
+			toolLoadImage.Sensitive=true;
+			toolDatabase.Sensitive=true;
 			
+			segmentingAndMatchingStepWidget.ResetState();
+			
+			recognizementFinished=true;
 		}
 	}
+	
+#endregion Metodos privados
 }

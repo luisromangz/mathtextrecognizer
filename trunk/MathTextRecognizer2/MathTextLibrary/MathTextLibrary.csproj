@@ -56,104 +56,45 @@
       <HintPath>..\..\..\..\..\..\Program Files\Mono-1.9\lib\mono\gac\glib-sharp\2.10.0.0__35e10195dab3c99f\glib-sharp.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="nunit.core">
-      <HintPath>..\..\..\..\..\..\Program Files\Mono-1.9\lib\mono\gac\nunit.core\2.2.0.0__96d09a1eb7f44a77\nunit.core.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\..\..\..\..\Program Files\Mono-1.9\lib\mono\gac\nunit.framework\2.2.0.0__96d09a1eb7f44a77\nunit.framework.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System">
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
-    <Reference Include="nunit.core, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="nunit.framework, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77">
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="BitmapProcesses\BitmapFixedThresholder.cs" />
     <Compile Include="BitmapProcesses\BitmapFramer.cs" />
+    <Compile Include="BitmapProcesses\BitmapProcessDescription.cs" />
+    <Compile Include="BitmapProcesses\BitmapProcessPropertyDescription.cs" />
     <Compile Include="BitmapProcesses\BitmapScaler.cs" />
     <Compile Include="BitmapProcesses\BitmapStentifordThinner.cs" />
     <Compile Include="BitmapProcesses\BitmapTwoPeaksThresholder.cs" />
     <Compile Include="BitmapProcesses\BitmapZhangSuenHoltThinner.cs" />
     <Compile Include="BitmapProcesses\BitmapZhangSuenStentifordHoltThinner.cs" />
-    <Compile Include="BitmapSegmenters\AllHolesProjectionBitmapSegmenter.cs" />
-    <Compile Include="BitmapSegmenters\DifferentialProjectionBitmapSegmenter.cs" />
-    <Compile Include="BitmapSegmenters\FractionVerticalBitmapSegmenter.cs" />
-    <Compile Include="BitmapSegmenters\IBitmapSegmenter.cs" />
-    <Compile Include="BitmapSegmenters\MostFrequentHoleProjectionBitmapSegmenter.cs" />
-    <Compile Include="BitmapSegmenters\ProjectionBitmapSegmenter.cs" />
-    <Compile Include="BitmapSegmenters\TwoHolesBitmapSegmenter.cs" />
+    <Compile Include="BitmapSegmenters\AllHolesProjectionSegmenter.cs" />
+    <Compile Include="BitmapSegmenters\BitmapSegmenter.cs" />
+    <Compile Include="BitmapSegmenters\MostFrequentHoleProjectionSegmenter.cs" />
+    <Compile Include="BitmapSegmenters\ProjectionSegmenter.cs" />
+    <Compile Include="BitmapSegmenters\WaterfallSegmenter.cs" />
+    <Compile Include="BitmapSegmenters\WaterfallSegmenterMode.cs" />
+    <Compile Include="Bitmap\FloatBitmap.cs" />
     <Compile Include="Controllers\ControllerEvents.cs" />
-    <Compile Include="Controllers\MathTextOutputController.cs" />
-    <Compile Include="Controllers\MathTextRecognizerController.cs" />
+    <Compile Include="Controllers\ControllerStepMode.cs" />
     <Compile Include="Output\LaTeXGenerator.cs" />
     <Compile Include="Output\MathMLGenerator.cs" />
     <Compile Include="Projection\Hole.cs" />
     <Compile Include="Projection\HorizontalBitmapProjection.cs" />
     <Compile Include="Projection\ProjectionMode.cs" />
     <Compile Include="Projection\VerticalBitmapProjection.cs" />
-    <Compile Include="TreeMaker\RecognizedTreeNode.cs" />
-    <Compile Include="TreeMaker\Steps\ITreeMakerStep.cs" />
-    <Compile Include="TreeMaker\Steps\MakeInitialTree.cs" />
-    <Compile Include="TreeMaker\Steps\SearchFractions.cs" />
-    <Compile Include="TreeMaker\Steps\SearchSuperAndSub.cs" />
     <Compile Include="Projection\BitmapProjection.cs" />
     <Compile Include="Utils\ImageUtils.cs" />
     <Compile Include="BitmapProcesses\BitmapProcess.cs" />
-    <Compile Include="Databases\Caracteristic\CaracteristicDatabase.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\ColorChangesXAboveFourCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\ColorChangesXBelowTwoCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\ColorChangesXEqualsFourCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\ColorChangesXEqualsTwoCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\ColorChangesYAboveFourCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\ColorChangesYBelowTwoCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\ColorChangesYEqualsFourCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\ColorChangesYEqualsTwoCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\EndingPointsEqualsOneCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\EndingPointsEqualsThreeCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\EndingPointsEqualsTwoCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\EndingPointsEqualsZeroCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\IBinaryCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\NumberBigHolesEqualsOneCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\NumberBigHolesEqualsTwoCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\NumberBigHolesEqualsZeroCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\PixelsLeftHalfCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\PixelsNortheastQuadrantCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\PixelsNorthwestQuadrantCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\PixelsSoutheastQuadrantCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\PixelsSouthwestQuadrantCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\PixelsTopHalfCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\ThriceTallerThanWiderCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\TreePointsEqualsOneCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\TreePointsEqualsThreeCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\TreePointsEqualsTwoCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\TreePointsEqualsZeroCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\TwiceTallerThanWiderCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\WiderThanTallerCaracteristic.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\Helpers\CountBlackNeighboursHelper.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\Helpers\CountColorChangesHelper.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\Helpers\CountNumberOfBlackPixelsHelper.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\Helpers\CountNumberOfHolesHelper.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\Helpers\CountPixelsHelper.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\Helpers\CountPixelsWithXNeighboursHelper.cs" />
-    <Compile Include="Databases\Caracteristic\Caracteristics\Helpers\ImageBoxerHelper.cs" />
     <Compile Include="Databases\MathTextDatabase.cs" />
     <Compile Include="Databases\Momentum\MomentumDatabase.cs" />
-    <Compile Include="Databases\DatabaseManager.cs" />
-    <Compile Include="Databases\Caracteristic\BinaryCaracteristicNode.cs" />
-    <Compile Include="Databases\Caracteristic\CaracteristicFactory.cs" />
     <Compile Include="Databases\DatabaseEvents.cs" />
     <Compile Include="Databases\ISymbolProcess.cs" />
     <Compile Include="Databases\DatabaseBase.cs" />
-    <Compile Include="Databases\DatabaseInfo.cs" />
     <Compile Include="Bitmap\MathTextBitmap.cs" />
     <Compile Include="Bitmap\MathTextBitmapEvents.cs" />
     <Compile Include="Symbol\MathSymbol.cs" />
