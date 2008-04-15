@@ -4,7 +4,7 @@ using System;
 using Gtk;
 
 
-namespace CustomGtkWidgets.Logger
+namespace MathTextCustomWidgets.Logger
 {
 	
 	/// <summary>
@@ -13,7 +13,7 @@ namespace CustomGtkWidgets.Logger
 	/// </summary>
 	public class LogSaveDialog
 	{
-		#region Glade Widgets
+#region Glade Widgets
 		[Glade.WidgetAttribute]
 		private FileChooserDialog logSaveDialog;
 		
@@ -23,7 +23,7 @@ namespace CustomGtkWidgets.Logger
 		[Glade.WidgetAttribute]
 		private Button btnCancel;
 		
-		#endregion Glade Widgets
+#endregion Glade Widgets
 		
 	
 		/// <summary>
@@ -56,7 +56,7 @@ namespace CustomGtkWidgets.Logger
             logSaveDialog.AddActionWidget(btnCancel,ResponseType.Cancel); 
 		}
 		
-		#region Propiedades
+#region Propiedades
 		
 		/// <value>
 		/// Esta propiedad permite recuperar el nombre de archivo seleccionado para guardar.
@@ -69,9 +69,9 @@ namespace CustomGtkWidgets.Logger
 			}
 		}
 		
-		#endregion Propiedades
+#endregion Propiedades
 		
-		#region Métodos públicos
+#region Métodos públicos
 		
 		/// <summary>
 		/// Este método destruye el cuadro de diálogo, cerrandolo.
@@ -90,7 +90,7 @@ namespace CustomGtkWidgets.Logger
 			return (ResponseType)(logSaveDialog.Run());
 		}		
 		
-		#endregion
+#endregion
 		
 		
 	}

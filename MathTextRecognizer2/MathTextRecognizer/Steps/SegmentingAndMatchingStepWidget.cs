@@ -9,8 +9,9 @@ using Gtk;
 using Glade;
 using Gdk;
 
-using CustomGtkWidgets.ImageArea;
-using CustomGtkWidgets.CommonDialogs;
+using MathTextCustomWidgets.ImageArea;
+using MathTextCustomWidgets.CommonDialogs;
+using MathTextCustomWidgets;
 
 using MathTextLibrary.Bitmap;
 using MathTextLibrary.Controllers;
@@ -56,6 +57,13 @@ namespace MathTextRecognizer.Steps
 		
 		[WidgetAttribute]
 		private Button btnTilEnd;
+		
+		[WidgetAttribute]
+		private Menu formulaNodeMenu;
+		
+		[WidgetAttribute]
+		private ImageMenuItem learnImageItem;
+		
 #endregion Widgets
 		
 #region Atributos
@@ -84,12 +92,20 @@ namespace MathTextRecognizer.Steps
 		
 		private ControllerStepMode stepMode;
 		
+		// Needed by the popup actions' handler methods
+		private FormulaNode selectedNode;
+		
 #endregion Atributos.
 		
 		public SegmentingAndMatchingStepWidget(MainRecognizerWindow window)
 		{
 			Glade.XML gxml = new XML("mathtextrecognizer.glade", 
 			                         "segmentingAndMatchingHPaned");
+			
+			gxml.Autoconnect(this);
+			
+			gxml = new XML("mathtextrecognizer.glade", 
+			               "formulaNodeMenu");
 			
 			gxml.Autoconnect(this);
 			
@@ -186,7 +202,9 @@ namespace MathTextRecognizer.Steps
 			// Asignamos el evento para cuando se produzca la selección de un
 			// nodo en el árbol.
 			treeview.NodeSelection.Changed += OnTreeviewSelectionChanged;
-			treeview.RowActivated += OnTreeviewRowActivated;
+						
+			treeview.ButtonPressEvent += 
+				new ButtonPressEventHandler(OnTreeViewButtonPress);
 			
 			imageAreaOriginal = new ImageArea();
 			imageAreaOriginal.ImageMode = ImageAreaMode.Zoom;
@@ -198,6 +216,8 @@ namespace MathTextRecognizer.Steps
 			imageAreaNode=new ImageArea();
 			imageAreaNode.ImageMode=ImageAreaMode.Zoom;			
 			frameNodeActual.Add(imageAreaNode);
+			
+			learnImageItem.Image = ImageResources.LoadImage("database16");
 		}
 		
 		/// <summary>
@@ -404,59 +424,84 @@ namespace MathTextRecognizer.Steps
 			ResetState();			
 			
 		}
-		
+			
 		/// <summary>
-		/// Manejamos el evento producido al activar una fila.
+		/// Maneja el click de raton sobre el <c>TreeView</c>, mostrando el
+		/// menu contextual si hicimos click con el boton derecho.
 		/// </summary>
 		/// <param name="sender">
 		/// A <see cref="System.Object"/>
 		/// </param>
 		/// <param name="args">
-		/// A <see cref="RowActivatedArgs"/>
+		/// A <see cref="ButtonPressEventArgs"/>
 		/// </param>
-		private void OnTreeviewRowActivated(object sender,
-		                                    RowActivatedArgs args)
-		{	
-			if(recognizementFinished)
+		// Para que ocurra antes que se consuma el evento de seleccion
+		[GLib.ConnectBeforeAttribute] 
+		private void OnTreeViewButtonPress(object sender, 
+		                                   ButtonPressEventArgs args)
+		{
+			// Nos quedamos unicamente con los clicks derechos
+			if(recognizementFinished 
+			   && args.Event.Button == 3)
 			{
-				FormulaNode activatedNode= 
-						(FormulaNode) (treeview.NodeStore.GetNode(args.Path));
-				
-				FormulaNodeActionDialog actionDialog = 
-					new FormulaNodeActionDialog(window.MainWindow, 
-					                           String.IsNullOrEmpty(activatedNode.Label));
-				
-				if(actionDialog.Show() == ResponseType.Ok)
+				TreePath path = new TreePath();
+                // Obtenemos el treepath con las coordenadas del cursor.
+                treeview.GetPathAtPos(System.Convert.ToInt16 (args.Event.X), 
+				                      System.Convert.ToInt16 (args.Event.Y),				              
+				                      out path);
+                
+				if( path != null)
 				{
+					// We try only if a node was found.			
+					FormulaNode node =  
+						(FormulaNode)(treeview.NodeStore.GetNode(path));	
 					
+					selectedNode = node;
 					
+					// The learning item is only shown when no label has
+					// been found.
+					learnImageItem.Visible =  String.IsNullOrEmpty(node.Label);
 					
-					ResponseType res= 
-						ConfirmDialog.Show(window.MainWindow,
-						                   "¿Deseas guardar la imagen del nodo «{0}»?",
-						                   activatedNode.Name);
-					
-					if (res == ResponseType.Yes)
-					{
-						string filename="";
-						res = ImageSaveDialog.Show(window.MainWindow,out filename);
-						
-						if(res == ResponseType.Ok)
-						{
-							string extension = 
-								Path.GetExtension(filename).ToLower().Trim('.');
-							activatedNode.MathTextBitmap.Pixbuf.Save(filename,extension);
-						}
-					}
-				}
-				
-				actionDialog.Destroy();
+					formulaNodeMenu.Popup();
+                }
+                        
 			}
 		}
 		
 		private void OnImageAreaOriginalZoomChanged(object sender, EventArgs a)
 		{
 			zoom = imageAreaOriginal.Zoom;			
+		}
+		
+		/// <summary>
+		/// Handles the click on the "Save image" formula node context menu item.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnSaveImageItemActivate(object sender,
+		                                      EventArgs args)
+		{
+			ResponseType res= 
+						ConfirmDialog.Show(window.MainWindow,
+						                   "¿Deseas guardar la imagen del nodo «{0}»?",
+						                   selectedNode.Name);
+					
+			if (res == ResponseType.Yes)
+			{
+				string filename="";
+				res = ImageSaveDialog.Show(window.MainWindow,out filename);
+				
+				if(res == ResponseType.Ok)
+				{
+					string extension = 
+						Path.GetExtension(filename).ToLower().Trim('.');
+					selectedNode.MathTextBitmap.Pixbuf.Save(filename,extension);
+				}
+			}
 		}
 			
 			

@@ -3,7 +3,7 @@ using System;
 
 using Gtk;
 
-namespace CustomGtkWidgets.CommonDialogs
+namespace MathTextCustomWidgets.CommonDialogs
 {
 	/// <summary>
 	/// Esta clase implementa un diálogo para seleccionar carpetas que es

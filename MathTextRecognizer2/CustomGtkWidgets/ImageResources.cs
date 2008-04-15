@@ -2,7 +2,7 @@
 using System;
 using Gdk;
 
-namespace CustomGtkWidgets
+namespace MathTextCustomWidgets
 {
 	
 	/// <value>
