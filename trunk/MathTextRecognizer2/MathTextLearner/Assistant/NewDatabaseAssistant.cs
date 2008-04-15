@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 using Gtk;
 
-using CustomGtkWidgets;
-using CustomGtkWidgets.CommonDialogs;
+using MathTextCustomWidgets;
+using MathTextCustomWidgets.CommonDialogs;
 
 using MathTextLibrary.Databases;
 

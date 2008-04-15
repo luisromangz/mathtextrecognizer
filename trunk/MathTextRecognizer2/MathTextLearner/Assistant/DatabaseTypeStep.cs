@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 using Gtk;
 
-using CustomGtkWidgets.CommonDialogs;
+using MathTextCustomWidgets.CommonDialogs;
 
 using MathTextLibrary.Databases;
 

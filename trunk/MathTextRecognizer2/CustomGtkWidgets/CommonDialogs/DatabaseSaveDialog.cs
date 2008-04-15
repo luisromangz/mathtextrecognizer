@@ -3,7 +3,7 @@ using System;
 
 using Gtk;
 
-namespace CustomGtkWidgets.CommonDialogs
+namespace MathTextCustomWidgets.CommonDialogs
 {
 	
 	/// <summary>

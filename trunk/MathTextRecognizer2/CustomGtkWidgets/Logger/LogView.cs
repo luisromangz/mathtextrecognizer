@@ -5,7 +5,7 @@ using System.IO;
 using Gtk;
 using Glade;
 
-namespace CustomGtkWidgets.Logger
+namespace MathTextCustomWidgets.Logger
 {
 
 	

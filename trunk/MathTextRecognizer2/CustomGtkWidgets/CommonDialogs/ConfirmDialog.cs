@@ -1,7 +1,7 @@
 using System;
 using Gtk;
 
-namespace CustomGtkWidgets.CommonDialogs
+namespace MathTextCustomWidgets.CommonDialogs
 {	
 	/// <summary>
 	/// Esta clase hereda de <c>MessageDialog</c> para especializarse

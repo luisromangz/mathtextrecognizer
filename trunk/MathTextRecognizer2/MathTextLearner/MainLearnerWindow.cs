@@ -14,10 +14,10 @@ using System.Collections.Generic;
 using Gtk;
 using Glade;
 
-using CustomGtkWidgets;
-using CustomGtkWidgets.Logger;
-using CustomGtkWidgets.ImageArea;
-using CustomGtkWidgets.CommonDialogs;
+using MathTextCustomWidgets;
+using MathTextCustomWidgets.Logger;
+using MathTextCustomWidgets.ImageArea;
+using MathTextCustomWidgets.CommonDialogs;
 
 using MathTextLibrary;
 using MathTextLibrary.Bitmap;
