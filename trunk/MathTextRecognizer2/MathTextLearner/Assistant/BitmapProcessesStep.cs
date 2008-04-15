@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 using Gtk;
 
-usingMathTextCustomWidgets.ImageArea;
+using MathTextCustomWidgets.ImageArea;
 using MathTextCustomWidgets.CommonDialogs;
 
 using MathTextLearner.Config;
