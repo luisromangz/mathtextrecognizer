@@ -29,7 +29,6 @@
   <DeployTargets />
   <Entries>
     <Entry filename="MathTextLearner/MathTextLearner.mdp" />
-    <Entry filename="CustomGtkWidgets/CustomGtkWidgets.mdp" />
     <Entry filename="MathTextLibrary/MathTextLibrary.mdp" />
     <Entry filename="MathTextRecognizer/MathTextRecognizer.mdp" />
   </Entries>
