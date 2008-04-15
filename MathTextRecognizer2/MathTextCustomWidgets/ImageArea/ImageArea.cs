@@ -153,7 +153,7 @@ namespace MathTextCustomWidgets.ImageArea
 					
 					if(sizeX >= 5 && sizeY >= 5)
 					{					    
-						scaled = image.ScaleSimple(sizeX,sizeY, InterpType.Bilinear);			
+						scaled = image.ScaleSimple(sizeX,sizeY, InterpType.Tiles);			
 					    
 					
 						GdkWindow.DrawPixbuf(

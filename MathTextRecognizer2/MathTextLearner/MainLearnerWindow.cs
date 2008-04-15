@@ -18,6 +18,7 @@ using MathTextCustomWidgets;
 using MathTextCustomWidgets.Logger;
 using MathTextCustomWidgets.ImageArea;
 using MathTextCustomWidgets.CommonDialogs;
+using MathTextCustomWidgets.Editors;
 
 using MathTextLibrary;
 using MathTextLibrary.Bitmap;
@@ -79,7 +80,7 @@ namespace MathTextLearner
 		private HBox nextButtonsHB;
 		
 		[WidgetAttribute]
-		private Entry entrySymbol;
+		private Alignment symbolEditorPlaceholder;
 		
 		[WidgetAttribute]
 		private Expander expanderLog;
@@ -133,6 +134,8 @@ namespace MathTextLearner
 		private MathTextBitmap mtb;
 		private MathSymbol symbol;
 		
+		private SymbolLabelEditorWidget symbolLabelEditor;
+		
 		private Thread learningThread;
 		
 		private const string title="Aprendedor de caracteres matemáticos";
@@ -179,7 +182,7 @@ namespace MathTextLearner
 		{
 			nextButtonsHB.Sensitive = false;
 			toolbar.Sensitive = true;
-			entrySymbol.Text = "";
+			symbolLabelEditor.Label = "";
 			menuOpen.Sensitive = true;			
 			menuSaveAs.Sensitive = true;
 			menuDatabase.Sensitive = true;
@@ -259,6 +262,10 @@ namespace MathTextLearner
 			toolNewDatabase.IconWidget =ImageResources.LoadImage("database-new22");
 			
 			menuDatabase.Image =ImageResources.LoadImage("database-new16");
+			
+			symbolLabelEditor = new SymbolLabelEditorWidget();
+			
+			symbolEditorPlaceholder.Add(symbolLabelEditor);
 				
 			mainWindow.ShowAll();			
 		}		
@@ -310,7 +317,6 @@ namespace MathTextLearner
 		/// </param>
 		private void LoadNewImages(List<Gdk.Pixbuf> images)
 		{
-			Gdk.Pixbuf scaledDown;
 			foreach(Gdk.Pixbuf p in images)
 			{
 				LoadNewImage(p);
@@ -365,13 +371,13 @@ namespace MathTextLearner
 		{
 			string errorMsg="";
 			symbol=new MathSymbol();
-			if(entrySymbol.Text.Trim()=="")
+			if(symbolLabelEditor.Label.Trim()=="")
 			{
 				errorMsg=".- El texto del símbolo no es válido.\n";
 			}
 			else
 			{
-				symbol.Text=entrySymbol.Text.Trim();
+				symbol.Text=symbolLabelEditor.Label.Trim();
 			}
 			
 			if(errorMsg=="")
@@ -816,7 +822,7 @@ namespace MathTextLearner
 			hboxSymbolWidgets.Sensitive = false;
 			nextButtonsHB.Sensitive =false;
 			
-			entrySymbol.Text = "";
+			symbolLabelEditor.Label = "";
 		}
 		
 		/// <summary>

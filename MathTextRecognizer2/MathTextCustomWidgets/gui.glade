@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.3 on Tue Apr  8 21:22:58 2008 -->
+<!--Generated with glade3 3.4.3 on Tue Apr 15 19:46:38 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="logViewWidget">
     <child>
@@ -87,8 +87,8 @@
     <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
     <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
     <property name="has_separator">False</property>
-    <property name="do_overwrite_confirmation">True</property>
     <property name="action">GTK_FILE_CHOOSER_ACTION_SAVE</property>
+    <property name="do_overwrite_confirmation">True</property>
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
@@ -469,6 +469,56 @@
           <packing>
             <property name="expand">False</property>
             <property name="pack_type">GTK_PACK_END</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="GtkWindow" id="symbolLabelEditorWidget">
+    <child>
+      <widget class="GtkHBox" id="symbolLabelEditorHB">
+        <property name="visible">True</property>
+        <child>
+          <widget class="GtkLabel" id="label4">
+            <property name="visible">True</property>
+            <property name="xpad">5</property>
+            <property name="label" translatable="yes">Etiqueta:</property>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkAlignment" id="alignment1">
+            <property name="visible">True</property>
+            <property name="xscale">0</property>
+            <property name="yscale">0</property>
+            <property name="top_padding">5</property>
+            <property name="bottom_padding">5</property>
+            <property name="right_padding">5</property>
+            <child>
+              <widget class="GtkComboBoxEntry" id="symbolsCBEntry">
+                <property name="visible">True</property>
+                <property name="has_tooltip">True</property>
+                <property name="tooltip_text">Despliege la lista para ver los símbolos matemáticos</property>
+                <property name="text_column">0</property>
+                <child internal-child="entry">
+                  <widget class="GtkEntry" id="comboboxentry-entry1">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="max_length">1</property>
+                    <property name="width_chars">3</property>
+                    <property name="xalign">0.5</property>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">1</property>
           </packing>
         </child>
       </widget>
