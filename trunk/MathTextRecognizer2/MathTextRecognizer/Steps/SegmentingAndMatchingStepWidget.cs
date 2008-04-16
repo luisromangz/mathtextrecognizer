@@ -468,6 +468,59 @@ namespace MathTextRecognizer.Steps
 			}
 		}
 		
+		/// <summary>
+		/// Handles the event lauched when the "edit label" option is clicked
+		/// in the formula node's contextual menu.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="a">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnEditLabeItemActivate(object sender, EventArgs a)
+		{
+			Dialogs.SymbolLabelEditorDialog dialog = 
+				new Dialogs.SymbolLabelEditorDialog(this.window.MainWindow,
+				                                    selectedNode);
+			
+			if(dialog.Show()== ResponseType.Ok)
+			{
+				bool changeLabel = true;
+				if(selectedNode.ChildCount > 0)
+				{
+					ResponseType res = ConfirmDialog.Show(window.MainWindow,
+					                                      "Este nodo tiene hijos, y se estableces "
+					                                      + "una etiqueta se eliminarán, ¿quieres"
+					                                      +" continuar?");
+					
+					if(res == ResponseType.Yes)
+					{
+						// We remove the nodes.
+						
+						while(selectedNode.ChildCount > 0)
+						{
+							selectedNode.RemoveChild((TreeNode)(selectedNode[0]));
+						}
+					}
+					else
+					{
+						changeLabel = false;
+					}
+				}
+				
+				if(changeLabel)
+				{
+					selectedNode.MathTextBitmap.Symbol = 
+						new MathTextLibrary.Symbol.MathSymbol(dialog.Label);
+				}
+			}
+			
+			
+			dialog.Destroy();
+			
+		}
+		
 		private void OnImageAreaOriginalZoomChanged(object sender, EventArgs a)
 		{
 			zoom = imageAreaOriginal.Zoom;			

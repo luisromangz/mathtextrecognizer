@@ -40,14 +40,12 @@ namespace MathTextCustomWidgets.Editors
 		{
 			get
 			{
-				//return symbolsCBEntry.ActiveText;
-				return "";
+				return symbolsCBEntry.ActiveText;
 			}
 			
 			set
 			{
-				//symbolsCBEntry.Entry.Text = value;
-				;
+				symbolsCBEntry.Entry.Text = value;
 			}
 		}
 		
