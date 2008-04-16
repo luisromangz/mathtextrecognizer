@@ -404,9 +404,10 @@
                 <property name="visible">True</property>
                 <property name="sensitive">False</property>
                 <property name="border_width">23</property>
-                <property name="spacing">23</property>
+                <property name="spacing">13</property>
                 <child>
                   <widget class="GtkFrame" id="frame6">
+                    <property name="width_request">226</property>
                     <property name="visible">True</property>
                     <property name="label_xalign">0</property>
                     <property name="shadow_type">GTK_SHADOW_IN</property>
@@ -475,7 +476,7 @@
                     <child>
                       <widget class="GtkLabel" id="label13">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">Información de la base de datos</property>
+                        <property name="label" translatable="yes">Propieedades de la base de dato</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
