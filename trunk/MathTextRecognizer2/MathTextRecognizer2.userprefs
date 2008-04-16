@@ -1,14 +1,17 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
-    <File name="Bienvenido" />
-    <File name="MathTextCustomWidgets/ImageResources.cs" line="1" column="1" />
     <File name="MathTextLearner/MainLearnerWindow.cs" line="241" column="1" />
-    <File name="MathTextCustomWidgets/Editors/SymbolLabelEditorWidget.cs" line="75" column="39" />
+    <File name="MathTextCustomWidgets/Editors/SymbolLabelEditorWidget.cs" line="92" column="4" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
-      <Node expanded="True">
-        <Node name="MathTextRecognizer" selected="True" />
+      <Node expanded="True" selected="True">
+        <Node name="MathTextLearner" expanded="True">
+          <Node name="Resources" expanded="True" />
+        </Node>
+        <Node name="MathTextRecognizer" expanded="True">
+          <Node name="Steps" expanded="True" />
+        </Node>
       </Node>
     </ViewMemento>
     <ViewMemento id="ClassPad">
