@@ -32,7 +32,6 @@
     <File name="Steps" subtype="Directory" buildaction="Compile" />
     <File name="Steps/SegmentingAndMatchingStepWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Steps/RecognizingStepWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Steps/FormulaNodeActionDialog.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

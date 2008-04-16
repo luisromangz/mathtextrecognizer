@@ -25,7 +25,8 @@ namespace MathTextCustomWidgets.Editors
 				new Glade.XML(null,"gui.glade", "symbolLabelEditorHB",null);
 			gxml.Autoconnect(this);
 			
-			this.Add(this.symbolLabelEditorHB);
+			InitializeWidgets();
+			
 			
 			this.ShowAll();
 		}
@@ -50,6 +51,32 @@ namespace MathTextCustomWidgets.Editors
 		
 		
 #endregion Properties
+		
+#region Private methods
+		/// <summary>
+		/// Initializes this widget children.
+		/// </summary>
+		private void InitializeWidgets()
+		{
+			this.Add(this.symbolLabelEditorHB);
+
+			// A model is neccesary to store the different values
+			Gtk.ListStore model = new Gtk.ListStore(typeof(string), 
+			                                        typeof(string),			         
+			                                        typeof(int));
+			
+				
+			symbolsCBEntry.Model = model;
+			symbolsCBEntry.WrapWidth =3;
+			symbolsCBEntry.TextColumn = 0;
+			symbolsCBEntry.ColumnSpanColumn = 2;
+			
+			model.AppendValues("+", "Suma",2);
+			model.AppendValues("-", "Resta",2);
+				
+		}
+		
+#endregion Private methods
 		
 		
 	}
