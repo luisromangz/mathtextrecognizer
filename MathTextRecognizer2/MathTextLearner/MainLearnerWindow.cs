@@ -256,10 +256,16 @@ namespace MathTextLearner
 			// La imagen reducida en la primera columna
 			imagesIV.PixbufColumn = 0;
 			
-			imagesStore = new ListStore(typeof(Gdk.Pixbuf), typeof(Gdk.Pixbuf)); 
+			imagesStore = new ListStore(typeof(Gdk.Pixbuf), 
+			                            typeof(Gdk.Pixbuf));
+						
 			imagesIV.Model = imagesStore;
 			
-			toolNewDatabase.IconWidget =ImageResources.LoadImage("database-new22");
+			imagesStore.RowInserted += OnImagesStoreRowInserted;
+			imagesStore.RowDeleted += OnImagesStoreRowDeleted;
+			
+			toolNewDatabase.IconWidget =
+				ImageResources.LoadImage("database-new22");
 			
 			menuDatabase.Image =ImageResources.LoadImage("database-new16");
 			
@@ -358,8 +364,6 @@ namespace MathTextLearner
 				
 				LogLine("¡Archivo de imagen «{0}» añadido correctamente!",
 				        filename);
-				
-				
 			}
 		}
 		
@@ -480,6 +484,34 @@ namespace MathTextLearner
 			OkDialog.Show(mainWindow, MessageType.Error,msg);
 			
 			PrepareForNewImage();
+		}
+		
+		/// <summary>
+		/// Handles the row inserted image tree model event.
+		/// </summary>
+		/// <param name="s">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="a">
+		/// A <see cref="RowInsertedArgs"/>
+		/// </param>
+		private void OnImagesStoreRowInserted(object s, RowInsertedArgs a)
+		{
+			buttonsHB.Sensitive = imagesStore.IterNChildren() > 0;
+		}
+		
+		/// <summary>
+		/// Handles the row delelte image tree model event.
+		/// </summary>
+		/// <param name="s">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="a">
+		/// A <see cref="RowDeletedArgs"/>
+		/// </param>
+		private void OnImagesStoreRowDeleted(object s, RowDeletedArgs a)
+		{
+			buttonsHB.Sensitive = imagesStore.IterNChildren() > 0;
 		}
 		
 		private void OnImagesIVSelectionChanged(object s, EventArgs a)
@@ -816,8 +848,6 @@ namespace MathTextLearner
 			imagesVB.Sensitive = true;
 			
 			imagesStore.Clear();
-			
-			buttonsHB.Sensitive = true;
 			
 			hboxSymbolWidgets.Sensitive = false;
 			nextButtonsHB.Sensitive =false;

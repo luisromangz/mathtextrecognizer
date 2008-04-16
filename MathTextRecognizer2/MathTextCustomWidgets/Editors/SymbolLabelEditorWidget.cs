@@ -68,14 +68,11 @@ namespace MathTextCustomWidgets.Editors
 
 			symbolsCBEntry.WrapWidth = 2;
 			
-			
-			
 			symbolsCBEntry.Model = model;
 			
 			symbolsCBEntry.TextColumn = 0;
 			Gtk.CellRendererText cell = new Gtk.CellRendererText();
-			
-			cell.Xalign = 0.0f;
+			cell.Alignment = Pango.Alignment.Left;
 			
 			symbolsCBEntry.PackStart(cell, true);
 			symbolsCBEntry.AddAttribute(cell,"text",1);
