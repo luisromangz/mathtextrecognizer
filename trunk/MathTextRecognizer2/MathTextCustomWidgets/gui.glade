@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.3 on Tue Apr 15 19:46:38 2008 -->
+<!--Generated with glade3 3.4.3 on Tue Apr 15 19:56:07 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="logViewWidget">
     <child>
@@ -502,7 +502,6 @@
                 <property name="visible">True</property>
                 <property name="has_tooltip">True</property>
                 <property name="tooltip_text">Despliege la lista para ver los símbolos matemáticos</property>
-                <property name="text_column">0</property>
                 <child internal-child="entry">
                   <widget class="GtkEntry" id="comboboxentry-entry1">
                     <property name="visible">True</property>

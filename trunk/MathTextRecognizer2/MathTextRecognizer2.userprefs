@@ -1,42 +1,25 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
     <File name="Bienvenido" />
-    <File name="CustomGtkWidgets/ImageResources.cs" line="1" column="1" />
-    <File name="CustomGtkWidgets/AssemblyInfo.cs" line="1" column="1" />
-    <File name="MathTextLearner/Assistant/BitmapProcessesStep.cs" line="8" column="1" />
     <File name="MathTextCustomWidgets/ImageResources.cs" line="1" column="1" />
-    <File name="MathTextLearner/MainLearnerWindow.cs" line="14" column="10" />
-    <File name="MathTextLearner/Assistant/DatabaseTypeStep.cs" line="10" column="7" />
+    <File name="MathTextLearner/MainLearnerWindow.cs" line="241" column="1" />
+    <File name="MathTextCustomWidgets/Editors/SymbolLabelEditorWidget.cs" line="75" column="39" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
       <Node expanded="True">
-        <Node name="MathTextCustomWidgets" expanded="True" />
-        <Node name="MathTextLearner" expanded="True">
-          <Node name="References" expanded="True" />
-          <Node name="Resources" expanded="True" />
-          <Node name="Assistant" expanded="True">
-            <Node name="DatabaseTypeStep.cs" selected="True" />
-          </Node>
-        </Node>
+        <Node name="MathTextRecognizer" selected="True" />
       </Node>
     </ViewMemento>
     <ViewMemento id="ClassPad">
-      <Node expanded="True">
-        <Node name="MathTextCustomWidgets" expanded="True" selected="True">
-          <Node name="MathTextCustomWidgets" expanded="True">
-            <Node name="CommonDialogs" expanded="True" />
-          </Node>
-        </Node>
-        <Node name="MathTextRecognizer" expanded="True" />
-      </Node>
+      <Node expanded="True" />
     </ViewMemento>
     <ViewMemento id="MonoDevelop.NUnit.TestPad">
       <Node expanded="True" />
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextLearner/Assistant/DatabaseTypeStep.cs" />
+    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextCustomWidgets/Editors/SymbolLabelEditorWidget.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>

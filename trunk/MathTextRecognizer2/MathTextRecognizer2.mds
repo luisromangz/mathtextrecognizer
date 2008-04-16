@@ -20,7 +20,7 @@
       </UnitTestInformation>
     </Configuration>
   </Configurations>
-  <StartMode startupentry="MathTextLearner" single="True">
+  <StartMode startupentry="MathTextRecognizer" single="True">
     <Execute type="None" entry="MathTextLearner" />
     <Execute type="None" entry="MathTextRecognizer" />
     <Execute type="None" entry="MathTextCustomWidgets" />
