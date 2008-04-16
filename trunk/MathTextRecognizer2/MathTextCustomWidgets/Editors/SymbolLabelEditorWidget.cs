@@ -40,12 +40,14 @@ namespace MathTextCustomWidgets.Editors
 		{
 			get
 			{
-				return symbolsCBEntry.ActiveText;
+				//return symbolsCBEntry.ActiveText;
+				return "";
 			}
 			
 			set
 			{
-				symbolsCBEntry.Entry.Text = value;
+				//symbolsCBEntry.Entry.Text = value;
+				;
 			}
 		}
 		
@@ -62,17 +64,45 @@ namespace MathTextCustomWidgets.Editors
 
 			// A model is neccesary to store the different values
 			Gtk.ListStore model = new Gtk.ListStore(typeof(string), 
-			                                        typeof(string),			         
-			                                        typeof(int));
+			                                        typeof(string));
+
+			symbolsCBEntry.WrapWidth = 2;
 			
-				
+			
+			
 			symbolsCBEntry.Model = model;
-			symbolsCBEntry.WrapWidth =3;
-			symbolsCBEntry.TextColumn = 0;
-			symbolsCBEntry.ColumnSpanColumn = 2;
 			
-			model.AppendValues("+", "Suma",2);
-			model.AppendValues("-", "Resta",2);
+			symbolsCBEntry.TextColumn = 0;
+			Gtk.CellRendererText cell = new Gtk.CellRendererText();
+			
+			cell.Xalign = 0.0f;
+			
+			symbolsCBEntry.PackStart(cell, true);
+			symbolsCBEntry.AddAttribute(cell,"text",1);
+			
+			// ∀∃∄∇∊∫∩∪⋂⋀⋁∧∨∞
+			
+			model.AppendValues("+", "Suma");
+			model.AppendValues("-", "Resta");	
+			model.AppendValues("·", "Multiplicación");
+			model.AppendValues("/", "División");
+			model.AppendValues("√", "Raíz");
+			model.AppendValues("∑", "Sumatorio");
+			model.AppendValues("∫", "Integral");
+			model.AppendValues("⋂", "Intersecctador");
+			model.AppendValues("⋃", "Unidor");
+			model.AppendValues("∪", "Unión");
+			model.AppendValues("∩", "Intersección");
+			model.AppendValues("⋀", "Conjuntor");
+			model.AppendValues("⋁", "Disyuntor");
+			model.AppendValues("∧", "Conjunción");
+			model.AppendValues("∨", "Disyunción");
+			model.AppendValues("∊", "Pertenece");
+			model.AppendValues("∀", "Para todo");
+			model.AppendValues("∃", "Existe");
+			model.AppendValues("∄", "No existe");
+			model.AppendValues("∞", "Infinito");
+			
 				
 		}
 		
