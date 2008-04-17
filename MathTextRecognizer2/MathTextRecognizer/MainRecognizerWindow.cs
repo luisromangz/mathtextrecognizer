@@ -18,6 +18,7 @@ using MathTextCustomWidgets;
 using MathTextCustomWidgets.Widgets.Logger;
 using MathTextCustomWidgets.Widgets.ImageArea;
 using MathTextCustomWidgets.Dialogs;
+using MathTextCustomWidgets.Dialogs.SymbolLabel;
 
 using MathTextLibrary;
 using MathTextLibrary.Bitmap;
@@ -306,6 +307,24 @@ namespace MathTextRecognizer
 		private void OnNewSessionClicked(object sender, EventArgs arg)
 		{			
 			System.Diagnostics.Process.Start(System.Environment.CommandLine);			
+		}
+		
+		/// <summary>
+		/// Handles the click on the simbol list editor menu item.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="arg">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnSymbolListEditorItem(object sender, EventArgs arg)
+		{
+			SymbolLabelDialog dialog = 
+				new SymbolLabelDialog(mainWindow);
+			
+			dialog.Show();
+			dialog.Destroy();
 		}
 		
 		/// <summary>

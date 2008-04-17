@@ -69,6 +69,26 @@
               </widget>
             </child>
             <child>
+              <widget class="GtkMenuItem" id="menuitem1">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">_Editar</property>
+                <property name="use_underline">True</property>
+                <child>
+                  <widget class="GtkMenu" id="menu2">
+                    <property name="visible">True</property>
+                    <child>
+                      <widget class="GtkMenuItem" id="symbolListEditorItem">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Lista de símbolos...</property>
+                        <property name="use_underline">True</property>
+                        <signal name="activate" handler="OnSymbolListEditorItem"/>
+                      </widget>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+            <child>
               <widget class="GtkMenuItem" id="menuTools">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">_Herramientas</property>

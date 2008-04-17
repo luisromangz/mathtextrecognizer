@@ -68,6 +68,7 @@ namespace MathTextCustomWidgets.Widgets
 		/// </param>
 		public void LoadSymbols()
 		{		
+			model.Clear();
 			List<SymbolLabelInfo> symbolsInfo = LibraryConfig.Instance.Symbols;
 			foreach(SymbolLabelInfo info in symbolsInfo)
 			{

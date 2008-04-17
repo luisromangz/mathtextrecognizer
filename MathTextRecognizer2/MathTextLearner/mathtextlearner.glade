@@ -91,7 +91,7 @@
                     <child>
                       <widget class="GtkMenuItem" id="symbolsEditItem">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">_Símbolos...</property>
+                        <property name="label" translatable="yes">_Lista de símbolos...</property>
                         <property name="use_underline">True</property>
                         <signal name="activate" handler="OnSymbolsEditItemActivate"/>
                       </widget>
