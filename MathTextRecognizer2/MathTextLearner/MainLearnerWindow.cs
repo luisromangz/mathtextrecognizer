@@ -210,7 +210,7 @@ namespace MathTextLearner
 				case 0:
 					break;
 				case 1:
-					conflictsMessage = "Hubo un conflicto entre caracteres";
+					conflictsMessage = "Hubo un conflicto entre caracteres.";
 					break;
 				default:
 					conflictsMessage = 
@@ -222,7 +222,7 @@ namespace MathTextLearner
 			// Informamos al usuario.
 			OkDialog.Show(mainWindow,
 				          MessageType.Info,
-				          "Todos los caracteres fueron procesados.{0}",
+				          "Todos los caracteres fueron procesados.\n{0}",
 				          conflictsMessage);
 				
 			mtb = null;

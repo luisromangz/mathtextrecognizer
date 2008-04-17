@@ -224,8 +224,9 @@ namespace MathTextRecognizer
 			segmentingAndMatchingStepWidget = 
 				new SegmentingAndMatchingStepWidget(this);
 			
-			recognizingStepsNB.AppendPage(segmentingAndMatchingStepWidget.Widget,
-			                              new Label("Segmentación y reconocimiento de caracteres"));
+			recognizingStepsNB.AppendPage(segmentingAndMatchingStepWidget,
+			                              new Label("Segmentación y "
+			                                        +"reconocimiento de carácteres"));
 			
 			mainWindow.ShowAll();
 		}
@@ -304,13 +305,8 @@ namespace MathTextRecognizer
 		/// </summary>
 		private void OnNewSessionClicked(object sender, EventArgs arg)
 		{			
-			System.Diagnostics.Process newSession =  
-				System.Diagnostics.Process.Start(System.Environment.CommandLine);			
+			System.Diagnostics.Process.Start(System.Environment.CommandLine);			
 		}
-		
-		
-		
-		
 		
 		/// <summary>
 		/// Metodo que maneja el evento provocado al cerrarse el dialogo de 
@@ -333,6 +329,8 @@ namespace MathTextRecognizer
 				recognizementFinished=false;
 				toolLatex.Sensitive=false;
 				menuMakeOutput.Sensitive=false;
+				
+				ClearLog();
 				
 			}
 		}

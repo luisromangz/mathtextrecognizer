@@ -1,16 +1,18 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
-    <File name="MathTextLearner/MainLearnerWindow.cs" line="241" column="1" />
-    <File name="MathTextCustomWidgets/Editors/SymbolLabelEditorWidget.cs" line="92" column="4" />
+    <File name="Bienvenido" />
+    <File name="MathTextLearner/MainLearnerWindow.cs" line="507" column="26" />
+    <File name="MathTextRecognizer/Steps/Dialogs/SymbolLabelEditorDialog.cs" line="57" column="4" />
+    <File name="MathTextRecognizer/Steps/SegmentingAndMatchingStepWidget.cs" line="503" column="60" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
       <Node expanded="True" selected="True">
-        <Node name="MathTextLearner" expanded="True">
-          <Node name="Resources" expanded="True" />
-        </Node>
+        <Node name="MathTextLearner" expanded="True" />
         <Node name="MathTextRecognizer" expanded="True">
-          <Node name="Steps" expanded="True" />
+          <Node name="Steps" expanded="True">
+            <Node name="Dialogs" expanded="True" />
+          </Node>
         </Node>
       </Node>
     </ViewMemento>
@@ -22,7 +24,7 @@
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextCustomWidgets/Editors/SymbolLabelEditorWidget.cs" />
+    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer/Steps/Dialogs/SymbolLabelEditorDialog.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>

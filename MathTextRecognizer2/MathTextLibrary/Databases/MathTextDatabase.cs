@@ -149,6 +149,7 @@ namespace MathTextLibrary.Databases
 		/// <value>
 		/// Contiene los simbolos almacenados en la base de datos.
 		/// </value>
+		[XmlIgnoreAttribute]
 		public List<MathSymbol> SymbolsContained
 		{
 			get

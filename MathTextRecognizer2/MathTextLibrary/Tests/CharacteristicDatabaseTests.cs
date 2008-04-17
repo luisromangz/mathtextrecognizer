@@ -24,7 +24,7 @@ namespace MathTextLibrary
 		[Test()]
 		public void RepeatedSymbolNotAdded()
 		{
-			CharacteristicDatabase database = new CharacteristicDatabase();
+			CharacteristicTreeDatabase database = new CharacteristicTreeDatabase();
 			
 			database.RootNode = new CharacteristicNode();
 			

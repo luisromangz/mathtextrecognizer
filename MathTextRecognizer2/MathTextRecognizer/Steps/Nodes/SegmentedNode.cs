@@ -10,7 +10,7 @@ using MathTextLibrary.Bitmap;
 
 using MathTextLibrary.Controllers;
 
-namespace MathTextRecognizer
+namespace MathTextRecognizer.Steps.Nodes
 {
 	
 	/// <summary>
@@ -18,7 +18,7 @@ namespace MathTextRecognizer
 	/// para poder a los nodos del arbol que mostramos en la interfaz un objeto
 	/// <c>MathTextBitmap</c> que represente la imagen correspondiente al nodo.
 	/// </summary>	
-	public class FormulaNode : TreeNode
+	public class SegmentedNode : TreeNode
 	{
 	
 		private string name;
@@ -39,7 +39,7 @@ namespace MathTextRecognizer
 		/// <param name="view">
 		/// El árbol al que añadimos el nodo.
 		/// </param>		
-		public FormulaNode(string name, MathTextBitmap bitmap, NodeView view)
+		public SegmentedNode(string name, MathTextBitmap bitmap, NodeView view)
 		    : base()
 		{
 			this.name=name;
@@ -125,7 +125,7 @@ namespace MathTextRecognizer
 		/// <returns>
 		/// El nodo añadido.
 		/// </returns>
-		public FormulaNode AddChild(MathTextBitmap childBitmap)
+		public SegmentedNode AddChild(MathTextBitmap childBitmap)
 		{		
 			string name="";
 			if(this.Parent ==null)
@@ -140,7 +140,7 @@ namespace MathTextRecognizer
 			
 			
 			
-			FormulaNode node = new FormulaNode(name,
+			SegmentedNode node = new SegmentedNode(name,
 			                                   childBitmap,
 			                                   view);
 				

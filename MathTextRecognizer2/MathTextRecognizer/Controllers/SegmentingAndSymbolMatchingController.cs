@@ -14,6 +14,8 @@ using MathTextLibrary.Projection;
 
 using MathTextLibrary.Controllers;
 
+using MathTextRecognizer.Steps.Nodes;
+
 namespace MathTextRecognizer.Controllers
 {
 	/// <summary>
@@ -36,7 +38,7 @@ namespace MathTextRecognizer.Controllers
 		/// Evento usado para notificar a la interfaz de que se ha terminado de
 		/// realizar un proceso.
 		/// </summary>
-		public event ProcessFinishedHandler RecognizeProcessFinished;
+		public event ProcessFinishedHandler RecognizementProcessFinished;
 		
 		/// <summary>
 		/// Evento usado para notificar a la interfaz de que se ha comenzado
@@ -45,7 +47,7 @@ namespace MathTextRecognizer.Controllers
 		public event BitmapBeingRecognizedHandler BitmapBeingRecognized;
 		
 		//La imagen raiz que contiene la formula completa que deseamos reconocer.
-		private FormulaNode startNode;
+		private SegmentedNode startNode;
 		
 		private List<BitmapSegmenter> segmenters;
 		
@@ -78,7 +80,7 @@ namespace MathTextRecognizer.Controllers
 		/// La imagen que hemos comenzado a reconocer, que sera enviada como
 		/// argumentod del evento.
 		/// </param>		
-		protected void OnBitmapBeingRecognized(MathTextBitmap bitmap)
+		protected void BitmapBeingRecognizedInvoker(MathTextBitmap bitmap)
 		{
 			if(BitmapBeingRecognized!=null)
 			{
@@ -92,7 +94,7 @@ namespace MathTextRecognizer.Controllers
 		/// <param name="msg">
 		/// El mensaje que queremos pasar como argumento al manejador del evento.
 		/// </param>		
-		protected void OnMessageLogSent(string msg, params object [] args)
+		protected void MessageLogSentInvoker(string msg, params object [] args)
 		{
 			if(MessageLogSent!=null)
 			{
@@ -103,11 +105,11 @@ namespace MathTextRecognizer.Controllers
 		/// <summary>
 		/// Envolvemos el lanzamiento del evento RecognizeProcessFinished, por comodidad.
 		/// </summary>		
-		protected void OnRecognizeProcessFinished()
+		protected void RecognizementProcessFinishedInvoker()
 		{
-			if(RecognizeProcessFinished!=null)
+			if(RecognizementProcessFinished!=null)
 			{
-				RecognizeProcessFinished(this,EventArgs.Empty);
+				RecognizementProcessFinished(this,EventArgs.Empty);
 			}
 
 		}
@@ -123,14 +125,14 @@ namespace MathTextRecognizer.Controllers
 			// Lo que hacemos es notificar a la interfaz de que una determinada 
 			// caracteristica binaria ha tomado un valor, y que caracteres son
 			// similares.
-			OnMessageLogSent("{0}: {1}",args.Process.GetType(), args.Result);
+			MessageLogSentInvoker("{0}: {1}",args.Process.GetType(), args.Result);
 			string similar="";	
 			if(args.SimilarSymbols!=null){
 				foreach(MathSymbol ms in args.SimilarSymbols){
 					similar += String.Format("«{0}»,", ms.Text);
 				}				
 				
-				OnMessageLogSent("Caracteres similares: {0}",
+				MessageLogSentInvoker("Caracteres similares: {0}",
 				                 similar.TrimEnd(new char[]{','}));
 			}
 		}
@@ -157,7 +159,7 @@ namespace MathTextRecognizer.Controllers
 		/// Contiene la imagen de inicio que
 		/// contiene la formula que deseamos reconocer.
 		/// </value>
-		public FormulaNode StartNode
+		public SegmentedNode StartNode
 		{
 			get
 			{				
@@ -193,8 +195,12 @@ namespace MathTextRecognizer.Controllers
 		/// </summary>
 		public void RecognizeProcess()
 		{
+			MessageLogSentInvoker("=======================================");
+			MessageLogSentInvoker(" Comenzando proceso de segmentado");
+			MessageLogSentInvoker("=======================================");
+			
 		   	RecognizerTreeBuild(startNode);
-		   	OnRecognizeProcessFinished();
+		   	RecognizementProcessFinishedInvoker();
 		}
 		
 		/// <summary>
@@ -206,14 +212,15 @@ namespace MathTextRecognizer.Controllers
 		/// <param name="node">
 		/// El nodo donde esta la imagen sobre la que trabajaremos.
 		/// </param>
-		private void RecognizerTreeBuild(FormulaNode node)
+		private void RecognizerTreeBuild(SegmentedNode node)
 		{			
 			// Seleccionamos el nodo.
 			node.Select();
 			
 			MathTextBitmap bitmap = node.MathTextBitmap;
-			OnMessageLogSent("Tratando la subimagen situada a partir de {0}",
-			                 bitmap.Position);
+			MessageLogSentInvoker("=======================================");
+			MessageLogSentInvoker("Tratando la subimagen «{0}»",
+			                      node.Name);
 						
 			//Si no logramos reconocer nada, es el simbolo nulo, tambien sera
 			//el simbolo nulo aunque hayamos podido crearle hijos.
@@ -225,7 +232,7 @@ namespace MathTextRecognizer.Controllers
 			foreach(MathTextDatabase database in databases)
 			{
 				bitmap.ProcessImage(database.Processes);
-				OnBitmapBeingRecognized(bitmap);
+				BitmapBeingRecognizedInvoker(bitmap);
 				
 				// Añadimos los caracteres reconocidos por la base de datos
 				foreach (MathSymbol symbol in database.Recognize(bitmap))
@@ -249,33 +256,33 @@ namespace MathTextRecognizer.Controllers
 			//Si no hemos reconocido nada, pues intentaremos segmentar el caracter.
 			if(associatedSymbol == null)
 			{			
-				OnMessageLogSent("La imagen no pudo ser reconocida como un "
-				                 + "simbolo por la base de datos, se tratará de "
-				                 + "segmentar");
+				MessageLogSentInvoker("La imagen no pudo ser reconocida como un "
+				                      + "simbolo por la base de datos, se tratará de "
+				                      + "segmentar");
 				
 				List<MathTextBitmap> children = CreateChildren(bitmap);
 				
 				if(children.Count > 1)
 				{
-					OnMessageLogSent("La imagen se ha segmentado correctamente");
+					MessageLogSentInvoker("La imagen se ha segmentado correctamente");
 					
 					//Si solo conseguimos un hijo, es la propia imagen, asi que nada
 					foreach(MathTextBitmap child in children)
 					{
-						FormulaNode childNode = node.AddChild(child);
+						SegmentedNode childNode = node.AddChild(child);
 						RecognizerTreeBuild(childNode);						
 					}
 				}
 				else
 				{
-					OnMessageLogSent("La imagen no pudo ser segmentada, el "
-					                 + "símbolo queda sin reconocer");
+					MessageLogSentInvoker("La imagen no pudo ser segmentada, el "
+					                      + "símbolo queda sin reconocer");
 				}
 			}
 			else
 			{
-				OnMessageLogSent("Símbolo reconocido por la base de datos como «{0}»",
-				                 associatedSymbol.Text);
+				MessageLogSentInvoker("Símbolo reconocido por la base de datos como «{0}»",
+				                      associatedSymbol.Text);
 			}
 		}
 		

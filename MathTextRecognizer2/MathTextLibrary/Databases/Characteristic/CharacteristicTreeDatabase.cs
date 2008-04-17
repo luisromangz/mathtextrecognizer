@@ -17,17 +17,14 @@ namespace MathTextLibrary.Databases.Characteristic
 	/// binarias para los caracteres aprendidos, asi como de realizar el añadido
 	/// de nuevos caracteres en la misma y realizar busquedas.
 	/// </summary>
-	[DatabaseTypeInfo("Base de datos basada en características binarias",
-	                  "Características binarias")]	
+	[DatabaseTypeInfo("Base de datos basada en el uso de un árbol de características binarias",
+	                  "Arbol de características binarias")]	
 	[XmlInclude(typeof(MathSymbol))]
 	[XmlInclude(typeof(CharacteristicNode))]
-	public class CharacteristicDatabase : DatabaseBase
+	public class CharacteristicTreeDatabase : DatabaseBase
 	{
-		#region Atributos
+#region Atributos
 		
-		// Tabla hash para el metodo alternativo de reconocimiento de caracteres
-		// basado en distancia.
-		private Dictionary<List<bool>,CharacteristicNode> characteristicHash;
 		
 		// Lista de caracteristicas binarias que se aplican sobre las imagenes.
 		private static List<IBinaryCharacteristic> characteristics;
@@ -42,6 +39,7 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// <value>
 		/// Contiene los simbolos almacenados en la base de datos.
 		/// </value>
+		[XmlIgnoreAttribute]
 		public override List<MathSymbol> SymbolsContained 
 		{
 			get
@@ -59,14 +57,9 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// Constructor de <c>CharacteristicDatabase</c>. Crea una base de datos
 		/// vacia, sin ningun simbolo aprendido.
 		/// </summary>
-		public CharacteristicDatabase() : base()
+		public CharacteristicTreeDatabase() : base()
 		{	
-           
-          
 			rootNode=new CharacteristicNode();
-			
-			characteristicHash = 
-				new Dictionary<List<bool>,CharacteristicNode>();
 		}
 		
 		/// <summary>
@@ -189,7 +182,7 @@ namespace MathTextLibrary.Databases.Characteristic
 					                                 characteristicValue);
 				 }
 				
-				 OnRecognizingStepDoneInvoke(args);
+				 RecognizingStepDoneInvoker(args);
 			}
 			
 			if(exists)
@@ -234,96 +227,6 @@ namespace MathTextLibrary.Databases.Characteristic
 			return count;
 		}
 		
-		/// <summary>
-		/// Se invoca para crear la tabla hash sobre la informacion aprendida a 
-		/// partir de la base de datos arbórea.
-		/// </summary>
-		private void CreateHashTable()
-		{
-			characteristicHash = 
-				new Dictionary<List<bool>,CharacteristicNode>();
-			Console.WriteLine("Creando hash");
-			CreateHashTableAux(rootNode,new List<bool>());
-			Console.WriteLine("Fin hash");
-			
-		}
-		
-		/// <summary>
-		/// Rellena recursivamente la tabla hash para la busqueda de 
-		/// caracteristicas.
-		/// </summary>
-		/// <param name="node">
-		/// El nodo que tratamos.
-		/// </param>
-		/// <param name="vector">
-		/// El vector de caracteristicas que vamos generando.
-		/// </param>
-		private void CreateHashTableAux(CharacteristicNode node,
-		                                List<bool> vector)
-		{
-			
-			List<bool> newVector; 
-			
-			if(node.HasSymbols)
-			{
-				// Hemos llegado a una hoja, añadimos una entrada en la tabla.
-				Console.WriteLine(vector.Count);
-				characteristicHash.Add(vector,node);
-			}
-			else
-			{				
-				if(node.FalseTree!=null)
-				{
-					newVector = new List<bool>(vector);
-					newVector.Add(false);
-					CreateHashTableAux(node.FalseTree,newVector);			
-				}
-				
-				if(node.TrueTree!=null)
-				{
-					newVector = new List<bool>(vector);
-					newVector.Add(true);
-					CreateHashTableAux(node.TrueTree,newVector);
-				}
-			}
-		}
-
-		
-		/// <summary>
-		/// Busca el símbolo mas cercano en la tabla hash.
-		/// </summary>
-		/// <param name="vector">
-		/// El vector conteniendo los resultados de las caracterisiticas 
-		/// binarias de un simbolo.
-		/// </param>
-		/// <returns>
-		/// El conjunto de simbolos mas cercano que hay en la base de datos.
-		/// </returns>
-		private List<MathSymbol> NearestSymbols(List<bool> vector)
-		{
-			
-			int minDiff=Int32.MaxValue;
-			List<MathSymbol> res = new List<MathSymbol>();
-			List<bool> key=null;
-			
-			foreach(List<bool> s in characteristicHash.Keys)
-			{
-				if(BoolVectorDistance(vector,s) < minDiff)
-				{
-					minDiff = BoolVectorDistance(vector,s);
-					key=s;
-				}
-			}		
-			
-			if(key!=null && minDiff < 3)
-			{
-				
-				res=characteristicHash[key].Symbols;
-			}
-			
-			return res;
-		
-		}
 #endregion Métodos no públicos
 		
 		/// <value>
