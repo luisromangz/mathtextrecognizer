@@ -61,7 +61,7 @@ namespace MathTextRecognizer.Steps
 		private Button btnTilEnd;
 		
 		[WidgetAttribute]
-		private Menu formulaNodeMenu;
+		private Menu segmentedNodeMenu;
 		
 		[WidgetAttribute]
 		private ImageMenuItem learnImageItem;
@@ -447,7 +447,7 @@ namespace MathTextRecognizer.Steps
 					// been found.
 					learnImageItem.Visible =  String.IsNullOrEmpty(node.Label);
 					
-					formulaNodeMenu.Popup();
+					segmentedNodeMenu.Popup();
                 }
                         
 			}

@@ -1,17 +1,29 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
-    <File name="Bienvenido" />
-    <File name="MathTextLearner/MainLearnerWindow.cs" line="507" column="26" />
-    <File name="MathTextRecognizer/Steps/Dialogs/SymbolLabelEditorDialog.cs" line="57" column="4" />
-    <File name="MathTextRecognizer/Steps/SegmentingAndMatchingStepWidget.cs" line="503" column="60" />
+    <File name="MathTextRecognizer/MainRecognizerWindow.cs" line="333" column="16" />
+    <File name="MathTextRecognizer/Steps/SegmentingAndMatchingStepWidget.cs" line="66" column="20" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
       <Node expanded="True" selected="True">
-        <Node name="MathTextLearner" expanded="True" />
+        <Node name="MathTextCustomWidgets" expanded="True">
+          <Node name="Logger" expanded="True" />
+        </Node>
+        <Node name="MathTextLearner" expanded="True">
+          <Node name="Assistant" expanded="True" />
+        </Node>
+        <Node name="MathTextLibrary" expanded="True">
+          <Node name="Databases" expanded="True">
+            <Node name="Characteristic" expanded="True" />
+          </Node>
+        </Node>
         <Node name="MathTextRecognizer" expanded="True">
+          <Node name="Resources" expanded="True" />
+          <Node name="Controllers" expanded="True" />
+          <Node name="DatabaseManager" expanded="True" />
           <Node name="Steps" expanded="True">
             <Node name="Dialogs" expanded="True" />
+            <Node name="Nodes" expanded="True" />
           </Node>
         </Node>
       </Node>
@@ -24,7 +36,7 @@
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer/Steps/Dialogs/SymbolLabelEditorDialog.cs" />
+    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer/Steps/SegmentingAndMatchingStepWidget.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>
