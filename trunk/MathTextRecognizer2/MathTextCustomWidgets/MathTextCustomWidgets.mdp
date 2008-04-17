@@ -20,22 +20,19 @@
     <File name="HandWriting/VectorHandWritingArea.cs" subtype="Code" buildaction="Compile" />
     <File name="HandWriting/IHandWritingArea.cs" subtype="Code" buildaction="Compile" />
     <File name="gui.glade" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Logger" subtype="Directory" buildaction="Compile" />
-    <File name="Logger/LogView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Logger/LogSaveDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="ImageArea" subtype="Directory" buildaction="Compile" />
     <File name="ImageArea/ImageArea.cs" subtype="Code" buildaction="Compile" />
     <File name="ImageArea/ImageAreaMode.cs" subtype="Code" buildaction="Compile" />
-    <File name="CommonDialogs" subtype="Directory" buildaction="Compile" />
-    <File name="CommonDialogs/DatabaseOpenDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="CommonDialogs/AppInfoDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="CommonDialogs/ConfirmDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="CommonDialogs/OkDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="CommonDialogs/ImageLoadDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="CommonDialogs/DatabaseSaveDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="CommonDialogs/FolderOpenDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="CommonDialogs/PanelAssistant.cs" subtype="Code" buildaction="Compile" />
-    <File name="CommonDialogs/PanelAssistantStep.cs" subtype="Code" buildaction="Compile" />
+    <File name="Dialogs" subtype="Directory" buildaction="Compile" />
+    <File name="Dialogs/DatabaseOpenDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Dialogs/AppInfoDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Dialogs/ConfirmDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Dialogs/OkDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Dialogs/ImageLoadDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Dialogs/DatabaseSaveDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Dialogs/FolderOpenDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Dialogs/PanelAssistant.cs" subtype="Code" buildaction="Compile" />
+    <File name="Dialogs/PanelAssistantStep.cs" subtype="Code" buildaction="Compile" />
     <File name="ImageResources.cs" subtype="Code" buildaction="Compile" />
     <File name="../Common/Artwork/insert-image16.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../Common/Artwork/insert-image22.png" subtype="Code" buildaction="EmbedAsResource" />
@@ -45,9 +42,11 @@
     <File name="../Common/Artwork/database-new22.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../Common/Artwork/window-new16.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../Common/Artwork/window-new22.png" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="CommonDialogs/ImageSaveDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Editors" subtype="Directory" buildaction="Compile" />
-    <File name="Editors/SymbolLabelEditorWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Dialogs/ImageSaveDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets" subtype="Directory" buildaction="Compile" />
+    <File name="Widgets/SymbolLabelEditorWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/Logger/LogSaveDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/Logger/LogView.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

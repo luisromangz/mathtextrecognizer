@@ -52,6 +52,35 @@ namespace MathTextCustomWidgets.Editors
 		
 #endregion Properties
 		
+#region Public methods
+		
+		/// <summary>
+		/// Loads the symbols from the config.
+		/// </summary>
+		private void LoadSymbols()
+		{
+			// ∀∃∄∇∊∫∩∪⋂⋀⋁∧∨∞
+			
+			model.AppendValues("√", @"\sqrt");
+			model.AppendValues("∑", @"\sum");
+			model.AppendValues("∫", @"\int");
+			model.AppendValues("⋂", @"\bigcap");
+			model.AppendValues("∩", @"\cap");
+			model.AppendValues("⋃", @"\bigcup");
+			model.AppendValues("∪", @"\cup");			
+			model.AppendValues("⋀", @"Conjuntor");
+			model.AppendValues("∧", @"Conjunción");
+			model.AppendValues("⋁", @"Disyuntor");
+			model.AppendValues("∨", @"Disyunción");
+			model.AppendValues("∊", @"Pertenece");
+			model.AppendValues("∀", @"Para todo");
+			model.AppendValues("∃", @"Existe");
+			model.AppendValues("∄", @"No existe");
+			model.AppendValues("∞", @"Infinito");
+		}
+		
+#endregion Public methods
+		
 #region Private methods
 		/// <summary>
 		/// Initializes this widget children.
@@ -68,37 +97,14 @@ namespace MathTextCustomWidgets.Editors
 			
 			symbolsCBEntry.Model = model;
 			
-			symbolsCBEntry.TextColumn = 0;
+			symbolsCBEntry.TextColumn = 1;
 			Gtk.CellRendererText cell = new Gtk.CellRendererText();
 			cell.Alignment = Pango.Alignment.Left;
 			
 			symbolsCBEntry.PackStart(cell, true);
 			symbolsCBEntry.AddAttribute(cell,"text",1);
 			
-			// ∀∃∄∇∊∫∩∪⋂⋀⋁∧∨∞
-			
-			model.AppendValues("+", "Suma");
-			model.AppendValues("-", "Resta");	
-			model.AppendValues("·", "Multiplicación");
-			model.AppendValues("/", "División");
-			model.AppendValues("√", "Raíz");
-			model.AppendValues("∑", "Sumatorio");
-			model.AppendValues("∫", "Integral");
-			model.AppendValues("⋂", "Intersecctador");
-			model.AppendValues("⋃", "Unidor");
-			model.AppendValues("∪", "Unión");
-			model.AppendValues("∩", "Intersección");
-			model.AppendValues("⋀", "Conjuntor");
-			model.AppendValues("⋁", "Disyuntor");
-			model.AppendValues("∧", "Conjunción");
-			model.AppendValues("∨", "Disyunción");
-			model.AppendValues("∊", "Pertenece");
-			model.AppendValues("∀", "Para todo");
-			model.AppendValues("∃", "Existe");
-			model.AppendValues("∄", "No existe");
-			model.AppendValues("∞", "Infinito");
-			
-				
+			LoadSymbols();
 		}
 		
 #endregion Private methods
