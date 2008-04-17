@@ -6,7 +6,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Threading;
 
-namespace MathTextCustomWidgets.HandWriting{
+namespace MathTextCustomWidgets.Widgets.HandWriting
+{
 
 	//Aqui se declaran dos tipos metodo para usarlos para gestionar eventos
 	public delegate void StrokeAddedEventHandler(object sender);

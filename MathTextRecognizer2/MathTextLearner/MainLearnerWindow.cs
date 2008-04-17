@@ -15,10 +15,11 @@ using Gtk;
 using Glade;
 
 using MathTextCustomWidgets;
-using MathTextCustomWidgets.Logger;
-using MathTextCustomWidgets.ImageArea;
-using MathTextCustomWidgets.CommonDialogs;
-using MathTextCustomWidgets.Editors;
+using MathTextCustomWidgets.Widgets;
+using MathTextCustomWidgets.Widgets.Logger;
+using MathTextCustomWidgets.Widgets.ImageArea;
+using MathTextCustomWidgets.Dialogs;
+using MathTextCustomWidgets.Dialogs.SymbolLabel;
 
 using MathTextLibrary;
 using MathTextLibrary.Bitmap;
@@ -708,6 +709,28 @@ namespace MathTextLearner
 			toolSaveAs.Sensitive = true;
 			
 			PrepareForNewImage();
+			
+		}
+		
+		
+		/// <summary>
+		/// Handles the activation of the edit symbols menu item.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgas"/>
+		/// </param>
+		private void OnSymbolsEditItemActivate(object sender, EventArgs args)
+		{
+			SymbolLabelDialog dialog = 
+				new SymbolLabelDialog(mainWindow);
+			
+			dialog.Show();
+			dialog.Destroy();
+			
+			symbolLabelEditor.LoadSymbols();
 			
 		}
 		

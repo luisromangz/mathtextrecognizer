@@ -4,7 +4,7 @@ using System;
 using Gtk;
 
 
-namespace MathTextCustomWidgets.Logger
+namespace MathTextCustomWidgets.Widgets.Logger
 {
 	
 	/// <summary>

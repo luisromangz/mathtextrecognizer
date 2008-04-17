@@ -5,8 +5,8 @@ using System;
 using Gtk;
 using Glade;
 
-using MathTextCustomWidgets.ImageArea;
-using MathTextCustomWidgets.Editors;
+using MathTextCustomWidgets.Widgets.ImageArea;
+using MathTextCustomWidgets.Widgets;
 
 using MathTextRecognizer.Steps.Nodes;
 

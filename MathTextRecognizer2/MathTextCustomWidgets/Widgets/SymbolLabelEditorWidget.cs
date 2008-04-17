@@ -2,8 +2,11 @@
 // User: luis at 18:55 15/04/2008
 
 using System;
+using System.Collections.Generic;
 
-namespace MathTextCustomWidgets.Editors
+using MathTextLibrary.Config;
+
+namespace MathTextCustomWidgets.Widgets
 {
 	
 	/// <summary>
@@ -17,6 +20,9 @@ namespace MathTextCustomWidgets.Editors
 		
 		[Glade.WidgetAttribute]
 		private Gtk.HBox symbolLabelEditorHB;
+		
+		[Glade.WidgetAttribute]
+		private Gtk.ListStore model;
 		
 		public SymbolLabelEditorWidget()
 			: base(0.5f, 0.5f, 1.0f, 1.0f)
@@ -57,26 +63,16 @@ namespace MathTextCustomWidgets.Editors
 		/// <summary>
 		/// Loads the symbols from the config.
 		/// </summary>
-		private void LoadSymbols()
-		{
-			// ∀∃∄∇∊∫∩∪⋂⋀⋁∧∨∞
-			
-			model.AppendValues("√", @"\sqrt");
-			model.AppendValues("∑", @"\sum");
-			model.AppendValues("∫", @"\int");
-			model.AppendValues("⋂", @"\bigcap");
-			model.AppendValues("∩", @"\cap");
-			model.AppendValues("⋃", @"\bigcup");
-			model.AppendValues("∪", @"\cup");			
-			model.AppendValues("⋀", @"Conjuntor");
-			model.AppendValues("∧", @"Conjunción");
-			model.AppendValues("⋁", @"Disyuntor");
-			model.AppendValues("∨", @"Disyunción");
-			model.AppendValues("∊", @"Pertenece");
-			model.AppendValues("∀", @"Para todo");
-			model.AppendValues("∃", @"Existe");
-			model.AppendValues("∄", @"No existe");
-			model.AppendValues("∞", @"Infinito");
+		/// <param name="symbolLabels">
+		/// The <c>SymbolLabelInfo</c> instances to be added.
+		/// </param>
+		public void LoadSymbols()
+		{		
+			List<SymbolLabelInfo> symbolsInfo = LibraryConfig.Instance.Symbols;
+			foreach(SymbolLabelInfo info in symbolsInfo)
+			{
+				model.AppendValues(info.Label, info.Symbol);
+			}
 		}
 		
 #endregion Public methods
@@ -90,21 +86,21 @@ namespace MathTextCustomWidgets.Editors
 			this.Add(this.symbolLabelEditorHB);
 
 			// A model is neccesary to store the different values
-			Gtk.ListStore model = new Gtk.ListStore(typeof(string), 
-			                                        typeof(string));
-
-			symbolsCBEntry.WrapWidth = 2;
-			
+			model = new Gtk.ListStore(typeof(string), 
+			                          typeof(string));			
 			symbolsCBEntry.Model = model;
 			
-			symbolsCBEntry.TextColumn = 1;
+			symbolsCBEntry.TextColumn = 0;
 			Gtk.CellRendererText cell = new Gtk.CellRendererText();
-			cell.Alignment = Pango.Alignment.Left;
-			
 			symbolsCBEntry.PackStart(cell, true);
 			symbolsCBEntry.AddAttribute(cell,"text",1);
 			
+			
 			LoadSymbols();
+			
+			// We adjust the wrap so it is mostrly a square.
+			symbolsCBEntry.WrapWidth = 
+				(int) Math.Ceiling(Math.Sqrt(model.IterNChildren())) -1;
 		}
 		
 #endregion Private methods

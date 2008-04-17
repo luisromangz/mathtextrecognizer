@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Threading;
 
-namespace MathTextCustomWidgets.HandWriting
+namespace MathTextCustomWidgets.Widgets.HandWriting
 {	
 	
 	public class VectorHandWritingArea : IHandWritingArea

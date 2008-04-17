@@ -9,8 +9,8 @@ using Gtk;
 using Glade;
 using Gdk;
 
-using MathTextCustomWidgets.ImageArea;
-using MathTextCustomWidgets.CommonDialogs;
+using MathTextCustomWidgets.Widgets.ImageArea;
+using MathTextCustomWidgets.Dialogs;
 using MathTextCustomWidgets;
 
 using MathTextLibrary.Bitmap;
@@ -541,6 +541,7 @@ namespace MathTextRecognizer.Steps
 				}
 			}
 		}
+		
 			
 			
 		/// <summary>

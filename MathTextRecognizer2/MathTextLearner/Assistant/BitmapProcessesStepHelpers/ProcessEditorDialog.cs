@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 using Gtk;
 
-using MathTextCustomWidgets.CommonDialogs;
+using MathTextCustomWidgets.Dialogs;
 
 using MathTextLearner.Assistant;
 

@@ -3,7 +3,7 @@ using System;
 using Gtk;
 using Glade;
 
-namespace MathTextCustomWidgets.CommonDialogs
+namespace MathTextCustomWidgets.Dialogs
 {
 	
 	

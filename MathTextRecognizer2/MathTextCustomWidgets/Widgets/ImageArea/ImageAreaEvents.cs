@@ -1,7 +1,7 @@
 
 using System;
 
-namespace CustomGtkWidgets
+namespace MathTextCustomWidgets.Widgets.ImageArea
 {
 	
 	

@@ -81,6 +81,26 @@
               </widget>
             </child>
             <child>
+              <widget class="GtkMenuItem" id="menuItem10">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">_Editar</property>
+                <property name="use_underline">True</property>
+                <child>
+                  <widget class="GtkMenu" id="menu1">
+                    <property name="visible">True</property>
+                    <child>
+                      <widget class="GtkMenuItem" id="symbolsEditItem">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">_Símbolos...</property>
+                        <property name="use_underline">True</property>
+                        <signal name="activate" handler="OnSymbolsEditItemActivate"/>
+                      </widget>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+            <child>
               <widget class="GtkMenuItem" id="menuitem7">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">A_yuda</property>
