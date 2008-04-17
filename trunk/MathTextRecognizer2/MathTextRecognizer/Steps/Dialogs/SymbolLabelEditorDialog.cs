@@ -8,6 +8,8 @@ using Glade;
 using MathTextCustomWidgets.Widgets.ImageArea;
 using MathTextCustomWidgets.Widgets;
 
+using MathTextLibrary.Symbol;
+
 using MathTextRecognizer.Steps.Nodes;
 
 namespace MathTextRecognizer.Steps.Dialogs
@@ -29,7 +31,7 @@ namespace MathTextRecognizer.Steps.Dialogs
 		private Button okButton;
 		
 		[WidgetAttribute]
-		private Alignment symbolEditorPlaceholder;
+		private VBox symbolEditorPlaceholder;
 		
 		[WidgetAttribute]
 		private Alignment imagePlaceholder;
@@ -61,7 +63,21 @@ namespace MathTextRecognizer.Steps.Dialogs
 			
 			
 			labelEditor = new SymbolLabelEditorWidget();
-			labelEditor.Label = node.Label;	
+			if(node.Symbols.Count == 1)
+				labelEditor.Label = node.Label;	
+			else
+			{
+				// If we have various posibilities, we add radio buttons.
+				RadioButton group = new RadioButton("group");
+				foreach(MathSymbol symbol in node.Symbols)
+				{					
+					symbolEditorPlaceholder.Add(new RadioButton(group,
+					                                            symbol.Text));
+				}
+				
+				symbolEditorPlaceholder.Add(new RadioButton(group, "Otra"));
+				labelEditor.Sensitive = false;
+			}
 			
 			symbolEditorPlaceholder.Add(labelEditor);
 			

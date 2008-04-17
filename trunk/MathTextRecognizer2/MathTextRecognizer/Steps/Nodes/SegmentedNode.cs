@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Gtk;
 
 using MathTextLibrary;
+using MathTextLibrary.Symbol;
 using MathTextLibrary.Bitmap;
 
 using MathTextLibrary.Controllers;
@@ -26,6 +27,8 @@ namespace MathTextRecognizer.Steps.Nodes
 		private MathTextBitmap bitmap;
 		private NodeView view;
 		private string position;
+		
+		List<MathSymbol> symbols;
 		
 		/// <summary>
 		/// El constructor de <code>FormulaNode</code>
@@ -52,7 +55,7 @@ namespace MathTextRecognizer.Steps.Nodes
 			
 			this.view = view;
 			
-			bitmap.SymbolChanged += new SymbolChangedHandler(OnSymbolChanged);
+			this.symbols = new List<MathSymbol>();
 		}
 		
 		/// <value>
@@ -99,21 +102,37 @@ namespace MathTextRecognizer.Steps.Nodes
 				return position;
 			}
 		}
+
+		/// <value>
+		/// Contains the symbols associed with the node.
+		/// </value>
+		public List<MathSymbol> Symbols 
+		{
+			get 
+			{
+				return symbols;
+			}
+			set 
+			{
+				symbols = value;
+				SetLabels();
+			}
+		}
 		
 		/// <summary>
 		/// Metodo que maneja el evento provocado al asociarse un simbolo 
 		/// al <code>MathTextBitmap</code>.
 		/// </summary>
-		private void OnSymbolChanged(object sender,EventArgs arg)
+		public void SetLabels()
 		{
-			// TODO Arreglar cambio del texto del nodo.
-			
-			if(bitmap.Symbol !=null)
+			// We prepare the string.
+			string text ="";
+			foreach(MathSymbol s in symbols)
 			{
-				// Si es nulo es pq no se reconoció.				
-				this.label=bitmap.Symbol.Text;
-				this.view.QueueDraw();
+				text += String.Format("{0}, ", s.Text);
 			}
+			
+			label = text.TrimEnd(',',' ');
 		}
 		
 		/// <summary>

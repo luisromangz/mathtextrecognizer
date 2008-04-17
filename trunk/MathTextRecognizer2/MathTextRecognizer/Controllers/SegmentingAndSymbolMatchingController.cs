@@ -222,10 +222,6 @@ namespace MathTextRecognizer.Controllers
 			MessageLogSentInvoker("Tratando la subimagen «{0}»",
 			                      node.Name);
 						
-			//Si no logramos reconocer nada, es el simbolo nulo, tambien sera
-			//el simbolo nulo aunque hayamos podido crearle hijos.
-			MathSymbol associatedSymbol;
-			
 			// Lanzamos el reconocedor de caracteres para cada una de
 			// las bases de datos.
 			List<MathSymbol> associatedSymbols = new List<MathSymbol>();
@@ -248,13 +244,14 @@ namespace MathTextRecognizer.Controllers
 			
 			
 			// Decidimos que símbolo de los  posiblemente devuelto usuaremos.			
-			associatedSymbol = ChooseSymbol(associatedSymbols);
+			
 						
-			// Asociamos el símbolo al nodo.
-			bitmap.Symbol=associatedSymbol;	
+			// We associate all symbols to the node, so we can postargate
+			// the decission step.
+			node.Symbols = associatedSymbols;
 			
 			//Si no hemos reconocido nada, pues intentaremos segmentar el caracter.
-			if(associatedSymbol == null)
+			if(associatedSymbols.Count ==0)
 			{			
 				MessageLogSentInvoker("La imagen no pudo ser reconocida como un "
 				                      + "simbolo por la base de datos, se tratará de "
@@ -281,37 +278,16 @@ namespace MathTextRecognizer.Controllers
 			}
 			else
 			{
-				MessageLogSentInvoker("Símbolo reconocido por la base de datos como «{0}»",
-				                      associatedSymbol.Text);
-			}
-		}
-		
-	
-		/// <summary>
-		/// Permite al usuario elegir entre varios caracteres que se hayan 
-		/// reconocido para una imagen.
-		/// </summary>
-		/// <param name="symbols">
-		/// A <see cref="List`1"/>
-		/// </param>
-		/// <returns>
-		/// A <see cref="MathSymbol"/>
-		/// </returns>
-		private MathSymbol ChooseSymbol(List<MathSymbol> symbols)
-		{
-			if(symbols.Count == 0)
-			{
-				// No pudo ser asignado.
-				return null;
-			}
-			else if(symbols.Count==1)
-			{
-				return symbols[0];
-			}
-			else
-			{
-				//TODO Seleccion entre varios caracteres
-				throw new NotImplementedException("TODO seleccion entre varios caracteres");
+				// We prepare the string.
+				string text ="";
+				foreach(MathSymbol s in associatedSymbols)
+				{
+					text += String.Format("«{0}», ", s.Text);
+				}
+				
+				text = text.TrimEnd(',',' ');
+				MessageLogSentInvoker("Símbolo reconocido por la base de datos como {0}.",
+				                      text);
 			}
 		}
 		

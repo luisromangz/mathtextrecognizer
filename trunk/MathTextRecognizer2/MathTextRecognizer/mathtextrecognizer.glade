@@ -1168,8 +1168,11 @@ MathML</property>
               </widget>
             </child>
             <child>
-              <widget class="GtkAlignment" id="symbolEditorPlaceholder">
+              <widget class="GtkVBox" id="symbolEditorPlaceholder">
                 <property name="visible">True</property>
+                <child>
+                  <placeholder/>
+                </child>
                 <child>
                   <placeholder/>
                 </child>
