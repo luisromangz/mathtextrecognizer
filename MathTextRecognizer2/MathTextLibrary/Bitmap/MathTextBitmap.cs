@@ -38,19 +38,10 @@ namespace MathTextLibrary.Bitmap
 		// Imagen con el preprocesamiento completo
 		private List<FloatBitmap> processedImages;
 		
-		// Simbolo por el que se ha reconocido la imagen
-		private MathSymbol symbol;
-		
 		// Anchura de la imagen sin procesar
 		private int width;
 		
 #endregion Atributos no públicos
-		
-#region Eventos
-		
-		public event SymbolChangedHandler SymbolChanged;
-		
-#endregion Eventos
 		
 #region Constructores
 		
@@ -197,26 +188,7 @@ namespace MathTextLibrary.Bitmap
 			}
 		}
 		
-		/// <value>
-		/// Contiene el simbolo asociado a la imagen.
-		/// </value>
-		/// <remarks>
-		/// Al modificar el simbolo se llama al metodo
-		/// <c>MathTextBitmap.OnSymbolChanged()</c> salvo si el tipo del nuevo
-		/// simbolo es <c>MathSymbolType.NotRecognized</c>.
-		/// </remarks>
-		public MathSymbol Symbol
-		{
-			get
-			{
-				return symbol;
-			}
-			set
-			{
-				symbol=value;				
-				OnSymbolChangedLauncher();
-			}
-		}
+	
 		
 		/// <value>
 		/// Contiene la anchura de la imagen sin procesar.
@@ -229,8 +201,10 @@ namespace MathTextLibrary.Bitmap
 			}	
 		}
 
-		public FloatBitmap FloatImage {
-			get {
+		public FloatBitmap FloatImage 
+		{
+			get 
+			{
 				return image;
 			}
 		}
@@ -263,20 +237,5 @@ namespace MathTextLibrary.Bitmap
 
 		#endregion Métodos públicos
 		
-		#region Métodos no públicos		
-		
-		/// <summary>
-		/// Metodo que se llama cuando se modifica el simbolo de la imagen 
-		/// para notificar al controlador.
-		/// </summary>
-		protected void OnSymbolChangedLauncher()
-		{
-			if(SymbolChanged!=null)
-			{
-				SymbolChanged(this,EventArgs.Empty);			
-			}
-		}
-		
-		#endregion Métodos no públicos
 	}
 }

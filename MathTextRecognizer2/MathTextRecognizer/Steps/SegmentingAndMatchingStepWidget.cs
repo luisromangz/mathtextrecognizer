@@ -2,6 +2,7 @@
 // User: luis at 20:16 14/04/2008
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 
@@ -14,6 +15,7 @@ using MathTextCustomWidgets.Dialogs;
 using MathTextCustomWidgets;
 
 using MathTextLibrary.Bitmap;
+using MathTextLibrary.Symbol;
 using MathTextLibrary.Controllers;
 
 using MathTextRecognizer.Controllers;
@@ -180,7 +182,10 @@ namespace MathTextRecognizer.Steps
 			
 			treeview.ShowExpanders = true;
 			treeview.AppendColumn ("Imagen", new CellRendererText (), "text", 0);
-			treeview.AppendColumn ("Etiqueta", new CellRendererText (), "text", 1);
+			
+			CellRendererText cellRenderer = new CellRendererText();
+			cellRenderer.Xalign = 0.5f;
+			treeview.AppendColumn ("Etiqueta", cellRenderer, "text", 1);
 			treeview.AppendColumn ("Posición", new CellRendererText (), "text", 2);
 			scrolledtree.Add(treeview);
 			
@@ -443,10 +448,6 @@ namespace MathTextRecognizer.Steps
 					
 					selectedNode = node;
 					
-					// The learning item is only shown when no label has
-					// been found.
-					learnImageItem.Visible =  String.IsNullOrEmpty(node.Label);
-					
 					segmentedNodeMenu.Popup();
                 }
                         
@@ -497,8 +498,10 @@ namespace MathTextRecognizer.Steps
 				
 				if(changeLabel)
 				{
-					selectedNode.MathTextBitmap.Symbol = 
-						new MathTextLibrary.Symbol.MathSymbol(dialog.Label);
+					// We remove all the symbols, then add the new one.
+					selectedNode.Symbols.Clear();					
+					selectedNode.Symbols.Add(new MathSymbol(dialog.Label));
+					selectedNode.SetLabels();
 				}
 			}
 			

@@ -13,7 +13,7 @@ namespace MathTextCustomWidgets.Dialogs.SymbolLabel
 	/// This class implements the editor for <c>SymbolLabelDialog</c> list
 	/// entries.
 	/// </summary>
-	public class SymbolLabelEditorDialog
+	public class SymbolLabelListDialog
 	{
 	
 		[WidgetAttribute]
@@ -34,7 +34,7 @@ namespace MathTextCustomWidgets.Dialogs.SymbolLabel
 		/// <param name="parent">
 		/// This dialog parent's window.
 		/// </param>
-		public SymbolLabelEditorDialog(Window parent)
+		public SymbolLabelListDialog(Window parent)
 		{
 			XML gxml = new XML(null, "gui.glade", "symbolLabelEditorDialog",null);			
 			gxml.Autoconnect(this);
