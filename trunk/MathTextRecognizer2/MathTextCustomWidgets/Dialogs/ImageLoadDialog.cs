@@ -3,7 +3,7 @@ using System;
 
 using Gtk;
 
-namespace MathTextCustomWidgets.CommonDialogs
+namespace MathTextCustomWidgets.Dialogs
 {
 	/// <summary>
 	/// Esta clase implementa un diálogo para cargar imágenes que es

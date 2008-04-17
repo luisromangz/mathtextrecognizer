@@ -4,7 +4,7 @@ using System;
 using Gtk;
 using Gdk;
 
-namespace MathTextCustomWidgets.ImageArea
+namespace MathTextCustomWidgets.Widgets.ImageArea
 {
     
 	

@@ -3,10 +3,7 @@ using System.Collections.Generic;
 
 using Gtk;
 
-using MathTextCustomWidgets.CommonDialogs;
-
-
-namespace MathTextCustomWidgets.CommonDialogs
+namespace MathTextCustomWidgets.Dialogs
 {
 
 	/// <summary>

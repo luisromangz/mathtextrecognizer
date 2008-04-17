@@ -9,8 +9,6 @@ using System.Xml.Serialization;
 
 using MathTextLibrary.Utils;
 
-using MathTextRecognizer.DatabaseManager;
-
 namespace MathTextLibrary.Config
 {
 	
@@ -19,19 +17,19 @@ namespace MathTextLibrary.Config
 	/// </summary>
 	public class LibraryConfig
 	{
-		private List<SymbolInfo> symbols;
+		private List<SymbolLabelInfo> symbols;
 		
 		private static LibraryConfig config;
 		
 		public LibraryConfig()
 		{
-			symbols = new List<SymbolInfo>();
+			symbols = new List<SymbolLabelInfo>();
 		}
 		
 		/// <value>
-		/// Contiene la informacion para persistir de las bases de datos.
+		/// Contains the symbols used.
 		/// </value>
-		public List<SymbolInfo> Symbols
+		public List<SymbolLabelInfo> Symbols
 		{
 			get
 			{
@@ -44,7 +42,7 @@ namespace MathTextLibrary.Config
 		}
 		
 		/// <value>
-		/// Permite recuperar la instancia de configuración.
+		/// Contains the config class' instance.
 		/// </value>
 		public static LibraryConfig Instance
 		{
@@ -57,13 +55,12 @@ namespace MathTextLibrary.Config
 		}
 		
 		/// <summary>
-		/// Carga la configuracion desde el archivo de configuracion
-		/// de la aplicacion.
+		/// Loads the configuration file.
 		/// </summary>
 		private static void Load()
 		{
 						
-			XmlSerializer serializer = new XmlSerializer(typeof(RecognizerConfig),
+			XmlSerializer serializer = new XmlSerializer(typeof(LibraryConfig),
 			                                              GetSerializationOverrides());	
 			
 			string path = ConfigFileUtils.GetConfigFilePath("MathTextLibrary");
@@ -73,29 +70,52 @@ namespace MathTextLibrary.Config
 			if(File.Exists(path))
 			{			                                           
 				configStream = new FileStream(path,FileMode.Open);
+				
+				// Deserializamos
+				config = (LibraryConfig)serializer.Deserialize(configStream);					
+				configStream.Close();
+				
+				return;
 			}
 			else
 			{
-				// Cargamos la configuración por defecto, cargandola desde
-				// un archivo de recursos.				
-				Assembly runningAssembly =Assembly.GetExecutingAssembly();
-				configStream = 
-					runningAssembly.GetManifestResourceStream("defaultConfig");			
+				config = new LibraryConfig();
 				
+				
+				config.Symbols.Add(new SymbolLabelInfo("√", @"\surd"));
+				config.Symbols.Add(new SymbolLabelInfo("∑", @"\sum"));
+				config.Symbols.Add(new SymbolLabelInfo("∏", @"\prod"));
+				config.Symbols.Add(new SymbolLabelInfo("∫", @"\int"));
+				config.Symbols.Add(new SymbolLabelInfo("∲", @"\oint"));
+				config.Symbols.Add(new SymbolLabelInfo("⋂", @"\bigcap"));
+				config.Symbols.Add(new SymbolLabelInfo("∩", @"\cap"));
+				config.Symbols.Add(new SymbolLabelInfo("⋃", @"\bigcup"));
+				config.Symbols.Add(new SymbolLabelInfo("∪", @"\cup"));			
+				config.Symbols.Add(new SymbolLabelInfo("⋀", @"\bigwedge"));
+				config.Symbols.Add(new SymbolLabelInfo("∧", @"\wedge"));
+				config.Symbols.Add(new SymbolLabelInfo("⋁", @"\bigvee"));
+				config.Symbols.Add(new SymbolLabelInfo("∨", @"\vee"));
+				config.Symbols.Add(new SymbolLabelInfo("∊", @"\in"));
+				config.Symbols.Add(new SymbolLabelInfo("∀", @"\forall"));
+				config.Symbols.Add(new SymbolLabelInfo("∃", @"\exists"));
+				config.Symbols.Add(new SymbolLabelInfo("∄", @"\nexists"));
+				config.Symbols.Add(new SymbolLabelInfo("∞", @"\infty"));
+				config.Symbols.Add(new SymbolLabelInfo("→", @"\rightarrow"));
+				config.Symbols.Add(new SymbolLabelInfo("≈", @"\simeq"));
+					
+			
 			}
 			
-			// Deserializamos
-			config = (RecognizerConfig)serializer.Deserialize(configStream);					
-			configStream.Close();
+			
 			
 		}
 		
 		/// <summary>
-		/// Guarda la configuracion.
+		/// Save the current configuration.
 		/// </summary>
 		public void Save()
 		{
-			XmlSerializer serializer = new XmlSerializer(typeof(RecognizerConfig),
+			XmlSerializer serializer = new XmlSerializer(typeof(LibraryConfig),
 			                                              GetSerializationOverrides());	
 			string path = ConfigFileUtils.GetConfigFilePath("MathTextLibrary");
 			
@@ -107,7 +127,7 @@ namespace MathTextLibrary.Config
 		}
 		
 		/// <summary>
-		/// Crea el perfil para poder serializar la configuracion.
+		/// Creates a serialization profile.
 		/// </summary>
 		/// <returns>
 		/// A <see cref="XmlSerializationOverrides"/>
@@ -125,10 +145,33 @@ namespace MathTextLibrary.Config
 	/// <summary>
 	/// This class implements a structure for storage of symbols and its labels.
 	/// </summary>
-	public class SymbolsInfo
+	public class SymbolLabelInfo
 	{
 		private string label;
 		private string symbol;
+				
+		/// <summary>
+		/// <c>SymbolsInfo</c>'s default constructor.
+		/// </summary>
+		public SymbolLabelInfo()
+		{
+			
+		}
+		
+		/// <summary>
+		/// <c>SymbolsInfo</c>'s parametrized constructor.
+		/// </summary>
+		/// <param name="symbol">
+		/// The symbol string.
+		/// </param>
+		/// <param name="label">
+		/// The label string.
+		/// </param>
+		public SymbolLabelInfo(string symbol, string label)
+		{
+			this.symbol = symbol;
+			this.label = label;
+		}
 		
 		/// <value>
 		/// Contains a symbols label.

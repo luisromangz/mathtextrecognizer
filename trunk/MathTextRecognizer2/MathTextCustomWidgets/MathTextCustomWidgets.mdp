@@ -46,6 +46,9 @@
     <File name="Widgets/ImageArea/ImageArea.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/ImageArea/ImageAreaEvents.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/ImageArea/ImageAreaMode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Dialogs/SymbolLabel" subtype="Directory" buildaction="Compile" />
+    <File name="Dialogs/SymbolLabel/SymbolLabelDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Dialogs/SymbolLabel/SymbolLabelEditorDialog.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
@@ -56,6 +59,8 @@
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <ProjectReference type="Gac" localcopy="True" refto="pango-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <ProjectReference type="Project" localcopy="True" refto="MathTextLibrary" />
+    <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
   <DeployTargets />
 </Project>

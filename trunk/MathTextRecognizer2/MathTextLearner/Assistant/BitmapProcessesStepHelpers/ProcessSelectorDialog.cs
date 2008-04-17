@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 using Gtk;
 
-using MathTextCustomWidgets.CommonDialogs;
+using MathTextCustomWidgets.Dialogs;
 
 namespace MathTextLearner.Assistant.BitmapProcessesStepHelpers
 {

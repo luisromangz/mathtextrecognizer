@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 using Gtk;
 
-using MathTextCustomWidgets.ImageArea;
-using MathTextCustomWidgets.CommonDialogs;
+using MathTextCustomWidgets.Widgets.ImageArea;
+using MathTextCustomWidgets.Dialogs;
 
 using MathTextLearner.Config;
 using MathTextLearner.Assistant.BitmapProcessesStepHelpers;

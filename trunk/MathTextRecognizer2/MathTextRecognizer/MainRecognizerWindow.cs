@@ -15,9 +15,9 @@ using Gdk;
 using Glade;
 
 using MathTextCustomWidgets;
-using MathTextCustomWidgets.Logger;
-using MathTextCustomWidgets.ImageArea;
-using MathTextCustomWidgets.CommonDialogs;
+using MathTextCustomWidgets.Widgets.Logger;
+using MathTextCustomWidgets.Widgets.ImageArea;
+using MathTextCustomWidgets.Dialogs;
 
 using MathTextLibrary;
 using MathTextLibrary.Bitmap;

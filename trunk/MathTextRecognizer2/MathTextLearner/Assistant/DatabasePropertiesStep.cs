@@ -3,7 +3,7 @@
 
 using System;
 
-using MathTextCustomWidgets.CommonDialogs;
+using MathTextCustomWidgets.Dialogs;
 
 namespace MathTextLearner.Assistant
 {
