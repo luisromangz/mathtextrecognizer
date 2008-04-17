@@ -72,6 +72,7 @@ namespace MathTextLibrary.Databases
 		/// <value>
 		/// Contiene los simbolos almacenados en la base de datos.
 		/// </value>
+		[XmlIgnoreAttribute]
 		public abstract List<MathSymbol> SymbolsContained
 		{
 			get;
@@ -100,7 +101,7 @@ namespace MathTextLibrary.Databases
 		/// <param name="arg">
 		/// Los argumentos pasados al manejador del evento.
 		/// </param>
-		protected void OnRecognizingStepDoneInvoke(ProcessingStepDoneArgs arg)
+		protected void RecognizingStepDoneInvoker(ProcessingStepDoneArgs arg)
 		{
 			if(RecognizingStepDone != null)
 			{

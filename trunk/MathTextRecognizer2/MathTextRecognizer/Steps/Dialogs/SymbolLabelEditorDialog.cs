@@ -8,6 +8,8 @@ using Glade;
 using MathTextCustomWidgets.ImageArea;
 using MathTextCustomWidgets.Editors;
 
+using MathTextRecognizer.Steps.Nodes;
+
 namespace MathTextRecognizer.Steps.Dialogs
 {
 	
@@ -45,7 +47,7 @@ namespace MathTextRecognizer.Steps.Dialogs
 		/// <param name="node">
 		/// The node which label we want to edit.
 		/// </param>
-		public SymbolLabelEditorDialog(Window parent, FormulaNode node)
+		public SymbolLabelEditorDialog(Window parent, SegmentedNode node)
 		{
 			XML gxml = new XML("mathtextrecognizer.glade",
 			                   "symbolLabelEditorDialog");

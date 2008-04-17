@@ -1055,7 +1055,7 @@ MathML</property>
       </widget>
     </child>
   </widget>
-  <widget class="GtkMenu" id="formulaNodeMenu">
+  <widget class="GtkMenu" id="segmentedNodeMenu">
     <property name="visible">True</property>
     <child>
       <widget class="GtkImageMenuItem" id="editLabelItem">

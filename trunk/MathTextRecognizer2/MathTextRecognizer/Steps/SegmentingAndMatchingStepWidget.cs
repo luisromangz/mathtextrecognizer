@@ -18,6 +18,8 @@ using MathTextLibrary.Controllers;
 
 using MathTextRecognizer.Controllers;
 
+using MathTextRecognizer.Steps.Nodes;
+
 namespace MathTextRecognizer.Steps
 {
 	
@@ -78,11 +80,9 @@ namespace MathTextRecognizer.Steps
 		
 		private SegmentingAndSymbolMatchingController controller;	
 		
-		private MainRecognizerWindow window;
-		
 		private float zoom;
 		
-		private FormulaNode currentNode;		
+		private SegmentedNode currentNode;		
 		
 		private MathTextBitmap rootBitmap;
 		
@@ -93,23 +93,25 @@ namespace MathTextRecognizer.Steps
 		private ControllerStepMode stepMode;
 		
 		// Needed by the popup actions' handler methods
-		private FormulaNode selectedNode;
+		private SegmentedNode selectedNode;
 		
 #endregion Atributos.
 		
 		public SegmentingAndMatchingStepWidget(MainRecognizerWindow window)
+			: base(window)
 		{
-			Glade.XML gxml = new XML("mathtextrecognizer.glade", 
-			                         "segmentingAndMatchingHPaned");
-			
+			Glade.XML gxml = new Glade.XML("mathtextrecognizer.glade",
+			                               "segmentingAndMatchingHPaned");
+
 			gxml.Autoconnect(this);
 			
-			gxml = new XML("mathtextrecognizer.glade", 
-			               "formulaNodeMenu");
+			this.Add(segmentingAndMatchingHPaned);
+			
+			// We load the contextual menu.
+			gxml = new Glade.XML("mathtextrecognizer.glade", 
+			               "segmentedNodeMenu");
 			
 			gxml.Autoconnect(this);
-			
-			this.window = window;
 			
 			
 			controller = new SegmentingAndSymbolMatchingController();
@@ -118,31 +120,15 @@ namespace MathTextRecognizer.Steps
 			// en el reconocimiento de un cáracter.
 			controller.MessageLogSent += new MessageLogSentHandler(OnMessageLog);
 			    		
-			controller.RecognizeProcessFinished +=
+			controller.RecognizementProcessFinished +=
 			    new ProcessFinishedHandler(OnRecognizeProcessFinished);
 			    
 			controller.BitmapBeingRecognized +=
 			    new BitmapBeingRecognizedHandler(OnBitmapBeingRecognized);
 			
-			InitializeWidgets();
-		}
-#region Propiedades
-
-		/// <value>
-		/// Contiene el widget que muestra el procesado relativo a la segmentacion
-		/// y reconocimiento de caracteres.
-		/// </value>
-		public override Widget Widget 
-		{
-			get 
-			{
-				return this.segmentingAndMatchingHPaned;
-			}
+			InitializeChildren();
 		}
 
-	
-		
-#endregion Propiedades
 		
 #region Metodos publicos
 		/// <summary>
@@ -162,10 +148,10 @@ namespace MathTextRecognizer.Steps
 			// Generamos el MaxtTextBitmap inical, y lo añadimos como
 			// un nodo al arbol.
 			MathTextBitmap mtb = new MathTextBitmap(imageOriginal);			
-			FormulaNode node = 
-				new FormulaNode(Path.GetFileNameWithoutExtension(filename),
-				            mtb,
-			                treeview);
+			SegmentedNode node = 
+				new SegmentedNode(System.IO.Path.GetFileNameWithoutExtension(filename),
+				                  mtb,
+				                  treeview);
 			    
 			store.AddNode(node);
 			controller.StartNode = node;
@@ -173,8 +159,7 @@ namespace MathTextRecognizer.Steps
 			
 			currentNode = null;
 			
-			window.Log("¡Archivo de imagen «{0}» cargado correctamente!",
-			           filename);
+			Log("¡Archivo de imagen «{0}» cargado correctamente!", filename);
 
 			
 			
@@ -184,9 +169,9 @@ namespace MathTextRecognizer.Steps
 		
 #region Metodos privados
 		
-		private void InitializeWidgets()
+		protected void InitializeChildren()
 		{
-			store = new NodeStore(typeof(FormulaNode));
+			store = new NodeStore(typeof(SegmentedNode));
 			
 			// Creamos el NodeView, podría hacerse en el fichero de Glade,
 			// aunque alguna razón habría por la que se hizo así.
@@ -247,7 +232,7 @@ namespace MathTextRecognizer.Steps
 					new Thread(new ThreadStart(controller.RecognizeProcess));
 				recognizingThread.Start();
 				
-				controller.Databases = window.DatabaseManager.Databases;
+				controller.Databases = Databases;
 			}
 		}
 			
@@ -271,8 +256,8 @@ namespace MathTextRecognizer.Steps
 				// Si hay un simbolo seleccionado, 
 				// nos traemos sus imagenes procesadas.
 				
-				FormulaNode node = 
-					(FormulaNode)(treeview.NodeSelection.SelectedNode);
+				SegmentedNode node = 
+					(SegmentedNode)(treeview.NodeSelection.SelectedNode);
 			
 				
 				ImageArea imageAreaProcessed = new ImageArea();
@@ -301,7 +286,7 @@ namespace MathTextRecognizer.Steps
 		/// </summary>
 		private void OnBtnNextNodeClicked(object sender, EventArgs arg)
 		{		    
-			window.LogAreaExpanded = true;
+			LogAreaExpanded = true;
 			
 			stepMode = ControllerStepMode.NodeByNode;
 				
@@ -314,7 +299,7 @@ namespace MathTextRecognizer.Steps
 		/// </summary>
 		private void OnBtnNextStepClicked(object sender, EventArgs arg)
 		{		    
-			window.LogAreaExpanded = true;
+			LogAreaExpanded = true;
 			
 			stepMode = ControllerStepMode.StepByStep;		    
 			
@@ -345,8 +330,8 @@ namespace MathTextRecognizer.Steps
 		    // Si hemos acabado el proceso y hemos seleccionado algo.
 			if(treeview.Selection.CountSelectedRows() > 0)
 			{
-				FormulaNode node=
-					(FormulaNode)(treeview.NodeSelection.SelectedNode);
+				SegmentedNode node=
+					(SegmentedNode)(treeview.NodeSelection.SelectedNode);
 				
 				imageAreaNode.Image=node.MathTextBitmap.Pixbuf;
 
@@ -394,7 +379,7 @@ namespace MathTextRecognizer.Steps
 		
 		private void OnMessageLogThreadSafe(object sender, EventArgs a)
 		{		   
-		    window.Log(((MessageLogSentArgs)a).Message);
+		    Log(((MessageLogSentArgs)a).Message);
 		}
 		
 		/// <summary>
@@ -411,10 +396,10 @@ namespace MathTextRecognizer.Steps
 		
 		private void OnRecognizeProccessFinishedThreadSafe(object sender, EventArgs a)
 		{
-		    window.Log("¡Reconocimiento terminado!");
+		    Log("¡Reconocimiento terminado!");
 			
 			OkDialog.Show(
-				window.MainWindow,
+				Window,
 				MessageType.Info,
 			    "¡Proceso de reconocimiento terminado!\n"
 			    + "Ahora puede revisar el resultado.");
@@ -453,8 +438,8 @@ namespace MathTextRecognizer.Steps
 				if( path != null)
 				{
 					// We try only if a node was found.			
-					FormulaNode node =  
-						(FormulaNode)(treeview.NodeStore.GetNode(path));	
+					SegmentedNode node =  
+						(SegmentedNode)(treeview.NodeStore.GetNode(path));	
 					
 					selectedNode = node;
 					
@@ -481,7 +466,7 @@ namespace MathTextRecognizer.Steps
 		private void OnEditLabeItemActivate(object sender, EventArgs a)
 		{
 			Dialogs.SymbolLabelEditorDialog dialog = 
-				new Dialogs.SymbolLabelEditorDialog(this.window.MainWindow,
+				new Dialogs.SymbolLabelEditorDialog(Window,
 				                                    selectedNode);
 			
 			if(dialog.Show()== ResponseType.Ok)
@@ -489,10 +474,11 @@ namespace MathTextRecognizer.Steps
 				bool changeLabel = true;
 				if(selectedNode.ChildCount > 0)
 				{
-					ResponseType res = ConfirmDialog.Show(window.MainWindow,
-					                                      "Este nodo tiene hijos, y se estableces "
-					                                      + "una etiqueta se eliminarán, ¿quieres"
-					                                      +" continuar?");
+					ResponseType res = 
+						ConfirmDialog.Show(Window,
+						                   "Este nodo tiene hijos, y se estableces "
+						                   + "una etiqueta se eliminarán, ¿quieres"
+						                   +" continuar?");
 					
 					if(res == ResponseType.Yes)
 					{
@@ -535,23 +521,22 @@ namespace MathTextRecognizer.Steps
 		/// <param name="args">
 		/// A <see cref="EventArgs"/>
 		/// </param>
-		private void OnSaveImageItemActivate(object sender,
-		                                      EventArgs args)
+		private void OnSaveImageItemActivate(object sender, EventArgs args)
 		{
 			ResponseType res= 
-						ConfirmDialog.Show(window.MainWindow,
+						ConfirmDialog.Show(Window,
 						                   "¿Deseas guardar la imagen del nodo «{0}»?",
 						                   selectedNode.Name);
 					
 			if (res == ResponseType.Yes)
 			{
 				string filename="";
-				res = ImageSaveDialog.Show(window.MainWindow,out filename);
+				res = ImageSaveDialog.Show(Window,out filename);
 				
 				if(res == ResponseType.Ok)
 				{
 					string extension = 
-						Path.GetExtension(filename).ToLower().Trim('.');
+						System.IO.Path.GetExtension(filename).ToLower().Trim('.');
 					selectedNode.MathTextBitmap.Pixbuf.Save(filename,extension);
 				}
 			}

@@ -64,8 +64,7 @@ namespace MathTextCustomWidgets.Logger
 						
 			txtLog.Buffer.Insert(
 				txtLog.Buffer.EndIter,
-				(String.Format(message,args))+"\n");	
-			
+				(String.Format(message,args))+"\n");
 			txtLogScroll.Vadjustment.Value = txtLogScroll.Vadjustment.Upper;
 		}
 		

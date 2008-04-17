@@ -35,7 +35,7 @@
     <File name="BitmapProcesses/BitmapProcess.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases" subtype="Directory" buildaction="Compile" />
     <File name="Databases/Characteristic" subtype="Directory" buildaction="Compile" />
-    <File name="Databases/Characteristic/CharacteristicDatabase.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/CharacteristicTreeDatabase.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Characteristic/Characteristics/ColorChangesXAboveFourCharacteristic.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Characteristic/Characteristics/ColorChangesXBelowTwoCharacteristic.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Characteristic/Characteristics/ColorChangesXEqualsFourCharacteristic.cs" subtype="Code" buildaction="Compile" />
