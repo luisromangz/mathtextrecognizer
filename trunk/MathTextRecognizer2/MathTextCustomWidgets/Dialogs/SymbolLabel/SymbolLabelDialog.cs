@@ -99,8 +99,8 @@ namespace MathTextCustomWidgets.Dialogs.SymbolLabel
 		/// </param>
 		private bool EditIter(TreeIter selected)
 		{
-			SymbolLabelEditorDialog dialog = 
-				new SymbolLabelEditorDialog(this.symbolLabelDialog);
+			SymbolLabelListDialog dialog = 
+				new SymbolLabelListDialog(this.symbolLabelDialog);
 			
 			dialog.Symbol = (string)(symbolLabelsModel.GetValue(selected,0));
 			dialog.Label = (string)(symbolLabelsModel.GetValue(selected,1));
