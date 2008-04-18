@@ -1,42 +1,20 @@
-﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
+﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.sln">
   <Files>
-    <File name="MathTextRecognizer/Steps/Nodes/SegmentedNode.cs" line="118" column="17" />
-    <File name="MathTextRecognizer/MainRecognizerWindow.cs" line="78" column="3" />
-    <File name="MathTextRecognizer/Steps/SegmentingAndMatchingStepWidget.cs" line="479" column="4" />
-    <File name="MathTextRecognizer/Steps/Dialogs/SymbolLabelEditorDialog.cs" line="12" column="1" />
+    <File name="Bienvenido" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
-      <Node expanded="True" selected="True">
-        <Node name="MathTextCustomWidgets" expanded="True">
-          <Node name="Dialogs" expanded="True">
-            <Node name="SymbolLabel" expanded="True" />
-          </Node>
-          <Node name="Widgets" expanded="True" />
-        </Node>
-        <Node name="MathTextLearner" expanded="True" />
-        <Node name="MathTextLibrary" expanded="True">
-          <Node name="Bitmap" expanded="True" />
-        </Node>
-        <Node name="MathTextRecognizer" expanded="True">
-          <Node name="Resources" expanded="True" />
-          <Node name="Controllers" expanded="True" />
-          <Node name="Steps" expanded="True">
-            <Node name="Dialogs" expanded="True" />
-            <Node name="Nodes" expanded="True" />
-          </Node>
-        </Node>
-      </Node>
+      <Node expanded="True" />
     </ViewMemento>
     <ViewMemento id="ClassPad">
       <Node expanded="True" />
     </ViewMemento>
     <ViewMemento id="MonoDevelop.NUnit.TestPad">
-      <Node expanded="True" />
+      <Node selected="True" />
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer/Steps/Dialogs/SymbolLabelEditorDialog.cs" />
+    <Property key="ActiveWindow" value="Bienvenido" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>

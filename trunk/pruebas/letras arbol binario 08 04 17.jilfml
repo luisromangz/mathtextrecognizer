@@ -1,0 +1,1727 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MathTextDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BitmapFixedThresholder>
+    <Threshold>203</Threshold>
+  </BitmapFixedThresholder>
+  <BitmapFramer />
+  <BitmapScaler>
+    <NewSize>50</NewSize>
+  </BitmapScaler>
+  <BitmapFixedThresholder>
+    <Threshold>206</Threshold>
+  </BitmapFixedThresholder>
+  <BitmapStentifordThinner>
+    <PreSmoothing>true</PreSmoothing>
+  </BitmapStentifordThinner>
+  <CharacteristicTreeDatabase>
+    <RootNode>
+      <Symbols />
+      <TrueTree>
+        <Symbols />
+        <TrueTree>
+          <Symbols />
+          <TrueTree>
+            <Symbols />
+            <TrueTree>
+              <Symbols />
+              <FalseTree>
+                <Symbols />
+                <TrueTree>
+                  <Symbols />
+                  <FalseTree>
+                    <Symbols />
+                    <FalseTree>
+                      <Symbols />
+                      <FalseTree>
+                        <Symbols />
+                        <TrueTree>
+                          <Symbols />
+                          <FalseTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <TrueTree>
+                                  <Symbols />
+                                  <FalseTree>
+                                    <Symbols />
+                                    <FalseTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <FalseTree>
+                                          <Symbols />
+                                          <TrueTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <TrueTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <TrueTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>n</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </TrueTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </FalseTree>
+                                                    </TrueTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </TrueTree>
+                                        </FalseTree>
+                                      </FalseTree>
+                                    </FalseTree>
+                                  </FalseTree>
+                                </TrueTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </FalseTree>
+                        </TrueTree>
+                      </FalseTree>
+                    </FalseTree>
+                  </FalseTree>
+                </TrueTree>
+              </FalseTree>
+            </TrueTree>
+            <FalseTree>
+              <Symbols />
+              <TrueTree>
+                <Symbols />
+                <TrueTree>
+                  <Symbols />
+                  <FalseTree>
+                    <Symbols />
+                    <FalseTree>
+                      <Symbols />
+                      <FalseTree>
+                        <Symbols />
+                        <TrueTree>
+                          <Symbols />
+                          <FalseTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <TrueTree>
+                                  <Symbols />
+                                  <FalseTree>
+                                    <Symbols />
+                                    <FalseTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <FalseTree>
+                                          <Symbols />
+                                          <TrueTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <TrueTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <TrueTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>v</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </TrueTree>
+                                                    </FalseTree>
+                                                  </TrueTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </TrueTree>
+                                        </FalseTree>
+                                      </FalseTree>
+                                    </FalseTree>
+                                  </FalseTree>
+                                </TrueTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </FalseTree>
+                        </TrueTree>
+                        <FalseTree>
+                          <Symbols />
+                          <TrueTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <TrueTree>
+                                  <Symbols />
+                                  <FalseTree>
+                                    <Symbols />
+                                    <FalseTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <FalseTree>
+                                          <Symbols />
+                                          <TrueTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <TrueTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <TrueTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>u</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </TrueTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </FalseTree>
+                                                    </TrueTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </TrueTree>
+                                        </FalseTree>
+                                      </FalseTree>
+                                    </FalseTree>
+                                  </FalseTree>
+                                </TrueTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </TrueTree>
+                        </FalseTree>
+                      </FalseTree>
+                    </FalseTree>
+                  </FalseTree>
+                </TrueTree>
+              </TrueTree>
+              <FalseTree>
+                <Symbols />
+                <TrueTree>
+                  <Symbols />
+                  <FalseTree>
+                    <Symbols />
+                    <FalseTree>
+                      <Symbols />
+                      <TrueTree>
+                        <Symbols />
+                        <FalseTree>
+                          <Symbols />
+                          <FalseTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <FalseTree>
+                                  <Symbols />
+                                  <FalseTree>
+                                    <Symbols />
+                                    <TrueTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <TrueTree>
+                                          <Symbols />
+                                          <FalseTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>x</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </FalseTree>
+                                                    </FalseTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </FalseTree>
+                                        </TrueTree>
+                                      </FalseTree>
+                                    </TrueTree>
+                                  </FalseTree>
+                                </FalseTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </FalseTree>
+                        </FalseTree>
+                      </TrueTree>
+                      <FalseTree>
+                        <Symbols />
+                        <FalseTree>
+                          <Symbols />
+                          <TrueTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <TrueTree>
+                                  <Symbols />
+                                  <FalseTree>
+                                    <Symbols />
+                                    <FalseTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <FalseTree>
+                                          <Symbols />
+                                          <FalseTree>
+                                            <Symbols />
+                                            <TrueTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <TrueTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <TrueTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>w</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </TrueTree>
+                                                      </FalseTree>
+                                                    </TrueTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </TrueTree>
+                                          </FalseTree>
+                                        </FalseTree>
+                                      </FalseTree>
+                                    </FalseTree>
+                                  </FalseTree>
+                                </TrueTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </TrueTree>
+                        </FalseTree>
+                      </FalseTree>
+                    </FalseTree>
+                  </FalseTree>
+                </TrueTree>
+                <FalseTree>
+                  <Symbols />
+                  <TrueTree>
+                    <Symbols />
+                    <FalseTree>
+                      <Symbols />
+                      <FalseTree>
+                        <Symbols />
+                        <FalseTree>
+                          <Symbols />
+                          <TrueTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <FalseTree>
+                                  <Symbols />
+                                  <TrueTree>
+                                    <Symbols />
+                                    <FalseTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <FalseTree>
+                                          <Symbols />
+                                          <TrueTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <TrueTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <TrueTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>a</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </TrueTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </FalseTree>
+                                                    </FalseTree>
+                                                  </FalseTree>
+                                                </TrueTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </TrueTree>
+                                        </FalseTree>
+                                      </FalseTree>
+                                    </FalseTree>
+                                  </TrueTree>
+                                </FalseTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </TrueTree>
+                        </FalseTree>
+                      </FalseTree>
+                    </FalseTree>
+                  </TrueTree>
+                </FalseTree>
+              </FalseTree>
+            </FalseTree>
+          </TrueTree>
+        </TrueTree>
+        <FalseTree>
+          <Symbols />
+          <TrueTree>
+            <Symbols />
+            <TrueTree>
+              <Symbols />
+              <FalseTree>
+                <Symbols />
+                <TrueTree>
+                  <Symbols />
+                  <FalseTree>
+                    <Symbols />
+                    <FalseTree>
+                      <Symbols />
+                      <FalseTree>
+                        <Symbols />
+                        <TrueTree>
+                          <Symbols />
+                          <FalseTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <FalseTree>
+                                  <Symbols />
+                                  <TrueTree>
+                                    <Symbols />
+                                    <FalseTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <FalseTree>
+                                          <Symbols />
+                                          <FalseTree>
+                                            <Symbols />
+                                            <TrueTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>m</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </FalseTree>
+                                                    </FalseTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </TrueTree>
+                                          </FalseTree>
+                                        </FalseTree>
+                                      </FalseTree>
+                                    </FalseTree>
+                                  </TrueTree>
+                                </FalseTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </FalseTree>
+                        </TrueTree>
+                      </FalseTree>
+                    </FalseTree>
+                  </FalseTree>
+                </TrueTree>
+              </FalseTree>
+            </TrueTree>
+          </TrueTree>
+        </FalseTree>
+      </TrueTree>
+      <FalseTree>
+        <Symbols />
+        <TrueTree>
+          <Symbols />
+          <TrueTree>
+            <Symbols />
+            <TrueTree>
+              <Symbols />
+              <TrueTree>
+                <Symbols />
+                <TrueTree>
+                  <Symbols />
+                  <FalseTree>
+                    <Symbols />
+                    <FalseTree>
+                      <Symbols />
+                      <FalseTree>
+                        <Symbols />
+                        <TrueTree>
+                          <Symbols />
+                          <FalseTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <TrueTree>
+                                  <Symbols />
+                                  <FalseTree>
+                                    <Symbols />
+                                    <FalseTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <TrueTree>
+                                          <Symbols />
+                                          <FalseTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <TrueTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <TrueTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>r</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </TrueTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </FalseTree>
+                                                    </TrueTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </FalseTree>
+                                        </TrueTree>
+                                      </FalseTree>
+                                    </FalseTree>
+                                  </FalseTree>
+                                </TrueTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </FalseTree>
+                        </TrueTree>
+                      </FalseTree>
+                    </FalseTree>
+                  </FalseTree>
+                </TrueTree>
+                <FalseTree>
+                  <Symbols />
+                  <TrueTree>
+                    <Symbols />
+                    <FalseTree>
+                      <Symbols />
+                      <FalseTree>
+                        <Symbols />
+                        <FalseTree>
+                          <Symbols />
+                          <FalseTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <FalseTree>
+                                  <Symbols />
+                                  <FalseTree>
+                                    <Symbols />
+                                    <TrueTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <FalseTree>
+                                          <Symbols />
+                                          <TrueTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <TrueTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>p</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </FalseTree>
+                                                    </TrueTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </TrueTree>
+                                        </FalseTree>
+                                      </FalseTree>
+                                    </TrueTree>
+                                  </FalseTree>
+                                </FalseTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </FalseTree>
+                        </FalseTree>
+                      </FalseTree>
+                    </FalseTree>
+                  </TrueTree>
+                </FalseTree>
+              </TrueTree>
+              <FalseTree>
+                <Symbols />
+                <TrueTree>
+                  <Symbols />
+                  <FalseTree>
+                    <Symbols />
+                    <FalseTree>
+                      <Symbols />
+                      <TrueTree>
+                        <Symbols />
+                        <FalseTree>
+                          <Symbols />
+                          <FalseTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <FalseTree>
+                                  <Symbols />
+                                  <TrueTree>
+                                    <Symbols />
+                                    <FalseTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <TrueTree>
+                                          <Symbols />
+                                          <FalseTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>f</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </FalseTree>
+                                                    </FalseTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </FalseTree>
+                                        </TrueTree>
+                                      </FalseTree>
+                                    </FalseTree>
+                                  </TrueTree>
+                                  <FalseTree>
+                                    <Symbols />
+                                    <TrueTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <TrueTree>
+                                          <Symbols />
+                                          <FalseTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>t</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </FalseTree>
+                                                    </FalseTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </FalseTree>
+                                        </TrueTree>
+                                      </FalseTree>
+                                    </TrueTree>
+                                  </FalseTree>
+                                </FalseTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </FalseTree>
+                        </FalseTree>
+                      </TrueTree>
+                    </FalseTree>
+                  </FalseTree>
+                </TrueTree>
+                <FalseTree>
+                  <Symbols />
+                  <TrueTree>
+                    <Symbols />
+                    <FalseTree>
+                      <Symbols />
+                      <TrueTree>
+                        <Symbols />
+                        <FalseTree>
+                          <Symbols />
+                          <FalseTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <FalseTree>
+                                  <Symbols />
+                                  <FalseTree>
+                                    <Symbols />
+                                    <TrueTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <TrueTree>
+                                          <Symbols />
+                                          <FalseTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <TrueTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <TrueTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>e</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </TrueTree>
+                                                      </FalseTree>
+                                                    </FalseTree>
+                                                  </FalseTree>
+                                                </TrueTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </FalseTree>
+                                        </TrueTree>
+                                      </FalseTree>
+                                    </TrueTree>
+                                  </FalseTree>
+                                </FalseTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </FalseTree>
+                        </FalseTree>
+                      </TrueTree>
+                    </FalseTree>
+                  </TrueTree>
+                </FalseTree>
+              </FalseTree>
+            </TrueTree>
+            <FalseTree>
+              <Symbols />
+              <TrueTree>
+                <Symbols />
+                <TrueTree>
+                  <Symbols />
+                  <FalseTree>
+                    <Symbols />
+                    <FalseTree>
+                      <Symbols />
+                      <FalseTree>
+                        <Symbols />
+                        <TrueTree>
+                          <Symbols />
+                          <FalseTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <FalseTree>
+                                  <Symbols />
+                                  <TrueTree>
+                                    <Symbols />
+                                    <FalseTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <FalseTree>
+                                          <Symbols />
+                                          <TrueTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <TrueTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <TrueTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>y</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </TrueTree>
+                                                      </FalseTree>
+                                                    </TrueTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </TrueTree>
+                                        </FalseTree>
+                                      </FalseTree>
+                                    </FalseTree>
+                                  </TrueTree>
+                                </FalseTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </FalseTree>
+                        </TrueTree>
+                        <FalseTree>
+                          <Symbols />
+                          <TrueTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <TrueTree>
+                                  <Symbols />
+                                  <FalseTree>
+                                    <Symbols />
+                                    <FalseTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <FalseTree>
+                                          <Symbols />
+                                          <TrueTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <TrueTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <TrueTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>h</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </TrueTree>
+                                                      </FalseTree>
+                                                    </TrueTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </TrueTree>
+                                        </FalseTree>
+                                      </FalseTree>
+                                    </FalseTree>
+                                  </FalseTree>
+                                </TrueTree>
+                                <FalseTree>
+                                  <Symbols />
+                                  <FalseTree>
+                                    <Symbols />
+                                    <TrueTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <FalseTree>
+                                          <Symbols />
+                                          <TrueTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <TrueTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>k</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </TrueTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </FalseTree>
+                                                    </FalseTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </TrueTree>
+                                        </FalseTree>
+                                      </FalseTree>
+                                    </TrueTree>
+                                  </FalseTree>
+                                </FalseTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </TrueTree>
+                          <FalseTree>
+                            <Symbols />
+                            <TrueTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <FalseTree>
+                                  <Symbols />
+                                  <TrueTree>
+                                    <Symbols />
+                                    <FalseTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <TrueTree>
+                                          <Symbols />
+                                          <FalseTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <TrueTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <TrueTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>c</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </TrueTree>
+                                                    </FalseTree>
+                                                  </TrueTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </FalseTree>
+                                        </TrueTree>
+                                      </FalseTree>
+                                    </FalseTree>
+                                  </TrueTree>
+                                </FalseTree>
+                              </FalseTree>
+                            </TrueTree>
+                          </FalseTree>
+                        </FalseTree>
+                      </FalseTree>
+                    </FalseTree>
+                  </FalseTree>
+                </TrueTree>
+              </TrueTree>
+              <FalseTree>
+                <Symbols />
+                <TrueTree>
+                  <Symbols />
+                  <FalseTree>
+                    <Symbols />
+                    <FalseTree>
+                      <Symbols />
+                      <TrueTree>
+                        <Symbols />
+                        <FalseTree>
+                          <Symbols />
+                          <FalseTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <FalseTree>
+                                  <Symbols />
+                                  <FalseTree>
+                                    <Symbols />
+                                    <TrueTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <TrueTree>
+                                          <Symbols />
+                                          <FalseTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>z</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </FalseTree>
+                                                    </FalseTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </FalseTree>
+                                        </TrueTree>
+                                      </FalseTree>
+                                    </TrueTree>
+                                  </FalseTree>
+                                </FalseTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </FalseTree>
+                        </FalseTree>
+                      </TrueTree>
+                      <FalseTree>
+                        <Symbols />
+                        <FalseTree>
+                          <Symbols />
+                          <TrueTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <FalseTree>
+                                  <Symbols />
+                                  <FalseTree>
+                                    <Symbols />
+                                    <TrueTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <TrueTree>
+                                          <Symbols />
+                                          <FalseTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <TrueTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <TrueTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>s</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </TrueTree>
+                                                    </FalseTree>
+                                                  </TrueTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </FalseTree>
+                                        </TrueTree>
+                                        <FalseTree>
+                                          <Symbols />
+                                          <TrueTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <TrueTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>i</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </TrueTree>
+                                                    </FalseTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </TrueTree>
+                                        </FalseTree>
+                                      </FalseTree>
+                                    </TrueTree>
+                                  </FalseTree>
+                                </FalseTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </TrueTree>
+                          <FalseTree>
+                            <Symbols />
+                            <TrueTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <FalseTree>
+                                  <Symbols />
+                                  <FalseTree>
+                                    <Symbols />
+                                    <TrueTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <TrueTree>
+                                          <Symbols />
+                                          <FalseTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <TrueTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <TrueTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>l</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </TrueTree>
+                                                    </FalseTree>
+                                                  </TrueTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </FalseTree>
+                                        </TrueTree>
+                                      </FalseTree>
+                                    </TrueTree>
+                                  </FalseTree>
+                                </FalseTree>
+                              </FalseTree>
+                            </TrueTree>
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <FalseTree>
+                                  <Symbols />
+                                  <TrueTree>
+                                    <Symbols />
+                                    <FalseTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <TrueTree>
+                                          <Symbols />
+                                          <FalseTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <TrueTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>j</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </TrueTree>
+                                                    </FalseTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </FalseTree>
+                                        </TrueTree>
+                                      </FalseTree>
+                                    </FalseTree>
+                                  </TrueTree>
+                                </FalseTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </FalseTree>
+                        </FalseTree>
+                      </FalseTree>
+                    </FalseTree>
+                  </FalseTree>
+                </TrueTree>
+                <FalseTree>
+                  <Symbols />
+                  <TrueTree>
+                    <Symbols />
+                    <FalseTree>
+                      <Symbols />
+                      <TrueTree>
+                        <Symbols />
+                        <FalseTree>
+                          <Symbols />
+                          <FalseTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <FalseTree>
+                                  <Symbols />
+                                  <FalseTree>
+                                    <Symbols />
+                                    <TrueTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <FalseTree>
+                                          <Symbols />
+                                          <TrueTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <TrueTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <TrueTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>g</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </TrueTree>
+                                                      </FalseTree>
+                                                    </FalseTree>
+                                                  </FalseTree>
+                                                </TrueTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </TrueTree>
+                                        </FalseTree>
+                                      </FalseTree>
+                                    </TrueTree>
+                                  </FalseTree>
+                                </FalseTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </FalseTree>
+                        </FalseTree>
+                      </TrueTree>
+                      <FalseTree>
+                        <Symbols />
+                        <FalseTree>
+                          <Symbols />
+                          <TrueTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <FalseTree>
+                                  <Symbols />
+                                  <TrueTree>
+                                    <Symbols />
+                                    <FalseTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <FalseTree>
+                                          <Symbols />
+                                          <TrueTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <TrueTree>
+                                                <FalseTree>
+                                                  <FalseTree>
+                                                    <FalseTree>
+                                                      <TrueTree>
+                                                        <FalseTree>
+                                                          <FalseTree>
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>0</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </TrueTree>
+                                                    </FalseTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </TrueTree>
+                                              <FalseTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <TrueTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <TrueTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>d</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </TrueTree>
+                                                        </FalseTree>
+                                                      </FalseTree>
+                                                    </FalseTree>
+                                                  </TrueTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </TrueTree>
+                                        </FalseTree>
+                                      </FalseTree>
+                                    </FalseTree>
+                                  </TrueTree>
+                                  <FalseTree>
+                                    <Symbols />
+                                    <TrueTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <FalseTree>
+                                          <Symbols />
+                                          <TrueTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <FalseTree>
+                                                <Symbols />
+                                                <TrueTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <TrueTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>b</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </TrueTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </FalseTree>
+                                                    </FalseTree>
+                                                  </FalseTree>
+                                                </TrueTree>
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <TrueTree>
+                                                      <Symbols />
+                                                      <FalseTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>q</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </FalseTree>
+                                                    </TrueTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </FalseTree>
+                                            </FalseTree>
+                                          </TrueTree>
+                                        </FalseTree>
+                                      </FalseTree>
+                                    </TrueTree>
+                                  </FalseTree>
+                                </FalseTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </TrueTree>
+                          <FalseTree>
+                            <Symbols />
+                            <FalseTree>
+                              <Symbols />
+                              <FalseTree>
+                                <Symbols />
+                                <FalseTree>
+                                  <Symbols />
+                                  <TrueTree>
+                                    <Symbols />
+                                    <FalseTree>
+                                      <Symbols />
+                                      <FalseTree>
+                                        <Symbols />
+                                        <FalseTree>
+                                          <Symbols />
+                                          <TrueTree>
+                                            <Symbols />
+                                            <FalseTree>
+                                              <Symbols />
+                                              <TrueTree>
+                                                <Symbols />
+                                                <FalseTree>
+                                                  <Symbols />
+                                                  <FalseTree>
+                                                    <Symbols />
+                                                    <FalseTree>
+                                                      <Symbols />
+                                                      <TrueTree>
+                                                        <Symbols />
+                                                        <FalseTree>
+                                                          <Symbols />
+                                                          <FalseTree>
+                                                            <Symbols />
+                                                            <FalseTree>
+                                                              <Symbols>
+                                                                <MathSymbol>
+                                                                  <Text>o</Text>
+                                                                </MathSymbol>
+                                                              </Symbols>
+                                                            </FalseTree>
+                                                          </FalseTree>
+                                                        </FalseTree>
+                                                      </TrueTree>
+                                                    </FalseTree>
+                                                  </FalseTree>
+                                                </FalseTree>
+                                              </TrueTree>
+                                            </FalseTree>
+                                          </TrueTree>
+                                        </FalseTree>
+                                      </FalseTree>
+                                    </FalseTree>
+                                  </TrueTree>
+                                </FalseTree>
+                              </FalseTree>
+                            </FalseTree>
+                          </FalseTree>
+                        </FalseTree>
+                      </FalseTree>
+                    </FalseTree>
+                  </TrueTree>
+                </FalseTree>
+              </FalseTree>
+            </FalseTree>
+          </TrueTree>
+        </TrueTree>
+      </FalseTree>
+    </RootNode>
+  </CharacteristicTreeDatabase>
+</MathTextDatabase>

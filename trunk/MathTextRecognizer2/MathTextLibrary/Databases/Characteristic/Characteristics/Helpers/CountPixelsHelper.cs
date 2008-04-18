@@ -40,33 +40,27 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			int halfWidth = width/2;
 			int halfHeight = height/2;
 			
-			if(width%2 == 0)
-				halfWidth--;
-			
-			if(height%2== 0)
-				halfHeight--;
-			
-		
-			switch(h) {
+			switch(h) 
+			{
 				case(Half.Top):
 					n=NumPixelsInArea(image,FloatBitmap.Black,
 					                  0,0,
-					                  width-1,halfHeight);
+					                  width,halfHeight);
 					break;
 				case(Half.Bottom):
 					n=NumPixelsInArea(image,FloatBitmap.Black,
 					                  0,halfHeight,
-					                  width-1,height-1);
+					                  width,height);
 					break;
 				case(Half.Left):
 					n=NumPixelsInArea(image,FloatBitmap.Black,
 					                  0,0,
-					                  halfWidth,height-1);
+					                  halfWidth,height);
 					break;
 				case(Half.Right):
 					n=NumPixelsInArea(image,FloatBitmap.Black,
 					                  halfWidth,0,
-					                  width-1,height-1);
+					                  width,height);
 					break;
 			}
 			
@@ -93,13 +87,9 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			int halfWidth = width/2;
 			int halfHeight = height/2;
 			
-			if(width%2 == 0)
-				halfWidth--;
 			
-			if(height%2== 0)
-				halfHeight--;
-			
-			switch(q) {
+			switch(q) 
+			{
 				case(Quadrant.NW):
 					n=NumPixelsInArea(image,FloatBitmap.Black,
 					                  0,0,
@@ -108,17 +98,17 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 				case(Quadrant.NE):
 					n=NumPixelsInArea(image,FloatBitmap.Black,
 					                  halfWidth,0,
-					                  width-1,halfHeight);
+					                  width,halfHeight);
 					break;
 				case(Quadrant.SW):
 					n=NumPixelsInArea(image,FloatBitmap.Black,
 					                  0,halfHeight,
-					                  halfWidth,height-1);
+					                  halfWidth,height);
 					break;
 				case(Quadrant.SE):
 					n=NumPixelsInArea(image,FloatBitmap.Black,
 					                  halfWidth,halfHeight,
-					                  width-1,height-1);
+					                  width,height);
 					break;
 				
 			}
@@ -147,9 +137,9 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			
 			int n=0;
 			
-			for(int i=x1; i<=x2; i++)
+			for(int i=x1; i<x2; i++)
 			{
-				for(int j=y1; j<=y2; j++)
+				for(int j=y1; j<y2; j++)
 				{
 					if(image[i,j] == value)
 						n++;
