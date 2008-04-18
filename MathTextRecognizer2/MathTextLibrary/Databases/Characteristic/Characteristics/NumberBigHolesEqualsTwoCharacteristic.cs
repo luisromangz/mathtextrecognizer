@@ -18,7 +18,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 			priority=80;
 		}
 		
-		public override bool Apply(MathTextBitmap image)
+		public override bool Apply(FloatBitmap image)
 		{
 			return (CountNumberOfHolesHelper.NumWhiteZones(image,true)-1) == 2;	
 		}

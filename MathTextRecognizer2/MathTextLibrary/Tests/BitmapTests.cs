@@ -22,8 +22,7 @@ namespace MathTextLibrary
 			bitmap[3,1] = FloatBitmap.White;
 			
 			FloatBitmap rotatedBitmap = bitmap.Rotate90();
-			Assert.AreEqual("0, 0, 0, 0, 0, \n0, 1, 0, 0, 0, \n0, 0, 0, 0, 0, \n0, 0, 0, 0, 0, \n",
-			                rotatedBitmap.ToString());
+			Assert.AreEqual(FloatBitmap.White, rotatedBitmap[1,2]);
 			
 			
 		}

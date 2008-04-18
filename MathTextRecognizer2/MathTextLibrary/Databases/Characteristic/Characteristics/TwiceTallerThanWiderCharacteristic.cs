@@ -17,7 +17,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 			priority=20;
 		}
 
-		public override bool Apply(MathTextBitmap image)
+		public override bool Apply(FloatBitmap image)
 		{
 			int x1,y1,x2,y2;
 			

@@ -21,19 +21,25 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <param name="image">Imagen sobre la que se trabaja</param>
 		/// <param name="neighbours">Numero de vecinos</param>
 		/// <returns>Numero de pixeles negros con <c>neighbours</c> vecinos</returns>
-		public static int numPixelsXNeighbours(MathTextBitmap image, int neighbours)
+		public static int CountPixelsXNeighbours(FloatBitmap image, int neighbours)
 		{
 			int count=0;
 			
-			FloatBitmap im=image.LastProcessedImage;
-			int sizeR = im.Width;
-			int sizeC = im.Height;
+			int width = image.Width;
+			int height = image.Height;
 
-			for(int i=0;i<sizeR;i++)
-				for(int j=0;j<sizeC;j++)
-					if(im[i,j]==FloatBitmap.Black
-							&& CountBlackNeighboursHelper.BlackNeighbours(im,i,j,sizeR,sizeC)==neighbours)
+			for(int i=0;i<width;i++)
+			{
+				for(int j=0;j<height;j++)
+				{
+					if(image[i,j]==FloatBitmap.Black
+							&& CountBlackNeighboursHelper.BlackNeighbours(image,i,j)==neighbours)
+					{
+						
 						count++;
+					}
+				}
+			}
 
 			return count;
 		}
@@ -46,19 +52,25 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <param name="neighbours">Numero de vecinos</param>
 		/// <returns>Numero de pixeles negros con <c>neighbours</c> o mas
 		/// vecinos</returns>
-		public static int numPixelsXOrMoreNeighbours(MathTextBitmap image, int neighbours)
+		public static int CountPixelsXOrMoreNeighbours(FloatBitmap image, 
+		                                               int neighbours)
 		{
 			int count=0;
 			
-			FloatBitmap im=image.LastProcessedImage;
-			int sizeR=im.Width;
-			int sizeC = im.Height;
+			int width=image.Width;
+			int height = image.Height;
 
-			for(int i=0;i<sizeR;i++)
-				for(int j=0;j<sizeC;j++)
-					if(im[i,j]==FloatBitmap.Black
-							&& CountBlackNeighboursHelper.BlackNeighbours(im,i,j,sizeR,sizeC)>=neighbours)
+			for(int i=0;i<width;i++)
+			{
+				for(int j=0;j<height;j++)
+				{
+					if(image[i,j]==FloatBitmap.Black
+							&& CountBlackNeighboursHelper.BlackNeighbours(image,i,j)>=neighbours)
+					{
 						count++;
+					}
+				}
+			}
 			
 			return count;
 		}

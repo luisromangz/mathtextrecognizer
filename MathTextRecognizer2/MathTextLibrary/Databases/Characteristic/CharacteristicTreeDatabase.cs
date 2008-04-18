@@ -83,11 +83,13 @@ namespace MathTextLibrary.Databases.Characteristic
 			CharacteristicNode node=rootNode;
 			bool characteristicValue;	
 			
+			FloatBitmap processedBitmap = bitmap.LastProcessedImage;
+			
 			// Recorremos las caracteristicas, y vamos creando el arbol segun
 			// vamos necesitando nodos.
 			foreach(IBinaryCharacteristic bc in characteristics)
 			{					
-				if(characteristicValue=bc.Apply(bitmap))
+				if(characteristicValue=bc.Apply(processedBitmap))
 				{
 					if(node.TrueTree==null)
 					{
@@ -105,9 +107,10 @@ namespace MathTextLibrary.Databases.Characteristic
 					node=node.FalseTree;					
 				}	
 				
-				ProcessingStepDoneArgs a = new ProcessingStepDoneArgs(bc,
-				                                                      bitmap,
-				                                                      characteristicValue);
+				ProcessingStepDoneArgs a = 
+					new ProcessingStepDoneArgs(bc,
+					                           bitmap,
+					                           characteristicValue);
 					
 				this.OnLearningStepDoneInvoke(a);
 			}	
@@ -142,11 +145,13 @@ namespace MathTextLibrary.Databases.Characteristic
 			
 			List<bool> vector=new List<bool>();
 			
+			FloatBitmap processedImage = image.LastProcessedImage;
+			
 			for(int i=0;i<characteristics.Count && exists;i++)
 			{
 				bc=(IBinaryCharacteristic)(characteristics[i]);				
 
-				if(characteristicValue=bc.Apply(image))
+				if(characteristicValue=bc.Apply(processedImage))
 				{
 				
 						if(nodo.TrueTree==null)

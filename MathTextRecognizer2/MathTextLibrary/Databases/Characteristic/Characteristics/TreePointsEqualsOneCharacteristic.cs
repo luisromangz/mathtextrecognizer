@@ -17,9 +17,9 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 			priority=290;
 		}
 				
-		public override bool Apply(MathTextBitmap image)
+		public override bool Apply(FloatBitmap image)
 		{
-			return CountPixelsWithXNeighboursHelper.numPixelsXOrMoreNeighbours(image, 3)==1;
+			return CountPixelsWithXNeighboursHelper.CountPixelsXOrMoreNeighbours(image, 3)==1;
 		}
 	}
 }

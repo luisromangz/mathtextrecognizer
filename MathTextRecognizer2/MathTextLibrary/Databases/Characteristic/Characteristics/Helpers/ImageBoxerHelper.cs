@@ -67,7 +67,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			{
 				for(int j=0;j<width;j++)
 				{
-					if(image[j,i]==FloatBitmap.Black)
+					if(image[j,i]!=FloatBitmap.White)
 					{
 						return i;
 					}
@@ -95,7 +95,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			{
 				for(int j=0;j<width;j++)
 				{
-					if(image[j,i]==FloatBitmap.Black)
+					if(image[j,i]!=FloatBitmap.White)
 					{
 						return i;
 					}
@@ -122,7 +122,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			{
 				for(int j=0;j<height;j++)
 				{
-					if(image[i,j]==FloatBitmap.Black)
+					if(image[i,j]!=FloatBitmap.White)
 					{
 						return i;
 					}
@@ -149,7 +149,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			{
 				for(int j=0;j<height;j++)
 				{
-					if(image[i,j]==FloatBitmap.Black)
+					if(image[i,j]!=FloatBitmap.White)
 					{
 						return i;
 					}
