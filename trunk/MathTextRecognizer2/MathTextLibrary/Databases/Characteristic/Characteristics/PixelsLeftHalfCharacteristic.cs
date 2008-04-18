@@ -18,7 +18,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 			priority=50;
 		}
 
-		public override bool Apply(MathTextBitmap image)
+		public override bool Apply(FloatBitmap image)
 		{
 			int npixelsLeft=CountPixelsHelper.NumBlackPixelsInHalf(image, Half.Left);
 			int npixelsRight=CountPixelsHelper.NumBlackPixelsInHalf(image, Half.Right);

@@ -15,25 +15,27 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		}
 
 		public static int BlackNeighbours(FloatBitmap image,
-		                                  int x, int y, int width, int height)
+		                                  int x, int y)
 		{
 			int res=0;
+			int width = image.Width;
+			int height = image.Height;
 			
-			if(x-1>=0 && y-1 >= 0 && image[x-1,y-1]==FloatBitmap.Black)
+			if(x-1>=0 && y-1 >= 0 && image[x-1,y-1]!=FloatBitmap.White)
 				res++;
-			if(x-1>=0 && image[x-1,y]==FloatBitmap.Black)
+			if(x-1>=0 && image[x-1,y]!=FloatBitmap.White)
 				res++;
-			if(x-1>=0 && y+1 < height && image[x-1,y+1]==FloatBitmap.Black)
+			if(x-1>=0 && y+1 < height && image[x-1,y+1]!=FloatBitmap.White)
 				res++;			
-			if(y-1 >= 0 && image[x,y-1]==FloatBitmap.Black)
+			if(y-1 >= 0 && image[x,y-1]!=FloatBitmap.White)
 				res++;
-			if(y+1 < height && image[x,y+1]==FloatBitmap.Black)
+			if(y+1 < height && image[x,y+1]!=FloatBitmap.White)
 				res++;			
-			if(x+1 < width && y-1 >= 0 && image[x+1,y-1]==FloatBitmap.Black)
+			if(x+1 < width && y-1 >= 0 && image[x+1,y-1]!=FloatBitmap.White)
 				res++;
-			if(x+1 <= width && image[x+1,y]==FloatBitmap.Black)
+			if(x+1 <= width && image[x+1,y]!=FloatBitmap.White)
 				res++;
-			if(x+1 < width && y+1 < height && image[x+1,y+1]==FloatBitmap.Black)
+			if(x+1 < width && y+1 < height && image[x+1,y+1]!=FloatBitmap.White)
 				res++;
 			return res;
 			

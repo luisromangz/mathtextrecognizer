@@ -31,34 +31,42 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <param name="image">Imagen sobre la que se trabaja</param>
 		/// <param name="h">Mitad a analizar</param>
 		/// <returns>Numero de pixeles negros</returns>
-		public static int NumBlackPixelsInHalf(MathTextBitmap image, Half h)
+		public static int NumBlackPixelsInHalf(FloatBitmap image, Half h)
 		{
 			int n=0;
-			FloatBitmap im=image.LastProcessedImage;
-			int sizeR = im.Width;
-			int sizeC = im.Height;
-			int mitadR = sizeR/2;
-			int mitadC = sizeC/2;
 			
-			if(sizeR%2 == 0)
-				mitadR--;
+			int width = image.Width;
+			int height = image.Height;
+			int halfWidth = width/2;
+			int halfHeight = height/2;
 			
-			if(sizeC%2== 0)
-				mitadC--;
+			if(width%2 == 0)
+				halfWidth--;
+			
+			if(height%2== 0)
+				halfHeight--;
 			
 		
 			switch(h) {
 				case(Half.Top):
-					n=NumPixelsInArea(im,FloatBitmap.Black,0,0,sizeR-1,mitadC);
+					n=NumPixelsInArea(image,FloatBitmap.Black,
+					                  0,0,
+					                  width-1,halfHeight);
 					break;
 				case(Half.Bottom):
-					n=NumPixelsInArea(im,FloatBitmap.Black,0,mitadC,sizeR-1,sizeC-1);
+					n=NumPixelsInArea(image,FloatBitmap.Black,
+					                  0,halfHeight,
+					                  width-1,height-1);
 					break;
 				case(Half.Left):
-					n=NumPixelsInArea(im,FloatBitmap.Black,0,0,mitadR,sizeC-1);
+					n=NumPixelsInArea(image,FloatBitmap.Black,
+					                  0,0,
+					                  halfWidth,height-1);
 					break;
 				case(Half.Right):
-					n=NumPixelsInArea(im,FloatBitmap.Black,mitadR,0,sizeR-1,sizeC-1);
+					n=NumPixelsInArea(image,FloatBitmap.Black,
+					                  halfWidth,0,
+					                  width-1,height-1);
 					break;
 			}
 			
@@ -76,33 +84,41 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <param name="image">Imagen sobre la que se trabaja</param>
 		/// <param name="q">Cuadrante a analizar</param>
 		/// <returns>Numero de pixeles negros</returns>
-		public static int NumBlackPixelsInQuadrant(MathTextBitmap image, Quadrant q)
+		public static int NumBlackPixelsInQuadrant(FloatBitmap image, Quadrant q)
 		{
 			int n=0;
-			FloatBitmap im=image.LastProcessedImage;
-			int sizeR = im.Width;
-			int sizeC = im.Height;
-			int mitadR = sizeR/2;
-			int mitadC = sizeC/2;
 			
-			if(sizeR%2 == 0)
-				mitadR--;
+			int width = image.Width;
+			int height = image.Height;
+			int halfWidth = width/2;
+			int halfHeight = height/2;
 			
-			if(sizeC%2== 0)
-				mitadC--;
+			if(width%2 == 0)
+				halfWidth--;
+			
+			if(height%2== 0)
+				halfHeight--;
 			
 			switch(q) {
 				case(Quadrant.NW):
-					n=NumPixelsInArea(im,FloatBitmap.Black,0,0,mitadR,mitadC);
+					n=NumPixelsInArea(image,FloatBitmap.Black,
+					                  0,0,
+					                  halfWidth,halfHeight);
 					break;
 				case(Quadrant.NE):
-					n=NumPixelsInArea(im,FloatBitmap.Black,mitadR,0,sizeR-1,mitadC);
+					n=NumPixelsInArea(image,FloatBitmap.Black,
+					                  halfWidth,0,
+					                  width-1,halfHeight);
 					break;
 				case(Quadrant.SW):
-					n=NumPixelsInArea(im,FloatBitmap.Black,0,mitadC,mitadR,sizeC-1);
+					n=NumPixelsInArea(image,FloatBitmap.Black,
+					                  0,halfHeight,
+					                  halfWidth,height-1);
 					break;
 				case(Quadrant.SE):
-					n=NumPixelsInArea(im,FloatBitmap.Black,mitadR,mitadC,sizeR-1,sizeC-1);
+					n=NumPixelsInArea(image,FloatBitmap.Black,
+					                  halfWidth,halfHeight,
+					                  width-1,height-1);
 					break;
 				
 			}
@@ -123,7 +139,8 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <param name="y2">Maxima coordenada vertical</param>
 		/// <returns>Numero de pixeles de valor <c>value</c></returns>
 		protected static int NumPixelsInArea(FloatBitmap image, float value,
-		                                    int x1, int y1, int x2, int y2)
+		                                    int x1, int y1, 
+		                                     int x2, int y2)
 		{
 			if(x1 > x2 || y1 > y2)
 				throw new ApplicationException("Área errónea en CountPixelsInQuadrant.NumPixelsInArea()");

@@ -227,7 +227,7 @@ namespace MathTextRecognizer
 			
 			recognizingStepsNB.AppendPage(segmentingAndMatchingStepWidget,
 			                              new Label("Segmentación y "
-			                                        +"reconocimiento de carácteres"));
+			                                        +"reconocimiento de caracteres"));
 			
 			mainWindow.ShowAll();
 		}

@@ -46,7 +46,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 		/// </summary>
 		/// <returns><c>true</c> si se cumple la caracteristica binaria
 		/// en la imagen</returns>
-		public abstract bool Apply(MathTextBitmap image);
+		public abstract bool Apply(FloatBitmap image);
 		
 		public virtual int CompareTo(object obj){			
 			return priority-((IBinaryCharacteristic)obj).priority;

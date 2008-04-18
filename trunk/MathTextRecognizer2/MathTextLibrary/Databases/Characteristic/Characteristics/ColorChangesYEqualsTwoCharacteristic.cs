@@ -17,10 +17,10 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 			priority=210;
 		}
 
-		public override bool Apply(MathTextBitmap image)
+		public override bool Apply(FloatBitmap image)
 		{
 			if(CountColorChangesHelper.NumColorChangesColumn(image,
-			                                                 image.LastProcessedImage.Height/2) == 2) 
+			                                                 image.Height/2) == 2) 
 			{
 				return true;
 			}

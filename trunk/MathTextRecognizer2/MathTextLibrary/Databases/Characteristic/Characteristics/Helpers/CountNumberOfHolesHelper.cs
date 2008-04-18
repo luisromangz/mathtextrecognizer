@@ -32,12 +32,10 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <param name="bigholes">Si <c>true</c> solo se cuentan los
 		/// agujeros grandes</param>
 		/// <returns>Numero de zonas blancas en la imagen</returns>
-		public static int NumWhiteZones(MathTextBitmap image, bool bigholes)
+		public static int NumWhiteZones(FloatBitmap image, bool bigholes)
 		{
-			FloatBitmap im=image.LastProcessedImage;
-			
-			int sizeC = im.Height;
-			int sizeR = im.Width;
+			int sizeC = image.Height;
+			int sizeR = image.Width;
 			
 			//Contiene las etiquetas de cada pixel
 			int[,] label = new int[sizeR,sizeC];
@@ -47,7 +45,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			int aux=1;
 			
 			/*Se analiza el primer elemento de la primera fila*/
-			if (im[0,0] == FloatBitmap.White)
+			if (image[0,0] == FloatBitmap.White)
 			{
 				label[0,0]=aux;
 			}
@@ -57,11 +55,11 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			/*Se analiza el resto de la primera fila*/
 			for(int i=1;i<sizeR;i++)
 			{
-				if (im[i,0]==FloatBitmap.White && im[i-1,0]==FloatBitmap.White)
+				if (image[i,0]==FloatBitmap.White && image[i-1,0]==FloatBitmap.White)
 				{
 					label[i,0]=aux;
 				}
-				else if (im[i,0]==FloatBitmap.White && im[i-1,0]!=FloatBitmap.White)
+				else if (image[i,0]==FloatBitmap.White && image[i-1,0]!=FloatBitmap.White)
 				{
 					label[i,0]=++aux;
 				}
@@ -72,11 +70,11 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			/*Se analiza el resto de la primera columna*/
 			for(int i=1;i<sizeC;i++)
 			{
-				if (im[0,i]==FloatBitmap.White && im[0,i-1]==FloatBitmap.White)
+				if (image[0,i]==FloatBitmap.White && image[0,i-1]==FloatBitmap.White)
 				{
 					label[0,i]=aux;
 				}
-				else if (im[0,i]==FloatBitmap.White && im[0,i-1]!=FloatBitmap.White)
+				else if (image[0,i]==FloatBitmap.White && image[0,i-1]!=FloatBitmap.White)
 				{
 					label[0,i]=++aux;
 				}
@@ -86,19 +84,19 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 			for(int i=1;i<sizeR;i++)
 				for(int j=1;j<sizeC;j++)
 				{
-					if(im[i,j]==FloatBitmap.White)
+					if(image[i,j]==FloatBitmap.White)
 					{
-						if(im[i-1,j]==FloatBitmap.White 
-						   && im[i,j-1]==FloatBitmap.White)
+						if(image[i-1,j]==FloatBitmap.White 
+						   && image[i,j-1]==FloatBitmap.White)
 						{
 							label[i,j]=label[i-1,j];
 							AddLabelsToEquiv(equiv,label[i-1,j],label[i,j-1]);
 						}
-						else if(im[i-1,j]==FloatBitmap.White)
+						else if(image[i-1,j]==FloatBitmap.White)
 						{
 							label[i,j]=label[i-1,j];
 						}
-						else if (im[i,j-1]==FloatBitmap.White)
+						else if (image[i,j-1]==FloatBitmap.White)
 						{
 							label[i,j]=label[i,j-1];
 						}

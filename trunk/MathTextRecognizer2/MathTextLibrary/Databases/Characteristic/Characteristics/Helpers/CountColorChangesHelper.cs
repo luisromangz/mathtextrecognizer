@@ -25,14 +25,14 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <param name="image">Imagen sobre la que se trabaja</param>
 		/// <param name="row">Fila a analizar</param>
 		/// <returns>Numero de cambios de color</returns>
-		public static int NumColorChangesRow(MathTextBitmap image, int row) 
+		public static int NumColorChangesRow(FloatBitmap image, int row) 
 		{
-			FloatBitmap im=image.LastProcessedImage;
+			
 			int nChanges=0;
 
-			for(int i=1; i<im.Height; i++) 
+			for(int i=1; i<image.Width; i++) 
 			{
-				if(im[row,i]!=im[row,i-1])
+				if(image[i,row]!=image[i-1,row])
 				{
 					nChanges++;
 				}
@@ -47,15 +47,13 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 		/// <param name="image">Imagen sobre la que se trabaja</param>
 		/// <param name="column">Columna a analizar</param>
 		/// <returns>Numero de cambios de color</returns>
-		public static int NumColorChangesColumn(MathTextBitmap image, int column) 
+		public static int NumColorChangesColumn(FloatBitmap image, int column) 
 		{
-			FloatBitmap im=image.LastProcessedImage;
 			int nChanges=0;
 
-			for(int i=1; i<im.Width; i++) 
-			{
-				
-				if(im[i,column]!=im[i-1,column])
+			for(int j=1; j<image.Height; j++) 
+			{				
+				if(image[column,j] != image[column,j-1])
 				{
 					nChanges++;
 				}

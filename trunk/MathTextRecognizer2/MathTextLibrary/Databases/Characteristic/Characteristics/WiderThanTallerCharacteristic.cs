@@ -17,14 +17,15 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 			priority=10;
 		}
 
-		public override bool Apply(MathTextBitmap image)
+		public override bool Apply(FloatBitmap image)
 		{
 			int x1,y1,x2,y2;
 			
 			try
 			{
 				ImageBoxerHelper.BoxImage(image,out x1,out y1,out x2,out y2);
-			} catch(ApplicationException)
+			} 
+			catch(ApplicationException)
 			{
 				return false;
 			}
