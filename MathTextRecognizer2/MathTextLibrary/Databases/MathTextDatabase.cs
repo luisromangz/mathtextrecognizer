@@ -28,11 +28,6 @@ namespace MathTextLibrary.Databases
 		public event ProcessingStepDoneHandler StepDone;
 		
 	
-		/// <summary>
-		/// Este evento se lanza cuando se ha aprendindo un nuevo simbolo en la
-		/// base de datos.
-		/// </summary>
-		public event SymbolLearnedHandler SymbolLearned;		
 		
 #endregion Eventos
 		
@@ -171,9 +166,9 @@ namespace MathTextLibrary.Databases
 		/// <param name="symbol">
 		/// El simbolo que representa a la imagen.
 		/// </param>
-		public void Learn(MathTextBitmap bitmap,MathSymbol symbol)
+		public bool Learn(MathTextBitmap bitmap,MathSymbol symbol)
 		{
-			database.Learn(bitmap,symbol);
+			return database.Learn(bitmap,symbol);
 		}
 		
 		/// <summary>
@@ -263,14 +258,6 @@ namespace MathTextLibrary.Databases
 			}		
 		}
 	
-		protected void OnSymbolLearned(object sender, EventArgs args)
-		{
-			if(SymbolLearned != null)
-			{
-				SymbolLearned(this, EventArgs.Empty);
-			}
-		}
-		
 #endregion Metodos protegidos
 		
 #region Metodos privados
@@ -326,8 +313,6 @@ namespace MathTextLibrary.Databases
 			this.database.StepDone += 
 				new ProcessingStepDoneHandler(OnStepDone);
 			
-			this.database.SymbolLearned +=
-				new SymbolLearnedHandler(OnSymbolLearned);
 		}
 		
 		/// <summary>

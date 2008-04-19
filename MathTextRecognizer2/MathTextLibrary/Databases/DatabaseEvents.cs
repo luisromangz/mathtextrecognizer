@@ -19,12 +19,6 @@ namespace MathTextLibrary.Databases
 	
 	
 	/// <summary>
-	/// Delegado que establece el tipo de los metodos que manejaran el evento que
-	/// informa de que se ha aprendido un simbolo en la base de datos de caracteres.
-	/// </summary>
-	public delegate void SymbolLearnedHandler(object sender,EventArgs arg);
-		
-	/// <summary>
 	/// Clase que especializa <c>EventArgs</c> para ofrecer informacion adicional
 	/// a los manejadores de los eventos encargados de escuchar cuando se ha dado
 	/// un paso en el reconocimiento de un caracter. 

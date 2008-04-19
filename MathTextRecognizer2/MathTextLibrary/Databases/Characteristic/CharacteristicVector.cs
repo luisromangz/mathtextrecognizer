@@ -78,12 +78,12 @@ namespace MathTextLibrary.Databases.Characteristic
 			
 			if(values.Count != vector.Length)
 			{
-				throw new ArgumentException("Vectors' length aren't equal");
+				throw new ArgumentException("Vector lengths aren't equal");
 			}
 			
 			for(int i=0;i<values.Count; i++)
 			{
-				if(this[i]!=vector[i])
+				if(this.values[i]!=vector.values[i])
 				{
 					count++;
 				}			
@@ -91,5 +91,80 @@ namespace MathTextLibrary.Databases.Characteristic
 			
 			return count;
 		}
+		
+		/// <summary>
+		/// Equals method.
+		/// </summary>
+		/// <param name="o">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
+		public override bool Equals (object o)
+		{
+			if(o.GetType() != this.GetType())
+				return false;
+			
+			CharacteristicVector vector = (CharacteristicVector) o;
+			int distance = this.Distance(vector);
+			Console.WriteLine("Distance {0}", distance);
+			
+			
+			// The vectors are the same if the distance is zero
+			return distance == 0;
+		}
+		
+		public override int GetHashCode ()
+		{
+			string res = "";
+			foreach (bool value in values)
+			{
+				res += (value?1:0).ToString();
+			}
+			
+			int resint;
+			
+			int.TryParse(res,out resint);
+			
+			return resint;
+		}
+
+		
+		/// <summary>
+		/// ToString method.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
+		public override string ToString ()
+		{
+			string res = "[";
+			foreach (bool value in values)
+			{
+				res += (value?1:0) +", ";
+			}
+			
+			res = res.TrimEnd(',',' ');
+			res+="]";
+			return res;
+		}
+		
+		/// <value>
+		/// Contains the binary values.
+		/// </value>
+		public List<bool> Values
+		{
+			get
+			{
+				return values;
+			}
+			set
+			{
+				values = value;
+			}
+		}
+
+
 	}
 }

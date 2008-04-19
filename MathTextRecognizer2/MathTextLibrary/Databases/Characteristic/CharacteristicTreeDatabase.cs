@@ -75,7 +75,7 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// <param name="symbol">
 		/// El simbolo que representa a la imagen.
 		///</param>
-		public override void Learn(MathTextBitmap bitmap,MathSymbol symbol)
+		public override bool Learn(MathTextBitmap bitmap,MathSymbol symbol)
 		{
 			if(characteristics == null)
 				characteristics=CharacteristicFactory.CreateCharacteristicList();
@@ -113,8 +113,8 @@ namespace MathTextLibrary.Databases.Characteristic
 				this.StepDoneInvoker(a);
 			}	
 			
-			node.AddSymbol(symbol);					
-			SymbolLearnedInvoke();
+			return node.AddSymbol(symbol);				
+			
 		}
 		
 		
@@ -230,10 +230,10 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// The <c>ProcessingStepDoneArgs</c> instance created.
 		/// </returns>
 		private StepDoneArgs CreateStepDoneArgs(IBinaryCharacteristic bc,
-		                                                  bool value,
-		                                                  List<MathSymbol> similarSymbols)
+		                                        bool value,
+		                                        List<MathSymbol> similarSymbols)
 		{
-			String res = String.Format("{0}: {1}", bc.GetType(), value);
+			String res = String.Format("Comprobando {0}: {1}", bc.GetType(), value);
 			string similar="";	
 			if(similarSymbols!=null)
 			{
@@ -242,7 +242,8 @@ namespace MathTextLibrary.Databases.Characteristic
 					similar += String.Format("«{0}», ", ms.Text);
 				}				
 				
-				res +=String.Format("\nCaracteres similares: {0}", similar.TrimEnd(',',' '));
+				res +=String.Format("\nCaracteres similares: {0}", 
+				                    similar.TrimEnd(',',' '));
 			}
 			
 			

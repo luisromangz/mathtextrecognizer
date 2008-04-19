@@ -31,9 +31,9 @@ namespace MathTextLibrary.Databases.Momentum
 		/// <param name="symbol">
 		/// El simbolo.
 		/// </param>
-		public override void Learn(MathTextBitmap image, MathSymbol symbol)
+		public override bool Learn(MathTextBitmap image, MathSymbol symbol)
 		{
-			
+			return false;
 		}
 		                          
 		/// <summary>

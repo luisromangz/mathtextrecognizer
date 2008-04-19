@@ -283,20 +283,23 @@ namespace MathTextLearner
 		/// </summary>
 		private void LearnProccess()
 		{
-			try
+			
+			// Lanzamos la excepcion para que no se modifique
+			// la base de datos
+			bool learned = database.Learn(mtb, symbol);
+			if(learned)
 			{
-				// Lanzamos la excepcion para que no se modifique
-				// la base de datos
-				database.Learn(mtb, symbol);
 				databaseModified=true;
 				SetTitle(null,true);
+				Application.Invoke(OnSymbolLearnedThread);
 			}
-			catch(DuplicateSymbolException e)
+			else
 			{
-				Application.Invoke(e,
-					new LearningFailedArgs(e.DuplicatedSymbol),
+				Application.Invoke(this,
+					new LearningFailedArgs(symbol),
 					OnLearningProccessFailedThread);
-			}		
+			}
+				
 		}
 		
 		/// <summary>
@@ -686,15 +689,7 @@ namespace MathTextLearner
 					
 		}
 		
-		/// <summary>
-		/// Metodo que maneja el evento provocado al aprenderse un simbolo en la
-		/// base de datos.
-		/// </summary>
-		private void OnSymbolLearned(object sender,EventArgs arg)
-		{
-			Application.Invoke(OnSymbolLearnedThread);
-		}
-		
+	
 		private void OnSymbolLearnedThread(object sender,EventArgs arg)
 		{
 			ResetWidgets();
@@ -855,8 +850,6 @@ namespace MathTextLearner
 		{
 			this.database = database; 
 			
-			database.SymbolLearned += new SymbolLearnedHandler(OnSymbolLearned);
-				
 			database.StepDone +=
 				new ProcessingStepDoneHandler(OnLearningStepDone);
 			
