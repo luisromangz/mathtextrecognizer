@@ -13,6 +13,8 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 	/// <seealso cref="MathTextLibrary.Characteristics.Helpers.CountPixelsHelper"/>
 	public class PixelsNortheastQuadrantCharacteristic:IBinaryCharacteristic
 	{
+		private const float epsilon = 0.01f;
+		
 		public PixelsNortheastQuadrantCharacteristic()
 		{
 			priority=120;
@@ -25,8 +27,12 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 			int npixelsSW=CountPixelsHelper.NumBlackPixelsInQuadrant(image, Quadrant.SW);
 			int npixelsSE=CountPixelsHelper.NumBlackPixelsInQuadrant(image, Quadrant.SE);
 			
-			return (npixelsNE>npixelsNW) && (npixelsNE>npixelsSW)
-				&& (npixelsNE>npixelsSE);
+			int tolerance = (int)((image.Width * image.Height)*epsilon);
+			
+			
+			return ((npixelsNE > npixelsNW + tolerance) 
+					&& (npixelsNE>npixelsSW + tolerance)
+					&& (npixelsNE>npixelsSE +tolerance));
 		}
 	}
 }

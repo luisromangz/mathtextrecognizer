@@ -227,6 +227,10 @@ namespace MathTextRecognizer.Controllers
 			List<MathSymbol> associatedSymbols = new List<MathSymbol>();
 			foreach(MathTextDatabase database in databases)
 			{
+				MessageLogSentInvoker("---------- «{0}» ------------",
+				                      database.Description);
+				                      
+				
 				bitmap.ProcessImage(database.Processes);
 				BitmapBeingRecognizedInvoker(bitmap);
 				

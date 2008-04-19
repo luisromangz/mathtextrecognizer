@@ -13,6 +13,9 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 	/// <seealso cref="MathTextLibrary.Characteristics.Helpers.CountPixelsHelper"/>
 	public class PixelsLeftHalfCharacteristic:IBinaryCharacteristic
 	{
+
+		private const float epsilon = 0.01f;
+		
 		public PixelsLeftHalfCharacteristic()
 		{
 			priority=50;
@@ -23,7 +26,9 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 			int npixelsLeft=CountPixelsHelper.NumBlackPixelsInHalf(image, Half.Left);
 			int npixelsRight=CountPixelsHelper.NumBlackPixelsInHalf(image, Half.Right);
 			
-			return npixelsLeft > npixelsRight;
+			int tolerance = (int)((image.Width * image.Height)*epsilon);
+			
+			return npixelsLeft > npixelsRight + tolerance;
 		}
 	}
 }

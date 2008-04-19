@@ -12,6 +12,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 	/// <seealso cref="MathTextLibrary.Characteristics.Helpers.ImageBoxerHelper"/>
 	public class TwiceTallerThanWiderCharacteristic:IBinaryCharacteristic
 	{
+		private const float epsilon = 0.05f;
 		public TwiceTallerThanWiderCharacteristic()
 		{
 			priority=20;
@@ -32,7 +33,9 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 			int width=(x2-x1+1);
 			int height=(y2-y1+1);
 			
-			return (2*height) >= width;
+			int tolerance = (int) (image.Width * epsilon);
+			
+			return height >= 2*width + tolerance;
 		}
 	}
 }
