@@ -33,7 +33,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics.Helpers
 				res++;			
 			if(x+1 < width && y-1 >= 0 && image[x+1,y-1]!=FloatBitmap.White)
 				res++;
-			if(x+1 <= width && image[x+1,y]!=FloatBitmap.White)
+			if(x+1 < width && image[x+1,y]!=FloatBitmap.White)
 				res++;
 			if(x+1 < width && y+1 < height && image[x+1,y+1]!=FloatBitmap.White)
 				res++;

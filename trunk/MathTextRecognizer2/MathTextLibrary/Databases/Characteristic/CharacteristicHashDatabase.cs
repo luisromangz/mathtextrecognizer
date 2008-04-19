@@ -33,7 +33,7 @@ namespace MathTextLibrary.Databases.Characteristic
 		// Lista de caracteristicas binarias que se aplican sobre las imagenes.
 		private static List<IBinaryCharacteristic> characteristics;
 		
-		private Dictionary<CharacteristicVector, List<MathSymbol>> symbolsDict;
+		private List<CharacteristicVector> symbolsDict;
 		
 #endregion Atributos
 		
@@ -61,7 +61,25 @@ namespace MathTextLibrary.Databases.Characteristic
 				
 				return res;
 			}
-		}	
+		}
+
+		/// <value>
+		/// Contains the association between value vectors and symbols.
+		/// </value>
+		public Dictionary<CharacteristicVector, List<MathSymbol>> SymbolsDictionary 
+		{
+			get 
+			{
+				return symbolsDict;
+			}
+			set
+			{
+				symbolsDict = value;
+			}
+		}
+	
+		
+		
 
 		
 #endregion Propiedades
@@ -74,7 +92,7 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// </summary>
 		public CharacteristicHashDatabase() : base()
 		{	
-			symbolsDict = new Dictionary<CharacteristicVector,List<MathSymbol>>();
+			symbolsDict = new List<CharacteristicVector>();
 		}
 		
 		/// <summary>
@@ -89,8 +107,8 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// </param>
 		/// <param name="symbol">
 		/// El simbolo que representa a la imagen.
-		///</param>
-		public override void Learn(MathTextBitmap bitmap,MathSymbol symbol)
+		/// </param>
+		public override bool Learn(MathTextBitmap bitmap,MathSymbol symbol)
 		{
 			if(characteristics == null)
 				characteristics=CharacteristicFactory.CreateCharacteristicList();
@@ -98,26 +116,33 @@ namespace MathTextLibrary.Databases.Characteristic
 			bool characteristicValue;	
 			
 			FloatBitmap processedBitmap = bitmap.LastProcessedImage;
-			CharacteristicVector vector = new CharacteristicVector();
+			CharacteristicVector vector = CreateVector(processedBitmap);
 			
-			// Recorremos las caracteristicas, y vamos creando el arbol segun
-			// vamos necesitando nodos.
-			foreach(IBinaryCharacteristic bc in characteristics)
-			{					
-				characteristicValue = bc.Apply(processedBitmap);
-				
-				vector.AddValue(characteristicValue);
-				
-				StepDoneArgs args = 
-					new StepDoneArgs(String.Format("{0}: {1}", 
-					                               bc.GetType(), 
-					                               characteristicValue));
-					
-				this.StepDoneInvoker(args);
-			}	
+			Console.WriteLine(vector.ToString());
 			
-							
-			SymbolLearnedInvoke();
+			if(symbolsDict.ContainsKey(vector))
+			{
+				Console.WriteLine("existe");
+				List<MathSymbol> symbols = symbolsDict[vector];
+				if(symbols.Contains(symbol))
+				{
+					Console.WriteLine("conflicto");
+					return false;
+				}
+				else
+				{
+					Console.WriteLine("no conflicto");
+					symbols.Add(symbol);
+				}
+			}
+			else
+			{
+				Console.WriteLine("no existe");
+				symbolsDict.Add(vector, 
+				                new List<MathSymbol>(new MathSymbol[]{symbol}));
+			}
+			
+			return true;
 		}
 		
 		
@@ -139,27 +164,50 @@ namespace MathTextLibrary.Databases.Characteristic
 			
 			List<MathSymbol> res = new List<MathSymbol>();
 			
-			bool exists=true; 
-			bool characteristicValue;
-			
-			CharacteristicVector vector = new CharacteristicVector();
-			
 			FloatBitmap processedImage = image.LastProcessedImage;
 			
-			foreach(IBinaryCharacteristic bc in characteristics)
-			{
-				characteristicValue = bc.Apply(processedImage);
-				
-				vector.AddValue(characteristicValue);
-				
-				StepDoneArgs args = 
-					new StepDoneArgs(String.Format("{0}: {1}", 
-					                               bc.GetType(), 
-					                               characteristicValue));
-				
-				StepDoneInvoker(args);
-			}
+			CharacteristicVector vector = CreateVector(processedImage);
 			
+			// We have this image vector, now we will compare with the stored ones.
+			
+			// We consider a threshold.
+			int threshold = (int)(characteristics.Count * epsilon); 
+			foreach(CharacteristicVector storedVector in symbolsDict.Keys)
+			{
+				// If the distance is below the threshold, we consider it valid.
+				if(vector.Distance(storedVector) <= threshold)
+				{
+					foreach(MathSymbol symbol in symbolsDict[storedVector])
+					{
+						// We don't want duplicated symbols.
+						if(!res.Contains(symbol))
+						{
+							res.Add(symbol);
+						}
+					}
+					
+					string msg = 
+						String.Format("Distancia({0}, {1}) <= {2}",
+						             vector.ToString(),
+						             storedVector.ToString(),
+						             threshold);
+					
+					msg += "\nSe añadieron los símbolos almacenados.";
+					
+					StepDoneInvoker(new StepDoneArgs(msg));
+				}
+				else
+				{
+					string msg = String.Format("Distancia({0}, {1}) > {2}",
+					                           vector.ToString(),
+					                           storedVector.ToString(),
+					                           threshold);
+					
+					StepDoneInvoker(new StepDoneArgs(msg));
+				}
+				
+				
+			}
 		
 			return res;
 
@@ -169,6 +217,40 @@ namespace MathTextLibrary.Databases.Characteristic
 		
 #endregion Métodos públicos
 		
+#region Private methods
+		/// <summary>
+		/// Creates a <c>CharacteristicVector</c> instance for a given
+		/// <c>FloatBitmap</c> object.
+		/// </summary>
+		/// <param name="image">
+		/// A <see cref="FloatBitmap"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="CharacteristicVector"/>
+		/// </returns>
+		private CharacteristicVector CreateVector(FloatBitmap image)
+		{
+			CharacteristicVector vector = new CharacteristicVector();
+			bool characteristicValue;
+			
+			foreach(IBinaryCharacteristic bc in characteristics)
+			{
+				characteristicValue = bc.Apply(image);
+				
+				vector.AddValue(characteristicValue);
+				
+				StepDoneArgs args = 
+					new StepDoneArgs(String.Format("Comprobando {0}: {1}", 
+					                               bc.GetType(), 
+					                               characteristicValue));
+				
+				StepDoneInvoker(args);
+			}
+			
+			return vector;
+		}
+		
+#endregion Private methods
 
 		
 	}

@@ -65,15 +65,21 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// <param name="symbol">
 		/// El simbolo a añadir
 		/// </param>
-		public void AddSymbol(MathSymbol symbol)
+		public bool AddSymbol(MathSymbol symbol)
 		{
 			if(symbols==null)
 				symbols = new List<MathSymbol>();
 			
-			if (!this.symbols.Contains(symbol))
-				this.symbols.Add(symbol);
+			if (this.symbols.Contains(symbol))
+			{
+				return false;
+				
+			}
 			else
-				throw new DuplicateSymbolException(symbol);
+			{
+				this.symbols.Add(symbol);
+				return true;
+			}
 		}
 		
 		

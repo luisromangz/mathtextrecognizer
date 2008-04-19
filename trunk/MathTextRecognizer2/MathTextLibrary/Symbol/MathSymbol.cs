@@ -80,6 +80,15 @@ namespace MathTextLibrary.Symbol
 			return text;
 		}
 		
+		/// <summary>
+		/// Compares two mathsymbol.
+		/// </summary>
+		/// <param name="o">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
 		public override bool Equals (object o)
 		{
 			if(o.GetType() != typeof(MathSymbol))
@@ -87,7 +96,7 @@ namespace MathTextLibrary.Symbol
 			
 			MathSymbol symbol = (MathSymbol) o;
 			
-			return this.text == symbol.text;
+			return this.text.Equals(symbol.Text);
 		}
 	}
 }
