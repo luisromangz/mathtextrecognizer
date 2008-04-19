@@ -24,11 +24,12 @@ namespace MathTextLibrary.Databases.Characteristic
 	                  "Arbol de características binarias")]	
 	[XmlInclude(typeof(MathSymbol))]
 	[XmlInclude(typeof(CharacteristicVector))]
-	public class CharacteristicHash : DatabaseBase
+	public class CharacteristicHashDatabase : DatabaseBase
 	{
 #region Atributos
 		
-		
+		private const float epsilon = 0.15f;  
+			
 		// Lista de caracteristicas binarias que se aplican sobre las imagenes.
 		private static List<IBinaryCharacteristic> characteristics;
 		
@@ -71,9 +72,9 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// Constructor de <c>CharacteristicDatabase</c>. Crea una base de datos
 		/// vacia, sin ningun simbolo aprendido.
 		/// </summary>
-		public CharacteristicHash() : base()
+		public CharacteristicHashDatabase() : base()
 		{	
-			
+			symbolsDict = new Dictionary<CharacteristicVector,List<MathSymbol>>();
 		}
 		
 		/// <summary>
@@ -103,20 +104,20 @@ namespace MathTextLibrary.Databases.Characteristic
 			// vamos necesitando nodos.
 			foreach(IBinaryCharacteristic bc in characteristics)
 			{					
-				bool characteristicValue = bc.Apply(processedBitmap);
+				characteristicValue = bc.Apply(processedBitmap);
 				
+				vector.AddValue(characteristicValue);
 				
-				
-				ProcessingStepDoneArgs a = 
-					new ProcessingStepDoneArgs(bc,
-					                           bitmap,
-					                           characteristicValue);
+				StepDoneArgs args = 
+					new StepDoneArgs(String.Format("{0}: {1}", 
+					                               bc.GetType(), 
+					                               characteristicValue));
 					
-				this.OnLearningStepDoneInvoke(a);
+				this.StepDoneInvoker(args);
 			}	
 			
-			node.AddSymbol(symbol);					
-			OnSymbolLearnedInvoke();
+							
+			SymbolLearnedInvoke();
 		}
 		
 		
@@ -137,64 +138,29 @@ namespace MathTextLibrary.Databases.Characteristic
 				characteristics=CharacteristicFactory.CreateCharacteristicList();
 			
 			List<MathSymbol> res = new List<MathSymbol>();
-			CharacteristicNode nodo=rootNode;
-			IBinaryCharacteristic bc;
 			
 			bool exists=true; 
 			bool characteristicValue;
 			
-			List<bool> vector=new List<bool>();
+			CharacteristicVector vector = new CharacteristicVector();
 			
 			FloatBitmap processedImage = image.LastProcessedImage;
 			
-			for(int i=0;i<characteristics.Count && exists;i++)
+			foreach(IBinaryCharacteristic bc in characteristics)
 			{
-				bc=(IBinaryCharacteristic)(characteristics[i]);				
-
-				if(characteristicValue=bc.Apply(processedImage))
-				{
+				characteristicValue = bc.Apply(processedImage);
 				
-						if(nodo.TrueTree==null)
-						{
-							exists=false;
-						}					
-						nodo=nodo.TrueTree;
-			
-				}
-				else
-				{
+				vector.AddValue(characteristicValue);
 				
-						 if(nodo.FalseTree==null)
-						 {
-							 exists=false;
-						 }					
-						 nodo=nodo.FalseTree;
-				 }		
+				StepDoneArgs args = 
+					new StepDoneArgs(String.Format("{0}: {1}", 
+					                               bc.GetType(), 
+					                               characteristicValue));
 				
-				 ProcessingStepDoneArgs args; 
-				 //Avisamos de que hemos dado un paso
-				 if(nodo!=null)
-				 {
-					args =new ProcessingStepDoneArgs(bc,
-					                                 image,
-					                                 characteristicValue,
-					                                 nodo.ChildrenSymbols);
-				 }
-				 else
-				 {
-				 	args =new ProcessingStepDoneArgs(bc,
-					                                 image,
-					                                 characteristicValue);
-				 }
-				
-				 RecognizingStepDoneInvoker(args);
+				StepDoneInvoker(args);
 			}
 			
-			if(exists)
-			{
-				res=nodo.Symbols;
-			}			
-			
+		
 			return res;
 
 		}
@@ -203,49 +169,7 @@ namespace MathTextLibrary.Databases.Characteristic
 		
 #endregion Métodos públicos
 		
+
 		
-#region Métodos no públicos
-		
-		/// <summary>
-		/// Calcula la distancia entre dos vectores, usando para ello el numero 
-		/// de diferencias entre los dos vectores.
-		/// </summary>
-		/// <param name="vector1">
-		/// El vector de caracteristicas binarias de un simbolo.
-		/// </param>
-		/// <param name="vector2">
-		/// El vector de caracteristicas binarias de otro simbolo.
-		/// </param>
-		/// <returns>La «distacia» entre los dos vectores.</returns>
-		private int BoolVectorDistance(List<bool> vector1, List<bool> vector2)
-		{
-			int count=0;
-			
-			for(int i=0;i<vector1.Count;i++)
-			{
-				if((bool)vector1[i]!=(bool)vector2[i])
-				{
-					count++;
-				}			
-			}
-			
-			return count;
-		}
-		
-#endregion Métodos no públicos
-		
-		/// <value>
-		/// Contiene el nodo raiz de la base de datos de caracteristicas.
-		/// </value>
-		public virtual CharacteristicNode RootNode 
-		{
-			get {
-				return rootNode;
-			}
-			set
-			{
-				rootNode = value;
-			}
-		}
 	}
 }

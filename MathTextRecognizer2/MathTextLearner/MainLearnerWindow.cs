@@ -394,8 +394,13 @@ namespace MathTextLearner
 				menuSaveAs.Sensitive=false;
 				menuOpen.Sensitive=false;
 				learningThread=null;
-				toolbar.Sensitive=false;							
+				toolbar.Sensitive=false;	
 				
+				learningThread = new Thread(new ThreadStart(LearnProccess));
+				learningThread.Start();
+				learningThread.Suspend();
+				
+				return;
 			}
 			else
 			{
@@ -416,21 +421,10 @@ namespace MathTextLearner
 		/// </summary>
 		private void OnBtnNextClicked(object sender, EventArgs arg)
 		{
-			if(learningThread == null){
-				stepByStep = true;
-				expanderLog.Expanded = true;
-				learningThread = new Thread(new ThreadStart(LearnProccess));	
-				learningThread.Priority = ThreadPriority.Highest;		
-				learningThread.Start();						
-			}
-			else
-			{			
-				if(learningThread.IsAlive)
-				{
-					learningThread.Resume();
-					btnNext.Sensitive = false;				
-				}
-			}				
+			nextButtonsHB.Sensitive = false;
+			expanderLog.Expanded = true;
+			stepByStep = true;
+			learningThread.Resume();
 		}
 		
 		/// <summary>
@@ -440,14 +434,9 @@ namespace MathTextLearner
 		private void OnBtnTilEndClicked(object sender, EventArgs arg)
 		{
 			stepByStep=false;
-			if(learningThread!=null)
-			{
-				learningThread.Resume();
-			}
-			else
-			{
-				LearnProccess();				
-			}
+			nextButtonsHB.Sensitive = false;
+			
+			learningThread.Resume();
 		}
 		
 		/// <summary>
@@ -553,20 +542,30 @@ namespace MathTextLearner
 		/// <param name="arg">
 		/// A <see cref="ProcessingStepDoneArgs"/>
 		/// </param>
-		private void OnLearningStepDone(object sender, ProcessingStepDoneArgs arg)
+		private void OnLearningStepDone(object sender, StepDoneArgs arg)
 		{
-			
 			Application.Invoke(sender, 
 			                   arg, 
 			                   OnLearningStepDoneThread);	
+			
+			if(stepByStep)
+			{
+				
+				learningThread.Suspend();				
+			}
 		}
 		
 		private void OnLearningStepDoneThread(object sender, EventArgs a)
 		{
+			if(stepByStep)
+			{
+				nextButtonsHB.Sensitive = true;
+				btnNext.IsFocus = true;
+			}
 			
-			ProcessingStepDoneArgs arg = (ProcessingStepDoneArgs) a;
+			StepDoneArgs arg = (StepDoneArgs) a;
 			btnNext.Sensitive = true;
-			LogLine("{0}: {1}", arg.Process.GetType(), arg.Result);
+			LogLine(arg.Message);
 		}	
 		
 		/// <summary>
@@ -669,6 +668,8 @@ namespace MathTextLearner
 			
 			
 			imagesVB.Sensitive = false;
+			
+			symbolLabelEditor.IsFocus = true;
 			
 		}
 			
@@ -856,7 +857,7 @@ namespace MathTextLearner
 			
 			database.SymbolLearned += new SymbolLearnedHandler(OnSymbolLearned);
 				
-			database.LearningStepDone +=
+			database.StepDone +=
 				new ProcessingStepDoneHandler(OnLearningStepDone);
 			
 			messageInfoHB.Visible = false;

@@ -24,15 +24,11 @@ namespace MathTextLibrary.Databases
 		
 		/// <summary>
 		/// Este evento se lanza para indicar que se completado un paso
-		/// mientras se esta aprendiendo un caracter en la base de datos.
+		/// mientras se esta aprendiendo o reconociendo un caracter en la 
+		/// base de datos.
 		/// </summary>
-		public event ProcessingStepDoneHandler LearningStepDone;
+		public event ProcessingStepDoneHandler StepDone;
 		
-		/// <summary>
-		/// Este evento se lanza para indicar que se completado un paso 
-		/// mientras se esta reconociendo un caracter en la base de datos.
-		/// </summary>
-		public event ProcessingStepDoneHandler RecognizingStepDone;
 		
 		/// <summary>
 		/// Este evento se lanza cuando se ha aprendindo un nuevo simbolo en la
@@ -83,37 +79,22 @@ namespace MathTextLibrary.Databases
 #region Metodos protegidos
 		
 		/// <summary>
-		/// Para lanzar el evento <c>LearningCharacteristicChecked</c> con
-		/// comodidad.
+		/// Launches the <c>StepDone</c> event.
 		/// </summary>		
-		protected void OnLearningStepDoneInvoke(ProcessingStepDoneArgs arg)
+		protected void StepDoneInvoker(StepDoneArgs arg)
 		{
-			if(LearningStepDone != null)
+			if(StepDone != null)
 			{
-				LearningStepDone(this,arg);
+				StepDone(this,arg);
 			}		
 		}
 		
-		/// <summary>
-		/// Para lanzar el evento <c>RecognizingCharacteristicChecked</c> con
-		/// comodidad.	
-		/// </summary>
-		/// <param name="arg">
-		/// Los argumentos pasados al manejador del evento.
-		/// </param>
-		protected void RecognizingStepDoneInvoker(ProcessingStepDoneArgs arg)
-		{
-			if(RecognizingStepDone != null)
-			{
-				RecognizingStepDone(this,arg);
-			}		
-		}
 		
 		/// <summary>
 		/// Metodo para lanzar facilmente el evento que provocado al completarse
 		/// el aprendizaje de un nuevo simbolo.
 		/// </summary>
-		protected void OnSymbolLearnedInvoke()
+		protected void SymbolLearnedInvoke()
 		{
 			if(SymbolLearned != null)
 			{

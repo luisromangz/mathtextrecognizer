@@ -1,20 +1,38 @@
-﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.sln">
+﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
-    <File name="Bienvenido" />
+    <File name="MathTextLibrary/Databases/Characteristic/Characteristics/ThriceTallerThanWiderCharacteristic.cs" line="38" column="17" />
+    <File name="MathTextLibrary/Databases/Characteristic/Characteristics/WiderThanTallerCharacteristic.cs" line="37" column="39" />
+    <File name="MathTextLibrary/Databases/Characteristic/Characteristics/TwiceTallerThanWiderCharacteristic.cs" line="38" column="17" />
+    <File name="MathTextLibrary/Databases/Characteristic/Characteristics/PixelsSoutheastQuadrantCharacteristic.cs" line="16" column="22" />
+    <File name="MathTextLibrary/Databases/Characteristic/Characteristics/PixelsSouthwestQuadrantCharacteristic.cs" line="16" column="37" />
+    <File name="MathTextLibrary/Databases/Characteristic/CharacteristicHashDatabase.cs" line="27" column="41" />
+    <File name="MathTextLibrary/Databases/Characteristic/CharacteristicTreeDatabase.cs" line="251" column="2" />
+    <File name="MathTextLibrary/Databases/Characteristic/CharacteristicVector.cs" line="10" column="46" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
-      <Node expanded="True" />
+      <Node expanded="True" selected="True">
+        <Node name="MathTextLibrary" expanded="True">
+          <Node name="Databases" expanded="True">
+            <Node name="Characteristic" expanded="True" />
+          </Node>
+        </Node>
+        <Node name="MathTextRecognizer" expanded="True">
+          <Node name="Controllers" expanded="True" />
+        </Node>
+      </Node>
     </ViewMemento>
     <ViewMemento id="ClassPad">
-      <Node expanded="True" />
+      <Node expanded="True">
+        <Node name="MathTextLearner" selected="True" />
+      </Node>
     </ViewMemento>
     <ViewMemento id="MonoDevelop.NUnit.TestPad">
-      <Node selected="True" />
+      <Node expanded="True" selected="True" />
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="Bienvenido" />
+    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextLibrary/Databases/Characteristic/CharacteristicHashDatabase.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>
