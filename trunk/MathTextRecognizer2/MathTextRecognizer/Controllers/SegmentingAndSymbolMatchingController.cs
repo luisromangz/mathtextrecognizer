@@ -120,21 +120,10 @@ namespace MathTextRecognizer.Controllers
 		/// <param name="sender">El objeto que envio el evento.</param>
 		/// <param name="args">Los argumentos del evento.</param>
 		private void OnProcessingStepDone(object sender,
-		                                  ProcessingStepDoneArgs args)
+		                                  StepDoneArgs args)
 		{
-			// Lo que hacemos es notificar a la interfaz de que una determinada 
-			// caracteristica binaria ha tomado un valor, y que caracteres son
-			// similares.
-			MessageLogSentInvoker("{0}: {1}",args.Process.GetType(), args.Result);
-			string similar="";	
-			if(args.SimilarSymbols!=null){
-				foreach(MathSymbol ms in args.SimilarSymbols){
-					similar += String.Format("«{0}»,", ms.Text);
-				}				
-				
-				MessageLogSentInvoker("Caracteres similares: {0}",
-				                 similar.TrimEnd(new char[]{','}));
-			}
+			
+			MessageLogSentInvoker(args.Message);
 		}
 		
 		/// <summary>
@@ -149,7 +138,7 @@ namespace MathTextRecognizer.Controllers
 			
 			MathTextDatabase database = MathTextDatabase.Load(path);
 			
-			database.RecognizingStepDone+=
+			database.StepDone+=
 				new ProcessingStepDoneHandler(OnProcessingStepDone);
 			
 			databases.Add(database);
@@ -184,7 +173,7 @@ namespace MathTextRecognizer.Controllers
 				databases = value;
 				foreach(MathTextDatabase database in value)
 				{
-					database.RecognizingStepDone+=
+					database.StepDone+=
 						new ProcessingStepDoneHandler(OnProcessingStepDone);
 				}
 			}

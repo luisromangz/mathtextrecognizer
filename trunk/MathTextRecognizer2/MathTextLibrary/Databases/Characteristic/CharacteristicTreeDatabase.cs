@@ -107,16 +107,14 @@ namespace MathTextLibrary.Databases.Characteristic
 					node=node.FalseTree;					
 				}	
 				
-				ProcessingStepDoneArgs a = 
-					new ProcessingStepDoneArgs(bc,
-					                           bitmap,
-					                           characteristicValue);
+				StepDoneArgs a = 
+						CreateStepDoneArgs(bc,characteristicValue,null);
 					
-				this.OnLearningStepDoneInvoke(a);
+				this.StepDoneInvoker(a);
 			}	
 			
 			node.AddSymbol(symbol);					
-			OnSymbolLearnedInvoke();
+			SymbolLearnedInvoke();
 		}
 		
 		
@@ -171,23 +169,22 @@ namespace MathTextLibrary.Databases.Characteristic
 						 nodo=nodo.FalseTree;
 				 }		
 				
-				 ProcessingStepDoneArgs args; 
+				 StepDoneArgs args; 
 				 //Avisamos de que hemos dado un paso
 				 if(nodo!=null)
 				 {
-					args =new ProcessingStepDoneArgs(bc,
-					                                 image,
-					                                 characteristicValue,
-					                                 nodo.ChildrenSymbols);
+					args =CreateStepDoneArgs(bc,
+					                         characteristicValue,
+					                         nodo.ChildrenSymbols);
 				 }
 				 else
 				 {
-				 	args =new ProcessingStepDoneArgs(bc,
-					                                 image,
-					                                 characteristicValue);
+				 	args =CreateStepDoneArgs(bc,
+					                         characteristicValue,
+					                         null);
 				 }
 				
-				 RecognizingStepDoneInvoker(args);
+				 StepDoneInvoker(args);
 			}
 			
 			if(exists)
@@ -199,45 +196,10 @@ namespace MathTextLibrary.Databases.Characteristic
 
 		}
 		
-		
-		
-#endregion Métodos públicos
-		
-		
-#region Métodos no públicos
-		
-		/// <summary>
-		/// Calcula la distancia entre dos vectores, usando para ello el numero 
-		/// de diferencias entre los dos vectores.
-		/// </summary>
-		/// <param name="vector1">
-		/// El vector de caracteristicas binarias de un simbolo.
-		/// </param>
-		/// <param name="vector2">
-		/// El vector de caracteristicas binarias de otro simbolo.
-		/// </param>
-		/// <returns>La «distacia» entre los dos vectores.</returns>
-		private int BoolVectorDistance(List<bool> vector1, List<bool> vector2)
-		{
-			int count=0;
-			
-			for(int i=0;i<vector1.Count;i++)
-			{
-				if((bool)vector1[i]!=(bool)vector2[i])
-				{
-					count++;
-				}			
-			}
-			
-			return count;
-		}
-		
-#endregion Métodos no públicos
-		
 		/// <value>
 		/// Contiene el nodo raiz de la base de datos de caracteristicas.
 		/// </value>
-		public virtual CharacteristicNode RootNode 
+		public CharacteristicNode RootNode 
 		{
 			get {
 				return rootNode;
@@ -247,5 +209,46 @@ namespace MathTextLibrary.Databases.Characteristic
 				rootNode = value;
 			}
 		}
+		
+	
+		
+#endregion Métodos públicos
+		
+		/// <summary>
+		/// Helps to create a <c>ProcessingStepDoneArgs</c> instance.
+		/// </summary>
+		/// <param name="bc">
+		/// The binary characteristic used.
+		/// </param>
+		/// <param name="value">
+		/// The value of the binary characteristic applied.
+		/// </param>
+		/// <param name="symilarSymbols">
+		/// Similar simbols found.
+		/// </param>
+		/// <returns>
+		/// The <c>ProcessingStepDoneArgs</c> instance created.
+		/// </returns>
+		private StepDoneArgs CreateStepDoneArgs(IBinaryCharacteristic bc,
+		                                                  bool value,
+		                                                  List<MathSymbol> similarSymbols)
+		{
+			String res = String.Format("{0}: {1}", bc.GetType(), value);
+			string similar="";	
+			if(similarSymbols!=null)
+			{
+				foreach(MathSymbol ms in similarSymbols)
+				{
+					similar += String.Format("«{0}», ", ms.Text);
+				}				
+				
+				res +=String.Format("\nCaracteres similares: {0}", similar.TrimEnd(',',' '));
+			}
+			
+			
+			
+			return new StepDoneArgs(res);
+		}
+		
 	}
 }

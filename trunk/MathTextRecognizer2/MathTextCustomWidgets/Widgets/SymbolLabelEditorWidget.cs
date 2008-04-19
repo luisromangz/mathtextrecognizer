@@ -34,6 +34,7 @@ namespace MathTextCustomWidgets.Widgets
 			InitializeWidgets();
 			
 			
+			
 			this.ShowAll();
 		}
 		
@@ -102,7 +103,15 @@ namespace MathTextCustomWidgets.Widgets
 			// We adjust the wrap so it is mostrly a square.
 			symbolsCBEntry.WrapWidth = 
 				(int) Math.Ceiling(Math.Sqrt(model.IterNChildren())) -1;
+			
+			
 		}
+		
+		protected override void OnFocusGrabbed ()
+		{
+			this.symbolsCBEntry.IsFocus = true;
+		}
+
 		
 #endregion Private methods
 		

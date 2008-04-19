@@ -25,14 +25,9 @@ namespace MathTextLibrary.Databases
 		/// Este evento se lanza para indicar que se completado un paso
 		/// mientras se esta aprendiendo un caracter en la base de datos.
 		/// </summary>
-		public event ProcessingStepDoneHandler LearningStepDone;
+		public event ProcessingStepDoneHandler StepDone;
 		
-		/// <summary>
-		/// Este evento se lanza para indicar que se completado un paso 
-		/// mientras se esta reconociendo un caracter en la base de datos.
-		/// </summary>
-		public event ProcessingStepDoneHandler RecognizingStepDone;
-		
+	
 		/// <summary>
 		/// Este evento se lanza cuando se ha aprendindo un nuevo simbolo en la
 		/// base de datos.
@@ -251,24 +246,23 @@ namespace MathTextLibrary.Databases
 		
 #region Metodos protegidos
 			
-		protected void OnLearningStepDone(object sender, ProcessingStepDoneArgs arg)
+		/// <summary>
+		/// This method relauches the children database's <c>StepDone</c> event.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="arg">
+		/// A <see cref="ProcessingStepDoneArgs"/>
+		/// </param>
+		protected void OnStepDone(object sender, StepDoneArgs arg)
 		{
-			if(LearningStepDone != null)
+			if(StepDone != null)
 			{
-				LearningStepDone(this,arg);
+				StepDone(this,arg);
 			}		
 		}
-		
-		
-		protected void OnRecognizingStepDone(object sender,
-		                                     ProcessingStepDoneArgs arg)
-		{
-			if(RecognizingStepDone != null)
-			{
-				RecognizingStepDone(this,arg);
-			}		
-		}
-		
+	
 		protected void OnSymbolLearned(object sender, EventArgs args)
 		{
 			if(SymbolLearned != null)
@@ -329,11 +323,8 @@ namespace MathTextLibrary.Databases
 		{
 			this.database = database;
 			
-			this.database.LearningStepDone += 
-				new ProcessingStepDoneHandler(OnLearningStepDone);
-			
-			this.database.RecognizingStepDone +=
-				new ProcessingStepDoneHandler(OnRecognizingStepDone);
+			this.database.StepDone += 
+				new ProcessingStepDoneHandler(OnStepDone);
 			
 			this.database.SymbolLearned +=
 				new SymbolLearnedHandler(OnSymbolLearned);
