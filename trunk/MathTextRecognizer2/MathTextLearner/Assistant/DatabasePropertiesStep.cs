@@ -4,6 +4,7 @@
 using System;
 
 using MathTextCustomWidgets.Dialogs;
+using MathTextCustomWidgets.Widgets;
 
 namespace MathTextLearner.Assistant
 {
@@ -15,7 +16,8 @@ namespace MathTextLearner.Assistant
 	public class DatabasePropertiesStep : PanelAssistantStep
 	{
 		
-		private string description;
+		private DatabaseDescritpionEditorWidget descriptionWidget;
+		
 			
 		/// <summary>
 		/// Constructor del panel de propiedades de la base de datos.
@@ -26,6 +28,8 @@ namespace MathTextLearner.Assistant
 		public DatabasePropertiesStep(PanelAssistant parent) :
 			base(parent)
 		{
+			descriptionWidget = new DatabaseDescritpionEditorWidget();
+			SetRootWidget(descriptionWidget);
 		}
 		
 #region Propiedades
@@ -33,11 +37,22 @@ namespace MathTextLearner.Assistant
 		/// <value>
 		/// Contiene la descripcion para la base de datos recien creada.
 		/// </value>
-		public string Description 
+		public string ShortDescription 
 		{
 			get
 			{
-				return description;
+				return descriptionWidget.ShortDescription;
+			}
+		}
+		
+		/// <value>
+		/// Contiene la descripcion larga para la base de datos recien creada.
+		/// </value>
+		public string LongDescription 
+		{
+			get
+			{
+				return descriptionWidget.LongDescription;
 			}
 		}
 #endregion Propiedades
@@ -46,7 +61,16 @@ namespace MathTextLearner.Assistant
 		
 		protected override void ComputeErrors ()
 		{
-			errors = "";
+			if(String.IsNullOrEmpty(ShortDescription))
+			{
+				errors.Add("· No has escrito la descripción corta de la base de datos");
+			}
+			
+			if(String.IsNullOrEmpty(LongDescription))
+			{
+				errors.Add("· No has escrito la descripción larga de la base de datos");
+			}		
+			
 		}
 
 #endregion Metodos no publicos

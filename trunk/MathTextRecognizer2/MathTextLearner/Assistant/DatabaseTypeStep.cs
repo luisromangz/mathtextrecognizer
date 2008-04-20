@@ -159,11 +159,11 @@ namespace MathTextLearner.Assistant
 		/// </summary>
 		protected override void ComputeErrors ()
 		{
-			errors = "";			
+				
 				
 			if(selectedType == null)
 			{
-				errors += "· Debes seleccionar el tipo de la base de datos a crear.";
+				errors.Add("· Debes seleccionar el tipo de la base de datos a crear.");
 			}
 		}
 

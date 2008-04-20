@@ -21,6 +21,7 @@ namespace MathTextLearner.Assistant
 		private DatabaseTypeStep databaseStep;
 		private FileSelectionStep fileStep;
 		private BitmapProcessesStep processesStep;
+		private DatabasePropertiesStep propertiesStep;
 		
 		public NewDatabaseAsisstant(Window parent) : 
 			base(parent, "Asistente de nueva base de datos de caracteres")
@@ -28,10 +29,12 @@ namespace MathTextLearner.Assistant
 			databaseStep = new DatabaseTypeStep(this);
 			fileStep = new FileSelectionStep(this);
 			processesStep = new BitmapProcessesStep(this, fileStep.ImagesStore);
+			propertiesStep = new DatabasePropertiesStep(this);
 			
 			this.AddStep(databaseStep);		
 			this.AddStep(fileStep);
 			this.AddStep(processesStep);
+			this.AddStep(propertiesStep);
 			
 			
 			foreach(PanelAssistantStep panel in Steps)
@@ -49,7 +52,8 @@ namespace MathTextLearner.Assistant
 		/// </value>
 		public MathTextDatabase Database
 		{
-			get{
+			get
+			{
 				return CreateDatabase();
 			}
 		}
@@ -74,6 +78,8 @@ namespace MathTextLearner.Assistant
 			
 			mtd.Database = databaseStep.Database;
 			mtd.Processes = processesStep.Processes;
+			mtd.Description = propertiesStep.LongDescription;
+			mtd.ShortDescription = propertiesStep.ShortDescription;
 			
 			return mtd;
 		}

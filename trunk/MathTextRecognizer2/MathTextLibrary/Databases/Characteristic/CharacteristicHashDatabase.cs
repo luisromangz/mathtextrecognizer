@@ -20,15 +20,15 @@ namespace MathTextLibrary.Databases.Characteristic
 	/// binarias para los caracteres aprendidos, asi como de realizar el añadido
 	/// de nuevos caracteres en la misma y realizar busquedas.
 	/// </summary>
-	[DatabaseTypeInfo("Base de datos basada en el uso de un mapa de características binarias",
-	                  "Arbol de características binarias")]	
-	[XmlInclude(typeof(MathSymbol))]
+	[DatabaseTypeInfo("Base de datos de vectores de características binarias",
+	                  "Vectores de características binarias")]	
+	
 	[XmlInclude(typeof(CharacteristicVector))]
 	public class CharacteristicHashDatabase : DatabaseBase
 	{
 #region Atributos
 		
-		private const float epsilon = 0.15f;  
+		private const float epsilon = 0.05f;  
 			
 		// Lista de caracteristicas binarias que se aplican sobre las imagenes.
 		private static List<IBinaryCharacteristic> characteristics;
@@ -47,8 +47,9 @@ namespace MathTextLibrary.Databases.Characteristic
 			get
 			{
 				List<MathSymbol> res = new List<MathSymbol>();
-				foreach(List<MathSymbol> symbols in symbolsDict.Values)
+				foreach(CharacteristicVector vector in symbolsDict)
 				{
+					List<MathSymbol> symbols = vector.Symbols;
 					foreach(MathSymbol symbol in symbols)
 					{
 						// We add the symbols that aren't already present.
@@ -66,7 +67,7 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// <value>
 		/// Contains the association between value vectors and symbols.
 		/// </value>
-		public Dictionary<CharacteristicVector, List<MathSymbol>> SymbolsDictionary 
+		public List<CharacteristicVector> Vectors
 		{
 			get 
 			{
@@ -120,10 +121,12 @@ namespace MathTextLibrary.Databases.Characteristic
 			
 			Console.WriteLine(vector.ToString());
 			
-			if(symbolsDict.ContainsKey(vector))
+			int position = symbolsDict.IndexOf(vector);
+			if(position >=0)
 			{
+				// The vector exists in the list
 				Console.WriteLine("existe");
-				List<MathSymbol> symbols = symbolsDict[vector];
+				List<MathSymbol> symbols = symbolsDict[position].Symbols;
 				if(symbols.Contains(symbol))
 				{
 					Console.WriteLine("conflicto");
@@ -138,8 +141,8 @@ namespace MathTextLibrary.Databases.Characteristic
 			else
 			{
 				Console.WriteLine("no existe");
-				symbolsDict.Add(vector, 
-				                new List<MathSymbol>(new MathSymbol[]{symbol}));
+				vector.Symbols.Add(symbol);
+				symbolsDict.Add(vector);
 			}
 			
 			return true;
@@ -172,12 +175,12 @@ namespace MathTextLibrary.Databases.Characteristic
 			
 			// We consider a threshold.
 			int threshold = (int)(characteristics.Count * epsilon); 
-			foreach(CharacteristicVector storedVector in symbolsDict.Keys)
+			foreach(CharacteristicVector storedVector in symbolsDict)
 			{
 				// If the distance is below the threshold, we consider it valid.
 				if(vector.Distance(storedVector) <= threshold)
 				{
-					foreach(MathSymbol symbol in symbolsDict[storedVector])
+					foreach(MathSymbol symbol in storedVector.Symbols)
 					{
 						// We don't want duplicated symbols.
 						if(!res.Contains(symbol))
@@ -237,7 +240,7 @@ namespace MathTextLibrary.Databases.Characteristic
 			{
 				characteristicValue = bc.Apply(image);
 				
-				vector.AddValue(characteristicValue);
+				vector.Values.Add(characteristicValue);
 				
 				StepDoneArgs args = 
 					new StepDoneArgs(String.Format("Comprobando {0}: {1}", 

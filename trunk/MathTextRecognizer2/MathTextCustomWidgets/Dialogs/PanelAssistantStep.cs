@@ -1,6 +1,6 @@
 
 using System;
-
+using System.Collections.Generic;
 using Gtk;
 
 namespace MathTextCustomWidgets.Dialogs
@@ -18,7 +18,7 @@ namespace MathTextCustomWidgets.Dialogs
 				
 		private PanelAssistant parent;
 		
-		protected string errors; // Debe ser creada al ejecutar HasErrors();
+		protected List<string> errors; // Debe ser creada al ejecutar HasErrors();
 		
 		#endregion Atributos
 		
@@ -43,7 +43,7 @@ namespace MathTextCustomWidgets.Dialogs
 		/// <value>
 		/// Permite recuperar los errores de validación del paso del asistente.
 		/// </value>
-		public string Errors
+		public List<string> Errors
 		{
 			get
 			{
@@ -58,8 +58,9 @@ namespace MathTextCustomWidgets.Dialogs
 		{
 			get
 			{
+				errors = new List<string>();
 				ComputeErrors();
-				return errors.Length > 0;
+				return errors.Count > 0;
 			}
 		}
 		
