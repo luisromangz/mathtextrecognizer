@@ -30,6 +30,8 @@
     <File name="Config/LearnerConfig.cs" subtype="Code" buildaction="Compile" />
     <File name="defaultConfig" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Assistant/DatabasePropertiesStep.cs" subtype="Code" buildaction="Compile" />
+    <File name="DatabaseDescriptionEditorWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="DatabaseDescriptionEditorDialog.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="glade-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
@@ -40,6 +42,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="nunit.framework, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
     <ProjectReference type="Gac" localcopy="True" refto="nunit.core, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
     <ProjectReference type="Project" localcopy="True" refto="MathTextCustomWidgets" />
+    <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
   <DeployTargets />
 </Project>

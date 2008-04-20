@@ -38,6 +38,7 @@ namespace MathTextLibrary.Databases
 		private DatabaseBase database;
 		
 		private string description;
+		private string shortDescription;
 		
 #endregion Atributos
 		
@@ -145,6 +146,21 @@ namespace MathTextLibrary.Databases
 			get
 			{
 				return database.SymbolsContained;
+			}
+		}
+
+		/// <value>
+		/// Contains a short description for the database.
+		/// </value>
+		public string ShortDescription 
+		{
+			get 
+			{
+				return shortDescription;
+			}
+			set 
+			{
+				shortDescription = value;
 			}
 		}
 	

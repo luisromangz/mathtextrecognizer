@@ -288,11 +288,9 @@ namespace MathTextLearner.Assistant
 		/// </summary>
 		protected override void ComputeErrors ()
 		{
-			errors = "";
-				
 			if(fileStore.IterNChildren() == 0)
 			{
-				errors += "· Tienes que añadir archivos de imagen para ser procesados.\n";
+				errors.Add("· Tienes que añadir archivos de imagen para ser procesados.");
 			}
 		}
 

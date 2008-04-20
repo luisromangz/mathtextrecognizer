@@ -102,6 +102,12 @@ namespace MathTextCustomWidgets.Dialogs
 		
 		#region Metodos publicos
 		
+		/// <summary>
+		/// Adds a new step to the assistant.
+		/// </summary>
+		/// <param name="step">
+		/// The step being added.
+		/// </param>
 		public void AddStep(PanelAssistantStep step)
 		{
 			// Añadimos un paso al asistente.
@@ -138,11 +144,19 @@ namespace MathTextCustomWidgets.Dialogs
 		
 		#region Metodos privados
 		
-		
+	
 		
 		private void OnAcceptButtonClicked(object sender, EventArgs a)
 		{
-			panelAssistant.Respond(ResponseType.Ok);
+			if(steps[steps.Count-1].HasErrors)
+			{
+				ShowErrors(steps.Count-1);
+				panelAssistant.Respond(ResponseType.None);
+			}
+			else
+			{
+				panelAssistant.Respond(ResponseType.Ok);
+			}
 		}
 		
 		private void OnBackButtonClicked(object sender, EventArgs a)
@@ -164,16 +178,17 @@ namespace MathTextCustomWidgets.Dialogs
 			panelAssistant.Respond(ResponseType.None);// sino se cierra el dialogo
 		}
 		
+		/// <summary>
+		/// Selects an assistant's panel by its index.
+		/// </summary>
+		/// <param name="idx">
+		/// The index of the panel to be selected.
+		/// </param>
 		private void SetIndex(int idx)
 		{
 			if(idx > panelIdx && ((PanelAssistantStep)(steps[panelIdx])).HasErrors)
 			{
-				OkDialog.Show(
-					panelAssistant,
-					MessageType.Warning,
-					"Para continuar, soluciona los siguientes problemas:\n\n{0}",
-					(steps[panelIdx] as PanelAssistantStep).Errors);
-					
+				ShowErrors(idx);
 			}
 			else
 			{
@@ -197,6 +212,28 @@ namespace MathTextCustomWidgets.Dialogs
 				}
 			
 			}
+		}
+		
+		/// <summary>
+		/// Shows the error of the given panel.
+		/// </summary>
+		/// <param name="idx">
+		/// The index of the panel.
+		/// </param>
+		private void ShowErrors(int idx)
+		{
+			string errors = "";
+				
+			foreach(string error in steps[panelIdx].Errors)
+			{
+				errors += String.Format("{0}\n",error);
+			}
+			
+			OkDialog.Show(
+				panelAssistant,
+				MessageType.Warning,
+				"Para continuar, soluciona los siguientes problemas:\n\n{0}",
+				errors);
 		}
 		
 		#endregion Metodos privados

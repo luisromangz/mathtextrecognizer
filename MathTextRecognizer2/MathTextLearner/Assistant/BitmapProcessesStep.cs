@@ -562,7 +562,7 @@ namespace MathTextLearner.Assistant
 		/// </summary>
 		protected override void ComputeErrors ()
 		{
-			errors = "";
+			
 		}
 
 		

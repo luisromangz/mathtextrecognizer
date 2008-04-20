@@ -3,6 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
+
+using MathTextLibrary.Symbol;
 
 namespace MathTextLibrary.Databases.Characteristic
 {
@@ -11,9 +14,11 @@ namespace MathTextLibrary.Databases.Characteristic
 	/// This class implements the index used to store the characteristic
 	/// values vectors and compare them.
 	/// </summary>
+	[XmlInclude(typeof(MathSymbol))]
 	public class CharacteristicVector
 	{
 		private List<bool> values;
+		private List<MathSymbol> symbols;
 		
 		/// <summary>
 		/// <c>CharacteristicVector</c>'s constructor.
@@ -21,8 +26,10 @@ namespace MathTextLibrary.Databases.Characteristic
 		public CharacteristicVector()
 		{
 			values = new List<bool>();
+			symbols = new List<MathSymbol>();
 		}
 		
+#region Properties
 		
 		/// <value>
 		/// Contains the vector's length.
@@ -32,6 +39,37 @@ namespace MathTextLibrary.Databases.Characteristic
 			get
 			{
 				return values.Count;
+			}
+		}
+		
+		
+				/// <value>
+		/// Contains the binary values.
+		/// </value>
+		public List<bool> Values
+		{
+			get
+			{
+				return values;
+			}
+			set
+			{
+				values = value;
+			}
+		}
+
+		/// <value>
+		/// Contains the symbols stored in the instance.
+		/// </value>
+		public List<MathSymbol> Symbols 
+		{
+			get 
+			{
+				return symbols;
+			}
+			set
+			{
+				symbols = value;
 			}
 		}
 		
@@ -49,16 +87,9 @@ namespace MathTextLibrary.Databases.Characteristic
 			}
 		}
 		
-		/// <summary>
-		/// Adds a value to the vector.
-		/// </summary>
-		/// <param name="value">
-		/// A <see cref="System.Boolean"/>
-		/// </param>
-		public void AddValue(bool value)
-		{
-			values.Add(value);
-		}
+#endregion Properties
+		
+#region Public methods
 		
 		/// <summary>
 		/// Calculates the distance between <c>CharacteristicVector</c>s
@@ -150,20 +181,7 @@ namespace MathTextLibrary.Databases.Characteristic
 			return res;
 		}
 		
-		/// <value>
-		/// Contains the binary values.
-		/// </value>
-		public List<bool> Values
-		{
-			get
-			{
-				return values;
-			}
-			set
-			{
-				values = value;
-			}
-		}
+#endregion Public methods
 
 
 	}

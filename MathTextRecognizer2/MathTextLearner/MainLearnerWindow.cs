@@ -54,6 +54,9 @@ namespace MathTextLearner
 		private MenuItem menuSaveAs;
 		
 		[WidgetAttribute]
+		private MenuItem menuSave;
+		
+		[WidgetAttribute]
 		private MenuItem menuOpen;
 		
 		[WidgetAttribute]
@@ -61,6 +64,9 @@ namespace MathTextLearner
 		
 		[WidgetAttribute]
 		private ToolButton toolNewDatabase;
+		
+		[WidgetAttribute]
+		private ToolButton toolSave;
 		
 		[WidgetAttribute]
 		private Button btnLearn;
@@ -105,6 +111,9 @@ namespace MathTextLearner
 		private Button nextImageBtn;
 		
 		[WidgetAttribute]
+		private Button editPropertiesBtn;
+		
+		[WidgetAttribute]
 		private HBox imagesHB;
 		
 		[WidgetAttribute]
@@ -142,6 +151,7 @@ namespace MathTextLearner
 		private const string title="Aprendedor de caracteres matemáticos";
 		
 		private bool databaseModified;	
+		private string databasePath;
 		
 		// Indica si el proceso de reconocimiento debe realizarse paso a paso
 		private bool stepByStep; 
@@ -289,8 +299,7 @@ namespace MathTextLearner
 			bool learned = database.Learn(mtb, symbol);
 			if(learned)
 			{
-				databaseModified=true;
-				SetTitle(null,true);
+				SetModified(true);
 				Application.Invoke(OnSymbolLearnedThread);
 			}
 			else
@@ -440,6 +449,39 @@ namespace MathTextLearner
 			nextButtonsHB.Sensitive = false;
 			
 			learningThread.Resume();
+		}
+		
+	
+		
+		/// <summary>
+		/// Handles the event launched when the database properties' edit button
+		/// is clicked.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="arg">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnEditPropertiesBtnClicked(object sender, EventArgs arg)
+		{
+			DatabaseDescritpionEditorDialog dialog = 
+				new DatabaseDescritpionEditorDialog(this.mainWindow);
+			
+			dialog.ShortDescription = database.ShortDescription;
+			dialog.LongDescription = database.Description;
+			
+			ResponseType res = dialog.Show();
+			
+			if(res == ResponseType.Ok)
+			{
+				database.ShortDescription = dialog.ShortDescription;
+				database.Description = dialog.LongDescription;
+				
+				SetModified(true);
+			}
+			
+			dialog.Destroy();
 		}
 		
 		/// <summary>
@@ -617,7 +659,7 @@ namespace MathTextLearner
 		/// </summary>
 		private void OnMenuSaveAsClicked(object sender, EventArgs arg)
 		{
-			SaveDatabase();
+			SaveDatabaseAs();
 		}
 		
 		
@@ -642,7 +684,8 @@ namespace MathTextLearner
 				
 				nextImageBtn.Sensitive = true;
 				
-				SetTitle("Nueva base de datos",false);
+				SetTitle("Nueva base de datos");
+				SetModified(false);
 				LogLine("¡Nueva base de datos creada con éxito!");
 			}
 			else
@@ -689,20 +732,62 @@ namespace MathTextLearner
 					
 		}
 		
+			/// <summary>
+		/// Handles the events launched when the save menu item or tool are 
+		/// clicked.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="arg">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnSaveDatabaseClicked(object sender, EventArgs arg)
+		{
+			ResponseType res = 
+				ConfirmDialog.Show(mainWindow, 
+				                   "¿Realmente quieres guardar "
+				                   +"los cambios de la base de datos?");
+			
+			if(res == ResponseType.Yes)
+			{
+				if(databasePath != null)
+				{
+					// We save the database in the same path as it was loaded.
+					database.Save(databasePath);
+					
+					SetModified(false);
+					
+					OkDialog.Show(
+						mainWindow,
+						MessageType.Info,
+						"Base de datos guardada correctamente en «{0}»",
+						Path.GetFileName(databasePath));
+						
+					LogLine(
+						"¡Base de datos guardada con éxito en «{0}»!",
+						Path.GetFileName(databasePath));
+				}
+				else
+				{
+					// If it is a new database, we make use the save as method.
+					SaveDatabaseAs();
+				}
+			}
+			
+		}
+		
 	
 		private void OnSymbolLearnedThread(object sender,EventArgs arg)
 		{
 			ResetWidgets();
 			string msg="!Símbolo aprendido con éxito!";
 			
-			SetTitle(null,true);
+			SetModified(true);
 				
 			LogLine(msg);	
 			OkDialog.Show(mainWindow, MessageType.Info, msg);
 			
-			databaseModified = true;
-			menuSaveAs.Sensitive = true;
-			toolSaveAs.Sensitive = true;
 			
 			PrepareForNewImage();
 			
@@ -766,10 +851,11 @@ namespace MathTextLearner
 				
 				SetDatabase(database);				
 					
-				this.SetTitle(file,false);
+				this.SetTitle(file);
+				databaseModified=false;
 				
 				LogLine("¡Base de datos «"+ file+ "» cargada correctamente!");
-				databaseModified=false;
+				
 			}
 		}
 		
@@ -793,7 +879,7 @@ namespace MathTextLearner
 			
 		}
 		
-		private void SaveDatabase()
+		private void SaveDatabaseAs()
 		{
 			string file;
 			if (DatabaseSaveDialog.Show(mainWindow,out file)
@@ -814,7 +900,7 @@ namespace MathTextLearner
 				if(File.Exists(file)
 					&& ConfirmDialog.Show(
 						mainWindow,
-						"El archivo «{0}» ya existe. ¿Desea sobreescibirlo?",
+						"El archivo «{0}» ya existe. ¿Deseas sobreescibirlo?",
 						Path.GetFileName(file)) 
 							== ResponseType.No)
 						
@@ -837,11 +923,9 @@ namespace MathTextLearner
 						"¡Base de datos guardada con éxito en «{0}»!",
 						Path.GetFileName(file));
 						
-					databaseModified=false;
-					menuSaveAs.Sensitive = false;
-					toolSaveAs.Sensitive = false;
+				
 					
-					SetTitle(file,false);	
+					SetModified(false);	
 				}
 			}
 		}
@@ -858,8 +942,8 @@ namespace MathTextLearner
 			mtb = null;
 			
 
-			toolSaveAs.Sensitive = false;
-			menuSaveAs.Sensitive = false;
+			toolSaveAs.Sensitive = true;
+			menuSaveAs.Sensitive = true;
 			
 			imagesHB.Sensitive = true;			
 			imagesVB.Sensitive = true;
@@ -869,37 +953,56 @@ namespace MathTextLearner
 			hboxSymbolWidgets.Sensitive = false;
 			nextButtonsHB.Sensitive =false;
 			
+			buttonsHB.Sensitive = true;
+			editPropertiesBtn.Sensitive = true;
+			
 			symbolLabelEditor.Label = "";
 		}
 		
+		/// <summary>
+		/// Sets the database modified flag and modifies the title acordingly.
+		/// </summary>
+		/// <param name="value">
+		/// A <see cref="System.Boolean"/>
+		/// </param>
+		private void SetModified(bool value)
+		{
+			databaseModified = value;
+			string modifiedFlag = " (modificada)";
+			
+			SetTitle(databasePath);
+			if(value)
+			{
+				this.mainWindow.Title = this.mainWindow.Title + modifiedFlag;
+			}
+			
+			toolSave.Sensitive = value;
+			menuSave.Sensitive = value;
+		}
+
 		/// <summary>
 		/// Este método permite cambiar el título de la venta de forma sencilla.
 		/// </summary>
 		/// <param name="databaseName">
 		/// El nombre de la base de datos que se está editando.
 		/// </param>
-		/// <param name="modified">
-		/// Si la base de datos ha sido modificada o no.
-		/// </param>
-		private void SetTitle(string databaseName,bool modified)
+		private void SetTitle(string database)
 		{
-			if(databaseName!=null)
+			databasePath = database;
+			
+			if(database!=null)
 			{
 			    // Si tenemos base de datos, ponemos su nombre en el titulo.			
 			
-				mainWindow.Title=
-					title
-						+ " - "
-						+ Path.GetFileName(databaseName) 
-						+(modified?" (Modificada)":"");
+				mainWindow.Title= String.Format("{0} - {1}",
+				                                title,
+				                                Path.GetFileName(database));
 			}
 			else
 			{
-				mainWindow.Title=
-					title
-						+" - "
-						+ "Nueva base de datos " 
-						+(modified?" (Modificada)":"");
+				mainWindow.Title= String.Format("{0} - {1}",
+				                                title,
+				                                "Nueva base de datos");
 			}
 		}
 		
@@ -919,7 +1022,7 @@ namespace MathTextLearner
 					
 				if(result == ResponseType.Yes)
 				{
-					SaveDatabase();
+					SaveDatabaseAs();
 				}
 			}
 		}	
