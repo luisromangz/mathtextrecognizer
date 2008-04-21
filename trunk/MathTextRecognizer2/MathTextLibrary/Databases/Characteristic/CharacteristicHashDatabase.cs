@@ -119,28 +119,24 @@ namespace MathTextLibrary.Databases.Characteristic
 			FloatBitmap processedBitmap = bitmap.LastProcessedImage;
 			CharacteristicVector vector = CreateVector(processedBitmap);
 			
-			Console.WriteLine(vector.ToString());
 			
 			int position = symbolsDict.IndexOf(vector);
 			if(position >=0)
 			{
 				// The vector exists in the list
-				Console.WriteLine("existe");
+			
 				List<MathSymbol> symbols = symbolsDict[position].Symbols;
 				if(symbols.Contains(symbol))
 				{
-					Console.WriteLine("conflicto");
 					return false;
 				}
 				else
 				{
-					Console.WriteLine("no conflicto");
 					symbols.Add(symbol);
 				}
 			}
 			else
 			{
-				Console.WriteLine("no existe");
 				vector.Symbols.Add(symbol);
 				symbolsDict.Add(vector);
 			}

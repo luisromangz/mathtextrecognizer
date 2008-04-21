@@ -217,7 +217,7 @@ namespace MathTextRecognizer.Controllers
 			foreach(MathTextDatabase database in databases)
 			{
 				MessageLogSentInvoker("---------- «{0}» ------------",
-				                      database.Description);
+				                      database.ShortDescription);
 				                      
 				
 				bitmap.ProcessImage(database.Processes);
