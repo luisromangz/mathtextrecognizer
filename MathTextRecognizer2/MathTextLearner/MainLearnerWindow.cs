@@ -122,6 +122,12 @@ namespace MathTextLearner
 		[WidgetAttribute]
 		private HBox messageInfoHB;
 		
+		[WidgetAttribute]
+		private Label databaseDescriptionLabel;
+		
+		[WidgetAttribute]
+		private Label databaseTypeLabel;
+		
 #endregion Glade widgets	
 		
 #region Otros widgets
@@ -135,6 +141,9 @@ namespace MathTextLearner
 		private ImageArea imageAreaOriginal;
 		private ImageArea imageAreaProcessed;
 		
+		
+		private SymbolLabelEditorWidget symbolLabelEditor;
+		
 #endregion Otros widgets
 		
 #region Otros atributos
@@ -143,8 +152,6 @@ namespace MathTextLearner
 		
 		private MathTextBitmap mtb;
 		private MathSymbol symbol;
-		
-		private SymbolLabelEditorWidget symbolLabelEditor;
 		
 		private Thread learningThread;
 		
@@ -155,6 +162,8 @@ namespace MathTextLearner
 		
 		// Indica si el proceso de reconocimiento debe realizarse paso a paso
 		private bool stepByStep; 
+		
+		private Tooltips labelTooltips;
 		
 		
 #endregion Otros atributos
@@ -242,6 +251,7 @@ namespace MathTextLearner
 			conflicts = 0;
 			
 			buttonsHB.Sensitive = false;
+			nextImageBtn.Sensitive = false;
 			
 			imagesVB.Sensitive = true;
 		}
@@ -283,6 +293,8 @@ namespace MathTextLearner
 			symbolLabelEditor = new SymbolLabelEditorWidget();
 			
 			symbolEditorPlaceholder.Add(symbolLabelEditor);
+			
+			labelTooltips = new Tooltips();
 				
 			mainWindow.ShowAll();			
 		}		
@@ -377,6 +389,8 @@ namespace MathTextLearner
 				
 				LogLine("¡Archivo de imagen «{0}» añadido correctamente!",
 				        filename);
+				
+				nextImageBtn.Sensitive = true;
 			}
 		}
 		
@@ -728,7 +742,10 @@ namespace MathTextLearner
 			imagesStore.Remove(ref iter);
 			
 			if(imagesStore.IterNChildren() == 0)
+			{
 				buttonsHB.Sensitive = false;
+				nextImageBtn.Sensitive=false;
+			}
 					
 		}
 		
@@ -930,6 +947,13 @@ namespace MathTextLearner
 			}
 		}
 		
+		/// <summary>
+		/// Sets the database the symbols will be learned into, and makes the
+		/// proper interface elementents (un)sensitive.
+		/// </summary>
+		/// <param name="database">
+		/// A <see cref="MathTextDatabase"/>
+		/// </param>
 		private void SetDatabase(MathTextDatabase database)
 		{
 			this.database = database; 
@@ -957,6 +981,26 @@ namespace MathTextLearner
 			editPropertiesBtn.Sensitive = true;
 			
 			symbolLabelEditor.Label = "";
+			
+			SetDatabaseInfo();
+			
+			
+		}
+		
+		private void SetDatabaseInfo()
+		{
+			databaseDescriptionLabel.Text = database.ShortDescription;
+			
+			labelTooltips.SetTip(databaseDescriptionLabel, 
+			                     database.Description, 
+			                     "longer description");
+			
+			
+			databaseTypeLabel.Text = database.DatabaseTypeShortDescription;
+			
+			labelTooltips.SetTip(databaseTypeLabel, 
+			                     database.DatabaseTypeDescription, 
+			                     "longer description");
 		}
 		
 		/// <summary>
@@ -1005,6 +1049,8 @@ namespace MathTextLearner
 				                                "Nueva base de datos");
 			}
 		}
+		
+		
 		
 		/// <summary>
 		/// Metodo para facilitar el mostrar el cuadro de dialogo de confirmacion 
