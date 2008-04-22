@@ -340,18 +340,29 @@ namespace MathTextRecognizer
 			{			
 				// Cargamos la imagen desde disco
 					
-				segmentingAndMatchingStepWidget.SetInitialImage(filename);
-				
-				this.mainWindow.Title = 
-					title + System.IO.Path.GetFileName(filename);
-			
-				recognizementFinished=false;
-				toolLatex.Sensitive=false;
-				menuMakeOutput.Sensitive=false;
-				
-				ClearLog();
+				LoadImage(filename);
 				
 			}
+		}
+		
+		/// <summary>
+		/// Loads an image as the image to be processed.
+		/// </summary>
+		/// <param name="filename">
+		/// The image's path.
+		/// </param>
+		private void LoadImage(string filename)
+		{
+			segmentingAndMatchingStepWidget.SetInitialImage(filename);
+				
+			this.mainWindow.Title = 
+				title + System.IO.Path.GetFileName(filename);
+		
+			recognizementFinished=false;
+			toolLatex.Sensitive=false;
+			menuMakeOutput.Sensitive=false;
+			
+			ClearLog();
 		}
 		
 		

@@ -390,7 +390,6 @@ namespace MathTextLearner
 				LogLine("¡Archivo de imagen «{0}» añadido correctamente!",
 				        filename);
 				
-				nextImageBtn.Sensitive = true;
 			}
 		}
 		
@@ -546,7 +545,7 @@ namespace MathTextLearner
 		/// </param>
 		private void OnImagesStoreRowInserted(object s, RowInsertedArgs a)
 		{
-			buttonsHB.Sensitive = imagesStore.IterNChildren() > 0;
+			nextImageBtn.Sensitive = true;
 		}
 		
 		/// <summary>
@@ -560,7 +559,7 @@ namespace MathTextLearner
 		/// </param>
 		private void OnImagesStoreRowDeleted(object s, RowDeletedArgs a)
 		{
-			buttonsHB.Sensitive = imagesStore.IterNChildren() > 0;
+			nextImageBtn.Sensitive = imagesStore.IterNChildren() > 0;
 		}
 		
 		private void OnImagesIVSelectionChanged(object s, EventArgs a)
@@ -739,14 +738,7 @@ namespace MathTextLearner
 			TreeIter iter;
 			imagesStore.GetIter(out iter,imagesIV.SelectedItems[0]);
 			
-			imagesStore.Remove(ref iter);
-			
-			if(imagesStore.IterNChildren() == 0)
-			{
-				buttonsHB.Sensitive = false;
-				nextImageBtn.Sensitive=false;
-			}
-					
+			imagesStore.Remove(ref iter);					
 		}
 		
 			/// <summary>

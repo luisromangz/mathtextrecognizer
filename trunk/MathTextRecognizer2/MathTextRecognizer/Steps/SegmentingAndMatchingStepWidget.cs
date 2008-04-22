@@ -217,10 +217,30 @@ namespace MathTextRecognizer.Steps
 		/// <param name="mtb">La subimagen que estamos tratando.</param>
 		private void MarkImage(MathTextBitmap mtb)
 		{
-			// TODO MarkImage Gdk style!
-			Pixbuf originalMarked= imageOriginal.Copy();			
+			
+			Pixbuf originalMarked= imageOriginal.Copy();	
+			
+			// We tint the copy in red.
+			originalMarked = 
+				originalMarked.CompositeColorSimple(originalMarked.Width,
+				                                    originalMarked.Height,
+				                                    InterpType.Bilinear,
+				                                    100,1,
+				                                    0xFF0000,0xFF0000);
+				
+			// Over the red tinted copy, we place the piece we want to be
+			// normal.
+			imageOriginal.CopyArea(mtb.Position.X,
+			                       mtb.Position.Y,
+			                       mtb.Width,
+			                       mtb.Height,
+			                       originalMarked,
+			                       mtb.Position.X,
+			                       mtb.Position.Y);
+		
 			
 			imageAreaOriginal.Image=originalMarked;
+			
 		}
 		
 		/// <summary>

@@ -1,43 +1,22 @@
-﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
+﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.sln">
   <Files>
-    <File name="MathTextLearner/Assistant/DatabasePropertiesStep.cs" line="29" column="14" />
-    <File name="MathTextCustomWidgets/Dialogs/PanelAssistant.cs" line="236" column="13" />
-    <File name="MathTextLearner/MainLearnerWindow.cs" line="923" column="8" />
-    <File name="MathTextRecognizer/Controllers/SegmentingAndSymbolMatchingController.cs" line="220" column="52" />
+    <File name="Bienvenido" />
+    <File name="MathTextLearner/MainLearnerWindow.cs" line="746" column="1" />
+    <File name="MathTextLibrary/Databases/Characteristic/CharacteristicHashDatabase.cs" line="140" column="1" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
-      <Node expanded="True">
-        <Node name="MathTextCustomWidgets" expanded="True">
-          <Node name="Dialogs" expanded="True" />
-        </Node>
-        <Node name="MathTextLearner" expanded="True">
-          <Node name="Resources" expanded="True" />
-          <Node name="Assistant" expanded="True" />
-          <Node name="Config" expanded="True" />
-        </Node>
-        <Node name="MathTextLibrary" expanded="True">
-          <Node name="Databases" expanded="True">
-            <Node name="Characteristic" expanded="True" />
-          </Node>
-          <Node name="Tests" expanded="True" />
-        </Node>
-        <Node name="MathTextRecognizer" expanded="True">
-          <Node name="Controllers" expanded="True">
-            <Node name="SegmentingAndSymbolMatchingController.cs" selected="True" />
-          </Node>
-        </Node>
-      </Node>
+      <Node expanded="True" />
     </ViewMemento>
     <ViewMemento id="ClassPad">
       <Node expanded="True" />
     </ViewMemento>
     <ViewMemento id="MonoDevelop.NUnit.TestPad">
-      <Node expanded="True" />
+      <Node />
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer/Controllers/SegmentingAndSymbolMatchingController.cs" />
+    <Property key="ActiveWindow" value="Bienvenido" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>
