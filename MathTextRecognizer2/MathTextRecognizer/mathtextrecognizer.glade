@@ -808,7 +808,7 @@ MathML</property>
                 <property name="height_request">200</property>
                 <property name="visible">True</property>
                 <property name="has_tooltip">True</property>
-                <property name="tooltip_text">Muestra la imagen de partida</property>
+                <property name="tooltip_text">Muestra la imagen de partida, con el nodo seleccionado resaltado</property>
                 <property name="border_width">5</property>
                 <property name="label_xalign">0</property>
                 <property name="shadow_type">GTK_SHADOW_IN</property>
@@ -1135,47 +1135,69 @@ MathML</property>
         <property name="visible">True</property>
         <property name="spacing">2</property>
         <child>
+          <widget class="GtkLabel" id="imageNameLabel">
+            <property name="visible">True</property>
+            <property name="xalign">0</property>
+            <property name="label" translatable="yes">Aquí puedes editar la etiqueta del nodo «{0}».</property>
+            <property name="use_markup">True</property>
+            <property name="justify">GTK_JUSTIFY_FILL</property>
+            <property name="wrap">True</property>
+            <property name="wrap_mode">PANGO_WRAP_WORD_CHAR</property>
+            <property name="width_chars">38</property>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="padding">5</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
           <widget class="GtkHBox" id="hbox9">
             <property name="visible">True</property>
-            <property name="spacing">4</property>
+            <property name="spacing">10</property>
             <child>
-              <widget class="GtkFrame" id="frame1">
-                <property name="width_request">80</property>
-                <property name="height_request">80</property>
+              <widget class="GtkAlignment" id="alignment12">
                 <property name="visible">True</property>
-                <property name="label_xalign">0</property>
-                <property name="shadow_type">GTK_SHADOW_IN</property>
+                <property name="yalign">0</property>
+                <property name="xscale">0</property>
+                <property name="yscale">0</property>
                 <child>
-                  <widget class="GtkAlignment" id="imagePlaceholder">
-                    <property name="width_request">80</property>
-                    <property name="height_request">80</property>
+                  <widget class="GtkFrame" id="frame1">
                     <property name="visible">True</property>
+                    <property name="label_xalign">0</property>
+                    <property name="shadow_type">GTK_SHADOW_IN</property>
                     <child>
-                      <placeholder/>
+                      <widget class="GtkAlignment" id="imagePlaceholder">
+                        <property name="width_request">80</property>
+                        <property name="height_request">80</property>
+                        <property name="visible">True</property>
+                        <child>
+                          <placeholder/>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="GtkLabel" id="label18">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Imagen</property>
+                      </widget>
+                      <packing>
+                        <property name="type">label_item</property>
+                      </packing>
                     </child>
                   </widget>
                 </child>
-                <child>
-                  <widget class="GtkLabel" id="label18">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">Imagen</property>
-                    <property name="use_markup">True</property>
-                  </widget>
-                  <packing>
-                    <property name="type">label_item</property>
-                  </packing>
-                </child>
               </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+              </packing>
             </child>
             <child>
               <widget class="GtkVBox" id="symbolEditorPlaceholder">
                 <property name="visible">True</property>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
+                <property name="homogeneous">True</property>
               </widget>
               <packing>
                 <property name="position">1</property>
@@ -1183,7 +1205,7 @@ MathML</property>
             </child>
           </widget>
           <packing>
-            <property name="position">1</property>
+            <property name="position">2</property>
           </packing>
         </child>
         <child internal-child="action_area">

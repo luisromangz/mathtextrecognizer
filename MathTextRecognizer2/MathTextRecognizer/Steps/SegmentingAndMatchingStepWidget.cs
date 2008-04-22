@@ -128,7 +128,7 @@ namespace MathTextRecognizer.Steps
 			controller.BitmapProcessedByDatabase +=
 			    new BitmapProcessedHandler(OnBitmapProcessedByDatabase);
 			
-			InitializeChildren();
+			InitializeWidgets();
 		}
 
 		
@@ -169,7 +169,7 @@ namespace MathTextRecognizer.Steps
 		
 #region Metodos privados
 		
-		protected void InitializeChildren()
+		protected void InitializeWidgets()
 		{
 			store = new NodeStore(typeof(SegmentedNode));
 			
@@ -186,6 +186,9 @@ namespace MathTextRecognizer.Steps
 			treeview.AppendColumn ("Etiqueta", cellRenderer, "text", 1);
 			treeview.AppendColumn ("Posición", new CellRendererText (), "text", 2);
 			scrolledtree.Add(treeview);
+			
+			treeview.Columns[1].Sizing = TreeViewColumnSizing.Autosize;
+			
 			
 			// Asignamos el evento para cuando se produzca la selección de un
 			// nodo en el árbol.
@@ -224,7 +227,7 @@ namespace MathTextRecognizer.Steps
 				                                    originalMarked.Height,
 				                                    InterpType.Bilinear,
 				                                    100,1,
-				                                    0xFF0000,0xFF0000);
+				                                    0xAAAAAA,0xAAAAAA);
 				
 			// Over the red tinted copy, we place the piece we want to be
 			// normal.
@@ -249,6 +252,8 @@ namespace MathTextRecognizer.Steps
 		{			
 			controller.Databases = this.Databases;
 			controller.Next(stepMode);
+			
+			this.MainWindow.ProcessItemsSenstive=false;
 		}
 			
 		
@@ -322,8 +327,9 @@ namespace MathTextRecognizer.Steps
 		/// </summary>
 		private void OnBtnTilEndClicked(object sender, EventArgs arg)
 		{
+			
+			LogAreaExpanded=false;
 			alignNextButtons.Sensitive=false;
-			LogAreaExpanded=false;alignNextButtons.Sensitive=false;
 			NextStep(ControllerStepMode.UntilEnd);
 		}
 		
@@ -344,7 +350,8 @@ namespace MathTextRecognizer.Steps
 		
 		private void OnNodeBeingProcessedThread(object sender, EventArgs args)
 		{
-			alignNextButtons.Sensitive=true;
+			if(controller.StepMode != ControllerStepMode.UntilEnd)
+				alignNextButtons.Sensitive=true;
 		}
 		
 		
@@ -428,7 +435,7 @@ namespace MathTextRecognizer.Steps
 		    Log("¡Reconocimiento terminado!");
 			
 			OkDialog.Show(
-				Window,
+				MainWindow.Window,
 				MessageType.Info,
 			    "¡Proceso de reconocimiento terminado!\n"
 			    + "Ahora puede revisar el resultado.");
@@ -491,7 +498,7 @@ namespace MathTextRecognizer.Steps
 		private void OnEditLabeItemActivate(object sender, EventArgs a)
 		{
 			Dialogs.SymbolLabelEditorDialog dialog = 
-				new Dialogs.SymbolLabelEditorDialog(Window,
+				new Dialogs.SymbolLabelEditorDialog(MainWindow.Window,
 				                                    selectedNode);
 			
 			if(dialog.Show()== ResponseType.Ok)
@@ -500,7 +507,7 @@ namespace MathTextRecognizer.Steps
 				if(selectedNode.ChildCount > 0)
 				{
 					ResponseType res = 
-						ConfirmDialog.Show(Window,
+						ConfirmDialog.Show(MainWindow.Window,
 						                   "Este nodo tiene hijos, y se estableces "
 						                   + "una etiqueta se eliminarán, ¿quieres"
 						                   +" continuar?");
@@ -531,6 +538,7 @@ namespace MathTextRecognizer.Steps
 			
 			
 			dialog.Destroy();
+			treeview.ColumnsAutosize();
 			
 		}
 		
@@ -551,14 +559,14 @@ namespace MathTextRecognizer.Steps
 		private void OnSaveImageItemActivate(object sender, EventArgs args)
 		{
 			ResponseType res= 
-						ConfirmDialog.Show(Window,
+						ConfirmDialog.Show(MainWindow.Window,
 						                   "¿Deseas guardar la imagen del nodo «{0}»?",
 						                   selectedNode.Name);
 					
 			if (res == ResponseType.Yes)
 			{
 				string filename="";
-				res = ImageSaveDialog.Show(Window,out filename);
+				res = ImageSaveDialog.Show(MainWindow.Window, out filename);
 				
 				if(res == ResponseType.Ok)
 				{
@@ -588,6 +596,8 @@ namespace MathTextRecognizer.Steps
 			recognizementFinished = true;
 			
 			imageAreaOriginal.Image = null;
+			
+			this.MainWindow.ProcessItemsSenstive = true;
 			
 		}
 		

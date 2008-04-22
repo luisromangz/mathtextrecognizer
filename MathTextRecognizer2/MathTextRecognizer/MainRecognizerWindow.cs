@@ -163,11 +163,31 @@ namespace MathTextRecognizer
 		/// <value>
 		/// Contiene la ventana de la aplicacion.
 		/// </value>
-		public Gtk.Window MainWindow 
+		public Gtk.Window Window 
 		{
 			get 
 			{
 				return mainWindow;
+			}
+		}
+		
+		/// <value>
+		/// Contains a boolean value indicating if some elements of the gui
+		/// which shouldn't be clicked while a process is running are sensitive.
+		/// </value>
+		public bool ProcessItemsSenstive
+		{
+			get
+			{
+				return toolDatabase.Sensitive;
+			}
+			set
+			{
+				toolDatabase.Sensitive =value;
+				toolDatabase.Sensitive =value;
+				
+				menuLoadImage.Sensitive =value;
+				menuOpenDatabaseManager.Sensitive =value;
 			}
 		}
 		
@@ -191,6 +211,8 @@ namespace MathTextRecognizer
 		{			
 			logView.LogLine(message, args);
 		}
+		
+	
 		
 #endregion Metodos publicos
 		

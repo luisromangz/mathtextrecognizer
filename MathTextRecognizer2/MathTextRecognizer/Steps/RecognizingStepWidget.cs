@@ -32,13 +32,13 @@ namespace MathTextRecognizer.Steps
 		}
 
 		/// <value>
-		/// Contains the app's main window's <c>Window</c> instance.
+		/// Contains the app's main window's <c>MainWindow</c> instance.
 		/// </value>
-		protected Gtk.Window Window
+		protected MainRecognizerWindow MainWindow
 		{
 			get
 			{
-				return mainWindow.MainWindow;
+				return mainWindow;
 			}
 		}
 		
