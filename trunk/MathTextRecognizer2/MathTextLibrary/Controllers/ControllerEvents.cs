@@ -24,14 +24,14 @@ namespace MathTextLibrary.Controllers
 	/// Delegado para los manejadores de los eventos enviados por los controladores 
 	/// cuando desean notificar que han comenzado a procesar una nueva imagen.
 	/// </summary>
-	public delegate void BitmapBeingRecognizedHandler(object sender,
-	                                                  BitmapBeingRecognizedArgs arg);
+	public delegate void BitmapProcessedHandler(object sender,
+	                                            BitmapProcessedArgs arg);
 
 	/// <summary>
 	/// Esta clase encapsula los argumentos enviados en los eventos manejados por
 	/// BitmapBeingRecognizedHandler.
 	/// </summary>
-	public class BitmapBeingRecognizedArgs : EventArgs
+	public class BitmapProcessedArgs : EventArgs
 	{
 		private MathTextBitmap b;
 		
@@ -39,7 +39,7 @@ namespace MathTextLibrary.Controllers
 		/// Constructor de la clase.
 		/// </summary>
 		/// <param name="bitmap">La imagen que se ha comenzado a reconocer.</param>
-		public BitmapBeingRecognizedArgs(MathTextBitmap bitmap)
+		public BitmapProcessedArgs(MathTextBitmap bitmap)
 			:base()
 	    {
 			b=bitmap;

@@ -88,11 +88,7 @@ namespace MathTextRecognizer.Steps
 		
 		private MathTextBitmap rootBitmap;
 		
-		private Thread recognizingThread;
-		
 		private bool recognizementFinished;
-		
-		private ControllerStepMode stepMode;
 		
 		// Needed by the popup actions' handler methods
 		private SegmentedNode selectedNode;
@@ -120,13 +116,17 @@ namespace MathTextRecognizer.Steps
 			
 			// Asignamos los eventos que indican que se han alcanzado hitos
 			// en el reconocimiento de un cáracter.
-			controller.MessageLogSent += new MessageLogSentHandler(OnMessageLog);
+			controller.MessageLogSent += 
+				new MessageLogSentHandler(OnMessageLog);
+			
+			controller.NodeBeingProcessed += 
+				new EventHandler(OnNodeBeingProcessed);
 			    		
-			controller.RecognizementProcessFinished +=
+			controller.ProcessFinished +=
 			    new ProcessFinishedHandler(OnRecognizeProcessFinished);
 			    
-			controller.BitmapBeingRecognized +=
-			    new BitmapBeingRecognizedHandler(OnBitmapBeingRecognized);
+			controller.BitmapProcessedByDatabase +=
+			    new BitmapProcessedHandler(OnBitmapProcessedByDatabase);
 			
 			InitializeChildren();
 		}
@@ -162,8 +162,6 @@ namespace MathTextRecognizer.Steps
 			currentNode = null;
 			
 			Log("¡Archivo de imagen «{0}» cargado correctamente!", filename);
-
-			
 			
 			alignNextButtons.Sensitive=true;
 		}
@@ -247,18 +245,10 @@ namespace MathTextRecognizer.Steps
 		/// Metodo que se invocara para indicar al controlador que deseamos
 		/// dar un nuevo paso de procesado.
 		/// </summary>
-		private void NextStep()
+		private void NextStep(ControllerStepMode stepMode)
 		{			
-			
-			if(recognizingThread == null 
-			   || recognizingThread.ThreadState == ThreadState.Stopped)
-			{
-				recognizingThread =
-					new Thread(new ThreadStart(controller.RecognizeProcess));
-				recognizingThread.Start();
-				
-				controller.Databases = Databases;
-			}
+			controller.Databases = this.Databases;
+			controller.Next(stepMode);
 		}
 			
 		
@@ -268,13 +258,13 @@ namespace MathTextRecognizer.Steps
 		/// </summary>
 		/// <param name="sender">El objeto que provoca el evento.</param>
 		/// <param name="arg">El argumento del evento.</param>
-		private void OnBitmapBeingRecognized(object sender, 
-		                                     BitmapBeingRecognizedArgs arg)
+		private void OnBitmapProcessedByDatabase(object sender, 
+		                                         BitmapProcessedArgs arg)
 		{
-			Gtk.Application.Invoke(sender, arg, OnBitmapBeingRecognizedThreadSafe);		
+			Gtk.Application.Invoke(sender, arg, OnBitmapProcessedByDatabaseThread);
 		}
 		
-		private void OnBitmapBeingRecognizedThreadSafe(object sender, EventArgs a)
+		private void OnBitmapProcessedByDatabaseThread(object sender, EventArgs a)
 		{		
 			if(treeview.NodeSelection.SelectedNodes.Length>0)
 			{
@@ -310,12 +300,10 @@ namespace MathTextRecognizer.Steps
 		/// el boton "Siguente nodo".
 		/// </summary>
 		private void OnBtnNextNodeClicked(object sender, EventArgs arg)
-		{		    
-			LogAreaExpanded = true;
-			
-			stepMode = ControllerStepMode.NodeByNode;
-				
-			NextStep();
+		{	
+			alignNextButtons.Sensitive=false;
+			LogAreaExpanded = false;				
+			NextStep(ControllerStepMode.NodeByNode);
 		}
 		
 		/// <summary>
@@ -323,24 +311,40 @@ namespace MathTextRecognizer.Steps
 		/// boton "Siguiente caracteristica".
 		/// </summary>
 		private void OnBtnNextStepClicked(object sender, EventArgs arg)
-		{		    
-			LogAreaExpanded = true;
-			
-			stepMode = ControllerStepMode.StepByStep;		    
-			
-			NextStep();
+		{					
+			LogAreaExpanded = true;			
+			NextStep(ControllerStepMode.StepByStep);
 		}
 		
-			/// <summary>
+		/// <summary>
 		/// Método que maneja el evento que se provoca al pulsar el botón
 		/// "Hasta el final".
 		/// </summary>
 		private void OnBtnTilEndClicked(object sender, EventArgs arg)
 		{
 			alignNextButtons.Sensitive=false;
-			stepMode = ControllerStepMode.UntilEnd;
-			
-			NextStep();
+			LogAreaExpanded=false;alignNextButtons.Sensitive=false;
+			NextStep(ControllerStepMode.UntilEnd);
+		}
+		
+		/// <summary>
+		/// Handles the event produced when a new node is going to be processed
+		/// by the controller.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnNodeBeingProcessed(object sender, EventArgs args)
+		{
+			Application.Invoke(OnNodeBeingProcessedThread);
+		}
+		
+		private void OnNodeBeingProcessedThread(object sender, EventArgs args)
+		{
+			alignNextButtons.Sensitive=true;
 		}
 		
 		
@@ -416,10 +420,10 @@ namespace MathTextRecognizer.Steps
 		private void OnRecognizeProcessFinished(object sender, EventArgs arg)
 		{			
 		    // Llamamos a través de invoke para que funcione.
-			Gtk.Application.Invoke(OnRecognizeProccessFinishedThreadSafe);			
+			Gtk.Application.Invoke(OnRecognizeProcessFinishedThread);			
 		}
 		
-		private void OnRecognizeProccessFinishedThreadSafe(object sender, EventArgs a)
+		private void OnRecognizeProcessFinishedThread(object sender, EventArgs a)
 		{
 		    Log("¡Reconocimiento terminado!");
 			

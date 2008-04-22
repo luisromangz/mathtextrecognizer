@@ -818,7 +818,7 @@ MathML</property>
                 <child>
                   <widget class="GtkLabel" id="label10">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">Imagen original</property>
+                    <property name="label" translatable="yes">Imagen original resaltada</property>
                     <property name="use_markup">True</property>
                   </widget>
                   <packing>

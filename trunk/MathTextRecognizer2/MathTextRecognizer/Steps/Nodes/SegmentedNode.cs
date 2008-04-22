@@ -10,6 +10,7 @@ using MathTextLibrary.Symbol;
 using MathTextLibrary.Bitmap;
 
 using MathTextLibrary.Controllers;
+using MathTextLibrary.Utils;
 
 namespace MathTextRecognizer.Steps.Nodes
 {
@@ -57,6 +58,27 @@ namespace MathTextRecognizer.Steps.Nodes
 			
 			this.symbols = new List<MathSymbol>();
 		}
+		
+		/// <summary>
+		/// <c>SegmentedNode</c>'s constructor
+		/// </summary>
+		/// <param name="bitmap">
+		/// A <see cref="MathTextBitmap"/>
+		/// </param>
+		/// <param name="view">
+		/// The parent node's <c>NodeView</c>.
+		/// </param>
+		public SegmentedNode(MathTextBitmap bitmap, NodeView view)
+		{
+		
+			this.view = view;
+			
+			this.bitmap =bitmap;
+			
+			this.position = String.Format("({0}, {1})",
+			                              bitmap.Position.X, bitmap.Position.Y);
+		}
+		
 		
 		/// <value>
 		/// Contiene la etiqueta del nodo.
@@ -118,6 +140,12 @@ namespace MathTextRecognizer.Steps.Nodes
 				SetLabels();
 			}
 		}
+
+		public NodeView View {
+			get {
+				return view;
+			}
+		}
 		
 		/// <summary>
 		/// Metodo que maneja el evento provocado al asociarse un simbolo 
@@ -133,42 +161,39 @@ namespace MathTextRecognizer.Steps.Nodes
 			}
 			
 			label = text.TrimEnd(',',' ');
+			
 		}
-		
+		 
 		/// <summary>
 		/// Añade un nodo hijo al nodo.
 		/// </summary>
 		/// <param name="childBitmap">
 		/// A <see cref="MathTextBitmap"/>
 		/// </param>
-		/// <returns>
-		/// El nodo añadido.
-		/// </returns>
-		public SegmentedNode AddChild(MathTextBitmap childBitmap)
+		public void AddSegmentedChild(SegmentedNode node)
 		{		
-			string name="";
+			Application.Invoke(this, 
+			                   new AddNodeArgs(node),
+			                   AddSegmentedChildThread);
+			
+		}
+		
+		public void AddSegmentedChildThread(object sender, EventArgs arg)
+		{
+			AddNodeArgs a = arg as AddNodeArgs;
+			this.AddChild(a.Node);
+			
 			if(this.Parent ==null)
 			{
 				// Si no tiene padre
-				name = String.Format("Imagen {0}",this.ChildCount+1);
+				a.Node.name = String.Format("Imagen {0}",this.ChildCount);
 			}
 			else
 			{
-				name = String.Format("{0}.{1}",this.name, this.ChildCount+1);
+				a.Node.name = String.Format("{0}.{1}",this.name, this.ChildCount);
 			}
 			
-			
-			
-			SegmentedNode node = new SegmentedNode(name,
-			                                   childBitmap,
-			                                   view);
-				
-			this.AddChild(node);
-			
 			view.ExpandAll();
-			view.QueueDraw();
-			
-			return node;
 		}
 		
 		/// <summary>
@@ -187,6 +212,28 @@ namespace MathTextRecognizer.Steps.Nodes
 			view.NodeSelection.SelectNode(this);
 			TreePath path = view.Selection.GetSelectedRows()[0];
 			view.ScrollToCell(path,view.Columns[0],true,1,0);
+		}
+		
+		/// <summary>
+		/// Contains the arguments of the handler method for the addition
+		/// of children nodes in the gui's thread.
+		/// </summary>
+		public class AddNodeArgs : EventArgs
+		{
+			private SegmentedNode node;
+			
+			public AddNodeArgs(SegmentedNode node)
+			{
+				this.node= node;
+			}
+			
+			public SegmentedNode Node
+			{
+				get
+				{
+					return node;
+				}
+			}
 		}
 	}
 }

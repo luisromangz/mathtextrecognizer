@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 using MathTextLibrary.Bitmap;
 
-namespace MathTextLibrary
+namespace MathTextLibrary.Tests
 {
 	
 	

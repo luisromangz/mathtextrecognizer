@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 using MathTextLibrary.Utils;
 
-namespace MathTextLibrary
+namespace MathTextLibrary.Tests
 {
 	
 	

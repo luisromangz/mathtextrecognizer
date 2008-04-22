@@ -33,6 +33,10 @@ namespace MathTextCustomWidgets.Widgets.Logger
         
         #endregion Widgets
 		
+		private const int MAX_LINES=80;
+		
+		private bool follow;
+		
 		
 		/// <summary>
 		/// Constructor de la clase LogView.
@@ -47,11 +51,26 @@ namespace MathTextCustomWidgets.Widgets.Logger
             
             
             this.Add(mainBox);
-            
-            txtLog.Buffer.Changed += OnTxtLogChanged;
+			
+			follow = false;
         }
         
-        #region Público
+#region Público
+		
+		/// <value>
+		/// Contains a value indicating if the textview will be scrolled to the output.
+		/// </value>
+		public bool Follow 
+		{
+			get 
+			{
+				return follow;
+			}
+			set
+			{
+				follow = value;
+			}
+		}
         
         /// <summary>
 		/// Añade un mensaje en una nueva línea tras el último mensaje añadido.
@@ -61,11 +80,22 @@ namespace MathTextCustomWidgets.Widgets.Logger
 		/// </param>
         public void LogLine(string message, params object [] args)
 		{	
-						
+					
+			if(txtLog.Buffer.LineCount > MAX_LINES)
+			{
+				TextIter start =txtLog.Buffer.GetIterAtLine(0);
+				TextIter end =txtLog.Buffer.GetIterAtLine(1);
+				
+				txtLog.Buffer.Delete(ref start, ref end);
+			}
+			
 			txtLog.Buffer.Insert(
 				txtLog.Buffer.EndIter,
 				(String.Format(message,args))+"\n");
-			txtLogScroll.Vadjustment.Value = txtLogScroll.Vadjustment.Upper;
+			
+			
+			if(follow)
+				txtLogScroll.Vadjustment.Value = txtLogScroll.Vadjustment.Upper;
 		}
 		
 		/// <summary>
@@ -76,9 +106,9 @@ namespace MathTextCustomWidgets.Widgets.Logger
 			txtLog.Buffer.Clear();
 		}
 		
-		#endregion Público
+#endregion Público
 		
-		#region Manejadores de eventos
+#region Manejadores de eventos
 		
 		private void OnBtnClearClicked(object sender, EventArgs a)
 		{
@@ -113,14 +143,8 @@ namespace MathTextCustomWidgets.Widgets.Logger
 		    lsd.Destroy();
 		}
 		
-		private void OnTxtLogChanged(object sender, EventArgs a)
-		{
-		    // Activamos los botones de la derecha cuando hay texto.
-		    rightBox.Sensitive = txtLog.Buffer.Text.Trim() != ""; 
-		        
-		}
 		
-		#endregion Manejadores de eventos
+#endregion Manejadores de eventos
 
 	}
 }

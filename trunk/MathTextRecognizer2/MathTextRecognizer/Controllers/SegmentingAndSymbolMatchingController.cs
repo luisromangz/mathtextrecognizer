@@ -38,18 +38,24 @@ namespace MathTextRecognizer.Controllers
 		/// Evento usado para notificar a la interfaz de que se ha terminado de
 		/// realizar un proceso.
 		/// </summary>
-		public event ProcessFinishedHandler RecognizementProcessFinished;
+		public event ProcessFinishedHandler ProcessFinished;
+		
+		public event EventHandler NodeBeingProcessed;
 		
 		/// <summary>
 		/// Evento usado para notificar a la interfaz de que se ha comenzado
 		/// a trabajar con un nueva pieza de la imagen.
 		/// </summary>
-		public event BitmapBeingRecognizedHandler BitmapBeingRecognized;
+		public event BitmapProcessedHandler BitmapProcessedByDatabase;
 		
 		//La imagen raiz que contiene la formula completa que deseamos reconocer.
 		private SegmentedNode startNode;
 		
 		private List<BitmapSegmenter> segmenters;
+		
+		private Thread processThread;
+		
+		private ControllerStepMode stepMode;
 		
 		/// <summary>
 		/// Constructor de la clase MathTextRecognizerController, debe ser invocado
@@ -69,7 +75,9 @@ namespace MathTextRecognizer.Controllers
 			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.RightToLeft));
 			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.BottomToTop));
 			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.TopToBottom));
-			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.LeftToRight));			               
+			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.LeftToRight));
+			
+			stepMode = ControllerStepMode.UntilEnd;
 			               
 		}
 	
@@ -80,11 +88,11 @@ namespace MathTextRecognizer.Controllers
 		/// La imagen que hemos comenzado a reconocer, que sera enviada como
 		/// argumentod del evento.
 		/// </param>		
-		protected void BitmapBeingRecognizedInvoker(MathTextBitmap bitmap)
+		protected void BitmapProcessedByDatabaseInvoker(MathTextBitmap bitmap)
 		{
-			if(BitmapBeingRecognized!=null)
+			if(BitmapProcessedByDatabase!=null)
 			{
-				BitmapBeingRecognized(this,new BitmapBeingRecognizedArgs(bitmap));
+				BitmapProcessedByDatabase(this,new BitmapProcessedArgs(bitmap));
 			}
 		}			
 		
@@ -105,13 +113,12 @@ namespace MathTextRecognizer.Controllers
 		/// <summary>
 		/// Envolvemos el lanzamiento del evento RecognizeProcessFinished, por comodidad.
 		/// </summary>		
-		protected void RecognizementProcessFinishedInvoker()
+		protected void ProcessFinishedInvoker()
 		{
-			if(RecognizementProcessFinished!=null)
+			if(ProcessFinished!=null)
 			{
-				RecognizementProcessFinished(this,EventArgs.Empty);
+				ProcessFinished(this,EventArgs.Empty);
 			}
-
 		}
 		
 		/// <summary>
@@ -121,9 +128,13 @@ namespace MathTextRecognizer.Controllers
 		/// <param name="args">Los argumentos del evento.</param>
 		private void OnProcessingStepDone(object sender,
 		                                  StepDoneArgs args)
-		{
-			
+		{			
 			MessageLogSentInvoker(args.Message);
+			
+			if(stepMode == ControllerStepMode.StepByStep)
+			{
+				processThread.Suspend();
+			}
 		}
 		
 		/// <summary>
@@ -163,8 +174,10 @@ namespace MathTextRecognizer.Controllers
 		/// <value>
 		/// Contiene las bases de datos que usa el controlador para reconocer.
 		/// </value>
-		public List<MathTextDatabase> Databases {
-			get {
+		public List<MathTextDatabase> Databases 
+		{
+			get
+			{
 				return databases;
 			}
 			
@@ -178,18 +191,33 @@ namespace MathTextRecognizer.Controllers
 				}
 			}
 		}
+
+		/// <value>
+		/// Contains the mode for the actual step.
+		/// </value>
+		public ControllerStepMode StepMode 
+		{
+			get 
+			{
+				return stepMode;
+			}
+			set 
+			{
+				stepMode = value;
+			}
+		}
 		
 		/// <summary>
 		/// Metodo que realiza el procesado de las imagenes
 		/// </summary>
-		public void RecognizeProcess()
+		public void Process()
 		{
 			MessageLogSentInvoker("=======================================");
 			MessageLogSentInvoker(" Comenzando proceso de segmentado");
 			MessageLogSentInvoker("=======================================");
 			
 		   	RecognizerTreeBuild(startNode);
-		   	RecognizementProcessFinishedInvoker();
+		   	ProcessFinishedInvoker();
 		}
 		
 		/// <summary>
@@ -204,6 +232,13 @@ namespace MathTextRecognizer.Controllers
 		private void RecognizerTreeBuild(SegmentedNode node)
 		{			
 			// Seleccionamos el nodo.
+			
+			NodeBeingProcessedInvoker();
+			if(stepMode != ControllerStepMode.UntilEnd)
+			{				
+				processThread.Suspend();	
+			}
+
 			node.Select();
 			
 			MathTextBitmap bitmap = node.MathTextBitmap;
@@ -221,7 +256,7 @@ namespace MathTextRecognizer.Controllers
 				                      
 				
 				bitmap.ProcessImage(database.Processes);
-				BitmapBeingRecognizedInvoker(bitmap);
+				BitmapProcessedByDatabaseInvoker(bitmap);
 				
 				// Añadimos los caracteres reconocidos por la base de datos
 				foreach (MathSymbol symbol in database.Recognize(bitmap))
@@ -231,11 +266,9 @@ namespace MathTextRecognizer.Controllers
 						// Solo añadimos si no esta ya el simbolo.
 						associatedSymbols.Add(symbol);
 					}
-				}				
+				}
 			}		
-			
-			
-			
+						
 			// Decidimos que símbolo de los  posiblemente devuelto usuaremos.			
 			
 						
@@ -257,10 +290,19 @@ namespace MathTextRecognizer.Controllers
 					MessageLogSentInvoker("La imagen se ha segmentado correctamente");
 					
 					//Si solo conseguimos un hijo, es la propia imagen, asi que nada
+					
+					List<SegmentedNode> nodes = new List<SegmentedNode>();
+					
 					foreach(MathTextBitmap child in children)
 					{
-						SegmentedNode childNode = node.AddChild(child);
-						RecognizerTreeBuild(childNode);						
+						SegmentedNode childNode = new SegmentedNode(child, node.View);	
+						node.AddSegmentedChild(childNode);
+						nodes.Add(childNode);
+					}
+					
+					foreach(SegmentedNode childNode in nodes)
+					{
+						RecognizerTreeBuild(childNode);	
 					}
 				}
 				else
@@ -312,6 +354,34 @@ namespace MathTextRecognizer.Controllers
 			}
 			
 			return children;
+		}
+		
+		/// <summary>
+		/// Runs the next step of the process being controlled.
+		/// </summary>
+		/// <param name="step">
+		/// The step mode for the new step.
+		/// </param>
+		public void Next(ControllerStepMode step)
+		{
+			stepMode = step;
+			
+			if(processThread == null || !processThread.IsAlive)
+			{
+				processThread = new Thread(new ThreadStart(Process));
+				//processThread.Priority = ThreadPriority.Lowest;
+				processThread.Start();				
+			}
+			else if (processThread.ThreadState == ThreadState.Suspended)
+			{
+				processThread.Resume();				
+			}
+		}
+		
+		protected void NodeBeingProcessedInvoker()
+		{
+			if(NodeBeingProcessed !=null)
+				NodeBeingProcessed(this, EventArgs.Empty);
 		}
 	}
 }

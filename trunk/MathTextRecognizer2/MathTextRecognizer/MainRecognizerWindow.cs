@@ -156,6 +156,7 @@ namespace MathTextRecognizer
 			set
 			{
 				expLog.Expanded = value;
+				logView.Follow = value;
 			}
 		}
 
