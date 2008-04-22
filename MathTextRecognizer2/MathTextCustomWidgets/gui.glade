@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.3 on Mon Apr 21 20:41:31 2008 -->
+<!--Generated with glade3 3.4.3 on Tue Apr 22 13:51:05 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="logViewWidget">
     <child>
@@ -32,7 +32,6 @@
         <child>
           <widget class="GtkVBox" id="rightBox">
             <property name="visible">True</property>
-            <property name="sensitive">False</property>
             <property name="spacing">5</property>
             <child>
               <widget class="GtkButton" id="btnClear">

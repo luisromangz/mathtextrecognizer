@@ -7,7 +7,7 @@ using NUnit.Framework;
 using MathTextLibrary.Bitmap;
 using MathTextLibrary.Databases.Characteristic.Characteristics.Helpers;
 
-namespace MathTextLibrary
+namespace MathTextLibrary.Tests
 {
 	
 	

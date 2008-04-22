@@ -11,7 +11,7 @@ using MathTextLibrary.Bitmap;
 using MathTextLibrary.Databases;
 using MathTextLibrary.Databases.Characteristic;
 
-namespace MathTextLibrary
+namespace MathTextLibrary.Tests
 {
 	
 	

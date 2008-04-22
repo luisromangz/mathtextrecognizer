@@ -64,7 +64,7 @@ namespace MathTextRecognizer.Steps
 			}
 			set
 			{
-				mainWindow.LogAreaExpanded = value;
+				mainWindow.LogAreaExpanded = value;				
 			}
 		}
 		
