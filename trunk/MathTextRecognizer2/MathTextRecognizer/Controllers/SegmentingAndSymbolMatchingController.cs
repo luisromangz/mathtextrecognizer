@@ -237,6 +237,7 @@ namespace MathTextRecognizer.Controllers
 			if(stepMode != ControllerStepMode.UntilEnd)
 			{				
 				processThread.Suspend();	
+				
 			}
 
 			node.Select();

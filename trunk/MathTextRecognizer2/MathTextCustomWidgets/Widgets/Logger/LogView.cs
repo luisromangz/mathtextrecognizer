@@ -10,8 +10,8 @@ namespace MathTextCustomWidgets.Widgets.Logger
 
 	
 	/// <summary> 
-	/// Esta clase implementa un control en el que mostrar mensajes de depuración
-	/// o que informen del progreso de una operación.
+	/// Esta clase implementa un control en el que mostrar mensajes de
+	/// depuración o que informen del progreso de una operación.
 	/// </summary>
 	public class LogView : Alignment
 	{

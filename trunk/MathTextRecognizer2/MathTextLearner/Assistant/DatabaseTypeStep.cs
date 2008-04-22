@@ -38,6 +38,8 @@ namespace MathTextLearner.Assistant
 		
 		private Dictionary<RadioButton,Type> databaseTypeMap;
 		
+		private RadioButton otherLabelRB;
+		
 #endregion Atributos
 		
 #region Constructor
