@@ -175,7 +175,7 @@ namespace MathTextRecognizer
 		/// Contains a boolean value indicating if some elements of the gui
 		/// which shouldn't be clicked while a process is running are sensitive.
 		/// </value>
-		public bool ProcessItemsSenstive
+		public bool ProcessItemsSensitive
 		{
 			get
 			{
