@@ -1,31 +1,20 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
-    <File name="MathTextRecognizer/Controllers/SegmentingAndSymbolMatchingController.cs" line="305" column="39" />
-    <File name="MathTextRecognizer/Steps/SegmentingAndMatchingStepWidget.cs" line="315" column="11" />
-    <File name="MathTextRecognizer/Steps/RecognizingStepWidget.cs" line="67" column="40" />
-    <File name="MathTextRecognizer/Steps/Nodes/SegmentedNode.cs" line="196" column="21" />
-    <File name="MathTextCustomWidgets/Widgets/Logger/LogView.cs" line="50" column="37" />
+    <File name="MathTextRecognizer/MainRecognizerWindow.cs" line="1" column="1" />
+    <File name="MathTextRecognizer/Steps/SegmentingAndMatchingStepWidget.cs" line="563" column="2" />
+    <File name="MathTextCustomWidgets/Widgets/Logger/LogView.cs" line="109" column="8" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
-      <Node expanded="True" selected="True">
+      <Node expanded="True">
         <Node name="MathTextCustomWidgets" expanded="True">
-          <Node name="Widgets" expanded="True">
-            <Node name="Logger" expanded="True" />
-          </Node>
+          <Node name="References" expanded="True" selected="True" />
         </Node>
-        <Node name="MathTextRecognizer" expanded="True">
-          <Node name="Controllers" expanded="True" />
-          <Node name="Steps" expanded="True">
-            <Node name="Nodes" expanded="True" />
-          </Node>
-        </Node>
+        <Node name="MathTextRecognizer" expanded="True" />
       </Node>
     </ViewMemento>
     <ViewMemento id="ClassPad">
-      <Node expanded="True">
-        <Node name="MathTextLibrary" expanded="True" />
-      </Node>
+      <Node expanded="True" />
     </ViewMemento>
     <ViewMemento id="MonoDevelop.NUnit.TestPad">
       <Node expanded="True" />

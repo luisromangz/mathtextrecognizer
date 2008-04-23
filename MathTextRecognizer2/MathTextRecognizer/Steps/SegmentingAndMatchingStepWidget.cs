@@ -68,6 +68,9 @@ namespace MathTextRecognizer.Steps
 		[WidgetAttribute]
 		private ImageMenuItem learnImageItem;
 		
+		[WidgetAttribute]
+		private MenuItem forceSegmentItem;
+		
 #endregion Widgets
 		
 #region Atributos
@@ -104,6 +107,7 @@ namespace MathTextRecognizer.Steps
 			gxml.Autoconnect(this);
 			
 			this.Add(segmentingAndMatchingHPaned);
+			
 			
 			// We load the contextual menu.
 			gxml = new Glade.XML("mathtextrecognizer.glade", 
@@ -275,7 +279,6 @@ namespace MathTextRecognizer.Steps
 			{
 				// Si hay un simbolo seleccionado, 
 				// nos traemos sus imagenes procesadas.
-				
 				SegmentedNode node = 
 					(SegmentedNode)(treeview.NodeSelection.SelectedNode);
 			
@@ -479,9 +482,11 @@ namespace MathTextRecognizer.Steps
 					
 					selectedNode = node;
 					
+					forceSegmentItem.Visible = 
+						String.IsNullOrEmpty(selectedNode.Label);
+					
 					segmentedNodeMenu.Popup();
-                }
-                        
+                }                        
 			}
 		}
 		
@@ -539,6 +544,21 @@ namespace MathTextRecognizer.Steps
 			
 			dialog.Destroy();
 			treeview.ColumnsAutosize();
+			
+		}
+		
+		/// <summary>
+		/// Handles 
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnForceSegmentItemClicked(object sender, EventArgs args)
+		{			
+			//TODO Do something.
 			
 		}
 		

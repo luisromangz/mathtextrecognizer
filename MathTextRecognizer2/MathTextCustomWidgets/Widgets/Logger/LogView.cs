@@ -95,7 +95,10 @@ namespace MathTextCustomWidgets.Widgets.Logger
 			
 			
 			if(follow)
+			{
 				txtLogScroll.Vadjustment.Value = txtLogScroll.Vadjustment.Upper;
+			}
+				
 		}
 		
 		/// <summary>

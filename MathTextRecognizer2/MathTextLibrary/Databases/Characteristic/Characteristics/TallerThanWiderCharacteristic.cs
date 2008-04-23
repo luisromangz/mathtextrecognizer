@@ -10,10 +10,10 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 	/// es como mas ancho que alto.
 	/// </summary>
 	/// <seealso cref="MathTextLibrary.Characteristics.Helpers.ImageBoxerHelper"/>
-	public class WiderThanTallerCharacteristic:IBinaryCharacteristic
+	public class TallerThanWiderCharacteristic:IBinaryCharacteristic
 	{
 		private const float epsilon = 0.05f;
-		public WiderThanTallerCharacteristic()
+		public TallerThanWiderCharacteristic()
 		{
 			priority=10;
 		}
@@ -34,9 +34,9 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 			int width=(x2-x1+1);
 			int height=(y2-y1+1);
 			
-			int tolerance = (int) (image.Height * epsilon);
+			int tolerance = (int) (image.Width * epsilon);
 			
-			return width >= height + tolerance;
+			return height >= width + tolerance;
 		}
 	}
 }
