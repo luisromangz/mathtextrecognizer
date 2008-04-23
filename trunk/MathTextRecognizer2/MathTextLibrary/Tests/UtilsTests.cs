@@ -16,11 +16,14 @@ namespace MathTextLibrary.Tests
 	{
 		
 		[Test()]
-		public void LuisLinuxConfigFilePathTest()
+		public void LinuxConfigFilePathTest()
 		{
 			string path = ConfigFileUtils.GetConfigFilePath("MathTextLearner");
 			
-			Assert.AreEqual("/home/luis/.config/mathtextlearner",
+			
+			
+			Assert.AreEqual(String.Format("/home/{0}/.config/mathtextlearner",
+			                              Environment.UserName),
 			                path,
 			                "La ruta del archivo no es la esperada");
 		}
