@@ -71,6 +71,15 @@ namespace MathTextRecognizer.Steps
 		[WidgetAttribute]
 		private MenuItem forceSegmentItem;
 		
+		[WidgetAttribute]
+		private Notebook buttonsNB;
+		
+		[WidgetAttribute]
+		private Button segmentBtn;
+		
+		[WidgetAttribute]
+		private Button gotoTokenizerBtn;
+		
 #endregion Widgets
 		
 #region Atributos
@@ -168,6 +177,9 @@ namespace MathTextRecognizer.Steps
 			Log("¡Archivo de imagen «{0}» cargado correctamente!", filename);
 			
 			alignNextButtons.Sensitive=true;
+			segmentBtn.Sensitive = true;
+			gotoTokenizerBtn.Sensitive = false;
+			buttonsNB.Page = 0;
 		}
 #endregion Metodos publicos
 		
@@ -254,10 +266,9 @@ namespace MathTextRecognizer.Steps
 		/// </summary>
 		private void NextStep(ControllerStepMode stepMode)
 		{			
-			controller.Databases = this.Databases;
-			controller.Next(stepMode);
 			
-			this.MainWindow.ProcessItemsSenstive=false;
+			
+			controller.Next(stepMode);
 		}
 			
 		
@@ -443,9 +454,11 @@ namespace MathTextRecognizer.Steps
 			    "¡Proceso de reconocimiento terminado!\n"
 			    + "Ahora puede revisar el resultado.");
 			    
-			 
+			
 						
-			ResetState();			
+			ResetState();
+			
+			gotoTokenizerBtn.Sensitive = true;
 			
 		}
 			
@@ -483,7 +496,7 @@ namespace MathTextRecognizer.Steps
 					selectedNode = node;
 					
 					forceSegmentItem.Visible = 
-						String.IsNullOrEmpty(selectedNode.Label);
+						!String.IsNullOrEmpty(selectedNode.Label);
 					
 					segmentedNodeMenu.Popup();
                 }                        
@@ -558,8 +571,20 @@ namespace MathTextRecognizer.Steps
 		/// </param>
 		private void OnForceSegmentItemClicked(object sender, EventArgs args)
 		{			
-			//TODO Do something.
 			
+			ResponseType res = 
+				ConfirmDialog.Show(this.MainWindow.Window,
+				                   "Si fuerza el segmentado perderás el "
+				                   + "reconocimiento realizado, ¿quieres continuar?");
+			
+			if(res == ResponseType.Yes)
+			{
+				controller.StartNode = selectedNode;
+				controller.SearchDatabase = false;
+				buttonsNB.Page = 1;
+				alignNextButtons.Sensitive = true;
+				controller.Next(ControllerStepMode.NodeByNode);
+			}
 		}
 		
 		private void OnImageAreaOriginalZoomChanged(object sender, EventArgs a)
@@ -597,6 +622,25 @@ namespace MathTextRecognizer.Steps
 			}
 		}
 		
+		/// <summary>
+		/// Handles the click in the segment button.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		public void OnSegmentBtnClicked(object sender, EventArgs args)
+		{
+			controller.Databases = this.Databases;
+			this.MainWindow.ProcessItemsSensitive=false;
+			segmentBtn.Sensitive = false;
+			gotoTokenizerBtn.Sensitive =  true;
+			buttonsNB.Page = 1;
+			controller.Next(ControllerStepMode.NodeByNode);
+		}
+		
 			
 			
 		/// <summary>
@@ -617,7 +661,11 @@ namespace MathTextRecognizer.Steps
 			
 			imageAreaOriginal.Image = null;
 			
-			this.MainWindow.ProcessItemsSenstive = true;
+			buttonsNB.Page = 0;
+			
+			gotoTokenizerBtn.Sensitive = false;
+			
+			this.MainWindow.ProcessItemsSensitive = true;
 			
 		}
 		

@@ -57,6 +57,8 @@ namespace MathTextRecognizer.Controllers
 		
 		private ControllerStepMode stepMode;
 		
+		private bool searchDatabase;
+		
 		/// <summary>
 		/// Constructor de la clase MathTextRecognizerController, debe ser invocado
 		/// en las posibles implementaciones distintas de la interfaz de usuario del
@@ -78,6 +80,8 @@ namespace MathTextRecognizer.Controllers
 			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.LeftToRight));
 			
 			stepMode = ControllerStepMode.UntilEnd;
+			
+			searchDatabase = true;
 			               
 		}
 	
@@ -206,6 +210,19 @@ namespace MathTextRecognizer.Controllers
 				stepMode = value;
 			}
 		}
+
+		/// <value>
+		/// Contains a boolean value indicating if the database should be
+		/// searched or we should segment directly.
+		/// </value>
+		public bool SearchDatabase {
+			get {
+				return searchDatabase;
+			}
+			set {
+				searchDatabase = value;
+			}
+		}
 		
 		/// <summary>
 		/// Metodo que realiza el procesado de las imagenes
@@ -246,44 +263,55 @@ namespace MathTextRecognizer.Controllers
 			MessageLogSentInvoker("=======================================");
 			MessageLogSentInvoker("Tratando la subimagen «{0}»",
 			                      node.Name);
-						
+			
 			// Lanzamos el reconocedor de caracteres para cada una de
 			// las bases de datos.
 			List<MathSymbol> associatedSymbols = new List<MathSymbol>();
-			foreach(MathTextDatabase database in databases)
+			if(searchDatabase)
 			{
-				MessageLogSentInvoker("---------- «{0}» ------------",
-				                      database.ShortDescription);
-				                      
-				
-				bitmap.ProcessImage(database.Processes);
-				BitmapProcessedByDatabaseInvoker(bitmap);
-				
-				// Añadimos los caracteres reconocidos por la base de datos
-				foreach (MathSymbol symbol in database.Recognize(bitmap))
+				foreach(MathTextDatabase database in databases)
 				{
-					if(!associatedSymbols.Contains(symbol))
+					MessageLogSentInvoker("---------- «{0}» ------------",
+					                      database.ShortDescription);
+					                      
+					
+					bitmap.ProcessImage(database.Processes);
+					BitmapProcessedByDatabaseInvoker(bitmap);
+					
+					// Añadimos los caracteres reconocidos por la base de datos
+					foreach (MathSymbol symbol in database.Recognize(bitmap))
 					{
-						// Solo añadimos si no esta ya el simbolo.
-						associatedSymbols.Add(symbol);
+						if(!associatedSymbols.Contains(symbol))
+						{
+							// Solo añadimos si no esta ya el simbolo.
+							associatedSymbols.Add(symbol);
+						}
 					}
-				}
-			}		
+				}		
 						
-			// Decidimos que símbolo de los  posiblemente devuelto usuaremos.			
 			
+			}
+		
 						
 			// We associate all symbols to the node, so we can postargate
 			// the decission step.
 			node.Symbols = associatedSymbols;
 			
 			//Si no hemos reconocido nada, pues intentaremos segmentar el caracter.
-			if(associatedSymbols.Count ==0)
-			{			
-				MessageLogSentInvoker("La imagen no pudo ser reconocida como un "
+			if(associatedSymbols.Count == 0)
+			{	
+				if(searchDatabase)
+				{
+					MessageLogSentInvoker("La imagen no pudo ser reconocida como un "
 				                      + "simbolo por la base de datos, se tratará de "
 				                      + "segmentar");
-				
+				}
+				else
+				{
+					MessageLogSentInvoker("Se procede directamente a segmentar la imagen");
+					this.SearchDatabase = true;
+				}
+					
 				List<MathTextBitmap> children = CreateChildren(bitmap);
 				
 				if(children.Count > 1)
@@ -370,7 +398,6 @@ namespace MathTextRecognizer.Controllers
 			if(processThread == null || !processThread.IsAlive)
 			{
 				processThread = new Thread(new ThreadStart(Process));
-				//processThread.Priority = ThreadPriority.Lowest;
 				processThread.Start();				
 			}
 			else if (processThread.ThreadState == ThreadState.Suspended)
