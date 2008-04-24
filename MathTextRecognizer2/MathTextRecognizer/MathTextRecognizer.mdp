@@ -28,13 +28,14 @@
     <File name="Config" subtype="Directory" buildaction="Compile" />
     <File name="Config/RecognizerConfig.cs" subtype="Code" buildaction="Compile" />
     <File name="defaultConfig" subtype="Code" buildaction="EmbedAsResource" />
-    <File name="Steps" subtype="Directory" buildaction="Compile" />
-    <File name="Steps/SegmentingAndMatchingStepWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Steps/RecognizingStepWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Steps/Dialogs" subtype="Directory" buildaction="Compile" />
-    <File name="Steps/Dialogs/SymbolLabelEditorDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Steps/Nodes" subtype="Directory" buildaction="Compile" />
-    <File name="Steps/Nodes/SegmentedNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Stages" subtype="Directory" buildaction="Compile" />
+    <File name="Stages/SegmentingAndMatchingStepWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Stages/RecognizingStepWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Stages/Dialogs" subtype="Directory" buildaction="Compile" />
+    <File name="Stages/Dialogs/SymbolLabelEditorDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Stages/Nodes" subtype="Directory" buildaction="Compile" />
+    <File name="Stages/Nodes/SegmentedNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Stages/Dialogs/LearnSymbolDatabaseChooserDialog.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
