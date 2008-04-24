@@ -41,40 +41,40 @@ namespace MathTextRecognizer
 	{
 		#region Glade-Widgets
 		[WidgetAttribute]
-		private Gtk.Window mainWindow;		
+		private Gtk.Window mainWindow = null;		
 		
 		[WidgetAttribute]		
-		private ToolButton toolLoadImage;
+		private ToolButton toolLoadImage = null;
 		
 		[WidgetAttribute]		
-		private ToolButton toolLatex;
+		private ToolButton toolLatex = null;
 		
 		[WidgetAttribute]		
-		private ToolButton toolDatabase;
+		private ToolButton toolDatabase = null;
 		
 		[WidgetAttribute]
-		private Expander expLog;
+		private Expander expLog = null;
 		
 		[WidgetAttribute]
-		private ImageMenuItem menuNewSession;
+		private ImageMenuItem menuNewSession = null;
 		
 		[WidgetAttribute]
-		private ImageMenuItem menuOpenDatabaseManager;
+		private ImageMenuItem menuOpenDatabaseManager = null;
 		
 		[WidgetAttribute]
-		private ImageMenuItem menuMakeOutput;
+		private ImageMenuItem menuMakeOutput = null; 
 		
 		[WidgetAttribute]
-		private ImageMenuItem menuLoadImage;
+		private ImageMenuItem menuLoadImage = null;
 		
 		[WidgetAttribute]
-		private HBox messageInfoHB;
+		private HBox messageInfoHB = null;
 		
 		[WidgetAttribute]
-		private ToolButton toolNewSession;
+		private ToolButton toolNewSession = null;
 		
 		[WidgetAttribute]
-		private Notebook recognizingStepsNB;
+		private Notebook recognizingStepsNB = null;
 		
 		#endregion Glade-Widgets
 		

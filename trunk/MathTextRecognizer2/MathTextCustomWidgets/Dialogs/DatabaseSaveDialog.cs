@@ -15,13 +15,13 @@ namespace MathTextCustomWidgets.Dialogs
 		#region Glade widgets
 		
 		[Glade.WidgetAttribute]
-		private FileChooserDialog databaseSaveDialog;
+		private FileChooserDialog databaseSaveDialog = null;
 		
 		[Glade.WidgetAttribute]
-		private Button btnSave;
+		private Button btnSave = null;
 		
 		[Glade.WidgetAttribute]
-		private Button btnCancel;
+		private Button btnCancel = null;
 		
 		#endregion Glade widgets
 		

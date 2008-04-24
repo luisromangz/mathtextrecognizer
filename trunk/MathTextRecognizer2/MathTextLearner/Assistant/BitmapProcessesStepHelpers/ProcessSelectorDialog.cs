@@ -19,13 +19,10 @@ namespace MathTextLearner.Assistant.BitmapProcessesStepHelpers
 		#region Controles de Glade
 		
 		[Glade.WidgetAttribute]
-		private Dialog processSelectorDialog;
-		
+		private Dialog processSelectorDialog = null;
+				
 		[Glade.WidgetAttribute]
-		private Button okBtn;
-		
-		[Glade.WidgetAttribute]
-		private ComboBox bitmapProcessCmb;			
+		private ComboBox bitmapProcessCmb = null;			
 		
 		#endregion Controles de Glade
 		

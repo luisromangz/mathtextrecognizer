@@ -34,52 +34,43 @@ namespace MathTextRecognizer.Steps
 	{
 #region Widgets
 		[WidgetAttribute]
-		private HPaned segmentingAndMatchingHPaned;
+		private HPaned segmentingAndMatchingHPaned = null;
 		
 		[WidgetAttribute]
-		private Frame frameOriginal;
+		private Frame frameOriginal = null;
 		
 		[WidgetAttribute]
-		private Frame frameNodeActual;
+		private Frame frameNodeActual = null;
+		
 		
 		[WidgetAttribute]
-		private Frame frameNodeProcessed;
+		private Notebook processedImageNB = null;
+		
+	
 		
 		[WidgetAttribute]
-		private Notebook processedImageNB;
+		private ScrolledWindow scrolledtree = null;
 		
 		[WidgetAttribute]
-		private Button btnNextStep;
+		private Alignment alignNextButtons = null;
+			
+		[WidgetAttribute]
+		private Menu segmentedNodeMenu= null;
 		
 		[WidgetAttribute]
-		private Button btnNextNode;
+		private ImageMenuItem learnImageItem = null;
 		
 		[WidgetAttribute]
-		private ScrolledWindow scrolledtree;
+		private MenuItem forceSegmentItem = null;
 		
 		[WidgetAttribute]
-		private Alignment alignNextButtons;
+		private Notebook buttonsNB = null;
 		
 		[WidgetAttribute]
-		private Button btnTilEnd;
+		private Button segmentBtn = null;
 		
 		[WidgetAttribute]
-		private Menu segmentedNodeMenu;
-		
-		[WidgetAttribute]
-		private ImageMenuItem learnImageItem;
-		
-		[WidgetAttribute]
-		private MenuItem forceSegmentItem;
-		
-		[WidgetAttribute]
-		private Notebook buttonsNB;
-		
-		[WidgetAttribute]
-		private Button segmentBtn;
-		
-		[WidgetAttribute]
-		private Button gotoTokenizerBtn;
+		private Button gotoTokenizerBtn = null;
 		
 #endregion Widgets
 		
@@ -94,13 +85,7 @@ namespace MathTextRecognizer.Steps
 		private ImageArea imageAreaNode;
 		
 		private SegmentingAndSymbolMatchingController controller;	
-		
-		private float zoom;
-		
-		private SegmentedNode currentNode;		
-		
-		private MathTextBitmap rootBitmap;
-		
+			
 		private bool recognizementFinished;
 		
 		// Needed by the popup actions' handler methods
@@ -171,10 +156,7 @@ namespace MathTextRecognizer.Steps
 			    
 			store.AddNode(node);
 			controller.StartNode = node;
-			rootBitmap=mtb;
-			
-			currentNode = null;
-			
+
 			Log("¡Archivo de imagen «{0}» cargado correctamente!", filename);
 			
 			alignNextButtons.Sensitive=true;
@@ -216,8 +198,7 @@ namespace MathTextRecognizer.Steps
 			
 			imageAreaOriginal = new ImageArea();
 			imageAreaOriginal.ImageMode = ImageAreaMode.Zoom;
-			imageAreaOriginal.ZoomChanged += OnImageAreaOriginalZoomChanged;
-			
+				
 			frameOriginal.Add(imageAreaOriginal);
 			
 			
@@ -439,6 +420,8 @@ namespace MathTextRecognizer.Steps
 					                                      selectedDatabase,
 					                                      selectedNode.MathTextBitmap.Pixbuf,
 					                                      selectedNode.Name);
+				
+				
 			}
 				                                      
 		}
@@ -613,11 +596,6 @@ namespace MathTextRecognizer.Steps
 				alignNextButtons.Sensitive = true;
 				controller.Next(ControllerStepMode.NodeByNode);
 			}
-		}
-		
-		private void OnImageAreaOriginalZoomChanged(object sender, EventArgs a)
-		{
-			zoom = imageAreaOriginal.Zoom;			
 		}
 		
 		/// <summary>

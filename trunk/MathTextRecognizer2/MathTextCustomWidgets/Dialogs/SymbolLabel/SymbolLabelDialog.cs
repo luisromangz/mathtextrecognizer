@@ -21,16 +21,16 @@ namespace MathTextCustomWidgets.Dialogs.SymbolLabel
 	public class SymbolLabelDialog
 	{
 		[WidgetAttribute]
-		private Dialog symbolLabelDialog;
+		private Dialog symbolLabelDialog= null;
 		
 		[WidgetAttribute]
-		private Button editBtn;
+		private Button editBtn = null;
 		
 		[WidgetAttribute]
-		private Button removeBtn;
+		private Button removeBtn = null;
 		
 		[WidgetAttribute]
-		private TreeView symbolLabelsTV;
+		private TreeView symbolLabelsTV = null;
 		
 		private ListStore symbolLabelsModel;
 		

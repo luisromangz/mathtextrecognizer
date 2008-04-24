@@ -23,17 +23,17 @@ namespace MathTextRecognizer.Output
 	public class OutputDialog
 	{
 		[WidgetAttribute]
-		private Dialog outputDialog;
+		private Dialog outputDialog = null;
 		
 		[WidgetAttribute]
-		private TextView textviewOutput;		
+		private TextView textviewOutput = null;		
 		
 		[WidgetAttribute]
-		private ComboBox comboOutputType;
+		private ComboBox comboOutputType = null;
 		
-		private OutputController controller;
+		private OutputController controller = null;
 		
-		private FileChooserDialog fileSaveDialog;
+		private FileChooserDialog fileSaveDialog = null;
 		
 		/// <summary>
 		/// Constructor de <code>OutputWindow</code>.
@@ -133,15 +133,7 @@ namespace MathTextRecognizer.Output
 		/// </summary>
 		private void OnComboOutputTypeChanged(object sender, EventArgs args)
 		{
-			switch(comboOutputType.Active)
-			{
-				case(0):
-					textviewOutput.Buffer.Text=controller.LaTeXOutput;
-					break;
-				case(1):
-					textviewOutput.Buffer.Text=controller.MathMLOutput;
-					break;			
-			}
+			
 
 		}
 	}

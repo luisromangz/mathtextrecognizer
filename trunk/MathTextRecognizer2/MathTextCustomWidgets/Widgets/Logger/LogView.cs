@@ -16,20 +16,15 @@ namespace MathTextCustomWidgets.Widgets.Logger
 	public class LogView : Alignment
 	{
 	     #region Widgets
+
         [WidgetAttribute]
-        private Window logViewWidget;
+        private HBox mainBox = null;        
         
         [WidgetAttribute]
-        private VBox rightBox;
+        private TextView txtLog = null;   
         
         [WidgetAttribute]
-        private HBox mainBox;        
-        
-        [WidgetAttribute]
-        private TextView txtLog;   
-        
-        [WidgetAttribute]
-        private ScrolledWindow txtLogScroll;     
+        private ScrolledWindow txtLogScroll = null;     
         
         #endregion Widgets
 		

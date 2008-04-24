@@ -19,13 +19,13 @@ namespace MathTextLearner
 	public class DatabaseDescritpionEditorDialog
 	{
 		[Glade.WidgetAttribute]
-		private Dialog databaseDescriptionEditorDialog;
+		private Dialog databaseDescriptionEditorDialog = null;
 		
 		[Glade.WidgetAttribute]
-		private Entry shortDescEntry;
+		private Entry shortDescEntry = null;
 		
 		[Glade.WidgetAttribute]
-		private TextView longDescTextV;
+		private TextView longDescTextV = null;
 		
 		
 		public DatabaseDescritpionEditorDialog(Window parent)

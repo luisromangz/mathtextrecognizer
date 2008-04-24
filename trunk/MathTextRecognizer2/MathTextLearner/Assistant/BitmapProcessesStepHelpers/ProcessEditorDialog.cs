@@ -23,13 +23,13 @@ namespace MathTextLearner.Assistant.BitmapProcessesStepHelpers
 #region Atributos de interfaz de usuario
 
 		[Glade.WidgetAttribute]
-		private Dialog processEditorDialog;
+		private Dialog processEditorDialog = null;
 		
 		[Glade.WidgetAttribute]
-		private VBox editVB;
+		private VBox editVB = null;
 		
 		[Glade.WidgetAttribute]
-		private Label infoLbl;
+		private Label infoLbl = null;
 		
 #endregion Atributos de interfaz de usuario
 		

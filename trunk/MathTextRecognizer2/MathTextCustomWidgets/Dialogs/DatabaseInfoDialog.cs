@@ -17,16 +17,16 @@ namespace MathTextCustomWidgets.Dialogs
 	public class DatabaseInfoDialog
 	{
 		[WidgetAttribute]
-		private Dialog databaseInfoDialog;
+		private Dialog databaseInfoDialog = null;
 		
 		[WidgetAttribute]
-		private Label shortDescLabel;
+		private Label shortDescLabel =null;
 		
 		[WidgetAttribute]
-		private Label longDescLabel;
+		private Label longDescLabel =null;
 		
 		[WidgetAttribute]
-		private Label typeLabel;
+		private Label typeLabel = null;
 		
 		
 		

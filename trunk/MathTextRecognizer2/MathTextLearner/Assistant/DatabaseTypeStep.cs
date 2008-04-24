@@ -23,22 +23,18 @@ namespace MathTextLearner.Assistant
 #region Controles de Glade
 		
 		[Glade.WidgetAttribute]
-		private VBox optionsVB;
+		private VBox optionsVB = null;
 		
 		[Glade.WidgetAttribute]
-		private VBox typeRootWidget;
+		private VBox typeRootWidget = null;
 				
 #endregion Controles de Glade
 		
 #region Atributos
 		
-		private ListStore fileStore;
-		
 		private Type selectedType;
 		
 		private Dictionary<RadioButton,Type> databaseTypeMap;
-		
-		private RadioButton otherLabelRB;
 		
 #endregion Atributos
 		

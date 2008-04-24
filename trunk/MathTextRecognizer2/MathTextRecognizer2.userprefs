@@ -1,4 +1,4 @@
-﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
+﻿<UserCombinePreferences version="1.0" filename="/home/luis/MathTextRecognizer2/MathTextRecognizer2.sln">
   <Files>
     <File name="Bienvenido" />
     <File name="MathTextLearner/MainLearnerWindow.cs" line="1071" column="2" />
@@ -7,26 +7,17 @@
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
-      <Node expanded="True">
-        <Node name="MathTextLearner" expanded="True">
-          <Node name="References" expanded="True" />
-          <Node name="MainLearnerWindow.cs" selected="True" />
-        </Node>
-        <Node name="MathTextLibrary" expanded="True" />
-        <Node name="MathTextRecognizer" expanded="True">
-          <Node name="Steps" expanded="True" />
-        </Node>
-      </Node>
+      <Node expanded="True" />
     </ViewMemento>
     <ViewMemento id="ClassPad">
       <Node expanded="True" />
     </ViewMemento>
     <ViewMemento id="MonoDevelop.NUnit.TestPad">
-      <Node expanded="True" />
+      <Node />
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextLearner/MainLearnerWindow.cs" />
+    <Property key="ActiveWindow" value="Bienvenido" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>
