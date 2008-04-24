@@ -6,14 +6,14 @@ using System.Collections.Generic;
 
 using MathTextLibrary.Databases;
 
-namespace MathTextRecognizer.Steps
+namespace MathTextRecognizer.Stages
 {
 	
 	/// <summary>
 	/// Base class for the <c>MathTextLearner</c>'s widgets used for
 	/// showing the recognizing steps.
 	/// </summary>
-	public abstract class RecognizingStepWidget : Gtk.Alignment
+	public abstract class RecognizingStageWidget : Gtk.Alignment
 	{
 		private MainRecognizerWindow mainWindow;
 		
@@ -23,7 +23,7 @@ namespace MathTextRecognizer.Steps
 		/// <param name="window">
 		/// The <c>MathTextRecognizer</c>'s main window instance.
 		/// </param>
-		public RecognizingStepWidget(MainRecognizerWindow window)
+		public RecognizingStageWidget(MainRecognizerWindow window)
 			: base(0.5f,0.5f,1.0f,1.0f)
 		{
 			this.mainWindow = window;

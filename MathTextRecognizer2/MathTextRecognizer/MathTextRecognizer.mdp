@@ -29,8 +29,8 @@
     <File name="Config/RecognizerConfig.cs" subtype="Code" buildaction="Compile" />
     <File name="defaultConfig" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Stages" subtype="Directory" buildaction="Compile" />
-    <File name="Stages/SegmentingAndMatchingStepWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Stages/RecognizingStepWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Stages/SegmentingAndMatchingStageWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Stages/RecognizingStageWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Stages/Dialogs" subtype="Directory" buildaction="Compile" />
     <File name="Stages/Dialogs/SymbolLabelEditorDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Stages/Nodes" subtype="Directory" buildaction="Compile" />

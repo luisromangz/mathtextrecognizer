@@ -27,7 +27,7 @@ using MathTextLibrary.Symbol;
 using MathTextLibrary.Controllers;
 using MathTextLibrary.Databases.Characteristic.Characteristics;
 
-using MathTextRecognizer.Steps;
+using MathTextRecognizer.Stages;
 using MathTextRecognizer.Controllers;
 using MathTextRecognizer.DatabaseManager;
 
@@ -84,7 +84,7 @@ namespace MathTextRecognizer
 		
 		private bool recognizementFinished;
 		
-		private SegmentingAndMatchingStepWidget segmentingAndMatchingStepWidget;
+		private SegmentingAndMatchingStageWidget segmentingAndMatchingStageWidget;
 		
 		private LogView logView;
 		
@@ -245,10 +245,10 @@ namespace MathTextRecognizer
 				recognizingStepsNB.RemovePage(0);
 			}
 			
-			segmentingAndMatchingStepWidget = 
-				new SegmentingAndMatchingStepWidget(this);
+			segmentingAndMatchingStageWidget = 
+				new SegmentingAndMatchingStageWidget(this);
 			
-			recognizingStepsNB.AppendPage(segmentingAndMatchingStepWidget,
+			recognizingStepsNB.AppendPage(segmentingAndMatchingStageWidget,
 			                              new Label("Segmentación y "
 			                                        +"reconocimiento de caracteres"));
 			
@@ -376,7 +376,7 @@ namespace MathTextRecognizer
 		/// </param>
 		private void LoadImage(string filename)
 		{
-			segmentingAndMatchingStepWidget.SetInitialImage(filename);
+			segmentingAndMatchingStageWidget.SetInitialImage(filename);
 				
 			this.mainWindow.Title = 
 				title + System.IO.Path.GetFileName(filename);
@@ -431,7 +431,7 @@ namespace MathTextRecognizer
 			toolLoadImage.Sensitive=true;
 			toolDatabase.Sensitive=true;
 			
-			segmentingAndMatchingStepWidget.ResetState();
+			segmentingAndMatchingStageWidget.ResetState();
 			
 			recognizementFinished=true;
 		}

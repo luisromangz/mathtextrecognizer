@@ -14,7 +14,7 @@ using MathTextLibrary.Databases;
 
 using MathTextRecognizer.DatabaseManager;
 
-namespace MathTextRecognizer
+namespace MathTextRecognizer.Stages.Dialogs
 {
 	
 	/// <summary>
@@ -25,6 +25,16 @@ namespace MathTextRecognizer
 	{
 		[WidgetAttribute]
 		private Dialog learnSymbolDatabaseChooserDialog = null;
+		
+		[WidgetAttribute]
+		private VBox optionsVB = null;
+		
+		
+		private RadioButton newRB;
+		
+		private Dictionary<string, MathTextDatabase> databaseHash;
+		
+		private MathTextDatabase choosenDatabase;
 		
 		/// <summary>
 		/// <c>LearnSymbolDatabaseChooserDialog</c>'s constructor.
@@ -42,15 +52,40 @@ namespace MathTextRecognizer
 			
 			gxml.Autoconnect(this);
 			
+			learnSymbolDatabaseChooserDialog.Modal=true;
+			learnSymbolDatabaseChooserDialog.Resizable = false;
+			learnSymbolDatabaseChooserDialog.TransientFor = parent;
+			
+			databaseHash = new Dictionary<string,MathTextDatabase>();
+			
+			RadioButton groupRB = new RadioButton("group");
+			foreach(DatabaseFileInfo databaseInfo in databases)
+			{
+				// We add a new option per database
+				string label = System.IO.Path.GetFileName(databaseInfo.Path);
+				RadioButton optionRB = new RadioButton(groupRB, label);
+				
+				optionRB.Clicked += new EventHandler(OnOptionRBClicked);
+				optionsVB.Add(optionRB);
+				
+				databaseHash.Add(label, databaseInfo.Database);
+			}
+			
+			// We add the option of creating a new database.
+			newRB = new RadioButton(groupRB, "Crear nueva base de datos");
+			optionsVB.Add(newRB);
 		}
 		
 #region Properties
 		
+		/// <value>
+		/// Contains the selected database in which the symbol will be learned.
+		/// </value>
 		public MathTextDatabase ChoosenDatabase
 		{
 			get
 			{
-				
+				return choosenDatabase;
 			}
 		}
 		
@@ -97,7 +132,7 @@ namespace MathTextRecognizer
 		/// </returns>
 		private bool HasErrors()
 		{
-			
+			return true;
 		}
 		
 		/// <summary>
@@ -115,6 +150,20 @@ namespace MathTextRecognizer
 			{
 				learnSymbolDatabaseChooserDialog.Respond(ResponseType.None);
 			}
+		}
+		
+		/// <summary>
+		/// Handles the choosing of a database.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnOptionRBClicked(object sender, EventArgs args)
+		{
+			
 		}
 		
 #endregion Private methods
