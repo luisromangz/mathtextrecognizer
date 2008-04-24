@@ -87,12 +87,7 @@ namespace MathTextLearner.Assistant
 				List<Gdk.Pixbuf> res = new List<Gdk.Pixbuf>();
 				foreach(object[] values in fileStore)
 				{
-					// Extremos la cadena de la ruta del modelo del iconview.
-					string path = (string) (values[2]);
-					
-					Gdk.Pixbuf p = new Gdk.Pixbuf(path);
-					
-					res.Add(p);
+					res.Add((Gdk.Pixbuf ) (values[3]));
 				}
 				
 				return res;
@@ -101,7 +96,10 @@ namespace MathTextLearner.Assistant
 		
 #endregion Propiedades
 		
-#region Metodos privados
+#region Public methods
+		
+#endregion Public methods
+		
 		/// <summary>
 		/// Añade un icono representando un archivo de imagen a la vista
 		/// de iconos del panel.
@@ -109,23 +107,43 @@ namespace MathTextLearner.Assistant
 		/// <param name="fileName">
 		/// La ruta del archivo que se añade al conjunto de archivos.
 		/// </param>
-		private void AddIcon(string fileName)
+		public void AddImageFile(string fileName)
 		{
 			// Aqui añadimos un icono al IconView.
 			
 			// Creamos la imagen.
 			Gdk.Pixbuf image = new Gdk.Pixbuf(fileName);
 						
-			image = ImageUtils.MakeThumbnail(image, 48);
+			AddImageFile(image, fileName);
+		}
+		
+		/// <summary>
+		/// Añade un icono representando un archivo de imagen a la vista
+		/// de iconos del panel.
+		/// </summary>
+		/// <param name="image">
+		/// The image to be added.
+		/// </param>
+		/// <param name="fileName">
+		/// La ruta del archivo que se añade al conjunto de archivos.
+		/// </param>
+		public void AddImageFile(Gdk.Pixbuf image, string fileName)
+		{
+			// Aqui añadimos un icono al IconView.
+			
+			Gdk.Pixbuf icon = ImageUtils.MakeThumbnail(image, 48);
 			
 			TreeIter iter = 
 				fileStore.AppendValues(
-					image, Path.GetFileName(fileName), fileName);
+					icon, Path.GetFileName(fileName), fileName, image);
 			
 			filesIconView.ScrollToPath(fileStore.GetPath(iter));
 			
 			filesIconView.SelectPath(fileStore.GetPath(iter));
 		}
+		
+#region Metodos privados
+	
 		
 		/// <summary>
 		/// Muestra una venta de información para el archivo representado 
@@ -167,7 +185,8 @@ namespace MathTextLearner.Assistant
 			// el propio archivo de Glade.
 			fileStore = new ListStore(typeof(Gdk.Pixbuf), 
 			                          typeof(string), 
-			                          typeof(string));
+			                          typeof(string),
+			                          typeof(Gdk.Pixbuf));
 				
 			filesIconView.Model = fileStore;		
 		}
@@ -182,7 +201,7 @@ namespace MathTextLearner.Assistant
 			if(ImageLoadDialog.Show(Assistant.Window, out filename)
 				== ResponseType.Ok)
 			{
-				AddIcon(filename);
+				AddImageFile(filename);
 			}
 		}
 		
@@ -212,7 +231,7 @@ namespace MathTextLearner.Assistant
 						// Si es png o jpg intentamos añadirlo.
 						try
 						{
-							AddIcon(file);
+							AddImageFile(file);
 							added++;
 						}
 						catch(Exception)

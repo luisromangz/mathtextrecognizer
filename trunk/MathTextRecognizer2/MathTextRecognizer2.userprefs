@@ -1,16 +1,21 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextRecognizer2.mds">
   <Files>
-    <File name="MathTextRecognizer/MainRecognizerWindow.cs" line="1" column="1" />
-    <File name="MathTextRecognizer/Steps/SegmentingAndMatchingStepWidget.cs" line="563" column="2" />
-    <File name="MathTextCustomWidgets/Widgets/Logger/LogView.cs" line="109" column="8" />
+    <File name="Bienvenido" />
+    <File name="MathTextLearner/MainLearnerWindow.cs" line="1071" column="2" />
+    <File name="MathTextLibrary/AssemblyInfo.cs" line="11" column="92" />
+    <File name="MathTextLearner/AssemblyInfo.cs" line="20" column="32" />
   </Files>
   <Views>
     <ViewMemento id="ProjectPad">
       <Node expanded="True">
-        <Node name="MathTextCustomWidgets" expanded="True">
-          <Node name="References" expanded="True" selected="True" />
+        <Node name="MathTextLearner" expanded="True">
+          <Node name="References" expanded="True" />
+          <Node name="MainLearnerWindow.cs" selected="True" />
         </Node>
-        <Node name="MathTextRecognizer" expanded="True" />
+        <Node name="MathTextLibrary" expanded="True" />
+        <Node name="MathTextRecognizer" expanded="True">
+          <Node name="Steps" expanded="True" />
+        </Node>
       </Node>
     </ViewMemento>
     <ViewMemento id="ClassPad">
@@ -21,7 +26,7 @@
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextCustomWidgets/Widgets/Logger/LogView.cs" />
+    <Property key="ActiveWindow" value="/home/luis/programacion/pfc/MathTextRecognizer2/MathTextLearner/MainLearnerWindow.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>

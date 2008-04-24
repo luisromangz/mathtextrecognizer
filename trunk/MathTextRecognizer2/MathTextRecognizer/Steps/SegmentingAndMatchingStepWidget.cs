@@ -14,6 +14,7 @@ using MathTextCustomWidgets.Widgets.ImageArea;
 using MathTextCustomWidgets.Dialogs;
 using MathTextCustomWidgets;
 
+using MathTextLibrary.Databases;
 using MathTextLibrary.Bitmap;
 using MathTextLibrary.Symbol;
 using MathTextLibrary.Controllers;
@@ -266,8 +267,6 @@ namespace MathTextRecognizer.Steps
 		/// </summary>
 		private void NextStep(ControllerStepMode stepMode)
 		{			
-			
-			
 			controller.Next(stepMode);
 		}
 			
@@ -413,6 +412,35 @@ namespace MathTextRecognizer.Steps
 				
 				MarkImage(node.MathTextBitmap);				
 			}
+		}
+		
+		/// <summary>
+		/// Handles the click on the "learn image" treeview's context menu item.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnLearnImageItemActivate(object sender, EventArgs args)
+		{
+			ResponseType res = ConfirmDialog.Show(MainWindow.Window,
+			                                    "¿Realmente quieres añadir el símbolo «{0}» a una base de datos?",
+			                                    selectedNode.Name);
+			
+			if(res == ResponseType.Yes)
+			{
+				// TODO Choose database.
+				MathTextDatabase selectedDatabase = null;
+			
+				MathTextLearner.MainLearnerWindow learnerWindow =
+					new MathTextLearner.MainLearnerWindow(this.MainWindow.Window,
+					                                      selectedDatabase,
+					                                      selectedNode.MathTextBitmap.Pixbuf,
+					                                      selectedNode.Name);
+			}
+				                                      
 		}
 		
 		/// <summary>

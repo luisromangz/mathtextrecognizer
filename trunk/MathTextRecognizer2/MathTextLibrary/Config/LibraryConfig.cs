@@ -63,7 +63,7 @@ namespace MathTextLibrary.Config
 			XmlSerializer serializer = new XmlSerializer(typeof(LibraryConfig),
 			                                              GetSerializationOverrides());	
 			
-			string path = ConfigFileUtils.GetConfigFilePath("MathTextLibrary");
+			string path = PathUtils.GetConfigFilePath("MathTextLibrary");
 			
 			Stream configStream;
 			
@@ -117,7 +117,7 @@ namespace MathTextLibrary.Config
 		{
 			XmlSerializer serializer = new XmlSerializer(typeof(LibraryConfig),
 			                                              GetSerializationOverrides());	
-			string path = ConfigFileUtils.GetConfigFilePath("MathTextLibrary");
+			string path = PathUtils.GetConfigFilePath("MathTextLibrary");
 			
 			using(StreamWriter w = new StreamWriter(path,false))
 			{

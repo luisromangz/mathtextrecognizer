@@ -12,6 +12,7 @@ using System.Threading;
 using System.Collections.Generic;
 
 using Gtk;
+using Gdk;
 using Glade;
 
 using MathTextCustomWidgets;
@@ -168,18 +169,32 @@ namespace MathTextLearner
 		
 #endregion Otros atributos
 
-#region Metodos publicos
-		public static void Main(string[] args)
-		{	
-			Application.Init();		
-			new MainLearnerWindow();	
-			Application.Run();
+#region Metodos publicos	
+		
+		/// <summary>
+		/// <c>MainLearnerWindow</c>'s default constructor.
+		/// </summary>
+		public MainLearnerWindow() : this(null, null, null, null)
+		{
+			
 		}
 		
 		/// <summary>
-		/// El constructor de <code>MainWindow</code>.
+		/// <c>MainLearnerWindow</c>'s parametriced constructor.
 		/// </summary>
-		public MainLearnerWindow()
+		/// <param name="parent">
+		/// The windo's parent window. 
+		/// </param>
+		/// <param name="inputDatabase">
+		/// A database to be loaded upon start.
+		/// </param>
+		/// <param name="inputImage">
+		/// An image to be learned upon start.
+		/// </param>
+		public MainLearnerWindow(Gtk.Window parent,
+		                         MathTextDatabase inputDatabase, 
+		                         Pixbuf inputImage,
+		                         string inputImageName)
 		{			
 			
 			Glade.XML gxml = new Glade.XML (null,
@@ -190,6 +205,44 @@ namespace MathTextLearner
 			gxml.Autoconnect (this);
 			
 			Initialize();
+			
+			if (parent !=null)
+			{
+				mainWindow.Modal = true;
+				mainWindow.TransientFor = parent;
+			}
+			
+			// We try loading the image.
+			
+			if(inputDatabase!=null)
+			{
+				// We have to load a database.
+				SetDatabase(inputDatabase);				
+				
+				if (inputImage != null)
+				{
+					LoadNewImage(inputImage);
+				}				
+			}
+			else if(inputImage!=null)
+			{
+				// We haven't specified a database, but want to learn and image,
+				// so we launch the new database wizard, and add that image.
+				NewDatabaseAsisstant assistant = 
+					new NewDatabaseAsisstant(mainWindow,
+					                         inputImage, 
+					                         inputImageName);
+				
+				ResponseType res  = assistant.Run();
+				if(res == ResponseType.Ok)
+				{
+					SetDatabase(assistant.Database);
+					
+					LoadNewImages(assistant.Images);
+				}				
+				
+				assistant.Destroy();
+			}
 		
 		}
 		
@@ -502,7 +555,7 @@ namespace MathTextLearner
 		/// </summary>
 		private void OnExit()
 		{
-			ShowDBSaveQuestionDialog();
+			
 			imageAreaOriginal.Image=null;
 			imageAreaProcessed.Image=null;
 			try
@@ -511,7 +564,10 @@ namespace MathTextLearner
 			}
 			catch(Exception)
 			{}
-			Application.Quit();			
+			
+			if(mainWindow.TransientFor == null)
+			   Application.Quit();
+			 
 		}
 		
 		private void OnLearningProccessFailedThread(object sender, 
@@ -682,7 +738,7 @@ namespace MathTextLearner
 		/// </summary>
 		private void OnNewDatabaseClicked(object sender, EventArgs arg)
 		{			
-			ShowDBSaveQuestionDialog();
+			SaveDatabase();
 			
 			NewDatabaseAsisstant assistant = 
 				new NewDatabaseAsisstant(mainWindow);
@@ -697,7 +753,7 @@ namespace MathTextLearner
 				
 				nextImageBtn.Sensitive = true;
 				
-				SetTitle("Nueva base de datos");
+				SetTitle("");				
 				SetModified(false);
 				LogLine("¡Nueva base de datos creada con éxito!");
 			}
@@ -753,36 +809,8 @@ namespace MathTextLearner
 		/// </param>
 		private void OnSaveDatabaseClicked(object sender, EventArgs arg)
 		{
-			ResponseType res = 
-				ConfirmDialog.Show(mainWindow, 
-				                   "¿Realmente quieres guardar "
-				                   +"los cambios de la base de datos?");
+			SaveDatabase();
 			
-			if(res == ResponseType.Yes)
-			{
-				if(databasePath != null)
-				{
-					// We save the database in the same path as it was loaded.
-					database.Save(databasePath);
-					
-					SetModified(false);
-					
-					OkDialog.Show(
-						mainWindow,
-						MessageType.Info,
-						"Base de datos guardada correctamente en «{0}»",
-						Path.GetFileName(databasePath));
-						
-					LogLine(
-						"¡Base de datos guardada con éxito en «{0}»!",
-						Path.GetFileName(databasePath));
-				}
-				else
-				{
-					// If it is a new database, we make use the save as method.
-					SaveDatabaseAs();
-				}
-			}
 			
 		}
 		
@@ -837,7 +865,7 @@ namespace MathTextLearner
 		private void OpenDatabase()
 		{			
 			// Preguntamos si se quiere salvar lo actual.
-			ShowDBSaveQuestionDialog();
+			SaveDatabase();
 			
 			// Abrimos la base de datos.
 			string file;		
@@ -859,8 +887,8 @@ namespace MathTextLearner
 				}
 				
 				SetDatabase(database);				
-					
-				this.SetTitle(file);
+				
+				SetTitle(file);
 				databaseModified=false;
 				
 				LogLine("¡Base de datos «"+ file+ "» cargada correctamente!");
@@ -874,6 +902,8 @@ namespace MathTextLearner
 			nextButtonsHB.Sensitive =false;
 			nextImageBtn.Sensitive = true;
 			
+			nextImageBtn.IsFocus = true;
+			
 			TreeIter iter;
 			imagesStore.GetIterFirst(out iter);			
 			imagesStore.Remove(ref iter);   
@@ -881,14 +911,62 @@ namespace MathTextLearner
 			if(imagesStore.IterNChildren() == 0)
 			{
 				
-				AllImagesLearned();
-				
+				AllImagesLearned();			
 				           
 			}
 			
 		}
 		
-		private void SaveDatabaseAs()
+		/// <summary>
+		/// Asks the user for confirmation and then saves a modified database.
+		/// </summary>
+		private void SaveDatabase()
+		{
+			if(databaseModified)
+			{
+				ResponseType res = 
+				ConfirmDialog.Show(mainWindow, 
+				                   "¿Realmente quieres guardar "
+				                   +"los cambios de la base de datos?");
+			
+				if(res == ResponseType.Yes)
+				{
+					if(!String.IsNullOrEmpty(databasePath))
+					{
+						// We save the database in the same path as it was loaded.
+						database.Save(databasePath);
+						
+						SetModified(false);
+						
+						OkDialog.Show(
+							mainWindow,
+							MessageType.Info,
+							"Base de datos guardada correctamente en «{0}»",
+							Path.GetFileName(databasePath));
+							
+						LogLine(
+							"¡Base de datos guardada con éxito en «{0}»!",
+							Path.GetFileName(databasePath));
+					}
+					else
+					{
+						// If it is a new database, we make use the save as method.
+						string path = SaveDatabaseAs();
+						if(!String.IsNullOrEmpty(path))
+							SetTitle(path);
+					}
+				}
+			}
+			
+		}
+		
+		/// <summary>
+		/// Launches the save as dialog.
+		/// </summary>
+		/// <returns>
+		/// The path the file was saved into, if any.
+		/// </returns>
+		private string SaveDatabaseAs()
 		{
 			string file;
 			if (DatabaseSaveDialog.Show(mainWindow,out file)
@@ -934,9 +1012,11 @@ namespace MathTextLearner
 						
 				
 					
-					SetModified(false);	
+					return file;
 				}
 			}
+			
+			return "";
 		}
 		
 		/// <summary>
@@ -1022,52 +1102,35 @@ namespace MathTextLearner
 		/// <param name="databaseName">
 		/// El nombre de la base de datos que se está editando.
 		/// </param>
-		private void SetTitle(string database)
+		private void SetTitle(string databasePath)
 		{
-			databasePath = database;
-			
-			if(database!=null)
+			if(!String.IsNullOrEmpty(databasePath))
 			{
 			    // Si tenemos base de datos, ponemos su nombre en el titulo.			
 			
 				mainWindow.Title= String.Format("{0} - {1}",
 				                                title,
-				                                Path.GetFileName(database));
+				                                Path.GetFileName(databasePath));
+				
+				this.databasePath = databasePath;
 			}
 			else
 			{
 				mainWindow.Title= String.Format("{0} - {1}",
 				                                title,
 				                                "Nueva base de datos");
+				
+				this.databasePath = "";
 			}
 		}
 		
 		
-		
-		/// <summary>
-		/// Metodo para facilitar el mostrar el cuadro de dialogo de confirmacion 
-		/// de guardar la base de datos.
-		/// </summary>
-		private void ShowDBSaveQuestionDialog()
-		{
-			if(databaseModified)
-			{
-				// Solo guardamos si el usuario quiere, y habiamos modificado.
-				ResponseType result = 
-					ConfirmDialog.Show(
-						mainWindow,
-						"¿Desea guardar los cambios en la base de datos?");
-					
-				if(result == ResponseType.Yes)
-				{
-					SaveDatabaseAs();
-				}
-			}
-		}	
+	
 #endregion Metodos privados
 		
 	}
 	
+#region Helper classes
 	/// <summary>
 	/// Encapsula el simbolo duplicado para poder pasarlo como argumento
 	/// al manejador del evento en el hilo de la interfaz.
@@ -1095,4 +1158,6 @@ namespace MathTextLearner
 		
 		
 	}
+	
+#endregion Helper classes
 }
