@@ -66,7 +66,7 @@ namespace MathTextRecognizer.Config
 			XmlSerializer serializer = new XmlSerializer(typeof(RecognizerConfig),
 			                                              GetSerializationOverrides());	
 			
-			string path = ConfigFileUtils.GetConfigFilePath("MathTextRecognizer");
+			string path = PathUtils.GetConfigFilePath("MathTextRecognizer");
 			
 			Stream configStream;
 			
@@ -97,7 +97,7 @@ namespace MathTextRecognizer.Config
 		{
 			XmlSerializer serializer = new XmlSerializer(typeof(RecognizerConfig),
 			                                              GetSerializationOverrides());	
-			string path = ConfigFileUtils.GetConfigFilePath("MathTextRecognizer");
+			string path = PathUtils.GetConfigFilePath("MathTextRecognizer");
 			
 			using(StreamWriter w = new StreamWriter(path,false))
 			{

@@ -1235,6 +1235,7 @@ MathML</property>
         <property name="tooltip" translatable="yes">Llama al programa aprendedor para aprender este símbolo</property>
         <property name="label" translatable="yes">Aprender la imagen...</property>
         <property name="use_underline">True</property>
+        <signal name="activate" handler="OnLearnImageItemActivate"/>
         <child internal-child="image">
           <widget class="GtkImage" id="menu-item-image8">
             <property name="visible">True</property>

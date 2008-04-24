@@ -18,7 +18,7 @@ namespace MathTextLibrary.Tests
 		[Test()]
 		public void LinuxConfigFilePathTest()
 		{
-			string path = ConfigFileUtils.GetConfigFilePath("MathTextLearner");
+			string path = PathUtils.GetConfigFilePath("MathTextLearner");
 			
 			
 			

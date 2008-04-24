@@ -70,7 +70,7 @@ namespace MathTextLearner.Config
 			XmlSerializer serializer = new XmlSerializer(typeof(LearnerConfig),
 			                                              GetSerializationOverrides());	
 			
-			string path = ConfigFileUtils.GetConfigFilePath("MathTextLearner");
+			string path = PathUtils.GetConfigFilePath("MathTextLearner");
 			
 			Stream configStream;
 			
@@ -100,7 +100,7 @@ namespace MathTextLearner.Config
 		{
 			XmlSerializer serializer = new XmlSerializer(typeof(LearnerConfig),
 			                                              GetSerializationOverrides());	
-			string path = ConfigFileUtils.GetConfigFilePath("MathTextLearner");
+			string path = PathUtils.GetConfigFilePath("MathTextLearner");
 			
 			using(StreamWriter w = new StreamWriter(path,false))
 			{

@@ -359,10 +359,7 @@ namespace MathTextLearner.Assistant
 		private void UpdatePreview(TreeIter image)
 		{
 			// Recuperamos la ruta de la imagen.
-			string path =(string)(imagesTV.Model.GetValue(image,2));
-			
-			Gdk.Pixbuf p = new Gdk.Pixbuf(path);
-			
+			Gdk.Pixbuf p =(Gdk.Pixbuf)(imagesTV.Model.GetValue(image,3));
 			originIA.Image = p;
 			
 			CreateProcessedPreview(p);

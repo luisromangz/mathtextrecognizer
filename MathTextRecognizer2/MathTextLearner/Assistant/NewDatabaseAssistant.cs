@@ -23,6 +23,12 @@ namespace MathTextLearner.Assistant
 		private BitmapProcessesStep processesStep;
 		private DatabasePropertiesStep propertiesStep;
 		
+		/// <summary>
+		/// <c>NewDatabaseAssistant</c>'s constructor.
+		/// </summary>
+		/// <param name="parent">
+		/// The window this dialog will be modal of.
+		/// </param>
 		public NewDatabaseAsisstant(Window parent) : 
 			base(parent, "Asistente de nueva base de datos de caracteres")
 		{
@@ -43,6 +49,28 @@ namespace MathTextLearner.Assistant
 			}
 			
 			this.Window.Icon = ImageResources.LoadPixbuf("database-new16");
+		}
+		
+		/// <summary>
+		/// <c>NewDatabaseAssistant</c>'s constructor.
+		/// </summary>
+		/// <param name="parent">
+		/// The window this dialog will be modal of.
+		/// </param>
+		/// <param name="startImage">
+		/// An image to be loaded by default.
+		/// </param>
+		/// <param name="imageName">
+		/// The added image's name.
+		/// </param>
+		public NewDatabaseAsisstant(Window parent, 
+		                            Gdk.Pixbuf startImage, 
+		                            string imageName)
+			: this(parent)
+		{
+			
+			fileStep.AddImageFile(startImage, imageName);
+			
 		}
 		
 #region Propiedades 

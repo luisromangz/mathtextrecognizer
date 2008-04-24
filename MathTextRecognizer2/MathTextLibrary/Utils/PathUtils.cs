@@ -1,4 +1,4 @@
-﻿// ConfigFileUtils.cs created with MonoDevelop
+// ConfigFileUtils.cs created with MonoDevelop
 // User: luis at 18:21 25/03/2008
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
@@ -13,7 +13,7 @@ namespace MathTextLibrary.Utils
 	/// <summary>
 	/// Contiene métodos para manejar el uso de archivos de configuracion
 	/// </summary>
-	public class ConfigFileUtils
+	public class PathUtils
 	{
 		/// <summary>
 		/// Este método permite recuperar la ruta del archivo de configuración
@@ -36,5 +36,7 @@ namespace MathTextLibrary.Utils
 			                     Path.DirectorySeparatorChar,
 			                     appName.ToLowerInvariant());
 		}
+		
+		
 	}
 }
