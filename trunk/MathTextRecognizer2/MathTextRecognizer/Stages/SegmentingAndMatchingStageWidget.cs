@@ -22,6 +22,9 @@ using MathTextLibrary.Controllers;
 using MathTextRecognizer.Controllers;
 
 using MathTextRecognizer.Stages.Nodes;
+using MathTextRecognizer.Stages.Dialogs;
+
+using MathTextLearner;
 
 namespace MathTextRecognizer.Stages
 {
@@ -404,22 +407,33 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		private void OnLearnImageItemActivate(object sender, EventArgs args)
 		{
+			// We ask for confirmation
 			ResponseType res = ConfirmDialog.Show(MainWindow.Window,
 			                                    "¿Realmente quieres añadir el símbolo «{0}» a una base de datos?",
 			                                    selectedNode.Name);
 			
 			if(res == ResponseType.Yes)
-			{
-				// TODO Choose database.
-				MathTextDatabase selectedDatabase = null;
-			
-				MathTextLearner.MainLearnerWindow learnerWindow =
-					new MathTextLearner.MainLearnerWindow(this.MainWindow.Window,
-					                                      selectedDatabase,
-					                                      selectedNode.MathTextBitmap.Pixbuf,
-					                                      selectedNode.Name);
+			{	
+				// We let the user select the database to be modified.
+				LearnSymbolDatabaseChooserDialog databaseDialog =
+					new LearnSymbolDatabaseChooserDialog(MainWindow.Window,
+					                                     MainWindow.DatabaseManager.DatabaseFilesInfo);
 				
+				res = databaseDialog.Show();
+				if(res == ResponseType.Ok)
+				{				
+					MathTextDatabase selectedDatabase = 
+						databaseDialog.ChoosenDatabase;
 				
+					MainLearnerWindow learnerWindow = 
+						new MainLearnerWindow(this.MainWindow.Window,
+						                      selectedDatabase,
+						                      selectedNode.MathTextBitmap.Pixbuf,
+						                      selectedNode.Name);
+				
+				}
+				
+				databaseDialog.Destroy();
 			}
 				                                      
 		}

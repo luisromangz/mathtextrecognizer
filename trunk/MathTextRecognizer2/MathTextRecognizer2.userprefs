@@ -1,45 +1,36 @@
 ﻿<UserCombinePreferences version="1.0" filename="/home/luis/MathTextRecognizer2/MathTextRecognizer2.mds">
-  <Files />
+  <Files>
+    <File name="MathTextRecognizer/Stages/SegmentingAndMatchingStageWidget.cs" line="90" column="25" />
+    <File name="MathTextRecognizer/Stages/RecognizingStageWidget.cs" line="9" column="36" />
+    <File name="MathTextRecognizer/Stages/Dialogs/LearnSymbolDatabaseChooserDialog.cs" line="131" column="26" />
+    <File name="MathTextRecognizer/MainRecognizerWindow.cs" line="434" column="36" />
+  </Files>
   <Views>
     <ViewMemento id="ProjectPad">
-      <Node expanded="True">
-        <Node name="MathTextCustomWidgets" expanded="True">
-          <Node name="Dialogs" expanded="True">
-            <Node name="SymbolLabel" expanded="True" />
-          </Node>
-          <Node name="Widgets" expanded="True">
-            <Node name="Logger" expanded="True" />
-          </Node>
-        </Node>
-        <Node name="MathTextLearner" expanded="True">
-          <Node name="Assistant" expanded="True">
-            <Node name="BitmapProcessesStepHelpers" expanded="True" />
-          </Node>
-        </Node>
-        <Node name="MathTextLibrary" expanded="True">
-          <Node name="Tests" expanded="True" />
-        </Node>
+      <Node expanded="True" selected="True">
         <Node name="MathTextRecognizer" expanded="True">
           <Node name="Resources" expanded="True" />
           <Node name="Controllers" expanded="True" />
-          <Node name="DatabaseManager" expanded="True" />
-          <Node name="Output" expanded="True" />
-          <Node name="Steps" expanded="True">
+          <Node name="Stages" expanded="True">
             <Node name="Dialogs" expanded="True" />
-            <Node name="SegmentingAndMatchingStepWidget.cs" selected="True" />
+            <Node name="Nodes" expanded="True" />
           </Node>
         </Node>
       </Node>
     </ViewMemento>
     <ViewMemento id="ClassPad">
-      <Node expanded="True" />
+      <Node expanded="True">
+        <Node name="MathTextRecognizer" expanded="True">
+          <Node name="MathTextRecognizer" expanded="True" />
+        </Node>
+      </Node>
     </ViewMemento>
     <ViewMemento id="MonoDevelop.NUnit.TestPad">
-      <Node expanded="True" />
+      <Node expanded="True" selected="True" />
     </ViewMemento>
   </Views>
   <Properties>
-    <Property key="ActiveWindow" value="" />
+    <Property key="ActiveWindow" value="/home/luis/MathTextRecognizer2/MathTextRecognizer/Stages/Dialogs/LearnSymbolDatabaseChooserDialog.cs" />
     <Property key="ActiveConfiguration" value="Debug" />
   </Properties>
 </UserCombinePreferences>
