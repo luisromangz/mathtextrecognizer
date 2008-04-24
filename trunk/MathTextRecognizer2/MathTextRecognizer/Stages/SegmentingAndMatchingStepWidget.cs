@@ -23,7 +23,7 @@ using MathTextRecognizer.Controllers;
 
 using MathTextRecognizer.Steps.Nodes;
 
-namespace MathTextRecognizer.Steps
+namespace MathTextRecognizer.Stages
 {
 	
 	/// <summary>
@@ -45,8 +45,6 @@ namespace MathTextRecognizer.Steps
 		
 		[WidgetAttribute]
 		private Notebook processedImageNB = null;
-		
-	
 		
 		[WidgetAttribute]
 		private ScrolledWindow scrolledtree = null;
