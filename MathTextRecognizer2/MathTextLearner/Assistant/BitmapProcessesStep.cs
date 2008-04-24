@@ -28,43 +28,38 @@ namespace MathTextLearner.Assistant
 #region Controles de Glade
 		
 		[Glade.WidgetAttribute]
-		private VBox processesRootWidget;
+		private VBox processesRootWidget = null;
 		
 		[Glade.WidgetAttribute]
-		private Button removeProcessBtn;		
+		private Button removeProcessBtn = null;		
 		
 		[Glade.WidgetAttribute]
-		private Button upProcessBtn;
+		private Button upProcessBtn = null;
 		
 		[Glade.WidgetAttribute]
-		private Button downProcessBtn;
+		private Button downProcessBtn = null;
 		
 		[Glade.WidgetAttribute]
-		private Button editProcessBtn;
+		private Button editProcessBtn = null;
+		
+		
 		
 		[Glade.WidgetAttribute]
-		private Button makeDefaultBtn;
-		
-		[Glade.WidgetAttribute]
-		private ScrolledWindow bitmapsProcessSW;
+		private ScrolledWindow bitmapsProcessSW = null;
 			
-		[Glade.WidgetAttribute]
-		private HBox previewHB;
-				
-		[Glade.WidgetAttribute]
-		private VButtonBox processBtnBox;
+		
+		
 		
 		[Glade.WidgetAttribute]
-		private Frame originFrame;
+		private Frame originFrame = null;
 		
 		[Glade.WidgetAttribute]
-		private Frame processedFrame;
+		private Frame processedFrame = null;
+		
+		
 		
 		[Glade.WidgetAttribute]
-		private Frame imagesFrame;
-		
-		[Glade.WidgetAttribute]
-		private TreeView imagesTV;
+		private TreeView imagesTV = null;
 		
 #endregion Controles de Glade
 		
@@ -408,7 +403,7 @@ namespace MathTextLearner.Assistant
     		   
 		    }
 			
-			int count=0;
+			int count = 0;
 			
 			foreach(TreeNode n in processesView.NodeStore)
 			{

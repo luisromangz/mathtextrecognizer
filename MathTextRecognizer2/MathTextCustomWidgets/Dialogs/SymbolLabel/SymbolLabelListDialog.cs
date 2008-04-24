@@ -17,16 +17,16 @@ namespace MathTextCustomWidgets.Dialogs.SymbolLabel
 	{
 	
 		[WidgetAttribute]
-		private Entry symbolEntry;
+		private Entry symbolEntry = null;
 		
 		[WidgetAttribute]
-		private Entry labelEntry;
+		private Entry labelEntry = null;
 		
 		[WidgetAttribute]
-		private Dialog symbolLabelEditorDialog;
+		private Dialog symbolLabelEditorDialog = null;
 		
 		[WidgetAttribute]
-		private Button okBtn;
+		private Button okBtn = null;
 		
 		/// <summary>
 		/// <c>SymbolLabelEditorDialog</c>'s constructor.

@@ -43,91 +43,83 @@ namespace MathTextLearner
 #region Glade widgets
 		//Aqui se declaran los controles de la interfaz.		
 		[WidgetAttribute]
-		private Gtk.Window mainWindow;
+		private Gtk.Window mainWindow = null;
 		
 		[WidgetAttribute]
-		private ImageMenuItem menuDatabase;
+		private ImageMenuItem menuDatabase = null;
 		
 		[WidgetAttribute]
-		private MenuItem menuLoad;
+		private MenuItem menuSaveAs = null;
 		
 		[WidgetAttribute]
-		private MenuItem menuSaveAs;
+		private MenuItem menuSave = null;
 		
 		[WidgetAttribute]
-		private MenuItem menuSave;
+		private MenuItem menuOpen = null;
 		
 		[WidgetAttribute]
-		private MenuItem menuOpen;
+		private Toolbar toolbar = null;
 		
 		[WidgetAttribute]
-		private Toolbar toolbar;
+		private ToolButton toolNewDatabase = null;
 		
 		[WidgetAttribute]
-		private ToolButton toolNewDatabase;
+		private ToolButton toolSave = null;
+			
+		[WidgetAttribute]
+		private HBox hboxSymbolWidgets = null;
 		
 		[WidgetAttribute]
-		private ToolButton toolSave;
+		private Frame frameOriginal = null;
 		
 		[WidgetAttribute]
-		private Button btnLearn;
+		private Frame frameProcessed = null;				
 		
 		[WidgetAttribute]
-		private HBox hboxSymbolWidgets;
+		private Button btnNext = null;
 		
 		[WidgetAttribute]
-		private Frame frameOriginal;
+		private HBox nextButtonsHB = null;
 		
 		[WidgetAttribute]
-		private Frame frameProcessed;				
+		private Alignment symbolEditorPlaceholder = null;
 		
 		[WidgetAttribute]
-		private Button btnNext;
+		private Expander expanderLog= null;
 		
 		[WidgetAttribute]
-		private HBox nextButtonsHB;
+		private IconView imagesIV = null;
 		
 		[WidgetAttribute]
-		private Alignment symbolEditorPlaceholder;
+		private VBox imagesVB = null;
 		
 		[WidgetAttribute]
-		private Expander expanderLog;
+		private ToolButton toolSaveAs = null;
+		
+			
+		[WidgetAttribute]
+		private Button removeImageBtn = null;
 		
 		[WidgetAttribute]
-		private IconView imagesIV;
+		private Button nextImageBtn = null;
 		
 		[WidgetAttribute]
-		private VBox imagesVB;
+		private Button editPropertiesBtn = null;
 		
 		[WidgetAttribute]
-		private ToolButton toolSaveAs;
+		private HBox imagesHB = null;
 		
 		[WidgetAttribute]
-		private Button addImageBtn;
+		private HBox buttonsHB = null;
 		
 		[WidgetAttribute]
-		private Button removeImageBtn;
+		private HBox messageInfoHB = null;
 		
 		[WidgetAttribute]
-		private Button nextImageBtn;
+		private Label databaseDescriptionLabel = null;
 		
 		[WidgetAttribute]
-		private Button editPropertiesBtn;
-		
-		[WidgetAttribute]
-		private HBox imagesHB;
-		
-		[WidgetAttribute]
-		private HBox buttonsHB;
-		
-		[WidgetAttribute]
-		private HBox messageInfoHB;
-		
-		[WidgetAttribute]
-		private Label databaseDescriptionLabel;
-		
-		[WidgetAttribute]
-		private Label databaseTypeLabel;
+		private Label databaseTypeLabel = null;
 		
 #endregion Glade widgets	
 		
@@ -242,6 +234,8 @@ namespace MathTextLearner
 				}				
 				
 				assistant.Destroy();
+				
+				
 			}
 		
 		}

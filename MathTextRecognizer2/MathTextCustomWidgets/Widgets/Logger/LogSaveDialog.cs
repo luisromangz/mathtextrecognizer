@@ -15,13 +15,13 @@ namespace MathTextCustomWidgets.Widgets.Logger
 	{
 #region Glade Widgets
 		[Glade.WidgetAttribute]
-		private FileChooserDialog logSaveDialog;
+		private FileChooserDialog logSaveDialog = null;
 		
 		[Glade.WidgetAttribute]
-		private Button btnSave;
+		private Button btnSave = null;
 		
 		[Glade.WidgetAttribute]
-		private Button btnCancel;
+		private Button btnCancel = null;
 		
 #endregion Glade Widgets
 		

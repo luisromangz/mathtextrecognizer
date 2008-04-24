@@ -16,13 +16,13 @@ namespace MathTextCustomWidgets.Dialogs
 		#region Atributos de glade
 		
 		[Glade.WidgetAttribute]
-		private FileChooserDialog imageLoadDialog;
+		private FileChooserDialog imageLoadDialog = null;
 		
 		[Glade.WidgetAttribute]
-		private Button okButton;
+		private Button okButton = null;
 		
 		[Glade.WidgetAttribute]
-		private Button cancelButton;
+		private Button cancelButton = null;
 		
 		#endregion Atributos de glade
 	

@@ -16,13 +16,13 @@ namespace MathTextCustomWidgets.Widgets
 	public class SymbolLabelEditorWidget : Gtk.Alignment
 	{
 		[Glade.WidgetAttribute]
-		private Gtk.ComboBoxEntry symbolsCBEntry;
+		private Gtk.ComboBoxEntry symbolsCBEntry = null;
 		
 		[Glade.WidgetAttribute]
-		private Gtk.HBox symbolLabelEditorHB;
+		private Gtk.HBox symbolLabelEditorHB = null;
 		
 		[Glade.WidgetAttribute]
-		private Gtk.ListStore model;
+		private Gtk.ListStore model = null;
 		
 		public SymbolLabelEditorWidget()
 			: base(0.5f, 0.5f, 1.0f, 1.0f)

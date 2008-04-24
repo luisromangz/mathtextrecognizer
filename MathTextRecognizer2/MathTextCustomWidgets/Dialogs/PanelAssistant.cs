@@ -16,19 +16,19 @@ namespace MathTextCustomWidgets.Dialogs
 		#region Widgets de Glade
 		
 		[Glade.WidgetAttribute]
-		private Button acceptButton;
+		private Button acceptButton = null;
 		
 		[Glade.WidgetAttribute]
-		private Button backButton;		
+		private Button backButton = null;		
 		
 		[Glade.WidgetAttribute]
-		private Dialog panelAssistant;
+		private Dialog panelAssistant = null;
 		
 		[Glade.WidgetAttribute]
-		private Button nextButton;
+		private Button nextButton = null;
 		
 		[Glade.WidgetAttribute]
-		private HBox stepsHBox;
+		private HBox stepsHBox = null;
 		
 		#endregion Widgets de Glade
 		

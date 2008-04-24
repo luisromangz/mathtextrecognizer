@@ -83,6 +83,18 @@ namespace MathTextRecognizer.DatabaseManager
 			else
 				return info.path == this.path;
 		}
+		
+		/// <summary>
+		/// Implements the hash code method.
+		/// </summary>
+		/// <returns>
+		/// The hash number for the <c>DatabaseFileInfo</c>'s instance.
+		/// </returns>
+		public override int GetHashCode ()
+		{
+			return this.path.GetHashCode();
+		}
+
 
 			
 	}

@@ -14,7 +14,7 @@ namespace MathTextCustomWidgets.Dialogs
 	public class AppInfoDialog
 	{
 		[WidgetAttribute]
-		private Gtk.AboutDialog appInfoDialog;	
+		private Gtk.AboutDialog appInfoDialog = null;	
 		
 		private AppInfoDialog(Window parent, string title, string msg)
 		{

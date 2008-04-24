@@ -26,19 +26,19 @@ namespace MathTextRecognizer.DatabaseManager
 		
 #region Widgets Glade
 		[Glade.WidgetAttribute]
-		private Dialog databaseManagerDialog;
+		private Dialog databaseManagerDialog = null;
 		
 		[Glade.WidgetAttribute]
-		private Button removeBtn;
+		private Button removeBtn = null;
 		
 		[Glade.WidgetAttribute]
-		private Button propertiesBtn;
+		private Button propertiesBtn = null;
 		
 		[Glade.WidgetAttribute]
-		private TreeView databasesTV;
+		private TreeView databasesTV = null;
 		
 		[Glade.WidgetAttribute]
-		private Button closeBtn;
+		private Button closeBtn = null;
 		
 		
 #endregion Widgets Glade

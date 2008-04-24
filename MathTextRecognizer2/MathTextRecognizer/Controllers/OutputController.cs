@@ -25,11 +25,7 @@ namespace MathTextRecognizer.Controllers
 	/// </summary>
 	public class OutputController
 	{
-		//La salida en MathML
-		private string mathMLPOutput;
-		//La salida en LaTeX
-		private string latexOutput;
-		
+				
 		//La imagen original que contiene la formula que hemos reconocido/segmentado,
 		//con todos sus hijos, siendo, en efecto, la raiz de un arbol de imagenes.
 		private MathTextBitmap startImage;
@@ -75,29 +71,6 @@ namespace MathTextRecognizer.Controllers
 			if(OutputCreated!=null)
 			{
 				OutputCreated(this,EventArgs.Empty);
-			}
-		}
-		
-		/// <value>
-		/// Contiener la salida MathML generada a partir de la formula.
-		/// </value>
-		public string MathMLOutput
-		{			
-			get
-			{
-				return mathMLPOutput;				
-			}
-		}
-		
-		/// <value>
-		/// Propiedad de solo lectura que nos permite recuperar la salida
-		/// LaTeX generada a partir de la formula.
-		/// </value>
-		public string LaTeXOutput
-		{			
-			get
-			{
-				return latexOutput;				
 			}
 		}
 		

@@ -21,13 +21,13 @@ namespace MathTextLearner.Assistant
 #region Controles de Glade
 		
 		[Glade.WidgetAttribute]
-		private VBox fileRootWidget;
+		private VBox fileRootWidget = null;
 		
 		[Glade.WidgetAttribute]
-		private Button removeButton;
+		private Button removeButton = null;
 		
 		[Glade.WidgetAttribute]
-		private IconView filesIconView;
+		private IconView filesIconView = null;
 
 		
 #endregion Controles de Glade
@@ -220,8 +220,6 @@ namespace MathTextLearner.Assistant
 								
 				string []  extensions = 
 				     new string []{"*.jpg", "*.JPG","*.png","*.PNG"};
-				
-				List<string> files = new List<string>();
 				
 				foreach (string extension in extensions)
 				{

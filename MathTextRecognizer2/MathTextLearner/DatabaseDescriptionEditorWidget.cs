@@ -17,13 +17,13 @@ namespace MathTextLearner
 	public class DatabaseDescritpionEditorWidget : Gtk.Alignment
 	{
 		[Glade.WidgetAttribute]
-		private VBox databaseDescriptionEditorVB;
+		private VBox databaseDescriptionEditorVB = null;
 		
 		[Glade.WidgetAttribute]
-		private Entry shortDescEntry;
+		private Entry shortDescEntry = null;
 		
 		[Glade.WidgetAttribute]
-		private TextView longDescTextV;
+		private TextView longDescTextV = null;
 		
 		
 		public DatabaseDescritpionEditorWidget() : base(0.5f, 0.5f, 1.0f, 1.0f)

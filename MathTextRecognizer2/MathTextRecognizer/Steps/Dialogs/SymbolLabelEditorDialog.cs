@@ -25,22 +25,19 @@ namespace MathTextRecognizer.Steps.Dialogs
 #region Glade widgets
 		
 		[WidgetAttribute]
-		private Dialog symbolLabelEditorDialog;
+		private Dialog symbolLabelEditorDialog = null;
 		
 		[WidgetAttribute]
-		private Button closeButton;
+		private Button okButton = null;
 		
 		[WidgetAttribute]
-		private Button okButton;
+		private VBox symbolEditorPlaceholder = null;
 		
 		[WidgetAttribute]
-		private VBox symbolEditorPlaceholder;
+		private Alignment imagePlaceholder = null;
 		
 		[WidgetAttribute]
-		private Alignment imagePlaceholder;
-		
-		[WidgetAttribute]
-		private Label imageNameLabel;
+		private Label imageNameLabel = null;
 		
 #endregion Glade widgets
 		
