@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MathTextDatabase xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <BitmapFixedThresholder>
+    <Threshold>207</Threshold>
+  </BitmapFixedThresholder>
+  <BitmapFramer />
+  <BitmapScaler>
+    <NewSize>50</NewSize>
+  </BitmapScaler>
+  <BitmapFixedThresholder>
+    <Threshold>207</Threshold>
+  </BitmapFixedThresholder>
+  <BitmapStentifordThinner>
+    <PreSmoothing>false</PreSmoothing>
+  </BitmapStentifordThinner>
+  <CharacteristicHashDatabase />
+</MathTextDatabase>
