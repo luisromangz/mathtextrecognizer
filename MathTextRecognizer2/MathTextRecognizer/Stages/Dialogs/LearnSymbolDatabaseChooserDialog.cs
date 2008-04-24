@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using Glade;
 using Gtk;
 
+using MathTextCustomWidgets.Dialogs;
+
 using MathTextLibrary.Databases;
 
 using MathTextRecognizer.DatabaseManager;
@@ -47,7 +49,7 @@ namespace MathTextRecognizer.Stages.Dialogs
 		{
 			XML gxml = new XML(null, 
 			                   "mathtextrecognizer.glade", 
-			                   "learnsymbolDataabseChooserDialog",
+			                   "learnSymbolDatabaseChooserDialog",
 			                   null);
 			
 			gxml.Autoconnect(this);
@@ -73,7 +75,10 @@ namespace MathTextRecognizer.Stages.Dialogs
 			
 			// We add the option of creating a new database.
 			newRB = new RadioButton(groupRB, "Crear nueva base de datos");
+			newRB.Clicked += new EventHandler(OnOptionRBClicked);
 			optionsVB.Add(newRB);
+			
+			learnSymbolDatabaseChooserDialog.ShowAll();
 		}
 		
 #region Properties
@@ -132,7 +137,15 @@ namespace MathTextRecognizer.Stages.Dialogs
 		/// </returns>
 		private bool HasErrors()
 		{
-			return true;
+			if(choosenDatabase == null && !newRB.Active)
+			{
+				OkDialog.Show(learnSymbolDatabaseChooserDialog,
+				              MessageType.Warning,
+				              "Debes seleccionar una opción para continuar.");
+				return true;
+			}
+			
+			return false;
 		}
 		
 		/// <summary>
@@ -149,6 +162,10 @@ namespace MathTextRecognizer.Stages.Dialogs
 			if(HasErrors())
 			{
 				learnSymbolDatabaseChooserDialog.Respond(ResponseType.None);
+			}			
+			else
+			{
+				learnSymbolDatabaseChooserDialog.Respond(ResponseType.Ok);
 			}
 		}
 		
@@ -163,7 +180,16 @@ namespace MathTextRecognizer.Stages.Dialogs
 		/// </param>
 		private void OnOptionRBClicked(object sender, EventArgs args)
 		{
+			RadioButton clickedRB = (RadioButton)sender;
 			
+			if(clickedRB == newRB)
+			{
+				choosenDatabase = null;
+			}
+			else
+			{
+				choosenDatabase = databaseHash[clickedRB.Label];
+			}
 		}
 		
 #endregion Private methods
