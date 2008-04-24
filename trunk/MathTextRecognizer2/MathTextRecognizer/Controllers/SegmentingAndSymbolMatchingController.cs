@@ -14,7 +14,7 @@ using MathTextLibrary.Projection;
 
 using MathTextLibrary.Controllers;
 
-using MathTextRecognizer.Steps.Nodes;
+using MathTextRecognizer.Stages.Nodes;
 
 namespace MathTextRecognizer.Controllers
 {

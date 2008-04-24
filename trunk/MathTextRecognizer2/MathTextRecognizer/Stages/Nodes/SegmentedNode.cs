@@ -12,7 +12,7 @@ using MathTextLibrary.Bitmap;
 using MathTextLibrary.Controllers;
 using MathTextLibrary.Utils;
 
-namespace MathTextRecognizer.Steps.Nodes
+namespace MathTextRecognizer.Stages.Nodes
 {
 	
 	/// <summary>

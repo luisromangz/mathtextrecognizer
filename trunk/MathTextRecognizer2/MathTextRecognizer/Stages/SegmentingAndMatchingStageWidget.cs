@@ -21,7 +21,7 @@ using MathTextLibrary.Controllers;
 
 using MathTextRecognizer.Controllers;
 
-using MathTextRecognizer.Steps.Nodes;
+using MathTextRecognizer.Stages.Nodes;
 
 namespace MathTextRecognizer.Stages
 {
@@ -30,7 +30,7 @@ namespace MathTextRecognizer.Stages
 	/// Esta clase implementa el widget que se usa para mostrar el 
 	/// proceso de segmentacion y reconocimiento.
 	/// </summary>
-	public class SegmentingAndMatchingStepWidget : RecognizingStepWidget
+	public class SegmentingAndMatchingStageWidget : RecognizingStageWidget
 	{
 #region Widgets
 		[WidgetAttribute]
@@ -91,7 +91,7 @@ namespace MathTextRecognizer.Stages
 		
 #endregion Atributos.
 		
-		public SegmentingAndMatchingStepWidget(MainRecognizerWindow window)
+		public SegmentingAndMatchingStageWidget(MainRecognizerWindow window)
 			: base(window)
 		{
 			Glade.XML gxml = new Glade.XML("mathtextrecognizer.glade",
