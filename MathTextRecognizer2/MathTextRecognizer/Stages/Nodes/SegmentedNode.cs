@@ -29,7 +29,7 @@ namespace MathTextRecognizer.Stages.Nodes
 		private NodeView view;
 		private string position;
 		
-		List<MathSymbol> symbols;
+		private List<MathSymbol> symbols;
 		
 		/// <summary>
 		/// El constructor de <code>FormulaNode</code>
@@ -141,12 +141,18 @@ namespace MathTextRecognizer.Stages.Nodes
 			}
 		}
 
-		public NodeView View {
-			get {
+		/// <value>
+		/// Contains the <c>NodeView</c> instance in which the node is shown.
+		/// </value>
+		public NodeView View 
+		{
+			get 
+			{
 				return view;
 			}
 		}
-		
+
+	
 		/// <summary>
 		/// Metodo que maneja el evento provocado al asociarse un simbolo 
 		/// al <code>MathTextBitmap</code>.
@@ -178,7 +184,16 @@ namespace MathTextRecognizer.Stages.Nodes
 			
 		}
 		
-		public void AddSegmentedChildThread(object sender, EventArgs arg)
+		/// <summary>
+		/// Auxiliary method used to add the node in the main app's thread.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="arg">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void AddSegmentedChildThread(object sender, EventArgs arg)
 		{
 			AddNodeArgs a = arg as AddNodeArgs;
 			this.AddChild(a.Node);

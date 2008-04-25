@@ -195,9 +195,9 @@ namespace MathTextCustomWidgets.Dialogs
 				// Activamos o desactivamos los botones segun corresponda.
 				panelIdx = idx;
 				backButton.Sensitive = idx > 0;
-				nextButton.Sensitive = idx < steps.Count -1;
+				nextButton.Visible = idx < steps.Count -1;
 				
-				acceptButton.Sensitive = idx == steps.Count -1;
+				acceptButton.Visible = idx == steps.Count -1;
 				
 				// Mostramos los paneles adecuados.
 				int i = 0;
