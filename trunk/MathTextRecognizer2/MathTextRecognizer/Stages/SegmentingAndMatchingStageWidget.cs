@@ -75,7 +75,8 @@ namespace MathTextRecognizer.Stages
 		
 #endregion Widgets
 		
-#region Atributos
+#region Attributes
+		
 		private NodeStore store;
 		private NodeView treeview;	
 		
@@ -92,7 +93,7 @@ namespace MathTextRecognizer.Stages
 		// Needed by the popup actions' handler methods
 		private SegmentedNode selectedNode;
 		
-#endregion Atributos.
+#endregion Attributes
 		
 		public SegmentingAndMatchingStageWidget(MainRecognizerWindow window)
 			: base(window)
@@ -420,6 +421,8 @@ namespace MathTextRecognizer.Stages
 					                                     MainWindow.DatabaseManager.DatabaseFilesInfo);
 				
 				res = databaseDialog.Show();
+				databaseDialog.Destroy();
+				
 				if(res == ResponseType.Ok)
 				{				
 					MathTextDatabase selectedDatabase = 
@@ -433,7 +436,7 @@ namespace MathTextRecognizer.Stages
 				
 				}
 				
-				databaseDialog.Destroy();
+				
 			}
 				                                      
 		}
@@ -584,7 +587,7 @@ namespace MathTextRecognizer.Stages
 		}
 		
 		/// <summary>
-		/// Handles 
+		/// Handles the selection of the "force segmenting" context menu item.
 		/// </summary>
 		/// <param name="sender">
 		/// A <see cref="System.Object"/>
