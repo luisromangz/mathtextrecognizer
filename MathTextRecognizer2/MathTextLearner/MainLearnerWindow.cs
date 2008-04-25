@@ -599,7 +599,7 @@ namespace MathTextLearner
 		}
 		
 		/// <summary>
-		/// Handles the row delelte image tree model event.
+		/// Handles the row deletion event of the image tree model.
 		/// </summary>
 		/// <param name="s">
 		/// A <see cref="System.Object"/>

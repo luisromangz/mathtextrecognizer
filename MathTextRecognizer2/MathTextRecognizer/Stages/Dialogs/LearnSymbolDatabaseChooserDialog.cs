@@ -32,6 +32,8 @@ namespace MathTextRecognizer.Stages.Dialogs
 		private VBox optionsVB = null;
 		
 		
+		private Tooltips optionsTooltips;
+		
 		private RadioButton newRB;
 		
 		private Dictionary<string, MathTextDatabase> databaseHash;
@@ -60,6 +62,8 @@ namespace MathTextRecognizer.Stages.Dialogs
 			
 			databaseHash = new Dictionary<string,MathTextDatabase>();
 			
+			optionsTooltips = new Tooltips();
+			
 			RadioButton groupRB = new RadioButton("group");
 			foreach(DatabaseFileInfo databaseInfo in databases)
 			{
@@ -70,6 +74,15 @@ namespace MathTextRecognizer.Stages.Dialogs
 				optionRB.Clicked += new EventHandler(OnOptionRBClicked);
 				optionsVB.Add(optionRB);
 				
+				MathTextDatabase database = databaseInfo.Database;
+			
+				
+				optionsTooltips.SetTip(optionRB, 
+				                       String.Format("{0}\n{1}",
+				                                     database.ShortDescription,
+				                                     database.Description),
+				                       "database description");
+				
 				databaseHash.Add(label, databaseInfo.Database);
 			}
 			
@@ -77,6 +90,11 @@ namespace MathTextRecognizer.Stages.Dialogs
 			newRB = new RadioButton(groupRB, "Crear nueva base de datos");
 			newRB.Clicked += new EventHandler(OnOptionRBClicked);
 			optionsVB.Add(newRB);
+			optionsTooltips.SetTip(newRB, 
+			                       "Te permite crear una base de datos nueva",
+			                       "new databse description");
+			
+			optionsTooltips.Enable();
 			
 			learnSymbolDatabaseChooserDialog.ShowAll();
 		}
