@@ -88,6 +88,15 @@ namespace MathTextRecognizer.Stages
 		/// </summary>
 		public abstract void ResetState();
 		
+		/// <summary>
+		/// Selects the next recognizing step.
+		/// </summary>
+		public void NextStage()			
+		{
+			Gtk.Notebook parentNB = (Gtk.Notebook)(this.Parent);
+			parentNB.NextPage();
+		}
+		
 		
 	}
 }

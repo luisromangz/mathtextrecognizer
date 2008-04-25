@@ -76,11 +76,12 @@ namespace MathTextRecognizer
 		[WidgetAttribute]
 		private Notebook recognizingStepsNB = null;
 		
+		[WidgetAttribute]
+		private Label stageNameLabel = null;
+		
 		#endregion Glade-Widgets
 		
 		#region Otros atributos
-		
-		
 		
 		private bool recognizementFinished;
 		
@@ -89,8 +90,6 @@ namespace MathTextRecognizer
 		private LogView logView;
 		
 		private const string title="Reconocedor de caracteres matemáticos - ";	
-		
-		
 		
 		private DatabaseManagerDialog databaseManagerDialog;
 		
@@ -102,9 +101,6 @@ namespace MathTextRecognizer
 		{			
 			Application.Init();
 			new MainRecognizerWindow();
-			
-			
-			
 			Application.Run();
 		}
 		
@@ -118,7 +114,7 @@ namespace MathTextRecognizer
 			                                "mainWindow",
 			                                null);
 			gxml.Autoconnect (this);			
-			this.Initialize();			
+			this.InitializeWidgets();			
 			
 			databaseManagerDialog = new DatabaseManagerDialog(this.mainWindow);
 			databaseManagerDialog.DatabaseListChanged += 
@@ -222,7 +218,7 @@ namespace MathTextRecognizer
 		/// <summary>
 		/// Para facilitar la inicializacion de los widgets.
 		/// </summary>
-		private void Initialize()
+		private void InitializeWidgets()
 		{		
 			mainWindow.Title = title + "Sin imagen";
 			
@@ -251,6 +247,10 @@ namespace MathTextRecognizer
 			recognizingStepsNB.AppendPage(segmentingAndMatchingStageWidget,
 			                              new Label("Segmentación y "
 			                                        +"reconocimiento de caracteres"));
+			
+			recognizingStepsNB.AppendPage(new SegmentingAndMatchingStageWidget(this),
+			                              new Label("buh"));
+			recognizingStepsNB.Page = 0;
 			
 			mainWindow.ShowAll();
 		}
@@ -330,6 +330,27 @@ namespace MathTextRecognizer
 		private void OnNewSessionClicked(object sender, EventArgs arg)
 		{			
 			System.Diagnostics.Process.Start(System.Environment.CommandLine);			
+		}
+		
+		/// <summary>
+		/// Handles the change in the notebook holding the widgets for the
+		/// recognizing stages, so we can chow its name in a label.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="arg">
+		/// A <see cref="ChangeCurrentPageArgs"/>
+		/// </param>
+		private void OnRecognizingStepsNBSwitchPage(object sender,
+		                                            SwitchPageArgs arg)
+		{
+			
+			Widget page = 
+				recognizingStepsNB.GetNthPage(recognizingStepsNB.Page);
+			stageNameLabel.Markup = 
+				String.Format("<b><i>{0}</i></b>",
+				              recognizingStepsNB.GetTabLabelText(page));
 		}
 		
 		/// <summary>

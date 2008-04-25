@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.3 on Tue Apr 22 13:51:05 2008 -->
+<!--Generated with glade3 3.4.3 on Fri Apr 25 11:47:16 2008 -->
 <glade-interface>
   <widget class="GtkWindow" id="logViewWidget">
     <child>
@@ -86,8 +86,8 @@
     <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
     <property name="type_hint">GDK_WINDOW_TYPE_HINT_NORMAL</property>
     <property name="has_separator">False</property>
-    <property name="action">GTK_FILE_CHOOSER_ACTION_SAVE</property>
     <property name="do_overwrite_confirmation">True</property>
+    <property name="action">GTK_FILE_CHOOSER_ACTION_SAVE</property>
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
@@ -439,8 +439,6 @@
             </child>
             <child>
               <widget class="GtkButton" id="nextButton">
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
                 <property name="label" translatable="yes">gtk-go-forward</property>
                 <property name="use_stock">True</property>
                 <property name="image_position">GTK_POS_RIGHT</property>
@@ -453,8 +451,6 @@
             </child>
             <child>
               <widget class="GtkButton" id="acceptButton">
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
                 <property name="label" translatable="yes">gtk-ok</property>
                 <property name="use_stock">True</property>
                 <property name="response_id">0</property>
@@ -542,7 +538,7 @@
                 <property name="can_focus">True</property>
                 <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
                 <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-                <property name="shadow_type">GTK_SHADOW_IN</property>
+                <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
                 <child>
                   <widget class="GtkTreeView" id="symbolLabelsTV">
                     <property name="visible">True</property>

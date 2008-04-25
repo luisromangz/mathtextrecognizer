@@ -93,6 +93,8 @@ namespace MathTextRecognizer.Stages
 		// Needed by the popup actions' handler methods
 		private SegmentedNode selectedNode;
 		
+		private SegmentedNode rootNode;
+		
 #endregion Attributes
 		
 		public SegmentingAndMatchingStageWidget(MainRecognizerWindow window)
@@ -157,6 +159,9 @@ namespace MathTextRecognizer.Stages
 				                  treeview);
 			    
 			store.AddNode(node);
+			
+			rootNode = node;
+			
 			controller.StartNode = node;
 
 			Log("¡Archivo de imagen «{0}» cargado correctamente!", filename);
@@ -327,6 +332,80 @@ namespace MathTextRecognizer.Stages
 			LogAreaExpanded=false;
 			alignNextButtons.Sensitive=false;
 			NextStep(ControllerStepMode.UntilEnd);
+		}
+		
+		/// <summary>
+		/// Handles the click on the "go to tokenizer" button.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="arg">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnGoToTokenizerBtnClicked(object sender, EventArgs arg)
+		{
+			
+			// We have to check the leaf nodes for problems.
+			
+			SegmentedNode analizedNode = rootNode;
+			List<string> errors = CheckNode(analizedNode);
+			
+			if(errors.Count == 0)
+			{
+				NextStage();
+			}			
+			else
+			{
+				string errorss = String.Join("\n", errors.ToArray());
+				OkDialog.Show(this.MainWindow.Window,
+				              MessageType.Info,
+				              "Para continuar a la siguente fase de procesado,"
+				              +"debes solucionar los siguentes problemas:\n\n{0}",
+				              errorss);
+			}
+		}
+		
+		/// <summary>
+		/// Checks a node to see if its a leaf node, and if so it has some
+		/// label related issues.
+		/// </summary>
+		/// <param name="analizedNode">
+		/// The node to be analized
+		/// </param>
+		/// <returns>
+		/// A list with the problems found.
+		/// </returns>
+		private List<string> CheckNode(SegmentedNode analizedNode)
+		{
+			List<string> errors = new List<string>();
+			if(analizedNode.ChildCount>0)
+			{
+				for(int i=0; i<analizedNode.ChildCount; i++)
+				{
+					SegmentedNode node = (SegmentedNode)(analizedNode[i]);
+					errors.AddRange(CheckNode(node));
+				}
+				
+			}
+			else
+			{
+				// We have a problem if we have many symbols in a node, or
+				// we don't have any.
+				
+				if(analizedNode.Symbols.Count ==0)
+				{
+					errors.Add(String.Format("· El nodo «{0}» no tiene etiqueta.",
+					                         analizedNode.Name));
+				}
+				else if(analizedNode.Symbols.Count > 1)
+				{
+					errors.Add(String.Format("· El nodo «{0}» tiene varias etiquetas.",
+					                         analizedNode.Name));					
+				}
+			}
+			
+			return errors;
 		}
 		
 		/// <summary>

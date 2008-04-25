@@ -273,6 +273,26 @@
           </packing>
         </child>
         <child>
+          <widget class="GtkAlignment" id="alignment16">
+            <property name="visible">True</property>
+            <property name="top_padding">5</property>
+            <child>
+              <widget class="GtkLabel" id="stageNameLabel">
+                <property name="visible">True</property>
+                <property name="xalign">0</property>
+                <property name="yalign">1</property>
+                <property name="xpad">10</property>
+                <property name="label" translatable="yes">&lt;b&gt;&lt;i&gt;Meh&lt;/i&gt;&lt;/b&gt;</property>
+                <property name="use_markup">True</property>
+              </widget>
+            </child>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+        <child>
           <widget class="GtkAlignment" id="alignment10">
             <property name="visible">True</property>
             <property name="top_padding">2</property>
@@ -282,6 +302,9 @@
               <widget class="GtkNotebook" id="recognizingStepsNB">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="show_tabs">False</property>
+                <property name="show_border">False</property>
+                <signal name="switch_page" handler="OnRecognizingStepsNBSwitchPage"/>
                 <child>
                   <placeholder/>
                 </child>
@@ -299,7 +322,7 @@
             </child>
           </widget>
           <packing>
-            <property name="position">3</property>
+            <property name="position">4</property>
           </packing>
         </child>
         <child>
@@ -321,7 +344,7 @@
           </widget>
           <packing>
             <property name="expand">False</property>
-            <property name="position">4</property>
+            <property name="position">5</property>
           </packing>
         </child>
       </widget>
@@ -334,6 +357,7 @@
     <property name="title" translatable="yes">Resultado del procesado</property>
     <property name="resizable">False</property>
     <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+    <property name="has_separator">False</property>
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
@@ -389,7 +413,7 @@ MathML</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
                     <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-                    <property name="shadow_type">GTK_SHADOW_IN</property>
+                    <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
                     <child>
                       <widget class="GtkTextView" id="textviewOutput">
                         <property name="visible">True</property>
@@ -437,6 +461,7 @@ MathML</property>
               <widget class="GtkButton" id="btnSave">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="has_focus">True</property>
                 <property name="response_id">0</property>
                 <signal name="clicked" handler="OnBtnSaveClicked"/>
                 <child>
@@ -513,7 +538,7 @@ MathML</property>
                 <property name="can_focus">True</property>
                 <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
                 <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-                <property name="shadow_type">GTK_SHADOW_IN</property>
+                <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
                 <child>
                   <widget class="GtkTreeView" id="databasesTV">
                     <property name="visible">True</property>
@@ -789,7 +814,7 @@ MathML</property>
             <property name="border_width">5</property>
             <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
             <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-            <property name="shadow_type">GTK_SHADOW_IN</property>
+            <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
             <child>
               <placeholder/>
             </child>
@@ -973,6 +998,7 @@ MathML</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="response_id">0</property>
+                            <signal name="clicked" handler="OnGoToTokenizerBtnClicked"/>
                             <child>
                               <widget class="GtkAlignment" id="alignment15">
                                 <property name="visible">True</property>
@@ -1358,6 +1384,7 @@ MathML</property>
               <widget class="GtkButton" id="okButton">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
+                <property name="has_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="label" translatable="yes">gtk-ok</property>
                 <property name="use_stock">True</property>
@@ -1433,7 +1460,7 @@ MathML</property>
             <child>
               <widget class="GtkButton" id="okBtn">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="is_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="label" translatable="yes">gtk-ok</property>
                 <property name="use_stock">True</property>
