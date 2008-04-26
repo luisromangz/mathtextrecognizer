@@ -108,9 +108,7 @@ namespace MathTextLearner
 		
 		[WidgetAttribute]
 		private HBox imagesHB = null;
-		
-		[WidgetAttribute]
-		private HBox buttonsHB = null;
+	
 		
 		[WidgetAttribute]
 		private HBox messageInfoHB = null;
@@ -166,7 +164,7 @@ namespace MathTextLearner
 		/// <summary>
 		/// <c>MainLearnerWindow</c>'s default constructor.
 		/// </summary>
-		public MainLearnerWindow() : this(null, null, null, null)
+		public MainLearnerWindow() : this(null, null,null, null, null)
 		{
 			
 		}
@@ -180,11 +178,15 @@ namespace MathTextLearner
 		/// <param name="inputDatabase">
 		/// A database to be loaded upon start.
 		/// </param>
+		/// <param name="inputDatabasePath">
+		/// The path of the input database.
+		/// </param>
 		/// <param name="inputImage">
 		/// An image to be learned upon start.
 		/// </param>
 		public MainLearnerWindow(Gtk.Window parent,
 		                         MathTextDatabase inputDatabase, 
+		                         string inputDatabasePath,
 		                         Pixbuf inputImage,
 		                         string inputImageName)
 		{			
@@ -209,7 +211,9 @@ namespace MathTextLearner
 			if(inputDatabase!=null)
 			{
 				// We have to load a database.
-				SetDatabase(inputDatabase);				
+				SetDatabase(inputDatabase);	
+				
+				SetTitle(inputDatabasePath);
 				
 				if (inputImage != null)
 				{
@@ -297,7 +301,6 @@ namespace MathTextLearner
 			// Reinciamos el contador de conflictos.
 			conflicts = 0;
 			
-			buttonsHB.Sensitive = false;
 			nextImageBtn.Sensitive = false;
 			
 			imagesVB.Sensitive = true;
@@ -323,6 +326,8 @@ namespace MathTextLearner
 			
 			// La imagen reducida en la primera columna
 			imagesIV.PixbufColumn = 0;
+			imagesIV.SelectionChanged += 
+				new EventHandler(OnImagesIVSelectionChanged);
 			
 			imagesStore = new ListStore(typeof(Gdk.Pixbuf), 
 			                            typeof(Gdk.Pixbuf));
@@ -384,7 +389,7 @@ namespace MathTextLearner
 			imagesIV.ScrollToPath(imagesStore.GetPath(iter));			
 			imagesIV.SelectPath(imagesStore.GetPath(iter));
 			
-			buttonsHB.Sensitive = true;
+			
 		}
 		
 		/// <summary>
@@ -468,6 +473,8 @@ namespace MathTextLearner
 				learningThread=null;
 				toolbar.Sensitive=false;	
 				
+				
+				
 				learningThread = new Thread(new ThreadStart(LearnProccess));
 				learningThread.Start();
 				learningThread.Suspend();
@@ -549,6 +556,9 @@ namespace MathTextLearner
 		/// </summary>
 		private void OnExit()
 		{
+		
+			SaveDatabase();
+				
 			
 			imageAreaOriginal.Image=null;
 			imageAreaProcessed.Image=null;
@@ -612,15 +622,17 @@ namespace MathTextLearner
 			nextImageBtn.Sensitive = imagesStore.IterNChildren() > 0;
 		}
 		
+		
 		private void OnImagesIVSelectionChanged(object s, EventArgs a)
 		{
 			removeImageBtn.Sensitive = imagesIV.SelectedItems.Length > 0;
 			
 			TreeIter selectedIter;
 			
+			Console.WriteLine(imagesIV.SelectedItems.Length);
+			
 			if(imagesIV.SelectedItems.Length > 0)
 			{
-			
 				TreePath selectedImagePath = imagesIV.SelectedItems[0];
 
 				imagesStore.GetIter(out selectedIter, selectedImagePath);
@@ -765,11 +777,13 @@ namespace MathTextLearner
 		
 		private void OnNextImageBtnClicked(object sender, EventArgs arg)
 		{
+			
 			nextImageBtn.Sensitive = false;
 			hboxSymbolWidgets.Sensitive = true;
 			
 			TreeIter iter;
 			imagesStore.GetIterFirst(out iter);
+			
 			TreePath selectedImagePath = imagesStore.GetPath(iter);			
 				                     
 			imagesIV.ScrollToPath(selectedImagePath);
@@ -920,7 +934,7 @@ namespace MathTextLearner
 			{
 				ResponseType res = 
 				ConfirmDialog.Show(mainWindow, 
-				                   "¿Realmente quieres guardar "
+				                   "¿Quieres guardar "
 				                   +"los cambios de la base de datos?");
 			
 				if(res == ResponseType.Yes)
@@ -1043,7 +1057,6 @@ namespace MathTextLearner
 			hboxSymbolWidgets.Sensitive = false;
 			nextButtonsHB.Sensitive =false;
 			
-			buttonsHB.Sensitive = true;
 			editPropertiesBtn.Sensitive = true;
 			
 			symbolLabelEditor.Label = "";

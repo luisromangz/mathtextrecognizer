@@ -1268,6 +1268,7 @@ MathML</property>
     </child>
     <child>
       <widget class="GtkImageMenuItem" id="forceSegmentItem">
+        <property name="visible">True</property>
         <property name="label" translatable="yes">Forzar segmentado</property>
         <property name="use_underline">True</property>
         <signal name="activate" handler="OnForceSegmentItemClicked"/>

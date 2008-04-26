@@ -36,9 +36,9 @@ namespace MathTextRecognizer.Stages.Dialogs
 		
 		private RadioButton newRB;
 		
-		private Dictionary<string, MathTextDatabase> databaseHash;
+		private Dictionary<string, DatabaseFileInfo> databaseHash;
 		
-		private MathTextDatabase choosenDatabase;
+		private DatabaseFileInfo choosenDatabase;
 		
 		/// <summary>
 		/// <c>LearnSymbolDatabaseChooserDialog</c>'s constructor.
@@ -60,7 +60,7 @@ namespace MathTextRecognizer.Stages.Dialogs
 			learnSymbolDatabaseChooserDialog.Resizable = false;
 			learnSymbolDatabaseChooserDialog.TransientFor = parent;
 			
-			databaseHash = new Dictionary<string,MathTextDatabase>();
+			databaseHash = new Dictionary<string,DatabaseFileInfo>();
 			
 			optionsTooltips = new Tooltips();
 			
@@ -83,7 +83,7 @@ namespace MathTextRecognizer.Stages.Dialogs
 				                                     database.Description),
 				                       "database description");
 				
-				databaseHash.Add(label, databaseInfo.Database);
+				databaseHash.Add(label, databaseInfo);
 			}
 			
 			// We add the option of creating a new database.
@@ -104,7 +104,7 @@ namespace MathTextRecognizer.Stages.Dialogs
 		/// <value>
 		/// Contains the selected database in which the symbol will be learned.
 		/// </value>
-		public MathTextDatabase ChoosenDatabase
+		public DatabaseFileInfo ChoosenDatabase
 		{
 			get
 			{
