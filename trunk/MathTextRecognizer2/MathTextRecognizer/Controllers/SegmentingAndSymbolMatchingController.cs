@@ -23,24 +23,13 @@ namespace MathTextRecognizer.Controllers
 	/// control de los procesos de segmentación de imagenes y asignación
 	/// de las mismas a un simbolo matematico determinado.
 	/// </summary>
-	public class SegmentingAndSymbolMatchingController
+	public class SegmentingAndSymbolMatchingController : BaseController
 	{			
 		
 		//La base de datos que usaremos para reconocer los caracteres.
 		private List<MathTextDatabase> databases;
 		
-		/// <summary>
-		/// Evento usado para enviar un mensaje de informacion a la interfaz.
-		/// </summary>
-		public event MessageLogSentHandler MessageLogSent;
 		
-		/// <summary>
-		/// Evento usado para notificar a la interfaz de que se ha terminado de
-		/// realizar un proceso.
-		/// </summary>
-		public event ProcessFinishedHandler ProcessFinished;
-		
-		public event EventHandler NodeBeingProcessed;
 		
 		/// <summary>
 		/// Evento usado para notificar a la interfaz de que se ha comenzado
@@ -53,9 +42,7 @@ namespace MathTextRecognizer.Controllers
 		
 		private List<BitmapSegmenter> segmenters;
 		
-		private Thread processThread;
 		
-		private ControllerStepMode stepMode;
 		
 		private bool searchDatabase;
 		
@@ -64,7 +51,7 @@ namespace MathTextRecognizer.Controllers
 		/// en las posibles implementaciones distintas de la interfaz de usuario del
 		/// reconocedor.
 		/// </summary>
-		public SegmentingAndSymbolMatchingController()
+		public SegmentingAndSymbolMatchingController() : base()
 		{						
 			databases = new List<MathTextDatabase>();	
 			
@@ -79,7 +66,7 @@ namespace MathTextRecognizer.Controllers
 			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.TopToBottom));
 			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.LeftToRight));
 			
-			stepMode = ControllerStepMode.UntilEnd;
+			
 			
 			searchDatabase = true;
 			               
@@ -100,30 +87,9 @@ namespace MathTextRecognizer.Controllers
 			}
 		}			
 		
-		/// <summary>
-		/// Envolvemos el lanzamiento del evento LogMessageSend, por comodidad.
-		/// </summary>
-		/// <param name="msg">
-		/// El mensaje que queremos pasar como argumento al manejador del evento.
-		/// </param>		
-		protected void MessageLogSentInvoker(string msg, params object [] args)
-		{
-			if(MessageLogSent!=null)
-			{
-				MessageLogSent(this,new MessageLogSentArgs(String.Format(msg,args)));
-			}
-		}
+	
 		
-		/// <summary>
-		/// Envolvemos el lanzamiento del evento RecognizeProcessFinished, por comodidad.
-		/// </summary>		
-		protected void ProcessFinishedInvoker()
-		{
-			if(ProcessFinished!=null)
-			{
-				ProcessFinished(this,EventArgs.Empty);
-			}
-		}
+	
 		
 		/// <summary>
 		/// Manejador del evento RecognizingCharacteristicChecked de la base de datos de caracteres.
@@ -135,10 +101,8 @@ namespace MathTextRecognizer.Controllers
 		{			
 			MessageLogSentInvoker(args.Message);
 			
-			if(stepMode == ControllerStepMode.StepByStep)
-			{
-				processThread.Suspend();
-			}
+			SuspendByStep();
+			
 		}
 		
 		/// <summary>
@@ -196,30 +160,20 @@ namespace MathTextRecognizer.Controllers
 			}
 		}
 
-		/// <value>
-		/// Contains the mode for the actual step.
-		/// </value>
-		public ControllerStepMode StepMode 
-		{
-			get 
-			{
-				return stepMode;
-			}
-			set 
-			{
-				stepMode = value;
-			}
-		}
+	
 
 		/// <value>
 		/// Contains a boolean value indicating if the database should be
 		/// searched or we should segment directly.
 		/// </value>
-		public bool SearchDatabase {
-			get {
+		public bool SearchDatabase 
+		{
+			get 
+			{
 				return searchDatabase;
 			}
-			set {
+			set 
+			{
 				searchDatabase = value;
 			}
 		}
@@ -227,7 +181,7 @@ namespace MathTextRecognizer.Controllers
 		/// <summary>
 		/// Metodo que realiza el procesado de las imagenes
 		/// </summary>
-		public void Process()
+		protected override void Process()
 		{
 			MessageLogSentInvoker("=======================================");
 			MessageLogSentInvoker(" Comenzando proceso de segmentado");
@@ -251,13 +205,12 @@ namespace MathTextRecognizer.Controllers
 			// Seleccionamos el nodo.
 			
 			NodeBeingProcessedInvoker();
-			if(stepMode != ControllerStepMode.UntilEnd)
-			{				
-				processThread.Suspend();	
-				
-			}
-
+			SuspendByNode();
+		
 			node.Select();
+			
+			while(node.ChildCount>0)
+				node.RemoveChild((SegmentedNode)node[0]);
 			
 			MathTextBitmap bitmap = node.MathTextBitmap;
 			MessageLogSentInvoker("=======================================");
@@ -385,31 +338,44 @@ namespace MathTextRecognizer.Controllers
 			return children;
 		}
 		
+	
+	}
+	
+	/// <summary>
+	/// Delegado para los manejadores de los eventos enviados por los controladores 
+	/// cuando desean notificar que han comenzado a procesar una nueva imagen.
+	/// </summary>
+	public delegate void BitmapProcessedHandler(object sender,
+	                                            BitmapProcessedArgs arg);
+	
+	/// <summary>
+	/// Esta clase encapsula los argumentos enviados en los eventos manejados por
+	/// BitmapBeingRecognizedHandler.
+	/// </summary>
+	public class BitmapProcessedArgs : EventArgs
+	{
+		private MathTextBitmap b;
+		
 		/// <summary>
-		/// Runs the next step of the process being controlled.
+		/// Constructor de la clase.
 		/// </summary>
-		/// <param name="step">
-		/// The step mode for the new step.
-		/// </param>
-		public void Next(ControllerStepMode step)
-		{
-			stepMode = step;
-			
-			if(processThread == null || !processThread.IsAlive)
-			{
-				processThread = new Thread(new ThreadStart(Process));
-				processThread.Start();				
-			}
-			else if (processThread.ThreadState == ThreadState.Suspended)
-			{
-				processThread.Resume();				
-			}
+		/// <param name="bitmap">La imagen que se ha comenzado a reconocer.</param>
+		public BitmapProcessedArgs(MathTextBitmap bitmap)
+			:base()
+	    {
+			b=bitmap;
 		}
 		
-		protected void NodeBeingProcessedInvoker()
+		/// <value>
+		/// Contiene la imagen que pasamos como argumento del evento.
+		/// </value>
+		public MathTextBitmap MathTextBitmap
 		{
-			if(NodeBeingProcessed !=null)
-				NodeBeingProcessed(this, EventArgs.Empty);
+			get
+			{
+				return b;
+			}
 		}
 	}
+	
 }

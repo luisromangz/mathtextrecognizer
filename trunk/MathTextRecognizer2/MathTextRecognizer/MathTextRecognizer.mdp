@@ -36,6 +36,7 @@
     <File name="Stages/Nodes" subtype="Directory" buildaction="Compile" />
     <File name="Stages/Nodes/SegmentedNode.cs" subtype="Code" buildaction="Compile" />
     <File name="Stages/Dialogs/LearnSymbolDatabaseChooserDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Stages/TokenizingStageWidget.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

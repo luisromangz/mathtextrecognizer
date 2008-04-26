@@ -45,7 +45,7 @@ namespace MathTextLearner.Assistant
 			
 			foreach(PanelAssistantStep panel in Steps)
 			{
-				panel.StepWidget.SetSizeRequest(500,250);
+				panel.StepWidget.SetSizeRequest(500,300);
 			}
 			
 			this.Window.Icon = ImageResources.LoadPixbuf("database-new16");

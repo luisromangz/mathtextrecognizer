@@ -448,11 +448,10 @@
             <child>
               <widget class="GtkHBox" id="buttonsHB">
                 <property name="visible">True</property>
-                <property name="sensitive">False</property>
                 <property name="border_width">23</property>
                 <property name="spacing">11</property>
                 <child>
-                  <widget class="GtkFrame" id="frame6">
+                  <widget class="GtkFrame" id="editPropetiesFrame">
                     <property name="width_request">226</property>
                     <property name="visible">True</property>
                     <property name="label_xalign">0</property>
@@ -753,10 +752,12 @@
                                 <child>
                                   <widget class="GtkHBox" id="nextButtonsHB">
                                     <property name="visible">True</property>
+                                    <property name="sensitive">False</property>
                                     <property name="spacing">9</property>
                                     <child>
                                       <widget class="GtkButton" id="btnNext">
                                         <property name="visible">True</property>
+                                        <property name="sensitive">False</property>
                                         <property name="can_focus">True</property>
                                         <property name="can_default">True</property>
                                         <property name="response_id">0</property>

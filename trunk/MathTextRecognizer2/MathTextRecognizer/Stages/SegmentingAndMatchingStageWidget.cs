@@ -20,7 +20,7 @@ using MathTextLibrary.Symbol;
 using MathTextLibrary.Controllers;
 
 using MathTextRecognizer.Controllers;
-
+using MathTextRecognizer.DatabaseManager;
 using MathTextRecognizer.Stages.Nodes;
 using MathTextRecognizer.Stages.Dialogs;
 
@@ -504,12 +504,13 @@ namespace MathTextRecognizer.Stages
 				
 				if(res == ResponseType.Ok)
 				{				
-					MathTextDatabase selectedDatabase = 
+					DatabaseFileInfo selectedDatabase = 
 						databaseDialog.ChoosenDatabase;
 				
 					MainLearnerWindow learnerWindow = 
 						new MainLearnerWindow(this.MainWindow.Window,
-						                      selectedDatabase,
+						                      selectedDatabase.Database,
+						                      selectedDatabase.Path,
 						                      selectedNode.MathTextBitmap.Pixbuf,
 						                      selectedNode.Name);
 				
@@ -598,10 +599,7 @@ namespace MathTextRecognizer.Stages
 					SegmentedNode node =  
 						(SegmentedNode)(treeview.NodeStore.GetNode(path));	
 					
-					selectedNode = node;
-					
-					forceSegmentItem.Visible = 
-						!String.IsNullOrEmpty(selectedNode.Label);
+					selectedNode = node;				
 					
 					segmentedNodeMenu.Popup();
                 }                        
@@ -760,6 +758,8 @@ namespace MathTextRecognizer.Stages
 			recognizementFinished = true;
 			
 			imageAreaOriginal.Image = null;
+			
+			treeview.NodeSelection.UnselectAll();
 			
 			buttonsNB.Page = 0;
 			
