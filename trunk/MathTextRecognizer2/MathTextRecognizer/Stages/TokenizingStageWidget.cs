@@ -9,6 +9,8 @@ using System.Collections.Generic;
 
 using Gtk;
 
+using MathTextLibrary.Tokenizing;
+
 using MathTextRecognizer.Stages.Nodes; 
 
 namespace MathTextRecognizer.Stages
@@ -50,7 +52,7 @@ namespace MathTextRecognizer.Stages
 		}
 		
 		/// <summary>
-		/// Stablish the product of the segmentation stage as the start point
+		/// Sets the product of the segmentation stage as the start point
 		/// for the tokenizing stage.
 		/// </summary>
 		/// <param name="segmentationResult">
@@ -58,10 +60,14 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		public void SetStartSymbols(List<SegmentedNode> segmentationResult)
 		{
-			
+			// Transforms the segmented nodes to tokens.
+			List<Token> tokens = new List<Token>();
 			foreach(SegmentedNode symbolNode in segmentationResult)
 			{
-				
+				tokens.Add(new Token(symbolNode.Label, 
+				                     symbolNode.MathTextBitmap.Position.X,
+				                     symbolNode.MathTextBitmap.Position.Y,
+				                     symbolNode.MathTextBitmap.FloatImage));
 			}				
 		}
 
