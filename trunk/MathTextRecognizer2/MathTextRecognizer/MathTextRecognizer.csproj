@@ -1,82 +1,85 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{D47E943F-9F84-49D5-9A56-FEF904FF1598}</ProjectGuid>
+    <ProjectGuid>{68F1CF2A-5683-4B48-933D-F32BA3707867}</ProjectGuid>
     <RootNamespace>
     </RootNamespace>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <OutputPath>bin\</OutputPath>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <NoStdLib>False</NoStdLib>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <TargetFrameworkVersion>Mono v2.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AssemblyName>MathTextRecognizer</AssemblyName>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
     <RootNamespace>
     </RootNamespace>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputType>Exe</OutputType>
-    <AssemblyName>MathTextRecognizer</AssemblyName>
-    <RootNamespace>
-    </RootNamespace>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DefineConstants>
-    </DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <DebugType>None</DebugType>
+    <DefineConstants>
+    </DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <ApplicationIcon>.</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>MathTextRecognizer</AssemblyName>
+    <OutputPath>bin\Release\</OutputPath>
     <DebugSymbols>false</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <Optimize>False</Optimize>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <DebugType>None</DebugType>
-    <DebugSymbols>false</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'Debug' ">
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <FileAlignment>4096</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <FileAlignment>4096</FileAlignment>
+    <RootNamespace>
+    </RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>
+    </DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <ApplicationIcon>.</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="glade-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="gtk-dotnet, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MathTextLibrary\MathTextLibrary.csproj">
-      <Project>{56121D73-A56B-4DD6-AE5E-1B4AF3EC9894}</Project>
+      <Project>{603789E4-51B9-4A31-B38B-165B7C6EABB4}</Project>
       <Name>MathTextLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CustomGtkWidgets\CustomGtkWidgets.csproj">
-      <Project>{856EB745-5912-471F-8F3A-7F135BE343BA}</Project>
-      <Name>CustomGtkWidgets</Name>
+    <ProjectReference Include="..\MathTextCustomWidgets\MathTextCustomWidgets.csproj">
+      <Name>MathTextCustomWidgets</Name>
+      <Project>{D526D55E-96FB-4E1F-876C-8CAC1B5A5E15}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\MathTextLearner\MathTextLearner.csproj">
+      <Project>{4A95EA54-B832-45C2-A412-4F8689703D25}</Project>
+      <Name>MathTextLearner</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="MTBNode.cs" />
-    <Compile Include="MainWindow.cs" />
-    <Compile Include="OutputDialog.cs" />
+    <Compile Include="MainRecognizerWindow.cs" />
+    <Compile Include="Output\OutputDialog.cs" />
+    <Compile Include="DatabaseManager\DatabaseManagerDialog.cs" />
+    <Compile Include="DatabaseManager\DatabaseFileInfo.cs" />
+    <Compile Include="Controllers\SegmentingAndSymbolMatchingController.cs" />
+    <Compile Include="Controllers\OutputController.cs" />
+    <Compile Include="Config\RecognizerConfig.cs" />
+    <Compile Include="Stages\SegmentingAndMatchingStageWidget.cs" />
+    <Compile Include="Stages\RecognizingStageWidget.cs" />
+    <Compile Include="Stages\Dialogs\SymbolLabelEditorDialog.cs" />
+    <Compile Include="Stages\Nodes\SegmentedNode.cs" />
+    <Compile Include="Stages\Dialogs\LearnSymbolDatabaseChooserDialog.cs" />
+    <Compile Include="Stages\TokenizingStageWidget.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="mathtextrecognizer.glade" />
+    <EmbeddedResource Include="defaultConfig" />
   </ItemGroup>
-  <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

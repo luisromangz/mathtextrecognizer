@@ -507,12 +507,12 @@ namespace MathTextRecognizer.Stages
 					DatabaseFileInfo selectedDatabase = 
 						databaseDialog.ChoosenDatabase;
 				
-					MainLearnerWindow learnerWindow = 
-						new MainLearnerWindow(this.MainWindow.Window,
-						                      selectedDatabase.Database,
-						                      selectedDatabase.Path,
-						                      selectedNode.MathTextBitmap.Pixbuf,
-						                      selectedNode.Name);
+					
+					new MainLearnerWindow(this.MainWindow.Window,
+					                      selectedDatabase.Database,
+					                      selectedDatabase.Path,
+					                      selectedNode.MathTextBitmap.Pixbuf,
+					                      selectedNode.Name);
 				
 				}
 				

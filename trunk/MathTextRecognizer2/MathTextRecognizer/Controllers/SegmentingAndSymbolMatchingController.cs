@@ -152,7 +152,8 @@ namespace MathTextRecognizer.Controllers
 			set
 			{
 				databases = value;
-				foreach(MathTextDatabase database in value)
+				Console.WriteLine(databases.Count);
+				foreach(MathTextDatabase database in databases)
 				{
 					database.StepDone+=
 						new ProcessingStepDoneHandler(OnProcessingStepDone);

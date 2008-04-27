@@ -201,18 +201,30 @@ namespace MathTextLibrary.Databases
 				                  MathTextDatabase.GetXmlAttributeOverrides());	
 			
 			MathTextDatabase db = null;
-			                                           
-			using(StreamReader r = new StreamReader(path))
+			StreamReader r = null;
+			
+		
+			try
 			{
-				try{
-					db = (MathTextDatabase)serializer.Deserialize(r);
-					r.Close();
-				}
-				catch(System.Xml.XmlException)
-				{
+				r = new StreamReader(path);
+			}
+			catch(Exception)
+			{
+				return null;
+			}
+				
+			                                           
+			try
+			{
+				db = (MathTextDatabase)serializer.Deserialize(r);
+				
+			}
+			catch(System.Xml.XmlException)
+			{
 					// Nada.
-				}
-			}			
+			}
+			
+			r.Close();
 			
 			return db;
 		}
