@@ -5,6 +5,9 @@
 //
 
 using System;
+using System.Collections.Generic;
+
+using MathTextLibrary.Bitmap;
 
 namespace MathTextLibrary.Tokenizing
 {
@@ -12,11 +15,219 @@ namespace MathTextLibrary.Tokenizing
 	/// <summary>
 	/// This class represents a product of lexical analisys.
 	/// </summary>
-	public class Token
+	public class Token : IComparable<Token>
 	{
+		private string text;		
+		private string type;
 		
-		public Token()
-		{
+		private int x;
+		private int y;
+	
+		private FloatBitmap image;
+		
+		/// <summary>
+		/// <c>Token</c>'s constructor.
+		/// </summary>
+		/// <param name="text">
+		/// The new token's text.
+		/// </param>
+		/// <param name="x">
+		/// The new token's upper left corner x coordinate.
+		/// </param>
+		/// <param name="y">
+		/// The new token's upper left corner y coordinate.
+		/// </param>
+		/// <param name="image">
+		/// The image which represents the new token.
+		/// </param>
+		public Token(string text, int x, int y, FloatBitmap image)
+		{			
+			this.text = text;
+			this.x = x;
+			this.y = y;
+			
+			this.image = image;
 		}
+		
+#region Properties
+		
+		/// <value>
+		/// Contains the token's text.
+		/// </value>
+		public string Text
+		{
+			get 
+			{
+				return text;
+			}
+			set 
+			{
+				text = value;
+			}
+		}
+		
+		/// <value>
+		/// Contains the token's type.
+		/// </value>
+		public string Type 
+		{
+			get 
+			{
+				return type;
+			}
+			set 
+			{
+				type = value;
+			}
+		}
+
+		/// <value>
+		/// Contains the image the token is symbolizing.
+		/// </value>
+		public FloatBitmap Image 
+		{
+			get {
+				return image;
+			}
+		}
+
+		/// <value>
+		/// Contains the X coordinate of the imagen the token is symbolizing.
+		/// </value>
+		public int X 
+		{
+			get 
+			{
+				return x;
+			}
+		}
+
+		/// <value>
+		/// Contains the Y coordinate of the image the token is symbolizing.
+		/// </value>
+		public int Y
+		{
+			get 
+			{
+				return y;
+			}
+		}
+		
+		/// <value>
+		/// Contains the height of the token's image.
+		/// </value>
+		public int Height
+		{
+			get
+			{
+				return image.Height;
+			}
+		}
+		
+		/// <value>
+		/// Contains the width of the token's image.
+		/// </value>
+		public int Width
+		{
+			get
+			{
+				return image.Width;
+			}
+		}
+		
+#endregion Properties
+		
+#region Public methods
+		
+		/// <summary>
+		/// Joins several tokens in one token.
+		/// </summary>
+		/// <param name="tokens">
+		/// A <see cref="List`1"/>
+		/// </param>
+		/// <param name="tokenType">
+		/// The new token's type.
+		/// </param>
+		/// <returns>
+		/// A <see cref="Token"/>
+		/// </returns>
+		public static Token Join(List<Token> tokens, string tokenType)
+		{
+			int maxY = -1;
+			int maxX = -1;
+			int minY = int.MaxValue;
+			int minX = int.MaxValue;
+			string newText ="";
+			
+			// We have to calculate the new image's bounds, and join the 
+			// texts.
+			foreach(Token t in tokens)
+			{
+				if(t.y < minY)
+				{
+					minY = t.y;
+				}
+				
+				if(t.y + t.Height > maxY)
+				{
+					maxY = t.y+t.Height;
+				}
+				
+				if(t.x < minX)
+				{
+					minX = t.x;
+				}
+				
+				if(t.x > maxX)
+				{
+					maxX = t.x;
+				}
+				
+				newText+=t.Text;
+			}
+			
+			int height = maxY - minY + 1;
+			int width = maxX - minX + 1;
+			
+			FloatBitmap image = new FloatBitmap(width, height);
+			
+			// We copy the images in the result image.
+			foreach(Token t in tokens)
+			{
+				for(int i = 0; i < t.image.Width; i++)
+				{
+					for(int j=0; j < t.image.Height; j++)
+					{
+						// We transform the coordinates so we place the 
+						// pixel correctly on the new image.
+						image[i + t.X - minX, j + t.Y -minY] = t.image[i, j];
+					}
+				}
+			}
+			
+			Token newToken = new Token(newText, minX, minY, image);
+			newToken.type = tokenType;
+			
+			
+			return newToken;
+			
+		}
+		
+		/// <summary>
+		/// Compares with another <c>Token</c>  instance.
+		/// </summary>
+		/// <param name="other">
+		/// A <see cref="Token"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Int32"/>
+		/// </returns>
+		public int CompareTo (Token other)
+		{
+			return this.X - other.X;
+		}
+
+		
+#endregion Public methods
 	}
 }
