@@ -77,8 +77,8 @@ namespace MathTextRecognizer.DatabaseManager
 			}
 			set
 			{
-				databaseFilesInfo = value;
-				foreach(DatabaseFileInfo info in databaseFilesInfo)
+				databaseFilesInfo = new List<DatabaseFileInfo>();
+				foreach(DatabaseFileInfo info in value)
 				{
 					AddDatabaseInfo(info);
 				}
@@ -154,8 +154,8 @@ namespace MathTextRecognizer.DatabaseManager
 				// No se abrio un archivo de base de datos, informamos.
 				OkDialog.Show(this.databaseManagerDialog,
 				              MessageType.Warning,
-				              "El archivo «{0}» no contiene una base de datos "+
-				              "correcta, y no se pudo abrir.",
+				              "El archivo «{0}» no contiene una base"
+				              + " de datos correcta, y no se pudo abrir.",
 				              databasePath);
 				return;
 			}
@@ -209,8 +209,8 @@ namespace MathTextRecognizer.DatabaseManager
 				// No se abrio un archivo de base de datos, informamos.
 				OkDialog.Show(this.databaseManagerDialog,
 				              MessageType.Warning,
-				              "El archivo «{0}» no contiene una base de datos "+
-				              "correcta, y no se pudo abrir.",
+				              "El archivo «{0}» no existe o no contiene " 
+				              +"una base de datos correcta, y no se pudo abrir.",
 				              databaseInfo.Path);
 				return;
 			}
@@ -219,6 +219,8 @@ namespace MathTextRecognizer.DatabaseManager
 			                         databaseInfo.Database.DatabaseTypeShortDescription,
 			                         databaseInfo.Path,
 			                         databaseInfo);  
+			
+			databaseFilesInfo.Add(databaseInfo);
 		}
 		
 		

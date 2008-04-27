@@ -1,105 +1,84 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{66835C24-8A59-45A8-93C4-EA5E1827D3D9}</ProjectGuid>
+    <ProjectGuid>{4A95EA54-B832-45C2-A412-4F8689703D25}</ProjectGuid>
     <RootNamespace>
     </RootNamespace>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <OutputPath>bin\</OutputPath>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <NoStdLib>False</NoStdLib>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <TargetFrameworkVersion>Mono v2.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AssemblyName>MathTextLearner</AssemblyName>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
     <RootNamespace>
     </RootNamespace>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputType>Exe</OutputType>
-    <AssemblyName>MathTextLearner</AssemblyName>
-    <RootNamespace>
-    </RootNamespace>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DefineConstants>
-    </DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <DebugType>None</DebugType>
+    <DefineConstants>
+    </DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <ApplicationIcon>.</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputType>Library</OutputType>
+    <AssemblyName>MathTextLearner</AssemblyName>
+    <OutputPath>bin\Release\</OutputPath>
     <DebugSymbols>false</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <Optimize>False</Optimize>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <StartAction>Project</StartAction>
-    <StartProgram>C:\Program Files\Mono-1.9\bin\mono.exe</StartProgram>
-    <DebugType>Full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'Debug' ">
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <FileAlignment>4096</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <FileAlignment>4096</FileAlignment>
+    <RootNamespace>
+    </RootNamespace>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>
+    </DefineConstants>
+    <WarningLevel>4</WarningLevel>
+    <ApplicationIcon>.</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="atk-sharp">
-      <HintPath>..\..\..\..\..\..\Program Files\Mono-1.9\lib\mono\gac\atk-sharp\2.10.0.0__35e10195dab3c99f\atk-sharp.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="gdk-sharp">
-      <HintPath>..\..\..\..\..\..\Program Files\Mono-1.9\lib\mono\gac\gdk-sharp\2.10.0.0__35e10195dab3c99f\gdk-sharp.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="glade-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="glib-sharp">
-      <HintPath>..\..\..\..\..\..\Program Files\Mono-1.9\lib\mono\gac\glib-sharp\2.10.0.0__35e10195dab3c99f\glib-sharp.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
-    <Reference Include="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Drawing">
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="nunit.framework, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <Reference Include="nunit.core, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CustomGtkWidgets\CustomGtkWidgets.csproj">
-      <Name>CustomGtkWidgets</Name>
-      <Project>{856EB745-5912-471F-8F3A-7F135BE343BA}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\MathTextLibrary\MathTextLibrary.csproj">
       <Name>MathTextLibrary</Name>
-      <Project>{56121D73-A56B-4DD6-AE5E-1B4AF3EC9894}</Project>
+      <Project>{603789E4-51B9-4A31-B38B-165B7C6EABB4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\MathTextCustomWidgets\MathTextCustomWidgets.csproj">
+      <Name>MathTextCustomWidgets</Name>
+      <Project>{D526D55E-96FB-4E1F-876C-8CAC1B5A5E15}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="MainLearnerWindow.cs" />
     <Compile Include="Assistant\BitmapProcessesStep.cs" />
     <Compile Include="Assistant\DatabaseTypeStep.cs" />
     <Compile Include="Assistant\FileSelectionStep.cs" />
     <Compile Include="Assistant\NewDatabaseAssistant.cs" />
+    <Compile Include="Assistant\BitmapProcessesStepHelpers\BitmapProcessNode.cs" />
+    <Compile Include="Assistant\BitmapProcessesStepHelpers\ProcessEditorDialog.cs" />
+    <Compile Include="Assistant\BitmapProcessesStepHelpers\ProcessEditorWidget.cs" />
+    <Compile Include="Assistant\BitmapProcessesStepHelpers\ProcessSelectorDialog.cs" />
+    <Compile Include="Config\LearnerConfig.cs" />
+    <Compile Include="Assistant\DatabasePropertiesStep.cs" />
+    <Compile Include="DatabaseDescriptionEditorWidget.cs" />
+    <Compile Include="DatabaseDescriptionEditorDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="mathtextlearner.glade" />
     <EmbeddedResource Include="Assistant\databaseAssistant.glade">
       <LogicalName>databaseAssistant.glade</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="defaultConfig" />
   </ItemGroup>
-  <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

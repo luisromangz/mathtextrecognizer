@@ -1,90 +1,82 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{856EB745-5912-471F-8F3A-7F135BE343BA}</ProjectGuid>
+    <ProjectGuid>{D526D55E-96FB-4E1F-876C-8CAC1B5A5E15}</ProjectGuid>
+    <RootNamespace>
+    </RootNamespace>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <NoStdLib>False</NoStdLib>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <OutputPath>bin\</OutputPath>
-    <TargetFrameworkVersion>Mono v2.0</TargetFrameworkVersion>
-    <OutputType>Library</OutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputType>Library</OutputType>
+    <AssemblyName>MathTextCustomWidgets</AssemblyName>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>true</DebugSymbols>
     <RootNamespace>
     </RootNamespace>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <RootNamespace>
-    </RootNamespace>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DefineConstants>
-    </DefineConstants>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <DebugType>None</DebugType>
+    <DefineConstants>
+    </DefineConstants>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputType>Library</OutputType>
+    <AssemblyName>MathTextCustomWidgets</AssemblyName>
+    <OutputPath>bin\Release\</OutputPath>
     <DebugSymbols>false</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <Optimize>False</Optimize>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <DebugType>Full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'Debug' ">
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <FileAlignment>4096</FileAlignment>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <FileAlignment>4096</FileAlignment>
+    <RootNamespace>
+    </RootNamespace>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>
+    </DefineConstants>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="glade-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="gtk-dotnet, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-dotnet, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System.Data" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MathTextLibrary\MathTextLibrary.csproj">
+      <Project>{603789E4-51B9-4A31-B38B-165B7C6EABB4}</Project>
+      <Name>MathTextLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="CommonDialogs\ImageSaveDialog.cs" />
-    <Compile Include="HandWriting\RasterHandWritingArea.cs" />
-    <Compile Include="HandWriting\VectorHandWritingArea.cs" />
-    <Compile Include="HandWriting\IHandWritingArea.cs" />
-    <Compile Include="Logger\LogView.cs" />
-    <Compile Include="Logger\LogSaveDialog.cs" />
-    <Compile Include="ImageArea\ImageArea.cs" />
-    <Compile Include="ImageArea\ImageAreaMode.cs" />
-    <Compile Include="CommonDialogs\DatabaseOpenDialog.cs" />
-    <Compile Include="CommonDialogs\AppInfoDialog.cs" />
-    <Compile Include="CommonDialogs\ConfirmDialog.cs" />
-    <Compile Include="CommonDialogs\OkDialog.cs" />
-    <Compile Include="CommonDialogs\ImageLoadDialog.cs" />
-    <Compile Include="CommonDialogs\DatabaseSaveDialog.cs" />
-    <Compile Include="CommonDialogs\FolderOpenDialog.cs" />
-    <Compile Include="CommonDialogs\PanelAssistant.cs" />
-    <Compile Include="CommonDialogs\PanelAssistantStep.cs" />
+    <Compile Include="Dialogs\DatabaseOpenDialog.cs" />
+    <Compile Include="Dialogs\AppInfoDialog.cs" />
+    <Compile Include="Dialogs\ConfirmDialog.cs" />
+    <Compile Include="Dialogs\OkDialog.cs" />
+    <Compile Include="Dialogs\ImageLoadDialog.cs" />
+    <Compile Include="Dialogs\DatabaseSaveDialog.cs" />
+    <Compile Include="Dialogs\FolderOpenDialog.cs" />
+    <Compile Include="Dialogs\PanelAssistant.cs" />
+    <Compile Include="Dialogs\PanelAssistantStep.cs" />
     <Compile Include="ImageResources.cs" />
+    <Compile Include="Dialogs\ImageSaveDialog.cs" />
+    <Compile Include="Widgets\SymbolLabelEditorWidget.cs" />
+    <Compile Include="Widgets\Logger\LogSaveDialog.cs" />
+    <Compile Include="Widgets\Logger\LogView.cs" />
+    <Compile Include="Widgets\HandWriting\IHandWritingArea.cs" />
+    <Compile Include="Widgets\HandWriting\RasterHandWritingArea.cs" />
+    <Compile Include="Widgets\HandWriting\VectorHandWritingArea.cs" />
+    <Compile Include="Widgets\ImageArea\ImageArea.cs" />
+    <Compile Include="Widgets\ImageArea\ImageAreaEvents.cs" />
+    <Compile Include="Widgets\ImageArea\ImageAreaMode.cs" />
+    <Compile Include="Dialogs\SymbolLabel\SymbolLabelDialog.cs" />
+    <Compile Include="Dialogs\SymbolLabel\SymbolLabelListDialog.cs" />
+    <Compile Include="Dialogs\DatabaseInfoDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gui.glade" />
@@ -94,6 +86,24 @@
     <EmbeddedResource Include="..\Common\Artwork\insert-image22.png">
       <Link>insert-image22.png</Link>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\Common\Artwork\database16.png">
+      <Link>database16.png</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Common\Artwork\database22.png">
+      <Link>database22.png</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Common\Artwork\database-new16.png">
+      <Link>database-new16.png</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Common\Artwork\database-new22.png">
+      <Link>database-new22.png</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Common\Artwork\window-new16.png">
+      <Link>window-new16.png</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Common\Artwork\window-new22.png">
+      <Link>window-new22.png</Link>
+    </EmbeddedResource>
   </ItemGroup>
-  <Import Project="$(SharpDevelopBinPath)\SharpDevelop.Build.CSharp.targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
