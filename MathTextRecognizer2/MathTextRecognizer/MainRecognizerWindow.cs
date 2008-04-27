@@ -248,8 +248,8 @@ namespace MathTextRecognizer
 			                              new Label("Segmentación y "
 			                                        +"reconocimiento de caracteres"));
 			
-			recognizingStepsNB.AppendPage(new SegmentingAndMatchingStageWidget(this),
-			                              new Label("buh"));
+			recognizingStepsNB.AppendPage(new TokenizingStageWidget(this),
+			                              new Label("Análisis léxico"));
 			recognizingStepsNB.Page = 0;
 			
 			mainWindow.ShowAll();
