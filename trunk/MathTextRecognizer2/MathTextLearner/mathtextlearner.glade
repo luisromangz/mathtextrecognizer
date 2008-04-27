@@ -955,6 +955,8 @@
                       <widget class="GtkEntry" id="shortDescEntry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="has_focus">True</property>
+                        <property name="is_focus">True</property>
                         <property name="max_length">35</property>
                         <property name="width_chars">35</property>
                       </widget>

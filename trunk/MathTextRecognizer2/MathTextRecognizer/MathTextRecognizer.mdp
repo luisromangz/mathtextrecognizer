@@ -23,13 +23,11 @@
     <File name="DatabaseManager/DatabaseManagerDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="DatabaseManager/DatabaseFileInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Controllers" subtype="Directory" buildaction="Compile" />
-    <File name="Controllers/SegmentingAndSymbolMatchingController.cs" subtype="Code" buildaction="Compile" />
     <File name="Controllers/OutputController.cs" subtype="Code" buildaction="Compile" />
     <File name="Config" subtype="Directory" buildaction="Compile" />
     <File name="Config/RecognizerConfig.cs" subtype="Code" buildaction="Compile" />
     <File name="defaultConfig" subtype="Code" buildaction="EmbedAsResource" />
     <File name="Stages" subtype="Directory" buildaction="Compile" />
-    <File name="Stages/SegmentingAndMatchingStageWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Stages/RecognizingStageWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Stages/Dialogs" subtype="Directory" buildaction="Compile" />
     <File name="Stages/Dialogs/SymbolLabelEditorDialog.cs" subtype="Code" buildaction="Compile" />
@@ -37,6 +35,9 @@
     <File name="Stages/Nodes/SegmentedNode.cs" subtype="Code" buildaction="Compile" />
     <File name="Stages/Dialogs/LearnSymbolDatabaseChooserDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Stages/TokenizingStageWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Controllers/SegmentingAndSymbolMatchingController.cs" subtype="Code" buildaction="Compile" />
+    <File name="Stages/SegmentingAndMatchingStageWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Stages/Nodes/TokenNode.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
