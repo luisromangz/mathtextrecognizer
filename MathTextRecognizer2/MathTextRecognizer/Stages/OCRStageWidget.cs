@@ -86,7 +86,7 @@ namespace MathTextRecognizer.Stages
 		
 		private ImageArea imageAreaNode;
 		
-		private SegmentingAndMatchingController controller;	
+		private OCRController controller;	
 			
 		private bool recognizementFinished;
 		
@@ -115,7 +115,7 @@ namespace MathTextRecognizer.Stages
 			gxml.Autoconnect(this);
 			
 			
-			controller = new SegmentingAndMatchingController();
+			controller = new OCRController();
 			
 			// Asignamos los eventos que indican que se han alcanzado hitos
 			// en el reconocimiento de un cáracter.

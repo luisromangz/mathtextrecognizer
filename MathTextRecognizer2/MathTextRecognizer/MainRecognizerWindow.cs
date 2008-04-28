@@ -85,7 +85,9 @@ namespace MathTextRecognizer
 		
 		private bool recognizementFinished;
 		
-		private OCRStageWidget segmentingAndMatchingStageWidget;
+		private OCRStageWidget ocrWidget;
+		
+		private TokenizingStageWidget  tokenizingWidget;
 		
 		private LogView logView;
 		
@@ -187,8 +189,29 @@ namespace MathTextRecognizer
 			}
 		}
 		
+		/// <value>
+		/// Contains the widget used to represent and control the 
+		/// segmentation and matching process.
+		/// </value>
+		public OCRStageWidget OCRWidget
+		{
+			get
+			{
+				return ocrWidget;				
+			}
+		}
 		
-		public S
+		/// <value>
+		/// Contains the widget used to show and control the sintactical
+		/// analisys process.
+		/// </value>
+		public TokenizingStageWidget TokenizingWidget
+		{
+			get
+			{
+				return tokenizingWidget;
+			}			
+		}
 		
 #endregion Propiedades
 		
@@ -244,10 +267,10 @@ namespace MathTextRecognizer
 				recognizingStepsNB.RemovePage(0);
 			}
 			
-			segmentingAndMatchingStageWidget = 
+			ocrWidget = 
 				new OCRStageWidget(this);
 			
-			recognizingStepsNB.AppendPage(segmentingAndMatchingStageWidget,
+			recognizingStepsNB.AppendPage(ocrWidget,
 			                              new Label("Segmentación y "
 			                                        +"reconocimiento de caracteres"));
 			
@@ -400,7 +423,7 @@ namespace MathTextRecognizer
 		/// </param>
 		private void LoadImage(string filename)
 		{
-			segmentingAndMatchingStageWidget.SetInitialImage(filename);
+			ocrWidget.SetInitialImage(filename);
 				
 			this.mainWindow.Title = 
 				title + System.IO.Path.GetFileName(filename);
@@ -455,7 +478,7 @@ namespace MathTextRecognizer
 			toolLoadImage.Sensitive=true;
 			toolDatabase.Sensitive=true;
 			
-			segmentingAndMatchingStageWidget.ResetState();
+			ocrWidget.ResetState();
 			
 			recognizementFinished=true;
 		}
