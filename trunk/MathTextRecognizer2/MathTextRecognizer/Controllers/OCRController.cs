@@ -23,7 +23,7 @@ namespace MathTextRecognizer.Controllers
 	/// control de los procesos de segmentación de imagenes y asignación
 	/// de las mismas a un simbolo matematico determinado.
 	/// </summary>
-	public class SegmentingAndSymbolMatchingController : BaseController
+	public class OCRController : BaseController
 	{			
 		
 		//La base de datos que usaremos para reconocer los caracteres.
@@ -51,7 +51,7 @@ namespace MathTextRecognizer.Controllers
 		/// en las posibles implementaciones distintas de la interfaz de usuario del
 		/// reconocedor.
 		/// </summary>
-		public SegmentingAndSymbolMatchingController() : base()
+		public OCRController() : base()
 		{						
 			databases = new List<MathTextDatabase>();	
 			
