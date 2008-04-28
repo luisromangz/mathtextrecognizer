@@ -192,6 +192,8 @@ namespace MathTextLibrary.Analisys.Lexical
 			FloatBitmap image = new FloatBitmap(width, height);
 			
 			// We copy the images in the result image.
+			
+			//TODO Revisar este algoritmo.
 			foreach(Token t in tokens)
 			{
 				for(int i = 0; i < t.image.Width; i++)
@@ -200,7 +202,7 @@ namespace MathTextLibrary.Analisys.Lexical
 					{
 						// We transform the coordinates so we place the 
 						// pixel correctly on the new image.
-						image[i + t.X - minX, j + t.Y -minY] = t.image[i, j];
+						image[i + t.X - minX, j + t.Y - minY] = t.image[i, j];
 					}
 				}
 			}
