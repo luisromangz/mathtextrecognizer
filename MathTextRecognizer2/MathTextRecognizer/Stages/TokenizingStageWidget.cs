@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 using Gtk;
 
-using MathTextLibrary.Tokenizing;
+using MathTextLibrary.Analisys.Lexical;
 
 using MathTextRecognizer.Stages.Nodes; 
 

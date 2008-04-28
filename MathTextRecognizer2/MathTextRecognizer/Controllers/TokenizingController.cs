@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 
 
-using MathTextLibrary.Tokenizing;
+using MathTextLibrary.Analisys.Lexical;
 using MathTextLibrary.Controllers;
 
 namespace MathTextRecognizer.Controllers
