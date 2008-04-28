@@ -93,7 +93,7 @@ namespace MathTextRecognizer.Stages
 		// Needed by the popup actions' handler methods
 		private SegmentedNode selectedNode;
 		
-		private SegmentedNode rootNode;
+		private SegmentedNode rootNode;		
 		
 #endregion Attributes
 		
@@ -133,7 +133,22 @@ namespace MathTextRecognizer.Stages
 			
 			InitializeWidgets();
 		}
-
+		
+#region Properties
+		
+		/// <value>
+		/// Contains the leaf nodes, which have no children so they contain
+		/// matched symbols.
+		/// </value>
+		public List<SegmentedNode> LeafNodes
+		{
+			get
+			{
+				return GetLeafs(rootNode);
+			}
+		}
+		
+#endregion Properties
 		
 #region Metodos publicos
 		/// <summary>
@@ -768,6 +783,36 @@ namespace MathTextRecognizer.Stages
 			this.MainWindow.ProcessItemsSensitive = true;
 			
 		}
+		
+		/// <summary>
+		/// Retrieves the leaf nodes of a given node.
+		/// </summary>
+		/// <param name="node">
+		/// The node to check;
+		/// </param>
+		/// <returns>
+		/// A list with the leafs.
+		/// </returns>
+		private List<SegmentedNode> GetLeafs(SegmentedNode node)
+		{
+			List<SegmentedNode> leafs = new List<SegmentedNode>();
+			
+			if(node.ChildCount == 0)
+			{
+				leafs.Add(node);
+			}
+			else
+			{
+				for(int i=0; i< node.ChildCount; i++)
+				{
+					leafs.AddRange(GetLeafs((SegmentedNode)node[i]));
+				}
+			}
+			
+			return leafs;
+		}
+	
+
 		
 #endregion Metodos privados
 	}

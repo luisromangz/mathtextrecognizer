@@ -97,6 +97,8 @@ namespace MathTextRecognizer.Stages
 			parentNB.NextPage();
 		}
 		
+
+		
 		
 	}
 }
