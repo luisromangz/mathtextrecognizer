@@ -41,6 +41,7 @@ namespace MathTextRecognizer.Controllers
 		{
 			tokens = initialTokens;
 		}
+		
 #endregion Public methods	
 		
 #region Non-public methods

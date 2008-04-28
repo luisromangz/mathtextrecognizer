@@ -482,6 +482,24 @@ namespace MathTextRecognizer
 			
 			recognizementFinished=true;
 		}
+		
+		/// <summary>
+		/// Opens the lexical rules manager when the appropiate menu item is
+		/// clicked.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnLexicalManagerItemClicked(object sender, EventArgs args)
+		{
+			LexicalRulesManagerDialog dialog = 
+				new LexicalRulesManagerDialog(this.Window);
+			dialog.Show();
+			dialog.Destroy();
+		}
 	}
 	
 #endregion Metodos privados

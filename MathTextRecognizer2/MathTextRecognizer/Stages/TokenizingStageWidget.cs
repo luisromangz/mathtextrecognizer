@@ -51,6 +51,14 @@ namespace MathTextRecognizer.Stages
 			
 		}
 		
+		
+
+		
+#endregion Public methods
+		
+#region Non-public methods
+		
+	
 		/// <summary>
 		/// Sets the product of the segmentation stage as the start point
 		/// for the tokenizing stage.
@@ -58,7 +66,7 @@ namespace MathTextRecognizer.Stages
 		/// <param name="segmentationResult">
 		/// A list made with the leaf of the segmentation tree.
 		/// </param>
-		public void SetStartSymbols(List<SegmentedNode> segmentationResult)
+		private void SetStartSymbols(List<SegmentedNode> segmentationResult)
 		{
 			// Transforms the segmented nodes to tokens.
 			List<Token> tokens = new List<Token>();
@@ -69,12 +77,10 @@ namespace MathTextRecognizer.Stages
 				                     symbolNode.MathTextBitmap.Position.Y,
 				                     symbolNode.MathTextBitmap.FloatImage));
 			}				
+			
+			tokens.Sort();
 		}
 
-		
-#endregion Public methods
-		
-#region Non-public methods
 		
 #endregion Non-public methods
 	}
