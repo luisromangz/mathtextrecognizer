@@ -85,7 +85,7 @@ namespace MathTextRecognizer
 		
 		private bool recognizementFinished;
 		
-		private SegmentingAndMatchingStageWidget segmentingAndMatchingStageWidget;
+		private OCRStageWidget segmentingAndMatchingStageWidget;
 		
 		private LogView logView;
 		
@@ -187,6 +187,9 @@ namespace MathTextRecognizer
 			}
 		}
 		
+		
+		public S
+		
 #endregion Propiedades
 		
 #region Metodos publicos
@@ -242,7 +245,7 @@ namespace MathTextRecognizer
 			}
 			
 			segmentingAndMatchingStageWidget = 
-				new SegmentingAndMatchingStageWidget(this);
+				new OCRStageWidget(this);
 			
 			recognizingStepsNB.AppendPage(segmentingAndMatchingStageWidget,
 			                              new Label("Segmentación y "

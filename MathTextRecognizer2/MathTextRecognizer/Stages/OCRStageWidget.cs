@@ -33,7 +33,7 @@ namespace MathTextRecognizer.Stages
 	/// Esta clase implementa el widget que se usa para mostrar el 
 	/// proceso de segmentacion y reconocimiento.
 	/// </summary>
-	public class SegmentingAndMatchingStageWidget : RecognizingStageWidget
+	public class OCRStageWidget : RecognizingStageWidget
 	{
 #region Widgets
 		[WidgetAttribute]
@@ -86,7 +86,7 @@ namespace MathTextRecognizer.Stages
 		
 		private ImageArea imageAreaNode;
 		
-		private SegmentingAndSymbolMatchingController controller;	
+		private SegmentingAndMatchingController controller;	
 			
 		private bool recognizementFinished;
 		
@@ -97,7 +97,7 @@ namespace MathTextRecognizer.Stages
 		
 #endregion Attributes
 		
-		public SegmentingAndMatchingStageWidget(MainRecognizerWindow window)
+		public OCRStageWidget(MainRecognizerWindow window)
 			: base(window)
 		{
 			Glade.XML gxml = new Glade.XML("mathtextrecognizer.glade",
@@ -115,7 +115,7 @@ namespace MathTextRecognizer.Stages
 			gxml.Autoconnect(this);
 			
 			
-			controller = new SegmentingAndSymbolMatchingController();
+			controller = new SegmentingAndMatchingController();
 			
 			// Asignamos los eventos que indican que se han alcanzado hitos
 			// en el reconocimiento de un cáracter.
