@@ -22,25 +22,52 @@ namespace MathTextLibrary.Tests
 		
 		[Test()]
 		public void MatchTextTest()			
+		{	
+			LexicalRule rule = new LexicalRule();
+			rule.RuleName = "NUMBER";
+			rule.LexicalExpressions.Add(@"[0-9]+");
+			rule.LexicalExpressions.Add(@"[0-9]+\.[0-9]+");
+			
+			// Should accept
+			string number= "290";
+			
+			Token token = TestToken(number, rule);
+			
+			Assert.IsNotNull(token, "El token es nulo para {0}",number);
+			Assert.AreEqual("NUMBER", token.Type, 
+			                "El tipo del token no es correcto para {0}",number);
+			Assert.AreEqual(number, token.Text, 
+			                "El texto del token no es correcto para {0}",number); 
+			
+			// Should accept
+			number= "290.23";
+			
+			token = TestToken(number, rule);
+			
+			Assert.IsNotNull(token, "El token es nulo para {0}",number);
+			Assert.AreEqual("NUMBER", token.Type, 
+			                "El tipo del token no es correcto para {0}",number);
+			Assert.AreEqual(number, token.Text, 
+			                "El texto del token no es correcto para {0}",number); 
+			
+			// Should fail
+			number= "2fdsf90.23";
+			
+			token = TestToken(number, rule);
+			
+			Assert.IsNull(token, "El token no es nulo para {0}",number);
+			
+		}
+		
+		private Token TestToken(string text, LexicalRule rule)
 		{
 			List<Token> tokens = new List<Token>();
-			
-			string number= "290.839";
-			foreach (char c in  number)
+			foreach (char c in  text)
 			{
 				tokens.Add(new Token(c.ToString(), 0,0, new FloatBitmap(2,2)));
 			}
 			
-			LexicalRule rule = new LexicalRule();
-			rule.RuleName = "NUMBER";
-			rule.LexicalExpressions.Add(@"[0-9]+(\.[0-9]+)?");
-			
-			Token token = rule.Match(tokens);
-			
-			Assert.IsNotNull(token, "El token es nulo");
-			Assert.AreEqual("NUMBER", token.Type, "El tipo del token no es correcto");
-			Assert.AreEqual(number, token.Text, "El texto del token no es correcto"); 
-			
+			return rule.Match(tokens);
 		}
 	}
 }

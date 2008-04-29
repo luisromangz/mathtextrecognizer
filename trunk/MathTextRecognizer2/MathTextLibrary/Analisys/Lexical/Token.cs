@@ -170,7 +170,7 @@ namespace MathTextLibrary.Analisys.Lexical
 				
 				if(t.y + t.Height > maxY)
 				{
-					maxY = t.y+t.Height;
+					maxY = t.y + t.Height;
 				}
 				
 				if(t.x < minX)
@@ -178,22 +178,22 @@ namespace MathTextLibrary.Analisys.Lexical
 					minX = t.x;
 				}
 				
-				if(t.x > maxX)
+				if(t.x + t.Width> maxX)
 				{
-					maxX = t.x;
+					maxX = t.x + t.Width;
 				}
 				
 				newText+=t.Text;
 			}
 			
-			int height = maxY - minY + 1;
-			int width = maxX - minX + 1;
+			int height = maxY - minY;
+			int width = maxX - minX;
 			
 			FloatBitmap image = new FloatBitmap(width, height);
 			
 			// We copy the images in the result image.
 			
-			//TODO Revisar este algoritmo.
+			//TODO: Revisar este algoritmo.
 			foreach(Token t in tokens)
 			{
 				for(int i = 0; i < t.image.Width; i++)
@@ -202,7 +202,9 @@ namespace MathTextLibrary.Analisys.Lexical
 					{
 						// We transform the coordinates so we place the 
 						// pixel correctly on the new image.
-						image[i + t.X - minX, j + t.Y - minY] = t.image[i, j];
+						int x = i + t.X - minX;
+						int y =  j + t.Y - minY;
+						image[x, y] = t.image[i, j];
 					}
 				}
 			}
