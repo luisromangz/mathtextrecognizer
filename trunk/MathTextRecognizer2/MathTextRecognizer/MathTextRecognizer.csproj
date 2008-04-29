@@ -2,14 +2,12 @@
   <PropertyGroup>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{68F1CF2A-5683-4B48-933D-F32BA3707867}</ProjectGuid>
-    <RootNamespace>
-    </RootNamespace>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AssemblyName>mathtextrecognizer</AssemblyName>
+    <OutputType>WinExe</OutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputType>WinExe</OutputType>
-    <AssemblyName>MathTextRecognizer</AssemblyName>
     <OutputPath>bin\Debug\</OutputPath>
     <DebugSymbols>true</DebugSymbols>
     <RootNamespace>
@@ -20,11 +18,8 @@
     <DefineConstants>
     </DefineConstants>
     <WarningLevel>4</WarningLevel>
-    <ApplicationIcon>.</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputType>WinExe</OutputType>
-    <AssemblyName>MathTextRecognizer</AssemblyName>
     <OutputPath>bin\Release\</OutputPath>
     <DebugSymbols>false</DebugSymbols>
     <RootNamespace>
@@ -35,17 +30,16 @@
     <DefineConstants>
     </DefineConstants>
     <WarningLevel>4</WarningLevel>
-    <ApplicationIcon>.</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="atk-sharp" />
+    <Reference Include="gdk-sharp" />
+    <Reference Include="glade-sharp" />
+    <Reference Include="glib-sharp" />
+    <Reference Include="gtk-sharp" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
-    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System.Drawing" />
-    <Reference Include="gtk-dotnet, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MathTextLibrary\MathTextLibrary.csproj">
@@ -60,6 +54,11 @@
       <Project>{4A95EA54-B832-45C2-A412-4F8689703D25}</Project>
       <Name>MathTextLearner</Name>
     </ProjectReference>
+    <Compile Include="Controllers\OCRController.cs" />
+    <Compile Include="Controllers\TokenizingController.cs" />
+    <Compile Include="Stages\Dialogs\LexicalRuleEditorDialog.cs" />
+    <Compile Include="Stages\Dialogs\LexicalRulesManagerDialog.cs" />
+    <Compile Include="Stages\OCRStageWidget.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
@@ -67,10 +66,8 @@
     <Compile Include="Output\OutputDialog.cs" />
     <Compile Include="DatabaseManager\DatabaseManagerDialog.cs" />
     <Compile Include="DatabaseManager\DatabaseFileInfo.cs" />
-    <Compile Include="Controllers\SegmentingAndSymbolMatchingController.cs" />
     <Compile Include="Controllers\OutputController.cs" />
     <Compile Include="Config\RecognizerConfig.cs" />
-    <Compile Include="Stages\SegmentingAndMatchingStageWidget.cs" />
     <Compile Include="Stages\RecognizingStageWidget.cs" />
     <Compile Include="Stages\Dialogs\SymbolLabelEditorDialog.cs" />
     <Compile Include="Stages\Nodes\SegmentedNode.cs" />

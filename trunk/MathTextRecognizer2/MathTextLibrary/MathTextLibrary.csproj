@@ -2,14 +2,14 @@
   <PropertyGroup>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <ProjectGuid>{603789E4-51B9-4A31-B38B-165B7C6EABB4}</ProjectGuid>
-    <RootNamespace>
-    </RootNamespace>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <AssemblyName>mathtextlibrary</AssemblyName>
+    <OutputType>Library</OutputType>
+    <NoStdLib>False</NoStdLib>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputType>Library</OutputType>
-    <AssemblyName>MathTextLibrary</AssemblyName>
     <OutputPath>bin\Debug\</OutputPath>
     <DebugSymbols>true</DebugSymbols>
     <RootNamespace>
@@ -17,14 +17,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <DefineConstants>
-    </DefineConstants>
     <WarningLevel>4</WarningLevel>
-    <ApplicationIcon>.</ApplicationIcon>
+    <DebugType>Full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputType>Library</OutputType>
-    <AssemblyName>MathTextLibrary</AssemblyName>
     <OutputPath>bin\Release\</OutputPath>
     <DebugSymbols>false</DebugSymbols>
     <RootNamespace>
@@ -35,14 +31,19 @@
     <DefineConstants>
     </DefineConstants>
     <WarningLevel>4</WarningLevel>
-    <ApplicationIcon>.</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp" />
+    <Reference Include="glib-sharp" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
-    <Reference Include="nunit.core, Version=2.2.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
-    <Reference Include="nunit.framework, Version=2.2.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
@@ -110,8 +111,6 @@
     <Compile Include="Bitmap\MathTextBitmap.cs" />
     <Compile Include="Symbol\MathSymbol.cs" />
     <Compile Include="Utils\PathUtils.cs" />
-    <Compile Include="Tests\UtilsTests.cs" />
-    <Compile Include="Tests\CharacteristicTreeDatabaseTests.cs" />
     <Compile Include="BitmapProcesses\BitmapProcessPropertyDescription.cs" />
     <Compile Include="BitmapProcesses\BitmapProcessDescription.cs" />
     <Compile Include="Databases\DatabaseTypeInfo.cs" />
@@ -120,12 +119,9 @@
     <Compile Include="BitmapSegmenters\WaterfallSegmenter.cs" />
     <Compile Include="BitmapSegmenters\WaterfallSegmenterMode.cs" />
     <Compile Include="Bitmap\FloatBitmap.cs" />
-    <Compile Include="Tests\BitmapTests.cs" />
     <Compile Include="Config\LibraryConfig.cs" />
-    <Compile Include="Tests\BinaryCharacteristicsTests.cs" />
     <Compile Include="Databases\Characteristic\CharacteristicHashDatabase.cs" />
     <Compile Include="Databases\Characteristic\CharacteristicVector.cs" />
-    <Compile Include="Tests\CharacteristicHashDatabaseTests.cs" />
     <Compile Include="Controllers\BaseController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
