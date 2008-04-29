@@ -41,6 +41,8 @@ namespace MathTextRecognizer
 		[WidgetAttribute]
 		private Button removeBtn = null;
 		
+		
+		
 #endregion Glade widgets
 		
 #region Other fields
@@ -179,13 +181,17 @@ namespace MathTextRecognizer
 		public void OnAddBtnClicked(object sender, EventArgs args)
 		{
 			
-			// TODO Add an actual LexicalRule.
-			LexicalRule rule = new LexicalRule();
-			rule.RuleName = "MEH";
-			rule.LexicalExpressions.Add("[0-9]+");
-			rule.LexicalExpressions.Add(@"[0-9]+\.[0-9]+");
+			LexicalRuleEditorDialog dialog = 
+				new LexicalRuleEditorDialog(lexicalRulesManagerDialog);
 			
-			AddRule(rule);
+			ResponseType res = dialog.Show();
+			
+			if(res == ResponseType.Ok)
+			{
+				AddRule(dialog.Rule);				
+			}
+			
+			dialog.Destroy();
 			
 		}
 
