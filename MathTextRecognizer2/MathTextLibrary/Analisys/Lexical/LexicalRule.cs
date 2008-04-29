@@ -105,8 +105,9 @@ namespace MathTextLibrary.Analisys.Lexical
 				regularExpressions = new List<Regex>();
 				foreach(string pattern in lexicalExpressions)
 				{
-					
-					Regex regex = new Regex(pattern,
+					// We add the modifiers to apply the regex to all the 
+					// text.
+					Regex regex = new Regex(String.Format("^{0}$",pattern),
 					                        RegexOptions.Compiled 
 					                        |RegexOptions.Singleline);
 					
