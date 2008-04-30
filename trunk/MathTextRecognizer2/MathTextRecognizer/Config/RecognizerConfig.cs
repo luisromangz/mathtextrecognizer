@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 
 using MathTextLibrary.Utils;
-
+using MathTextLibrary.Analisys.Lexical;
 using MathTextRecognizer.DatabaseManager;
 
 namespace MathTextRecognizer.Config
@@ -20,12 +20,14 @@ namespace MathTextRecognizer.Config
 	public class RecognizerConfig
 	{
 		private List<DatabaseFileInfo> databaseFilesInfo;
+		private List<LexicalRule> lexicalRules;
 		
 		private static RecognizerConfig config;
 		
 		public RecognizerConfig()
 		{
 			databaseFilesInfo = new List<DatabaseFileInfo>();
+			lexicalRules = new List<LexicalRule>();
 		}
 		
 		/// <value>
@@ -55,6 +57,21 @@ namespace MathTextRecognizer.Config
 				return config;
 			}
 		}
+
+		/// <value>
+		/// Contains the rules used in the lexical analisys.
+		/// </value>
+		public List<LexicalRule> LexicalRules 
+		{			
+			get
+			{
+				return lexicalRules;
+			}
+			set
+			{
+				lexicalRules = value;
+			}
+		}
 		
 		/// <summary>
 		/// Carga la configuracion desde el archivo de configuracion
@@ -63,8 +80,9 @@ namespace MathTextRecognizer.Config
 		private static void Load()
 		{
 						
-			XmlSerializer serializer = new XmlSerializer(typeof(RecognizerConfig),
-			                                              GetSerializationOverrides());	
+			XmlSerializer serializer = 
+				new XmlSerializer(typeof(RecognizerConfig),
+				                  GetSerializationOverrides());	
 			
 			string path = PathUtils.GetConfigFilePath("MathTextRecognizer");
 			
@@ -95,8 +113,10 @@ namespace MathTextRecognizer.Config
 		/// </summary>
 		public void Save()
 		{
-			XmlSerializer serializer = new XmlSerializer(typeof(RecognizerConfig),
-			                                              GetSerializationOverrides());	
+			XmlSerializer serializer =
+				new XmlSerializer(typeof(RecognizerConfig),
+				                  GetSerializationOverrides());	
+			
 			string path = PathUtils.GetConfigFilePath("MathTextRecognizer");
 			
 			using(StreamWriter w = new StreamWriter(path,false))

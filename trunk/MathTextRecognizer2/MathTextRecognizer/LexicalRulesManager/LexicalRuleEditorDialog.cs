@@ -9,7 +9,7 @@ using Glade;
 using MathTextCustomWidgets.Dialogs;
 using MathTextLibrary.Analisys.Lexical;
 
-namespace MathTextRecognizer
+namespace MathTextRecognizer.LexicalRuleManager
 {
 	
 	/// <summary>
@@ -31,6 +31,9 @@ namespace MathTextRecognizer
 		[WidgetAttribute]
 		private ScrolledWindow expressionsSW = null;
 		
+		[WidgetAttribute]
+		private Alignment moreInfoPlaceholder = null;
+		
 #endregion Glade widgets
 		
 		/// <summary>
@@ -47,10 +50,11 @@ namespace MathTextRecognizer
 			                   null);
 			gxml.Autoconnect(this);
 			
+			
 			lexicalRuleEditorDialog.TransientFor = parent;
+			AddExpression("");	
 			
-			AddExpression("");
-			
+			lexicalRuleEditorDialog.ShowAll();
 		}
 		
 #region Properties
@@ -64,7 +68,7 @@ namespace MathTextRecognizer
 			{
 				
 				LexicalRule res = new LexicalRule();
-				res.RuleName = ruleNameEntry.Text.Trim();
+				res.Name = ruleNameEntry.Text.Trim();
 				
 				foreach (LexicalExpressionWidget widget 
 				         in expressionsVB.AllChildren ) 
@@ -76,7 +80,7 @@ namespace MathTextRecognizer
 			
 			set
 			{
-				ruleNameEntry.Text = value.RuleName;
+				ruleNameEntry.Text = value.Name;
 				
 				// We clear the vertical box.
 				foreach (LexicalExpressionWidget widget 
@@ -135,7 +139,8 @@ namespace MathTextRecognizer
 		private void AddExpression(string expression)
 		{
 			LexicalExpressionWidget widget = 
-				new LexicalExpressionWidget(this.lexicalRuleEditorDialog);
+				new LexicalExpressionWidget(this.lexicalRuleEditorDialog,
+				                            expressionsVB);
 			widget.Expression = expression;
 			
 			expressionsVB.Add(widget);
@@ -204,8 +209,7 @@ namespace MathTextRecognizer
 				lexicalRuleEditorDialog.Respond(ResponseType.None);
 			}
 			else
-			{
-				
+			{				
 				lexicalRuleEditorDialog.Respond(ResponseType.Ok);
 			}
 		}
@@ -223,28 +227,40 @@ namespace MathTextRecognizer
 			private Entry expressionEntry = null;
 			
 			[WidgetAttribute]
-			private Frame expressionFrame = null;
+			private Alignment expressionAlignment = null;
+			
+			[WidgetAttribute]
+			private Button upBtn = null;
+			
+			[WidgetAttribute]
+			private Button downBtn = null;
+			
+			[WidgetAttribute]
+			private Label orLabel = null;
 			
 			private Window parentWindow;
+			private VBox container;
 			
 			/// <summary>
 			/// <c>LexicalExpressionWidget</c>'s constructor.
 			/// </summary>
-			public LexicalExpressionWidget(Window parentWindow) 
+			public LexicalExpressionWidget(Window parentWindow, VBox container) 
 				: base(0, 0.5f, 0, 0)
 			{
 				XML gxml = new XML(null, 
 				                   "mathtextrecognizer.glade",
-				                   "expressionFrame",
+				                   "expressionAlignment",
 				                   null);
 				
 				gxml.Autoconnect(this);
 				
 				this.parentWindow = parentWindow;
+				this.container = container;
 				
-				this.Add(expressionFrame);
+				this.Add(expressionAlignment);
 				
-				this.expressionEntry.IsFocus = true;
+				container.Added += new AddedHandler(OnContainerAdded);
+				container.Removed += new RemovedHandler(OnContainerRemoved);
 				
 				this.ShowAll();
 			}
@@ -254,8 +270,7 @@ namespace MathTextRecognizer
 			/// Contains the widget's expression.
 			/// </value>
 			public string Expression
-			{
-				
+			{				
 				get
 				{
 					return expressionEntry.Text.Trim();					
@@ -267,11 +282,45 @@ namespace MathTextRecognizer
 			}
 			
 			/// <summary>
+			/// Checks the position of the control and sets the sensitiveness
+			/// of the buttons (and other things) accordingly.
+			/// </summary>
+			public void CheckPosition()
+			{
+				int position = (container[this] as Gtk.Box.BoxChild).Position;
+				bool notLast = position < container.Children.Length -1;
+				bool notFirst = position > 0;
+				downBtn.Sensitive = notLast;
+				upBtn.Sensitive = notFirst;				
+				orLabel.Text = notFirst?"|":" ";	
+					
+			}
+			
+			/// <summary>
 			/// Moves the widget one position before the actual.
 			/// </summary>
 			private void OnUpBtnClicked(object sender, EventArgs args)
 			{
-				
+				int position = (container[this] as Gtk.Box.BoxChild).Position;
+				container.ReorderChild(this, position-1);
+				(container.Children[position] as LexicalExpressionWidget).CheckPosition();
+				CheckPosition();
+			}
+			
+			/// <summary>
+			/// Handles the addition of a sibling.
+			/// </summary>
+			private void OnContainerAdded(object sender, AddedArgs args) 
+			{				
+				CheckPosition();
+			}
+			
+			/// <summary>
+			/// Handles the deletion of a sibling.
+			/// </summary>
+			private void OnContainerRemoved(object sender, RemovedArgs args)
+			{			
+				CheckPosition();
 			}
 			
 			/// <summary>
@@ -279,19 +328,27 @@ namespace MathTextRecognizer
 			/// </summary>
 			private void OnDownBtnClicked(object sender, EventArgs args)
 			{
-				
+				int position = (container[this] as Gtk.Box.BoxChild).Position;
+				container.ReorderChild(this, position+1);
+				(container.Children[position] as LexicalExpressionWidget).CheckPosition();
+				CheckPosition();
 			}
-			
-			
 			
 			/// <summary>
 			/// Removes the widget from the list.
 			/// </summary>
 			private void OnRemoveBtnClicked(object sender, EventArgs args)
 			{
-				ResponseType res = 
-					ConfirmDialog.Show(parentWindow,
-					                   "¿Quieres eliminar la expresión?");
+				
+				ResponseType res = ResponseType.Yes;
+				
+				// If the widget isn't empty, we have to ask.
+				if(!String.IsNullOrEmpty(this.Expression.Trim()))
+				{
+					res = ConfirmDialog.Show(parentWindow,
+					                         "¿Quieres eliminar la expresión?");
+				}
+				
 				
 				if(res == ResponseType.Yes)
 				{

@@ -24,7 +24,7 @@ namespace MathTextLibrary.Tests
 		public void MatchTextTest()			
 		{	
 			LexicalRule rule = new LexicalRule();
-			rule.RuleName = "NUMBER";
+			rule.Name = "NUMBER";
 			rule.LexicalExpressions.Add(@"[0-9]+");
 			rule.LexicalExpressions.Add(@"[0-9]+\.[0-9]+");
 			

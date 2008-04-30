@@ -13,7 +13,9 @@ using Glade;
 using MathTextCustomWidgets.Dialogs;
 using MathTextLibrary.Analisys.Lexical;
 
-namespace MathTextRecognizer
+using MathTextRecognizer.Config;
+
+namespace MathTextRecognizer.LexicalRuleManager
 {
 	
 	/// <summary>
@@ -64,11 +66,17 @@ namespace MathTextRecognizer
 			                   "lexicalRulesManagerDialog",
 			                   null);
 			
+			
+			
 			gxml.Autoconnect(this);
 			
 			lexicalRulesManagerDialog.TransientFor = parent;
 			
+			lexicalRulesManagerDialog.Deletable = false;
+			
 			InitializeWidgets();
+			
+			this.LexicalRules = RecognizerConfig.Instance.LexicalRules;
 			
 		}
 		
@@ -137,7 +145,7 @@ namespace MathTextRecognizer
 			string expression =  
 				String.Join(" | ", rule.LexicalExpressions.ToArray());
 			
-			TreeIter newIter = 	rulesStore.AppendValues(rule.RuleName,
+			TreeIter newIter = 	rulesStore.AppendValues(rule.Name,
 			                                            expression,
 			                                            rule);
 			
@@ -178,7 +186,7 @@ namespace MathTextRecognizer
 		/// <param name="args">
 		/// A <see cref="EventArgs"/>
 		/// </param>
-		public void OnAddBtnClicked(object sender, EventArgs args)
+		private void OnAddBtnClicked(object sender, EventArgs args)
 		{
 			
 			LexicalRuleEditorDialog dialog = 
@@ -205,7 +213,7 @@ namespace MathTextRecognizer
 		/// <param name="args">
 		/// A <see cref="EventArgs"/>
 		/// </param>
-		public void OnRemoveBtnClicked(object sender, EventArgs args)
+		private void OnRemoveBtnClicked(object sender, EventArgs args)
 		{			
 			TreeIter selected;
 			rulesTV.Selection.GetSelected(out selected);
@@ -233,7 +241,7 @@ namespace MathTextRecognizer
 		/// <param name="args">
 		/// A <see cref="EventArgs"/>
 		/// </param>
-		public void OnUpBtnClicked(object sender, EventArgs args)
+		private void OnUpBtnClicked(object sender, EventArgs args)
 		{
 			TreePath selectedPath =  rulesTV.Selection.GetSelectedRows()[0];
 			TreeIter selected;
@@ -251,6 +259,22 @@ namespace MathTextRecognizer
 			rulesTV.ScrollToCell(previousPath, rulesTV.Columns[0], true, 0, 0);
 		}
 		
+			
+		/// <summary>
+		/// Maneja el evento producido al pulsar el boton de cerrar el dialogo.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnCloseBtnClicked(object sender, EventArgs args)
+		{
+			this.lexicalRulesManagerDialog.Hide();
+		}
+		
+		
 		/// <summary>
 		/// Moves the selected rule one postion lower.
 		/// </summary>
@@ -260,7 +284,7 @@ namespace MathTextRecognizer
 		/// <param name="args">
 		/// A <see cref="EventArgs"/>
 		/// </param>
-		public void OnDownBtnClicked(object sender, EventArgs args)
+		private void OnDownBtnClicked(object sender, EventArgs args)
 		{
 			TreePath selectedPath =  rulesTV.Selection.GetSelectedRows()[0];
 			TreeIter selected;
@@ -286,9 +310,32 @@ namespace MathTextRecognizer
 		/// <param name="args">
 		/// A <see cref="EventArgs"/>
 		/// </param>
-		public void OnEditBtnClicked(object sender, EventArgs args)
+		private void OnEditBtnClicked(object sender, EventArgs args)
 		{
-			// TODO Edit rule;
+			TreeIter selected;
+			rulesTV.Selection.GetSelected(out selected);
+			
+			LexicalRule rule = rulesStore.GetValue(selected, 2) as LexicalRule;
+			
+			LexicalRuleEditorDialog dialog = 
+				new LexicalRuleEditorDialog(lexicalRulesManagerDialog);
+			
+			dialog.Rule = rule;
+			
+			ResponseType res = dialog.Show();
+			
+			if(res == ResponseType.Ok)
+			{
+				// The modified rule.
+				rule = dialog.Rule;
+				rulesStore.SetValues(selected, 
+				                     rule.Name,
+				                     String.Join(" | ", 
+				                                rule.LexicalExpressions.ToArray()),
+				                     rule);
+			}
+			
+			dialog.Destroy();
 		}
 		
 		/// <summary>
@@ -300,9 +347,18 @@ namespace MathTextRecognizer
 		/// <param name="args">
 		/// A <see cref="EventArgs"/>
 		/// </param>
-		public void OnSaveBtnClicked(object sender, EventArgs args)
+		private void OnSaveBtnClicked(object sender, EventArgs args)
 		{
+			ResponseType res =
+				ConfirmDialog.Show(lexicalRulesManagerDialog,
+				                   "Esto cambiará la configuración de la "
+				                   + "aplicación, ¿desea contnuar?");
 			
+			if(res == ResponseType.Yes)
+			{
+				RecognizerConfig.Instance.LexicalRules = this.LexicalRules;
+				RecognizerConfig.Instance.Save();
+			}
 		}
 		
 		/// <summary>
@@ -314,7 +370,7 @@ namespace MathTextRecognizer
 		/// <param name="args">
 		/// A <see cref="EventArgs"/>
 		/// </param>
-		public void OnRulesTVSelectionChanged(object sender, EventArgs args)
+		private void OnRulesTVSelectionChanged(object sender, EventArgs args)
 		{
 			bool rowSelected = rulesTV.Selection.CountSelectedRows() > 0;
 			
@@ -332,7 +388,7 @@ namespace MathTextRecognizer
 			editBtn.Sensitive = rowSelected;
 			removeBtn.Sensitive = rowSelected;
 		}
-		
+
 #endregion Non-public methods
 	}
 }
