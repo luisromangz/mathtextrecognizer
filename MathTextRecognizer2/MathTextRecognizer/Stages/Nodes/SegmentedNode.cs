@@ -168,6 +168,8 @@ namespace MathTextRecognizer.Stages.Nodes
 			
 			label = text.TrimEnd(',',' ');
 			
+			view.ColumnsAutosize();
+			
 		}
 		 
 		/// <summary>
@@ -209,6 +211,7 @@ namespace MathTextRecognizer.Stages.Nodes
 			}
 			
 			view.ExpandAll();
+			view.ColumnsAutosize();
 		}
 		
 		/// <summary>
@@ -237,11 +240,17 @@ namespace MathTextRecognizer.Stages.Nodes
 		{
 			private SegmentedNode node;
 			
+			/// <summary>
+			/// <c>AddNodeArgs</c>'s constructor.
+			/// </summary>
 			public AddNodeArgs(SegmentedNode node)
 			{
 				this.node= node;
 			}
 			
+			/// <summary>
+			/// Contains the node added.
+			/// </summary>
 			public SegmentedNode Node
 			{
 				get
