@@ -275,7 +275,7 @@ namespace MathTextRecognizer
 				new OCRStageWidget(this);
 			
 			recognizingStepsNB.AppendPage(ocrWidget,
-			                              new Label("Segmentación y "
+			                              new Label("Segmentación de la imagen y "
 			                                        +"reconocimiento de caracteres"));
 			
 			recognizingStepsNB.AppendPage(new TokenizingStageWidget(this),
