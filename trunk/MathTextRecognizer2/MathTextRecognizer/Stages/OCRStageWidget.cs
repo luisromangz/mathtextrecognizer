@@ -522,13 +522,20 @@ namespace MathTextRecognizer.Stages
 					DatabaseFileInfo selectedDatabase = 
 						databaseDialog.ChoosenDatabase;
 				
+					MathTextDatabase database = null;
+					string databasePath = "";
+					if(selectedDatabase != null)
+					{
+						database = selectedDatabase.Database;
+						databasePath = selectedDatabase.Path;
+					}
 					
-					new MainLearnerWindow(this.MainWindow.Window,
-					                      selectedDatabase.Database,
-					                      selectedDatabase.Path,
-					                      selectedNode.MathTextBitmap.Pixbuf,
-					                      selectedNode.Name);
-				
+					MainLearnerWindow learner =
+						new MainLearnerWindow(this.MainWindow.Window,
+						                      database,
+						                      databasePath,
+						                      selectedNode.MathTextBitmap.Pixbuf,
+						                      selectedNode.Name);
 				}
 				
 				
