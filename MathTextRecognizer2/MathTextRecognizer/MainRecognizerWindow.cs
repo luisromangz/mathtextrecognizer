@@ -30,6 +30,7 @@ using MathTextLibrary.Databases.Characteristic.Characteristics;
 using MathTextRecognizer.Stages;
 using MathTextRecognizer.Controllers;
 using MathTextRecognizer.DatabaseManager;
+using MathTextRecognizer.LexicalRuleManager;
 
 namespace MathTextRecognizer
 {
@@ -95,7 +96,7 @@ namespace MathTextRecognizer
 		
 		private DatabaseManagerDialog databaseManagerDialog;
 		
-
+		private LexicalRulesManagerDialog lexicalRulesManagerDialog;
 		
 		#endregion Otros atributos
 		
@@ -126,6 +127,9 @@ namespace MathTextRecognizer
 			// bases de datos.			
 			databaseManagerDialog.DatabaseFilesInfo = 
 				Config.RecognizerConfig.Instance.DatabaseFilesInfo;
+			
+			lexicalRulesManagerDialog = 
+				new LexicalRulesManagerDialog(this.mainWindow);		
 		}
 		
 		
@@ -311,7 +315,7 @@ namespace MathTextRecognizer
 		/// </summary>
 		private void OnOpenDatabaseManagerClicked(object sender, EventArgs arg)
 		{	
-			databaseManagerDialog.Run();			
+			databaseManagerDialog.Show();			
 		}
 		
 			
@@ -322,6 +326,7 @@ namespace MathTextRecognizer
 		private void OnExitClicked(object sender, EventArgs arg)
 		{
 			databaseManagerDialog.Destroy();
+			lexicalRulesManagerDialog.Destroy();
 			OnExit();
 		}
 		
@@ -495,10 +500,7 @@ namespace MathTextRecognizer
 		/// </param>
 		private void OnLexicalManagerItemClicked(object sender, EventArgs args)
 		{
-			LexicalRulesManagerDialog dialog = 
-				new LexicalRulesManagerDialog(this.Window);
-			dialog.Show();
-			dialog.Destroy();
+			lexicalRulesManagerDialog.Show();
 		}
 	}
 	

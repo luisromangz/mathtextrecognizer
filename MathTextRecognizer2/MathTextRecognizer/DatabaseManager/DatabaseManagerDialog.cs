@@ -61,6 +61,8 @@ namespace MathTextRecognizer.DatabaseManager
 				new RowDeletedHandler(OnDatabasesLSRowsChanged);
 			databasesLS.RowInserted +=
 				new RowInsertedHandler(OnDatabasesLSRowsChanged);
+			
+			databaseManagerDialog.Deletable = false;
 		}
 		
 #region Propiedades
@@ -120,7 +122,7 @@ namespace MathTextRecognizer.DatabaseManager
 		/// <returns>
 		/// La respuesta del dialogo.
 		/// </returns>
-		public ResponseType Run()
+		public ResponseType Show()
 		{
 			return (ResponseType)(this.databaseManagerDialog.Run());
 		}

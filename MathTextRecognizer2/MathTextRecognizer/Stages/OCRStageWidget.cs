@@ -697,6 +697,10 @@ namespace MathTextRecognizer.Stages
 			
 			if(res == ResponseType.Yes)
 			{
+				// We reload the databases because the new segmentation may be
+				// due a database change.
+				controller.Databases = this.Databases;
+				
 				controller.StartNode = selectedNode;
 				controller.SearchDatabase = false;
 				buttonsNB.Page = 1;
