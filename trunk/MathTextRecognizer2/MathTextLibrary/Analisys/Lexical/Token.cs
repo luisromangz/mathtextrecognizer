@@ -230,6 +230,22 @@ namespace MathTextLibrary.Analisys.Lexical
 		{
 			return this.X - other.X;
 		}
+		
+		/// <summary>
+		/// Checks if the invoking token is next to another.
+		/// </summary>
+		/// <param name="previous">
+		/// The token to check with.
+		/// </param>
+		/// <returns>
+		/// <c>true</c> if the invoking token is next to the one used as
+		/// parameter.
+		/// </returns>
+		public bool IsNextTo(Token previous)
+		{
+			// TODO Complete the IsNextTo stub method.
+			return true;
+		}
 
 		
 #endregion Public methods

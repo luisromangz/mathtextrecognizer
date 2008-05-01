@@ -91,7 +91,7 @@ namespace MathTextLibrary.Analisys.Lexical
 			{
 				if(!String.IsNullOrEmpty(t.Type))
 				{
-					text += String.Format("{{0}}", t.Type);
+					text += String.Format("%%{0}%%", t.Type);
 				}
 				else
 				{
