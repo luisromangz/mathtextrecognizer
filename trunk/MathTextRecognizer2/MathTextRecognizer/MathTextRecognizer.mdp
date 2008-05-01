@@ -36,7 +36,6 @@
     <File name="Stages/Dialogs/LearnSymbolDatabaseChooserDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Stages/TokenizingStageWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Stages/OCRStageWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Controllers/TokenizingController.cs" subtype="Code" buildaction="Compile" />
     <File name="Controllers/OCRController.cs" subtype="Code" buildaction="Compile" />
     <File name="LexicalRulesManager" subtype="Directory" buildaction="Compile" />
     <File name="LexicalRulesManager/LexicalRuleEditorDialog.cs" subtype="Code" buildaction="Compile" />

@@ -9,9 +9,8 @@ using System.Collections.Generic;
 
 
 using MathTextLibrary.Analisys.Lexical;
-using MathTextLibrary.Controllers;
 
-namespace MathTextRecognizer.Controllers
+namespace MathTextLibrary.Controllers
 {
 	
 	/// <summary>
@@ -30,18 +29,24 @@ namespace MathTextRecognizer.Controllers
 		{
 		}
 		
-#region Public methods		
-		
-		/// <summary>
-		/// Sets the intial tokens to be processed.
-		/// </summary>
-		/// <param name="initialTokens">
-		/// The inital tokens.
-		/// </param>
-		public void SetInitialTokens(List<Token> initialTokens)
+#region Properties
+		/// <value>
+		/// Contains the tokens processed by the controller.
+		/// </value>
+		public List<Token> Tokens
 		{
-			tokens = initialTokens;
+			get
+			{
+				return tokens;
+			}
+			set
+			{
+				tokens = value;
+			}
 		}
+#endregion Properties
+		
+#region Public methods		
 		
 		/// <summary>
 		/// 
@@ -132,10 +137,69 @@ namespace MathTextRecognizer.Controllers
 		/// </returns>
 		private List<Token> MatchTokens(List<Token> sequence)
 		{
-			// TODO Complete the MatchTokens method stub.
-			return null;
+			List<Token> result = new List<Token>();
+			
+			List<Token> discarded = new List<Token>();
+			
+			bool found = false;
+			while(sequence.Count > 0 && !found)
+			{
+				Token foundToken = null;				
+				foreach (LexicalRule rule in lexicalRules) 
+				{
+					foundToken = rule.Match(sequence);
+					if(foundToken!=null)
+					{
+						// We search no more.
+						break;
+					}
+				}
+				
+				// We check if a token was found
+				if(foundToken == null)
+				{
+					// We remove the token from the input sequence and add it
+					// to the discarded set.
+					int lastIndex = sequence.Count -1;
+					discarded.Add(sequence[lastIndex]);
+					sequence.RemoveAt(lastIndex);
+				}
+				else
+				{
+					// We found a token, so we stop searching and add
+					// the token to the result.
+					found = true;
+					result.Add(foundToken);
+				}
+			}
+			
+			if(found && discarded.Count > 0)
+			{
+				// We try to match the discarded tokens.
+				// It has to be reversed because its elements were
+				// added from right to left.
+				discarded.Reverse(); 
+				result.AddRange(MatchTokens(discarded));
+			}
+			else if(!found)
+			{
+				// Houston, we have a lexical input problem.
+				throw new Exception("No rules were able to match the input tokens.");
+			}
+			
+			return result;
 		}
 
+		/// <summary>
+		/// Sets the intial tokens to be processed.
+		/// </summary>
+		/// <param name="initialTokens">
+		/// The inital tokens.
+		/// </param>
+		private void SetInitialTokens(List<Token> initialTokens)
+		{
+			tokens = initialTokens;
+		}
 		
 #endregion Non-public methods
 	}
