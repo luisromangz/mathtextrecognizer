@@ -25,6 +25,8 @@ namespace MathTextLibrary.Analisys.Lexical
 	
 		private FloatBitmap image;
 		
+		private const float epsilon = 0.05f;
+		
 		/// <summary>
 		/// <c>Token</c>'s constructor.
 		/// </summary>
@@ -243,8 +245,34 @@ namespace MathTextLibrary.Analisys.Lexical
 		/// </returns>
 		public bool IsNextTo(Token previous)
 		{
-			// TODO Complete the IsNextTo stub method.
+			
+			
+			int horizontalDistance = this.x - previous.x+ previous.Width;
+			if(horizontalDistance > (Math.Min(this.Width, previous.Width))
+			   || horizontalDistance <0)
+			{
+				return false;
+			}
+				
+				
+			
+			int previousCenterY = previous.y+ previous.Height/2;
+			int thisCenterY = this.y + this.Height /2;
+			
+			int mediumHeight = (previous.Height + this.Height)/2;
+			
+			int range = (int)(mediumHeight * epsilon);
+			
+			if(Math.Abs(previousCenterY-thisCenterY) > range)
+			{
+				return false;
+			}
+			
+			
+			
+			
 			return true;
+			
 		}
 
 		

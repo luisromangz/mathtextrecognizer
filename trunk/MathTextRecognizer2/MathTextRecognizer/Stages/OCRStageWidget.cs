@@ -200,12 +200,17 @@ namespace MathTextRecognizer.Stages
 			treeview.RulesHint = true;
 			
 			treeview.ShowExpanders = true;
-			treeview.AppendColumn ("Imagen", new CellRendererText (), "text", 0);
+			treeview.AppendColumn ("Imagen", 
+			                       new CellRendererText (), 
+			                       "text", 0);
 			
 			CellRendererText cellRenderer = new CellRendererText();
 			cellRenderer.Xalign = 0.5f;
 			treeview.AppendColumn ("Etiqueta", cellRenderer, "text", 1);
-			treeview.AppendColumn ("Posición", new CellRendererText (), "text", 2);
+			treeview.AppendColumn ("Posición", 
+			                       new CellRendererText (), 
+			                       "text", 2);
+			
 			scrolledtree.Add(treeview);
 			
 			treeview.Columns[1].Sizing = TreeViewColumnSizing.Autosize;
