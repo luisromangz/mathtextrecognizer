@@ -72,13 +72,17 @@ namespace MathTextLibrary.Controllers
 			MessageLogSentInvoker(" Comenzando proceso de análisis léxico");
 			MessageLogSentInvoker("========================================");
 			
-			List<List<Token>> tokenSequences = GetTokenSequences();
+			List<TokenSequence> tokenSequences = GetTokenSequences();
 			
-			foreach (List<Token> tokenSequence in tokenSequences) 
+			ProcessFinishedInvoker();
+			
+			foreach (TokenSequence sequence in tokenSequences) 
 			{
-				List<Token> matchedTokens = MatchTokens(tokenSequence);
+				List<Token> matchedTokens = MatchTokens(sequence);
 				tokens.AddRange(matchedTokens);
 			}
+			
+			ProcessFinishedInvoker();
 			
 			
 		}
@@ -89,33 +93,33 @@ namespace MathTextLibrary.Controllers
 		/// <returns>
 		/// The list of sequences of contiguous tokens.
 		/// </returns>
-		private List<List<Token>> GetTokenSequences()
+		private List<TokenSequence> GetTokenSequences()
 		{
-			List<List<Token>> tokenSequences = new List<List<Token>>();
-			List<Token> sequence = new List<Token>();
+			List<TokenSequence> tokenSequences = new List<TokenSequence>();
+			TokenSequence sequence = new TokenSequence();
 			// We add a first sequence to the list.
 			tokenSequences.Add(sequence);
 			
 			/// We add the first token to the first sequence.
 			Token lastToken = tokens[0];
-			sequence.Add(lastToken);
+			sequence.Append(lastToken);
 			tokens.RemoveAt(0);
 			
 			// All the tokens must be in one sequence.
 			while(this.tokens.Count > 0)
-			{
+			{				
 				Token firstToken = tokens[0];
 				if(!firstToken.IsNextTo(lastToken))
 				{
 					// If the symbols aren't contiguous, a new sequence has
 					// commenced.
-					sequence = new List<Token>();
+					sequence = new TokenSequence();					
 					tokenSequences.Add(sequence);
 				}
 				
 				// We add the token to the current sequence, and remove it
 				// from the inital token list.
-				sequence.Add(firstToken);
+				sequence.Append(firstToken);
 				tokens.RemoveAt(0);
 				
 				// We update the token pointer.
@@ -130,16 +134,16 @@ namespace MathTextLibrary.Controllers
 		/// Matches a given token sequence into one or more Tokens.
 		/// </summary>
 		/// <param name="sequence">
-		/// A <see cref="List`1"/>
+		/// The token sequence (possibly) containing tokens.
 		/// </param>
 		/// <returns>
-		/// The tokens the 
+		/// The tokens found in the sequence. 
 		/// </returns>
-		private List<Token> MatchTokens(List<Token> sequence)
+		private List<Token> MatchTokens(TokenSequence sequence)
 		{
 			List<Token> result = new List<Token>();
 			
-			List<Token> discarded = new List<Token>();
+			TokenSequence discarded = new TokenSequence();
 			
 			bool found = false;
 			while(sequence.Count > 0 && !found)
@@ -159,9 +163,9 @@ namespace MathTextLibrary.Controllers
 				if(foundToken == null)
 				{
 					// We remove the token from the input sequence and add it
-					// to the discarded set.
+					// at the beggining of the discarded set.
 					int lastIndex = sequence.Count -1;
-					discarded.Add(sequence[lastIndex]);
+					discarded.Prepend(sequence[lastIndex]);
 					sequence.RemoveAt(lastIndex);
 				}
 				else
@@ -175,10 +179,6 @@ namespace MathTextLibrary.Controllers
 			
 			if(found && discarded.Count > 0)
 			{
-				// We try to match the discarded tokens.
-				// It has to be reversed because its elements were
-				// added from right to left.
-				discarded.Reverse(); 
 				result.AddRange(MatchTokens(discarded));
 			}
 			else if(!found)

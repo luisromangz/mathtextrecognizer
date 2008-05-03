@@ -83,7 +83,7 @@ namespace MathTextLibrary.Analisys.Lexical
 		/// A new token which groups the given tokens, or null when the matching
 		/// process wasn't successful.
 		/// </returns>
-		public Token Match(List<Token> tokens)
+		public Token Match(TokenSequence tokens)
 		{
 			// We form the expression to be matched.
 			string text = "";

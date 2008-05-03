@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 
 using Gtk;
+using Glade;
 
 using MathTextLibrary.Analisys.Lexical;
 
@@ -25,7 +26,34 @@ namespace MathTextRecognizer.Stages
 		
 #region Glade widgets
 		
+		[WidgetAttribute]
+		private Alignment tokenizingStageWidget = null;
+		
+		[WidgetAttribute]
+		private IconView symbolsIV = null;
+		
+		[WidgetAttribute]
+		private TreeView sequencesTV = null;
+		
+		[WidgetAttribute]
+		private Notebook buttonsNB = null;
+		
+		[WidgetAttribute]
+		private Alignment alignNextButtons = null;
+		
+		[WidgetAttribute]
+		private Button processBtn = null;
+		
+		[WidgetAttribute]
+		private Button nextStageBtn = null;
+		
 #endregion Glade widgets
+		
+#region Fields
+		
+		private ListStore sequencesModel;
+		
+#endregion Fields
 		
 		/// <summary>
 		/// <c>TokenizingStageWidget</c>'s constructor.
@@ -35,6 +63,14 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		public TokenizingStageWidget(MainRecognizerWindow parent) : base(parent)
 		{
+			XML gladeXml = new XML(null,"mathtextrecognizer.glade" ,"tokenizingStageWidget", null);
+			gladeXml.Autoconnect(this);
+			
+			this.Add(tokenizingStageWidget);
+			
+			InitializeWidgets();
+			
+			this.ShowAll();
 		}
 		
 #region Properties
@@ -58,6 +94,16 @@ namespace MathTextRecognizer.Stages
 		
 #region Non-public methods
 		
+		/// <summary>
+		/// Initialize the widget's children widgets.
+		/// </summary>
+		private void InitializeWidgets()
+		{
+			sequencesModel = new ListStore(typeof(string),
+			                               typeof(string),
+			                               typeof(TokenSequence));
+			
+		}
 	
 		/// <summary>
 		/// Sets the product of the segmentation stage as the start point
