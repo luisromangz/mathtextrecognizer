@@ -61,10 +61,10 @@ namespace MathTextLibrary.Tests
 		
 		private Token TestToken(string text, LexicalRule rule)
 		{
-			List<Token> tokens = new List<Token>();
+			TokenSequence tokens = new TokenSequence();
 			foreach (char c in  text)
 			{
-				tokens.Add(new Token(c.ToString(), 0,0, new FloatBitmap(2,2)));
+				tokens.Append(new Token(c.ToString(), 0,0, new FloatBitmap(2,2)));
 			}
 			
 			return rule.Match(tokens);

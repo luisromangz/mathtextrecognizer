@@ -153,7 +153,7 @@ namespace MathTextLibrary.Analisys.Lexical
 		/// <returns>
 		/// A <see cref="Token"/>
 		/// </returns>
-		public static Token Join(List<Token> tokens, string tokenType)
+		public static Token Join(TokenSequence tokens, string tokenType)
 		{
 			int maxY = -1;
 			int maxX = -1;

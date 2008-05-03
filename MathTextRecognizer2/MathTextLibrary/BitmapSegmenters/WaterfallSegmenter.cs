@@ -287,6 +287,9 @@ namespace MathTextLibrary.BitmapSegmenters
 			return image;
 		}
 		
+		/// <summary>
+		/// THis class implements the point used in the waterfall segmenter.
+		/// </summary>
 		private class Point
 		{
 			private int x;
