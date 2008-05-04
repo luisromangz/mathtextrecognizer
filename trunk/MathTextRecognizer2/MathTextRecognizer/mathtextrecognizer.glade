@@ -2226,13 +2226,12 @@ Las reglas que estén más altas en la lista se aplicarán primero, y esto puede
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-                        <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                        <property name="vscrollbar_policy">GTK_POLICY_NEVER</property>
                         <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
                         <child>
                           <widget class="GtkIconView" id="symbolsIV">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="orientation">GTK_ORIENTATION_HORIZONTAL</property>
                           </widget>
                         </child>
                       </widget>
@@ -2280,6 +2279,7 @@ Las reglas que estén más altas en la lista se aplicarán primero, y esto puede
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="headers_clickable">True</property>
+                                <property name="rules_hint">True</property>
                               </widget>
                             </child>
                           </widget>
@@ -2332,7 +2332,7 @@ Las reglas que estén más altas en la lista se aplicarán primero, y esto puede
                         <child>
                           <widget class="GtkLabel" id="label49">
                             <property name="visible">True</property>
-                            <property name="label" translatable="yes">Tokens:</property>
+                            <property name="label" translatable="yes">Símbolos de la secuencia:</property>
                             <property name="use_markup">True</property>
                           </widget>
                           <packing>
@@ -2370,41 +2370,51 @@ Las reglas que estén más altas en la lista se aplicarán primero, y esto puede
                         <property name="spacing">10</property>
                         <property name="layout_style">GTK_BUTTONBOX_CENTER</property>
                         <child>
-                          <widget class="GtkButton" id="processBtn">
+                          <widget class="GtkAlignment" id="alignment32">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="response_id">0</property>
                             <child>
-                              <widget class="GtkAlignment" id="alignment37">
+                              <widget class="GtkButton" id="processBtn">
                                 <property name="visible">True</property>
-                                <property name="xscale">0</property>
+                                <property name="sensitive">False</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="response_id">0</property>
                                 <child>
-                                  <widget class="GtkHBox" id="hbox30">
+                                  <widget class="GtkAlignment" id="alignment37">
                                     <property name="visible">True</property>
-                                    <property name="spacing">5</property>
+                                    <property name="xscale">0</property>
+                                    <property name="yscale">0.79000002145767212</property>
                                     <child>
-                                      <widget class="GtkImage" id="image28">
+                                      <widget class="GtkHBox" id="hbox30">
                                         <property name="visible">True</property>
-                                        <property name="stock">gtk-cut</property>
+                                        <property name="spacing">5</property>
+                                        <child>
+                                          <widget class="GtkImage" id="image28">
+                                            <property name="visible">True</property>
+                                            <property name="stock">gtk-cut</property>
+                                          </widget>
+                                        </child>
+                                        <child>
+                                          <widget class="GtkLabel" id="label41">
+                                            <property name="visible">True</property>
+                                            <property name="label" translatable="yes">_Secuenciar</property>
+                                            <property name="use_underline">True</property>
+                                          </widget>
+                                          <packing>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
                                       </widget>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkLabel" id="label41">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">_Segmentar</property>
-                                        <property name="use_underline">True</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="position">1</property>
-                                      </packing>
                                     </child>
                                   </widget>
                                 </child>
                               </widget>
                             </child>
                           </widget>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">False</property>
+                          </packing>
                         </child>
                         <child>
                           <widget class="GtkButton" id="nextStageBtn">
@@ -2424,7 +2434,7 @@ Las reglas que estén más altas en la lista se aplicarán primero, y esto puede
                                     <child>
                                       <widget class="GtkLabel" id="label42">
                                         <property name="visible">True</property>
-                                        <property name="label" translatable="yes">_Ir al tokenizado</property>
+                                        <property name="label" translatable="yes">_Ir al análisis sintáctico</property>
                                         <property name="use_underline">True</property>
                                       </widget>
                                     </child>

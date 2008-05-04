@@ -139,8 +139,6 @@ namespace MathTextLibrary.Databases.Characteristic
 			
 			CharacteristicVector vector = (CharacteristicVector) o;
 			int distance = this.Distance(vector);
-			Console.WriteLine("Distance {0}", distance);
-			
 			
 			// The vectors are the same if the distance is zero
 			return distance == 0;

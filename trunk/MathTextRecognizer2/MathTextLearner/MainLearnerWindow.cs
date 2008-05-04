@@ -629,8 +629,6 @@ namespace MathTextLearner
 			
 			TreeIter selectedIter;
 			
-			Console.WriteLine(imagesIV.SelectedItems.Length);
-			
 			if(imagesIV.SelectedItems.Length > 0)
 			{
 				TreePath selectedImagePath = imagesIV.SelectedItems[0];
