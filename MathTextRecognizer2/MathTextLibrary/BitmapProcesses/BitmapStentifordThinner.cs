@@ -298,18 +298,7 @@ namespace MathTextLibrary.BitmapProcesses
 				i2 = i+2; if (i2 > 8) i2 -= 8;
 				k += (N[i] - N[i]*N[i1]*N[i2]);
 			}
-			/*
-			Console.WriteLine ("Yokoi: ({0},{1})",r, c);
-			Console.WriteLine ("{0} {1} {2}", im[r-1,c-1], im[r-1,c],	im[r-1,c+1]);
-			Console.WriteLine ("{0} {1} {2}", im[r,c-1], im[r,c],im[r,c+1]);
-			Console.WriteLine ("{0} {1} {2}", im[r+1,c-1], im[r+1,c],im[r+1,c+1]);
-			for (i=0; i<9; i++){
-				Console.WriteLine ("{0} ", N[i]);
-			}
-			
-			Console.WriteLine();
-			Console.WriteLine ("Y = {0}\n", k);			
-			*/
+		
 			return k;
 		}
 

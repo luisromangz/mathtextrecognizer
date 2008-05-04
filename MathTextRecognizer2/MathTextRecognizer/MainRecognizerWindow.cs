@@ -280,9 +280,11 @@ namespace MathTextRecognizer
 			
 			recognizingStepsNB.AppendPage(new TokenizingStageWidget(this),
 			                              new Label("Análisis léxico"));
-			recognizingStepsNB.Page = 0;
+			
 			
 			mainWindow.ShowAll();
+			
+			recognizingStepsNB.Page = 0;
 		}
 		
 		
@@ -486,6 +488,8 @@ namespace MathTextRecognizer
 			ocrWidget.ResetState();
 			
 			recognizementFinished=true;
+			
+			recognizingStepsNB.Page=0;
 		}
 		
 		/// <summary>

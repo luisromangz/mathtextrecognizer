@@ -91,10 +91,15 @@ namespace MathTextRecognizer.Stages
 		/// <summary>
 		/// Selects the next recognizing step.
 		/// </summary>
-		public void NextStage()			
+		/// <returns>
+		/// The new stage.
+		/// </returns>
+		public RecognizingStageWidget NextStage()			
 		{
 			Gtk.Notebook parentNB = (Gtk.Notebook)(this.Parent);
 			parentNB.NextPage();
+			
+			return (RecognizingStageWidget)(parentNB.GetNthPage(parentNB.Page));
 		}
 		
 

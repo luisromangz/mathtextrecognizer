@@ -373,7 +373,12 @@ namespace MathTextRecognizer.Stages
 			
 			if(errors.Count == 0)
 			{
-				NextStage();
+				TokenizingStageWidget tokenizingWidget =  
+					NextStage() as TokenizingStageWidget;
+				
+				tokenizingWidget.SetStartSymbols(this.LeafNodes);
+				
+				
 			}			
 			else
 			{

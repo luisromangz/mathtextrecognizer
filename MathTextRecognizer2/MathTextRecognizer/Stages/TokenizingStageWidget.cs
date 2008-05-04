@@ -10,7 +10,9 @@ using System.Collections.Generic;
 using Gtk;
 using Glade;
 
+using MathTextLibrary.Utils;
 using MathTextLibrary.Analisys.Lexical;
+using MathTextLibrary.Controllers;
 
 using MathTextRecognizer.Stages.Nodes; 
 
@@ -52,6 +54,9 @@ namespace MathTextRecognizer.Stages
 #region Fields
 		
 		private ListStore sequencesModel;
+		private ListStore symbolsModel;
+		
+		private TokenizingController controller;
 		
 #endregion Fields
 		
@@ -63,8 +68,14 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		public TokenizingStageWidget(MainRecognizerWindow parent) : base(parent)
 		{
-			XML gladeXml = new XML(null,"mathtextrecognizer.glade" ,"tokenizingStageWidget", null);
+			XML gladeXml = new XML(null,
+			                       "mathtextrecognizer.glade" ,
+			                       "tokenizingStageWidget", 
+			                       null);
+			
 			gladeXml.Autoconnect(this);
+			
+			controller = new TokenizingController();
 			
 			this.Add(tokenizingStageWidget);
 			
@@ -84,10 +95,43 @@ namespace MathTextRecognizer.Stages
 		/// </summary>
 		public override void ResetState ()
 		{
-			
+			symbolsModel.Clear();
 		}
 		
-		
+		/// <summary>
+		/// Sets the product of the segmentation stage as the start point
+		/// for the tokenizing stage.
+		/// </summary>
+		/// <param name="segmentationResult">
+		/// A list made with the leaf of the segmentation tree.
+		/// </param>
+		public void SetStartSymbols(List<SegmentedNode> segmentationResult)
+		{
+			// Transforms the segmented nodes to tokens.
+			List<Token> tokens = new List<Token>();
+			foreach(SegmentedNode symbolNode in segmentationResult)
+			{
+				tokens.Add(new Token(symbolNode.Label, 
+				                     symbolNode.MathTextBitmap.Position.X,
+				                     symbolNode.MathTextBitmap.Position.Y,
+				                     symbolNode.MathTextBitmap.FloatImage));
+			}				
+			
+			tokens.Sort();
+			
+			// We add the symbols to the gui.
+			foreach (Token token in tokens) 
+			{
+				symbolsModel.AppendValues(ImageUtils.MakeThumbnail(token.Image.CreatePixbuf(),
+				                                                   48),
+				                          token.Text);
+			}
+			
+			symbolsIV.Columns = tokens.Count;
+			
+			// We stablish the controller initial tokens.
+			controller.Tokens = tokens;
+		}
 
 		
 #endregion Public methods
@@ -103,29 +147,27 @@ namespace MathTextRecognizer.Stages
 			                               typeof(string),
 			                               typeof(TokenSequence));
 			
+			sequencesTV.Model = sequencesModel;
+			
+			sequencesTV.AppendColumn("Secuencia", 
+			                         new CellRendererText(), 
+			                         "text",0);
+			
+			sequencesTV.AppendColumn("Tokens",
+			                         new CellRendererText(),
+			                         "text",1);
+			
+			symbolsModel = new ListStore(typeof(Gdk.Pixbuf),
+			                             typeof(string));
+			
+			symbolsIV.Model = symbolsModel;
+			
+			symbolsIV.TextColumn = 1;
+			symbolsIV.PixbufColumn =0;
+			
 		}
 	
-		/// <summary>
-		/// Sets the product of the segmentation stage as the start point
-		/// for the tokenizing stage.
-		/// </summary>
-		/// <param name="segmentationResult">
-		/// A list made with the leaf of the segmentation tree.
-		/// </param>
-		private void SetStartSymbols(List<SegmentedNode> segmentationResult)
-		{
-			// Transforms the segmented nodes to tokens.
-			List<Token> tokens = new List<Token>();
-			foreach(SegmentedNode symbolNode in segmentationResult)
-			{
-				tokens.Add(new Token(symbolNode.Label, 
-				                     symbolNode.MathTextBitmap.Position.X,
-				                     symbolNode.MathTextBitmap.Position.Y,
-				                     symbolNode.MathTextBitmap.FloatImage));
-			}				
-			
-			tokens.Sort();
-		}
+	
 
 		
 #endregion Non-public methods
