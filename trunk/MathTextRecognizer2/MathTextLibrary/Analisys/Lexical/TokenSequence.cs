@@ -68,8 +68,8 @@ namespace MathTextLibrary.Analisys.Lexical
 		public void Append(Token item)
 		{
 			sequence.Add(item);
-			ChangedInvoker();
 			ItemAddedInvoker();
+			ChangedInvoker();			
 		}
 		
 		/// <summary>
@@ -81,8 +81,9 @@ namespace MathTextLibrary.Analisys.Lexical
 		public void Prepend(Token item)
 		{
 			sequence.Insert(0, item);
-			ChangedInvoker();
 			ItemAddedInvoker();
+			ChangedInvoker();
+			
 		}
 		
 		/// <summary>
@@ -124,7 +125,10 @@ namespace MathTextLibrary.Analisys.Lexical
 		protected void ChangedInvoker()
 		{			
 			if(this.Changed !=null)
+			{
 				Changed(this, EventArgs.Empty);
+			}
+				
 		}
 		
 		/// <summary>
@@ -133,7 +137,10 @@ namespace MathTextLibrary.Analisys.Lexical
 		protected void ItemAddedInvoker()
 		{
 			if(this.ItemAdded != null)
+			{
 				ItemAdded(this, EventArgs.Empty);
+			}
+				
 		}
 		
 #endregion Public methods
