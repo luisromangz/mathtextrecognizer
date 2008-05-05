@@ -147,6 +147,18 @@ namespace MathTextRecognizer
 		}
 		
 		/// <value>
+		/// Contains the lexical rules manager.
+		/// </value>
+		public LexicalRulesManagerDialog LexicalRulesManager
+		{
+			
+			get{
+				
+				return lexicalRulesManagerDialog;
+			}
+		}
+		
+		/// <value>
 		/// Contiene el estado de expansión del visor del log.
 		/// </value>
 		public bool LogAreaExpanded
@@ -186,7 +198,7 @@ namespace MathTextRecognizer
 			set
 			{
 				toolDatabase.Sensitive =value;
-				toolDatabase.Sensitive =value;
+				toolLoadImage.Sensitive =value;
 				
 				menuLoadImage.Sensitive =value;
 				menuOpenDatabaseManager.Sensitive =value;

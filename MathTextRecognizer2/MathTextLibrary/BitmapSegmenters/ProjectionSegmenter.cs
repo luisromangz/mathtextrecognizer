@@ -152,9 +152,10 @@ namespace MathTextLibrary.BitmapSegmenters{
 				GetEdges(cutImage, out pd, out sd);
 				cutImage =  cutImage.SubImage(pd.X, pd.Y, sd.Width,sd.Height);
 				// Montamos el bitmap
-				MathTextBitmap newBitmap = new MathTextBitmap(cutImage,
-				                                              new Point(xpos + x0 +  pd.X,
-				                                                        ypos + y0+ pd.Y));
+				MathTextBitmap newBitmap =
+					new MathTextBitmap(cutImage,
+					                   new Point(xpos + x0 +  pd.X,
+					                             ypos + y0+ pd.Y));
 					
 				newBitmaps.Add(newBitmap);
 			}		

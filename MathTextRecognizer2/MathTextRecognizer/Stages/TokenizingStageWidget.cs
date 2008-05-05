@@ -35,7 +35,7 @@ namespace MathTextRecognizer.Stages
 		private IconView symbolsIV = null;
 		
 		[WidgetAttribute]
-		private TreeView sequencesTV = null;
+		private ScrolledWindow sequencesNVPlaceholder = null;
 		
 		[WidgetAttribute]
 		private Notebook buttonsNB = null;
@@ -53,10 +53,12 @@ namespace MathTextRecognizer.Stages
 		
 #region Fields
 		
-		private ListStore sequencesModel;
+		private NodeStore sequencesModel;
 		private ListStore symbolsModel;
 		
 		private TokenizingController controller;
+		
+		private NodeView sequencesNV = null;
 		
 #endregion Fields
 		
@@ -76,8 +78,15 @@ namespace MathTextRecognizer.Stages
 			gladeXml.Autoconnect(this);
 			
 			controller = new TokenizingController();
+			controller.SequenceAdded+= 
+				new SequenceAddedHandler(OnControllerSequenceAdded);
 			
-			this.Add(tokenizingStageWidget);
+			controller.NodeBeingProcessed+= 
+				new EventHandler(OnControllerNodeBeingProcessed);
+			
+			controller.MessageLogSent+=
+				new MessageLogSentHandler(OnMessageLogSent);
+			
 			
 			InitializeWidgets();
 			
@@ -111,7 +120,7 @@ namespace MathTextRecognizer.Stages
 			List<Token> tokens = new List<Token>();
 			foreach(SegmentedNode symbolNode in segmentationResult)
 			{
-				tokens.Add(new Token(symbolNode.Label, 
+				tokens.Add(new Token(symbolNode.Label,
 				                     symbolNode.MathTextBitmap.Position.X,
 				                     symbolNode.MathTextBitmap.Position.Y,
 				                     symbolNode.MathTextBitmap.FloatImage));
@@ -143,17 +152,19 @@ namespace MathTextRecognizer.Stages
 		/// </summary>
 		private void InitializeWidgets()
 		{
-			sequencesModel = new ListStore(typeof(string),
-			                               typeof(string),
-			                               typeof(TokenSequence));
+			this.Add(tokenizingStageWidget);
 			
-			sequencesTV.Model = sequencesModel;
+			sequencesModel = new NodeStore(typeof(SequenceNode));
 			
-			sequencesTV.AppendColumn("Secuencia", 
+			sequencesNV = new NodeView(sequencesModel);
+			sequencesNV.RulesHint = true;
+			sequencesNVPlaceholder.Add(sequencesNV);
+			
+			sequencesNV.AppendColumn("Secuencia", 
 			                         new CellRendererText(), 
 			                         "text",0);
 			
-			sequencesTV.AppendColumn("Tokens",
+			sequencesNV.AppendColumn("Tokens",
 			                         new CellRendererText(),
 			                         "text",1);
 			
@@ -167,9 +178,225 @@ namespace MathTextRecognizer.Stages
 			
 		}
 	
-	
+		/// <summary>
+		/// Adds a node to repressent the new sequence.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="SequenceAddedArgs"/>
+		/// </param>
+		private void OnControllerSequenceAdded(object sender, 
+		                                       SequenceAddedArgs args)
+		{
+			Application.Invoke(sender, args, OnControllerSequenceAddedThread);
+		}
+		
+		private void OnControllerSequenceAddedThread(object sender,
+		                                             EventArgs args)
+		{
+			SequenceAddedArgs a = args as SequenceAddedArgs;
+			
+			SequenceNode node = new SequenceNode(a.Sequence);			
+			sequencesModel.AddNode(node);
+		}
+		
+		/// <summary>
+		/// Handles the start of processing of a new node.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="ntArgs">
+		/// A <see cref="Eve"/>
+		/// </param>
+		private void OnControllerNodeBeingProcessed(object sender, 
+		                                            EventArgs args)
+		{
+			Application.Invoke(OnControllerNodeBeingProcessedThread);
+		}
+		
+		private void OnControllerNodeBeingProcessedThread(object sender,
+		                                                  EventArgs args)
+		{
+			// Remove the first item, and the selects the new first.
+			TreeIter first;
+			symbolsModel.GetIterFirst(out first);
+			symbolsModel.Remove(ref first);
+			
+			symbolsIV.SelectPath(symbolsModel.GetPath(first));
+		}
+		
+		/// <summary>
+		/// Writes a log message.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="MessageLogSentArgs">
+		/// A <see cref="MessageLogSentArgs"/>
+		/// </param>		
+		private void OnMessageLogSent(object sender,MessageLogSentArgs a)
+		{
+		    // Llamamos a través de invoke para que funcione bien.			
+			Application.Invoke(sender, a,OnMessageLogSentThread);
+		}
+		
+		private void OnMessageLogSentThread(object sender, EventArgs a)
+		{		   
+		    Log(((MessageLogSentArgs)a).Message);
+		}
+				
+		/// <summary>
+		/// Launches the sequencing process.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnProcessBtnClicked(object sender, EventArgs args)
+		{
+			controller.SetLexicalRules(MainWindow.LexicalRulesManager.LexicalRules);
+			controller.Next(ControllerStepMode.StepByStep);
+			
+			buttonsNB.Page = 1;
+			
+			TreeIter first;
+			symbolsModel.GetIterFirst(out first);
+			
+			symbolsIV.SelectPath(symbolsModel.GetPath(first));
+		}
+				
 
 		
 #endregion Non-public methods
+	}
+	
+	/// <summary>
+	/// This class implements a node for the sequence treeview.
+	/// </summary>
+	class SequenceNode : TreeNode
+	{
+		TokenSequence sequence;
+		TokenSequence tokens;
+		
+		string sequenceLabel;
+		string tokensLabel;
+		
+		public SequenceNode(TokenSequence sequence)
+		{
+			this.sequence = sequence;
+			this.tokens = new TokenSequence();
+			
+			sequence.Changed += new EventHandler(OnSequenceItemAdded);
+			tokens.Changed += new EventHandler(OnTokensChanged);
+		}
+		
+#region Properties
+		
+		/// <value>
+		/// Contains the node sequence column text.
+		/// </value>
+		[TreeNodeValue(Column =0)]
+		public string SequenceText
+		{
+			get
+			{
+				return sequenceLabel;
+			}
+		}
+	
+		/// <value>
+		/// Contains the node tokens column text.
+		/// </value>
+		[TreeNodeValue(Column =1)]
+		public string TokensText
+		{
+			get
+			{
+				return tokensLabel;
+			}
+		}
+
+		/// <value>
+		/// Contains the tokens assigned to this node's token sequence.
+		/// </value>
+		public TokenSequence Tokens 
+		{
+			get 
+			{
+				return tokens;
+			}
+			set 
+			{
+				tokens = value;
+				tokens.Changed += new EventHandler(OnTokensChanged);
+			}
+		}
+		
+#endregion Properties
+		
+#region Event handlers	
+		/// <summary>
+		/// Creates the label for the sequence column when the sequence 
+		/// is modified.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnSequenceItemAdded(object sender, EventArgs args)
+		{
+			Application.Invoke(OnSequenceItemAddedThread);
+		}
+		
+		private void OnSequenceItemAddedThread(object sender, EventArgs args)
+		{
+			List<string> res = new List<string>();
+			
+			foreach (Token t in sequence) 
+			{
+				res.Add(t.Text);
+			}
+			
+			sequenceLabel =  String.Join(", ", res.ToArray());
+			Console.WriteLine("Sequence {0}", sequenceLabel);
+		}
+
+		
+		/// <summary>
+		/// Creates the label for the sequence column when the sequence 
+		/// is modified.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnTokensChanged(object sender, EventArgs args)
+		{
+			Application.Invoke(OnTokensChangedThread);
+		}
+		
+		private void OnTokensChangedThread(object sender, EventArgs args)
+		{
+			List<string> res = new List<string>();
+			
+			foreach (Token t in tokens) 
+			{
+				res.Add(t.Type);
+			}
+			
+			tokensLabel =  String.Join(", ", res.ToArray());
+		
+		}
+		
+#endregion Event handlers
 	}
 }

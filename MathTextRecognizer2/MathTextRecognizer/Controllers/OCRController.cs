@@ -68,7 +68,7 @@ namespace MathTextRecognizer.Controllers
 			
 			
 			
-			searchDatabase = true;
+			searchDatabase = false;
 			               
 		}
 	
@@ -85,11 +85,7 @@ namespace MathTextRecognizer.Controllers
 			{
 				BitmapProcessedByDatabase(this,new BitmapProcessedArgs(bitmap));
 			}
-		}			
-		
-	
-		
-	
+		}
 		
 		/// <summary>
 		/// Manejador del evento RecognizingCharacteristicChecked de la base de datos de caracteres.
@@ -240,9 +236,7 @@ namespace MathTextRecognizer.Controllers
 							associatedSymbols.Add(symbol);
 						}
 					}
-				}		
-						
-			
+				}
 			}
 		
 						

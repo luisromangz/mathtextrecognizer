@@ -81,6 +81,11 @@ namespace MathTextLibrary.BitmapSegmenters
 				}
 			}
 			
+			if(points.Count ==0)
+			{
+				return new List<MathTextBitmap>();
+			}
+			
 			int x = points[0].X;
 			int y = points[0].Y;
 				
