@@ -6,6 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <AssemblyName>mathtextrecognizer</AssemblyName>
     <OutputType>WinExe</OutputType>
+    <NoStdLib>False</NoStdLib>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -13,11 +15,10 @@
     <RootNamespace>
     </RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <DefineConstants>
-    </DefineConstants>
     <WarningLevel>4</WarningLevel>
+    <DebugType>Full</DebugType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -30,6 +31,13 @@
     <DefineConstants>
     </DefineConstants>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <BaseAddress>4194304</BaseAddress>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="atk-sharp" />
@@ -55,9 +63,12 @@
       <Name>MathTextLearner</Name>
     </ProjectReference>
     <Compile Include="Controllers\OCRController.cs" />
-    <Compile Include="Controllers\TokenizingController.cs" />
-    <Compile Include="Stages\Dialogs\LexicalRuleEditorDialog.cs" />
-    <Compile Include="Stages\Dialogs\LexicalRulesManagerDialog.cs" />
+    <Compile Include="LexicalRulesManager\LexicalRuleEditorDialog.cs">
+      <Link>LexicalRuleEditorDialog.cs</Link>
+    </Compile>
+    <Compile Include="LexicalRulesManager\LexicalRulesManagerDialog.cs">
+      <Link>LexicalRulesManagerDialog.cs</Link>
+    </Compile>
     <Compile Include="Stages\OCRStageWidget.cs" />
   </ItemGroup>
   <ItemGroup>

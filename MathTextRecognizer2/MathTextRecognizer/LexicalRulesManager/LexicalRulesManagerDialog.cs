@@ -328,11 +328,11 @@ namespace MathTextRecognizer.LexicalRuleManager
 			{
 				// The modified rule.
 				rule = dialog.Rule;
-				rulesStore.SetValues(selected, 
-				                     rule.Name,
-				                     String.Join(" | ", 
-				                                rule.LexicalExpressions.ToArray()),
-				                     rule);
+				rulesStore.SetValue(selected,0,rule.Name);
+				rulesStore.SetValue(selected,
+				                    1,
+				            	   	String.Join(" | ", 
+				                                rule.LexicalExpressions.ToArray()));
 			}
 			
 			dialog.Destroy();

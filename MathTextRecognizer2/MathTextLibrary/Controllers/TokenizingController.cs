@@ -1,4 +1,4 @@
-// TokenizingController.cs created with MonoDevelop
+﻿// TokenizingController.cs created with MonoDevelop
 // User: luis at 17:43 27/04/2008
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
@@ -104,6 +104,8 @@ namespace MathTextLibrary.Controllers
 			MessageLogSentInvoker("===== Secuencia añadida =====");
 			SequenceAddedInvoker(sequence);
 			
+			NodeBeingProcessedInvoker();
+			//SuspendByStep();
 			/// We add the first token to the first sequence.
 			Token lastToken = tokens[0];
 			sequence.Append(lastToken);
@@ -113,7 +115,10 @@ namespace MathTextLibrary.Controllers
 			
 			// All the tokens must be in one sequence.
 			while(this.tokens.Count > 0)
-			{				
+			{	
+				NodeBeingProcessedInvoker();
+				//SuspendByStep();
+				
 				Token firstToken = tokens[0];
 				if(!firstToken.CloseFollows(lastToken))
 				{
@@ -138,7 +143,7 @@ namespace MathTextLibrary.Controllers
 				// We update the token pointer.
 				lastToken = firstToken;
 				
-				NodeBeingProcessedInvoker();
+				
 			}
 			
 			return tokenSequences;

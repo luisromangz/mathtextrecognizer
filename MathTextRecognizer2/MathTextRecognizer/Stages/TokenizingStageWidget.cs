@@ -1,4 +1,4 @@
-// TokenizingStageWidget.cs created with MonoDevelop
+﻿// TokenizingStageWidget.cs created with MonoDevelop
 // User: luis at 16:19 26/04/2008
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
@@ -59,6 +59,8 @@ namespace MathTextRecognizer.Stages
 		private TokenizingController controller;
 		
 		private NodeView sequencesNV = null;
+		
+		private TreePath processedPath = null;
 		
 #endregion Fields
 		
@@ -221,11 +223,18 @@ namespace MathTextRecognizer.Stages
 		                                                  EventArgs args)
 		{
 			// Remove the first item, and the selects the new first.
-			TreeIter first;
-			symbolsModel.GetIterFirst(out first);
-			symbolsModel.Remove(ref first);
+			if(processedPath ==null)
+			{
+				TreeIter first;
+				symbolsModel.GetIterFirst(out first);
+				
+				processedPath = symbolsModel.GetPath(first);
+			}
 			
-			symbolsIV.SelectPath(symbolsModel.GetPath(first));
+			symbolsIV.SelectPath(processedPath);
+			symbolsIV.ScrollToPath(processedPath, 0,0);
+			
+			processedPath.Next();
 		}
 		
 		/// <summary>
