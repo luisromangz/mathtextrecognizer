@@ -364,6 +364,8 @@ namespace MathTextRecognizer
 			if(res==ResponseType.Yes)
 			{			
 				LoadImage();
+				
+				ResetState();
 			}
 		}
 		
@@ -498,6 +500,7 @@ namespace MathTextRecognizer
 			toolDatabase.Sensitive=true;
 			
 			ocrWidget.ResetState();
+			tokenizingWidget.ResetState();
 			
 			recognizementFinished=true;
 			

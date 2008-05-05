@@ -2226,6 +2226,7 @@ MathML</property>
                     <property name="left_padding">5</property>
                     <child>
                       <widget class="GtkScrolledWindow" id="scrolledwindow2">
+                        <property name="height_request">80</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
@@ -2233,6 +2234,7 @@ MathML</property>
                         <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
                         <child>
                           <widget class="GtkIconView" id="symbolsIV">
+                            <property name="height_request">90</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                           </widget>
@@ -2471,7 +2473,6 @@ MathML</property>
                 <child>
                   <widget class="GtkAlignment" id="alignNextButtons">
                     <property name="visible">True</property>
-                    <property name="sensitive">False</property>
                     <property name="has_tooltip">True</property>
                     <property name="tooltip_text">El nodo procesado según cada base de datos</property>
                     <property name="xscale">0</property>

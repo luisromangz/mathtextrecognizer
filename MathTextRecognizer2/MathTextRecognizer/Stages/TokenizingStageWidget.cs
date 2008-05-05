@@ -1,4 +1,4 @@
-﻿// TokenizingStageWidget.cs created with MonoDevelop
+// TokenizingStageWidget.cs created with MonoDevelop
 // User: luis at 16:19 26/04/2008
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
@@ -107,6 +107,9 @@ namespace MathTextRecognizer.Stages
 		public override void ResetState ()
 		{
 			symbolsModel.Clear();
+			sequencesModel.Clear();
+			
+			buttonsNB.Page =0;
 		}
 		
 		/// <summary>
@@ -192,16 +195,11 @@ namespace MathTextRecognizer.Stages
 		private void OnControllerSequenceAdded(object sender, 
 		                                       SequenceAddedArgs args)
 		{
-			Application.Invoke(sender, args, OnControllerSequenceAddedThread);
-		}
-		
-		private void OnControllerSequenceAddedThread(object sender,
-		                                             EventArgs args)
-		{
 			SequenceAddedArgs a = args as SequenceAddedArgs;
 			
 			SequenceNode node = new SequenceNode(a.Sequence);			
 			sequencesModel.AddNode(node);
+			sequencesNV.ColumnsAutosize();
 		}
 		
 		/// <summary>
@@ -222,14 +220,7 @@ namespace MathTextRecognizer.Stages
 		private void OnControllerNodeBeingProcessedThread(object sender,
 		                                                  EventArgs args)
 		{
-			// Remove the first item, and the selects the new first.
-			if(processedPath ==null)
-			{
-				TreeIter first;
-				symbolsModel.GetIterFirst(out first);
-				
-				processedPath = symbolsModel.GetPath(first);
-			}
+			// Selects the new first.			
 			
 			symbolsIV.SelectPath(processedPath);
 			symbolsIV.ScrollToPath(processedPath, 0,0);
@@ -268,15 +259,22 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		private void OnProcessBtnClicked(object sender, EventArgs args)
 		{
-			controller.SetLexicalRules(MainWindow.LexicalRulesManager.LexicalRules);
-			controller.Next(ControllerStepMode.StepByStep);
-			
-			buttonsNB.Page = 1;
-			
+			sequencesModel.Clear();
+		
 			TreeIter first;
 			symbolsModel.GetIterFirst(out first);
 			
-			symbolsIV.SelectPath(symbolsModel.GetPath(first));
+			processedPath = symbolsModel.GetPath(first);
+				
+			symbolsIV.SelectPath(processedPath);
+			symbolsIV.ScrollToPath(processedPath, 0, 0);
+				
+			buttonsNB.Page = 1;
+			
+			
+			controller.SetLexicalRules(MainWindow.LexicalRulesManager.LexicalRules);
+			controller.Next(ControllerStepMode.StepByStep);
+		
 		}
 				
 
@@ -300,8 +298,9 @@ namespace MathTextRecognizer.Stages
 			this.sequence = sequence;
 			this.tokens = new TokenSequence();
 			
-			sequence.Changed += new EventHandler(OnSequenceItemAdded);
-			tokens.Changed += new EventHandler(OnTokensChanged);
+			this.sequence.ItemAdded += new EventHandler(OnSequenceItemAdded);	
+			
+			this.tokens.Changed += new EventHandler(OnTokensChanged);
 		}
 		
 #region Properties
@@ -370,11 +369,10 @@ namespace MathTextRecognizer.Stages
 			
 			foreach (Token t in sequence) 
 			{
-				res.Add(t.Text);
+				res.Add(String.Format("«{0}»",t.Text));
 			}
 			
 			sequenceLabel =  String.Join(", ", res.ToArray());
-			Console.WriteLine("Sequence {0}", sequenceLabel);
 		}
 
 		

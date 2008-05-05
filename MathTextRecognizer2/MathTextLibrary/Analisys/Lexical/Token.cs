@@ -27,6 +27,12 @@ namespace MathTextLibrary.Analisys.Lexical
 		
 		private const float epsilon = 0.05f;
 		
+		private const string DESCENDERS = "yjgpq";
+		private const string ASCENDERS = "tijñ";
+		private const string PUNCTUATION = ".,";
+			
+		
+		
 		/// <summary>
 		/// <c>Token</c>'s constructor.
 		/// </summary>
@@ -50,7 +56,6 @@ namespace MathTextLibrary.Analisys.Lexical
 			
 			this.image = image;
 		}
-		
 #region Properties
 		
 		/// <value>
@@ -134,6 +139,66 @@ namespace MathTextLibrary.Analisys.Lexical
 			get
 			{
 				return image.Width;
+			}
+		}
+		
+		/// <value>
+		/// Contains the token's baseline.
+		/// </value>
+		public int Baseline
+		{
+			get
+			{
+				
+				int baseline = this.Height;
+				
+				bool isAscender = (ASCENDERS.Contains(this.text) 
+				                   || char.IsUpper(this.Text[0])
+				                   || char.IsNumber(this.text[0]));
+				
+				
+				if(DESCENDERS.Contains(this.text)
+				   && !isAscender)
+				{
+					baseline = (int)(baseline*0.66f);
+				}
+				else if(DESCENDERS.Contains(this.text)
+				        && isAscender)
+				{
+					baseline = (int)(baseline*0.87f);
+				}
+				
+				
+				return this.y + baseline;
+			}
+		}
+		
+		/// <value>
+		/// Contains the token's body line.
+		/// </value>
+		public int Bodyline
+		{
+			get
+			{
+				int bodyline = this.y;
+				
+				bool isAscender = (ASCENDERS.Contains(this.text) 
+				                   || char.IsUpper(this.Text[0])
+				                   || char.IsNumber(this.text[0]));
+				
+				if(isAscender
+				   && !DESCENDERS.Contains(this.text))
+				{
+					bodyline += (int)(this.Height*0.33f);
+				}
+				else if(isAscender
+				        && DESCENDERS.Contains(this.text))
+				{
+					bodyline += (int)(this.Height*0.13f);
+				}
+				
+				
+				return bodyline;
 			}
 		}
 		
@@ -248,29 +313,33 @@ namespace MathTextLibrary.Analisys.Lexical
 			
 			
 			int horizontalDistance = this.x - (previous.x+ previous.Width);
-			if(horizontalDistance > (Math.Min(this.Width, previous.Width))
+			if(horizontalDistance > (this.Width + previous.Width)/2
 			   || horizontalDistance <0)
 			{
 				return false;
 			}
 				
 				
-			
-			int previousCenterY = previous.y+ previous.Height/2;
-			int thisCenterY = this.y + this.Height /2;
-			
-			int mediumHeight = (previous.Height + this.Height)/2;
-			
-			int range = (int)(mediumHeight * epsilon);
-			int difference = Math.Abs(previousCenterY-thisCenterY);
-			
-			Console.WriteLine("Meh: {0}, {1}", range, difference);
-			if(difference > range)
+			int range = (int)(epsilon*(Math.Max(this.Height, previous.Height)));
+			int baseDiff = Math.Abs(this.Baseline - previous.Baseline);
+			//int bodyDiff = Math.Abs(this.Bodyline - previous.Bodyline);
+		
+			/*if(PUNCTUATION.Contains(this.text)
+			    || PUNCTUATION.Contains(previous.text))
 			{
-				return false;
+				// The body line in punctuation symbols makes no sense,
+				// so we only check the baseline.
+				Console.WriteLine("Meh {0} {1}", this.text , previous.text);
+				return baseDiff <= range;
 			}
+			else
+			{	
+				// If the baselines and bodylines are similar,
+				// then they are close.
+				return baseDiff <= range && bodyDiff <= range;
+			}*/
 			
-			return true;
+			return baseDiff <=range;
 			
 		}
 
