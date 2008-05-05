@@ -243,11 +243,11 @@ namespace MathTextLibrary.Analisys.Lexical
 		/// <c>true</c> if the invoking token is next to the one used as
 		/// parameter.
 		/// </returns>
-		public bool IsNextTo(Token previous)
+		public bool CloseFollows(Token previous)
 		{
 			
 			
-			int horizontalDistance = this.x - previous.x+ previous.Width;
+			int horizontalDistance = this.x - (previous.x+ previous.Width);
 			if(horizontalDistance > (Math.Min(this.Width, previous.Width))
 			   || horizontalDistance <0)
 			{
@@ -262,14 +262,13 @@ namespace MathTextLibrary.Analisys.Lexical
 			int mediumHeight = (previous.Height + this.Height)/2;
 			
 			int range = (int)(mediumHeight * epsilon);
+			int difference = Math.Abs(previousCenterY-thisCenterY);
 			
-			if(Math.Abs(previousCenterY-thisCenterY) > range)
+			Console.WriteLine("Meh: {0}, {1}", range, difference);
+			if(difference > range)
 			{
 				return false;
 			}
-			
-			
-			
 			
 			return true;
 			

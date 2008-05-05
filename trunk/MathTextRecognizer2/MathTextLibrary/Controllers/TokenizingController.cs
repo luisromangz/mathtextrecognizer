@@ -22,6 +22,8 @@ namespace MathTextLibrary.Controllers
 		private List<Token> tokens;
 		private List<LexicalRule> lexicalRules;
 		
+		public event SequenceAddedHandler SequenceAdded;
+		
 		/// <summary>
 		/// <c>TokenizingController</c>'s constructor.
 		/// </summary>
@@ -76,11 +78,11 @@ namespace MathTextLibrary.Controllers
 			
 			ProcessFinishedInvoker();
 			
-			foreach (TokenSequence sequence in tokenSequences) 
+			/*foreach (TokenSequence sequence in tokenSequences) 
 			{
 				List<Token> matchedTokens = MatchTokens(sequence);
 				tokens.AddRange(matchedTokens);
-			}
+			}*/
 			
 			ProcessFinishedInvoker();
 			
@@ -99,31 +101,44 @@ namespace MathTextLibrary.Controllers
 			TokenSequence sequence = new TokenSequence();
 			// We add a first sequence to the list.
 			tokenSequences.Add(sequence);
+			MessageLogSentInvoker("===== Secuencia añadida =====");
+			SequenceAddedInvoker(sequence);
 			
 			/// We add the first token to the first sequence.
 			Token lastToken = tokens[0];
 			sequence.Append(lastToken);
+			MessageLogSentInvoker("Símbolo «{0}» añadido a la secuencia", 
+				                  lastToken.Text);
 			tokens.RemoveAt(0);
 			
 			// All the tokens must be in one sequence.
 			while(this.tokens.Count > 0)
 			{				
 				Token firstToken = tokens[0];
-				if(!firstToken.IsNextTo(lastToken))
+				if(!firstToken.CloseFollows(lastToken))
 				{
 					// If the symbols aren't contiguous, a new sequence has
 					// commenced.
 					sequence = new TokenSequence();					
 					tokenSequences.Add(sequence);
+					SequenceAddedInvoker(sequence);
+					MessageLogSentInvoker("===== Secuencia añadida =====");
 				}
 				
 				// We add the token to the current sequence, and remove it
 				// from the inital token list.
 				sequence.Append(firstToken);
+				MessageLogSentInvoker("Símbolo «{0}» añadido a la secuencia", 
+				                      firstToken.Text);
+				
+				
+				
 				tokens.RemoveAt(0);
 				
 				// We update the token pointer.
 				lastToken = firstToken;
+				
+				NodeBeingProcessedInvoker();
 			}
 			
 			return tokenSequences;
@@ -183,8 +198,8 @@ namespace MathTextLibrary.Controllers
 			}
 			else if(!found)
 			{
-				// Houston, we have a lexical input problem.
-				throw new Exception("No rules were able to match the input tokens.");
+				//TODO What to do if can't match?
+				
 			}
 			
 			return result;
@@ -202,5 +217,50 @@ namespace MathTextLibrary.Controllers
 		}
 		
 #endregion Non-public methods
+		
+#region Event invokers
+		
+		private void SequenceAddedInvoker(TokenSequence sequence)
+		{
+			if(SequenceAdded !=null)
+				SequenceAdded(this, new SequenceAddedArgs(sequence));
+		}
+		
+#endregion Event invokers
+	}
+	
+	/// <summary>
+	/// Delegate for the sequence added event of <c>TokenizingController</c>.
+	/// </summary>
+	/// <param name="sender">
+	/// A <see cref="System.Object"/>
+	/// </param>
+	/// <param name="args">
+	/// A <see cref="SequenceAddedArgs"/>
+	/// </param>
+	public delegate void SequenceAddedHandler(object sender, 
+	                                          SequenceAddedArgs args);
+	
+	/// <summary>
+	/// Wrapper class for the sequence added event parameters.
+	/// </summary>
+	public class SequenceAddedArgs : EventArgs
+	{
+		private TokenSequence sequence;
+		public SequenceAddedArgs(TokenSequence sequence)
+		{
+			this.sequence = sequence;
+		}
+		
+		/// <value>
+		/// Contains the sequence which was added.
+		/// </value>
+		public TokenSequence Sequence
+		{
+			get
+			{
+				return sequence;
+			}
+		}
 	}
 }

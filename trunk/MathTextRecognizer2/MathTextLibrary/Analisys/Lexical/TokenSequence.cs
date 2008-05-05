@@ -15,12 +15,20 @@ namespace MathTextLibrary.Analisys.Lexical
 	{
 		private List<Token> sequence;
 		
+		public event EventHandler Changed;
+		public event EventHandler ItemAdded;
+		
 		/// <summary>
 		/// <c>TokenSequence</c>'s constructor.
 		/// </summary>
 		public TokenSequence()
 		{
 			sequence = new List<Token>();
+		}
+		
+		public TokenSequence(List<Token> tokens)
+		{
+			sequence = tokens;
 		}
 		
 #region Properties
@@ -60,6 +68,8 @@ namespace MathTextLibrary.Analisys.Lexical
 		public void Append(Token item)
 		{
 			sequence.Add(item);
+			ChangedInvoker();
+			ItemAddedInvoker();
 		}
 		
 		/// <summary>
@@ -71,6 +81,8 @@ namespace MathTextLibrary.Analisys.Lexical
 		public void Prepend(Token item)
 		{
 			sequence.Insert(0, item);
+			ChangedInvoker();
+			ItemAddedInvoker();
 		}
 		
 		/// <summary>
@@ -86,7 +98,7 @@ namespace MathTextLibrary.Analisys.Lexical
 		{
 			Token removed = sequence[position];
 			sequence.RemoveAt(position);
-			
+			ChangedInvoker();
 			return removed;
 		}
 		
@@ -102,9 +114,26 @@ namespace MathTextLibrary.Analisys.Lexical
 		}
 		
 		IEnumerator IEnumerable.GetEnumerator()
-		{
-			
+		{			
 			return sequence.GetEnumerator();
+		}
+		
+		/// <summary>
+		/// Shortcut for launching the Changed event.
+		/// </summary>
+		protected void ChangedInvoker()
+		{			
+			if(this.Changed !=null)
+				Changed(this, EventArgs.Empty);
+		}
+		
+		/// <summary>
+		/// Shortcut for launching the ItemAdded event.
+		/// </summary>
+		protected void ItemAddedInvoker()
+		{
+			if(this.ItemAdded != null)
+				ItemAdded(this, EventArgs.Empty);
 		}
 		
 #endregion Public methods

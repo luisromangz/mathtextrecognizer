@@ -317,6 +317,43 @@
           </MathSymbol>
         </Symbols>
       </CharacteristicVector>
+      <CharacteristicVector>
+        <Values>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>true</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>true</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>true</boolean>
+          <boolean>false</boolean>
+          <boolean>true</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+          <boolean>false</boolean>
+        </Values>
+        <Symbols>
+          <MathSymbol>
+            <Text>.</Text>
+          </MathSymbol>
+        </Symbols>
+      </CharacteristicVector>
     </Vectors>
   </CharacteristicHashDatabase>
   <Description>Base de datos de vectores de caracteristicas binarias creada a partir de imagenes de cifras LaTeX de baja resolucion.</Description>
