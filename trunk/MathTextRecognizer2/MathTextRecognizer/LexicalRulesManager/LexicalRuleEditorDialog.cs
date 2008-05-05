@@ -213,6 +213,28 @@ namespace MathTextRecognizer.LexicalRuleManager
 				lexicalRuleEditorDialog.Respond(ResponseType.Ok);
 			}
 		}
+		
+		/// <summary>
+		/// Shows a message box with info about the dialog.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnInfoBtnClicked(object sender, EventArgs args)
+		{
+			OkDialog.Show(this.lexicalRuleEditorDialog,
+			              MessageType.Info,
+			             "Aquí puedes editar una regla de análisis léxico. En la "
+			              +"zona izquierda se establece el nombre de la regla (que"
+			              +" será el tipo del token creado a partir de la misma) y"
+			              +" en la zona derecha el conjunto de expresiones que la"
+			              +" generarán.");
+			
+			
+		}
 				
 #endregion Non-public methods
 		

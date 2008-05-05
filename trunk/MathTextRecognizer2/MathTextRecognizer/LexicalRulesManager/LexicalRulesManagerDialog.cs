@@ -389,6 +389,27 @@ namespace MathTextRecognizer.LexicalRuleManager
 			removeBtn.Sensitive = rowSelected;
 		}
 
+		/// <summary>
+		/// Shows an info messagebox for the dialog.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnInfoBtnClicked(object sender, EventArgs args)
+		{
+			OkDialog.Show(this.lexicalRulesManagerDialog,
+			              MessageType.Info,
+			              "Aquí puedes editar la lista de reglas léxicas que "
+			              +"se usarán para asignar etiquetas a los símbolos "
+			              +"según su significado.\n"
+			              +"Las reglas que estén más altas en la lista se aplicarán"
+			              +" primero, y esto puede influir en el resultado del"
+			              +" proceso de reconocimiento léxico.");			 
+  
+		}
 #endregion Non-public methods
 	}
 }
