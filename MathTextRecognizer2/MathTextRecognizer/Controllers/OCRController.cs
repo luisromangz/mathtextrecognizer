@@ -14,7 +14,7 @@ using MathTextLibrary.Projection;
 
 using MathTextLibrary.Controllers;
 
-using MathTextRecognizer.Stages.Nodes;
+using MathTextRecognizer.Controllers.Nodes;
 
 namespace MathTextRecognizer.Controllers
 {
@@ -333,43 +333,6 @@ namespace MathTextRecognizer.Controllers
 		}
 		
 	
-	}
-	
-	/// <summary>
-	/// Delegado para los manejadores de los eventos enviados por los controladores 
-	/// cuando desean notificar que han comenzado a procesar una nueva imagen.
-	/// </summary>
-	public delegate void BitmapProcessedHandler(object sender,
-	                                            BitmapProcessedArgs arg);
-	
-	/// <summary>
-	/// Esta clase encapsula los argumentos enviados en los eventos manejados por
-	/// BitmapBeingRecognizedHandler.
-	/// </summary>
-	public class BitmapProcessedArgs : EventArgs
-	{
-		private MathTextBitmap b;
-		
-		/// <summary>
-		/// Constructor de la clase.
-		/// </summary>
-		/// <param name="bitmap">La imagen que se ha comenzado a reconocer.</param>
-		public BitmapProcessedArgs(MathTextBitmap bitmap)
-			:base()
-	    {
-			b=bitmap;
-		}
-		
-		/// <value>
-		/// Contiene la imagen que pasamos como argumento del evento.
-		/// </value>
-		public MathTextBitmap MathTextBitmap
-		{
-			get
-			{
-				return b;
-			}
-		}
 	}
 	
 }

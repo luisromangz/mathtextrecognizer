@@ -110,8 +110,6 @@
     <File name="Analisys/Lexical/Token.cs" subtype="Code" buildaction="Compile" />
     <File name="Analisys/Lexical/LexicalRule.cs" subtype="Code" buildaction="Compile" />
     <File name="Tests/LexicalRuleTests.cs" subtype="Code" buildaction="Compile" />
-    <File name="Controllers/TokenizingController.cs" subtype="Code" buildaction="Compile" />
-    <File name="Tests/TokenizingControllerTest.cs" subtype="Code" buildaction="Compile" />
     <File name="Analisys/Lexical/TokenSequence.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>

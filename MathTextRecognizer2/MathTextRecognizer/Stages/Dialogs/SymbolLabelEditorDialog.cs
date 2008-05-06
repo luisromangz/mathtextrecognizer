@@ -10,7 +10,7 @@ using MathTextCustomWidgets.Widgets;
 
 using MathTextLibrary.Symbol;
 
-using MathTextRecognizer.Stages.Nodes;
+using MathTextRecognizer.Controllers.Nodes;
 
 namespace MathTextRecognizer.Stages.Dialogs
 {

@@ -1,4 +1,4 @@
-﻿// TokenizingController.cs created with MonoDevelop
+// TokenizingController.cs created with MonoDevelop
 // User: luis at 17:43 27/04/2008
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
@@ -7,10 +7,10 @@
 using System;
 using System.Collections.Generic;
 
-
+using MathTextLibrary.Controllers;
 using MathTextLibrary.Analisys.Lexical;
 
-namespace MathTextLibrary.Controllers
+namespace MathTextRecognizer.Controllers
 {
 	
 	/// <summary>
@@ -29,6 +29,7 @@ namespace MathTextLibrary.Controllers
 		/// </summary>
 		public TokenizingController() : base()
 		{
+			
 		}
 		
 #region Properties
@@ -78,15 +79,13 @@ namespace MathTextLibrary.Controllers
 			
 			ProcessFinishedInvoker();
 			
-			/*foreach (TokenSequence sequence in tokenSequences) 
+			foreach (TokenSequence sequence in tokenSequences) 
 			{
 				List<Token> matchedTokens = MatchTokens(sequence);
 				tokens.AddRange(matchedTokens);
-			}*/
+			}
 			
 			ProcessFinishedInvoker();
-			
-			
 		}
 		
 		/// <summary>
@@ -199,12 +198,8 @@ namespace MathTextLibrary.Controllers
 			
 			if(found && discarded.Count > 0)
 			{
-				result.AddRange(MatchTokens(discarded));
-			}
-			else if(!found)
-			{
-				//TODO What to do if can't match?
 				
+				result.AddRange(MatchTokens(discarded));
 			}
 			
 			return result;
@@ -232,40 +227,5 @@ namespace MathTextLibrary.Controllers
 		}
 		
 #endregion Event invokers
-	}
-	
-	/// <summary>
-	/// Delegate for the sequence added event of <c>TokenizingController</c>.
-	/// </summary>
-	/// <param name="sender">
-	/// A <see cref="System.Object"/>
-	/// </param>
-	/// <param name="args">
-	/// A <see cref="SequenceAddedArgs"/>
-	/// </param>
-	public delegate void SequenceAddedHandler(object sender, 
-	                                          SequenceAddedArgs args);
-	
-	/// <summary>
-	/// Wrapper class for the sequence added event parameters.
-	/// </summary>
-	public class SequenceAddedArgs : EventArgs
-	{
-		private TokenSequence sequence;
-		public SequenceAddedArgs(TokenSequence sequence)
-		{
-			this.sequence = sequence;
-		}
-		
-		/// <value>
-		/// Contains the sequence which was added.
-		/// </value>
-		public TokenSequence Sequence
-		{
-			get
-			{
-				return sequence;
-			}
-		}
 	}
 }

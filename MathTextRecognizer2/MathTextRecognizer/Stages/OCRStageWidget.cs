@@ -21,7 +21,7 @@ using MathTextLibrary.Controllers;
 
 using MathTextRecognizer.Controllers;
 using MathTextRecognizer.DatabaseManager;
-using MathTextRecognizer.Stages.Nodes;
+using MathTextRecognizer.Controllers.Nodes;
 using MathTextRecognizer.Stages.Dialogs;
 
 using MathTextLearner;

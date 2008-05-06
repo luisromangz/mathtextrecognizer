@@ -31,8 +31,6 @@
     <File name="Stages/RecognizingStageWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Stages/Dialogs" subtype="Directory" buildaction="Compile" />
     <File name="Stages/Dialogs/SymbolLabelEditorDialog.cs" subtype="Code" buildaction="Compile" />
-    <File name="Stages/Nodes" subtype="Directory" buildaction="Compile" />
-    <File name="Stages/Nodes/SegmentedNode.cs" subtype="Code" buildaction="Compile" />
     <File name="Stages/Dialogs/LearnSymbolDatabaseChooserDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Stages/TokenizingStageWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Stages/OCRStageWidget.cs" subtype="Code" buildaction="Compile" />
@@ -40,6 +38,11 @@
     <File name="LexicalRulesManager" subtype="Directory" buildaction="Compile" />
     <File name="LexicalRulesManager/LexicalRuleEditorDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="LexicalRulesManager/LexicalRulesManagerDialog.cs" subtype="Code" buildaction="Compile" />
+    <File name="Controllers/TokenizingController.cs" subtype="Code" buildaction="Compile" />
+    <File name="Controllers/Nodes/SegmentedNode.cs" subtype="Code" buildaction="Compile" />
+    <File name="Tests" subtype="Directory" buildaction="Compile" />
+    <File name="Tests/TokenizingControllerTest.cs" subtype="Code" buildaction="Compile" />
+    <File name="Controllers/RecognizingControllerEvents.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
@@ -50,9 +53,9 @@
     <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="glib-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Project" localcopy="True" refto="MathTextCustomWidgets" />
-    <ProjectReference type="Gac" localcopy="True" refto="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <ProjectReference type="Gac" localcopy="True" refto="gtk-dotnet, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <ProjectReference type="Project" localcopy="True" refto="MathTextLearner" />
+    <ProjectReference type="Gac" localcopy="True" refto="nunit.framework, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
   </References>
   <DeployTargets />
 </Project>

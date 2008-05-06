@@ -290,7 +290,8 @@ namespace MathTextRecognizer
 			                              new Label("Segmentación de la imagen y "
 			                                        +"reconocimiento de caracteres"));
 			
-			recognizingStepsNB.AppendPage(new TokenizingStageWidget(this),
+			tokenizingWidget = new TokenizingStageWidget(this);
+			recognizingStepsNB.AppendPage(tokenizingWidget,
 			                              new Label("Análisis léxico"));
 			
 			
