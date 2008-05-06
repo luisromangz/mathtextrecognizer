@@ -9,8 +9,9 @@ using NUnit.Framework;
 using MathTextLibrary.Bitmap;
 using MathTextLibrary.Analisys.Lexical;
 using MathTextLibrary.Controllers;
+using MathTextRecognizer.Controllers;
 
-namespace MathTextLibrary.Tests
+namespace MathTextRecognizer.Tests
 {
 	
 	

@@ -14,7 +14,8 @@ using MathTextLibrary.Utils;
 using MathTextLibrary.Analisys.Lexical;
 using MathTextLibrary.Controllers;
 
-using MathTextRecognizer.Stages.Nodes; 
+using MathTextRecognizer.Controllers;
+using MathTextRecognizer.Controllers.Nodes; 
 
 namespace MathTextRecognizer.Stages
 {
