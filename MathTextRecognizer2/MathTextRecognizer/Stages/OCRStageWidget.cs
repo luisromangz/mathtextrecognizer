@@ -288,10 +288,10 @@ namespace MathTextRecognizer.Stages
 		private void OnBitmapProcessedByDatabase(object sender, 
 		                                         BitmapProcessedArgs arg)
 		{
-			Gtk.Application.Invoke(sender, arg, OnBitmapProcessedByDatabaseThread);
+			Gtk.Application.Invoke(sender, arg, OnBitmapProcessedByDatabaseInThread);
 		}
 		
-		private void OnBitmapProcessedByDatabaseThread(object sender, EventArgs a)
+		private void OnBitmapProcessedByDatabaseInThread(object sender, EventArgs a)
 		{		
 			if(treeview.NodeSelection.SelectedNodes.Length>0)
 			{
@@ -445,10 +445,10 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		private void OnNodeBeingProcessed(object sender, EventArgs args)
 		{
-			Application.Invoke(OnNodeBeingProcessedThread);
+			Application.Invoke(OnNodeBeingProcessedInThread);
 		}
 		
-		private void OnNodeBeingProcessedThread(object sender, EventArgs args)
+		private void OnNodeBeingProcessedInThread(object sender, EventArgs args)
 		{
 			if(controller.StepMode != ControllerStepMode.UntilEnd)
 				alignNextButtons.Sensitive=true;
@@ -562,10 +562,10 @@ namespace MathTextRecognizer.Stages
 		private void OnMessageLog(object sender,MessageLogSentArgs a)
 		{
 		    // Llamamos a través de invoke para que funcione bien.			
-			Application.Invoke(sender, a,OnMessageLogThreadSafe);
+			Application.Invoke(sender, a,OnMessageLogInThread);
 		}
 		
-		private void OnMessageLogThreadSafe(object sender, EventArgs a)
+		private void OnMessageLogInThread(object sender, EventArgs a)
 		{		   
 		    Log(((MessageLogSentArgs)a).Message);
 		}
@@ -579,10 +579,11 @@ namespace MathTextRecognizer.Stages
 		private void OnRecognizeProcessFinished(object sender, EventArgs arg)
 		{			
 		    // Llamamos a través de invoke para que funcione.
-			Gtk.Application.Invoke(OnRecognizeProcessFinishedThread);			
+			Gtk.Application.Invoke(OnRecognizeProcessFinishedInThread);			
 		}
 		
-		private void OnRecognizeProcessFinishedThread(object sender, EventArgs a)
+		private void OnRecognizeProcessFinishedInThread(object sender,
+		                                                EventArgs a)
 		{
 		    Log("¡Reconocimiento terminado!");
 			

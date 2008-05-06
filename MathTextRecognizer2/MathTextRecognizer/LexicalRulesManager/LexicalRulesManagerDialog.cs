@@ -243,7 +243,6 @@ namespace MathTextRecognizer.LexicalRuleManager
 		/// </param>
 		private void OnUpBtnClicked(object sender, EventArgs args)
 		{
-			TreePath selectedPath =  rulesTV.Selection.GetSelectedRows()[0];
 			TreeIter selected;
 			rulesTV.Selection.GetSelected(out selected);
 			
@@ -286,7 +285,6 @@ namespace MathTextRecognizer.LexicalRuleManager
 		/// </param>
 		private void OnDownBtnClicked(object sender, EventArgs args)
 		{
-			TreePath selectedPath =  rulesTV.Selection.GetSelectedRows()[0];
 			TreeIter selected;
 			rulesTV.Selection.GetSelected(out selected);
 			

@@ -7,8 +7,12 @@
 using System;
 using System.Collections.Generic;
 
+using Gtk;
+
 using MathTextLibrary.Controllers;
 using MathTextLibrary.Analisys.Lexical;
+
+using MathTextRecognizer.Controllers.Nodes;
 
 namespace MathTextRecognizer.Controllers
 {
@@ -75,14 +79,13 @@ namespace MathTextRecognizer.Controllers
 			MessageLogSentInvoker(" Comenzando proceso de análisis léxico");
 			MessageLogSentInvoker("========================================");
 			
-			List<TokenSequence> tokenSequences = GetTokenSequences();
+			List<SequenceNode> tokenSequences = GetTokenSequences();
 			
 			ProcessFinishedInvoker();
 			
-			foreach (TokenSequence sequence in tokenSequences) 
+			foreach (SequenceNode sequence in tokenSequences) 
 			{
-				List<Token> matchedTokens = MatchTokens(sequence);
-				tokens.AddRange(matchedTokens);
+				MatchTokens(sequence);
 			}
 			
 			ProcessFinishedInvoker();
@@ -94,14 +97,15 @@ namespace MathTextRecognizer.Controllers
 		/// <returns>
 		/// The list of sequences of contiguous tokens.
 		/// </returns>
-		private List<TokenSequence> GetTokenSequences()
+		private List<SequenceNode> GetTokenSequences()
 		{
-			List<TokenSequence> tokenSequences = new List<TokenSequence>();
+			List<SequenceNode> tokenSequences = new List<SequenceNode>();
 			TokenSequence sequence = new TokenSequence();
 			// We add a first sequence to the list.
-			tokenSequences.Add(sequence);
+			SequenceNode node = new SequenceNode(sequence);
+			tokenSequences.Add(node);
 			MessageLogSentInvoker("===== Secuencia añadida =====");
-			SequenceAddedInvoker(sequence);
+			SequenceAddedInvoker(node);
 			
 			NodeBeingProcessedInvoker();
 			//SuspendByStep();
@@ -123,9 +127,10 @@ namespace MathTextRecognizer.Controllers
 				{
 					// If the symbols aren't contiguous, a new sequence has
 					// commenced.
-					sequence = new TokenSequence();					
-					tokenSequences.Add(sequence);
-					SequenceAddedInvoker(sequence);
+					sequence = new TokenSequence();	
+					node = new SequenceNode(sequence);
+					tokenSequences.Add(node);
+					SequenceAddedInvoker(node);
 					MessageLogSentInvoker("===== Secuencia añadida =====");
 				}
 				
@@ -155,14 +160,15 @@ namespace MathTextRecognizer.Controllers
 		/// <param name="sequence">
 		/// The token sequence (possibly) containing tokens.
 		/// </param>
-		/// <returns>
-		/// The tokens found in the sequence. 
-		/// </returns>
-		private List<Token> MatchTokens(TokenSequence sequence)
-		{
-			List<Token> result = new List<Token>();
-			
+		private void MatchTokens(SequenceNode node)
+		{			
 			TokenSequence discarded = new TokenSequence();
+			SequenceNode discardedNode = new SequenceNode(discarded);
+			TokenSequence sequence = node.Sequence;
+			
+			node.Select();
+			NodeBeingProcessedInvoker();
+			
 			
 			bool found = false;
 			while(sequence.Count > 0 && !found)
@@ -184,7 +190,14 @@ namespace MathTextRecognizer.Controllers
 					// We remove the token from the input sequence and add it
 					// at the beggining of the discarded set.
 					int lastIndex = sequence.Count -1;
+					if(node.ChildCount==0)
+					{
+						// If we haven't done so, we add the discarded sequence.
+						node.AddSequenceChild(discardedNode);
+					}
+						
 					discarded.Prepend(sequence[lastIndex]);
+					
 					sequence.RemoveAt(lastIndex);
 				}
 				else
@@ -192,17 +205,19 @@ namespace MathTextRecognizer.Controllers
 					// We found a token, so we stop searching and add
 					// the token to the result.
 					found = true;
-					result.Add(foundToken);
+					node.AppendToken(foundToken);
 				}
 			}
 			
 			if(found && discarded.Count > 0)
 			{
-				
-				result.AddRange(MatchTokens(discarded));
+				// We follow the recursive path.
+				MatchTokens(discardedNode);
 			}
-			
-			return result;
+			else
+			{
+				node.RemoveSequenceChildren();
+			}
 		}
 
 		/// <summary>
@@ -220,7 +235,7 @@ namespace MathTextRecognizer.Controllers
 		
 #region Event invokers
 		
-		private void SequenceAddedInvoker(TokenSequence sequence)
+		private void SequenceAddedInvoker(SequenceNode sequence)
 		{
 			if(SequenceAdded !=null)
 				SequenceAdded(this, new SequenceAddedArgs(sequence));

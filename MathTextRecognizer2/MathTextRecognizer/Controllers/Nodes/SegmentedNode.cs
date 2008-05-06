@@ -182,7 +182,7 @@ namespace MathTextRecognizer.Controllers.Nodes
 		{		
 			Application.Invoke(this, 
 			                   new AddNodeArgs(node),
-			                   AddSegmentedChildThread);
+			                   AddSegmentedChildInThread);
 			
 		}
 		
@@ -195,7 +195,7 @@ namespace MathTextRecognizer.Controllers.Nodes
 		/// <param name="arg">
 		/// A <see cref="EventArgs"/>
 		/// </param>
-		private void AddSegmentedChildThread(object sender, EventArgs arg)
+		private void AddSegmentedChildInThread(object sender, EventArgs arg)
 		{
 			AddNodeArgs a = arg as AddNodeArgs;
 			this.AddChild(a.Node);
@@ -219,13 +219,13 @@ namespace MathTextRecognizer.Controllers.Nodes
 		/// </summary>
 		public void Select()
 		{
-			Application.Invoke(new EventHandler(SelectThread));
+			Application.Invoke(new EventHandler(SelectInThread));
 		}
 			
 		/// <summary>
 		/// Realiza la selecion del nodo en el hilo de la interfaz.
 		/// </summary>
-		private void SelectThread(object sender, EventArgs args)
+		private void SelectInThread(object sender, EventArgs args)
 		{
 			view.NodeSelection.SelectNode(this);
 			TreePath path = view.Selection.GetSelectedRows()[0];
