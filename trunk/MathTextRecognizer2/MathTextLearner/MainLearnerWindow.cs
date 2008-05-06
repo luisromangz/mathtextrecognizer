@@ -364,13 +364,13 @@ namespace MathTextLearner
 			if(learned)
 			{
 				SetModified(true);
-				Application.Invoke(OnSymbolLearnedThread);
+				Application.Invoke(OnSymbolLearnedInThread);
 			}
 			else
 			{
 				Application.Invoke(this,
 					new LearningFailedArgs(symbol),
-					OnLearningProccessFailedThread);
+					OnLearningProccessFailedInThread);
 			}
 				
 		}
@@ -574,7 +574,7 @@ namespace MathTextLearner
 			 
 		}
 		
-		private void OnLearningProccessFailedThread(object sender, 
+		private void OnLearningProccessFailedInThread(object sender, 
 		                                              EventArgs a)
 		{
 			
@@ -664,7 +664,7 @@ namespace MathTextLearner
 		{
 			Application.Invoke(sender, 
 			                   arg, 
-			                   OnLearningStepDoneThread);	
+			                   OnLearningStepDoneInThread);	
 			
 			if(stepByStep)
 			{
@@ -673,7 +673,7 @@ namespace MathTextLearner
 			}
 		}
 		
-		private void OnLearningStepDoneThread(object sender, EventArgs a)
+		private void OnLearningStepDoneInThread(object sender, EventArgs a)
 		{
 			if(stepByStep)
 			{
@@ -821,7 +821,7 @@ namespace MathTextLearner
 		}
 		
 	
-		private void OnSymbolLearnedThread(object sender,EventArgs arg)
+		private void OnSymbolLearnedInThread(object sender,EventArgs arg)
 		{
 			ResetWidgets();
 			string msg="!Símbolo aprendido con éxito!";

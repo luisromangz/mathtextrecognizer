@@ -6,6 +6,8 @@ using System;
 using MathTextLibrary.Analisys.Lexical;
 using MathTextLibrary.Bitmap;
 
+using MathTextRecognizer.Controllers.Nodes;
+
 namespace MathTextRecognizer.Controllers
 {
 	
@@ -67,8 +69,8 @@ namespace MathTextRecognizer.Controllers
 	/// </summary>
 	public class SequenceAddedArgs : EventArgs
 	{
-		private TokenSequence sequence;
-		public SequenceAddedArgs(TokenSequence sequence)
+		private SequenceNode sequence;
+		public SequenceAddedArgs(SequenceNode sequence)
 		{
 			this.sequence = sequence;
 		}
@@ -76,7 +78,7 @@ namespace MathTextRecognizer.Controllers
 		/// <value>
 		/// Contains the sequence which was added.
 		/// </value>
-		public TokenSequence Sequence
+		public SequenceNode Sequence
 		{
 			get
 			{

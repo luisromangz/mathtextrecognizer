@@ -63,6 +63,9 @@ namespace MathTextRecognizer.Stages
 		
 		private TreePath processedPath = null;
 		
+		// Indicates if the sequencing process has been completed.
+		private int state = 0;
+		
 #endregion Fields
 		
 		/// <summary>
@@ -90,6 +93,9 @@ namespace MathTextRecognizer.Stages
 			controller.MessageLogSent+=
 				new MessageLogSentHandler(OnMessageLogSent);
 			
+			controller.ProcessFinished += 
+				new ProcessFinishedHandler(OnControllerProcessFinished);
+			
 			
 			InitializeWidgets();
 			
@@ -111,6 +117,10 @@ namespace MathTextRecognizer.Stages
 			sequencesModel.Clear();
 			
 			buttonsNB.Page =0;
+			
+			processBtn.Label = "Secuenciar";
+			
+			state = 0;
 		}
 		
 		/// <summary>
@@ -198,8 +208,8 @@ namespace MathTextRecognizer.Stages
 		{
 			SequenceAddedArgs a = args as SequenceAddedArgs;
 			
-			SequenceNode node = new SequenceNode(a.Sequence);			
-			sequencesModel.AddNode(node);
+			a.Sequence.Widget = sequencesNV;
+			sequencesModel.AddNode(a.Sequence);
 			sequencesNV.ColumnsAutosize();
 		}
 		
@@ -215,18 +225,24 @@ namespace MathTextRecognizer.Stages
 		private void OnControllerNodeBeingProcessed(object sender, 
 		                                            EventArgs args)
 		{
-			Application.Invoke(OnControllerNodeBeingProcessedThread);
+			Application.Invoke(OnControllerNodeBeingProcessedInThread);
 		}
 		
-		private void OnControllerNodeBeingProcessedThread(object sender,
+		private void OnControllerNodeBeingProcessedInThread(object sender,
 		                                                  EventArgs args)
 		{
-			// Selects the new first.			
 			
-			symbolsIV.SelectPath(processedPath);
-			symbolsIV.ScrollToPath(processedPath, 0,0);
+			if(state==0)
+			{
+				// We are sequencing.
+				
+				// Selects the new first.			
+				symbolsIV.SelectPath(processedPath);
+				symbolsIV.ScrollToPath(processedPath, 0,0);
+				
+				processedPath.Next();
+			}
 			
-			processedPath.Next();
 		}
 		
 		/// <summary>
@@ -241,10 +257,10 @@ namespace MathTextRecognizer.Stages
 		private void OnMessageLogSent(object sender,MessageLogSentArgs a)
 		{
 		    // Llamamos a través de invoke para que funcione bien.			
-			Application.Invoke(sender, a,OnMessageLogSentThread);
+			Application.Invoke(sender, a,OnMessageLogSentInThread);
 		}
 		
-		private void OnMessageLogSentThread(object sender, EventArgs a)
+		private void OnMessageLogSentInThread(object sender, EventArgs a)
 		{		   
 		    Log(((MessageLogSentArgs)a).Message);
 		}
@@ -274,137 +290,32 @@ namespace MathTextRecognizer.Stages
 			
 			
 			controller.SetLexicalRules(MainWindow.LexicalRulesManager.LexicalRules);
-			controller.Next(ControllerStepMode.StepByStep);
-		
+			controller.Next(ControllerStepMode.StepByStep);		
 		}
-				
-
+			
+		/// <summary>
+		/// Handles the process finished event of the controller.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="a">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnControllerProcessFinished(object sender, EventArgs a)
+		{
+			// The state has changed.
+			state = state +1;
+			
+			// We have finished.
+			nextStageBtn.Sensitive = state ==2; // Sensitive if we have finished.
+			
+			processBtn.Label = state==0?"Secuenciar":"Extraer tokens";
+			// We change to the first page
+			buttonsNB.Page = 0;		
+			
+		}
 		
 #endregion Non-public methods
-	}
-	
-	/// <summary>
-	/// This class implements a node for the sequence treeview.
-	/// </summary>
-	class SequenceNode : TreeNode
-	{
-		TokenSequence sequence;
-		TokenSequence tokens;
-		
-		string sequenceLabel;
-		string tokensLabel;
-		
-		public SequenceNode(TokenSequence sequence)
-		{
-			this.sequence = sequence;
-			this.tokens = new TokenSequence();
-			
-			this.sequence.ItemAdded += new EventHandler(OnSequenceItemAdded);	
-			
-			this.tokens.Changed += new EventHandler(OnTokensChanged);
-		}
-		
-#region Properties
-		
-		/// <value>
-		/// Contains the node sequence column text.
-		/// </value>
-		[TreeNodeValue(Column =0)]
-		public string SequenceText
-		{
-			get
-			{
-				return sequenceLabel;
-			}
-		}
-	
-		/// <value>
-		/// Contains the node tokens column text.
-		/// </value>
-		[TreeNodeValue(Column =1)]
-		public string TokensText
-		{
-			get
-			{
-				return tokensLabel;
-			}
-		}
-
-		/// <value>
-		/// Contains the tokens assigned to this node's token sequence.
-		/// </value>
-		public TokenSequence Tokens 
-		{
-			get 
-			{
-				return tokens;
-			}
-			set 
-			{
-				tokens = value;
-				tokens.Changed += new EventHandler(OnTokensChanged);
-			}
-		}
-		
-#endregion Properties
-		
-#region Event handlers	
-		/// <summary>
-		/// Creates the label for the sequence column when the sequence 
-		/// is modified.
-		/// </summary>
-		/// <param name="sender">
-		/// A <see cref="System.Object"/>
-		/// </param>
-		/// <param name="args">
-		/// A <see cref="EventArgs"/>
-		/// </param>
-		private void OnSequenceItemAdded(object sender, EventArgs args)
-		{
-			Application.Invoke(OnSequenceItemAddedThread);
-		}
-		
-		private void OnSequenceItemAddedThread(object sender, EventArgs args)
-		{
-			List<string> res = new List<string>();
-			
-			foreach (Token t in sequence) 
-			{
-				res.Add(String.Format("«{0}»",t.Text));
-			}
-			
-			sequenceLabel =  String.Join(", ", res.ToArray());
-		}
-
-		
-		/// <summary>
-		/// Creates the label for the sequence column when the sequence 
-		/// is modified.
-		/// </summary>
-		/// <param name="sender">
-		/// A <see cref="System.Object"/>
-		/// </param>
-		/// <param name="args">
-		/// A <see cref="EventArgs"/>
-		/// </param>
-		private void OnTokensChanged(object sender, EventArgs args)
-		{
-			Application.Invoke(OnTokensChangedThread);
-		}
-		
-		private void OnTokensChangedThread(object sender, EventArgs args)
-		{
-			List<string> res = new List<string>();
-			
-			foreach (Token t in tokens) 
-			{
-				res.Add(t.Type);
-			}
-			
-			tokensLabel =  String.Join(", ", res.ToArray());
-		
-		}
-		
-#endregion Event handlers
 	}
 }
