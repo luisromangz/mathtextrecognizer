@@ -2264,7 +2264,7 @@ MathML</property>
               <widget class="GtkHPaned" id="hpaned1">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="position">225</property>
+                <property name="position">260</property>
                 <child>
                   <widget class="GtkFrame" id="frame7">
                     <property name="width_request">210</property>
@@ -2495,7 +2495,7 @@ MathML</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="response_id">1</property>
-                            <signal name="clicked" handler="OnBtnNextStep"/>
+                            <signal name="clicked" handler="OnBtnNextStepClicked"/>
                             <child>
                               <widget class="GtkAlignment" id="alignment39">
                                 <property name="visible">True</property>

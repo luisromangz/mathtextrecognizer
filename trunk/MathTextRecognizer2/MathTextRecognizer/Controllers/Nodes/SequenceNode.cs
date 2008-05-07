@@ -25,21 +25,37 @@ namespace MathTextRecognizer.Controllers.Nodes
 		private string sequenceLabel;
 		private string tokensLabel;
 		
+		private string nodeName;
+		
 		private NodeView widget;
 		
 		public SequenceNode(TokenSequence sequence)
 		{
-			this.sequence = sequence;
-			
+			this.sequence = sequence;			
 			this.sequence.Changed += new EventHandler(OnSequenceChangedAdded);	
 		}
 		
 #region Properties
 		
 		/// <value>
+		/// Contains the node's name;
+		/// </value>
+		[TreeNodeValue(Column=0)]
+		public string NodeName
+		{
+			get
+			{
+				return nodeName;
+			}
+			set
+			{
+				nodeName = value;
+			}
+		}
+		/// <value>
 		/// Contains the node sequence column text.
 		/// </value>
-		[TreeNodeValue(Column =0)]
+		[TreeNodeValue(Column =1)]
 		public string SequenceText
 		{
 			get
@@ -51,8 +67,8 @@ namespace MathTextRecognizer.Controllers.Nodes
 		/// <value>
 		/// Contains the node tokens column text.
 		/// </value>
-		[TreeNodeValue(Column =1)]
-		public string TokensText
+		[TreeNodeValue(Column =2)]
+		public string FoundTokenText
 		{
 			get
 			{
@@ -179,14 +195,19 @@ namespace MathTextRecognizer.Controllers.Nodes
 		                                   EventArgs args)
 		{
 			AddSequenceChildArgs a = args as AddSequenceChildArgs;
+			
+			a.ChildNode.NodeName = 
+				String.Format("{0}.{1}",this.NodeName,this.ChildCount+1);
+			
 			this.AddChild(a.ChildNode);
 			
 			// We set the tree view of the child node.
 			a.ChildNode.Widget = this.widget;
 			
 			// We expand the node and resize the columns (if necessary).
+			
 			widget.ExpandAll();
-			widget.ColumnsAutosize();
+			//widget.ColumnsAutosize();
 		}
 		
 		
