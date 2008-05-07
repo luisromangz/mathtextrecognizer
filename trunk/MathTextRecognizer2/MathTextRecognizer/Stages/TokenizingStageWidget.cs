@@ -182,7 +182,7 @@ namespace MathTextRecognizer.Stages
 			                         new CellRendererText(), 
 			                         "text",0);
 			
-			sequencesNV.AppendColumn("Tokens",
+			sequencesNV.AppendColumn("Token",
 			                         new CellRendererText(),
 			                         "text",1);
 			

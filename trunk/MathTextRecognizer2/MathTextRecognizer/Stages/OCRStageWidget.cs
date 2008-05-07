@@ -772,6 +772,7 @@ namespace MathTextRecognizer.Stages
 			segmentBtn.Sensitive = false;
 			gotoTokenizerBtn.Sensitive =  true;
 			buttonsNB.Page = 1;
+			controller.SearchDatabase = false;
 			controller.Next(ControllerStepMode.NodeByNode);
 		}
 		

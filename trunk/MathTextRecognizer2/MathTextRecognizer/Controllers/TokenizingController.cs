@@ -215,7 +215,7 @@ namespace MathTextRecognizer.Controllers
 					// We found a token, so we stop searching and add
 					// the token to the result.
 					found = true;
-					acceptedNode.AppendToken(foundToken);
+					acceptedNode.FoundToken = foundToken;
 				}
 			}
 			
@@ -228,7 +228,7 @@ namespace MathTextRecognizer.Controllers
 			{
 				// Only one token was found, we assimilate the acceptedNode
 				// with its parent.
-				node.AppendToken(foundToken);
+				node.FoundToken = foundToken;
 				node.RemoveSequenceChildren();
 			}
 			else
