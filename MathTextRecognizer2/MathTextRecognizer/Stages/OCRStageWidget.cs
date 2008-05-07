@@ -376,8 +376,7 @@ namespace MathTextRecognizer.Stages
 				TokenizingStageWidget tokenizingWidget =  
 					NextStage() as TokenizingStageWidget;
 				
-				tokenizingWidget.SetStartSymbols(this.LeafNodes);
-				
+				tokenizingWidget.SetStartSymbols(this.LeafNodes);				
 				
 			}			
 			else
@@ -418,7 +417,7 @@ namespace MathTextRecognizer.Stages
 				// We have a problem if we have many symbols in a node, or
 				// we don't have any.
 				
-				if(analizedNode.Symbols.Count ==0)
+				if(analizedNode.Symbols.Count == 0)
 				{
 					errors.Add(String.Format("· El nodo «{0}» no tiene etiqueta.",
 					                         analizedNode.Name));
@@ -655,7 +654,7 @@ namespace MathTextRecognizer.Stages
 				new Dialogs.SymbolLabelEditorDialog(MainWindow.Window,
 				                                    selectedNode);
 			
-			if(dialog.Show()== ResponseType.Ok)
+			if(dialog.Show() == ResponseType.Ok)
 			{
 				bool changeLabel = true;
 				if(selectedNode.ChildCount > 0)

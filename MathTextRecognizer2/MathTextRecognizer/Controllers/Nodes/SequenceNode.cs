@@ -70,6 +70,10 @@ namespace MathTextRecognizer.Controllers.Nodes
 			{
 				return tokens;
 			}
+			set
+			{
+				tokens = value;
+			}
 		}
 
 		/// <value>

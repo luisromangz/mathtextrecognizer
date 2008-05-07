@@ -5,6 +5,7 @@ using System;
 using Gtk;
 using Glade;
 
+using MathTextCustomWidgets.Dialogs;
 using MathTextCustomWidgets.Widgets.ImageArea;
 using MathTextCustomWidgets.Widgets;
 
@@ -65,9 +66,6 @@ namespace MathTextRecognizer.Stages.Dialogs
 			
 			symbolLabelEditorDialog.TransientFor = parent;
 			
-			symbolLabelEditorDialog.AddActionWidget(okButton,
-			                                        ResponseType.Ok);
-			
 			InitializeWidgets(node);
 			
 			
@@ -93,7 +91,12 @@ namespace MathTextRecognizer.Stages.Dialogs
 		/// </returns>
 		public ResponseType Show()
 		{
-			return (ResponseType)(symbolLabelEditorDialog.Run());
+			ResponseType res = ResponseType.None;
+			while(res == ResponseType.None)
+			{
+				res = (ResponseType)(symbolLabelEditorDialog.Run());
+			}
+			return res;
 		}
 		
 		/// <summary>
@@ -181,8 +184,35 @@ namespace MathTextRecognizer.Stages.Dialogs
 				labelEditor.Label = selected.Label;
 				labelEditor.Sensitive=false;
 			
-			}
+			}				
+		}
+		
+		/// <summary>
+		/// Checks the selected text, and if it isn't nil, responds Ok.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventHandler"/>
+		/// </param>
+		[GLib.ConnectBefore]
+		private void OnOkButtonClicked(object sender, EventArgs args)
+		{
+			if(String.IsNullOrEmpty(this.Label))
+			{
+				// If there are errors, we show a message box and respond none,
+				// so the dialog don't get closed.
+				OkDialog.Show(this.symbolLabelEditorDialog,
+				              MessageType.Info,
+				              "Debes escribir una etiqueta para continuar.");
 				
+				symbolLabelEditorDialog.Respond(ResponseType.None);
+			}
+			else
+			{
+				symbolLabelEditorDialog.Respond(ResponseType.Ok);
+			}
 		}
 		
 #endregion Private methods

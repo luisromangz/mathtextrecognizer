@@ -163,20 +163,30 @@ namespace MathTextRecognizer.Controllers
 		private void MatchTokens(SequenceNode node)
 		{			
 			TokenSequence discarded = new TokenSequence();
+			
+			TokenSequence accepted = new TokenSequence();
+			SequenceNode acceptedNode = new SequenceNode(accepted);
 			SequenceNode discardedNode = new SequenceNode(discarded);
 			TokenSequence sequence = node.Sequence;
+			
+			node.AddSequenceChild(acceptedNode);
+			
+			foreach (Token t in sequence) 
+			{
+				accepted.Append(t);
+			}
 			
 			node.Select();
 			NodeBeingProcessedInvoker();
 			
-			
 			bool found = false;
-			while(sequence.Count > 0 && !found)
+			Token foundToken = null;		
+			while(accepted.Count > 0 && !found)
 			{
-				Token foundToken = null;				
+						
 				foreach (LexicalRule rule in lexicalRules) 
 				{
-					foundToken = rule.Match(sequence);
+					foundToken = rule.Match(accepted);
 					if(foundToken!=null)
 					{
 						// We search no more.
@@ -189,23 +199,23 @@ namespace MathTextRecognizer.Controllers
 				{
 					// We remove the token from the input sequence and add it
 					// at the beggining of the discarded set.
-					int lastIndex = sequence.Count -1;
+					int lastIndex = accepted.Count -1;
 					if(node.ChildCount==0)
 					{
 						// If we haven't done so, we add the discarded sequence.
 						node.AddSequenceChild(discardedNode);
 					}
 						
-					discarded.Prepend(sequence[lastIndex]);
+					discarded.Prepend(accepted[lastIndex]);
 					
-					sequence.RemoveAt(lastIndex);
+					accepted.RemoveAt(lastIndex);
 				}
 				else
 				{
 					// We found a token, so we stop searching and add
 					// the token to the result.
 					found = true;
-					node.AppendToken(foundToken);
+					acceptedNode.AppendToken(foundToken);
 				}
 			}
 			
@@ -214,8 +224,16 @@ namespace MathTextRecognizer.Controllers
 				// We follow the recursive path.
 				MatchTokens(discardedNode);
 			}
+			else if(found && discarded.Count ==0)
+			{
+				// Only one token was found, we assimilate the acceptedNode
+				// with its parent.
+				node.AppendToken(foundToken);
+				node.RemoveSequenceChildren();
+			}
 			else
 			{
+				// If nothing was found, we remove the children.
 				node.RemoveSequenceChildren();
 			}
 		}

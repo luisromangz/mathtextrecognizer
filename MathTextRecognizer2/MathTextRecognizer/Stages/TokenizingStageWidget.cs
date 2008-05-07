@@ -116,7 +116,7 @@ namespace MathTextRecognizer.Stages
 			symbolsModel.Clear();
 			sequencesModel.Clear();
 			
-			buttonsNB.Page =0;
+			buttonsNB.Page = 0;
 			
 			processBtn.Label = "Secuenciar";
 			
@@ -147,8 +147,10 @@ namespace MathTextRecognizer.Stages
 			// We add the symbols to the gui.
 			foreach (Token token in tokens) 
 			{
-				symbolsModel.AppendValues(ImageUtils.MakeThumbnail(token.Image.CreatePixbuf(),
-				                                                   48),
+				Gdk.Pixbuf thumbnail = 
+					ImageUtils.MakeThumbnail(token.Image.CreatePixbuf(),
+					                         48);
+				symbolsModel.AppendValues(thumbnail,
 				                          token.Text);
 			}
 			
