@@ -184,9 +184,19 @@ namespace MathTextRecognizer.Stages
 			                         new CellRendererText(), 
 			                         "text",0);
 			
+			
+			
+			sequencesNV.AppendColumn("Símbolos", 
+			                         new CellRendererText(), 
+			                         "text",1);
+			
 			sequencesNV.AppendColumn("Token",
 			                         new CellRendererText(),
-			                         "text",1);
+			                         "text",2);
+			foreach (TreeViewColumn column in sequencesNV.Columns) 
+			{
+				column.Sizing = TreeViewColumnSizing.Autosize;
+			}
 			
 			symbolsModel = new ListStore(typeof(Gdk.Pixbuf),
 			                             typeof(string));
@@ -195,6 +205,51 @@ namespace MathTextRecognizer.Stages
 			
 			symbolsIV.TextColumn = 1;
 			symbolsIV.PixbufColumn =0;
+			
+		}
+		
+		/// <summary>
+		/// Tells the controller to process a new step.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnBtnNextStepClicked(object sender, EventArgs args)
+		{
+			
+			
+		}
+		
+		/// <summary>
+		/// Tells the controller to process a new node.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnBtnNextNodeClicked(object sender, EventArgs args)
+		{
+			
+			
+		}
+		
+		/// <summary>
+		/// Tells the controller to process until the finish of the current
+		/// process.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnBtnTilEndClicked(object sender, EventArgs args)
+		{
 			
 		}
 	
@@ -213,8 +268,22 @@ namespace MathTextRecognizer.Stages
 			SequenceAddedArgs a = args as SequenceAddedArgs;
 			
 			a.Sequence.Widget = sequencesNV;
+			
+			int number = 1;
+			foreach (SequenceNode node in sequencesModel) 
+			{
+				number++;
+			}
+			
+			a.Sequence.NodeName = String.Format("{0}", 
+			                                    number);
 			sequencesModel.AddNode(a.Sequence);
-			sequencesNV.ColumnsAutosize();
+			//sequencesNV.ColumnsAutosize();
+			sequencesNV.NodeSelection.SelectNode(a.Sequence);
+			sequencesNV.ScrollToCell(sequencesNV.Selection.GetSelectedRows()[0],
+			                         sequencesNV.Columns[0],
+			                         true,
+			                         1,0);
 		}
 		
 		/// <summary>
@@ -223,8 +292,8 @@ namespace MathTextRecognizer.Stages
 		/// <param name="sender">
 		/// A <see cref="System.Object"/>
 		/// </param>
-		/// <param name="ntArgs">
-		/// A <see cref="Eve"/>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
 		/// </param>
 		private void OnControllerNodeBeingProcessed(object sender, 
 		                                            EventArgs args)
@@ -368,13 +437,19 @@ namespace MathTextRecognizer.Stages
 				// If the node has children, we check them.
 				for(int i=0; i<node.ChildCount; i++)
 				{
-					res.AddRange(CheckNodeErrors(node[i]));
+					res.AddRange(CheckNodeErrors(node[i] as SequenceNode));
 				}
 			}
 			else
 			{
-				// TODO check a leaf node.
+				if(node.FoundToken == null)
+				{
+					res.Add(String.Format("· La secuencia {0} no encajó con ninguna regla léxica definida.",
+					                      node.NodeName));
+				}
 			}
+			
+			return res;
 		}
 		
 #endregion Non-public methods
