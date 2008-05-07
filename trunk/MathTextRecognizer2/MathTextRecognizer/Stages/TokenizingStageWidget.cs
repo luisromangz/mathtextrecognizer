@@ -10,6 +10,8 @@ using System.Collections.Generic;
 using Gtk;
 using Glade;
 
+using MathTextCustomWidgets.Dialogs;
+
 using MathTextLibrary.Utils;
 using MathTextLibrary.Analisys.Lexical;
 using MathTextLibrary.Controllers;
@@ -316,6 +318,63 @@ namespace MathTextRecognizer.Stages
 			// We change to the first page
 			buttonsNB.Page = 0;		
 			
+		}
+		
+		/// <summary>
+		/// Checks if the tokeninzing result is correct, and if so, advances 
+		/// to the next 
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="arg">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnNextStageBtnClicked(object sender, EventArgs arg)
+		{
+			List<string> errors = new List<string>();
+			foreach (SequenceNode rootNode in sequencesModel) 
+			{
+				errors.AddRange(CheckNodeErrors(rootNode));
+			}
+			
+			if(errors.Count > 0)
+			{
+				// There were errors.
+				string errorss = String.Join("\n", errors.ToArray());
+				
+				OkDialog.Show(this.MainWindow.Window,
+				              MessageType.Info,
+				              "Para continuar a la siguente fase de procesado,"
+				              +"debes solucionar los siguentes problemas:\n\n{0}",
+				              errorss);
+			}
+		}
+		
+		/// <summary>
+		/// Checks a node for errors.
+		/// </summary>
+		/// <param name="node">
+		/// The node to be checked.
+		/// </param>
+		/// <returns>
+		/// A list with the errors causes.
+		/// </returns>
+		private List<string> CheckNodeErrors(SequenceNode node)
+		{
+			List<string> res = new List<string>();
+			if(node.ChildCount > 0)
+			{
+				// If the node has children, we check them.
+				for(int i=0; i<node.ChildCount; i++)
+				{
+					res.AddRange(CheckNodeErrors(node[i]));
+				}
+			}
+			else
+			{
+				// TODO check a leaf node.
+			}
 		}
 		
 #endregion Non-public methods
