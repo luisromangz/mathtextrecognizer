@@ -20,7 +20,7 @@ namespace MathTextRecognizer.Controllers.Nodes
 	public class SequenceNode : TreeNode
 	{
 		private TokenSequence sequence;
-		private List<Token> tokens;
+		private Token token;
 		
 		private string sequenceLabel;
 		private string tokensLabel;
@@ -30,7 +30,6 @@ namespace MathTextRecognizer.Controllers.Nodes
 		public SequenceNode(TokenSequence sequence)
 		{
 			this.sequence = sequence;
-			this.tokens = new List<Token>();
 			
 			this.sequence.Changed += new EventHandler(OnSequenceChangedAdded);	
 		}
@@ -64,15 +63,15 @@ namespace MathTextRecognizer.Controllers.Nodes
 		/// <value>
 		/// Contains the tokens assigned to this node's token sequence.
 		/// </value>
-		public List<Token> Tokens 
+		public Token FoundToken
 		{
 			get 
 			{
-				return tokens;
+				return token;
 			}
 			set
 			{
-				tokens = value;
+				SetToken(value);
 			}
 		}
 
@@ -122,19 +121,6 @@ namespace MathTextRecognizer.Controllers.Nodes
 		
 		
 		
-		
-		/// <summary>
-		/// Appends a token to the node's token list.
-		/// </summary>
-		/// <param name="foundToken">
-		/// A <see cref="Token"/>
-		/// </param>
-		public void AppendToken(Token foundToken)
-		{
-			Application.Invoke(this, 
-			                   new AppendTokenArgs(foundToken),
-			                   AppendTokenInThread);
-		}
 		
 		
 		/// <summary>
@@ -203,20 +189,35 @@ namespace MathTextRecognizer.Controllers.Nodes
 			widget.ColumnsAutosize();
 		}
 		
-		private void AppendTokenInThread(object sender, EventArgs args)
+		
+		/// <summary>
+		/// Appends a token to the node's token list.
+		/// </summary>
+		/// <param name="foundToken">
+		/// A <see cref="Token"/>
+		/// </param>
+		private void SetToken(Token foundToken)
+		{
+			Application.Invoke(this, 
+			                   new SetTokenArgs(foundToken),
+			                   SetTokenInThread);
+		}
+		
+		
+		private void SetTokenInThread(object sender, EventArgs args)
 		{
 			// We append the node to the list, then build the label.
-			AppendTokenArgs a = args as AppendTokenArgs;
+			SetTokenArgs a = args as SetTokenArgs;
 			
-			tokens.Add(a.FoundToken);
+			token = a.FoundToken;
 			
-			if(tokens.Count == 1)
+			if(token == null)
 			{
-				tokensLabel = a.FoundToken.Type;
+				tokensLabel = "";
 			}
-			else if(tokens.Count >1)
+			else 
 			{
-				tokensLabel += String.Format(", {0}", a.FoundToken.Type);
+				tokensLabel = token.Type;
 			}
 			
 			widget.ColumnsAutosize();
@@ -233,6 +234,9 @@ namespace MathTextRecognizer.Controllers.Nodes
 		private void SelectInThread(object sender, EventArgs args)
 		{
 			widget.NodeSelection.SelectNode(this);
+			
+			TreePath path = widget.Selection.GetSelectedRows()[0];
+			widget.ScrollToCell(path,widget.Columns[0],true,1,0);			
 		}
 	
 		
@@ -267,10 +271,10 @@ namespace MathTextRecognizer.Controllers.Nodes
 	/// Implements a helper class so we can pass the found token
 	/// so its added in the app's main thread.
 	/// </summary>
-	class AppendTokenArgs : EventArgs
+	class SetTokenArgs : EventArgs
 	{
 		private Token foundToken;
-		public AppendTokenArgs(Token foundToken)
+		public SetTokenArgs(Token foundToken)
 		{
 			this.foundToken= foundToken;
 		}
