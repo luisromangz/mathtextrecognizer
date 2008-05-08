@@ -328,6 +328,8 @@
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                                <property name="has_tooltip">True</property>
+                                <property name="tooltip_text">Añadir imagen</property>
                                 <property name="tooltip" translatable="yes">Añadir una imagen para aprender</property>
                                 <property name="response_id">0</property>
                                 <signal name="clicked" handler="OnAddImageBtnClicked"/>
@@ -345,12 +347,34 @@
                               </packing>
                             </child>
                             <child>
+                              <widget class="GtkButton" id="addFolderImagesBtn">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="has_tooltip">True</property>
+                                <property name="tooltip_text">Añadir imagenes de una carpeta</property>
+                                <property name="response_id">0</property>
+                                <signal name="clicked" handler="OnAddFolderImagesBtnClicked"/>
+                                <child>
+                                  <widget class="GtkImage" id="image9">
+                                    <property name="visible">True</property>
+                                    <property name="stock">gtk-directory</property>
+                                  </widget>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
                               <widget class="GtkButton" id="removeImageBtn">
                                 <property name="visible">True</property>
                                 <property name="sensitive">False</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="events">GDK_POINTER_MOTION_MASK | GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK</property>
+                                <property name="has_tooltip">True</property>
+                                <property name="tooltip_text">Eliminar imagen</property>
                                 <property name="tooltip" translatable="yes">Eliminar una imagen</property>
                                 <property name="response_id">0</property>
                                 <signal name="clicked" handler="OnRemoveImageBtnClicked"/>
@@ -365,7 +389,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">False</property>
-                                <property name="position">1</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                           </widget>
@@ -757,7 +781,6 @@
                                     <child>
                                       <widget class="GtkButton" id="btnNext">
                                         <property name="visible">True</property>
-                                        <property name="sensitive">False</property>
                                         <property name="can_focus">True</property>
                                         <property name="can_default">True</property>
                                         <property name="response_id">0</property>

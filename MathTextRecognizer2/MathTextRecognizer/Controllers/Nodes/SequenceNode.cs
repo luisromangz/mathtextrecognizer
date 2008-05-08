@@ -204,10 +204,10 @@ namespace MathTextRecognizer.Controllers.Nodes
 			// We set the tree view of the child node.
 			a.ChildNode.Widget = this.widget;
 			
-			// We expand the node and resize the columns (if necessary).
-			
-			widget.ExpandAll();
-			//widget.ColumnsAutosize();
+			// We expand the node (the check shouldn't be neccessary but
+			// fixes a nullreference exception :S
+			if(widget!=null)
+				widget.ExpandAll();
 		}
 		
 		

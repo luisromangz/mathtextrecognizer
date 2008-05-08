@@ -37,26 +37,13 @@ namespace MathTextRecognizer.Controllers
 		}
 		
 #region Properties
-		/// <value>
-		/// Contains the tokens processed by the controller.
-		/// </value>
-		public List<Token> Tokens
-		{
-			get
-			{
-				return tokens;
-			}
-			set
-			{
-				tokens = value;
-			}
-		}
+		
 #endregion Properties
 		
 #region Public methods		
 		
 		/// <summary>
-		/// 
+		/// Set the rules used for the lexical analisys.
 		/// </summary>
 		/// <param name="lexicalRules">
 		/// The rules defined for the lexical analysis.
@@ -65,6 +52,19 @@ namespace MathTextRecognizer.Controllers
 		{
 			this.lexicalRules = lexicalRules;			
 		}
+		
+		
+		/// <summary>
+		/// Sets the intial tokens to be processed.
+		/// </summary>
+		/// <param name="initialTokens">
+		/// The inital tokens.
+		/// </param>
+		public void SetInitialTokens(List<Token> initialTokens)
+		{
+			tokens = initialTokens;
+		}
+		
 		
 #endregion Public methods	
 		
@@ -238,17 +238,6 @@ namespace MathTextRecognizer.Controllers
 			}
 		}
 
-		/// <summary>
-		/// Sets the intial tokens to be processed.
-		/// </summary>
-		/// <param name="initialTokens">
-		/// The inital tokens.
-		/// </param>
-		private void SetInitialTokens(List<Token> initialTokens)
-		{
-			tokens = initialTokens;
-		}
-		
 #endregion Non-public methods
 		
 #region Event invokers

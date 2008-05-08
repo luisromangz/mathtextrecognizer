@@ -263,7 +263,24 @@ namespace MathTextLearner
 		
 #endregion Metodos publicos
 		
-#region Metodos privados
+#region Private methods
+		
+		/// <summary>
+		/// Adds an image to the image list.
+		/// </summary>
+		/// <param name="filename">
+		/// A <see cref="System.String"/> containing the image's location.
+		/// </param>
+		private void AddImageFile(string filename)
+		{
+			Gdk.Pixbuf b = new Gdk.Pixbuf(filename);	
+
+			LoadNewImage(b);	
+			
+			LogLine("¡Archivo de imagen «{0}» añadido correctamente!",
+			        filename);
+		}
+			
 		
 		/// <summary>
 		/// Muestra el mensaje que indica como termino el proceso de aprendizaje, 
@@ -434,13 +451,9 @@ namespace MathTextLearner
 			
 			if(ImageLoadDialog.Show(mainWindow , out filename) 
 				== ResponseType.Ok)
-			{								
-				Gdk.Pixbuf b = new Gdk.Pixbuf(filename);	
-
-				LoadNewImage(b);	
-				
-				LogLine("¡Archivo de imagen «{0}» añadido correctamente!",
-				        filename);
+			{		
+				AddImageFile(filename);
+			
 				
 			}
 		}
@@ -959,7 +972,11 @@ namespace MathTextLearner
 						// If it is a new database, we make use the save as method.
 						string path = SaveDatabaseAs();
 						if(!String.IsNullOrEmpty(path))
+						{
 							SetTitle(path);
+							SetModified(false);
+						}
+							
 					}
 				}
 			}
@@ -1129,9 +1146,71 @@ namespace MathTextLearner
 			}
 		}
 		
+		/// <summary>
+		/// Addes the images from a folder.
+		/// </summary>
+		/// <param name="o">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="a">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnAddFolderImagesBtnClicked(object o, EventArgs a)
+		{
+			// Selccionamos la carpeta
+			string folderPath;
+			if(FolderOpenDialog.Show(this.mainWindow, out folderPath)
+				== ResponseType.Ok)
+			{
+				
+				int added = 0;
+								
+				string []  extensions = 
+				     new string []{"*.jpg", "*.JPG","*.png","*.PNG"};
+				
+				foreach (string extension in extensions)
+				{
+					foreach (string file in Directory.GetFiles(folderPath, 
+					                                           extension))
+					{
+						// Si es png o jpg intentamos añadirlo.
+						try
+						{
+							AddImageFile(file);
+							added++;
+						}
+						catch(Exception)
+						{
+							// Si peta, el fichero tenia una extensión que no
+							// hacia honor a su contenido.
+						}
+					}
+				}
+				
+				if(added > 0)
+				{
+					// Decimos el número de archivos que hemos añadido.
+					OkDialog.Show(
+						this.mainWindow,
+						MessageType.Info,
+						"Se añidieron {0} archivos(s) de imagen.",
+						added);
+				}
+				else
+				{
+					// Nos quejamos si no pudimos añadir ningún fichero.
+					OkDialog.Show(
+						this.mainWindow,
+						MessageType.Warning,
+						"No se encotró ningún archivo de imagen válido en la"
+						+" carpeta seleccionada",
+						added);
+				}
+			}			
+		}
 		
 	
-#endregion Metodos privados
+#endregion Private methods
 		
 	}
 	

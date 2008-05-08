@@ -41,7 +41,8 @@ namespace MathTextCustomWidgets.Dialogs
 			XML gxml = new XML(null, "gui.glade", "databaseInfoDialog", null);
 			gxml.Autoconnect(this);
 			
-			
+			this.databaseInfoDialog.TransientFor = parent;
+			this.databaseInfoDialog.Modal = true;
 		}
 		
 		/// <summary>
@@ -52,7 +53,7 @@ namespace MathTextCustomWidgets.Dialogs
 		/// </param>
 		public void SetDatabase(MathTextDatabase database)
 		{
-			shortDescLabel.Text = String.Format("<i>{0}</i>", 
+			shortDescLabel.Markup = String.Format("<i>{0}</i>", 
 			                                    database.ShortDescription);
 			
 			longDescLabel.Text = database.Description;
