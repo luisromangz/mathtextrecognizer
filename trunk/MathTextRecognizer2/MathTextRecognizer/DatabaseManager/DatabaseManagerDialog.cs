@@ -318,7 +318,17 @@ namespace MathTextRecognizer.DatabaseManager
 		/// </param>
 		private void OnPropertiesBtnClicked(object sender, EventArgs args)
 		{
+			DatabaseInfoDialog dialog =
+				new DatabaseInfoDialog(this.databaseManagerDialog);
 			
+			// We get the selected database and show its properties.
+			TreeIter selected;
+			databasesTV.Selection.GetSelected(out selected);
+			DatabaseFileInfo info = 
+				(DatabaseFileInfo)(databasesLS.GetValue(selected, 3));
+			dialog.SetDatabase(info.Database);
+			dialog.Show();
+			dialog.Destroy();
 		}
 		
 		/// Maneja el evento producido al pulsar el boton de añadir 

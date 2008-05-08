@@ -10,28 +10,28 @@ using System.Collections.Generic;
 
 using MathTextLibrary.Bitmap;
 using MathTextLibrary.Symbol;
-using MathTextLibrary.Databases.Characteristic.Characteristics;
+using MathTextLibrary.Databases;
 
 
-namespace MathTextLibrary.Databases.Characteristic
+
+namespace MathTextLibrary.Databases.Receptors
 {	
 	/// <summary>
 	/// Esta clase se encarga de mantener una base de datos de caracteristicas
 	/// binarias para los caracteres aprendidos, asi como de realizar el añadido
 	/// de nuevos caracteres en la misma y realizar busquedas.
 	/// </summary>
-	[DatabaseTypeInfo("Base de datos de vectores de características binarias",
-	                  "Vectores de características binarias")]	
+	[DatabaseTypeInfo("Base de datos de vectores de receptores en la imagen",
+	                  "Vectores de receptores")]	
 	
 	[XmlInclude(typeof(CheckVector))]
-	public class CharacteristicHashDatabase : DatabaseBase
+	public class ReceptorVectorDatabase : DatabaseBase
 	{
 #region Atributos
 		
-		private const float epsilon = 0.05f;  
-			
-		// Lista de caracteristicas binarias que se aplican sobre las imagenes.
-		private static List<IBinaryCharacteristic> characteristics;
+		private const float epsilon = 0.1f;  
+		
+		private List<Receptor> receptors;
 		
 		private List<CheckVector> symbolsDict;
 		
@@ -78,6 +78,21 @@ namespace MathTextLibrary.Databases.Characteristic
 				symbolsDict = value;
 			}
 		}
+
+		/// <value>
+		/// Contains the receptors used by the database.
+		/// </value>
+		public List<Receptor> Receptors
+		{
+			get 
+			{
+				return receptors;
+			}
+			set
+			{
+				receptors = value;
+			}
+		}
 	
 		
 		
@@ -88,10 +103,9 @@ namespace MathTextLibrary.Databases.Characteristic
 #region Métodos públicos
 		
 		/// <summary>
-		/// Constructor de <c>CharacteristicDatabase</c>. Crea una base de datos
-		/// vacia, sin ningun simbolo aprendido.
+		/// <c>ReceptorVectorDatabase</c>'s constructor.
 		/// </summary>
-		public CharacteristicHashDatabase() : base()
+		public ReceptorVectorDatabase() : base()
 		{	
 			symbolsDict = new List<CheckVector>();
 		}
@@ -111,14 +125,10 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// </param>
 		public override bool Learn(MathTextBitmap bitmap,MathSymbol symbol)
 		{
-			if(characteristics == null)
-				characteristics=CharacteristicFactory.CreateCharacteristicList();
-			
-			bool characteristicValue;	
+			bool receptorValue;	
 			
 			FloatBitmap processedBitmap = bitmap.LastProcessedImage;
-			CheckVector vector = CreateVector(processedBitmap);
-			
+			CheckVector vector = CreateVector(processedBitmap);			
 			
 			int position = symbolsDict.IndexOf(vector);
 			if(position >=0)
@@ -158,9 +168,6 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// </returns>
 		public override List<MathSymbol> Match(MathTextBitmap image)
 		{
-			if(characteristics == null)
-				characteristics=CharacteristicFactory.CreateCharacteristicList();
-			
 			List<MathSymbol> res = new List<MathSymbol>();
 			
 			FloatBitmap processedImage = image.LastProcessedImage;
@@ -170,7 +177,7 @@ namespace MathTextLibrary.Databases.Characteristic
 			// We have this image vector, now we will compare with the stored ones.
 			
 			// We consider a threshold.
-			int threshold = (int)(characteristics.Count * epsilon); 
+			int threshold = (int)(receptors.Count * epsilon); 
 			foreach(CheckVector storedVector in symbolsDict)
 			{
 				// If the distance is below the threshold, we consider it valid.
@@ -229,23 +236,58 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// </returns>
 		private CheckVector CreateVector(FloatBitmap image)
 		{
-			CheckVector vector = new CheckVector();
-			bool characteristicValue;
-			
-			foreach(IBinaryCharacteristic bc in characteristics)
+			// We create the receptors list.
+			if(receptors == null)
 			{
-				characteristicValue = bc.Apply(image);
-				
-				vector.Values.Add(characteristicValue);
-				
-				StepDoneArgs args = 
-					new StepDoneArgs(String.Format("Comprobando {0}: {1}", 
-					                               bc.GetType(), 
-					                               characteristicValue));
-				
-				StepDoneInvoker(args);
+				receptors = Receptor.GenerateList(50);
 			}
 			
+			CheckVector vector = new CheckVector();
+			bool checkValue;
+			
+			int		width = image.Width;
+			int		height = image.Height;
+			
+			for(int i = 0; i<receptors.Count ;i++)
+			{
+				// We initialize the new check vector
+				vector.Values.Add(false);
+			}
+
+			Receptor receptor;
+			for (int y = 0; y < height; y++)
+			{
+				for (int x = 0; x < width; x++)
+				{
+					// Check for black pixel
+					if (image[x, y] == FloatBitmap.Black)
+					{
+						for (int i = 0; i < receptors.Count; i++)
+						{
+							// Skip already activated receptors
+							if (vector.Values[i])
+								continue;
+
+							receptor = receptors[i];
+							checkValue =
+								receptor.GetReceptorState(x, y, width, height);
+							vector.Values[i]= checkValue;
+							
+							
+							// We inform the controller.
+							StepDoneArgs args = 
+								new StepDoneArgs(String.Format("Comprobando receptor {0} en el pixel {1}: {2}", 
+								                               String.Format("({0}, {1}) -> ({2}, {3})",
+								                                             receptor.X0,receptor.Y0,
+								                                             receptor.X1, receptor.Y1),
+								                               String.Format("({0}, {1})" ,x, y),
+								                               checkValue));
+				
+							StepDoneInvoker(args);
+						}
+					}
+				}
+			}
 			return vector;
 		}
 		

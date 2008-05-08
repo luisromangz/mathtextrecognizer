@@ -9,7 +9,7 @@ using MathTextLearner;
 
 namespace MathTextLearnerLauncher
 {
-	class MainClass
+	public class MainClass
 	{
 		public static void Main(string[] args)
 		{

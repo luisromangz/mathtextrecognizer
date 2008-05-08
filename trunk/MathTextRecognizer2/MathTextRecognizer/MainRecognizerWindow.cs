@@ -480,8 +480,9 @@ namespace MathTextRecognizer
 		private void OnDatabaseManagerDialogDatabaseListChanged(object sender,
 		                                                        EventArgs args)
 		{
+			Console.WriteLine("uh {0}" ,databaseManagerDialog.DatabaseFilesInfo.Count);
 			messageInfoHB.Visible = 
-				databaseManagerDialog.DatabaseFilesInfo.Count ==0;
+				databaseManagerDialog.DatabaseFilesInfo.Count == 0;
 		}
 		
 		

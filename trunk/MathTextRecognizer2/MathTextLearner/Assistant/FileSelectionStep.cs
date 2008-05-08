@@ -189,6 +189,12 @@ namespace MathTextLearner.Assistant
 			                          typeof(Gdk.Pixbuf));
 				
 			filesIconView.Model = fileStore;		
+			
+			filesIconView.SelectionChanged += 
+				new EventHandler(OnFilesIconViewSelectionChanged);
+			
+			filesIconView.ItemActivated += 
+				new ItemActivatedHandler(OnFilesIconViewItemActivated);
 		}
 				
 		/// <summary>

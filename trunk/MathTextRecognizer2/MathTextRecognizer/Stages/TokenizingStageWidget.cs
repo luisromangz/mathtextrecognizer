@@ -156,10 +156,11 @@ namespace MathTextRecognizer.Stages
 				                          token.Text);
 			}
 			
+			// We don't want vertical scrolling.
 			symbolsIV.Columns = tokens.Count;
 			
 			// We stablish the controller initial tokens.
-			controller.Tokens = tokens;
+			controller.SetInitialTokens(tokens);
 		}
 
 		

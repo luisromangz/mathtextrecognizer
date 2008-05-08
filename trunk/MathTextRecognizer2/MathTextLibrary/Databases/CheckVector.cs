@@ -7,15 +7,15 @@ using System.Xml.Serialization;
 
 using MathTextLibrary.Symbol;
 
-namespace MathTextLibrary.Databases.Characteristic
+namespace MathTextLibrary.Databases
 {
 	
 	/// <summary>
-	/// This class implements the index used to store the characteristic
-	/// values vectors and compare them.
+	/// This class implements the index used to store a check list
+	/// values and compare them.
 	/// </summary>
 	[XmlInclude(typeof(MathSymbol))]
-	public class CharacteristicVector
+	public class CheckVector
 	{
 		private List<bool> values;
 		private List<MathSymbol> symbols;
@@ -23,7 +23,7 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// <summary>
 		/// <c>CharacteristicVector</c>'s constructor.
 		/// </summary>
-		public CharacteristicVector()
+		public CheckVector()
 		{
 			values = new List<bool>();
 			symbols = new List<MathSymbol>();
@@ -103,7 +103,7 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// The distance between vectors, as the number of differences between 
 		/// them.
 		/// </returns>
-		public int Distance(CharacteristicVector vector)
+		public int Distance(CheckVector vector)
 		{
 			int count=0;
 			
@@ -137,7 +137,7 @@ namespace MathTextLibrary.Databases.Characteristic
 			if(o.GetType() != this.GetType())
 				return false;
 			
-			CharacteristicVector vector = (CharacteristicVector) o;
+			CheckVector vector = (CheckVector) o;
 			int distance = this.Distance(vector);
 			
 			// The vectors are the same if the distance is zero
