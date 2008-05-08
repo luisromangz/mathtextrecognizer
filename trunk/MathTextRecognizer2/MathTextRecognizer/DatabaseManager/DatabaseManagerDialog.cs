@@ -79,7 +79,7 @@ namespace MathTextRecognizer.DatabaseManager
 			}
 			set
 			{
-				databaseFilesInfo = new List<DatabaseFileInfo>();
+				databaseFilesInfo.Clear();
 				foreach(DatabaseFileInfo info in value)
 				{
 					AddDatabaseInfo(info);
@@ -169,7 +169,9 @@ namespace MathTextRecognizer.DatabaseManager
 			if(!databaseFilesInfo.Contains(databaseInfo))
 			{
 				
-			
+				// Lo añadimos a la coleccion.
+				databaseFilesInfo.Add(databaseInfo);
+				
 				TreeIter newItem =
 					databasesLS.AppendValues(Path.GetFileName(databasePath),
 					                         database.DatabaseTypeShortDescription,
@@ -185,8 +187,7 @@ namespace MathTextRecognizer.DatabaseManager
 				                         1.0f,
 				                         0.0f);
 				
-				// Lo añadimos a la coleccion.
-				databaseFilesInfo.Add(databaseInfo);
+				
 			}
 			else
 			{
@@ -217,12 +218,13 @@ namespace MathTextRecognizer.DatabaseManager
 				return;
 			}
 			
+			databaseFilesInfo.Add(databaseInfo);
 			databasesLS.AppendValues(Path.GetFileName(databaseInfo.Path),
 			                         databaseInfo.Database.DatabaseTypeShortDescription,
 			                         databaseInfo.Path,
 			                         databaseInfo);  
 			
-			databaseFilesInfo.Add(databaseInfo);
+			
 		}
 		
 		
@@ -349,8 +351,9 @@ namespace MathTextRecognizer.DatabaseManager
 			DatabaseFileInfo databaseInfo = 
 				(DatabaseFileInfo) (databasesLS.GetValue(selectedIter, 3));
 
-			databasesLS.Remove(ref selectedIter);
 			databaseFilesInfo.Remove(databaseInfo);
+			databasesLS.Remove(ref selectedIter);
+			
 		}
 		
 		/// Maneja el evento producido al pulsar el boton guardar la selección
