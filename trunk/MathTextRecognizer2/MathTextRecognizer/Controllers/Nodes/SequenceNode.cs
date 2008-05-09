@@ -254,7 +254,9 @@ namespace MathTextRecognizer.Controllers.Nodes
 		
 		private void SelectInThread(object sender, EventArgs args)
 		{
-			widget.NodeSelection.SelectNode(this);
+			// Sometimes it seems that the widget is null...
+			if(this.widget !=null)
+				widget.NodeSelection.SelectNode(this);
 			
 			TreePath path = widget.Selection.GetSelectedRows()[0];
 			widget.ScrollToCell(path,widget.Columns[0],true,1,0);			

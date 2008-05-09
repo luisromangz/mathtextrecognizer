@@ -23,7 +23,7 @@ namespace MathTextRecognizer.Controllers
 	/// control de los procesos de segmentación de imagenes y asignación
 	/// de las mismas a un simbolo matematico determinado.
 	/// </summary>
-	public class OCRController : BaseController
+	public class OCRController : ControllerBase
 	{			
 		
 		//La base de datos que usaremos para reconocer los caracteres.

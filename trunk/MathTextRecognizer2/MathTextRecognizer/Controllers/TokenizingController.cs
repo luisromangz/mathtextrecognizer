@@ -21,7 +21,7 @@ namespace MathTextRecognizer.Controllers
 	/// This class' instances serve as the controllores of the sintactical
 	/// analisys.
 	/// </summary>
-	public class TokenizingController : BaseController
+	public class TokenizingController : ControllerBase
 	{
 		private List<Token> tokens;
 		private List<LexicalRule> lexicalRules;

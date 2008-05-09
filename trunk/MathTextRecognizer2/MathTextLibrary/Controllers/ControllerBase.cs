@@ -14,7 +14,7 @@ namespace MathTextLibrary.Controllers
 	/// This clases is used as the basis to build all the controllers used in the
 	/// application.
 	/// </summary>
-	public abstract class BaseController
+	public abstract class ControllerBase
 	{
 
 #region Events
@@ -39,7 +39,7 @@ namespace MathTextLibrary.Controllers
 		private ControllerStepMode stepMode;
 		
 #endregion Attributes
-		public BaseController()
+		public ControllerBase()
 		{
 			stepMode = ControllerStepMode.UntilEnd;
 		}
