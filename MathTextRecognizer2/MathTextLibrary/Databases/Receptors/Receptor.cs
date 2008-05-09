@@ -201,14 +201,21 @@ namespace MathTextLibrary.Databases.Receptors
 			int x0n = (int)(x0*width);
 			int x1n = (int)(x1*width);
 				
-			int a = y0n - y1n;
+			/*int a = y0n - y1n;
 			int	b = x1n - x0n;
 			int	c = y0n * (x0n - x1n) + x0n * (y1n - y0n);
 			float	d = (float) Math.Sqrt(a * a + b * b);
-			
 			// check if the point is on the receptors line
 			if (Math.Abs(a * x + b * y + c) / d < 1)
+				return true;*/
+			
+			float k = (float) (y1n - y0n) / (float) (x1n - x0n);
+			float z = (float) y0n - k * x0n;
+			
+			if ((int)(k * x + z - y) == 0)
 				return true;
+			
+		
 
 			return false;
 		}

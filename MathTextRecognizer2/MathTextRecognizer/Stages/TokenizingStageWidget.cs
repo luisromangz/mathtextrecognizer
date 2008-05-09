@@ -41,13 +41,16 @@ namespace MathTextRecognizer.Stages
 		private ScrolledWindow sequencesNVPlaceholder = null;
 		
 		[WidgetAttribute]
-		private Notebook buttonsNB = null;
+		private Notebook tokenizingButtonsNB = null;
 		
 		[WidgetAttribute]
-		private Alignment alignNextButtons = null;
+		private Alignment tokenizingNextButtonsAlign = null;
 		
 		[WidgetAttribute]
 		private Button processBtn = null;
+		
+		[WidgetAttribute]
+		private Label processBtnLbl = null;
 		
 		[WidgetAttribute]
 		private Button nextStageBtn = null;
@@ -118,9 +121,9 @@ namespace MathTextRecognizer.Stages
 			symbolsModel.Clear();
 			sequencesModel.Clear();
 			
-			buttonsNB.Page = 0;
+			tokenizingButtonsNB.Page = 0;
 			
-			processBtn.Label = "Secuenciar";
+			processBtnLbl.Text = "Secuenciar";
 			
 			state = 0;
 		}
@@ -360,7 +363,7 @@ namespace MathTextRecognizer.Stages
 			symbolsIV.SelectPath(processedPath);
 			symbolsIV.ScrollToPath(processedPath, 0, 0);
 				
-			buttonsNB.Page = 1;
+			tokenizingButtonsNB.Page = 1;
 			
 			
 			controller.SetLexicalRules(MainWindow.LexicalRulesManager.LexicalRules);
@@ -384,9 +387,9 @@ namespace MathTextRecognizer.Stages
 			// We have finished.
 			nextStageBtn.Sensitive = state ==2; // Sensitive if we have finished.
 			
-			processBtn.Label = state==0?"Secuenciar":"Extraer tokens";
+			processBtnLbl.Text = state==0?"Secuenciar":"Extraer tokens";
 			// We change to the first page
-			buttonsNB.Page = 0;		
+			tokenizingButtonsNB.Page = 0;		
 			
 		}
 		

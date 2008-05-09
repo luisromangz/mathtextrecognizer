@@ -213,7 +213,11 @@ namespace MathTextRecognizer.Stages
 			
 			scrolledtree.Add(treeview);
 			
-			treeview.Columns[1].Sizing = TreeViewColumnSizing.Autosize;
+			foreach (TreeViewColumn col in treeview) 
+			{
+				col.Sizing = TreeViewColumnSizing.Autosize;
+			}
+			
 			
 			
 			// Asignamos el evento para cuando se produzca la selección de un
@@ -689,9 +693,7 @@ namespace MathTextRecognizer.Stages
 				}
 			}
 			
-			
 			dialog.Destroy();
-			treeview.ColumnsAutosize();
 			
 		}
 		
@@ -775,8 +777,6 @@ namespace MathTextRecognizer.Stages
 			controller.SearchDatabase = false;
 			controller.Next(ControllerStepMode.NodeByNode);
 		}
-		
-			
 			
 		/// <summary>
 		/// Coloca los widgets al estado inicial para preparar la interfaz 
