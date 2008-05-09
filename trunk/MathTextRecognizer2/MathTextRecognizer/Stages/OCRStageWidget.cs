@@ -286,7 +286,7 @@ namespace MathTextRecognizer.Stages
 		/// Metodo que se invocara para indicar al controlador que deseamos
 		/// dar un nuevo paso de procesado.
 		/// </summary>
-		private void NextStep(ControllerStepMode stepMode)
+		protected override void NextStep(ControllerStepMode stepMode)
 		{			
 			controller.Next(stepMode);
 		}

@@ -11,8 +11,10 @@ using Gtk;
 using Glade;
 
 using MathTextCustomWidgets.Dialogs;
+using MathTextCustomWidgets.Widgets.ImageArea;
 
 using MathTextLibrary.Utils;
+using MathTextLibrary.Bitmap;
 using MathTextLibrary.Analisys.Lexical;
 using MathTextLibrary.Controllers;
 
@@ -58,6 +60,9 @@ namespace MathTextRecognizer.Stages
 		[WidgetAttribute]
 		private Notebook tokenizingStepsNB = null;
 		
+		[WidgetAttribute]
+		private Frame currentImageFrm = null;
+		
 #endregion Glade widgets
 		
 #region Fields
@@ -72,7 +77,13 @@ namespace MathTextRecognizer.Stages
 		private TreePath processedPath = null;
 		
 		// Indicates if the sequencing process has been completed.
-		private int state = 0;
+		private bool sequencingFinished = false;
+		
+		
+		private Token lastToken;
+		
+		private ImageArea baselineImageArea;
+	
 		
 #endregion Fields
 		
@@ -136,7 +147,14 @@ namespace MathTextRecognizer.Stages
 			
 			processBtnLbl.Text = "Secuenciar";
 			
-			state = 0;
+			sequencingFinished = false;
+			
+			processBtn.Sensitive = true;
+			nextStageBtn.Sensitive = false;
+			
+			tokenizingNextButtonsAlign.Sensitive = true;
+			
+			baselineImageArea.Image = null;
 		}
 		
 		/// <summary>
@@ -167,14 +185,15 @@ namespace MathTextRecognizer.Stages
 					ImageUtils.MakeThumbnail(token.Image.CreatePixbuf(),
 					                         48);
 				symbolsModel.AppendValues(thumbnail,
-				                          token.Text);
+				                          token.Text,
+				                          token);
 			}
 			
 			// We don't want vertical scrolling.
 			symbolsIV.Columns = tokens.Count;
 			
 			// We stablish the controller initial tokens.
-			controller.SetInitialTokens(tokens);
+			controller.SetInitialData(tokens, sequencesNV);
 		}
 
 		
@@ -192,14 +211,14 @@ namespace MathTextRecognizer.Stages
 			sequencesModel = new NodeStore(typeof(SequenceNode));
 			
 			sequencesNV = new NodeView(sequencesModel);
+			
+			sequencesNV.ShowExpanders = true;
 			sequencesNV.RulesHint = true;
 			sequencesNVPlaceholder.Add(sequencesNV);
 			
 			sequencesNV.AppendColumn("Secuencia", 
 			                         new CellRendererText(), 
 			                         "text",0);
-			
-			
 			
 			sequencesNV.AppendColumn("Símbolos", 
 			                         new CellRendererText(), 
@@ -208,19 +227,26 @@ namespace MathTextRecognizer.Stages
 			sequencesNV.AppendColumn("Token",
 			                         new CellRendererText(),
 			                         "text",2);
+			
 			foreach (TreeViewColumn column in sequencesNV.Columns) 
 			{
-				column.Sizing = TreeViewColumnSizing.Autosize;
+				column.Sizing = TreeViewColumnSizing.Autosize;								
 			}
-			
+						
 			symbolsModel = new ListStore(typeof(Gdk.Pixbuf),
-			                             typeof(string));
+			                             typeof(string),
+			                             typeof(Token));
 			
 			symbolsIV.Model = symbolsModel;
 			
 			symbolsIV.TextColumn = 1;
 			symbolsIV.PixbufColumn =0;
 			
+			baselineImageArea = new ImageArea();
+			baselineImageArea.ImageMode = ImageAreaMode.Zoom;
+			currentImageFrm.Add(baselineImageArea);
+			
+			tokenizingStageWidget.ShowAll();
 		}
 		
 		/// <summary>
@@ -234,8 +260,9 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		private void OnBtnNextStepClicked(object sender, EventArgs args)
 		{
-			
-			
+			LogAreaExpanded = true;	
+			tokenizingNextButtonsAlign.Sensitive=false;
+			NextStep(ControllerStepMode.StepByStep);
 		}
 		
 		/// <summary>
@@ -249,7 +276,9 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		private void OnBtnNextNodeClicked(object sender, EventArgs args)
 		{
-			
+			tokenizingNextButtonsAlign.Sensitive=false;
+			LogAreaExpanded = false;				
+			NextStep(ControllerStepMode.NodeByNode);
 			
 		}
 		
@@ -264,8 +293,10 @@ namespace MathTextRecognizer.Stages
 		/// A <see cref="EventArgs"/>
 		/// </param>
 		private void OnBtnTilEndClicked(object sender, EventArgs args)
-		{
-			
+		{			
+			LogAreaExpanded=false;
+			tokenizingNextButtonsAlign.Sensitive=false;
+			NextStep(ControllerStepMode.UntilEnd);
 		}
 	
 		/// <summary>
@@ -280,9 +311,13 @@ namespace MathTextRecognizer.Stages
 		private void OnControllerSequenceAdded(object sender, 
 		                                       SequenceAddedArgs args)
 		{
+			Application.Invoke(sender, args, OnControllerSequenceAddedInThread);
+		}
+		
+		private void OnControllerSequenceAddedInThread(object sender, 
+		                                               EventArgs args)
+		{
 			SequenceAddedArgs a = args as SequenceAddedArgs;
-			
-			a.Sequence.Widget = sequencesNV;
 			
 			int number = 1;
 			foreach (SequenceNode node in sequencesModel) 
@@ -299,6 +334,8 @@ namespace MathTextRecognizer.Stages
 			                         sequencesNV.Columns[0],
 			                         true,
 			                         1,0);
+			
+			sequencesNV.ColumnsAutosize();
 		}
 		
 		/// <summary>
@@ -320,16 +357,46 @@ namespace MathTextRecognizer.Stages
 		                                                  EventArgs args)
 		{
 			
-			if(state==0)
+			if(!sequencingFinished)
 			{
 				// We are sequencing.
+				
+				processedPath.Next();
 				
 				// Selects the new first.			
 				symbolsIV.SelectPath(processedPath);
 				symbolsIV.ScrollToPath(processedPath, 0,0);
 				
-				processedPath.Next();
+				// We get the token.
+				TreeIter selectedIter;
+				if(symbolsModel.GetIter(out selectedIter, processedPath))
+				{
+					Token processedToken = 
+					symbolsModel.GetValue(selectedIter, 2) as Token;
+				
+					FloatBitmap sequenceImage;
+					if(this.lastToken != null)
+					{
+						TokenSequence seq = new TokenSequence();
+						seq.Append(lastToken);
+						seq.Append(processedToken);
+						Token joinedToken =Token.Join(seq, "");
+						sequenceImage = joinedToken.Image;
+					}
+					else
+					{
+						sequenceImage = processedToken.Image;					
+					}
+					
+					baselineImageArea.Image = sequenceImage.CreatePixbuf();
+					
+					lastToken = processedToken;
+				}
+				
+				
 			}
+			
+			tokenizingNextButtonsAlign.Sensitive = true;
 			
 		}
 				
@@ -344,20 +411,31 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		private void OnProcessBtnClicked(object sender, EventArgs args)
 		{
-			sequencesModel.Clear();
+			if(!sequencingFinished)
+			{
+				sequencesModel.Clear();
 		
-			TreeIter first;
-			symbolsModel.GetIterFirst(out first);
+				TreeIter first;
+				symbolsModel.GetIterFirst(out first);
 			
-			processedPath = symbolsModel.GetPath(first);
+				lastToken = symbolsModel.GetValue(first, 2) as Token;
 				
-			symbolsIV.SelectPath(processedPath);
-			symbolsIV.ScrollToPath(processedPath, 0, 0);
+				processedPath = symbolsModel.GetPath(first);
 				
-			tokenizingButtonsNB.Page = 1;
+					
+				symbolsIV.SelectPath(processedPath);
+				symbolsIV.ScrollToPath(processedPath, 0, 0);
+					
+				tokenizingButtonsNB.Page = 1;
+				
+				
+				controller.SetLexicalRules(MainWindow.LexicalRulesManager.LexicalRules);
+			}
+			else
+			{
+				
+			}
 			
-			
-			controller.SetLexicalRules(MainWindow.LexicalRulesManager.LexicalRules);
 			controller.Next(ControllerStepMode.StepByStep);		
 		}
 			
@@ -372,13 +450,22 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		private void OnControllerProcessFinished(object sender, EventArgs a)
 		{
-			// The state has changed.
-			state = state +1;
-			
 			// We have finished.
-			nextStageBtn.Sensitive = state ==2; // Sensitive if we have finished.
+			nextStageBtn.Sensitive = sequencingFinished; 
+			processBtn.Sensitive = !sequencingFinished;
 			
-			processBtnLbl.Text = state==0?"Secuenciar":"Extraer tokens";
+			
+			
+			// The state has changed.
+			if(!sequencingFinished)
+				sequencingFinished = true;
+			
+			
+			
+			
+			if(sequencingFinished)
+				processBtnLbl.Text = "Extraer tokens";
+			
 			// We change to the first page
 			tokenizingButtonsNB.Page = 0;		
 			
@@ -410,7 +497,7 @@ namespace MathTextRecognizer.Stages
 				OkDialog.Show(this.MainWindow.Window,
 				              MessageType.Info,
 				              "Para continuar a la siguente fase de procesado,"
-				              +"debes solucionar los siguentes problemas:\n\n{0}",
+				              + "debes solucionar los siguentes problemas:\n\n{0}",
 				              errorss);
 			}
 		}
@@ -446,6 +533,12 @@ namespace MathTextRecognizer.Stages
 			
 			return res;
 		}
+		
+		protected override void NextStep (ControllerStepMode mode)
+		{
+			controller.Next(mode);
+		}
+
 		
 #endregion Non-public methods
 	}

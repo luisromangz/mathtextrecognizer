@@ -111,12 +111,20 @@ namespace MathTextLibrary.Controllers
 		/// </summary>
 		protected void SuspendByNode()
 		{
-				if(stepMode != ControllerStepMode.UntilEnd)
+			if(stepMode != ControllerStepMode.UntilEnd)
 			{				
 				processThread.Suspend();	
 				
 			}
 
+		}
+		
+		/// <summary>
+		/// Suspends the thread inconditionally.
+		/// </summary>
+		protected void Suspend()
+		{
+			processThread.Suspend();
 		}
 		
 		/// <summary>

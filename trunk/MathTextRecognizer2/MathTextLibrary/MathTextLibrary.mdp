@@ -103,18 +103,18 @@
     <File name="Tests/BinaryCharacteristicsTests.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Characteristic/CharacteristicHashDatabase.cs" subtype="Code" buildaction="Compile" />
     <File name="Tests/CharacteristicHashDatabaseTests.cs" subtype="Code" buildaction="Compile" />
-    <File name="Controllers/BaseController.cs" subtype="Code" buildaction="Compile" />
     <File name="Analisys" subtype="Directory" buildaction="Compile" />
     <File name="Analisys/Lexical" subtype="Directory" buildaction="Compile" />
     <File name="Analisys/Lexical/Token.cs" subtype="Code" buildaction="Compile" />
     <File name="Analisys/Lexical/LexicalRule.cs" subtype="Code" buildaction="Compile" />
     <File name="Tests/LexicalRuleTests.cs" subtype="Code" buildaction="Compile" />
-    <File name="Analisys/Lexical/TokenSequence.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Receptors" subtype="Directory" buildaction="Compile" />
     <File name="Databases/Receptors/ReceptorVectorDatabase.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Receptors/Receptor.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/CheckVector.cs" subtype="Code" buildaction="Compile" />
     <File name="Tests/ReceptorDatabaseTests.cs" subtype="Code" buildaction="Compile" />
+    <File name="Controllers/ControllerBase.cs" subtype="Code" buildaction="Compile" />
+    <File name="Analisys/Lexical/TokenSequence.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
@@ -122,6 +122,7 @@
     <ProjectReference type="Gac" localcopy="True" refto="System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <ProjectReference type="Gac" localcopy="True" refto="nunit.core, Version=2.2.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
     <ProjectReference type="Gac" localcopy="True" refto="nunit.framework, Version=2.2.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </References>
   <DeployTargets />
 </Project>

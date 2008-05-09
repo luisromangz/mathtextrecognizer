@@ -139,5 +139,14 @@ namespace MathTextRecognizer.Stages
 		    Log(((MessageLogSentArgs)a).Message);
 		}
 		
+		/// <summary>
+		/// Makes the controller process more data.
+		/// </summary>
+		/// <param name="mode">
+		/// A <see cref="ControllerStepMode"/> indicating when the controller 
+		/// should stop.
+		/// </param>
+		protected abstract void NextStep(ControllerStepMode mode);
+		
 	}
 }

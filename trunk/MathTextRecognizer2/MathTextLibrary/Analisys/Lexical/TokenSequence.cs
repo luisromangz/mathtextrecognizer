@@ -128,7 +128,6 @@ namespace MathTextLibrary.Analisys.Lexical
 			{
 				Changed(this, EventArgs.Empty);
 			}
-				
 		}
 		
 		/// <summary>
@@ -142,6 +141,25 @@ namespace MathTextLibrary.Analisys.Lexical
 			}
 				
 		}
+		
+		/// <summary>
+		/// Creates a string representation of the sequence.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
+		public override string ToString ()
+		{
+			List<string> res = new List<string>();
+			
+			foreach (Token t in sequence) 
+			{
+				res.Add(String.Format("«{0}»",t.Text));
+			}
+			
+			return String.Join(", ", res.ToArray());			
+		}
+
 		
 #endregion Public methods
 		

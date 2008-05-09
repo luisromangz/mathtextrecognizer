@@ -26,7 +26,10 @@ namespace MathTextRecognizer.Controllers
 		private List<Token> tokens;
 		private List<LexicalRule> lexicalRules;
 		
+		private NodeView view;
+		
 		public event SequenceAddedHandler SequenceAdded;
+		
 		
 		/// <summary>
 		/// <c>TokenizingController</c>'s constructor.
@@ -60,9 +63,10 @@ namespace MathTextRecognizer.Controllers
 		/// <param name="initialTokens">
 		/// The inital tokens.
 		/// </param>
-		public void SetInitialTokens(List<Token> initialTokens)
+		public void SetInitialData(List<Token> initialTokens, NodeView view)
 		{
 			tokens = initialTokens;
+			this.view = view;
 		}
 		
 		
@@ -79,9 +83,13 @@ namespace MathTextRecognizer.Controllers
 			MessageLogSentInvoker(" Comenzando proceso de análisis léxico");
 			MessageLogSentInvoker("========================================");
 			
+			Suspend();
+			
 			List<SequenceNode> tokenSequences = GetTokenSequences();
 			
 			ProcessFinishedInvoker();
+			
+			Suspend();
 			
 			foreach (SequenceNode sequence in tokenSequences) 
 			{
@@ -102,16 +110,16 @@ namespace MathTextRecognizer.Controllers
 			List<SequenceNode> tokenSequences = new List<SequenceNode>();
 			TokenSequence sequence = new TokenSequence();
 			// We add a first sequence to the list.
-			SequenceNode node = new SequenceNode(sequence);
+			SequenceNode node = new SequenceNode(sequence, view);
 			tokenSequences.Add(node);
 			MessageLogSentInvoker("===== Secuencia añadida =====");
-			SequenceAddedInvoker(node);
+			SequenceAddedInvoker(node);			
+	
 			
-			NodeBeingProcessedInvoker();
-			//SuspendByStep();
 			/// We add the first token to the first sequence.
 			Token lastToken = tokens[0];
 			sequence.Append(lastToken);
+			
 			MessageLogSentInvoker("Símbolo «{0}» añadido a la secuencia", 
 				                  lastToken.Text);
 			tokens.RemoveAt(0);
@@ -120,7 +128,7 @@ namespace MathTextRecognizer.Controllers
 			while(this.tokens.Count > 0)
 			{	
 				NodeBeingProcessedInvoker();
-				//SuspendByStep();
+				SuspendByNode();
 				
 				Token firstToken = tokens[0];
 				if(!firstToken.CloseFollows(lastToken))
@@ -128,9 +136,11 @@ namespace MathTextRecognizer.Controllers
 					// If the symbols aren't contiguous, a new sequence has
 					// commenced.
 					sequence = new TokenSequence();	
-					node = new SequenceNode(sequence);
+					node = new SequenceNode(sequence, view);
+					
 					tokenSequences.Add(node);
 					SequenceAddedInvoker(node);
+					
 					MessageLogSentInvoker("===== Secuencia añadida =====");
 				}
 				
@@ -138,8 +148,7 @@ namespace MathTextRecognizer.Controllers
 				// from the inital token list.
 				sequence.Append(firstToken);
 				MessageLogSentInvoker("Símbolo «{0}» añadido a la secuencia", 
-				                      firstToken.Text);
-				
+				                      firstToken.Text);			
 				
 				
 				tokens.RemoveAt(0);
@@ -165,11 +174,11 @@ namespace MathTextRecognizer.Controllers
 			TokenSequence discarded = new TokenSequence();
 			
 			TokenSequence accepted = new TokenSequence();
-			SequenceNode acceptedNode = new SequenceNode(accepted);
-			SequenceNode discardedNode = new SequenceNode(discarded);
+			SequenceNode acceptedNode = new SequenceNode(accepted, view);
+			SequenceNode discardedNode = new SequenceNode(discarded, view);
 			TokenSequence sequence = node.Sequence;
 			
-			node.AddSequenceChild(acceptedNode);
+			node.AddChildSequence(acceptedNode);
 			
 			foreach (Token t in sequence) 
 			{
@@ -203,7 +212,7 @@ namespace MathTextRecognizer.Controllers
 					if(node.ChildCount==0)
 					{
 						// If we haven't done so, we add the discarded sequence.
-						node.AddSequenceChild(discardedNode);
+						node.AddChildSequence(discardedNode);
 					}
 						
 					discarded.Prepend(accepted[lastIndex]);

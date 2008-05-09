@@ -130,6 +130,9 @@ namespace MathTextRecognizer
 			
 			lexicalRulesManagerDialog = 
 				new LexicalRulesManagerDialog(this.mainWindow);		
+			
+			GLib.ExceptionManager.UnhandledException+=
+				new GLib.UnhandledExceptionHandler(OnUnhandledException);
 		}
 		
 		
@@ -227,6 +230,17 @@ namespace MathTextRecognizer
 			{
 				return tokenizingWidget;
 			}			
+		}
+
+		/// <value>
+		/// Contains the widget used to show the syntactical analysis.
+		/// </value>
+		public FormulaMatchingStageWidget FormulaMatchingWidget 
+		{
+			get 
+			{
+				return formulaMatchingWidget;
+			}
 		}
 		
 #endregion Propiedades
@@ -525,6 +539,20 @@ namespace MathTextRecognizer
 		private void OnLexicalManagerItemClicked(object sender, EventArgs args)
 		{
 			lexicalRulesManagerDialog.Show();
+		}
+		
+		/// <summary>
+		/// Handles the unhandled exceptions.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="UnhandledExceptionEventArgs"/>
+		/// </param>
+		private void OnUnhandledException(UnhandledExceptionEventArgs args)
+		{
+			Console.WriteLine(args.ExceptionObject.ToString());
 		}
 	}
 	
