@@ -41,7 +41,7 @@ namespace MathTextRecognizer.LexicalRuleManager
 		private Button editBtn = null;
 		
 		[WidgetAttribute]
-		private Button removeBtn = null;
+		private Button removeRuleBtn = null;
 		
 		
 		
@@ -384,7 +384,7 @@ namespace MathTextRecognizer.LexicalRuleManager
 				rowSelected && idx < rulesStore.IterNChildren() - 1;
 			
 			editBtn.Sensitive = rowSelected;
-			removeBtn.Sensitive = rowSelected;
+			removeRuleBtn.Sensitive = rowSelected;
 		}
 
 		/// <summary>
