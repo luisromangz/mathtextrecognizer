@@ -31,9 +31,6 @@ namespace MathTextRecognizer.LexicalRuleManager
 		[WidgetAttribute]
 		private ScrolledWindow expressionsSW = null;
 		
-		[WidgetAttribute]
-		private Alignment moreInfoPlaceholder = null;
-		
 #endregion Glade widgets
 		
 		/// <summary>

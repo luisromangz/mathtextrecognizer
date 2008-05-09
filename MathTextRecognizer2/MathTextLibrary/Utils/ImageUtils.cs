@@ -44,7 +44,7 @@ namespace MathTextLibrary.Utils
 			
 			Pixbuf res = image.ScaleSimple((int)(size*scaleX),
 			                               (int)(size*scaleY), 
-			                               Gdk.InterpType.Nearest);
+			                               Gdk.InterpType.Bilinear);
 				
 			return res;
 			

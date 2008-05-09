@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 
 using MathTextLibrary.Databases;
+using MathTextLibrary.Controllers;
 
 namespace MathTextRecognizer.Stages
 {
@@ -17,6 +18,8 @@ namespace MathTextRecognizer.Stages
 	{
 		private MainRecognizerWindow mainWindow;
 		
+		protected static string widgetLabel;
+		
 		/// <summary>
 		/// <c>RecognizingStepWidget</c>'s constructor.
 		/// </summary>
@@ -27,8 +30,17 @@ namespace MathTextRecognizer.Stages
 			: base(0.5f,0.5f,1.0f,1.0f)
 		{
 			this.mainWindow = window;
-			
-			
+		}
+		
+		/// <value>
+		/// Contains the recognizing widget's label;
+		/// </value>
+		public static string WidgetLabel
+		{
+			get
+			{
+				return widgetLabel;
+			}
 		}
 
 		/// <value>
@@ -102,8 +114,30 @@ namespace MathTextRecognizer.Stages
 			return (RecognizingStageWidget)(parentNB.GetNthPage(parentNB.Page));
 		}
 		
-
 		
+		/// <summary>
+		/// Shows a message sent by the controller in the log area.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="MessageLogSentArgs"/>
+		/// </param>
+		protected void OnControllerMessageLogSent(object sender, 
+		                                        MessageLogSentArgs args)
+		{
+		    // Llamamos a través de invoke para que funcione bien.			
+			Gtk.Application.Invoke(sender, 
+			                       args,
+			                       OnControllerMessageLogSentInThread);
+		}
+		
+		private void OnControllerMessageLogSentInThread(object sender, 
+		                                                EventArgs a)
+		{		   
+		    Log(((MessageLogSentArgs)a).Message);
+		}
 		
 	}
 }

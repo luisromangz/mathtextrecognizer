@@ -86,10 +86,10 @@ namespace MathTextRecognizer
 		
 		private bool recognizementFinished;
 		
-		private OCRStageWidget ocrWidget;
-		
-		private TokenizingStageWidget  tokenizingWidget;
-		
+		private OCRStageWidget ocrWidget;		
+		private TokenizingStageWidget  tokenizingWidget;		
+		private FormulaMatchingStageWidget formulaMatchingWidget;
+			
 		private LogView logView;
 		
 		private const string title="Reconocedor de caracteres matemáticos - ";	
@@ -150,9 +150,9 @@ namespace MathTextRecognizer
 		/// Contains the lexical rules manager.
 		/// </value>
 		public LexicalRulesManagerDialog LexicalRulesManager
-		{
-			
-			get{
+		{			
+			get
+			{
 				
 				return lexicalRulesManagerDialog;
 			}
@@ -283,16 +283,20 @@ namespace MathTextRecognizer
 				recognizingStepsNB.RemovePage(0);
 			}
 			
-			ocrWidget = 
-				new OCRStageWidget(this);
-			
+			// We add the OCR widget.
+			ocrWidget = new OCRStageWidget(this);			
 			recognizingStepsNB.AppendPage(ocrWidget,
-			                              new Label("Segmentación de la imagen y "
-			                                        +"reconocimiento de caracteres"));
+			                              new Label(OCRStageWidget.WidgetLabel));
 			
+			// We add the tokenizer widget.
 			tokenizingWidget = new TokenizingStageWidget(this);
 			recognizingStepsNB.AppendPage(tokenizingWidget,
-			                              new Label("Análisis léxico"));
+			                              new Label(TokenizingStageWidget.WidgetLabel));
+			
+			
+			formulaMatchingWidget = new FormulaMatchingStageWidget(this);
+			recognizingStepsNB.AppendPage(formulaMatchingWidget,
+			                              new Label(FormulaMatchingStageWidget.WidgetLabel));
 			
 			
 			mainWindow.ShowAll();

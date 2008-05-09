@@ -55,6 +55,9 @@ namespace MathTextRecognizer.Stages
 		[WidgetAttribute]
 		private Button nextStageBtn = null;
 		
+		[WidgetAttribute]
+		private Notebook tokenizingStepsNB = null;
+		
 #endregion Glade widgets
 		
 #region Fields
@@ -96,7 +99,7 @@ namespace MathTextRecognizer.Stages
 				new EventHandler(OnControllerNodeBeingProcessed);
 			
 			controller.MessageLogSent+=
-				new MessageLogSentHandler(OnMessageLogSent);
+				new MessageLogSentHandler(OnControllerMessageLogSent);
 			
 			controller.ProcessFinished += 
 				new ProcessFinishedHandler(OnControllerProcessFinished);
@@ -105,6 +108,14 @@ namespace MathTextRecognizer.Stages
 			InitializeWidgets();
 			
 			this.ShowAll();
+		}
+		
+		/// <summary>
+		/// <c>TokenizingStageWidget</c>'s static fields initializer.
+		/// </summary>
+		static TokenizingStageWidget()
+		{
+			widgetLabel = "Análisis léxico";
 		}
 		
 #region Properties
@@ -320,26 +331,6 @@ namespace MathTextRecognizer.Stages
 				processedPath.Next();
 			}
 			
-		}
-		
-		/// <summary>
-		/// Writes a log message.
-		/// </summary>
-		/// <param name="sender">
-		/// A <see cref="System.Object"/>
-		/// </param>
-		/// <param name="MessageLogSentArgs">
-		/// A <see cref="MessageLogSentArgs"/>
-		/// </param>		
-		private void OnMessageLogSent(object sender,MessageLogSentArgs a)
-		{
-		    // Llamamos a través de invoke para que funcione bien.			
-			Application.Invoke(sender, a,OnMessageLogSentInThread);
-		}
-		
-		private void OnMessageLogSentInThread(object sender, EventArgs a)
-		{		   
-		    Log(((MessageLogSentArgs)a).Message);
 		}
 				
 		/// <summary>

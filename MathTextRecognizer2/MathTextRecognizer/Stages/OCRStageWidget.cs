@@ -120,7 +120,7 @@ namespace MathTextRecognizer.Stages
 			// Asignamos los eventos que indican que se han alcanzado hitos
 			// en el reconocimiento de un cáracter.
 			controller.MessageLogSent += 
-				new MessageLogSentHandler(OnMessageLog);
+				new MessageLogSentHandler(OnControllerMessageLogSent);
 			
 			controller.NodeBeingProcessed += 
 				new EventHandler(OnNodeBeingProcessed);
@@ -132,6 +132,15 @@ namespace MathTextRecognizer.Stages
 			    new BitmapProcessedHandler(OnBitmapProcessedByDatabase);
 			
 			InitializeWidgets();
+		}
+		
+		/// <summary>
+		/// <c>OCRStageWidget</c>'s static field initializer.
+		/// </summary>
+		static OCRStageWidget()
+		{
+			widgetLabel = 
+				"Segmentación de la imagen y reconocimiento de caracteres";
 		}
 		
 #region Properties
@@ -557,23 +566,6 @@ namespace MathTextRecognizer.Stages
 		}
 		
 		/// <summary>
-		/// Maneja el evento del controlador que sirve para enviar un mensaje a 
-		/// la interfaz.
-		/// </summary>
-		/// <param name="sender">El objeto que provoca el evento.</param>
-		/// <param name="msg">El mensaje que deseamos mostrar.</param>
-		private void OnMessageLog(object sender,MessageLogSentArgs a)
-		{
-		    // Llamamos a través de invoke para que funcione bien.			
-			Application.Invoke(sender, a,OnMessageLogInThread);
-		}
-		
-		private void OnMessageLogInThread(object sender, EventArgs a)
-		{		   
-		    Log(((MessageLogSentArgs)a).Message);
-		}
-		
-		/// <summary>
 		/// Manejo del evento provocado por el controlador cuando finaliza el
 		/// proceso de reconocimiento.
 		/// </summary>
@@ -833,8 +825,6 @@ namespace MathTextRecognizer.Stages
 			
 			return leafs;
 		}
-	
-
 		
 #endregion Metodos privados
 	}
