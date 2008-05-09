@@ -2,7 +2,7 @@
 
 using System;
 
-namespace MathTextLibrary
+namespace MathTextLibrary.Databases
 {
 	
 	

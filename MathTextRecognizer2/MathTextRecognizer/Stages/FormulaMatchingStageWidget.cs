@@ -43,17 +43,24 @@ namespace MathTextRecognizer.Stages
 			widgetLabel = "Construcción de fórmulas";
 		}
 		
-#region Non-public methods
-		
-		/// <summary>
+#region Public methods
+			/// <summary>
 		/// Set the widget to its initial state.
 		/// </summary>
 		public override void ResetState ()
 		{
 			
 		}
-
 		
+#endregion Public methods
+		
+#region Non-public methods		
+	
+		
+		protected override void NextStep (ControllerStepMode mode)
+		{
+			controller.Next(mode);
+		}
 		
 #endregion Non-public methods
 	}

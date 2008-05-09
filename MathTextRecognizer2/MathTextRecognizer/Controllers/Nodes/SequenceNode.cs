@@ -29,10 +29,11 @@ namespace MathTextRecognizer.Controllers.Nodes
 		
 		private NodeView widget;
 		
-		public SequenceNode(TokenSequence sequence)
+		public SequenceNode(TokenSequence sequence, NodeView widget)
 		{
 			this.sequence = sequence;			
-			this.sequence.Changed += new EventHandler(OnSequenceChangedAdded);	
+			this.sequence.Changed += new EventHandler(OnSequenceChanged);	
+			this.widget = widget;
 		}
 		
 #region Properties
@@ -61,6 +62,10 @@ namespace MathTextRecognizer.Controllers.Nodes
 			get
 			{
 				return sequenceLabel;
+			}
+			set
+			{
+				sequenceLabel = value;
 			}
 		}
 	
@@ -102,20 +107,7 @@ namespace MathTextRecognizer.Controllers.Nodes
 			}
 		}
 
-		/// <value>
-		/// Contains the treeviw which shows the node.
-		/// </value>
-		public NodeView Widget
-		{
-			get 
-			{
-				return widget;
-			}
-			set 
-			{
-				widget = value;
-			}
-		}
+			
 		
 #endregion Properties
 		
@@ -127,12 +119,12 @@ namespace MathTextRecognizer.Controllers.Nodes
 		/// <param name="childNode">
 		/// A <see cref="SequenceNode"/>
 		/// </param>
-		public void AddSequenceChild(SequenceNode childNode)
+		public void AddChildSequence(SequenceNode childNode)
 		{
-			AddSequenceChildArgs args = new AddSequenceChildArgs(childNode);
+			AddChildSequenceArgs args = new AddChildSequenceArgs(childNode);
 			Application.Invoke(this, 
 			                   args,
-			                   AddSequenceChildThread);
+			                   AddChildSequenceInThread);
 		}
 		
 		
@@ -167,47 +159,41 @@ namespace MathTextRecognizer.Controllers.Nodes
 		/// <param name="args">
 		/// A <see cref="EventArgs"/>
 		/// </param>
-		private void OnSequenceChangedAdded(object sender, EventArgs args)
+		private void OnSequenceChanged(object sender, EventArgs args)
 		{
-			Application.Invoke(OnSequenceItemAddedInThread);
+			Application.Invoke(OnSequenceChangedInThread);
 		}
 		
-		private void OnSequenceItemAddedInThread(object sender, EventArgs args)
+		private void OnSequenceChangedInThread(object sender, EventArgs args)
 		{
-			List<string> res = new List<string>();
 			
-			foreach (Token t in sequence) 
-			{
-				res.Add(String.Format("«{0}»",t.Text));
-			}
+			SequenceText = sequence.ToString();
 			
-			sequenceLabel =  String.Join(", ", res.ToArray());
-			
-			if(sequenceLabel =="")
+			if(SequenceText =="")
 			{
 				// If we have removed the label, we warn the user.
-				sequenceLabel = "Error al reconocer";
+				SequenceText = "Error al reconocer";
 			}
+			
+			// This shouldn't be required.
+			widget.Columns[1].QueueResize();
+			widget.QueueDraw();
+			widget.ColumnsAutosize();			
 		}
 
 		
-		private void AddSequenceChildThread(object sender, 
-		                                   EventArgs args)
+		private void AddChildSequenceInThread(object sender, EventArgs args)
 		{
-			AddSequenceChildArgs a = args as AddSequenceChildArgs;
+			AddChildSequenceArgs a = args as AddChildSequenceArgs;
 			
 			a.ChildNode.NodeName = 
 				String.Format("{0}.{1}",this.NodeName,this.ChildCount+1);
 			
 			this.AddChild(a.ChildNode);
 			
-			// We set the tree view of the child node.
-			a.ChildNode.Widget = this.widget;
-			
-			// We expand the node (the check shouldn't be neccessary but
-			// fixes a nullreference exception :S
-			if(widget!=null)
-				widget.ExpandAll();
+			// We expand the node			
+			widget.ExpandAll();
+			widget.ColumnsAutosize();
 		}
 		
 		
@@ -254,12 +240,10 @@ namespace MathTextRecognizer.Controllers.Nodes
 		
 		private void SelectInThread(object sender, EventArgs args)
 		{
-			// Sometimes it seems that the widget is null...
-			if(this.widget !=null)
-				widget.NodeSelection.SelectNode(this);
 			
+			widget.NodeSelection.SelectNode(this);			
 			TreePath path = widget.Selection.GetSelectedRows()[0];
-			widget.ScrollToCell(path,widget.Columns[0],true,1,0);			
+			widget.ScrollToCell(path,widget.Columns[0],true,1,0);
 		}
 	
 		
@@ -270,10 +254,10 @@ namespace MathTextRecognizer.Controllers.Nodes
 	/// Implements a helper class so we can pass the child node to the
 	/// delegate adding childs in the application's thread.
 	/// </summary>
-	class AddSequenceChildArgs : EventArgs
+	class AddChildSequenceArgs : EventArgs
 	{
 		private SequenceNode childNode;
-		public AddSequenceChildArgs(SequenceNode childNode)
+		public AddChildSequenceArgs(SequenceNode childNode)
 		{
 			this.childNode= childNode;
 		}
