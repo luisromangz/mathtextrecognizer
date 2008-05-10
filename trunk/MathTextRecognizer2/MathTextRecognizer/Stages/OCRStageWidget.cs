@@ -798,6 +798,11 @@ namespace MathTextRecognizer.Stages
 			
 		}
 		
+		public override void Abort ()
+		{
+			controller.TryAbort();
+		}
+		
 		/// <summary>
 		/// Retrieves the leaf nodes of a given node.
 		/// </summary>
@@ -825,6 +830,9 @@ namespace MathTextRecognizer.Stages
 			
 			return leafs;
 		}
+		
+			
+		
 		
 #endregion Metodos privados
 	}

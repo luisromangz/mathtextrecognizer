@@ -30,6 +30,10 @@ namespace MathTextRecognizer.Controllers
 		
 		public event SequenceAddedHandler SequenceAdded;
 		
+		public event TokenCheckedHandler TokenChecked;
+		
+		public event EventHandler StepFailed; 
+		
 		
 		/// <summary>
 		/// <c>TokenizingController</c>'s constructor.
@@ -108,55 +112,76 @@ namespace MathTextRecognizer.Controllers
 		private List<SequenceNode> GetTokenSequences()
 		{
 			List<SequenceNode> tokenSequences = new List<SequenceNode>();
-			TokenSequence sequence = new TokenSequence();
-			// We add a first sequence to the list.
-			SequenceNode node = new SequenceNode(sequence, view);
-			tokenSequences.Add(node);
-			MessageLogSentInvoker("===== Secuencia añadida =====");
-			SequenceAddedInvoker(node);			
-	
-			
-			/// We add the first token to the first sequence.
-			Token lastToken = tokens[0];
-			sequence.Append(lastToken);
-			
-			MessageLogSentInvoker("Símbolo «{0}» añadido a la secuencia", 
-				                  lastToken.Text);
-			tokens.RemoveAt(0);
-			
+		
+			SequenceNode node = null;
+			Token lastToken = null;
+			Token currentToken = null;
 			// All the tokens must be in one sequence.
 			while(this.tokens.Count > 0)
 			{	
-				NodeBeingProcessedInvoker();
-				SuspendByNode();
+				TokenSequence foundSequence = null;
 				
-				Token firstToken = tokens[0];
-				if(!firstToken.CloseFollows(lastToken))
+				currentToken = tokens[0];
+				
+				NodeBeingProcessedInvoker();					
+				
+				if(tokenSequences.Count ==0)
+					TokenCheckedInvoker(null, currentToken);
+				
+				foreach (SequenceNode storedNode in tokenSequences) 
+				{					
+					// We search the stored sequences so we may find one that
+					// has the same baseline as the 
+					storedNode.Select();
+					
+					this.MessageLogSentInvoker("Comprobando si «{0}» puede formar parte de la secuencia {1}",
+					                           currentToken.Text,
+					                           storedNode.NodeName);
+					
+					lastToken = storedNode.Sequence.Last;
+					
+					TokenCheckedInvoker(lastToken, currentToken);
+					if(tokenSequences.Count>1)
+						SuspendByStep();
+					
+					if(currentToken.CloseFollows(lastToken))
+					{
+						
+						foundSequence = storedNode.Sequence;
+						break;
+					}
+				}
+				
+				
+				
+				if(foundSequence == null)
 				{
 					// If the symbols aren't contiguous, a new sequence has
 					// commenced.
-					sequence = new TokenSequence();	
-					node = new SequenceNode(sequence, view);
-					
+					foundSequence = new TokenSequence();	
+					node = new SequenceNode(foundSequence, view);
 					tokenSequences.Add(node);
+					node.NodeName = tokenSequences.Count.ToString();
 					SequenceAddedInvoker(node);
 					
-					MessageLogSentInvoker("===== Secuencia añadida =====");
+					MessageLogSentInvoker("===== Secuencia {0} añadida =====", 
+					                      node.NodeName);
 				}
+				
+				
 				
 				// We add the token to the current sequence, and remove it
 				// from the inital token list.
-				sequence.Append(firstToken);
-				MessageLogSentInvoker("Símbolo «{0}» añadido a la secuencia", 
-				                      firstToken.Text);			
+				foundSequence.Append(currentToken);
+				MessageLogSentInvoker("Símbolo «{0}» añadido a la secuencia {1}", 
+				                      currentToken.Text,
+				                      node.NodeName);	
+				
+				StepDoneInvoker();				
+				SuspendByNode();
 				
 				
 				tokens.RemoveAt(0);
-				
-				// We update the token pointer.
-				lastToken = firstToken;
-				
-				
 			}
 			
 			return tokenSequences;
@@ -171,6 +196,7 @@ namespace MathTextRecognizer.Controllers
 		/// </param>
 		private void MatchTokens(SequenceNode node)
 		{			
+			
 			TokenSequence discarded = new TokenSequence();
 			
 			TokenSequence accepted = new TokenSequence();
@@ -187,6 +213,7 @@ namespace MathTextRecognizer.Controllers
 			
 			node.Select();
 			NodeBeingProcessedInvoker();
+			SuspendByNode();
 			
 			bool found = false;
 			Token foundToken = null;		
@@ -255,6 +282,24 @@ namespace MathTextRecognizer.Controllers
 		{
 			if(SequenceAdded !=null)
 				SequenceAdded(this, new SequenceAddedArgs(sequence));
+		}
+		
+		private void TokenCheckedInvoker(Token lastToken, Token currentToken)
+		{
+			if(TokenChecked !=null)
+			{
+				TokenChecked(this, 
+				             new TokenCheckedArgs(lastToken, currentToken));
+			}
+				
+		}
+		
+		private void StepFailedInvoker()
+		{
+			if(StepFailed!=null)
+			{
+				StepFailed(this, EventArgs.Empty);
+			}
 		}
 		
 #endregion Event invokers

@@ -149,6 +149,8 @@ namespace MathTextRecognizer
 			}
 		}
 		
+		
+		
 		/// <value>
 		/// Contains the lexical rules manager.
 		/// </value>
@@ -242,6 +244,8 @@ namespace MathTextRecognizer
 				return formulaMatchingWidget;
 			}
 		}
+		
+		
 		
 #endregion Propiedades
 		
@@ -482,6 +486,9 @@ namespace MathTextRecognizer
 		/// </summary>
 		private void OnExit()
 		{
+			ocrWidget.Abort();
+			tokenizingWidget.Abort();
+			formulaMatchingWidget.Abort();
 			Application.Quit();			
 		}	
 		

@@ -148,5 +148,10 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		protected abstract void NextStep(ControllerStepMode mode);
 		
+		/// <summary>
+		/// Abort this widget's controller thread.
+		/// </summary>
+		public abstract void Abort();
+		
 	}
 }

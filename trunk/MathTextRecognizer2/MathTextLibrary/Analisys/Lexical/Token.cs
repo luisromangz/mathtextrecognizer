@@ -313,7 +313,7 @@ namespace MathTextLibrary.Analisys.Lexical
 			
 			
 			int horizontalDistance = this.x - (previous.x+ previous.Width);
-			if(horizontalDistance > (this.Width + previous.Width)/2
+			if(horizontalDistance > (this.Width + previous.Width)/4
 			   || horizontalDistance <0)
 			{
 				return false;
