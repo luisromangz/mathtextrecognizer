@@ -107,6 +107,18 @@ namespace MathTextRecognizer.LexicalRuleManager
 				}
 			}
 		}
+		
+		/// <value>
+		/// Contains the rule view's model.
+		/// </value>
+		public ListStore RulesStore
+		{
+			
+			get
+			{
+				return rulesStore;
+			}
+		}
 #endregion Properties
 		
 #region Public methods

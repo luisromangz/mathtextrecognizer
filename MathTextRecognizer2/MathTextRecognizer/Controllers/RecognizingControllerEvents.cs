@@ -86,4 +86,46 @@ namespace MathTextRecognizer.Controllers
 			}
 		}
 	}
+	
+	public delegate void TokenCheckedHandler(object sender, 
+	                                         TokenCheckedArgs args);
+	
+	/// <summary>
+	/// Auxiliary class to be used as argument of the <c>TokenChecked</c> event.
+	/// </summary>
+	public class TokenCheckedArgs : EventArgs
+	{
+		private Token lastToken;
+		private Token currentToken;
+		
+		
+		
+		public TokenCheckedArgs (Token lastToken, Token currentToken)
+			: base ()
+		{
+			this.lastToken = lastToken;
+			this.currentToken= currentToken;
+		}
+		
+		/// <value>
+		/// Contains the last token in the sequence the current token is being
+		/// checked with.
+		/// </value>
+		public Token LastToken 
+		{
+			get {
+				return lastToken;
+			}
+		}
+
+		/// <value>
+		/// Contains the current event being processed.
+		/// </value>
+		public Token CurrentToken 
+		{
+			get {
+				return currentToken;
+			}
+		}
+	}
 }

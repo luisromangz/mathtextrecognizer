@@ -52,6 +52,13 @@ namespace MathTextRecognizer.Stages
 			
 		}
 		
+			
+		public override void Abort ()
+		{
+			controller.TryAbort();
+		}
+		
+		
 #endregion Public methods
 		
 #region Non-public methods		
@@ -61,7 +68,7 @@ namespace MathTextRecognizer.Stages
 		{
 			controller.Next(mode);
 		}
-		
+	
 #endregion Non-public methods
 	}
 }

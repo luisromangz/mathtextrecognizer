@@ -31,6 +31,8 @@ namespace MathTextLibrary.Controllers
 		
 		public event EventHandler NodeBeingProcessed;
 		
+		public event EventHandler StepDone;
+		
 #endregion Events
 		
 #region Attributes
@@ -83,6 +85,15 @@ namespace MathTextLibrary.Controllers
 			{
 				processThread.Resume();				
 			}
+		}
+		
+		/// <summary>
+		/// Aborts the processing thread.
+		/// </summary>
+		public void TryAbort()
+		{
+			if(processThread!=null)
+				processThread.Abort();
 		}
 #endregion Public methods
 		
@@ -152,14 +163,25 @@ namespace MathTextLibrary.Controllers
 			}
 		}
 		
-		
-			
-		
+		/// <summary>
+		/// Invokes the <c>NodeBeingProcessed</c> event.
+		/// </summary> 
 		protected void NodeBeingProcessedInvoker()
 		{
 			if(NodeBeingProcessed !=null)
 				NodeBeingProcessed(this, EventArgs.Empty);
 		}
+		
+		
+		/// <summary>
+		/// Invokes the <c>StepDone</c> event.
+		/// </summary>
+		protected void StepDoneInvoker()
+		{
+			if(StepDone!=null)
+				StepDone(this, EventArgs.Empty);
+		}
+		
 #endregion Protected methods
 	}
 }

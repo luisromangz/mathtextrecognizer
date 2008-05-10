@@ -55,6 +55,20 @@ namespace MathTextLibrary.Analisys.Lexical
 			}
 		}
 		
+		/// <value>
+		/// Contains the last token of the sequence.
+		/// </value>
+		public Token Last
+		{
+			get
+			{
+				if(this.Count>0)
+					return this[Count-1];
+				else
+					return null;
+			}
+		}
+		
 #endregion Properties
 		
 #region Public methods
