@@ -78,12 +78,14 @@ namespace MathTextLibrary.Analisys.Lexical
 		/// </summary>
 		/// <param name="tokens">
 		/// The tokens we try to group.
+		/// </param>		
+		/// <param name="foundToken">
+		/// The token result of joining the sequence, has a meaning or not.
 		/// </param>
 		/// <returns>
-		/// A new token which groups the given tokens, or null when the matching
-		/// process wasn't successful.
+		/// If a valid token was found.
 		/// </returns>
-		public Token Match(TokenSequence tokens)
+		public bool Match(TokenSequence tokens, out Token foundToken)
 		{
 			// We form the expression to be matched.
 			string text = "";
@@ -128,15 +130,9 @@ namespace MathTextLibrary.Analisys.Lexical
 				}
 			}
 			
-			if(!found)
-			{
-				return null;				
-			}
+			foundToken = Token.Join(tokens, this.ruleName);
 			
-			Token newToken = Token.Join(tokens, this.ruleName);
-			
-			return newToken;
-			
+			return found;
 		}
 		
 		

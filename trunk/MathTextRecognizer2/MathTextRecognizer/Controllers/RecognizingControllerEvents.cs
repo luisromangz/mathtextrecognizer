@@ -128,4 +128,81 @@ namespace MathTextRecognizer.Controllers
 			}
 		}
 	}
+	
+	/// <summary>
+	/// Delegate for the <see cref="TokenzingController"/>'s 
+	/// SequenceBeingMatched event.
+	/// </summary>
+	/// <param name="sender">
+	/// A <see cref="System.Object"/>
+	/// </param>
+	/// <param name="a">
+	/// A <see cref="SequenceBeingMatchedArgs"/>
+	/// </param>
+	public delegate void SequenceBeingMatchedHandler(object sender,
+	                                                      SequenceBeingMatchedArgs a);
+	
+	
+	/// <summary>
+	/// Auxiliary class used to pass the arguments of
+	/// <see cref="SequenceBeingMatchedHandler"/> type.
+	/// </summary>
+	public class SequenceBeingMatchedArgs : EventArgs
+	{
+		private Token joinedToken;
+		private LexicalRule matchingRule;
+		private bool found;
+		
+		/// <summary>
+		/// <see cref="SequenceBeingMatcchedArgs"/>'s contructor.
+		/// </summary>
+		/// <param name="joinedToken">
+		/// A <see cref="Token"/>
+		/// </param>
+		/// <param name="matchingRule">
+		/// A <see cref="LexicalRule"/>
+		/// </param>
+		/// <param name="found">
+		/// A <see cref="System.Boolean"/>
+		/// </param>
+		public SequenceBeingMatchedArgs(Token joinedToken, 
+		                                LexicalRule matchingRule,
+		                                bool found)
+		{
+			this.joinedToken = joinedToken;
+			this.matchingRule = matchingRule;
+			this.found = found;
+		}
+		
+		/// <value>
+		/// The resulting token of joining the matched sequence's elements.
+		/// </value>
+		public Token JoinedToken
+		{
+			get
+			{
+				return joinedToken;
+			}
+		}
+		
+		/// <value>
+		/// Contains the rule being used to match the token.
+		/// </value>
+		public LexicalRule MatchingRule
+		{
+			get
+			{
+				return matchingRule;
+			}
+		}
+
+		/// <value>
+		/// <c>true</c> if the found token is a valid one.
+		/// </value>
+		public bool Found {
+			get {
+				return found;
+			}
+		}
+	}
 }

@@ -123,13 +123,13 @@ namespace MathTextRecognizer.Stages
 				new MessageLogSentHandler(OnControllerMessageLogSent);
 			
 			controller.NodeBeingProcessed += 
-				new EventHandler(OnNodeBeingProcessed);
+				new NodeBeingProcessedHandler(OnControllerNodeBeingProcessed);
 			    		
 			controller.ProcessFinished +=
-			    new ProcessFinishedHandler(OnRecognizeProcessFinished);
+			    new ProcessFinishedHandler(OnControllerProcessFinished);
 			    
 			controller.BitmapProcessedByDatabase +=
-			    new BitmapProcessedHandler(OnBitmapProcessedByDatabase);
+			    new BitmapProcessedHandler(OnControllerBitmapProcessedByDatabase);
 			
 			InitializeWidgets();
 		}
@@ -298,7 +298,7 @@ namespace MathTextRecognizer.Stages
 		/// </summary>
 		/// <param name="sender">El objeto que provoca el evento.</param>
 		/// <param name="arg">El argumento del evento.</param>
-		private void OnBitmapProcessedByDatabase(object sender, 
+		private void OnControllerBitmapProcessedByDatabase(object sender, 
 		                                         BitmapProcessedArgs arg)
 		{
 			Gtk.Application.Invoke(sender, arg, OnBitmapProcessedByDatabaseInThread);
@@ -455,7 +455,8 @@ namespace MathTextRecognizer.Stages
 		/// <param name="args">
 		/// A <see cref="EventArgs"/>
 		/// </param>
-		private void OnNodeBeingProcessed(object sender, EventArgs args)
+		private void OnControllerNodeBeingProcessed(object sender, 
+		                                            NodeBeingProcessedArgs args)
 		{
 			Application.Invoke(OnNodeBeingProcessedInThread);
 		}
@@ -571,7 +572,7 @@ namespace MathTextRecognizer.Stages
 		/// </summary>
 		/// <param name="sender">El objeto que provoca el evento.</param>
 		/// <param name="arg">Los argumentos del evento.</param>
-		private void OnRecognizeProcessFinished(object sender, EventArgs arg)
+		private void OnControllerProcessFinished(object sender, EventArgs arg)
 		{			
 		    // Llamamos a través de invoke para que funcione.
 			Gtk.Application.Invoke(OnRecognizeProcessFinishedInThread);			

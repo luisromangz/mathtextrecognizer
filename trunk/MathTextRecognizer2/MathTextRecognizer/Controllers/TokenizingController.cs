@@ -32,7 +32,9 @@ namespace MathTextRecognizer.Controllers
 		
 		public event TokenCheckedHandler TokenChecked;
 		
-		public event EventHandler StepFailed; 
+		public event EventHandler MatchingFailed; 
+		
+		public event SequenceBeingMatchedHandler SequenceBeingMatched;
 		
 		
 		/// <summary>
@@ -89,11 +91,15 @@ namespace MathTextRecognizer.Controllers
 			
 			Suspend();
 			
+			MessageLogSentInvoker("========== Secuenciación ==========");
+			
 			List<SequenceNode> tokenSequences = GetTokenSequences();
 			
 			ProcessFinishedInvoker();
 			
 			Suspend();
+			
+			MessageLogSentInvoker("========== Tokenización de secuencias ==========");
 			
 			foreach (SequenceNode sequence in tokenSequences) 
 			{
@@ -123,7 +129,7 @@ namespace MathTextRecognizer.Controllers
 				
 				currentToken = tokens[0];
 				
-				NodeBeingProcessedInvoker();					
+				NodeBeingProcessedInvoker(null);					
 				
 				if(tokenSequences.Count ==0)
 					TokenCheckedInvoker(null, currentToken);
@@ -212,51 +218,76 @@ namespace MathTextRecognizer.Controllers
 			}
 			
 			node.Select();
-			NodeBeingProcessedInvoker();
-			SuspendByNode();
+			NodeBeingProcessedInvoker(node);
+			SuspendByStep();
 			
 			bool found = false;
 			Token foundToken = null;		
+			
+			bool discardedNodeAdded = false;
+			
+			MessageLogSentInvoker("===== Tratando la secuencia {0} =====", 
+			                      node.NodeName);
+			
 			while(accepted.Count > 0 && !found)
 			{
-						
 				foreach (LexicalRule rule in lexicalRules) 
 				{
-					foundToken = rule.Match(accepted);
-					if(foundToken!=null)
+					found = rule.Match(accepted, out foundToken);
+					
+					MessageLogSentInvoker("¿La regla «{0}» acepta la secuencia «{1}»?: {2}", 
+					                      rule.Name,
+					                      accepted.ToString(),
+					                      found?"Sí":"No");
+					SequenceBeingMatchedInvoker(foundToken, rule, found);
+					SuspendByStep();
+					
+					if(found)
 					{
 						// We search no more.
 						break;
-					}
+					}				
 				}
 				
 				// We check if a token was found
-				if(foundToken == null)
+				if(!found)
 				{
 					// We remove the token from the input sequence and add it
 					// at the beggining of the discarded set.
 					int lastIndex = accepted.Count -1;
-					if(node.ChildCount==0)
+					if(!discardedNodeAdded)
 					{
 						// If we haven't done so, we add the discarded sequence.
 						node.AddChildSequence(discardedNode);
+						discardedNodeAdded = true;
 					}
+					
+					this.MatchingFailedInvoker();
+					
+					MessageLogSentInvoker("Se elimina el último símbolo de la secuencia {0} para seguir probando.",
+					                      accepted.ToString());
 						
 					discarded.Prepend(accepted[lastIndex]);
 					
 					accepted.RemoveAt(lastIndex);
+					
+					
 				}
 				else
 				{
 					// We found a token, so we stop searching and add
 					// the token to the result.
-					found = true;
 					acceptedNode.FoundToken = foundToken;
+					
+					
 				}
 			}
 			
+		
+			
 			if(found && discarded.Count > 0)
 			{
+				MessageLogSentInvoker("Se tratará la secuencia de símbolos descartados.");
 				// We follow the recursive path.
 				MatchTokens(discardedNode);
 			}
@@ -271,7 +302,13 @@ namespace MathTextRecognizer.Controllers
 			{
 				// If nothing was found, we remove the children.
 				node.RemoveSequenceChildren();
+				
+				MessageLogSentInvoker("No se pudo reconocer la secuencia {0}.",
+					                   node.Sequence.ToString());
 			}
+			
+			StepDoneInvoker();
+			SuspendByNode();
 		}
 
 #endregion Non-public methods
@@ -294,12 +331,39 @@ namespace MathTextRecognizer.Controllers
 				
 		}
 		
-		private void StepFailedInvoker()
+		/// <summary>
+		/// Launches the <see cref="SequenceBeingMatched"/> event.
+		/// </summary>
+		/// <param name="joinedToken">
+		/// A <see cref="Token"/>
+		/// </param>
+		/// <param name="matcherRule">
+		/// A <see cref="LexicalRule"/>
+		/// </param>
+		/// <param name="found">
+		/// If the token is a valid token.
+		/// </param>
+		protected void SequenceBeingMatchedInvoker(Token joinedToken,
+		                                         LexicalRule matcherRule,
+		                                         bool found)
 		{
-			if(StepFailed!=null)
+			if(this.SequenceBeingMatched !=null)
 			{
-				StepFailed(this, EventArgs.Empty);
+				SequenceBeingMatchedArgs args = 
+					new SequenceBeingMatchedArgs(joinedToken, matcherRule, found);
+				
+				SequenceBeingMatched(this, args);
 			}
+		}
+		
+		/// <summary>
+		/// Launches the MatchingFailed event.
+		/// </summary>
+		protected void MatchingFailedInvoker()
+		{
+			if(MatchingFailed!=null)
+				MatchingFailed(this, EventArgs.Empty);
+			
 		}
 		
 #endregion Event invokers

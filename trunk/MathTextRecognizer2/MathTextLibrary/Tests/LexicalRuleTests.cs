@@ -67,7 +67,11 @@ namespace MathTextLibrary.Tests
 				tokens.Append(new Token(c.ToString(), 0,0, new FloatBitmap(2,2)));
 			}
 			
-			return rule.Match(tokens);
+			Token res;
+			if(!rule.Match(tokens, out res))
+				return null;
+			
+			return res;
 		}
 	}
 }

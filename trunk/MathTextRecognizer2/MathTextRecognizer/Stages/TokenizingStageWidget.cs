@@ -98,6 +98,9 @@ namespace MathTextRecognizer.Stages
 		
 		private ImageArea baselineImageArea;
 		private ImageArea sequenceMatchingImageArea;
+		
+		
+		private Gdk.Pixbuf sequenceNodeImage;
 	
 		
 #endregion Fields
@@ -125,7 +128,7 @@ namespace MathTextRecognizer.Stages
 				new TokenCheckedHandler(OnControllerTokenChecked);
 			
 			controller.NodeBeingProcessed+=
-				new EventHandler(OnControllerNodeBeingProcessed);
+				new NodeBeingProcessedHandler(OnControllerNodeBeingProcessed);
 			
 			controller.StepDone += OnControllerStepDone;
 			
@@ -134,7 +137,10 @@ namespace MathTextRecognizer.Stages
 			
 			controller.ProcessFinished += 
 				new ProcessFinishedHandler(OnControllerProcessFinished);
+			controller.SequenceBeingMatched +=
+				new SequenceBeingMatchedHandler(OnControllerSequenceBeingMatched);
 			
+			controller.MatchingFailed += OnControllerMatchingFailed;
 			
 			InitializeWidgets();
 			
@@ -174,6 +180,9 @@ namespace MathTextRecognizer.Stages
 			nextStageBtn.Sensitive = false;
 			
 			tokenizingNextButtonsAlign.Sensitive = true;
+			
+			matchingResultLbl.Markup = "-";
+			sequencingStepResultLbl.Markup="-";
 			
 			baselineImageArea.Image = null;
 			sequenceMatchingImageArea.Image =null;
@@ -348,6 +357,29 @@ namespace MathTextRecognizer.Stages
 		}
 		
 		/// <summary>
+		/// Writes a message saying the matching process failed.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="a">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnControllerMatchingFailed(object sender, EventArgs a)
+		{
+			Application.Invoke(OnControllerMatchingFailedInThread);
+		}
+		
+		private void OnControllerMatchingFailedInThread(object sender, EventArgs a)
+		{
+			matchingResultLbl.Markup =
+				"<b>La secuencia no pudo ser asociada a ningún token</b>";
+			
+			if(controller.StepMode != ControllerStepMode.UntilEnd)
+				tokenizingNextButtonsAlign.Sensitive = true;
+		}
+		
+		/// <summary>
 		/// If sequencing, selects the next symbol of the list.
 		/// </summary>
 		/// <param name="sender">
@@ -357,24 +389,55 @@ namespace MathTextRecognizer.Stages
 		/// A <see cref="EventArgas"/>
 		/// </param>
 		private void OnControllerNodeBeingProcessed(object sender, 
-		                                            EventArgs args)
+		                                            NodeBeingProcessedArgs args)
 		{
-			Application.Invoke(OnControllerNodeBeingProcessedInThread);
+			Application.Invoke(sender, args, OnControllerNodeBeingProcessedInThread);
 		}
 		
 		private void OnControllerNodeBeingProcessedInThread(object sender,
 		                                                    EventArgs args)
 		{
+			NodeBeingProcessedArgs a =  args as NodeBeingProcessedArgs;
+			
 			if(!sequencingFinished)
 			{
-				// We are sequencing.				
-				
+				// We are sequencing.	
 				
 				// Selects the new first.			
 				symbolsIV.SelectPath(processedPath);
-				symbolsIV.ScrollToPath(processedPath, 0,0);
+				symbolsIV.ScrollToPath(processedPath,1,0.5f);
 				processedPath.Next();
 				
+			}
+			else
+			{
+				// We are matching
+				SequenceNode node = (SequenceNode) a.Node;
+				
+				Token t = Token.Join(node.Sequence, "");
+				
+				sequenceNodeImage = t.Image.CreatePixbuf();
+				
+				sequenceMatchingImageArea.Image = sequenceNodeImage.Copy();
+				
+				sequenceNodeImage = 
+					sequenceNodeImage.CompositeColorSimple(sequenceNodeImage.Width,
+					                                    sequenceNodeImage.Height,
+					                                    Gdk.InterpType.Nearest, 
+					                                    100, 1,  
+					                                    0xAAAAAA,0xAAAAAA);
+				
+				matchingResultLbl.Markup = "-";
+				
+				tokenizingRulesTV.Selection.UnselectAll();
+				
+				tokenizingRulesTV.ScrollToPoint(0,0);
+				
+				
+				if(controller.StepMode == ControllerStepMode.StepByStep)
+				{
+					tokenizingNextButtonsAlign.Sensitive = true;
+				}
 			}
 		}
 	
@@ -415,6 +478,87 @@ namespace MathTextRecognizer.Stages
 		
 			
 			sequencesNV.ColumnsAutosize();
+		}
+		
+		/// <summary>
+		/// Handles the controller's SequenceBeingMatched event.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="quenceBeingMatchedArgs">
+		/// A <see cref="Se"/>
+		/// </param>
+		private void OnControllerSequenceBeingMatched(object sender, 
+		                                              SequenceBeingMatchedArgs args)
+		{
+			Application.Invoke(sender,
+			                   args,
+			                   OnControllerSequenceBeingMatchedInThread);
+		}
+		
+		private void OnControllerSequenceBeingMatchedInThread(object sender,
+		                                                      EventArgs args)
+		{
+			
+			
+			SequenceBeingMatchedArgs a =  args as SequenceBeingMatchedArgs;
+			
+			
+			Gdk.Pixbuf sequenceImage = a.JoinedToken.Image.CreatePixbuf();
+			
+			Gdk.Pixbuf drawnImage = sequenceNodeImage.Copy();
+			
+			sequenceImage.CopyArea(0, 0, 
+			                       sequenceImage.Width, sequenceImage.Height,
+			                       drawnImage,
+			                       0,0);
+			
+			sequenceMatchingImageArea.Image = drawnImage;
+			
+			TreeIter iter;
+			tokenizingRulesTV.Model.GetIterFirst(out iter);
+			
+			TreePath path = tokenizingRulesTV.Model.GetPath(iter);
+			
+			tokenizingRulesTV.Selection.UnselectAll();
+				
+			string ruleName;
+			do
+			{
+				ruleName = tokenizingRulesTV.Model.GetValue(iter,0) as string;
+				
+				if(ruleName == a.MatchingRule.Name)
+				{
+					tokenizingRulesTV.Selection.SelectPath(path);
+					tokenizingRulesTV.ScrollToCell(path,
+					                               tokenizingRulesTV.Columns[0],
+					                               true,
+					                               0.5f, 0);
+					break;
+				}
+				
+				path.Next();
+					
+				
+			}while(tokenizingRulesTV.Model.GetIter(out iter, path));
+			
+			if(a.Found)
+			{
+				matchingResultLbl.Markup=
+					String.Format("<b>Sí, se le asigna el token «{0}» a la secuencia actual</b>",
+					              a.JoinedToken.Type);
+			}
+			else
+			{
+				matchingResultLbl.Markup=
+					String.Format("<b>No, la regla actual no concuerda con la secuencia</b>");
+			}
+			
+			// Activate the buttons if necessary.
+			if(controller.StepMode == ControllerStepMode.StepByStep)
+				tokenizingNextButtonsAlign.Sensitive = true;
+			
 		}
 		
 		/// <summary>
@@ -574,25 +718,13 @@ namespace MathTextRecognizer.Stages
 				lastToken = symbolsModel.GetValue(first, 2) as Token;
 				
 				processedPath = symbolsModel.GetPath(first);
-				
 					
 				symbolsIV.SelectPath(processedPath);
-				symbolsIV.ScrollToPath(processedPath, 0, 0);
-				
-				
-			}
-			else
-			{
-				tokenizingStepsNB.Page = 1;
-				
-				// We retrieve the rules.
-				controller.SetLexicalRules(MainWindow.LexicalRulesManager.LexicalRules);
-				
-				this.tokenizingRulesTV.Model = 
-					MainWindow.LexicalRulesManager.RulesStore;
+				symbolsIV.ScrollToPath(processedPath, 1, 0.5f);
 			}
 			
 			tokenizingButtonsNB.Page = 1;
+			tokenizingNextButtonsAlign.Sensitive = true;
 			controller.Next(ControllerStepMode.StepByStep);		
 		}
 			
@@ -607,20 +739,51 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		private void OnControllerProcessFinished(object sender, EventArgs a)
 		{
+			Application.Invoke(OnControllerProcessFinishedInThread);
+			
+		}
+		
+		private void OnControllerProcessFinishedInThread(object sender,
+		                                                 EventArgs args)
+		{
 			// We have finished.
 			nextStageBtn.Sensitive = sequencingFinished; 
 			processBtn.Sensitive = !sequencingFinished;
 			
 			// The state has changed.
 			if(!sequencingFinished)
+			{
 				sequencingFinished = true;
+				OkDialog.Show(this.MainWindow.Window,
+				              MessageType.Info,
+				              "El proceso de secuenciación de los símbolos a terminado, puede procederse a extraer los tokens de las secuencias.");
+			}
+				
+			else
+			{
+				OkDialog.Show(this.MainWindow.Window,
+				              MessageType.Info,
+				              "El proceso de análisis léxico ha terminado, ahora puedes revisar el resultado.");
+			}
+			
 			
 			if(sequencingFinished)
-				processBtnLbl.Text = "Extraer tokens";
+			{
+				// We retrieve the rules.
+				controller.SetLexicalRules(MainWindow.LexicalRulesManager.LexicalRules);
+				
+				this.tokenizingRulesTV.Model = 
+					MainWindow.LexicalRulesManager.RulesStore;
+				
+				tokenizingStepsNB.Page = 1;				
+				processBtnLbl.Text = "_Extraer tokens";
+				
+				
+			}
+			
 			
 			// We change to the first page
 			tokenizingButtonsNB.Page = 0;		
-			
 		}
 		
 		/// <summary>

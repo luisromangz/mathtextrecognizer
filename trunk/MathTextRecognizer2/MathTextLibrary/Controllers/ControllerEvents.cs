@@ -1,6 +1,9 @@
 // created on 02/01/2006 at 13:20
 using System;
+
 using System.Collections.Generic;
+
+using Gtk;
 
 using MathTextLibrary.Bitmap;
 
@@ -51,6 +54,27 @@ namespace MathTextLibrary.Controllers
 	            return this.message;
 	        }
 	    }
+	}
+	
+	public delegate void NodeBeingProcessedHandler(object sender,
+	                                               NodeBeingProcessedArgs args);
+	
+	public class NodeBeingProcessedArgs : EventArgs
+	{
+		private ITreeNode node;
+		
+		public NodeBeingProcessedArgs(ITreeNode node)
+		{
+			this.node = node;
+		}
+		
+		public ITreeNode Node
+		{
+			get
+			{
+				return node;
+			}
+		}
 	}
 	
 	
