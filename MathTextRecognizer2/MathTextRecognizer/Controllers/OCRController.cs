@@ -200,7 +200,7 @@ namespace MathTextRecognizer.Controllers
 		{			
 			// Seleccionamos el nodo.
 			
-			NodeBeingProcessedInvoker();
+			NodeBeingProcessedInvoker(node);
 			SuspendByNode();
 		
 			node.Select();

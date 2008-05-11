@@ -29,7 +29,7 @@ namespace MathTextLibrary.Controllers
 		/// </summary>
 		public event ProcessFinishedHandler ProcessFinished;
 		
-		public event EventHandler NodeBeingProcessed;
+		public event NodeBeingProcessedHandler NodeBeingProcessed;
 		
 		public event EventHandler StepDone;
 		
@@ -166,10 +166,10 @@ namespace MathTextLibrary.Controllers
 		/// <summary>
 		/// Invokes the <c>NodeBeingProcessed</c> event.
 		/// </summary> 
-		protected void NodeBeingProcessedInvoker()
+		protected void NodeBeingProcessedInvoker(Gtk.ITreeNode node)
 		{
 			if(NodeBeingProcessed !=null)
-				NodeBeingProcessed(this, EventArgs.Empty);
+				NodeBeingProcessed(this, new NodeBeingProcessedArgs(node));
 		}
 		
 		

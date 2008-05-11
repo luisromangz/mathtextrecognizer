@@ -2456,33 +2456,39 @@ MathML</property>
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkVBox" id="vbox9">
+                          <widget class="GtkAlignment" id="alignment36">
                             <property name="visible">True</property>
-                            <property name="spacing">5</property>
+                            <property name="yscale">0</property>
                             <child>
-                              <widget class="GtkLabel" id="label39">
+                              <widget class="GtkVBox" id="vbox9">
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">¿Concuerda la secuencia con la regla seleccionada?</property>
-                                <property name="justify">GTK_JUSTIFY_CENTER</property>
-                                <property name="wrap">True</property>
-                                <property name="width_chars">25</property>
+                                <property name="spacing">5</property>
+                                <child>
+                                  <widget class="GtkLabel" id="label39">
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">¿Concuerda la secuencia con la regla seleccionada?</property>
+                                    <property name="justify">GTK_JUSTIFY_CENTER</property>
+                                    <property name="wrap">True</property>
+                                    <property name="width_chars">25</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="GtkLabel" id="matchingResultLbl">
+                                    <property name="visible">True</property>
+                                    <property name="ypad">6</property>
+                                    <property name="label" translatable="yes">-</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
                               </widget>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="GtkLabel" id="matchingResultLbl">
-                                <property name="visible">True</property>
-                                <property name="ypad">6</property>
-                                <property name="label" translatable="yes">-</property>
-                              </widget>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
-                                <property name="position">1</property>
-                              </packing>
                             </child>
                           </widget>
                           <packing>
@@ -2662,7 +2668,7 @@ MathML</property>
                                         <child>
                                           <widget class="GtkLabel" id="label44">
                                             <property name="visible">True</property>
-                                            <property name="label" translatable="yes">Siguiente paso</property>
+                                            <property name="label" translatable="yes">Siguiente _paso</property>
                                             <property name="use_underline">True</property>
                                           </widget>
                                         </child>
@@ -2702,7 +2708,7 @@ MathML</property>
                                         <child>
                                           <widget class="GtkLabel" id="label45">
                                             <property name="visible">True</property>
-                                            <property name="label" translatable="yes">Siguiente nodo</property>
+                                            <property name="label" translatable="yes">Siguiente _nodo</property>
                                             <property name="use_underline">True</property>
                                           </widget>
                                           <packing>
@@ -2747,7 +2753,7 @@ MathML</property>
                                         <child>
                                           <widget class="GtkLabel" id="label46">
                                             <property name="visible">True</property>
-                                            <property name="label" translatable="yes">Hasta el final</property>
+                                            <property name="label" translatable="yes">Hasta el _final</property>
                                             <property name="use_underline">True</property>
                                           </widget>
                                         </child>

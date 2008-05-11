@@ -11,6 +11,7 @@ namespace MathTextCustomWidgets.Dialogs
 	/// </summary>
 	public class OkDialog : MessageDialog
 	{
+		private Window parent;
 		/// <summary>
 		/// El constructor de <c>OkDialog</c>.
 		/// </summary>
@@ -30,6 +31,7 @@ namespace MathTextCustomWidgets.Dialogs
 					ButtonsType.Ok,
 					message, args)
 		{
+			this.parent = parent;
 			this.Modal = true;
 			this.TransientFor = parent;
 			this.Icon = parent.Icon;
@@ -61,7 +63,11 @@ namespace MathTextCustomWidgets.Dialogs
 		/// </returns>
 		public new ResponseType Run()
 		{
-			return (ResponseType)(base.Run());		
+			// We draw attention towards the app.
+			parent.UrgencyHint = true;
+			ResponseType res= (ResponseType)(base.Run());
+			parent.UrgencyHint = false;
+			return res;
 		}
 		
 		

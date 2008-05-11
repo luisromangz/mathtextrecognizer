@@ -9,6 +9,8 @@ namespace MathTextCustomWidgets.Dialogs
 	/// </summary>
 	public class ConfirmDialog : MessageDialog
 	{
+		private Window parent;
+		
 		/// <summary>
 		/// El constructor de <c>ConfirmDialog</c>.
 		/// </summary>
@@ -29,6 +31,7 @@ namespace MathTextCustomWidgets.Dialogs
 			this.Modal = true;
 			this.TransientFor = parent;
 			this.Icon = parent.Icon;
+			this.parent = parent;
 		}	
 		
 		/// <summary>
@@ -40,7 +43,11 @@ namespace MathTextCustomWidgets.Dialogs
 		/// </returns>
 		public new ResponseType Run()
 		{
-			return (ResponseType)(base.Run());		
+			// We draw attention towards the app.
+			parent.UrgencyHint = true;
+			ResponseType res= (ResponseType)(base.Run());		
+			parent.UrgencyHint = false;
+			return res;
 		}
 		
 		/// <summary>
