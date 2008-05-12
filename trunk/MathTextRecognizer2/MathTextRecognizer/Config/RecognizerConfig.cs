@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 
 using MathTextLibrary.Utils;
-using MathTextLibrary.Analisys.Lexical;
+using MathTextLibrary.Analisys;
 using MathTextRecognizer.DatabaseManager;
 
 namespace MathTextRecognizer.Config

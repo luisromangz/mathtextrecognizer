@@ -7,7 +7,7 @@ using Gtk;
 using Glade;
 
 using MathTextCustomWidgets.Dialogs;
-using MathTextLibrary.Analisys.Lexical;
+using MathTextLibrary.Analisys;
 
 namespace MathTextRecognizer.LexicalRuleManager
 {

@@ -104,9 +104,6 @@
     <File name="Databases/Characteristic/CharacteristicHashDatabase.cs" subtype="Code" buildaction="Compile" />
     <File name="Tests/CharacteristicHashDatabaseTests.cs" subtype="Code" buildaction="Compile" />
     <File name="Analisys" subtype="Directory" buildaction="Compile" />
-    <File name="Analisys/Lexical" subtype="Directory" buildaction="Compile" />
-    <File name="Analisys/Lexical/Token.cs" subtype="Code" buildaction="Compile" />
-    <File name="Analisys/Lexical/LexicalRule.cs" subtype="Code" buildaction="Compile" />
     <File name="Tests/LexicalRuleTests.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Receptors" subtype="Directory" buildaction="Compile" />
     <File name="Databases/Receptors/ReceptorVectorDatabase.cs" subtype="Code" buildaction="Compile" />
@@ -114,7 +111,13 @@
     <File name="Databases/CheckVector.cs" subtype="Code" buildaction="Compile" />
     <File name="Tests/ReceptorDatabaseTests.cs" subtype="Code" buildaction="Compile" />
     <File name="Controllers/ControllerBase.cs" subtype="Code" buildaction="Compile" />
-    <File name="Analisys/Lexical/TokenSequence.cs" subtype="Code" buildaction="Compile" />
+    <File name="Analisys/LexicalRule.cs" subtype="Code" buildaction="Compile" />
+    <File name="Analisys/Token.cs" subtype="Code" buildaction="Compile" />
+    <File name="Analisys/TokenSequence.cs" subtype="Code" buildaction="Compile" />
+    <File name="Analisys/SyntacticRule.cs" subtype="Code" buildaction="Compile" />
+    <File name="Analisys/SyntacticalExpression.cs" subtype="Code" buildaction="Compile" />
+    <File name="Analisys/ISyntacticMatcher.cs" subtype="Code" buildaction="Compile" />
+    <File name="Analisys/SyntacticalExpressionItem.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

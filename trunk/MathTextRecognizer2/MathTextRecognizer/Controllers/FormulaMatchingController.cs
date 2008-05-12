@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-using MathTextLibrary.Analisys.Lexical;
+using MathTextLibrary.Analisys;
 using MathTextLibrary.Controllers;
 
 namespace MathTextRecognizer.Controllers

@@ -5,7 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace MathTextLibrary.Analisys.Lexical
+namespace MathTextLibrary.Analisys
 {
 	
 	/// <summary>

@@ -3,7 +3,7 @@
 
 using System;
 
-using MathTextLibrary.Analisys.Lexical;
+using MathTextLibrary.Analisys;
 using MathTextLibrary.Bitmap;
 
 using MathTextRecognizer.Controllers.Nodes;
