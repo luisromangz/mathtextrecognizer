@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 
 using MathTextLibrary.Bitmap;
-using MathTextLibrary.Analisys.Lexical;
+using MathTextLibrary.Analisys;
 
 namespace MathTextLibrary.Tests
 {

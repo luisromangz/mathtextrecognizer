@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace MathTextLibrary.Analisys.Lexical
+namespace MathTextLibrary.Analisys
 {
 	
 	/// <summary>

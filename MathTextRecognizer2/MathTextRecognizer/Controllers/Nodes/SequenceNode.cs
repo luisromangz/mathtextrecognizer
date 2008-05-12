@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 using Gtk;
 
-using MathTextLibrary.Analisys.Lexical;
+using MathTextLibrary.Analisys;
 
 namespace MathTextRecognizer.Controllers.Nodes
 {

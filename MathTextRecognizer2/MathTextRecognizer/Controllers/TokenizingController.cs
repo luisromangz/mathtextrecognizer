@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using Gtk;
 
 using MathTextLibrary.Controllers;
-using MathTextLibrary.Analisys.Lexical;
+using MathTextLibrary.Analisys;
 
 using MathTextRecognizer.Controllers.Nodes;
 

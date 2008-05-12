@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 using MathTextLibrary.Bitmap;
 
-namespace MathTextLibrary.Analisys.Lexical
+namespace MathTextLibrary.Analisys
 {
 	
 	/// <summary>

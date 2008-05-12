@@ -15,7 +15,7 @@ using MathTextCustomWidgets.Widgets.ImageArea;
 
 using MathTextLibrary.Utils;
 using MathTextLibrary.Bitmap;
-using MathTextLibrary.Analisys.Lexical;
+using MathTextLibrary.Analisys;
 using MathTextLibrary.Controllers;
 
 using MathTextRecognizer.Controllers;
