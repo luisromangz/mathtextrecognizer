@@ -14,6 +14,8 @@ namespace MathTextLibrary.Analisys
 	{
 		private List<ExpressionItem> childrenItems;
 		
+		private string formatString;
+		
 		
 		/// <summary>
 		/// <see cref="ExpressionItemGroup"/>'s constructor.
@@ -39,6 +41,21 @@ namespace MathTextLibrary.Analisys
 				childrenItems = value;
 			}
 		}
+
+		/// <value>
+		/// Contains the string used to format the group's matched contents.
+		/// </value>
+		public string FormatString 
+		{
+			get 
+			{
+				return formatString;
+			}
+			set 
+			{
+				formatString = value;
+			}
+		}
 		
 #endregion Properties
 		
@@ -62,14 +79,13 @@ namespace MathTextLibrary.Analisys
 		/// </returns>
 		protected override string MatchSequence(TokenSequence sequence)
 		{
-			string res = "";
-			
+			List<string> res = new List<string>();
 			foreach (ExpressionItem item in childrenItems) 
 			{
-				item.Match(sequence);
+				res.Add(item.Match(sequence));
 			}
 			
-			return res;
+			return String.Format(formatString, res.ToArray());
 		}
 		
 		/// <summary>
