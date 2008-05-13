@@ -186,57 +186,116 @@ namespace MathTextLibrary.Analisys
 		
 #region Public methods
 		
-		/// <summary>
-		/// Matches a sequence with the expression.
-		/// </summary>
-		/// <param name="sequence">
-		/// A <see cref="TokenSequence"/> to be matched.
-		/// </param>
-		/// <returns>
-		/// The string containing the rule.
-		/// </returns>
-		public string Match (TokenSequence sequence)
+	
+		public bool Match (TokenSequence sequence, out string res)
 		{
-			string res = "";
+			res = "";
+			int counter =0;			
+			string auxOutput;
 			switch(modifier)				
 			{
-			case ExpressionItemModifier.Repeating:
-				do
-				{
-					res += this.MatchSequence(sequence);
-				}
-				while(FirstTokens.Contains(sequence[0]));
-				break;
-			case ExpressionItemModifier.RepeatingNonCompulsory:
-			
-				while(FirstTokens.Contains(sequence[0]))
-				{
-					res+= this.MatchSequence(sequence);
-				}
-				break;
-			case ExpressionItemModifier.NonCompulsory:
-			
-				if(FirstTokens.Contains(sequence[0]))
-					res+= this.MatchSequence(sequence);
-				break;
-			
-			default:
-				res+= this.MatchSequence(sequence);
-				break;
+				case ExpressionItemModifier.Repeating:
+					while(this.MatchSequence(sequence, out auxOutput))
+					{
+						counter++;
+						res +=auxOutput;
+					}		
+					if(counter > 0)
+					{
+						return false;
+					}
+										
+					break;
+				case ExpressionItemModifier.RepeatingNonCompulsory:
+				
+					while(this.MatchSequence(sequence, out auxOutput))
+					{
+						res+= auxOutput;
+					}
+					break;
+				case ExpressionItemModifier.NonCompulsory:
+				
+					if(this.MatchSequence(sequence, out auxOutput))
+					{
+						res= auxOutput;
+					}
+					break;
+				
+				default:
+					if(this.MatchSequence(sequence, out auxOutput))
+					{
+						res= auxOutput;
+					}
+					else
+					{
+						return false;
+					}
+					break;
 			}
+			return true;
+		}
+		
+		public override string ToString ()
+		{
+			String res = this.ToStringAux();
+			
+			switch(modifier)
+			{
+				case ExpressionItemModifier.NonCompulsory:
+					res+="?";
+					break;
+				case ExpressionItemModifier.Repeating:
+					res+="+";
+					break;
+				case ExpressionItemModifier.RepeatingNonCompulsory:
+					res+="*";
+					break;
+			}
+			
+			foreach (ExpressionItem item in relatedItems)
+			{
+				switch(item.Position)
+				{
+					case ExpressionItemPosition.Above:
+						res+= "↑";
+						break;
+					case ExpressionItemPosition.Below:
+						res+="";
+						break;
+					case ExpressionItemPosition.Inside:
+						res+="↶";
+						break;
+					case ExpressionItemPosition.RootIndex:
+						res+="↖";
+						break;						
+					case ExpressionItemPosition.SubIndex:
+						res+="↘";
+						break;						
+					case ExpressionItemPosition.SuperIndex:
+						res+="↗";
+						break;
+						
+				}
+			}
+			
 			return res;
 		}
+
 		
 #endregion Public methods
 		
 #region Non-public methods
 		
-		protected abstract string MatchSequence(TokenSequence sequence);
+		protected abstract bool MatchSequence(TokenSequence sequence, out string output);
 				      
 				      
-		protected abstract List<Token> CreateFirstTokensSet();
+		protected abstract List<Token> CreateFirstTokensSet();		
+		
+		protected abstract string ToStringAux();
 		
 #endregion Non-public methods
+		
+
 	}
 	
 }

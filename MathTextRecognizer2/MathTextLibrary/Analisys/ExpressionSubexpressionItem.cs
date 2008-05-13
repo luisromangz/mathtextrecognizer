@@ -43,6 +43,11 @@ namespace MathTextLibrary.Analisys
 		}
 		
 #endregion Properties
+
+#region Public methods
+
+		
+#endregion Public methods
 		
 #region Non-public methods
 		
@@ -52,10 +57,15 @@ namespace MathTextLibrary.Analisys
 			return SyntacticalRulesManager.Instance[expressionName].FirstTokens;
 		}
 		
-		protected override string MatchSequence (TokenSequence sequence)
+		protected override bool MatchSequence (TokenSequence sequence, out string output)
 		{
 			// The actual matching is done by the rule.
-			return SyntacticalRulesManager.Instance[expressionName].Match(sequence);
+			return SyntacticalRulesManager.Instance[expressionName].Match(sequence, out output);
+		}
+
+		protected override string ToStringAux ()
+		{
+			return this.expressionName;
 		}
 
 

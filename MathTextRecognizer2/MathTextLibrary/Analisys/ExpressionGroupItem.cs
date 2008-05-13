@@ -67,25 +67,27 @@ namespace MathTextLibrary.Analisys
 #endregion Public methods
 		
 #region Non-public methods
-		
-		/// <summary>
-		/// Matches a token sequence with the group.
-		/// </summary>
-		/// <param name="sequence">
-		/// A <see cref="TokenSequence"/> to be matched.
-		/// </param>
-		/// <returns>
-		/// The string representation of the group.
-		/// </returns>
-		protected override string MatchSequence(TokenSequence sequence)
+	
+		protected override bool MatchSequence(TokenSequence sequence, 
+		                                      out string output)
 		{
+			output="";
 			List<string> res = new List<string>();
 			foreach (ExpressionItem item in childrenItems) 
 			{
-				res.Add(item.Match(sequence));
+				string auxOutput;
+				if(item.Match(sequence, out auxOutput))
+				{
+					res.Add(auxOutput);
+				}
+				else
+				{
+					return false;
+				}				
 			}
 			
-			return String.Format(formatString, res.ToArray());
+			output = String.Format(formatString, res.ToArray());
+			return true;
 		}
 		
 		/// <summary>
@@ -125,6 +127,18 @@ namespace MathTextLibrary.Analisys
 			
 			return firstTokens;
 		}
+		
+		protected override string ToStringAux ()
+		{
+			List<string> resList = new List<string>();
+			foreach (ExpressionItem item in childrenItems) 
+			{
+				resList.Add(item.ToString());
+			}
+			
+			return String.Format("{{0}}", String.Join(" ", resList.ToArray()));
+		}
+
 
 		
 #endregion Non-public methods

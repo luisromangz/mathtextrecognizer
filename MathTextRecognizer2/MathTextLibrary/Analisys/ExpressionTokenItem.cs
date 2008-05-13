@@ -13,7 +13,9 @@ namespace MathTextLibrary.Analisys
 	/// </summary>
 	public class ExpressionTokenItem : ExpressionItem
 	{
-		private string tokenType;		
+		private string tokenType;	
+		
+		private bool forceTokenSearch;
 		
 		/// <summary>
 		/// <see cref="ExpressionTokenItem"/>'s constructor.
@@ -38,18 +40,45 @@ namespace MathTextLibrary.Analisys
 				tokenType = value;
 			}
 		}
+
+		/// <value>
+		/// Contains a value indicating if the token must be searched instead
+		/// just taking the first token in the sequence.
+		/// </value>
+		public bool ForceTokenSearch 
+		{
+			get 
+			{
+				return forceTokenSearch;
+			}
+			set
+			{
+				forceTokenSearch = value;
+			}
+		}
 		
 #endregion Properties
 		
 #region Non-public methods
 		
-		protected override string MatchSequence (TokenSequence sequence)
+		protected override bool MatchSequence (TokenSequence sequence, 
+		                                       out string output)
 		{
-			// TODO: The index isn't the first, but the first in the baseline.
-			string text = sequence[0].Text;
-			sequence.RemoveAt(0);
+			output ="";
+			int idx = 0;
+			if(forceTokenSearch)
+			{
+				idx = sequence.SearchToken(new Token(this.tokenType));
+			}		
 			
-			return text;
+			if(idx==-1 || !this.FirstTokens.Contains(sequence[idx]))
+			{
+				return false || !IsCompulsory;
+			}
+			
+			output= sequence[idx].Text;
+			return true;
+			
 		}
 
 		protected override List<Token> CreateFirstTokensSet ()
@@ -63,6 +92,11 @@ namespace MathTextLibrary.Analisys
 			}
 			
 			return firstTokens;
+		}
+
+		protected override string ToStringAux ()
+		{
+			return this.tokenType;
 		}
 
 		

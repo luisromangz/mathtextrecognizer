@@ -94,34 +94,42 @@ namespace MathTextLibrary.Analisys
 #endregion Properties
 		
 #region Public methods
-		
-		/// <summary>
-		/// Tries to match a token sequence with any of the syntactical rules
-		/// contained.
-		/// </summary>
-		/// <param name="sequence">
-		/// A <see cref="TokenSequence"/> 
-		/// </param>
-		/// <returns>
-		/// A <see cref="System.String"/>
-		/// </returns>
-		public string Match(TokenSequence sequence)
+	
+		public bool Match(TokenSequence sequence, out string text)
 		{
-			string res ="";
+			
 			
 			foreach (SyntacticalExpression expression in expressions)  
 			{
-				// We check the first token of the sequence against the 
-				// expression's set of possible firt tokens.
-				if(expression.FirstTokens.Contains(sequence[0]))
+				
+				string expressionRes;
+				if(expression.Match(sequence, out expressionRes))
 				{
-					res = expression.Match(sequence);
-					break;
+					// If the matching is successful, we consider 
+					// the output valid.
+					text = expressionRes;
+					return true;
 				}
+				
 			}
 			
-			return res;
+			text ="";
+			return false;
 		}
+		
+		public override string ToString ()
+		{
+			List<string> expressionStrings = new List<string>();
+			foreach (SyntacticalExpression exp in expressions)
+			{
+				expressionStrings.Add(exp.ToString());
+			}
+			
+			return String.Format("{0} : {1}",
+			                     this.ruleName,
+			                     String.Join(" | ", expressionStrings.ToArray()));
+		}
+
 		
 #endregion Public methods
 		

@@ -13,6 +13,6 @@ namespace MathTextLibrary.Analisys
 	/// </summary>
 	public interface ISyntacticMatcher
 	{
-		string Match(TokenSequence sequence);
+		bool Match(TokenSequence sequence, out string text);
 	}
 }
