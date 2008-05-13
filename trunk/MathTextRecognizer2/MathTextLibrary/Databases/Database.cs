@@ -16,7 +16,7 @@ namespace MathTextLibrary.Databases
 	/// Esta clase es la clase base para las distintas implementaciones de bases 
 	/// de datos en las que podemos reconocer caracteres matemáticos.
 	/// </summary>	
-	public abstract class DatabaseBase
+	public abstract class Database
 	{	
 
 

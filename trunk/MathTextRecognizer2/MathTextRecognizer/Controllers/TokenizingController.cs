@@ -99,7 +99,7 @@ namespace MathTextRecognizer.Controllers
 			
 			Suspend();
 			
-			MessageLogSentInvoker("========== Tokenización de secuencias ==========");
+			MessageLogSentInvoker("========== Itemización de secuencias ==========");
 			
 			foreach (SequenceNode sequence in tokenSequences) 
 			{

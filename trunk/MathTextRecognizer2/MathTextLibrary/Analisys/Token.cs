@@ -30,7 +30,19 @@ namespace MathTextLibrary.Analisys
 		private const string DESCENDERS = "yjgpq";
 		private const string ASCENDERS = "tijñ";
 		private const string PUNCTUATION = ".,";
+		
+		private static Token empty = new Token("");
 			
+		/// <summary>
+		/// <see cref="Token"/>'s contructor accepting the token's type.
+		/// </summary>
+		/// <param name="tokenType">
+		/// A <see cref="System.String"/>
+		/// </param>
+		public Token(string tokenType)
+		{
+			this.type = tokenType;
+		}
 		
 		
 		/// <summary>
@@ -199,6 +211,17 @@ namespace MathTextLibrary.Analisys
 				
 				
 				return bodyline;
+			}
+		}
+
+		/// <value>
+		/// Contains an empty token.
+		/// </value>
+		public static Token Empty 
+		{
+			get 
+			{
+				return empty;
 			}
 		}
 		

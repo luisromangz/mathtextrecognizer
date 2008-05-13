@@ -35,7 +35,7 @@ namespace MathTextLibrary.Databases
 		
 		private List<BitmapProcess> processes;
 		
-		private DatabaseBase database;
+		private Database database;
 		
 		private string description;
 		private string shortDescription;
@@ -48,7 +48,7 @@ namespace MathTextLibrary.Databases
 			
 		}	
 		
-		public MathTextDatabase(DatabaseBase database)
+		public MathTextDatabase(Database database)
 		{
 			SetDatabase(database);
 		}	
@@ -77,7 +77,7 @@ namespace MathTextLibrary.Databases
 		/// Contiene la base de datos de información de
 		/// caracteres asociada a este objeto.
 		/// </value>
-		public DatabaseBase Database
+		public Database Database
 		{
 			get {
 				return database;
@@ -299,11 +299,11 @@ namespace MathTextLibrary.Databases
 		private static List<Type> RetrieveDatabaseTypes()
 		{
 			List<Type> types = new List<Type>();
-			Assembly ass = Assembly.GetAssembly(typeof(DatabaseBase));
+			Assembly ass = Assembly.GetAssembly(typeof(Database));
 			
 			foreach(Type bpt in ass.GetTypes())
 			{
-				if(bpt.BaseType == typeof(DatabaseBase))
+				if(bpt.BaseType == typeof(Database))
 				{
 					types.Add(bpt);
 				}
@@ -334,7 +334,7 @@ namespace MathTextLibrary.Databases
 		/// <param name="database">
 		/// La base de datos que contiene este objeto.
 		/// </param>
-		private void SetDatabase(DatabaseBase database)
+		private void SetDatabase(Database database)
 		{
 			this.database = database;
 			
@@ -356,13 +356,13 @@ namespace MathTextLibrary.Databases
 			XmlAttributes attrs = new XmlAttributes();
         
 			
-			Assembly ass = Assembly.GetAssembly(typeof(DatabaseBase));
+			Assembly ass = Assembly.GetAssembly(typeof(Database));
 			
 			XmlElementAttribute attr;
 			
 			foreach(Type t in ass.GetTypes())
 			{
-				if(t.BaseType == typeof(DatabaseBase))
+				if(t.BaseType == typeof(Database))
 				{
 					attr = new XmlElementAttribute();
 					attr.ElementName = t.Name;

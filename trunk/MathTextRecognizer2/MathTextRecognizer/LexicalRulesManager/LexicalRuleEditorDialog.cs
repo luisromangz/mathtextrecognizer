@@ -226,7 +226,7 @@ namespace MathTextRecognizer.LexicalRuleManager
 			              MessageType.Info,
 			             "Aquí puedes editar una regla de análisis léxico. En la "
 			              +"zona izquierda se establece el nombre de la regla (que"
-			              +" será el tipo del token creado a partir de la misma) y"
+			              +" será el tipo del item creado a partir de la misma) y"
 			              +" en la zona derecha el conjunto de expresiones que la"
 			              +" generarán.");
 			

@@ -24,7 +24,7 @@ namespace MathTextCustomWidgets.Dialogs
 		    appInfoDialog.TransientFor = parent;
 		    appInfoDialog.Modal = true;
 		    
-		    appInfoDialog.Name = title;
+		    appInfoDialog.ProgramName = title;
 		    appInfoDialog.Comments = msg + 
 		    	"\n\nDesarrollado como proyecto de fin de carrera por:\n\n"+
 		    	"Luis Román Gutiérrez\n\n"+
