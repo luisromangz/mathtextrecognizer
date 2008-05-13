@@ -173,6 +173,35 @@ namespace MathTextLibrary.Analisys
 			
 			return String.Join(", ", res.ToArray());			
 		}
+		
+		
+		/// <summary>
+		/// Searchs for a token in the sequence, and retrieves the tallest 
+		/// (and thus more important) instance.
+		/// </summary>
+		/// <param name="t">
+		/// The searched <see cref="Token"/>.
+		/// </param>
+		/// <returns>
+		/// The position of the tallest found token.
+		/// </returns>
+		public int SearchToken(Token t)
+		{
+			int idx = -1;
+			int maxHeight = -1;
+			Token testedToken;
+			for(int i=0; i< sequence.Count; i++)
+			{
+				testedToken = sequence[i];
+				if(testedToken == t && testedToken.Height > maxHeight)
+				{
+					maxHeight = testedToken.Height;
+					idx = i;
+				}
+			}
+			
+			return idx;
+		}
 
 		
 #endregion Public methods

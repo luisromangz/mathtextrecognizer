@@ -281,9 +281,8 @@ namespace MathTextLibrary.Analisys
 			
 			FloatBitmap image = new FloatBitmap(width, height);
 			
-			// We copy the images in the result image.
 			
-			//TODO: Revisar este algoritmo.
+			// We copy the images in the result image.			
 			foreach(Token t in tokens)
 			{
 				for(int i = 0; i < t.image.Width; i++)
@@ -300,8 +299,7 @@ namespace MathTextLibrary.Analisys
 			}
 			
 			Token newToken = new Token(newText, minX, minY, image);
-			newToken.type = tokenType;
-			
+			newToken.type = tokenType;			
 			
 			return newToken;
 			
@@ -345,22 +343,6 @@ namespace MathTextLibrary.Analisys
 				
 			int range = (int)(epsilon*(Math.Max(this.Height, previous.Height)));
 			int baseDiff = Math.Abs(this.Baseline - previous.Baseline);
-			//int bodyDiff = Math.Abs(this.Bodyline - previous.Bodyline);
-		
-			/*if(PUNCTUATION.Contains(this.text)
-			    || PUNCTUATION.Contains(previous.text))
-			{
-				// The body line in punctuation symbols makes no sense,
-				// so we only check the baseline.
-				Console.WriteLine("Meh {0} {1}", this.text , previous.text);
-				return baseDiff <= range;
-			}
-			else
-			{	
-				// If the baselines and bodylines are similar,
-				// then they are close.
-				return baseDiff <= range && bodyDiff <= range;
-			}*/
 			
 			return baseDiff <=range;
 			

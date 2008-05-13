@@ -21,6 +21,7 @@ namespace MathTextLibrary.Analisys
 		
 		public SyntacticalExpression()
 		{
+			items = new List<ExpressionItem>();
 		}
 		
 #region Properties
@@ -57,31 +58,72 @@ namespace MathTextLibrary.Analisys
 				formatString = value;
 			}
 		}
+
+		/// <value>
+		/// Contains the items forming the expression.
+		/// </value>
+		public List<ExpressionItem> Items
+		{
+			get
+			{
+				return items;
+			}
+			
+			set
+			{
+				items = value;
+			}
+		}
 		
 		
 #endregion Properties
 		
 #region Public methods
 		
-		/// <summary>
-		/// Matches a sequence of tokens with a sequence.
-		/// </summary>
-		/// <param name="sequence">
-		/// The token sequence to be matched.
-		/// </param>
-		/// <returns>
-		/// The string result of the matching.
-		/// </returns>
-		public string Match(TokenSequence sequence)
+		
+		public bool Match(TokenSequence sequence, out string output)
 		{		
-			List<string> res = new List<string>();
-			foreach (ExpressionItem item in items) 
+			List<string> outputList = new List<string>();
+			
+			bool res;
+			
+			TokenSequence backupSequence = new TokenSequence();
+			foreach (Token t in sequence) 
 			{
-				res.Add(item.Match(sequence));
+				backupSequence.Append(t);
 			}
 			
-			return String.Format(formatString, res.ToArray());
+			foreach (ExpressionItem item in items) 
+			{
+				string expressionString;
+				res = item.Match(sequence,out expressionString);
+				if(!res)
+				{
+					output="";
+					// We revert the state to the original.
+					sequence = backupSequence;
+					return false;
+				}
+				
+				outputList.Add(expressionString);
+			}
+			
+			output = String.Format(formatString, outputList.ToArray());
+			
+			return true;
 		}
+		
+		public override string ToString ()
+		{
+			List<string> resStrings = new List<string>();
+			foreach (ExpressionItem item in items) 
+			{
+				resStrings.Add(item.ToString());
+			}
+			
+			return String.Join(" ", resStrings.ToArray());
+		}
+
 		
 #endregion Public methods
 		
