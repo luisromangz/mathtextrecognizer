@@ -289,7 +289,7 @@ namespace MathTextRecognizer.Stages
 			sequenceMatchingImageArea.ImageMode = ImageAreaMode.Zoom;
 			sequenceImageFrm.Add(sequenceMatchingImageArea);
 			
-			tokenizingRulesTV.AppendColumn("Token generado", 
+			tokenizingRulesTV.AppendColumn("Item generado", 
 			                               new CellRendererText(), 
 			                               "text", 0);
 			tokenizingRulesTV.AppendColumn("Expresión", 
@@ -373,7 +373,7 @@ namespace MathTextRecognizer.Stages
 		private void OnControllerMatchingFailedInThread(object sender, EventArgs a)
 		{
 			matchingResultLbl.Markup =
-				"<b>La secuencia no pudo ser asociada a ningún token</b>";
+				"<b>La secuencia no pudo ser asociada a ningún item</b>";
 			
 			if(controller.StepMode != ControllerStepMode.UntilEnd)
 				tokenizingNextButtonsAlign.Sensitive = true;
@@ -546,7 +546,7 @@ namespace MathTextRecognizer.Stages
 			if(a.Found)
 			{
 				matchingResultLbl.Markup=
-					String.Format("<b>Sí, se le asigna el token «{0}» a la secuencia actual</b>",
+					String.Format("<b>Sí, se le asigna el item «{0}» a la secuencia actual</b>",
 					              a.JoinedToken.Type);
 			}
 			else
@@ -756,7 +756,7 @@ namespace MathTextRecognizer.Stages
 				sequencingFinished = true;
 				OkDialog.Show(this.MainWindow.Window,
 				              MessageType.Info,
-				              "El proceso de secuenciación de los símbolos a terminado, puede procederse a extraer los tokens de las secuencias.");
+				              "El proceso de secuenciación de los símbolos a terminado, puede procederse a extraer los items de las secuencias.");
 			}
 				
 			else
@@ -776,7 +776,7 @@ namespace MathTextRecognizer.Stages
 					MainWindow.LexicalRulesManager.RulesStore;
 				
 				tokenizingStepsNB.Page = 1;				
-				processBtnLbl.Text = "_Extraer tokens";
+				processBtnLbl.Text = "_Extraer items";
 				
 				
 			}

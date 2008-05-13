@@ -84,9 +84,9 @@ namespace MathTextCustomWidgets.Widgets.Logger
 				txtLog.Buffer.Delete(ref start, ref end);
 			}
 			
-			txtLog.Buffer.Insert(
-				txtLog.Buffer.EndIter,
-				(String.Format(message,args))+"\n");
+			TextIter endIter = txtLog.Buffer.EndIter;
+			txtLog.Buffer.Insert(ref endIter,
+			                     String.Format(message+"\n",args));
 			
 			
 			if(follow)

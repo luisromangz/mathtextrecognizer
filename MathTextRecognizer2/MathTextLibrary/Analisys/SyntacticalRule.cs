@@ -10,20 +10,22 @@ namespace MathTextLibrary.Analisys
 	/// <summary>
 	/// This class represent the rules used for syntactila analysis.
 	/// </summary>
-	public class SyntacticRule : ISyntacticMatcher
+	public class SyntacticalRule : ISyntacticMatcher
 	{
 		private List<SyntacticalExpression> expressions;
 		private string ruleName;
 		
+		private List<Token> firstItems;
+		
 		/// <summary>
 		/// <see cref="SyntacticRule"/>'s default constructor.
 		/// </summary>
-		public SyntacticRule()
+		public SyntacticalRule()
 		{
 			expressions = new List<SyntacticalExpression>();
 		}
 		
-		public SyntacticRule(string ruleName) : this()
+		public SyntacticalRule(string ruleName) : this()
 		{
 			this.ruleName = ruleName;
 		}
@@ -54,6 +56,39 @@ namespace MathTextLibrary.Analisys
 			{
 				return expressions;
 			}
+			set
+			{
+				expressions = value;
+			}
+		}
+		
+		/// <value>
+		/// Contains the first tokens that may appear in the rule's expressions.
+		/// </value>
+		public List<Token> FirstTokens
+		{
+			get
+			{
+				if(firstItems == null)
+				{
+					firstItems = new List<Token>();
+					
+					foreach (SyntacticalExpression exp in expressions) 
+					{
+						foreach (Token t in exp.FirstTokens ) 
+						{
+							if(!firstItems.Contains(t))
+							{
+								// We add the token only if it wasn't alread
+								// present.
+								firstItems.Add(t);
+							}
+						}
+					}
+				}
+				
+				return firstItems;
+			}
 		}
 		
 #endregion Properties
@@ -72,8 +107,20 @@ namespace MathTextLibrary.Analisys
 		/// </returns>
 		public string Match(TokenSequence sequence)
 		{
+			string res ="";
 			
-			return null;
+			foreach (SyntacticalExpression expression in expressions)  
+			{
+				// We check the first token of the sequence against the 
+				// expression's set of possible firt tokens.
+				if(expression.FirstTokens.Contains(sequence[0]))
+				{
+					res = expression.Match(sequence);
+					break;
+				}
+			}
+			
+			return res;
 		}
 		
 #endregion Public methods

@@ -24,7 +24,7 @@ namespace MathTextLibrary.Databases.Characteristic
 	                  "Vectores de características binarias")]	
 	
 	[XmlInclude(typeof(CheckVector))]
-	public class CharacteristicHashDatabase : DatabaseBase
+	public class CharacteristicHashDatabase : Database
 	{
 #region Atributos
 		

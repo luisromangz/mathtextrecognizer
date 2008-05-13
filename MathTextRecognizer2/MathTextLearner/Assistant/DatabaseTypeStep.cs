@@ -62,13 +62,13 @@ namespace MathTextLearner.Assistant
 		/// <value>
 		/// Permite recuperar los procesos selecionados.
 		/// </value>
-		public DatabaseBase Database
+		public Database Database
 		{
 			get
 			{
-				DatabaseBase res = null;
+				Database res = null;
 				
-				res = (DatabaseBase)selectedType.GetConstructor(new Type[0]).Invoke(null);
+				res = (Database)selectedType.GetConstructor(new Type[0]).Invoke(null);
 				
 				return res;
 			}
@@ -118,13 +118,13 @@ namespace MathTextLearner.Assistant
 		private List<Type> RetrieveDatabaseTypes()
 		{
 			// Recuperamos el ensamblado donde esta DatabaseBase
-			Assembly ass = Assembly.GetAssembly(typeof(DatabaseBase));
+			Assembly ass = Assembly.GetAssembly(typeof(Database));
 			List<Type> databaseTypes = new List<Type>();
 			
 			// Procesamos las clases que extienden DatabaseBase
 			foreach(Type t in ass.GetTypes())
 			{
-				if(t.BaseType == typeof(DatabaseBase))
+				if(t.BaseType == typeof(Database))
 				{
 					databaseTypes.Add(t);					
 				}

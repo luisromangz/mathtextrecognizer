@@ -21,7 +21,7 @@ namespace MathTextLibrary.Databases.Characteristic
 	                  "Árbol de características binarias")]	
 	[XmlInclude(typeof(MathSymbol))]
 	[XmlInclude(typeof(CharacteristicNode))]
-	public class CharacteristicTreeDatabase : DatabaseBase
+	public class CharacteristicTreeDatabase : Database
 	{
 #region Atributos
 		

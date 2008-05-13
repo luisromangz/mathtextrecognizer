@@ -15,7 +15,7 @@ namespace MathTextLibrary.Databases.Momentum
 	[DatabaseTypeInfo("Base de datos basada en los momentos de los caracteres",
 	                  "Momentos")]
 	[XmlInclude(typeof(MathSymbol))]
-	public class MomentumDatabase : DatabaseBase
+	public class MomentumDatabase : Database
 	{
 		
 		public MomentumDatabase() : base()

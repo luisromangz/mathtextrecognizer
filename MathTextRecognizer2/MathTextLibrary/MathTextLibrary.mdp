@@ -79,7 +79,7 @@
     <File name="Databases/Characteristic/CharacteristicFactory.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/DatabaseEvents.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/ISymbolProcess.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/DatabaseBase.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Database.cs" subtype="Code" buildaction="Compile" />
     <File name="Bitmap" subtype="Directory" buildaction="Compile" />
     <File name="Bitmap/MathTextBitmap.cs" subtype="Code" buildaction="Compile" />
     <File name="Symbol" subtype="Directory" buildaction="Compile" />
@@ -114,10 +114,14 @@
     <File name="Analisys/LexicalRule.cs" subtype="Code" buildaction="Compile" />
     <File name="Analisys/Token.cs" subtype="Code" buildaction="Compile" />
     <File name="Analisys/TokenSequence.cs" subtype="Code" buildaction="Compile" />
-    <File name="Analisys/SyntacticRule.cs" subtype="Code" buildaction="Compile" />
+    <File name="Analisys/SyntacticalRule.cs" subtype="Code" buildaction="Compile" />
     <File name="Analisys/SyntacticalExpression.cs" subtype="Code" buildaction="Compile" />
     <File name="Analisys/ISyntacticMatcher.cs" subtype="Code" buildaction="Compile" />
-    <File name="Analisys/SyntacticalExpressionItem.cs" subtype="Code" buildaction="Compile" />
+    <File name="Analisys/ExpressionItem.cs" subtype="Code" buildaction="Compile" />
+    <File name="Analisys/ExpressionGroupItem.cs" subtype="Code" buildaction="Compile" />
+    <File name="Analisys/ExpressionTokenItem.cs" subtype="Code" buildaction="Compile" />
+    <File name="Analisys/ExpressionSubexpressionItem.cs" subtype="Code" buildaction="Compile" />
+    <File name="Analisys/SyntacticalRulesManager.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

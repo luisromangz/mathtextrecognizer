@@ -25,7 +25,7 @@ namespace MathTextLibrary.Databases.Receptors
 	                  "Vectores de receptores")]	
 	
 	[XmlInclude(typeof(CheckVector))]
-	public class ReceptorVectorDatabase : DatabaseBase
+	public class ReceptorVectorDatabase : Database
 	{
 #region Atributos
 		
