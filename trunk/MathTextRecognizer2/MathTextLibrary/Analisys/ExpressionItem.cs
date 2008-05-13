@@ -64,7 +64,12 @@ namespace MathTextLibrary.Analisys
 		/// <summary>
 		/// The item is the index of a root-like symbol item.
 		/// </summary>
-		RootIndex
+		RootIndex,
+		
+		/// <summary>
+		/// The expression is inside the related expression.
+		/// </summary>
+		Inside
 	}
 	
 	/// <summary>

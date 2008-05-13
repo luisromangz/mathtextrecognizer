@@ -17,6 +17,7 @@ namespace MathTextLibrary.Analisys
 		
 		private List<Token> firstTokens;
 		
+		private string formatString;
 		
 		public SyntacticalExpression()
 		{
@@ -40,6 +41,22 @@ namespace MathTextLibrary.Analisys
 				return null;
 			}
 		} 
+
+		/// <value>
+		/// Contains the format string used to format the contents matched
+		/// by the expression.
+		/// </value>
+		public string FormatString 
+		{
+			get 
+			{
+				return formatString;
+			}
+			set 
+			{
+				formatString = value;
+			}
+		}
 		
 		
 #endregion Properties
@@ -57,13 +74,13 @@ namespace MathTextLibrary.Analisys
 		/// </returns>
 		public string Match(TokenSequence sequence)
 		{		
-			string res = "";
+			List<string> res = new List<string>();
 			foreach (ExpressionItem item in items) 
 			{
-				res +=item.Match(sequence);
+				res.Add(item.Match(sequence));
 			}
 			
-			return res;
+			return String.Format(formatString, res.ToArray());
 		}
 		
 #endregion Public methods
