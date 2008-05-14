@@ -136,7 +136,7 @@ namespace MathTextLibrary.Analisys
 				resList.Add(item.ToString());
 			}
 			
-			return String.Format("{{0}}", String.Join(" ", resList.ToArray()));
+			return "{" + String.Join(" ", resList.ToArray()) + "}";
 		}
 
 

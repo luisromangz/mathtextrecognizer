@@ -235,7 +235,7 @@ namespace MathTextRecognizer.Controllers
 				{
 					found = rule.Match(accepted, out foundToken);
 					
-					MessageLogSentInvoker("¿La regla «{0}» acepta la secuencia «{1}»?: {2}", 
+					MessageLogSentInvoker("¿La regla «{0}» acepta la secuencia ({1})?: {2}", 
 					                      rule.Name,
 					                      accepted.ToString(),
 					                      found?"Sí":"No");

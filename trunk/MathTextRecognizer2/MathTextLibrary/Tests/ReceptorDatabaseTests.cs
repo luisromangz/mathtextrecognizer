@@ -20,7 +20,7 @@ namespace MathTextLibrary.Tests
 		{
 			Receptor receptor = new Receptor(0.5f, 0.5f, 0.99f, 0.99f);
 			
-			bool state = receptor.GetReceptorState(26,27,50,50);
+			bool state = receptor.GetReceptorState(26,26,50,50);
 			
 			Assert.IsTrue(state, "The receptor doesn't detected the point");
 		}
