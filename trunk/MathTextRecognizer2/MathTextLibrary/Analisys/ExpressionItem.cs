@@ -196,7 +196,8 @@ namespace MathTextLibrary.Analisys
 			switch(modifier)				
 			{
 				case ExpressionItemModifier.Repeating:
-					while(this.MatchSequence(sequence, out auxOutput))
+					while(sequence.Count > 0 
+					      && this.MatchSequence(sequence, out auxOutput))
 					{
 						counter++;
 						res +=auxOutput;
@@ -209,21 +210,24 @@ namespace MathTextLibrary.Analisys
 					break;
 				case ExpressionItemModifier.RepeatingNonCompulsory:
 				
-					while(this.MatchSequence(sequence, out auxOutput))
+					while(sequence.Count > 0
+					      && this.MatchSequence(sequence, out auxOutput))
 					{
 						res+= auxOutput;
 					}
 					break;
 				case ExpressionItemModifier.NonCompulsory:
 				
-					if(this.MatchSequence(sequence, out auxOutput))
+					if(sequence.Count>0
+					   && this.MatchSequence(sequence, out auxOutput))
 					{
 						res= auxOutput;
 					}
 					break;
 				
 				default:
-					if(this.MatchSequence(sequence, out auxOutput))
+					if(sequence.Count>0
+					   && this.MatchSequence(sequence, out auxOutput))
 					{
 						res= auxOutput;
 					}
