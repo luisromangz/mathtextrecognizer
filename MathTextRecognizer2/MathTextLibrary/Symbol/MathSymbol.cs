@@ -78,6 +78,7 @@ namespace MathTextLibrary.Symbol
 		public override string ToString()
 		{
 			return text;
+			
 		}
 		
 		/// <summary>

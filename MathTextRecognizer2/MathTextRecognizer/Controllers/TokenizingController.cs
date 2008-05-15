@@ -28,6 +28,8 @@ namespace MathTextRecognizer.Controllers
 		
 		private NodeView view;
 		
+		private SequenceNode sequenceForTokenizing;
+		
 		public event SequenceAddedHandler SequenceAdded;
 		
 		public event TokenCheckedHandler TokenChecked;
@@ -35,6 +37,8 @@ namespace MathTextRecognizer.Controllers
 		public event EventHandler MatchingFailed; 
 		
 		public event SequenceBeingMatchedHandler SequenceBeingMatched;
+		
+		
 		
 		
 		/// <summary>
@@ -75,6 +79,17 @@ namespace MathTextRecognizer.Controllers
 			this.view = view;
 		}
 		
+		/// <summary>
+		/// Sets a <see cref="SequenceNode"/> that will be analyzed lexically.
+		/// </summary>
+		/// <param name="node">
+		/// A <see cref="SequenceNode"/>
+		/// </param>
+		public void SetSequenceForTokenizing(SequenceNode node)
+		{
+			sequenceForTokenizing = node;
+		}
+		
 		
 #endregion Public methods	
 		
@@ -89,17 +104,27 @@ namespace MathTextRecognizer.Controllers
 			MessageLogSentInvoker(" Comenzando proceso de análisis léxico");
 			MessageLogSentInvoker("========================================");
 			
-			Suspend();
+			List<SequenceNode> tokenSequences;
+			if(sequenceForTokenizing ==null)
+			{
+				Suspend();
 			
-			MessageLogSentInvoker("========== Secuenciación ==========");
-			
-			List<SequenceNode> tokenSequences = GetTokenSequences();
-			
-			ProcessFinishedInvoker();
+				MessageLogSentInvoker("========== Secuenciación ==========");
+				
+				tokenSequences = GetTokenSequences();
+				
+				ProcessFinishedInvoker();
+			}
+			else
+			{
+				tokenSequences = new List<SequenceNode>();
+				tokenSequences.Add(sequenceForTokenizing);
+			}
 			
 			Suspend();
 			
 			MessageLogSentInvoker("========== Itemización de secuencias ==========");
+			
 			
 			foreach (SequenceNode sequence in tokenSequences) 
 			{

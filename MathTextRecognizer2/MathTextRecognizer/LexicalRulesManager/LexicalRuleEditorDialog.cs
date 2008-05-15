@@ -183,13 +183,28 @@ namespace MathTextRecognizer.LexicalRuleManager
 			}
 			else
 			{
-				foreach (Widget w in expressionsVB.Children) 
+				for(int i =0; i < expressionsVB.Children.Length; i++) 
 				{
-					LexicalExpressionWidget widget = (LexicalExpressionWidget)w;
+					
+					LexicalExpressionWidget widget = (LexicalExpressionWidget)(expressionsVB.Children[i]);
 					if(String.IsNullOrEmpty(widget.Expression.Trim()))
 					{
-						errors.Add("· Hay expresiones en blanco.");
+						errors.Add(String.Format("· La expresión {0} está en blanco.", i +1));
 						break;
+					}
+					else
+					{
+						// We are gonna check if the expression 
+						// is well formed, the hard way.
+						try
+						{
+							System.Text.RegularExpressions.Regex.IsMatch("meh",widget.Expression.Trim());
+						}
+						catch(Exception)
+						{
+							errors.Add(String.Format("· La expresión {0} no es una expressión regular de .Net/Mono válida.", i+1));
+						}
+						
 					}
 				}				
 			}

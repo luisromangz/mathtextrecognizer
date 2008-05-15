@@ -46,7 +46,7 @@ namespace MathTextRecognizer.Stages
 		/// <value>
 		/// Contains the app's main window's <c>MainWindow</c> instance.
 		/// </value>
-		protected MainRecognizerWindow MainWindow
+		protected MainRecognizerWindow MainRecognizerWindow
 		{
 			get
 			{

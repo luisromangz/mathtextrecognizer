@@ -75,9 +75,13 @@ namespace MathTextRecognizer.Stages
 		[WidgetAttribute]
 		private Frame sequenceImageFrm = null;
 		
+		[WidgetAttribute]
+		private Menu sequenceNodeMenu = null;
+		
 		
 #endregion Glade widgets
 		
+
 #region Fields
 		
 		private NodeStore sequencesModel;
@@ -91,6 +95,7 @@ namespace MathTextRecognizer.Stages
 		
 		// Indicates if the sequencing process has been completed.
 		private bool sequencingFinished = false;
+		private bool processFinished = false;
 		
 		
 		private Token lastToken;
@@ -101,9 +106,13 @@ namespace MathTextRecognizer.Stages
 		
 		
 		private Gdk.Pixbuf sequenceNodeImage;
-	
+		
+		private SequenceNode selectedNode;
 		
 #endregion Fields
+		
+		
+#region Constructors
 		
 		/// <summary>
 		/// <c>TokenizingStageWidget</c>'s constructor.
@@ -117,6 +126,13 @@ namespace MathTextRecognizer.Stages
 			                       "mathtextrecognizer.glade" ,
 			                       "tokenizingStageWidget", 
 			                       null);
+			
+			gladeXml.Autoconnect(this);
+			
+			gladeXml = new XML(null, 
+			                   "mathtextrecognizer.glade",
+			                   "sequenceNodeMenu", 
+			                   null);
 			
 			gladeXml.Autoconnect(this);
 			
@@ -154,6 +170,8 @@ namespace MathTextRecognizer.Stages
 		{
 			widgetLabel = "Análisis léxico";
 		}
+		
+#endregion Constructors
 		
 #region Properties
 		
@@ -263,15 +281,23 @@ namespace MathTextRecognizer.Stages
 			                         new CellRendererText(), 
 			                         "text",1);
 			
-			sequencesNV.AppendColumn("Token",
+			sequencesNV.AppendColumn("Item",
 			                         new CellRendererText(),
 			                         "text",2);
 			
+			// We tell the treeview's columns to resize automatically.
 			foreach (TreeViewColumn column in sequencesNV.Columns) 
 			{
 				column.Sizing = TreeViewColumnSizing.Autosize;								
 			}
-						
+			
+			// We handle the pressing of the mouse buttons, so we can show
+			// the contextual menu.
+		
+			sequencesNV.Events = Gdk.EventMask.ButtonPressMask;
+			sequencesNV.ButtonPressEvent+= 
+				new ButtonPressEventHandler(OnSequencesNVButtonPress);
+									
 			symbolsModel = new ListStore(typeof(Gdk.Pixbuf),
 			                             typeof(string),
 			                             typeof(Token));
@@ -298,6 +324,8 @@ namespace MathTextRecognizer.Stages
 			
 			tokenizingRulesTV.Columns[0].Sizing = TreeViewColumnSizing.Autosize;
 			tokenizingRulesTV.Columns[1].Sizing = TreeViewColumnSizing.Autosize;
+			
+			
 				
 			
 			tokenizingButtonsNB.Page = 0;
@@ -754,36 +782,84 @@ namespace MathTextRecognizer.Stages
 			if(!sequencingFinished)
 			{
 				sequencingFinished = true;
-				OkDialog.Show(this.MainWindow.Window,
+				OkDialog.Show(this.MainRecognizerWindow.Window,
 				              MessageType.Info,
 				              "El proceso de secuenciación de los símbolos a terminado, puede procederse a extraer los items de las secuencias.");
 			}
 				
 			else
 			{
-				OkDialog.Show(this.MainWindow.Window,
+				OkDialog.Show(this.MainRecognizerWindow.Window,
 				              MessageType.Info,
 				              "El proceso de análisis léxico ha terminado, ahora puedes revisar el resultado.");
+				
+				processBtn.Sensitive = false;
+				processFinished = true;
+				
+				matchingResultLbl.Markup= "-";
+				
+				tokenizingRulesTV.Selection.UnselectAll();
+				tokenizingRulesTV.ScrollToPoint(0,0);
 			}
 			
 			
 			if(sequencingFinished)
 			{
 				// We retrieve the rules.
-				controller.SetLexicalRules(MainWindow.LexicalRulesManager.LexicalRules);
+				controller.SetLexicalRules(MainRecognizerWindow.LexicalRulesManager.LexicalRules);
 				
 				this.tokenizingRulesTV.Model = 
-					MainWindow.LexicalRulesManager.RulesStore;
+					MainRecognizerWindow.LexicalRulesManager.RulesStore;
 				
 				tokenizingStepsNB.Page = 1;				
 				processBtnLbl.Text = "_Extraer items";
-				
-				
+				processBtnLbl.UseUnderline = true;
 			}
 			
 			
 			// We change to the first page
 			tokenizingButtonsNB.Page = 0;		
+		}
+		
+		/// <summary>
+		/// Ask the user for his permissions to perform a new lexical
+		/// analysis on the selected sequence.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="arg">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnForceTokenizingItemActivate(object sender, EventArgs arg)
+		{
+			
+			if(selectedNode.FoundToken !=null || selectedNode.ChildCount >0)
+			{
+				// We need that the user confirm the operation as, it is desctructive.
+				ResponseType res =
+					ConfirmDialog.Show(this.MainRecognizerWindow.Window,
+					                   "Se van a perder los items identificados en la secuencia seleccionada (o sus hijos), ¿deseas continuar?");
+				if(res == ResponseType.No)
+					return;
+			}
+			
+			selectedNode.RemoveSequenceChildren();
+			selectedNode.FoundToken = null;
+			
+			// We set again the rules, because the user _should_ have modified them.
+			controller.SetLexicalRules(MainRecognizerWindow.LexicalRulesManager.LexicalRules);
+			
+			controller.SetSequenceForTokenizing(selectedNode);
+			
+			tokenizingButtonsNB.Page = 1;
+			tokenizingNextButtonsAlign.Sensitive = true;
+			
+			
+			// We lauch the tokenizer again.
+			NextStep(ControllerStepMode.StepByStep);
+			
+				
 		}
 		
 		/// <summary>
@@ -809,11 +885,46 @@ namespace MathTextRecognizer.Stages
 				// There were errors.
 				string errorss = String.Join("\n", errors.ToArray());
 				
-				OkDialog.Show(this.MainWindow.Window,
+				OkDialog.Show(this.MainRecognizerWindow.Window,
 				              MessageType.Info,
 				              "Para continuar a la siguente fase de procesado,"
 				              + "debes solucionar los siguentes problemas:\n\n{0}",
 				              errorss);
+			}
+		}
+		
+		/// <summary>
+		/// Shows the contextual menu for the sequences' nodes.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="ButtonPressEventArgs"/>
+		/// </param>
+		[GLib.ConnectBeforeAttribute]
+		private void OnSequencesNVButtonPress(object sender,
+		                                           ButtonPressEventArgs args)
+		{
+			Console.WriteLine("meh {0} {1}", processFinished, args.Event.Button);
+			if(processFinished && args.Event.Button == 3)
+			{
+				TreePath path = new TreePath();
+                // Obtenemos el treepath con las coordenadas del cursor.
+                sequencesNV.GetPathAtPos(System.Convert.ToInt16 (args.Event.X), 
+				                      System.Convert.ToInt16 (args.Event.Y),				              
+				                      out path);
+                
+				if( path != null)
+				{
+					// We try only if a node was found.			
+					SequenceNode node =
+						(SequenceNode)(sequencesModel.GetNode(path));	
+					
+					
+					selectedNode = node;										
+					sequenceNodeMenu.Popup();	
+				}
 			}
 		}
 		
@@ -849,10 +960,20 @@ namespace MathTextRecognizer.Stages
 			return res;
 		}
 		
+		/// <summary>
+		/// Auxiliary method tasked with telling the controller to resume the
+		/// working process.
+		/// </summary>
+		/// <param name="mode">
+		/// A <see cref="ControllerStepMode"/> that tells the controller
+		/// when the next stop shoul be made.
+		/// </param>
 		protected override void NextStep (ControllerStepMode mode)
 		{
 			controller.Next(mode);
 		}
+		
+		
 		
 
 		
