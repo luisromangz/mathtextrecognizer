@@ -234,7 +234,7 @@ namespace MathTextRecognizer.Stages
 			treeview.NodeSelection.Changed += OnTreeviewSelectionChanged;
 						
 			treeview.ButtonPressEvent += 
-				new ButtonPressEventHandler(OnTreeViewButtonPress);
+				new ButtonPressEventHandler(OnTreeviewButtonPress);
 			
 			imageAreaOriginal = new ImageArea();
 			imageAreaOriginal.ImageMode = ImageAreaMode.Zoom;
@@ -395,7 +395,7 @@ namespace MathTextRecognizer.Stages
 			else
 			{
 				string errorss = String.Join("\n", errors.ToArray());
-				OkDialog.Show(this.MainWindow.Window,
+				OkDialog.Show(this.MainRecognizerWindow.Window,
 				              MessageType.Info,
 				              "Para continuar a la siguente fase de procesado,"
 				              +"debes solucionar los siguentes problemas:\n\n{0}",
@@ -526,7 +526,7 @@ namespace MathTextRecognizer.Stages
 		private void OnLearnImageItemActivate(object sender, EventArgs args)
 		{
 			// We ask for confirmation
-			ResponseType res = ConfirmDialog.Show(MainWindow.Window,
+			ResponseType res = ConfirmDialog.Show(MainRecognizerWindow.Window,
 			                                    "¿Realmente quieres añadir el símbolo «{0}» a una base de datos?",
 			                                    selectedNode.Name);
 			
@@ -534,8 +534,8 @@ namespace MathTextRecognizer.Stages
 			{	
 				// We let the user select the database to be modified.
 				LearnSymbolDatabaseChooserDialog databaseDialog =
-					new LearnSymbolDatabaseChooserDialog(MainWindow.Window,
-					                                     MainWindow.DatabaseManager.DatabaseFilesInfo);
+					new LearnSymbolDatabaseChooserDialog(MainRecognizerWindow.Window,
+					                                     MainRecognizerWindow.DatabaseManager.DatabaseFilesInfo);
 				
 				res = databaseDialog.Show();
 				databaseDialog.Destroy();
@@ -554,7 +554,7 @@ namespace MathTextRecognizer.Stages
 					}
 					
 					MainLearnerWindow learner =
-						new MainLearnerWindow(this.MainWindow.Window,
+						new MainLearnerWindow(this.MainRecognizerWindow.Window,
 						                      database,
 						                      databasePath,
 						                      selectedNode.MathTextBitmap.Pixbuf,
@@ -584,7 +584,7 @@ namespace MathTextRecognizer.Stages
 		    Log("¡Reconocimiento terminado!");
 			
 			OkDialog.Show(
-				MainWindow.Window,
+				MainRecognizerWindow.Window,
 				MessageType.Info,
 			    "¡Proceso de reconocimiento terminado!\n"
 			    + "Ahora puede revisar el resultado.");
@@ -592,6 +592,8 @@ namespace MathTextRecognizer.Stages
 			
 						
 			ResetState();
+			
+			recognizementFinished = true;
 			
 			gotoTokenizerBtn.Sensitive = true;
 			
@@ -609,7 +611,7 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		// Para que ocurra antes que se consuma el evento de seleccion
 		[GLib.ConnectBeforeAttribute] 
-		private void OnTreeViewButtonPress(object sender, 
+		private void OnTreeviewButtonPress(object sender, 
 		                                   ButtonPressEventArgs args)
 		{
 			// Nos quedamos unicamente con los clicks derechos
@@ -648,7 +650,7 @@ namespace MathTextRecognizer.Stages
 		private void OnEditLabeItemActivate(object sender, EventArgs a)
 		{
 			Dialogs.SymbolLabelEditorDialog dialog = 
-				new Dialogs.SymbolLabelEditorDialog(MainWindow.Window,
+				new Dialogs.SymbolLabelEditorDialog(MainRecognizerWindow.Window,
 				                                    selectedNode);
 			
 			if(dialog.Show() == ResponseType.Ok)
@@ -657,7 +659,7 @@ namespace MathTextRecognizer.Stages
 				if(selectedNode.ChildCount > 0)
 				{
 					ResponseType res = 
-						ConfirmDialog.Show(MainWindow.Window,
+						ConfirmDialog.Show(MainRecognizerWindow.Window,
 						                   "Este nodo tiene hijos, y se estableces "
 						                   + "una etiqueta se eliminarán, ¿quieres"
 						                   +" continuar?");
@@ -703,7 +705,7 @@ namespace MathTextRecognizer.Stages
 		{			
 			
 			ResponseType res = 
-				ConfirmDialog.Show(this.MainWindow.Window,
+				ConfirmDialog.Show(this.MainRecognizerWindow.Window,
 				                   "Si fuerza el segmentado perderás el "
 				                   + "reconocimiento realizado, ¿quieres continuar?");
 			
@@ -733,14 +735,14 @@ namespace MathTextRecognizer.Stages
 		private void OnSaveImageItemActivate(object sender, EventArgs args)
 		{
 			ResponseType res= 
-						ConfirmDialog.Show(MainWindow.Window,
+						ConfirmDialog.Show(MainRecognizerWindow.Window,
 						                   "¿Deseas guardar la imagen del nodo «{0}»?",
 						                   selectedNode.Name);
 					
 			if (res == ResponseType.Yes)
 			{
 				string filename="";
-				res = ImageSaveDialog.Show(MainWindow.Window, out filename);
+				res = ImageSaveDialog.Show(MainRecognizerWindow.Window, out filename);
 				
 				if(res == ResponseType.Ok)
 				{
@@ -763,7 +765,7 @@ namespace MathTextRecognizer.Stages
 		public void OnSegmentBtnClicked(object sender, EventArgs args)
 		{
 			controller.Databases = this.Databases;
-			this.MainWindow.ProcessItemsSensitive=false;
+			this.MainRecognizerWindow.ProcessItemsSensitive=false;
 			segmentBtn.Sensitive = false;
 			gotoTokenizerBtn.Sensitive =  true;
 			buttonsNB.Page = 1;
@@ -785,7 +787,7 @@ namespace MathTextRecognizer.Stages
 			while(processedImageNB.NPages > 0)
 				processedImageNB.RemovePage(0);
 			
-			recognizementFinished = true;
+			recognizementFinished = false;
 			
 			imageAreaOriginal.Image = null;
 			
@@ -795,7 +797,7 @@ namespace MathTextRecognizer.Stages
 			
 			gotoTokenizerBtn.Sensitive = false;
 			
-			this.MainWindow.ProcessItemsSensitive = true;
+			this.MainRecognizerWindow.ProcessItemsSensitive = true;
 			
 		}
 		
