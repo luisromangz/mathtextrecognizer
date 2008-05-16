@@ -31,6 +31,7 @@ using MathTextRecognizer.Stages;
 using MathTextRecognizer.Controllers;
 using MathTextRecognizer.DatabaseManager;
 using MathTextRecognizer.LexicalRuleManager;
+using MathTextRecognizer.SyntacticalRulesManager;
 
 namespace MathTextRecognizer
 {
@@ -46,10 +47,7 @@ namespace MathTextRecognizer
 		
 		[WidgetAttribute]		
 		private ToolButton toolLoadImage = null;
-		
-		[WidgetAttribute]		
-		private ToolButton toolLatex = null;
-		
+				
 		[WidgetAttribute]		
 		private ToolButton toolDatabase = null;
 		
@@ -98,6 +96,8 @@ namespace MathTextRecognizer
 		
 		private LexicalRulesManagerDialog lexicalRulesManagerDialog;
 		
+		private SyntacticalRulesManagerDialog syntacticalRulesManagerDialog;
+		
 		#endregion Otros atributos
 		
 		public static void Main(string[] args)
@@ -131,8 +131,16 @@ namespace MathTextRecognizer
 			lexicalRulesManagerDialog = 
 				new LexicalRulesManagerDialog(this.mainWindow);		
 			
-			GLib.ExceptionManager.UnhandledException+=
-				new GLib.UnhandledExceptionHandler(OnUnhandledException);
+			syntacticalRulesManagerDialog = 
+				new SyntacticalRulesManagerDialog(this.Window);
+			
+//			GLib.ExceptionManager.UnhandledException+= delegate(GLib.UnhandledExceptionArgs args)
+//			{
+//				Console.WriteLine(args.ExceptionObject.ToString());				
+//			};
+				
+			
+			
 		}
 		
 		
@@ -160,6 +168,17 @@ namespace MathTextRecognizer
 			{
 				
 				return lexicalRulesManagerDialog;
+			}
+		}
+		
+		/// <value>
+		/// Contains the dialog used to manage the syntactical rules.
+		/// </value>
+		public SyntacticalRulesManagerDialog SyntacticalRulesManager
+		{
+			get 
+			{
+				return syntacticalRulesManagerDialog;
 			}
 		}
 		
@@ -244,6 +263,8 @@ namespace MathTextRecognizer
 				return formulaMatchingWidget;
 			}
 		}
+
+		
 		
 		
 		
@@ -364,6 +385,7 @@ namespace MathTextRecognizer
 		{
 			databaseManagerDialog.Destroy();
 			lexicalRulesManagerDialog.Destroy();
+			syntacticalRulesManagerDialog.Destroy();
 			OnExit();
 		}
 		
@@ -473,7 +495,6 @@ namespace MathTextRecognizer
 				title + System.IO.Path.GetFileName(filename);
 		
 			recognizementFinished=false;
-			toolLatex.Sensitive=false;
 			menuMakeOutput.Sensitive=false;
 			
 			ClearLog();
@@ -516,8 +537,6 @@ namespace MathTextRecognizer
 		/// </summary>
 		private void ResetState()
 		{
-			toolLatex.Sensitive=true;
-			
 			menuLoadImage.Sensitive=true;
 			menuOpenDatabaseManager.Sensitive=true;
 			menuMakeOutput.Sensitive=true;
@@ -549,17 +568,18 @@ namespace MathTextRecognizer
 		}
 		
 		/// <summary>
-		/// Handles the unhandled exceptions.
+		/// Shows the syntactical rules manager.
 		/// </summary>
 		/// <param name="sender">
 		/// A <see cref="System.Object"/>
 		/// </param>
 		/// <param name="args">
-		/// A <see cref="UnhandledExceptionEventArgs"/>
+		/// A <see cref="EventArgs"/>
 		/// </param>
-		private void OnUnhandledException(UnhandledExceptionEventArgs args)
+		private void OnSyntacticalManagerItemActivate(object sender, 
+		                                              EventArgs args)
 		{
-			Console.WriteLine(args.ExceptionObject.ToString());
+			syntacticalRulesManagerDialog.Show();
 		}
 	}
 	
