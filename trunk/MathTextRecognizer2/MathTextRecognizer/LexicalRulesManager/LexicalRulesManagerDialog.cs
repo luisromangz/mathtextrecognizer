@@ -15,7 +15,7 @@ using MathTextLibrary.Analisys;
 
 using MathTextRecognizer.Config;
 
-namespace MathTextRecognizer.LexicalRuleManager
+namespace MathTextRecognizer.LexicalRulesManager
 {
 	
 	/// <summary>
