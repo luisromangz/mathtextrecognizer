@@ -30,7 +30,7 @@ using MathTextLibrary.Databases.Characteristic.Characteristics;
 using MathTextRecognizer.Stages;
 using MathTextRecognizer.Controllers;
 using MathTextRecognizer.DatabaseManager;
-using MathTextRecognizer.LexicalRuleManager;
+using MathTextRecognizer.LexicalRulesManager;
 using MathTextRecognizer.SyntacticalRulesManager;
 
 namespace MathTextRecognizer

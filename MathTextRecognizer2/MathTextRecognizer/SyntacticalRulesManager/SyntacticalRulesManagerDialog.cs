@@ -141,7 +141,12 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </param>
 		private void OnAddSynRuleBtnClicked(object sender, EventArgs args)
 		{
+			SyntacticalRuleEditorDialog dialog = 
+				new SyntacticalRuleEditorDialog(syntacticalRulesManagerDialog);
 			
+			dialog.Show();
+			
+			dialog.Destroy();
 		}		
 		
 		
