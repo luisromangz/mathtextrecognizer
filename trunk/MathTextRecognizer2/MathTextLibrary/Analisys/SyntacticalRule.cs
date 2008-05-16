@@ -95,6 +95,21 @@ namespace MathTextLibrary.Analisys
 		
 #region Public methods
 	
+		/// <summary>
+		/// Tries to math a <see cref="TokenSequence"/> with the rule's 
+		/// expressions.
+		/// </summary>
+		/// <param name="sequence">
+		/// The <see cref="TokenSequence"/> we want to match.
+		/// </param>
+		/// <param name="text">
+		/// The <see cref="System.String"/> output text produced by the
+		/// expression that matched the input sequence.
+		/// </param>
+		/// <returns>
+		/// <c>true</c> it the sequence was matched correctly, <c>false</c>
+		/// if there were errors.
+		/// </returns>
 		public bool Match(TokenSequence sequence, out string text)
 		{
 			Console.WriteLine(this.ToString());
@@ -117,6 +132,12 @@ namespace MathTextLibrary.Analisys
 			return false;
 		}
 		
+		/// <summary>
+		/// Puts the rules info in string format.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/>
+		/// </returns>
 		public override string ToString ()
 		{
 			List<string> expressionStrings = new List<string>();

@@ -172,6 +172,8 @@ namespace MathTextRecognizer.LexicalRuleManager
 		{
 			List<string> errors = new List<string>();
 			
+			bool regExErrors = false;
+			
 			if(String.IsNullOrEmpty(ruleNameEntry.Text.Trim()))
 			{
 				errors.Add("· La regla necesita un nombre.");				
@@ -186,7 +188,9 @@ namespace MathTextRecognizer.LexicalRuleManager
 				for(int i =0; i < expressionsVB.Children.Length; i++) 
 				{
 					
-					LexicalExpressionWidget widget = (LexicalExpressionWidget)(expressionsVB.Children[i]);
+					LexicalExpressionWidget widget = 
+						(LexicalExpressionWidget)(expressionsVB.Children[i]);
+					
 					if(String.IsNullOrEmpty(widget.Expression.Trim()))
 					{
 						errors.Add(String.Format("· La expresión {0} está en blanco.", i +1));
@@ -203,6 +207,7 @@ namespace MathTextRecognizer.LexicalRuleManager
 						catch(Exception)
 						{
 							errors.Add(String.Format("· La expresión {0} no es una expressión regular de .Net/Mono válida.", i+1));
+							regExErrors = true;
 						}
 						
 					}
@@ -215,8 +220,10 @@ namespace MathTextRecognizer.LexicalRuleManager
 				string errorss = string.Join("\n", errors.ToArray());
 				OkDialog.Show(lexicalRuleEditorDialog,
 				              MessageType.Warning,
-				              "Para continuar, debes solucionar los siguentes problemas:\n\n{0}",
-				             errorss);
+				              "Para continuar, debes solucionar los siguentes problemas:\n\n{0}{1}",
+				             errorss,
+				              regExErrors?"\n\nPara mas información sobre el formato de las expresiones regulares, visite http://msdn.microsoft.com/es-es/library/hs600312(VS.80).aspx.":"");
+				
 				
 				lexicalRuleEditorDialog.Respond(ResponseType.None);
 			}
@@ -264,10 +271,10 @@ namespace MathTextRecognizer.LexicalRuleManager
 			private Alignment expressionAlignment = null;
 			
 			[WidgetAttribute]
-			private Button upBtn = null;
+			private Button lexUpBtn = null;
 			
 			[WidgetAttribute]
-			private Button downBtn = null;
+			private Button lexDownBtn = null;
 			
 			[WidgetAttribute]
 			private Label orLabel = null;
@@ -324,8 +331,8 @@ namespace MathTextRecognizer.LexicalRuleManager
 				int position = (container[this] as Gtk.Box.BoxChild).Position;
 				bool notLast = position < container.Children.Length -1;
 				bool notFirst = position > 0;
-				downBtn.Sensitive = notLast;
-				upBtn.Sensitive = notFirst;				
+				lexDownBtn.Sensitive = notLast;
+				lexUpBtn.Sensitive = notFirst;				
 				orLabel.Text = notFirst?"|":" ";	
 					
 			}
