@@ -70,6 +70,17 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			}
 		}
 		
+		/// <value>
+		/// Contains the dialog's window.
+		/// </value>
+		public Window Window
+		{
+			get
+			{
+				return syntacticalRuleEditorDialog;
+			}
+		}
+		
 #endregion Properties
 		
 #region Public methods
@@ -101,9 +112,65 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			syntacticalRuleEditorDialog.Destroy();
 		}
 		
+		/// <summary>
+		/// Removes a expression from the expression list.
+		/// </summary>
+		/// <param name="widget">
+		/// A <see cref="SyntacticalExpressionWidget"/>
+		/// </param>
+		public void RemoveExpression(SyntacticalExpressionWidget widget)
+		{
+			
+			for(int i = 0; i<synEdExpressionsVB.Children.Length; i++)
+			{
+				if(synEdExpressionsVB.Children[i] == widget)
+				{
+					// Whe remove the separator.
+					if(i > 0)
+					{
+						synEdExpressionsVB.Remove(synEdExpressionsVB.Children[i-1]);
+					}
+					else if(synEdExpressionsVB.Children.Length > 1)
+					{
+						synEdExpressionsVB.Remove(synEdExpressionsVB.Children[1]);
+					}
+					
+					break;
+				}
+			}
+			
+			synEdExpressionsVB.Remove(widget);
+		}
+		
 #endregion Public methods
 		
 #region Non-public methods
+		
+		/// <summary>
+		/// Adds an expression to the expressions list.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="SyntacticalExpressionWidget"/>
+		/// </returns>
+		private SyntacticalExpressionWidget AddExpression()
+		{
+			
+			if(synEdExpressionsVB.Children.Length>0)
+			{
+				HSeparator separator = new HSeparator();
+				synEdExpressionsVB.Add(separator);
+				separator.Show();
+			}
+			
+			SyntacticalExpressionWidget widget = 
+				new SyntacticalExpressionWidget(this);
+			
+			synEdExpressionsVB.Add(widget);
+			
+			synEdExpressionScroller.Vadjustment.Value = synEdExpressionScroller.Vadjustment.Upper;
+			
+			return widget;
+		}
 		
 		/// <summary>
 		/// Initializes the dialog's children widgets.
@@ -118,10 +185,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </summary>
 		private void OnSynEdAddExpBtnClicked(object sender, EventArgs args)
 		{
-			SyntacticalExpressionWidget widget = 
-				new SyntacticalExpressionWidget(this);
-			
-			synEdExpressionsVB.Add(widget);
+			AddExpression();
 		}
 		
 		/// <summary>

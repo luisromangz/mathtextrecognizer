@@ -61,9 +61,6 @@ namespace MathTextRecognizer
 		private ImageMenuItem menuOpenDatabaseManager = null;
 		
 		[WidgetAttribute]
-		private ImageMenuItem menuMakeOutput = null; 
-		
-		[WidgetAttribute]
 		private ImageMenuItem menuLoadImage = null;
 		
 		[WidgetAttribute]
@@ -495,8 +492,6 @@ namespace MathTextRecognizer
 				title + System.IO.Path.GetFileName(filename);
 		
 			recognizementFinished=false;
-			menuMakeOutput.Sensitive=false;
-			
 			ClearLog();
 		}
 		
@@ -539,7 +534,6 @@ namespace MathTextRecognizer
 		{
 			menuLoadImage.Sensitive=true;
 			menuOpenDatabaseManager.Sensitive=true;
-			menuMakeOutput.Sensitive=true;
 			
 			toolLoadImage.Sensitive=true;
 			toolDatabase.Sensitive=true;

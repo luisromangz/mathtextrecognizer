@@ -553,12 +553,12 @@ namespace MathTextRecognizer.Stages
 						databasePath = selectedDatabase.Path;
 					}
 					
-					MainLearnerWindow learner =
-						new MainLearnerWindow(this.MainRecognizerWindow.Window,
-						                      database,
-						                      databasePath,
-						                      selectedNode.MathTextBitmap.Pixbuf,
-						                      selectedNode.Name);
+				
+					new MainLearnerWindow(this.MainRecognizerWindow.Window,
+					                      database,
+					                      databasePath,
+					                      selectedNode.MathTextBitmap.Pixbuf,
+					                      selectedNode.Name);
 				}
 				
 				
