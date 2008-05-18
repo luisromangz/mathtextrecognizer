@@ -172,8 +172,8 @@ namespace MathTextLibrary.Tests
 			exp = new SyntacticalExpression();
 			exp.FormatString="{0}{1}";
 			
-			ExpressionSubexpressionItem esi = new ExpressionSubexpressionItem();
-			esi.ExpressionName = "multiplicacion";
+			ExpressionRuleCallItem esi = new ExpressionRuleCallItem();
+			esi.RuleName = "multiplicacion";
 			exp.Items.Add(esi);
 			
 			group = new ExpressionGroupItem();
@@ -183,8 +183,8 @@ namespace MathTextLibrary.Tests
 			eti.TokenType = "ADD";
 			group.ChildrenItems.Add(eti);
 			
-			esi = new ExpressionSubexpressionItem();
-			esi.ExpressionName = "multiplicacion";
+			esi = new ExpressionRuleCallItem();
+			esi.RuleName = "multiplicacion";
 			group.ChildrenItems.Add(esi);
 			
 			

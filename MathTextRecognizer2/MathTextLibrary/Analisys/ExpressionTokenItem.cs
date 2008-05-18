@@ -65,7 +65,6 @@ namespace MathTextLibrary.Analisys
 		protected override bool MatchSequence (TokenSequence sequence, 
 		                                       out string output)
 		{
-			Console.WriteLine("Token Item {0}, ({1})", this.ToString(), sequence.ToString());
 			output ="";
 			int idx = 0;
 			if(forceTokenSearch)
@@ -75,7 +74,6 @@ namespace MathTextLibrary.Analisys
 			
 			if(idx==-1 || !this.FirstTokens.Contains(sequence[idx]))
 			{
-				Console.WriteLine("meh {0}", this.FirstTokens[0].Type);
 				return false || !IsCompulsory;
 			}
 			

@@ -112,8 +112,7 @@ namespace MathTextLibrary.Analisys
 		/// </returns>
 		public bool Match(TokenSequence sequence, out string text)
 		{
-			Console.WriteLine(this.ToString());
-			
+
 			foreach (SyntacticalExpression expression in expressions)  
 			{
 				

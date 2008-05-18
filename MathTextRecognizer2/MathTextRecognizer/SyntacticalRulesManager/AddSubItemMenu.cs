@@ -71,7 +71,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </param>
 		private void OnAddGroupItmActivate(object sender, EventArgs args)
 		{
-			
+			container.AddItem(new ExpressionGroupWidget(container));
 		}
 		
 		/// <summary>
@@ -85,7 +85,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </param>
 		private void OnAddSubexpressionItmActivate(object sender, EventArgs args)
 		{
-			
+			container.AddItem(new ExpressionRuleCallWidget(container));
 		}
 	}
 }

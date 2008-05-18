@@ -906,7 +906,6 @@ namespace MathTextRecognizer.Stages
 		private void OnSequencesNVButtonPress(object sender,
 		                                           ButtonPressEventArgs args)
 		{
-			Console.WriteLine("meh {0} {1}", processFinished, args.Event.Button);
 			if(processFinished && args.Event.Button == 3)
 			{
 				TreePath path = new TreePath();
