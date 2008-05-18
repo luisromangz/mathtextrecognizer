@@ -120,7 +120,7 @@
     <File name="Analisys/ExpressionItem.cs" subtype="Code" buildaction="Compile" />
     <File name="Analisys/ExpressionGroupItem.cs" subtype="Code" buildaction="Compile" />
     <File name="Analisys/ExpressionTokenItem.cs" subtype="Code" buildaction="Compile" />
-    <File name="Analisys/ExpressionSubexpressionItem.cs" subtype="Code" buildaction="Compile" />
+    <File name="Analisys/ExpressionRuleCallItem.cs" subtype="Code" buildaction="Compile" />
     <File name="Analisys/SyntacticalRulesManager.cs" subtype="Code" buildaction="Compile" />
     <File name="Tests/SyntacticalRuleTests.cs" subtype="Code" buildaction="Compile" />
   </Contents>

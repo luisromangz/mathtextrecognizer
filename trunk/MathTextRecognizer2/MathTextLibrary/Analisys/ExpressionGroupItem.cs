@@ -86,7 +86,6 @@ namespace MathTextLibrary.Analisys
 				}	
 				
 			}
-			Console.WriteLine("hu!:"+formatString+", ("+ String.Join(", ", res.ToArray()) +")");
 			output = String.Format(formatString, res.ToArray());
 			return true;
 		}

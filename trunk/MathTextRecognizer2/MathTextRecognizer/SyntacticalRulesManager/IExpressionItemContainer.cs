@@ -27,5 +27,21 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			get;
 		}
+		
+		/// <summary>
+		/// Moves an items towars the container start.
+		/// </summary>
+		/// <param name="widget">
+		/// A <see cref="ExpressionItemWidget"/>
+		/// </param>
+		void MoveItemBackwards(ExpressionItemWidget widget);
+		
+		/// <summary>
+		/// Moves an item towards the container end.
+		/// </summary>
+		/// <param name="widget">
+		/// A <see cref="ExpressionItemWidget"/>
+		/// </param>
+		void MoveItemFordwards(ExpressionItemWidget widget);
 	}
 }

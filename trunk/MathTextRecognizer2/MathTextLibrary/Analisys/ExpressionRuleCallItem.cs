@@ -11,7 +11,7 @@ namespace MathTextLibrary.Analisys
 	/// This class implements an expression item that represents the use
 	/// of another expression in the parent expression.
 	/// </summary>
-	public class ExpressionSubexpressionItem : ExpressionItem
+	public class ExpressionRuleCallItem : ExpressionItem
 	{
 		string expressionName;
 		
@@ -19,7 +19,7 @@ namespace MathTextLibrary.Analisys
 		/// <summary>
 		/// <see cref="ExpressionSubexpressionItem"/>'s constructor.
 		/// </summary>
-		public ExpressionSubexpressionItem() : base()
+		public ExpressionRuleCallItem() : base()
 		{
 		}
 		
@@ -30,7 +30,7 @@ namespace MathTextLibrary.Analisys
 		/// <value>
 		/// Contains the name of the subexpression to be used.
 		/// </value>
-		public string ExpressionName 
+		public string RuleName 
 		{
 			get 
 			{

@@ -83,7 +83,7 @@ namespace MathTextLibrary.Analisys
 		
 		public bool Match(TokenSequence sequence, out string output)
 		{		
-			Console.WriteLine("Tratando expression: {0}", this.ToString());
+
 			List<string> outputList = new List<string>();
 			
 			bool res;

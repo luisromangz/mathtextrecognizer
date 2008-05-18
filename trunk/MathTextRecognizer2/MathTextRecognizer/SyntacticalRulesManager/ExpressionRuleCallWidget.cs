@@ -1,5 +1,5 @@
-// ExpressionItemWIdget.cs created with MonoDevelop
-// User: luis at 17:52 17/05/2008
+// ExpressionRuleCallWidget.cs created with MonoDevelop
+// User: luis at 11:15 18/05/2008
 
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 	/// <summary>
 	/// This class implements a widget to set a token expression item.
 	/// </summary>
-	public class ExpressionTokenWidget : ExpressionItemWidget
+	public class ExpressionRuleCallWidget : ExpressionItemWidget
 	{
 		
 #region Glade widgets
@@ -24,17 +24,16 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		private Entry expTokenTypeEntry = null;
 		
 		[Widget]
-		private HBox expressionTokenWidgetBase = null;
+		private HBox expressionRuleWidgetBase = null;
 		
 		[Widget]
-		private Button expTokenNextBtn = null;
+		private Button expRuleNextBtn = null;
 		
 		[Widget]
-		private Button expTokenPreviousBtn = null;
+		private Button expRulePreviousBtn = null;
 		
 		[Widget]
-		private VSeparator expTokenSeparator = null;
-		
+		private VSeparator expRuleSeparator = null;
 		
 #endregion Glade widgets
 		
@@ -43,22 +42,22 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 #endregion Fields
 		
 		/// <summary>
-		/// <see cref="ExpressionTokenWidget"/>'s constructor.
+		/// <see cref="ExpressionRuleCallWidget"/>'s constructor.
 		/// </summary>
 		/// <param name="container">
 		/// A <see cref="IExpressionItemContainer"/>
 		/// </param>
-		public ExpressionTokenWidget(IExpressionItemContainer container) 
+		public ExpressionRuleCallWidget(IExpressionItemContainer container) 
 			: base(container)
 		{
 			Glade.XML gladeXml = new XML("mathtextrecognizer.glade",
-			                             "expressionTokenWidgetBase");
+			                             "expressionRuleWidgetBase");
 			
 			gladeXml.Autoconnect(this);
 			
-			this.Add(expressionTokenWidgetBase);
+			this.Add(expressionRuleWidgetBase);
 			
-			this.HeightRequest = expressionTokenWidgetBase.HeightRequest;
+			this.HeightRequest = expressionRuleWidgetBase.HeightRequest;
 			
 			this.ShowAll();
 		}
@@ -71,16 +70,16 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			get 
 			{
-				ExpressionTokenItem res = new ExpressionTokenItem();
-				res.TokenType = expTokenTypeEntry.Text.Trim();
+				ExpressionRuleCallItem res = new ExpressionRuleCallItem();
+				res.RuleName = expTokenTypeEntry.Text.Trim();
 				
 				return res;
 			}
 			set 
 			{
-				if(value.GetType() != typeof(ExpressionTokenItem))
+				if(value.GetType() != typeof(ExpressionRuleCallItem))
 				{
-					throw new ArgumentException("The type of the value wasn't ExpressionTokenItem");
+					throw new ArgumentException("The type of the value wasn't ExpressionRuleCallItem");
 				}
 				
 				expTokenTypeEntry.Text = (value as ExpressionTokenItem).TokenType;
@@ -100,11 +99,14 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </param>
 		public override void CheckPosition(int position)
 		{
-			expTokenNextBtn.Sensitive = position < container.ItemCount -1;
-			expTokenSeparator.Visible = position < container.ItemCount -1;
+			expRuleNextBtn.Sensitive = position < container.ItemCount -1;
+			expRuleSeparator.Visible = position < container.ItemCount -1;
 			
-			expTokenPreviousBtn.Sensitive =  position > 0;
+			expRulePreviousBtn.Sensitive =  position > 0;
+			
+			
 		}
+		
 		
 #endregion Public methods
 		
@@ -119,17 +121,17 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// <param name="args">
 		/// A <see cref="EventArgs"/>
 		/// </param>
-		protected void OnExpTokenRmBtnClicked(object sender, EventArgs args)
+		protected void OnExpRuleRmBtnClicked(object sender, EventArgs args)
 		{
 			container.RemoveItem(this);
 		}
 		
-		private void OnExpTokenNextBtnClicked(object sender, EventArgs args)
+		protected void OnExpRuleNextBtnClicked(object sender, EventArgs args)
 		{
 			this.MoveFordwards();
 		}
 		
-		private void OnExpTokenPreviousBtnClicked(object sender, EventArgs args)
+		protected void OnExpRulePreviousBtnClicked(object sender, EventArgs args)
 		{
 			this.MoveBackwards();
 		}

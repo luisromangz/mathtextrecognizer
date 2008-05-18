@@ -130,13 +130,7 @@ namespace MathTextRecognizer
 			
 			syntacticalRulesManagerDialog = 
 				new SyntacticalRulesManagerDialog(this.Window);
-			
-//			GLib.ExceptionManager.UnhandledException+= delegate(GLib.UnhandledExceptionArgs args)
-//			{
-//				Console.WriteLine(args.ExceptionObject.ToString());				
-//			};
-				
-			
+		
 			
 		}
 		

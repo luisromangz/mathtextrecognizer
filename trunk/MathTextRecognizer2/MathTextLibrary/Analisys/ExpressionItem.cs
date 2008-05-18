@@ -189,7 +189,7 @@ namespace MathTextLibrary.Analisys
 	
 		public bool Match (TokenSequence sequence, out string res)
 		{
-			Console.WriteLine("Item {0}", this.ToString());
+
 			res = "";
 			int counter =0;			
 			string auxOutput;

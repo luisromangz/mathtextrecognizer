@@ -104,15 +104,20 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </param>
 		public void AddItem (ExpressionItemWidget widget)
 		{
-			if(expItemsBox.Children.Length>0)
-			{
-				VSeparator separator = new VSeparator();
-				expItemsBox.Add(separator);
-				separator.Show();
-			}
 			expItemsBox.Add(widget);
 			
-			expItemsScroller.HeightRequest = widget.HeightRequest + 20;
+			for(int i=0;i<expItemsBox.Children.Length; i++)
+			{
+				(expItemsBox.Children[i] as ExpressionItemWidget).CheckPosition(i);
+			}
+			
+			
+			widget.HeightRequestChanged +=
+				new EventHandler(OnChildWidgetHeightRequestChanged);
+			
+			// We expand the scroller is it's necessary to show the whole widget.
+			if(widget.HeightRequest + 20 > expItemsScroller.HeightRequest)
+				expItemsScroller.HeightRequest = widget.HeightRequest + 20;
 			
 			expItemsScroller.Hadjustment.Value =
 				expItemsScroller.Hadjustment.Upper;
@@ -126,24 +131,6 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </param>
 		public void RemoveItem(ExpressionItemWidget widget)
 		{
-			for(int i = 0; i< expItemsBox.Children.Length; i++)
-			{
-				if(expItemsBox.Children[i] == widget)
-				{
-					// Whe remove the separator.
-					if(i > 0)
-					{
-						expItemsBox.Remove(expItemsBox.Children[i-1]);
-					}
-					else if(expItemsBox.Children.Length > 1)
-					{
-						expItemsBox.Remove(expItemsBox.Children[1]);
-					}
-					
-					break;
-				}
-			}
-			
 			expItemsBox.Remove(widget);
 				
 			
@@ -154,14 +141,51 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			else
 			{
 				int maxRequest = -1;
-				foreach (ExpressionItemWidget childWidget in  expItemsBox.Children) 
+				
+				for(int i=0;i<expItemsBox.Children.Length; i++)
 				{
+					ExpressionItemWidget childWidget =
+						(expItemsBox.Children[i] as ExpressionItemWidget);
+					
 					if (maxRequest < childWidget.HeightRequest)
 						maxRequest = childWidget.HeightRequest;
+					
+					childWidget.CheckPosition(i);
 				}
+			
 				
 				expItemsScroller.HeightRequest = maxRequest + 20;
 			}
+		}
+		
+		/// <summary>
+		/// Moves the item towards the expression's end.
+		/// </summary>
+		/// <param name="widget">
+		/// A <see cref="ExpressionItemWidget"/>
+		/// </param>
+		public void MoveItemFordwards(ExpressionItemWidget widget)
+		{
+			int position = (expItemsBox[widget] as Gtk.Box.BoxChild).Position;
+			expItemsBox.ReorderChild(widget, position+1);
+			widget.CheckPosition(position+1);
+			
+			(expItemsBox.Children[position] as ExpressionItemWidget).CheckPosition(position);
+		}
+		
+		/// <summary>
+		/// Moves the widget towards the beginning of the expression.
+		/// </summary>
+		/// <param name="widget">
+		/// A <see cref="ExpressionItemWidget"/>
+		/// </param>
+		public void MoveItemBackwards(ExpressionItemWidget widget)
+		{
+			int position = (expItemsBox[widget] as Gtk.Box.BoxChild).Position;
+			expItemsBox.ReorderChild(widget, position-1);
+			widget.CheckPosition(position-1);
+			
+			(expItemsBox.Children[position] as ExpressionItemWidget).CheckPosition(position);
 		}
 		
 #endregion Public methods
@@ -224,6 +248,36 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		}
 			
 	
+			/// <summary>
+		/// Changes the height of the container based on the height of its
+		/// children, when a height request is detected.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnChildWidgetHeightRequestChanged(object sender,
+		                                               EventArgs args)
+		{
+			if(expItemsBox.Children.Length ==0)
+			{
+				expItemsBox.HeightRequest = 90;
+			}
+			else
+			{
+				int maxRequest = -1;
+				foreach (Widget childWidget in  expItemsBox.Children) 
+				{
+					if (maxRequest < childWidget.HeightRequest)
+						maxRequest = childWidget.HeightRequest;
+				}
+				
+				expItemsScroller.HeightRequest = maxRequest + 20;
+				
+			}
+		}
 		
 #endregion Non-public methods
 	}
