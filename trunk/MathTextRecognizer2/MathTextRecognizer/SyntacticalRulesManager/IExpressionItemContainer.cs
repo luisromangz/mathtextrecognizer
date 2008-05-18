@@ -28,6 +28,11 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			get;
 		}
 		
+		Gtk.Box.BoxChild this[Widget w]
+		{
+			get;
+		}
+		
 		/// <summary>
 		/// Moves an items towars the container start.
 		/// </summary>

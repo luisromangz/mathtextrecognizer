@@ -110,6 +110,20 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			}
 		}
 		
+		/// <summary>
+		/// Contains the <see cref="BoxChild"/> associated to a widget.
+		/// </summary>
+		/// <param name="widget">
+		/// A <see cref="ExpressionItemWidget"/>
+		/// </param>
+		public Gtk.Box.BoxChild this[Widget w]
+		{
+			get
+			{
+				return expGroupItemsBox[w] as Gtk.Box.BoxChild;
+			}
+		}
+		
 		
 #endregion Properties	
 		
@@ -126,11 +140,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			expGroupItemsBox.Add(widget);
 			
-			
-			
-			for(int i=0;i<expGroupItemsBox.Children.Length; i++)
+			foreach (ExpressionItemWidget childWidget in  expGroupItemsBox) 
 			{
-				(expGroupItemsBox.Children[i] as ExpressionItemWidget).CheckPosition(i);
+				childWidget.CheckPosition();
 			}
 		
 			CheckHeight();
@@ -158,14 +170,10 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			expGroupItemsBox.Remove(widget);
 			
-			for(int i=0;i<expGroupItemsBox.Children.Length; i++)
+			foreach (ExpressionItemWidget childWidget in expGroupItemsBox) 
 			{
-				ExpressionItemWidget childWidget =
-					(expGroupItemsBox.Children[i] as ExpressionItemWidget);
-			
-				childWidget.CheckPosition(i);
+				childWidget.CheckPosition();
 			}
-			
 			
 			CheckHeight();
 			
@@ -181,9 +189,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			int position = (expGroupItemsBox[widget] as Gtk.Box.BoxChild).Position;
 			expGroupItemsBox.ReorderChild(widget, position+1);
-			widget.CheckPosition(position+1);
+			widget.CheckPosition();
 			
-			(expGroupItemsBox.Children[position] as ExpressionItemWidget).CheckPosition(position);
+			(expGroupItemsBox.Children[position] as ExpressionItemWidget).CheckPosition();
 			
 		}
 		
@@ -197,9 +205,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			int position = (expGroupItemsBox[widget] as Gtk.Box.BoxChild).Position;
 			expGroupItemsBox.ReorderChild(widget, position-1);
-			widget.CheckPosition(position-1);
+			widget.CheckPosition();
 			
-			(expGroupItemsBox.Children[position] as ExpressionItemWidget).CheckPosition(position);
+			(expGroupItemsBox.Children[position] as ExpressionItemWidget).CheckPosition();
 		}
 		
 		/// <summary>
@@ -209,8 +217,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// <param name="position">
 		/// A <see cref="System.Int32"/>
 		/// </param>
-		public override void CheckPosition (int position)
+		public override void CheckPosition ()
 		{
+			int position = container[this].Position;
 			expGroupNextBtn.Sensitive = position < container.ItemCount -1;
 			expGroupSeparator.Visible = position < container.ItemCount -1;
 			

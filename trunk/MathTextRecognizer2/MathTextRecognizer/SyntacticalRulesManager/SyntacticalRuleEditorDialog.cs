@@ -155,17 +155,16 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		private SyntacticalExpressionWidget AddExpression()
 		{
 			
-			if(synEdExpressionsVB.Children.Length>0)
-			{
-				HSeparator separator = new HSeparator();
-				synEdExpressionsVB.Add(separator);
-				separator.Show();
-			}
-			
 			SyntacticalExpressionWidget widget = 
 				new SyntacticalExpressionWidget(this);
 			
 			synEdExpressionsVB.Add(widget);
+			
+			foreach (SyntacticalExpressionWidget expWidget in synEdExpressionsVB) 
+			{
+				expWidget.CheckPosition();
+			}
+			
 			
 			synEdExpressionScroller.Vadjustment.Value = synEdExpressionScroller.Vadjustment.Upper;
 			

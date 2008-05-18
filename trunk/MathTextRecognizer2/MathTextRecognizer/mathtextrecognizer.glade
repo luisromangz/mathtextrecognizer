@@ -2995,7 +2995,7 @@ MathML</property>
     </child>
   </widget>
   <widget class="GtkDialog" id="syntacticalRuleEditorDialog">
-    <property name="width_request">600</property>
+    <property name="width_request">750</property>
     <property name="height_request">350</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Editor de reglas</property>
@@ -3200,61 +3200,66 @@ MathML</property>
         <property name="yalign">0</property>
         <property name="yscale">0</property>
         <child>
-          <widget class="GtkHBox" id="hbox35">
+          <widget class="GtkVBox" id="vbox11">
             <property name="visible">True</property>
-            <property name="spacing">5</property>
             <child>
-              <widget class="GtkAlignment" id="alignment55">
+              <widget class="GtkHBox" id="hbox35">
                 <property name="visible">True</property>
-                <property name="yalign">0</property>
-                <property name="yscale">0</property>
-                <property name="top_padding">6</property>
+                <property name="spacing">5</property>
                 <child>
-                  <widget class="GtkLabel" id="expEdOrLabel">
+                  <widget class="GtkAlignment" id="alignment55">
                     <property name="visible">True</property>
-                    <property name="yalign">1</property>
-                    <property name="ypad">12</property>
-                    <property name="label" translatable="yes">|</property>
-                  </widget>
-                </child>
-              </widget>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkVBox" id="vbox12">
-                <property name="visible">True</property>
-                <child>
-                  <widget class="GtkFrame" id="frame7">
-                    <property name="visible">True</property>
-                    <property name="label_xalign">0</property>
-                    <property name="shadow_type">GTK_SHADOW_NONE</property>
+                    <property name="yalign">0</property>
+                    <property name="yscale">0</property>
+                    <property name="top_padding">6</property>
                     <child>
-                      <widget class="GtkAlignment" id="alignment56">
+                      <widget class="GtkLabel" id="expEdOrLbl">
                         <property name="visible">True</property>
-                        <property name="top_padding">5</property>
+                        <property name="yalign">1</property>
+                        <property name="ypad">12</property>
+                        <property name="label" translatable="yes">|</property>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkVBox" id="vbox12">
+                    <property name="visible">True</property>
+                    <child>
+                      <widget class="GtkFrame" id="frame7">
+                        <property name="visible">True</property>
+                        <property name="label_xalign">0</property>
+                        <property name="shadow_type">GTK_SHADOW_NONE</property>
                         <child>
-                          <widget class="GtkScrolledWindow" id="expItemsScroller">
-                            <property name="height_request">90</property>
+                          <widget class="GtkAlignment" id="alignment56">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="vscrollbar_policy">GTK_POLICY_NEVER</property>
+                            <property name="top_padding">5</property>
                             <child>
-                              <widget class="GtkViewport" id="viewport3">
+                              <widget class="GtkScrolledWindow" id="expItemsScroller">
+                                <property name="height_request">90</property>
                                 <property name="visible">True</property>
-                                <property name="resize_mode">GTK_RESIZE_QUEUE</property>
-                                <property name="shadow_type">GTK_SHADOW_NONE</property>
+                                <property name="can_focus">True</property>
+                                <property name="vscrollbar_policy">GTK_POLICY_NEVER</property>
                                 <child>
-                                  <widget class="GtkAlignment" id="alignment58">
+                                  <widget class="GtkViewport" id="viewport3">
                                     <property name="visible">True</property>
-                                    <property name="xalign">0</property>
-                                    <property name="xscale">0</property>
+                                    <property name="resize_mode">GTK_RESIZE_QUEUE</property>
+                                    <property name="shadow_type">GTK_SHADOW_NONE</property>
                                     <child>
-                                      <widget class="GtkHBox" id="expItemsBox">
+                                      <widget class="GtkAlignment" id="alignment58">
                                         <property name="visible">True</property>
-                                        <property name="spacing">5</property>
+                                        <property name="xalign">0</property>
+                                        <property name="xscale">0</property>
+                                        <child>
+                                          <widget class="GtkHBox" id="expItemsBox">
+                                            <property name="visible">True</property>
+                                            <property name="spacing">5</property>
+                                          </widget>
+                                        </child>
                                       </widget>
                                     </child>
                                   </widget>
@@ -3263,117 +3268,49 @@ MathML</property>
                             </child>
                           </widget>
                         </child>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkLabel" id="label50">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">Expresión:</property>
-                        <property name="use_markup">True</property>
-                      </widget>
-                      <packing>
-                        <property name="type">label_item</property>
-                      </packing>
-                    </child>
-                  </widget>
-                </child>
-                <child>
-                  <widget class="GtkFrame" id="frame8">
-                    <property name="visible">True</property>
-                    <property name="label_xalign">0</property>
-                    <property name="shadow_type">GTK_SHADOW_NONE</property>
-                    <child>
-                      <widget class="GtkAlignment" id="alignment52">
-                        <property name="visible">True</property>
-                        <property name="xalign">0</property>
-                        <property name="xscale">0</property>
-                        <property name="left_padding">5</property>
                         <child>
-                          <widget class="GtkEntry" id="expFormatEntry">
+                          <widget class="GtkLabel" id="label50">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="has_tooltip">True</property>
-                            <property name="tooltip_text">Escriba aquí la cadena de formato de la expresión. La cadena {0} será sustituida por el texto resultante del análisis del primer elemento de la expresión, {1} del segundo, etc.</property>
-                            <property name="width_chars">20</property>
+                            <property name="label" translatable="yes">Expresión:</property>
+                            <property name="use_markup">True</property>
                           </widget>
+                          <packing>
+                            <property name="type">label_item</property>
+                          </packing>
                         </child>
                       </widget>
                     </child>
                     <child>
-                      <widget class="GtkLabel" id="label52">
+                      <widget class="GtkFrame" id="frame8">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">Cadena de formato:</property>
-                        <property name="use_markup">True</property>
-                      </widget>
-                      <packing>
-                        <property name="type">label_item</property>
-                      </packing>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">False</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-              </widget>
-              <packing>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkVBox" id="vbox11">
-                <property name="visible">True</property>
-                <property name="spacing">4</property>
-                <child>
-                  <widget class="GtkHBox" id="hbox36">
-                    <property name="visible">True</property>
-                    <property name="spacing">3</property>
-                    <property name="homogeneous">True</property>
-                    <child>
-                      <widget class="GtkAlignment" id="alignment51">
-                        <property name="visible">True</property>
-                        <property name="yscale">0</property>
+                        <property name="label_xalign">0</property>
+                        <property name="shadow_type">GTK_SHADOW_NONE</property>
                         <child>
-                          <widget class="GtkButton" id="expUpBtn">
+                          <widget class="GtkAlignment" id="alignment52">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
-                            <property name="has_tooltip">True</property>
-                            <property name="tooltip_text">Sube la expresión dentro de la lista de expresiones de la regla, dándole más prioridad</property>
-                            <property name="response_id">0</property>
+                            <property name="xalign">0</property>
+                            <property name="xscale">0</property>
+                            <property name="left_padding">5</property>
                             <child>
-                              <widget class="GtkImage" id="image33">
+                              <widget class="GtkEntry" id="expFormatEntry">
                                 <property name="visible">True</property>
-                                <property name="stock">gtk-go-up</property>
+                                <property name="can_focus">True</property>
+                                <property name="has_tooltip">True</property>
+                                <property name="tooltip_text">Escriba aquí la cadena de formato de la expresión. La cadena {0} será sustituida por el texto resultante del análisis del primer elemento de la expresión, {1} del segundo, etc.</property>
+                                <property name="width_chars">20</property>
                               </widget>
                             </child>
                           </widget>
                         </child>
-                      </widget>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">False</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="GtkAlignment" id="alignment54">
-                        <property name="visible">True</property>
-                        <property name="yalign">1</property>
-                        <property name="yscale">0</property>
                         <child>
-                          <widget class="GtkButton" id="expUpBtn1">
+                          <widget class="GtkLabel" id="label52">
                             <property name="visible">True</property>
-                            <property name="sensitive">False</property>
-                            <property name="has_tooltip">True</property>
-                            <property name="tooltip_text">Baja la expresión dentro del conjunto de expresiones de la regla, quitandole prioridad</property>
-                            <property name="response_id">0</property>
-                            <child>
-                              <widget class="GtkImage" id="image38">
-                                <property name="visible">True</property>
-                                <property name="stock">gtk-go-up</property>
-                              </widget>
-                            </child>
+                            <property name="label" translatable="yes">Cadena de formato:</property>
+                            <property name="use_markup">True</property>
                           </widget>
+                          <packing>
+                            <property name="type">label_item</property>
+                          </packing>
                         </child>
                       </widget>
                       <packing>
@@ -3382,62 +3319,142 @@ MathML</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
+                  </widget>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkVBox" id="vbox17">
+                    <property name="visible">True</property>
+                    <property name="spacing">4</property>
                     <child>
-                      <widget class="GtkAlignment" id="alignment53">
+                      <widget class="GtkHBox" id="hbox36">
                         <property name="visible">True</property>
-                        <property name="yalign">1</property>
-                        <property name="yscale">0</property>
+                        <property name="spacing">3</property>
+                        <property name="homogeneous">True</property>
                         <child>
-                          <widget class="GtkButton" id="expRemoveBtn">
+                          <widget class="GtkAlignment" id="alignment51">
                             <property name="visible">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="has_tooltip">True</property>
-                            <property name="tooltip_text">Elimina la expresión de la regla.</property>
-                            <property name="response_id">0</property>
-                            <signal name="clicked" handler="OnExpRemoveBtnClicked"/>
+                            <property name="yscale">0</property>
                             <child>
-                              <widget class="GtkImage" id="image35">
+                              <widget class="GtkButton" id="expUpBtn">
                                 <property name="visible">True</property>
-                                <property name="stock">gtk-remove</property>
+                                <property name="sensitive">False</property>
+                                <property name="has_tooltip">True</property>
+                                <property name="tooltip_text">Sube la expresión dentro de la lista de expresiones de la regla, dándole más prioridad</property>
+                                <property name="response_id">0</property>
+                                <signal name="clicked" handler="OnExpUpBtnClicked"/>
+                                <child>
+                                  <widget class="GtkImage" id="image33">
+                                    <property name="visible">True</property>
+                                    <property name="stock">gtk-go-up</property>
+                                  </widget>
+                                </child>
                               </widget>
                             </child>
                           </widget>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkAlignment" id="alignment54">
+                            <property name="visible">True</property>
+                            <property name="yalign">1</property>
+                            <property name="yscale">0</property>
+                            <child>
+                              <widget class="GtkButton" id="expDownBtn">
+                                <property name="visible">True</property>
+                                <property name="sensitive">False</property>
+                                <property name="has_tooltip">True</property>
+                                <property name="tooltip_text">Baja la expresión dentro del conjunto de expresiones de la regla, quitandole prioridad</property>
+                                <property name="response_id">0</property>
+                                <signal name="clicked" handler="OnExpDownBtnClicked"/>
+                                <child>
+                                  <widget class="GtkImage" id="image38">
+                                    <property name="visible">True</property>
+                                    <property name="stock">gtk-go-up</property>
+                                  </widget>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">False</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkAlignment" id="alignment53">
+                            <property name="visible">True</property>
+                            <property name="yalign">1</property>
+                            <property name="yscale">0</property>
+                            <child>
+                              <widget class="GtkButton" id="expRemoveBtn">
+                                <property name="visible">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="has_tooltip">True</property>
+                                <property name="tooltip_text">Elimina la expresión de la regla.</property>
+                                <property name="response_id">0</property>
+                                <signal name="clicked" handler="OnExpRemoveBtnClicked"/>
+                                <child>
+                                  <widget class="GtkImage" id="image35">
+                                    <property name="visible">True</property>
+                                    <property name="stock">gtk-remove</property>
+                                  </widget>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">False</property>
+                            <property name="position">2</property>
+                          </packing>
                         </child>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
                         <property name="fill">False</property>
-                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkButton" id="expEdAddItemBtn">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="has_tooltip">True</property>
+                        <property name="tooltip_text">Añade un item a la expresión</property>
+                        <property name="label" translatable="yes">Añadir item...</property>
+                        <property name="response_id">0</property>
+                        <signal name="clicked" handler="OnExpAddItemBtnClicked"/>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">False</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkButton" id="expEdAddItemBtn">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="has_tooltip">True</property>
-                    <property name="tooltip_text">Añade un item a la expresión</property>
-                    <property name="label" translatable="yes">Añadir item...</property>
-                    <property name="response_id">0</property>
-                    <signal name="clicked" handler="OnExpAddItemBtnClicked"/>
-                  </widget>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">False</property>
-                    <property name="position">1</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
               </widget>
+            </child>
+            <child>
+              <widget class="GtkHSeparator" id="expSeparator">
+                <property name="visible">True</property>
+              </widget>
               <packing>
                 <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">2</property>
+                <property name="padding">2</property>
+                <property name="position">1</property>
               </packing>
             </child>
           </widget>
@@ -3962,7 +3979,7 @@ MathML</property>
                             <property name="top_padding">5</property>
                             <child>
                               <widget class="GtkScrolledWindow" id="expGroupItemsScroller">
-                                <property name="width_request">301</property>
+                                <property name="width_request">340</property>
                                 <property name="height_request">130</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>

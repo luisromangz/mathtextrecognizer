@@ -98,8 +98,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// <param name="position">
 		/// A <see cref="System.Int32"/>
 		/// </param>
-		public override void CheckPosition(int position)
+		public override void CheckPosition()
 		{
+			int position = container[this].Position;
 			expTokenNextBtn.Sensitive = position < container.ItemCount -1;
 			expTokenSeparator.Visible = position < container.ItemCount -1;
 			
