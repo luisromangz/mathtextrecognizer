@@ -61,7 +61,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// <param name="position">
 		/// A <see cref="System.Int32"/>
 		/// </param>
-		public abstract void CheckPosition(int position);
+		public abstract void CheckPosition();
 		
 		public void MoveFordwards()
 		{

@@ -39,6 +39,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		[Widget]
 		private ScrolledWindow expItemsScroller = null;
 		
+		[Widget]
+		private HSeparator expSeparator = null;
+		
 #endregion Glade widgets
 		
 #region Fields
@@ -92,6 +95,21 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			}
 		}
 		
+		/// <summary>
+		/// Contains the <see cref="BoxChild"/> associated to a 
+		/// given widget.
+		/// </summary>
+		/// <param name="widget">
+		/// A <see cref="ExpressionItemWidget"/>
+		/// </param>
+		public Gtk.Box.BoxChild this[Widget w]
+		{
+			get
+			{
+				return expItemsBox[w] as Gtk.Box.BoxChild;
+			}
+		}
+		
 #endregion Properties
 		
 #region Public methods
@@ -106,9 +124,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			expItemsBox.Add(widget);
 			
-			for(int i=0;i<expItemsBox.Children.Length; i++)
+			foreach (ExpressionItemWidget w in expItemsBox.Children) 
 			{
-				(expItemsBox.Children[i] as ExpressionItemWidget).CheckPosition(i);
+				w.CheckPosition();
 			}
 			
 			
@@ -142,15 +160,12 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			{
 				int maxRequest = -1;
 				
-				for(int i=0;i<expItemsBox.Children.Length; i++)
+				foreach (ExpressionItemWidget childWidget in expItemsBox.Children) 
 				{
-					ExpressionItemWidget childWidget =
-						(expItemsBox.Children[i] as ExpressionItemWidget);
-					
 					if (maxRequest < childWidget.HeightRequest)
 						maxRequest = childWidget.HeightRequest;
 					
-					childWidget.CheckPosition(i);
+					childWidget.CheckPosition();
 				}
 			
 				
@@ -168,9 +183,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			int position = (expItemsBox[widget] as Gtk.Box.BoxChild).Position;
 			expItemsBox.ReorderChild(widget, position+1);
-			widget.CheckPosition(position+1);
+			widget.CheckPosition();
 			
-			(expItemsBox.Children[position] as ExpressionItemWidget).CheckPosition(position);
+			(expItemsBox.Children[position] as ExpressionItemWidget).CheckPosition();
 		}
 		
 		/// <summary>
@@ -183,9 +198,25 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			int position = (expItemsBox[widget] as Gtk.Box.BoxChild).Position;
 			expItemsBox.ReorderChild(widget, position-1);
-			widget.CheckPosition(position-1);
+			widget.CheckPosition();
 			
-			(expItemsBox.Children[position] as ExpressionItemWidget).CheckPosition(position);
+			(expItemsBox.Children[position] as ExpressionItemWidget).CheckPosition();
+		}
+		
+		/// <summary>
+		/// Checks the expression's position and acts accordingly.
+		/// </summary>
+		public void CheckPosition()
+		{
+			int position =
+				(this.dialog.ExpressionsBox[this] as Gtk.Box.BoxChild).Position;
+			
+			expEdOrLbl.Text = position>0?"|": " ";
+			
+			expSeparator.Visible = position < dialog.ExpressionsBox.Children.Length -1;
+			expDownBtn.Sensitive = position < dialog.ExpressionsBox.Children.Length -1;
+			
+			expUpBtn.Sensitive =  position > 0;
 		}
 		
 #endregion Public methods
@@ -248,7 +279,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		}
 			
 	
-			/// <summary>
+		/// <summary>
 		/// Changes the height of the container based on the height of its
 		/// children, when a height request is detected.
 		/// </summary>
@@ -277,6 +308,24 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				expItemsScroller.HeightRequest = maxRequest + 20;
 				
 			}
+		}
+		
+		private void OnExpUpBtnClicked(object sender, EventArgs args)
+		{
+			int position = (dialog.ExpressionsBox[this] as Gtk.Box.BoxChild).Position;
+			dialog.ExpressionsBox.ReorderChild(this, position-1);
+			this.CheckPosition();
+			
+			(dialog.ExpressionsBox.Children[position] as ExpressionItemWidget).CheckPosition();
+		}
+		
+		private void OnExpDownBtnClicked(object sender, EventArgs args)
+		{
+			int position = (dialog.ExpressionsBox[this] as Gtk.Box.BoxChild).Position;
+			dialog.ExpressionsBox.ReorderChild(this, position+1);
+			this.CheckPosition();
+			
+			(dialog.ExpressionsBox.Children[position] as ExpressionItemWidget).CheckPosition();
 		}
 		
 #endregion Non-public methods
