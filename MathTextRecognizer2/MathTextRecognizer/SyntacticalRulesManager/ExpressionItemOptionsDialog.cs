@@ -78,7 +78,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			get 
 			{
-				throw new NotImplementedException();
+				return itemOpRelatedItemsBox.Children.Length;
 			}
 		}
 
@@ -93,11 +93,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			get 
 			{
-				throw new NotImplementedException();
-			}
-			set 
-			{
-				throw new NotImplementedException();
+				return (Gtk.Box.BoxChild)(itemOpRelatedItemsBox[w]);
 			}
 		}
 		
@@ -139,8 +135,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				itemOpForceSearchCheck.Active =  value.ForceCheck;
 				itemOpFormatEntry.Text =  value.FormatString;
 				
-				itemOpModifierCombo.Active = (int)(value.Modifier);
-				
+				itemOpModifierCombo.Active = (int)(value.Modifier);			
 				
 			}
 		}
@@ -157,7 +152,22 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </param>
 		public void AddItem (ExpressionItemWidget widget)
 		{
+			RelatedItemWidget relatedItemWidget = 
+				new RelatedItemWidget(widget, this);
 			
+			widget.SetRelatedMode();
+			
+			this.itemOpRelatedItemsBox.Add(relatedItemWidget);
+			
+			foreach (RelatedItemWidget relWidget in itemOpRelatedItemsBox.Children) 
+			{
+				relWidget.CheckPosition();
+			}
+			
+			itemOpFormatEntry.Sensitive = true;
+			
+			itemOpRelatedItemsScroller.Vadjustment.Value = 
+				itemOpRelatedItemsScroller.Vadjustment.Upper;
 		}
 
 		/// <summary>
@@ -168,7 +178,15 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </param>
 		public void RemoveItem (ExpressionItemWidget widget)
 		{
-			throw new NotImplementedException();
+			itemOpRelatedItemsBox.Remove(widget);
+			
+			foreach (RelatedItemWidget relWidget in itemOpRelatedItemsBox.Children) 
+			{
+				relWidget.CheckPosition();
+			}
+			
+			itemOpFormatEntry.Sensitive = 
+				itemOpRelatedItemsBox.Children.Length > 0;
 		}
 
 		/// <summary>
@@ -179,7 +197,11 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </param>
 		public void MoveItemBackwards (ExpressionItemWidget widget)
 		{
-			throw new NotImplementedException();
+			int position = this[widget].Position;
+			itemOpRelatedItemsBox.ReorderChild(widget, position-1);
+			widget.CheckPosition();
+			
+			((RelatedItemWidget)itemOpRelatedItemsBox.Children[position]).CheckPosition();
 		}
 
 		/// <summary>
@@ -190,7 +212,12 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </param>
 		public void MoveItemFordwards (ExpressionItemWidget widget)
 		{
-			throw new NotImplementedException();
+			int position = this[widget].Position;
+			itemOpRelatedItemsBox.ReorderChild(widget, position+1);
+			widget.CheckPosition();
+			
+			((RelatedItemWidget)itemOpRelatedItemsBox.Children[position]).CheckPosition();
+			
 		}
 		
 		/// <summary>
@@ -236,7 +263,24 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			itemOpForceSearchCheck.Visible = isToken;
 			itemOpFormatAlignment.Visible =  isToken;
 			itemOpRelatedItemsFrame.Visible =  isToken;
+			
+			if(isToken)
+			{
+				this.expressionItemOptionsDialog.WidthRequest = 520;
+			}
+			
+			itemOpRelatedItemsScroller.Vadjustment.ValueChanged+=
+				delegate(object sender, EventArgs args)
+			{
+				itemOpRelatedItemsScroller.QueueDraw();
+			};
 		
+		}
+		
+		private void OnItemOpAddRelatedBtnClicked(object sender,
+		                                          EventArgs args)
+		{
+			addItemMenu.Popup();
 		}
 		
 #endregion Non-public methods

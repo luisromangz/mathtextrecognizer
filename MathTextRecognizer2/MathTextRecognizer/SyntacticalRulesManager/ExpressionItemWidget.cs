@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 using Gtk;
 
+using MathTextCustomWidgets.Dialogs;
+
 using MathTextLibrary.Analisys;
 
 namespace MathTextRecognizer.SyntacticalRulesManager
@@ -71,10 +73,22 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </summary>
 		public abstract void SetRelatedMode();
 		
+		protected void Remove()
+		{
+			ResponseType res = 
+				ConfirmDialog.Show(this.container.Window,
+				                   "¿Realmente quieres eliminar este elemento?");
+			
+			if(res == ResponseType.No)
+				return;
+			
+			container.RemoveItem(this);
+		}
+		
 		/// <summary>
 		/// Moves the item towards the container's end.
 		/// </summary>
-		public void MoveFordwards()
+		protected void MoveFordwards()
 		{
 			this.container.MoveItemFordwards(this);
 		}
@@ -82,7 +96,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// <summary>
 		/// Moves the item towards the container's beginning.
 		/// </summary>
-		public void MoveBackwards()
+		protected void MoveBackwards()
 		{
 			this.container.MoveItemBackwards(this);
 		}

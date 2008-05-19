@@ -293,7 +293,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </param>
 		protected void OnExpGroupRmBtnClicked(object sender, EventArgs args)
 		{
-			container.RemoveItem(this);
+			Remove();
 		}
 		
 		/// <summary>

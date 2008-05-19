@@ -51,11 +51,13 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			:base(container)
 		{
 			Glade.XML gladeXml = new XML("mathtextrecognizer.glade",
-			                             "relatedItemWidget");
+			                             "relatedItemWidgetBase");
 			
 			gladeXml.Autoconnect(this);
 			
 			this.itemWidget = itemWidget;
+			
+			this.Add(relatedItemWidgetBase);
 			
 			
 			this.relatedItemPlaceholder.Add(itemWidget);
@@ -125,10 +127,27 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			throw new NotImplementedException ();
 		}
-
-	
 	
 #endregion Public methods
+		
+#region Non-public methods
+		
+		protected void OnRelatedItemRmBtnClicked(object sender, EventArgs args)
+		{
+			Remove();
+		}
+		
+		protected void OnRelatedItemUpBtnClicked(object sender, EventArgs args)
+		{
+			this.MoveBackwards();
+		}
+		
+		protected void OnRelatedItemDownBtnClicked(object sender, EventArgs args)
+		{
+			this.MoveFordwards();
+		}
+		
+#endregion Non-public methods
 	}
 	
 
