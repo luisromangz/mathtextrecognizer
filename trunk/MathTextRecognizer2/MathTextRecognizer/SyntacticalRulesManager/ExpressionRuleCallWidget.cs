@@ -138,7 +138,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </param>
 		protected void OnExpRuleRmBtnClicked(object sender, EventArgs args)
 		{
-			container.RemoveItem(this);
+			Remove();
 		}
 		
 		protected void OnExpRuleNextBtnClicked(object sender, EventArgs args)
