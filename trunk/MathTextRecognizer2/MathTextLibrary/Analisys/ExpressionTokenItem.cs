@@ -17,12 +17,17 @@ namespace MathTextLibrary.Analisys
 		
 		private bool forceTokenSearch;
 		
+		private List<ExpressionItem> relatedItems;
+		
+		
 		/// <summary>
 		/// <see cref="ExpressionTokenItem"/>'s constructor.
 		/// </summary>
 		public ExpressionTokenItem() : base()
 		{
 			forceTokenSearch = false;
+			
+			relatedItems = new List<ExpressionItem>();		
 		}
 		
 #region Properties
@@ -58,6 +63,19 @@ namespace MathTextLibrary.Analisys
 			}
 		}
 		
+		
+		/// <value>
+		/// Contains the list of items placed in a special position 
+		/// relative to this item.
+		/// </value>
+		public List<ExpressionItem> RelatedItems
+		{
+			get
+			{
+				return relatedItems;
+			}
+		}
+		
 #endregion Properties
 		
 #region Non-public methods
@@ -76,7 +94,6 @@ namespace MathTextLibrary.Analisys
 			{
 				return false || !IsCompulsory;
 			}
-			
 			
 			output= sequence[idx].Text;
 			sequence.RemoveAt(idx);
@@ -99,7 +116,63 @@ namespace MathTextLibrary.Analisys
 
 		protected override string ToStringAux ()
 		{
-			return this.tokenType;
+			
+			
+			if(relatedItems.Count == 0)
+			{
+				return this.tokenType;
+			}
+			else
+			{
+				string res=this.TokenType + " {";
+				
+				foreach (ExpressionItem item in relatedItems)
+				{
+					switch(item.Position)
+					{
+						case ExpressionItemPosition.Above:
+							res+= "↑";
+							break;
+						case ExpressionItemPosition.Below:
+							res+="";
+							break;
+						case ExpressionItemPosition.Inside:
+							res+="↶";
+							break;
+						case ExpressionItemPosition.RootIndex:
+							res+="↖";
+							break;						
+						case ExpressionItemPosition.SubIndex:
+							res+="↘";
+							break;						
+						case ExpressionItemPosition.SuperIndex:
+							res+="↗";
+							break;
+							
+					}
+					
+					res+= "{"+item.ToString()+"}";
+				}
+				
+				res +="}";
+				
+				return res;
+			}
+			
+		}
+		
+		/// <summary>
+		/// Tries to match the tokens related items.
+		/// </summary>
+		/// <param name="index">
+		/// A <see cref="System.Int32"/>
+		/// </param>
+		/// <param name="sequence">
+		/// A <see cref="TokenSequence"/>
+		/// </param>
+		private void MatchRelatedItems(int index, TokenSequence sequence)
+		{
+			
 		}
 
 		

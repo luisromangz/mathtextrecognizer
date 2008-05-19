@@ -32,6 +32,9 @@ namespace MathTextRecognizer.LexicalRulesManager
 		[WidgetAttribute]
 		private Label orLabel = null;
 		
+		[WidgetAttribute]
+		private HSeparator lexExpSeparator = null;
+		
 		private Window parentWindow;
 		private VBox container;
 		
@@ -87,6 +90,8 @@ namespace MathTextRecognizer.LexicalRulesManager
 			lexDownBtn.Sensitive = notLast;
 			lexUpBtn.Sensitive = notFirst;				
 			orLabel.Text = notFirst?"|":" ";	
+			
+			lexExpSeparator.Visible = notLast;
 				
 		}
 		

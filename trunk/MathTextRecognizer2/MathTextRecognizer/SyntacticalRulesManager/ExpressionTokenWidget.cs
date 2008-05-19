@@ -35,6 +35,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		[Widget]
 		private VSeparator expTokenSeparator = null;
 		
+		[Widget]
+		private VBox expTokenButtonsBox =null;
+		
 		
 #endregion Glade widgets
 		
@@ -107,6 +110,17 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			expTokenPreviousBtn.Sensitive =  position > 0;
 		}
 		
+		/// <summary>
+		/// Hides some widget's elements to make it more suitable to be 
+		/// shown inside a <see cref="RelatedItemWidget"/>.
+		/// </summary>
+		public override void SetRelatedMode ()
+		{
+			expTokenButtonsBox.Visible = false;
+			expTokenSeparator.Visible= false;
+		}
+
+		
 #endregion Public methods
 		
 #region Non-public methods
@@ -133,6 +147,16 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		private void OnExpTokenPreviousBtnClicked(object sender, EventArgs args)
 		{
 			this.MoveBackwards();
+		}
+		
+		private void OnExpTokenOptionsBtnClicked(object sender, EventArgs args)
+		{
+			ExpressionItemOptionsDialog dialog = 
+				new ExpressionItemOptionsDialog(this.container.Window , 
+				                                typeof(ExpressionTokenItem));
+			
+			dialog.Show();
+			dialog.Destroy();
 		}
 		
 #endregion Non-public methods

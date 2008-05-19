@@ -102,11 +102,22 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// <param name="widget">
 		/// A <see cref="ExpressionItemWidget"/>
 		/// </param>
-		public Gtk.Box.BoxChild this[Widget w]
+		public new Gtk.Box.BoxChild this[Widget w]
 		{
 			get
 			{
 				return expItemsBox[w] as Gtk.Box.BoxChild;
+			}
+		}
+		
+		/// <value>
+		/// Contains the container's window.
+		/// </value>
+		public Window Window
+		{
+			get
+			{
+				return dialog.Window;
 			}
 		}
 		
@@ -310,22 +321,33 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			}
 		}
 		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
 		private void OnExpUpBtnClicked(object sender, EventArgs args)
 		{
-			int position = (dialog.ExpressionsBox[this] as Gtk.Box.BoxChild).Position;
+			int position =
+				(dialog.ExpressionsBox[this] as Gtk.Box.BoxChild).Position;
 			dialog.ExpressionsBox.ReorderChild(this, position-1);
 			this.CheckPosition();
 			
-			(dialog.ExpressionsBox.Children[position] as ExpressionItemWidget).CheckPosition();
+			((SyntacticalExpressionWidget)dialog.ExpressionsBox.Children[position]).CheckPosition();
 		}
 		
 		private void OnExpDownBtnClicked(object sender, EventArgs args)
 		{
-			int position = (dialog.ExpressionsBox[this] as Gtk.Box.BoxChild).Position;
+			int position = 
+				(dialog.ExpressionsBox[this] as Gtk.Box.BoxChild).Position;
 			dialog.ExpressionsBox.ReorderChild(this, position+1);
 			this.CheckPosition();
 			
-			(dialog.ExpressionsBox.Children[position] as ExpressionItemWidget).CheckPosition();
+			((SyntacticalExpressionWidget)dialog.ExpressionsBox.Children[position]).CheckPosition();
 		}
 		
 #endregion Non-public methods
