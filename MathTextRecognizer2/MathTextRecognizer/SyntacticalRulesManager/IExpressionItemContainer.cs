@@ -33,6 +33,11 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			get;
 		}
 		
+		Window Window
+		{
+			get;
+		}
+		
 		/// <summary>
 		/// Moves an items towars the container start.
 		/// </summary>

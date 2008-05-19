@@ -78,24 +78,46 @@ namespace MathTextLibrary.Analisys
 	public abstract class ExpressionItem : ISyntacticMatcher
 	{
 		private ExpressionItemPosition position;
-		private ExpressionItem relatedItem;
+		
+		
+		private ExpressionTokenItem relatedItem;
 		
 		private ExpressionItemModifier modifier;
 		private List<Token> firstTokens;
 		
-		private List<ExpressionItem> relatedItems;
 		
 		/// <summary>
 		/// <see cref="ExpressionItem"/>'s constructor
 		/// </summary>
 		public ExpressionItem()
 		{
-			relatedItems = new List<ExpressionItem>();			
+				
 		}
 
 		
 		
 #region Properties
+		
+		/// <value>
+		/// This item's related item. When assigned, a tree is formed.
+		/// </value>
+		public ExpressionTokenItem RelatedTo 
+		{
+			get 
+			{
+				return relatedItem;
+			}
+			set 
+			{
+				relatedItem = value;
+				if(!value.RelatedItems.Contains(this))
+				{
+					value.RelatedItems.Add(this);
+				}
+				
+			}
+		}
+		
 		
 		/// <value>
 		/// Contains the first tokens of the item.
@@ -139,33 +161,7 @@ namespace MathTextLibrary.Analisys
 			}
 		}
 
-		/// <value>
-		/// This item's related item. When assigned, a tree is formed.
-		/// </value>
-		public ExpressionItem RelatedItem 
-		{
-			get 
-			{
-				return relatedItem;
-			}
-			set 
-			{
-				relatedItem = value;
-				value.relatedItems.Add(this);
-			}
-		}
 		
-		/// <value>
-		/// Contains the list of items placed in a special position 
-		/// relative to this item.
-		/// </value>
-		public List<ExpressionItem> RelatedItems
-		{
-			get
-			{
-				return relatedItems;
-			}
-		}
 
 		/// <value>
 		/// The item's appearance modifier.
@@ -257,31 +253,7 @@ namespace MathTextLibrary.Analisys
 					break;
 			}
 			
-			foreach (ExpressionItem item in relatedItems)
-			{
-				switch(item.Position)
-				{
-					case ExpressionItemPosition.Above:
-						res+= "↑";
-						break;
-					case ExpressionItemPosition.Below:
-						res+="";
-						break;
-					case ExpressionItemPosition.Inside:
-						res+="↶";
-						break;
-					case ExpressionItemPosition.RootIndex:
-						res+="↖";
-						break;						
-					case ExpressionItemPosition.SubIndex:
-						res+="↘";
-						break;						
-					case ExpressionItemPosition.SuperIndex:
-						res+="↗";
-						break;
-						
-				}
-			}
+		
 			
 			return res;
 		}

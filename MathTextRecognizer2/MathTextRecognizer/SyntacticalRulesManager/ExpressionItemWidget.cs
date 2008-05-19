@@ -37,6 +37,8 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			set;
 		}
 		
+		
+		
 		/// <value>
 		/// Sets the widget height request.
 		/// </value>
@@ -63,14 +65,37 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </param>
 		public abstract void CheckPosition();
 		
+		/// <summary>
+		/// Sets the widget in a mode suitable to be shown inside 
+		/// a <see cref="RelatedItemWidget"/>.
+		/// </summary>
+		public abstract void SetRelatedMode();
+		
+		/// <summary>
+		/// Moves the item towards the container's end.
+		/// </summary>
 		public void MoveFordwards()
 		{
 			this.container.MoveItemFordwards(this);
 		}
 		
+		/// <summary>
+		/// Moves the item towards the container's beginning.
+		/// </summary>
 		public void MoveBackwards()
 		{
 			this.container.MoveItemBackwards(this);
+		}
+		
+		/// <value>
+		/// Contains the widget's parent window.
+		/// </value>
+		public Window Window
+		{
+			get
+			{
+				return container.Window;
+			}
 		}
 	}
 }

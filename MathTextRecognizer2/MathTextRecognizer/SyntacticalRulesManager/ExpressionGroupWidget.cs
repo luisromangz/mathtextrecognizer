@@ -37,7 +37,13 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		private Button expGroupPreviousBtn = null;
 		
 		[Widget]
+		private Button expGroupRmBtn = null;
+		
+		[Widget]
 		private VSeparator expGroupSeparator = null;
+		
+		[Widget]
+		private Entry expGroupFormatEntry = null;
 		
 		
 #endregion Glade widgets
@@ -116,13 +122,15 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// <param name="widget">
 		/// A <see cref="ExpressionItemWidget"/>
 		/// </param>
-		public Gtk.Box.BoxChild this[Widget w]
+		public new Gtk.Box.BoxChild this[Widget w]
 		{
 			get
 			{
 				return expGroupItemsBox[w] as Gtk.Box.BoxChild;
 			}
 		}
+		
+
 		
 		
 #endregion Properties	
@@ -158,6 +166,22 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			
 		}
+		
+		/// <summary>
+		/// Sets the widget in a mode suitable to be shown inside 
+		/// a <see cref="RelatedItemWidget"/>.
+		/// </summary>
+		public override void SetRelatedMode ()
+		{
+			expGroupNextBtn.Visible =false;
+			expGroupPreviousBtn.Visible = false;
+			expGroupRmBtn.Visible = false;
+			
+			
+			
+			expGroupSeparator.Visible = false;
+		}
+
 		
 		
 		/// <summary>
@@ -313,8 +337,17 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			this.MoveBackwards();
 		}
-
 		
+		private void OnExpGroupOptionsBtnClicked(object sender, EventArgs args)
+		{
+			ExpressionItemOptionsDialog dialog =
+				new ExpressionItemOptionsDialog(container.Window,
+				                                typeof(ExpressionGroupItem));
+			
+			dialog.Show();
+			dialog.Destroy();
+		}
+
 #endregion Non-public methods
 	}
 }
