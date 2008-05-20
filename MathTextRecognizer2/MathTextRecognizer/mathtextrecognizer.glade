@@ -3297,9 +3297,9 @@ MathML</property>
                           </widget>
                         </child>
                         <child>
-                          <widget class="GtkLabel" id="label50">
+                          <widget class="GtkLabel" id="expLabel">
                             <property name="visible">True</property>
-                            <property name="label" translatable="yes">Expresión:</property>
+                            <property name="label" translatable="yes">Expresión</property>
                             <property name="use_markup">True</property>
                           </widget>
                           <packing>

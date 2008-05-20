@@ -59,6 +59,14 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		}
 		
 		/// <summary>
+		/// Checks the widget for validation errors.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="List`1"/> containing the found errors.
+		/// </returns>
+		public abstract List<string> CheckErrors();
+		
+		/// <summary>
 		/// Sets some widgets attributes that depends on the item widget's 
 		/// position.
 		/// </summary>

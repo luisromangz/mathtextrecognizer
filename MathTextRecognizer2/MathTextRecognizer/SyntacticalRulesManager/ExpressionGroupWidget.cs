@@ -177,8 +177,6 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			expGroupPreviousBtn.Visible = false;
 			expGroupRmBtn.Visible = false;
 			
-			
-			
 			expGroupSeparator.Visible = false;
 		}
 
@@ -250,6 +248,80 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			expGroupPreviousBtn.Sensitive =  position > 0;
 		}
 			
+		/// <summary>
+		/// Checks the item for validation errors.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/> containing the widget's errors.
+		/// </returns>
+		public override List<string> CheckErrors ()
+		{
+			
+			
+			List<string> errorList = new List<string>();
+			
+			int position = container[this].Position + 1;
+			
+			if(expGroupItemsBox.Children.Length ==0)
+			{
+				errorList.Add(String.Format("· El item en la posición {0} no contiene ningún item.",
+				                            position));
+			}
+			else
+			{
+				
+				
+				if(String.IsNullOrEmpty(expGroupFormatEntry.Text.Trim()))
+				{
+					errorList.Add("\t· La cadena de formato del grupo esta vacía.");
+				}
+				else
+				{
+					try
+					{
+						List<string> testList = new List<string>();
+						
+						for(int i =0; i< expGroupItemsBox.Children.Length; i++)
+						{
+							testList.Add("test");
+						}
+						
+						// We are going to test the format string.
+						String.Format(expGroupFormatEntry.Text.Trim(),
+						              testList.ToArray());
+					}
+					catch(Exception)
+					{
+						errorList.Add("\t· La cadena de formato del grupo no es válida.");
+					}
+				}
+				
+				
+				foreach (ExpressionItemWidget childWidget in 
+				         expGroupItemsBox.Children) 
+				{
+					List<string> childErrors =  childWidget.CheckErrors();
+					
+					foreach (string error in childErrors) 
+					{
+						errorList.Add("\t"+error);
+					}
+				}
+				
+				if(errorList.Count>0)
+				{
+					errorList.Insert(0,
+					                 String.Format("· El grupo de items de la posición {0} tiene los siguientes errores:",
+					                               position));
+				}
+				
+				
+			}
+			
+			
+			return errorList;
+		}
+
 		
 #endregion Public methods
 		

@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using Gtk;
 using Glade;
 
+using MathTextCustomWidgets.Dialogs;
+
 namespace MathTextRecognizer.SyntacticalRulesManager
 {
 	
@@ -169,6 +171,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			synEdExpressionScroller.Vadjustment.Value = synEdExpressionScroller.Vadjustment.Upper;
 			
 			return widget;
+			
 		}
 		
 		/// <summary>
@@ -176,7 +179,11 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </summary>
 		private void InitializeWidgets()
 		{
-			
+			synEdExpressionScroller.Vadjustment.ValueChanged+=
+				delegate (object sender, EventArgs args)
+			{
+				synEdExpressionScroller.QueueDraw();
+			};
 		}
 		
 		/// <summary>
@@ -213,7 +220,45 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		[GLib.ConnectBefore]
 		private void OnSynEdOkBtnClicked(object sender, EventArgs args)
 		{
-			syntacticalRuleEditorDialog.Respond(ResponseType.Ok);
+			List<string> errors = new List<string>();
+			
+			if(synEdExpressionsVB.Children.Length == 0)
+			{
+				errors.Add("· No se ha definido ninguna expresión para la regla.");
+			}
+			else
+			{
+				foreach (SyntacticalExpressionWidget widget in 
+			         synEdExpressionsVB.Children) 
+				{
+					List<string> expressionErrors = widget.CheckErrors();
+					
+					errors.AddRange(expressionErrors);
+					
+				}
+			}
+			
+			
+			
+			if(errors.Count>0)
+			{
+				// There were validations errors, we inform the user.
+				string errorString = String.Join("\n", errors.ToArray());
+				
+				OkDialog.Show(this.Window,
+				              MessageType.Info,
+				              "Para continuar, debes solventar los siguientes errores:\n\n{0}",
+				              errorString);
+				
+				syntacticalRuleEditorDialog.Respond(ResponseType.None);
+				
+				synEdExpressionScroller.QueueDraw();
+				
+			}
+			else
+			{
+				syntacticalRuleEditorDialog.Respond(ResponseType.Ok);
+			}
 		}
 		
 #endregion Non-public methods

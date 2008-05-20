@@ -2,6 +2,7 @@
 // User: luis at 16:00 19/05/2008
 
 using System;
+using System.Collections.Generic;
 
 using Gtk;
 using Glade;
@@ -127,6 +128,12 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			throw new NotImplementedException ();
 		}
+		
+		public override List<string> CheckErrors ()
+		{
+			return itemWidget.CheckErrors();
+		}
+
 	
 #endregion Public methods
 		

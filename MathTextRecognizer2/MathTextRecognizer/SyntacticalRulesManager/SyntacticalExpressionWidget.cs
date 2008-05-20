@@ -2,6 +2,7 @@
 // User: luis at 18:21 16/05/2008
 
 using System;
+using System.Collections.Generic;
 
 using Gtk;
 using Glade;
@@ -41,6 +42,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		
 		[Widget]
 		private HSeparator expSeparator = null;
+		
+		[Widget]
+		private Label expLabel = null;
 		
 #endregion Glade widgets
 		
@@ -228,6 +232,79 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			expDownBtn.Sensitive = position < dialog.ExpressionsBox.Children.Length -1;
 			
 			expUpBtn.Sensitive =  position > 0;
+			
+			expLabel.Text =  String.Format("Expresión {0}", position + 1);
+		}
+		
+		/// <summary>
+		/// Checks the errors in the expression.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="List`1"/>
+		/// </returns>
+		public List<string> CheckErrors()
+		{
+			List<string> errors = new List<string>();
+			
+			int position = 
+				((Gtk.Box.BoxChild)(this.dialog.ExpressionsBox[this])).Position +1;
+			
+			if(expItemsBox.Children.Length == 0)
+			{
+				errors.Add( String.Format("· La expresión {0} no contiene elementos.",
+				                          position));
+			}
+			else
+			{
+				if(String.IsNullOrEmpty(expFormatEntry.Text.Trim()))
+				{
+					errors.Add("\t· La cadena de formato de la expresión está vacia.");
+				}
+				else
+				{
+					try
+					{
+						List<string> testList = new List<string>();
+						
+						for(int i =0; i< expItemsBox.Children.Length; i++)
+						{
+							testList.Add("test");
+						}
+						
+						// We are going to test the format string.
+						String.Format(expFormatEntry.Text.Trim(),
+						              testList.ToArray());
+					}
+					catch(Exception)
+					{
+						errors.Add("\t· La cadena de formato de la expresión no es válida.");
+					}
+				}
+				
+				
+				
+				foreach (ExpressionItemWidget itemWidget in expItemsBox.Children) 
+				{
+					List<string> itemErrors = itemWidget.CheckErrors();
+					
+					foreach (string itemError in itemErrors) 
+					{
+						errors.Add("\t" + itemError);
+					}
+					
+				}
+				
+				if(errors.Count > 0)
+				{
+					errors.Insert(0,String.Format("· La expresión {0} tiene los siguientes errores:",
+					                              position));
+				
+				}
+				
+				
+			}
+			
+			return errors;
 		}
 		
 #endregion Public methods
