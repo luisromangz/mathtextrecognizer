@@ -41,7 +41,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 #region Fields
 		private ListStore synRulesModel;
 		
-		private SyntacticalRule selectedRule;
+		private TreeIter selectedRule;
 #endregion Fields
 		
 #region Constructors	
@@ -60,6 +60,8 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			gladeXml = new XML ("mathtextrecognizer.glade",
 			                    "synRuleMenu");
+			
+			gladeXml.Autoconnect (this);
 			
 			syntacticalRulesManagerDialog.TransientFor = parent;
 			
@@ -164,6 +166,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			synRulesTree.Selection.Changed += 
 				new EventHandler(OnSynRulesTreeSelectionChanged);
 			
+			synRulesTree.ButtonPressEvent+= 
+				new ButtonPressEventHandler(OnSynRulesTreeButtonPressEvent);
+			
 			
 			// We add the columsn of the treeview.
 			synRulesTree.AppendColumn("Regla", 
@@ -230,7 +235,12 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </param>
 		private void OnDefaultSynRuleItemActivate(object sender, EventArgs args)
 		{
+			TreeIter first;
+			synRulesModel.GetIterFirst(out first);
+			synRulesModel.MoveBefore(selectedRule, first);
 			
+			synRulesTree.Selection.SelectIter(selectedRule);
+			synRulesTree.ScrollToPoint(0,0);
 		}
 		
 		/// <summary>
@@ -313,7 +323,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// <param name="args">
 		/// A <see cref="EventArgs"/>
 		/// </param>
-		[GLib.ConnectBeforeAttribute]
+		[GLib.ConnectBefore]
 		private void OnSynRulesInfoBtnClicked(object sender, EventArgs args)
 		{
 			// TODO: Add a useful info message for the SyntacticalRulesManagerDialog.
@@ -333,28 +343,36 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// <param name="args">
 		/// A <see cref="ButtonPressEventArgs"/>
 		/// </param>
+		[GLib.ConnectBefore]
 		private void OnSynRulesTreeButtonPressEvent(object sender, 
 		                                            ButtonPressEventArgs args)
 		{
+			
+			Console.WriteLine("meh");
 			// Have the user pressed the right mouse button?
 			if(args.Event.Button == 3)
 			{
 				// Yeah, so let's see if there is something under the mouse pointer.
 				TreePath path;
-				if(synRulesTree.GetPathAtPos((int)args.Event.X,
-				                             (int)args.Event.Y,
-				                             out path))
+				synRulesTree.GetPathAtPos((int)args.Event.X,
+				                          (int)args.Event.Y,
+				                          out path);
+				
+				// There seems to exist a rule there,
+				// it is the default one?
+				TreeIter iter;
+				if(synRulesModel.GetIter(out iter, path))
 				{
-					// There seems to exist a rule there,
-					// it is the default one?
-					TreeIter iter;
-					synRulesModel.GetIter(out iter, path);
+					selectedRule =  iter;
 					
-					selectedRule = 
-						synRulesModel.GetValue(iter, 2) as SyntacticalRule;
-					
-					// We show the contextual menu.
-					synRuleMenu.Popup();
+					TreeIter first;
+					synRulesModel.GetIterFirst(out first);
+					if(synRulesModel.GetPath(iter).ToString() != 
+					   synRulesModel.GetPath(first).ToString())
+					{
+						// We show the contextual menu.
+						synRuleMenu.Popup();
+					}
 					
 					
 				}

@@ -2852,7 +2852,6 @@ MathML</property>
                     <property name="can_focus">True</property>
                     <property name="headers_clickable">True</property>
                     <property name="search_column">0</property>
-                    <signal name="button_press_event" handler="OnSynRulesTreeButtonPressEvent"/>
                   </widget>
                 </child>
               </widget>
@@ -3021,7 +3020,7 @@ MathML</property>
     <child>
       <widget class="GtkMenuItem" id="defaultSynRuleItem">
         <property name="visible">True</property>
-        <property name="label" translatable="yes">Establecer como regla por defecto</property>
+        <property name="label" translatable="yes">Convertir en la regla de inicio</property>
         <property name="use_underline">True</property>
         <signal name="activate" handler="OnDefaultSynRuleItemActivate"/>
       </widget>

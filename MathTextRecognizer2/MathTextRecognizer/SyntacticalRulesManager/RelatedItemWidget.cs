@@ -86,8 +86,6 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				
 				itemWidget.ExpressionItem = value;
 				relatedItemPositionCombo.Active = (int)(value.Position) -1;
-				
-				Console.WriteLine(relatedItemPositionCombo.Active);
 			}
 		}
 		
