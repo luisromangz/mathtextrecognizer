@@ -120,6 +120,27 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			expTokenSeparator.Visible= false;
 		}
 
+		/// <summary>
+		/// Checks if the item has validation errors.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/> containing the errors found.
+		/// </returns>
+		public override List<string> CheckErrors ()
+		{
+			int position =  container[this].Position +1;
+			
+			List<string> errors = new List<string>();
+			
+			if(String.IsNullOrEmpty(expTokenTypeEntry.Text.Trim()))
+			{
+				errors.Add(String.Format( "· El item de la posición {0} no espefica el tipo de item con el que tiene que coincidir.",
+				                         position));
+			}			
+			
+			return errors;
+		}
+
 		
 #endregion Public methods
 		

@@ -21,7 +21,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 #region Glade widgets
 		
 		[Widget]
-		private Entry expTokenTypeEntry = null;
+		private Entry expRuleNameEntry = null;
 		
 		[Widget]
 		private HBox expressionRuleWidgetBase = null;
@@ -74,7 +74,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			get 
 			{
 				ExpressionRuleCallItem res = new ExpressionRuleCallItem();
-				res.RuleName = expTokenTypeEntry.Text.Trim();
+				res.RuleName = expRuleNameEntry.Text.Trim();
 				
 				return res;
 			}
@@ -85,7 +85,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 					throw new ArgumentException("The type of the value wasn't ExpressionRuleCallItem");
 				}
 				
-				expTokenTypeEntry.Text = (value as ExpressionTokenItem).TokenType;
+				expRuleNameEntry.Text = (value as ExpressionRuleCallItem).RuleName;
 			}
 		}
 		
@@ -120,6 +120,29 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			expRuleButtonsBox.Visible = false;
 			expRuleSeparator.Visible = false;
 		}
+		
+		/// <summary>
+		/// Checks the rule call for errors.
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.String"/> describing the found errors.
+		/// </returns>
+		public override List<string> CheckErrors ()
+		{
+			List<string> errors = new List<string>();
+			
+			int position =  this.container[this].Position + 1;
+			
+			if(String.IsNullOrEmpty(expRuleNameEntry.Text.Trim()))
+			{
+				errors.Add(String.Format("· El item en la posición {0} no contiene un nombre de regla. ",
+				                         position));
+					
+			}
+			
+			return errors;
+		}
+
 
 		
 		
