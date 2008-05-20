@@ -1,2 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RecognizerConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" />
+<RecognizerConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <LexicalRules>
+    <LexicalRule>
+      <LexicalExpressions>
+        <string>[0-9]+</string>
+        <string>[0-9]+\.[0-9]+</string>
+      </LexicalExpressions>
+      <Name>NUMBER</Name>
+    </LexicalRule>
+    <LexicalRule>
+      <LexicalExpressions>
+        <string>sin</string>
+        <string>cos</string>
+      </LexicalExpressions>
+      <Name>FUNCTION</Name>
+    </LexicalRule>
+    <LexicalRule>
+      <LexicalExpressions>
+        <string>[A-Za-z]+</string>
+      </LexicalExpressions>
+      <Name>IDENT</Name>
+    </LexicalRule>
+    <LexicalRule>
+      <LexicalExpressions>
+        <string>\+</string>
+        <string>-</string>
+      </LexicalExpressions>
+      <Name>ADD</Name>
+    </LexicalRule>
+    <LexicalRule>
+      <LexicalExpressions>
+        <string>\(</string>
+      </LexicalExpressions>
+      <Name>LPAR</Name>
+    </LexicalRule>
+    <LexicalRule>
+      <LexicalExpressions>
+        <string>\)</string>
+      </LexicalExpressions>
+      <Name>RPAR</Name>
+    </LexicalRule>
+  </LexicalRules>
+</RecognizerConfig>

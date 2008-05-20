@@ -86,47 +86,11 @@ namespace MathTextLibrary.Analisys
 				}	
 				
 			}
-			output = String.Format(formatString, res.ToArray());
+			output = String.Format(FormatString, res.ToArray());
 			return true;
 		}
 		
-		/// <summary>
-		/// Creates a list with the first tokens set of the group.
-		/// </summary>
-		/// <returns>
-		/// A <see cref="List`1"/> containing the first tokens.
-		/// </returns>
-		protected override List<Token> CreateFirstTokensSet ()
-		{
-			List<Token> firstTokens = new List<Token>();
-			
-			// We test each child item.		
-			foreach (ExpressionItem item in childrenItems) 
-			{
-				foreach (Token t in item.FirstTokens) 
-				{
-					if(!firstTokens.Contains(t))
-					{
-						// We only add the token if it isn't already pressent.
-						firstTokens.Add(t);
-					}					
-				}
-				
-				
-				if(!(item.Modifier == ExpressionItemModifier.NonCompulsory
-				     || item.Modifier == ExpressionItemModifier.RepeatingNonCompulsory))
-				{
-					// If the tested token isn't nullable,
-					// we can stop as the first token set won't change now.
-					// We can also remove the empty token from the list.
-					firstTokens.Remove(Token.Empty);
-					break;
-				}
-					
-			}
-			
-			return firstTokens;
-		}
+	
 		
 		protected override string ToStringAux ()
 		{

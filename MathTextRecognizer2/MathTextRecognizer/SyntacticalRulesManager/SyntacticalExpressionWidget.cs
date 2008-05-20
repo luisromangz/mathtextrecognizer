@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Gtk;
 using Glade;
 
+using MathTextLibrary.Analisys;
 using MathTextCustomWidgets.Dialogs;
 
 namespace MathTextRecognizer.SyntacticalRulesManager
@@ -122,6 +123,33 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			get
 			{
 				return dialog.Window;
+			}
+		}
+		
+		public SyntacticalExpression Expression
+		{
+			get
+			{
+				SyntacticalExpression expression = new SyntacticalExpression();
+				expression.FormatString = expFormatEntry.Text.Trim();
+				
+				foreach (ExpressionItemWidget childWidget in 
+				         expItemsBox.Children) 
+				{
+					expression.Items.Add(childWidget.ExpressionItem);
+				}
+				
+				return expression;
+				
+			}
+			set
+			{
+				expFormatEntry.Text = value.FormatString;
+				
+				foreach (ExpressionItem item in value.Items) 
+				{
+					this.AddItem(ExpressionItemWidget.CreateWidget(item, this));
+				}
 			}
 		}
 		

@@ -19,6 +19,10 @@ namespace MathTextLibrary.Analisys
 		
 		private List<ExpressionItem> relatedItems;
 		
+		private string formatString;
+		
+		
+		
 		
 		/// <summary>
 		/// <see cref="ExpressionTokenItem"/>'s constructor.
@@ -74,6 +78,26 @@ namespace MathTextLibrary.Analisys
 			{
 				return relatedItems;
 			}
+			set
+			{
+				relatedItems = value;
+			}
+		}
+
+		/// <value>
+		/// Contains the format string for the token in case it has 
+		/// related items.
+		/// </value>
+		public string FormatString
+		{
+			get 
+			{
+				return formatString;
+			}
+			set
+			{
+				formatString = value;
+			}
 		}
 		
 #endregion Properties
@@ -90,7 +114,7 @@ namespace MathTextLibrary.Analisys
 				idx = sequence.SearchToken(new Token(this.tokenType));
 			}		
 			
-			if(idx==-1 || !this.FirstTokens.Contains(sequence[idx]))
+			if(idx==-1 || this.tokenType != sequence[idx].Type)
 			{
 				return false || !IsCompulsory;
 			}
@@ -101,18 +125,7 @@ namespace MathTextLibrary.Analisys
 			
 		}
 
-		protected override List<Token> CreateFirstTokensSet ()
-		{
-			List<Token> firstTokens = new List<Token>();
-			
-			firstTokens.Add(new Token(this.tokenType));
-			if(!this.IsCompulsory)
-			{
-				firstTokens.Add(Token.Empty);
-			}
-			
-			return firstTokens;
-		}
+		
 
 		protected override string ToStringAux ()
 		{
@@ -124,7 +137,7 @@ namespace MathTextLibrary.Analisys
 			}
 			else
 			{
-				string res=this.TokenType + " {";
+				string res="{" + this.TokenType;
 				
 				foreach (ExpressionItem item in relatedItems)
 				{

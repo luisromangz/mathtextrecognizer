@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace MathTextLibrary.Analisys
 {
@@ -42,6 +43,10 @@ namespace MathTextLibrary.Analisys
 	public enum ExpressionItemPosition
 	{
 		/// <summary>
+		/// The position is not applicable to the item.
+		/// </summary>
+		None,
+		/// <summary>
 		/// The item is placed above the related one.
 		/// </summary>
 		Above,
@@ -75,12 +80,11 @@ namespace MathTextLibrary.Analisys
 	/// <summary>
 	/// This class is the base for all kinds of expression items.
 	/// </summary>
+	[XmlInclude(typeof(ExpressionItemModifier))]
+	[XmlInclude(typeof(ExpressionItemPosition))]
 	public abstract class ExpressionItem : ISyntacticMatcher
 	{
 		private ExpressionItemPosition position;
-		
-		
-		private ExpressionTokenItem relatedItem;
 		
 		private ExpressionItemModifier modifier;
 		private List<Token> firstTokens;
@@ -98,45 +102,12 @@ namespace MathTextLibrary.Analisys
 		
 #region Properties
 		
-		/// <value>
-		/// This item's related item. When assigned, a tree is formed.
-		/// </value>
-		public ExpressionTokenItem RelatedTo 
-		{
-			get 
-			{
-				return relatedItem;
-			}
-			set 
-			{
-				relatedItem = value;
-				if(!value.RelatedItems.Contains(this))
-				{
-					value.RelatedItems.Add(this);
-				}
-				
-			}
-		}
-		
-		
-		/// <value>
-		/// Contains the first tokens of the item.
-		/// </value>
-		public List<Token> FirstTokens
-		{
-			get
-			{
-				if (firstTokens == null)
-				{
-					firstTokens = CreateFirstTokensSet();
-				}
-				return firstTokens;
-			}
-		}
+	
 		
 		/// <value>
 		/// Contains a value indicating if the item is compulsory.
 		/// </value>
+		[XmlIgnore]
 		public bool IsCompulsory
 		{
 			get
@@ -265,8 +236,6 @@ namespace MathTextLibrary.Analisys
 		
 		protected abstract bool MatchSequence(TokenSequence sequence, out string output);
 				      
-				      
-		protected abstract List<Token> CreateFirstTokensSet();		
 		
 		protected abstract string ToStringAux();
 		

@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using Gtk;
 using Glade;
 
+
+using MathTextLibrary.Analisys;
 using MathTextCustomWidgets.Dialogs;
 
 namespace MathTextRecognizer.SyntacticalRulesManager
@@ -80,6 +82,38 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			get
 			{
 				return syntacticalRuleEditorDialog;
+			}
+		}
+		
+		/// <value>
+		/// 
+		/// </value>
+		public SyntacticalRule Rule
+		{
+			get
+			{
+				SyntacticalRule rule = new SyntacticalRule();
+				rule.Name =  synEdRuleNameEntry.Text.Trim();
+				
+				foreach (SyntacticalExpressionWidget widget in 
+				         synEdExpressionsVB.Children) 
+				{
+					rule.Expressions.Add(widget.Expression);
+				}
+				
+				return rule;
+			}
+			set
+			{
+				synEdRuleNameEntry.Text = value.Name;
+				
+				foreach (SyntacticalExpression expression in value.Expressions) 
+				{
+					SyntacticalExpressionWidget expWidget =
+						this.AddExpression();
+					
+					expWidget.Expression = expression;
+				}
 			}
 		}
 		
@@ -222,6 +256,11 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			List<string> errors = new List<string>();
 			
+			if(String.IsNullOrEmpty(synEdRuleNameEntry.Text.Trim()))
+			{
+				errors.Add("· No se ha establecido un nombre para la regla");
+			}
+			
 			if(synEdExpressionsVB.Children.Length == 0)
 			{
 				errors.Add("· No se ha definido ninguna expresión para la regla.");
@@ -237,8 +276,6 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 					
 				}
 			}
-			
-			
 			
 			if(errors.Count>0)
 			{

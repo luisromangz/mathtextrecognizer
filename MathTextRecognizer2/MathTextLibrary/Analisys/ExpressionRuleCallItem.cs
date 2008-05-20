@@ -51,12 +51,6 @@ namespace MathTextLibrary.Analisys
 		
 #region Non-public methods
 		
-		protected override List<Token> CreateFirstTokensSet ()
-		{
-			// We just have to retrieve the referenced rule's first token set.
-			return SyntacticalRulesManager.Instance[expressionName].FirstTokens;
-		}
-		
 		protected override bool MatchSequence (TokenSequence sequence, out string output)
 		{
 			// The actual matching is done by the rule.
