@@ -149,8 +149,6 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 						this.AddItemAux(relatedWidget);
 					
 					relatedWidgetHolder.ExpressionItem = relatedItem;
-					
-					Console.WriteLine(relatedItem.Position);
 				}
 				
 			}
