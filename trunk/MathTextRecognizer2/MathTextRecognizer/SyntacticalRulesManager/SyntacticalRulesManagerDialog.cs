@@ -10,6 +10,8 @@ using Glade;
 using MathTextLibrary.Analisys;
 using MathTextCustomWidgets.Dialogs;
 
+using MathTextRecognizer.Config;
+
 namespace MathTextRecognizer.SyntacticalRulesManager
 {
 	/// <summary>
@@ -30,6 +32,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		
 		[Widget]
 		private Button rmSynRuleBtn = null;
+		
+		[Widget]
+		private Button synRuleEditBtn = null;
 		
 #endregion Glade widgets
 		
@@ -64,6 +69,38 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			
 			InitializeWidgets();
+			
+			this.SyntacticalRules = 
+				Config.RecognizerConfig.Instance.SyntacticalRules;
+		}
+		
+		/// <value>
+		/// Contains the rules managed by the dialog.
+		/// </value>
+		public List<SyntacticalRule> SyntacticalRules
+		{
+			get
+			{
+				List<SyntacticalRule> rules = new List<SyntacticalRule>();
+				
+				foreach (object [] values in synRulesModel) 
+				{
+					rules.Add(values[1] as SyntacticalRule);
+				}
+				
+				return rules;
+			}
+			set
+			{
+				foreach (SyntacticalRule rule in value) 
+				{
+					AddRule(rule);
+					
+				}
+				
+				synRulesTree.Selection.UnselectAll();
+				synRulesTree.ScrollToPoint(0,0);
+			}
 		}
 		
 #endregion Constructors
@@ -100,6 +137,17 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		
 #region Non-public methods
 		
+		private void AddRule(SyntacticalRule rule)
+		{
+			TreeIter iter = synRulesModel.AppendValues(rule.ToString(),
+				                                           rule);
+				
+			synRulesTree.Selection.SelectIter(iter);
+			synRulesTree.ScrollToCell(synRulesModel.GetPath(iter), 
+			                          synRulesTree.Columns[0],
+			                          true,0.5f,0);
+		}
+		
 		/// <summary>
 		/// Initialize the dialog's children widgets.
 		/// </summary>
@@ -108,7 +156,6 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			// We create the tree's model, and asign it.
 			synRulesModel = new ListStore(typeof(string),
-			                              typeof(string),
 			                              typeof(SyntacticalRule));
 			
 			synRulesTree.Model = synRulesModel;
@@ -123,11 +170,6 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			                          new CellRendererText(),
 			                          "markup" ,0);
 			synRulesTree.Columns[0].Sizing = TreeViewColumnSizing.Autosize;
-			
-			synRulesTree.AppendColumn("Expresión", 
-			                          new CellRendererText(),
-			                          "text", 1);
-			synRulesTree.Columns[1].Sizing = TreeViewColumnSizing.Autosize;
 		}
 		
 		/// <summary>
@@ -144,10 +186,37 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			SyntacticalRuleEditorDialog dialog = 
 				new SyntacticalRuleEditorDialog(syntacticalRulesManagerDialog);
 			
-			dialog.Show();
+			ResponseType res = dialog.Show();
+			if(res == ResponseType.Ok)
+			{
+				AddRule(dialog.Rule);
+				
+			}
 			
 			dialog.Destroy();
-		}		
+		}	
+		
+		private void OnSynRuleEditBtnClicked(object sender, EventArgs args)
+		{
+			SyntacticalRuleEditorDialog dialog = 
+				new SyntacticalRuleEditorDialog(syntacticalRulesManagerDialog);
+			
+			TreeIter iter;
+			synRulesTree.Selection.GetSelected(out iter);
+			
+			dialog.Rule = synRulesModel.GetValue(iter, 1) as  SyntacticalRule;
+			
+			ResponseType res = dialog.Show();
+			if(res == ResponseType.Ok)
+			{
+				SyntacticalRule rule = dialog.Rule;
+				synRulesModel.SetValues(iter,
+				                        rule.ToString(),				                      
+				                        rule);
+			}
+			
+			dialog.Destroy();
+		}
 		
 		
 		/// <summary>
@@ -182,9 +251,10 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			SyntacticalRule rule = 
 				synRulesModel.GetValue(selected, 2) as SyntacticalRule;
 			
-			ResponseType res = ConfirmDialog.Show(syntacticalRulesManagerDialog,
-			                                      "¿Realemente quieres eliminar la regla «{0}»?",
-			                                      rule.Name);
+			ResponseType res = 
+				ConfirmDialog.Show(syntacticalRulesManagerDialog,
+				                   "¿Realemente quieres eliminar la regla «{0}»?",
+				                   rule.Name);
 			
 			if(res == ResponseType.No)
 			{
@@ -223,7 +293,15 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </param>
 		private void OnSynMakeDefaultBtnClicked(object sender, EventArgs args)
 		{
+			ResponseType res =
+				ConfirmDialog.Show(syntacticalRulesManagerDialog,
+				                   "Esto cambiará la configuración de la aplicación, ¿desea continuar?");
 			
+			if(res == ResponseType.Yes)
+			{
+				RecognizerConfig.Instance.SyntacticalRules = SyntacticalRules;
+				RecognizerConfig.Instance.Save();
+			}
 		}
 		
 		/// <summary>
@@ -298,6 +376,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			// The remove button must be sensitive just if we have a rule
 			// selected.
 			rmSynRuleBtn.Sensitive = 
+				synRulesTree.Selection.CountSelectedRows() > 0;
+			
+			synRuleEditBtn.Sensitive= 
 				synRulesTree.Selection.CountSelectedRows() > 0;
 		}
 		

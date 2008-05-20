@@ -21,6 +21,7 @@ namespace MathTextRecognizer.Config
 	{
 		private List<DatabaseFileInfo> databaseFilesInfo;
 		private List<LexicalRule> lexicalRules;
+		private List<SyntacticalRule> syntacticalRules;
 		
 		private static RecognizerConfig config;
 		
@@ -70,6 +71,18 @@ namespace MathTextRecognizer.Config
 			set
 			{
 				lexicalRules = value;
+			}
+		}
+
+		public List<SyntacticalRule> SyntacticalRules 
+		{
+			get 
+			{
+				return syntacticalRules;
+			}
+			set 
+			{
+				syntacticalRules = value;
 			}
 		}
 		

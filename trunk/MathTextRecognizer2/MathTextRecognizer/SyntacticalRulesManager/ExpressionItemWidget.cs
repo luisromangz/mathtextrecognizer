@@ -23,11 +23,15 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		
 		public event EventHandler HeightRequestChanged;
 		
+		protected ExpressionItemOptions options;
+		
 		
 		public ExpressionItemWidget(IExpressionItemContainer container) 
 			: base(0.5f, 0.5f, 1,1)
 		{
 			this.container = container;
+			
+			options = new ExpressionItemOptions();
 		}
 		
 		/// <value>
@@ -39,7 +43,30 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			set;
 		}
 		
-		
+		/// <value>
+		/// Contains the position of the item in its container.
+		/// </value>
+		public int Position
+		{
+			get
+			{
+				if(container.GetType() == typeof(ExpressionItemOptionsDialog))
+				{
+					Widget widget = this;
+					
+					while(widget.GetType()!= typeof (RelatedItemWidget))
+					{
+						widget =  widget.Parent;
+					}
+					
+					return container[widget].Position +1;
+				}
+				else
+				{
+					return container[this].Position + 1;			
+				}
+			}
+		}
 		
 		/// <value>
 		/// Sets the widget height request.
@@ -118,6 +145,61 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			{
 				return container.Window;
 			}
+		}
+		
+		/// <summary>
+		/// Creates a widget based on the type of the item pased.
+		/// </summary>
+		/// <param name="item">
+		/// The <see cref="ExpressionItem"/> that will be contained in the
+		/// widget.
+		/// </param>
+		/// <param name="container">
+		/// The container holding the new widget.
+		/// </param>
+		/// <returns>
+		/// The widget holding the given item.
+		/// </returns>
+		public static ExpressionItemWidget CreateWidget(ExpressionItem item, 
+		                                                IExpressionItemContainer container)
+		{
+			ExpressionItemWidget widget = null;
+			
+			if(item.GetType() == typeof(ExpressionGroupItem))
+			{
+				widget= new ExpressionGroupWidget(container);
+			}
+			else if(item.GetType() == typeof(ExpressionTokenItem))		
+			{
+				widget =  new ExpressionTokenWidget(container);
+			}
+					
+			if(item.GetType() == typeof(ExpressionRuleCallItem))
+			{
+				widget =  new ExpressionRuleCallWidget(container);
+			}
+			
+			widget.ExpressionItem = item;
+			
+			return widget;
+		}
+		
+		/// <summary>
+		/// Shows the options dialog.
+		/// </summary>
+		protected void ShowOptions()
+		{
+			ExpressionItemOptionsDialog dialog = 
+				new ExpressionItemOptionsDialog(this.container.Window , 
+				                                this.GetType());
+			
+			dialog.Options = this.options;
+			ResponseType res = dialog.Show();
+			if(res == ResponseType.Ok)
+			{
+				this.options = dialog.Options;
+			}
+			dialog.Destroy();
 		}
 	}
 }

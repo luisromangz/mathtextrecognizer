@@ -131,7 +131,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			List<string> errors = new List<string>();
 			
-			int position =  this.container[this].Position + 1;
+			int position = this.Position;
 			
 			if(String.IsNullOrEmpty(expRuleNameEntry.Text.Trim()))
 			{
@@ -176,13 +176,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		
 		protected void OnExpRuleOptionsBtnClicked(object sender, EventArgs args)
 		{
-			ExpressionItemOptionsDialog dialog =
-				new ExpressionItemOptionsDialog(this.container.Window,
-				                                typeof(ExpressionRuleCallItem));
-			
-			dialog.Show();
-			
-			dialog.Destroy();
+			this.ShowOptions();
 		}
 		
 #endregion Non-public methods

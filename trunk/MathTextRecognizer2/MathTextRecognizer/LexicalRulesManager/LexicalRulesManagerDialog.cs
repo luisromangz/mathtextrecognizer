@@ -361,8 +361,7 @@ namespace MathTextRecognizer.LexicalRulesManager
 		{
 			ResponseType res =
 				ConfirmDialog.Show(lexicalRulesManagerDialog,
-				                   "Esto cambiará la configuración de la "
-				                   + "aplicación, ¿desea contnuar?");
+				                   "Esto cambiará la configuración de la aplicación, ¿desea continuar?");
 			
 			if(res == ResponseType.Yes)
 			{

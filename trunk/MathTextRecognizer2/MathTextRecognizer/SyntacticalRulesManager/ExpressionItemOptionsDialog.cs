@@ -9,6 +9,8 @@ using Glade;
 
 using MathTextLibrary.Analisys;
 
+using MathTextCustomWidgets.Dialogs;
+
 namespace MathTextRecognizer.SyntacticalRulesManager
 {
 	
@@ -65,8 +67,6 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			this.expressionItemOptionsDialog.TransientFor = parent;
 			
 			InitializeWidgets(expressionType);
-		
-			
 		}
 		
 #region Properties
@@ -116,7 +116,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			get
 			{
 				ExpressionItemOptions options = new ExpressionItemOptions();
-				options.ForceCheck = itemOpForceSearchCheck.Active;
+				options.ForceTokenSearch = itemOpForceSearchCheck.Active;
 				options.Modifier =
 					(ExpressionItemModifier)(itemOpModifierCombo.Active);
 				
@@ -124,7 +124,8 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				
 				foreach (RelatedItemWidget childWidget in itemOpRelatedItemsBox.Children) 
 				{
-					options.RelatedItems.Add(childWidget.ExpressionItem);
+					ExpressionItem childItem = childWidget.ExpressionItem;
+					options.RelatedItems.Add(childItem);
 				}
 				
 				return options;
@@ -132,10 +133,25 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			set
 			{
-				itemOpForceSearchCheck.Active =  value.ForceCheck;
+				itemOpForceSearchCheck.Active =  value.ForceTokenSearch;
 				itemOpFormatEntry.Text =  value.FormatString;
 				
-				itemOpModifierCombo.Active = (int)(value.Modifier);			
+				itemOpModifierCombo.Active = (int)(value.Modifier);	
+				
+				itemOpFormatEntry.Text = value.FormatString;
+				
+				foreach (ExpressionItem relatedItem in value.RelatedItems) 
+				{
+					ExpressionItemWidget relatedWidget = 
+						ExpressionItemWidget.CreateWidget(relatedItem, this);
+					
+					RelatedItemWidget relatedWidgetHolder = 
+						this.AddItemAux(relatedWidget);
+					
+					relatedWidgetHolder.ExpressionItem = relatedItem;
+					
+					Console.WriteLine(relatedItem.Position);
+				}
 				
 			}
 		}
@@ -144,6 +160,8 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		
 #region Public methods
 
+
+		
 		/// <summary>
 		/// Adds an item to the container.
 		/// </summary>
@@ -156,7 +174,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				new RelatedItemWidget(widget, this);
 			
 			widget.SetRelatedMode();
-			
+						
 			this.itemOpRelatedItemsBox.Add(relatedItemWidget);
 			
 			foreach (RelatedItemWidget relWidget in itemOpRelatedItemsBox.Children) 
@@ -164,7 +182,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				relWidget.CheckPosition();
 			}
 			
-			itemOpFormatEntry.Sensitive = true;
+			itemOpFormatAlignment.Sensitive = true;
 			
 			itemOpRelatedItemsScroller.Vadjustment.Value = 
 				itemOpRelatedItemsScroller.Vadjustment.Upper;
@@ -185,7 +203,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				relWidget.CheckPosition();
 			}
 			
-			itemOpFormatEntry.Sensitive = 
+			itemOpFormatAlignment.Sensitive = 
 				itemOpRelatedItemsBox.Children.Length > 0;
 		}
 
@@ -252,13 +270,40 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		
 #region Non-public methods
 		
+		/// <summary>
+		/// Adds an item to the container.
+		/// </summary>
+		/// <param name="widget">
+		/// A <see cref="ExpressionItemWidget"/>
+		/// </param>
+		private RelatedItemWidget AddItemAux (ExpressionItemWidget widget)
+		{
+			RelatedItemWidget relatedItemWidget = 
+				new RelatedItemWidget(widget, this);
+			
+			widget.SetRelatedMode();
+						
+			this.itemOpRelatedItemsBox.Add(relatedItemWidget);
+			
+			foreach (RelatedItemWidget relWidget in itemOpRelatedItemsBox.Children) 
+			{
+				relWidget.CheckPosition();
+			}
+			
+			itemOpFormatAlignment.Sensitive = true;
+			
+			itemOpRelatedItemsScroller.Vadjustment.Value = 
+				itemOpRelatedItemsScroller.Vadjustment.Upper;
+			
+			return relatedItemWidget;
+		}
+		
+		
 		private void InitializeWidgets(Type expressionType)
 		{
-			
-			
 			this.itemOpModifierCombo.Active = 0;
 			
-			bool isToken = expressionType == typeof(ExpressionTokenItem);
+			bool isToken = expressionType == typeof(ExpressionTokenWidget);
 			
 			itemOpForceSearchCheck.Visible = isToken;
 			itemOpFormatAlignment.Visible =  isToken;
@@ -283,6 +328,70 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			addItemMenu.Popup();
 		}
 		
+		/// <summary>
+		/// Validates the dialog, and responds accordignly.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnItemOpOkBtnClicked(object sender, EventArgs args)
+		{
+			List<string> errors = new List<string>();
+			
+			if(itemOpRelatedItemsBox.Children.Length > 0)
+			{
+				if(String.IsNullOrEmpty(itemOpFormatEntry.Text.Trim()))
+				{
+					errors.Add("· No hay definida cadena de formato para el item y sus elementos relacionados.");
+				}
+				
+				List<string> checkList =  new List<string>();
+				// The checking string has to contemplate the token the 
+				/// expresions are related to (hence the +1)
+				for(int i = 0; i<itemOpRelatedItemsBox.Children.Length + 1; i++)
+				{
+					checkList.Add("test");
+				}
+				
+				try
+				{
+					String.Format(itemOpFormatEntry.Text, checkList.ToArray());
+				}
+				catch(Exception)
+				{
+					errors.Add("· La cadena de formato para el item no es válida.");
+				}
+				
+				foreach (RelatedItemWidget relatedWidget in 
+				         itemOpRelatedItemsBox.Children) 
+				{
+					errors.AddRange(relatedWidget.CheckErrors());
+				}
+			}
+			
+			
+			if(errors.Count> 0)
+			{
+				
+				OkDialog.Show(this.expressionItemOptionsDialog,
+				              MessageType.Info,
+				              "Para continuar, debes solucionar los siguientes errores:\n\n{0}",
+				              String.Join("\n", errors.ToArray()));
+				
+				this.itemOpRelatedItemsScroller.QueueDraw();
+				
+				this.expressionItemOptionsDialog.Respond(ResponseType.None);
+			}
+			else
+			{
+				this.expressionItemOptionsDialog.Respond(ResponseType.Ok);
+			}
+			
+		}
+		
 #endregion Non-public methods
 	}
 	
@@ -293,7 +402,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 	public class ExpressionItemOptions
 	{
 		public ExpressionItemModifier Modifier;
-		public bool ForceCheck;
+		public bool ForceTokenSearch;
 		public List<ExpressionItem> RelatedItems;
 		public string FormatString;	
 				

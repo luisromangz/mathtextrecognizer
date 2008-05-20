@@ -32,6 +32,11 @@ namespace MathTextLibrary.Analisys
 		private const string PUNCTUATION = ".,";
 		
 		private static Token empty = new Token("");
+		
+		public Token()
+		{
+			
+		}
 			
 		/// <summary>
 		/// <see cref="Token"/>'s contructor accepting the token's type.

@@ -4,18 +4,20 @@
 using System;
 using System.Collections.Generic;
 
+using System.Xml.Serialization;
+
 namespace MathTextLibrary.Analisys
 {
+	
 	
 	/// <summary>
 	/// This class represent the rules used for syntactila analysis.
 	/// </summary>
+	[XmlInclude(typeof(SyntacticalExpression))]
 	public class SyntacticalRule : ISyntacticMatcher
 	{
 		private List<SyntacticalExpression> expressions;
 		private string ruleName;
-		
-		private List<Token> firstItems;
 		
 		/// <summary>
 		/// <see cref="SyntacticRule"/>'s default constructor.
@@ -62,34 +64,6 @@ namespace MathTextLibrary.Analisys
 			}
 		}
 		
-		/// <value>
-		/// Contains the first tokens that may appear in the rule's expressions.
-		/// </value>
-		public List<Token> FirstTokens
-		{
-			get
-			{
-				if(firstItems == null)
-				{
-					firstItems = new List<Token>();
-					
-					foreach (SyntacticalExpression exp in expressions) 
-					{
-						foreach (Token t in exp.FirstTokens ) 
-						{
-							if(!firstItems.Contains(t))
-							{
-								// We add the token only if it wasn't alread
-								// present.
-								firstItems.Add(t);
-							}
-						}
-					}
-				}
-				
-				return firstItems;
-			}
-		}
 		
 #endregion Properties
 		

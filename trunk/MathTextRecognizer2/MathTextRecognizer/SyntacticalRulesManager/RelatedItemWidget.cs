@@ -60,8 +60,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			this.Add(relatedItemWidgetBase);
 			
-			
-			this.relatedItemPlaceholder.Add(itemWidget);
+			this.relatedItemPlaceholder.Add(itemWidget);		
 			
 			this.ShowAll();
 		}
@@ -77,14 +76,18 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			get 
 			{
-				itemWidget.ExpressionItem.Position =
-					(ExpressionItemPosition)(relatedItemPositionCombo.Active);
-				return itemWidget.ExpressionItem;
+				ExpressionItem item = itemWidget.ExpressionItem;
+				item.Position = 
+					(ExpressionItemPosition)(relatedItemPositionCombo.Active+1);
+				return item;
 			}
 			set 
 			{  
+				
 				itemWidget.ExpressionItem = value;
-				relatedItemPositionCombo.Active = (int)(value.Position);
+				relatedItemPositionCombo.Active = (int)(value.Position) -1;
+				
+				Console.WriteLine(relatedItemPositionCombo.Active);
 			}
 		}
 		
@@ -102,6 +105,8 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				itemWidget = value;
 			}
 		}
+		
+	
 		
 		
 		
@@ -131,7 +136,16 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		
 		public override List<string> CheckErrors ()
 		{
-			return itemWidget.CheckErrors();
+			List<string> errors = new List<string>(itemWidget.CheckErrors());
+			
+			
+			if(relatedItemPositionCombo.Active == -1)
+			{
+				errors.Insert(0,
+				              String.Format("· No se ha indicado la posición del elemento {0}.",
+				                            this.Position));
+			}
+			return errors;
 		}
 
 	

@@ -94,6 +94,28 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			get 
 			{
 				ExpressionGroupItem res = new ExpressionGroupItem();
+				
+				List<ExpressionItem> items = new List<ExpressionItem>();
+				
+				
+				
+				foreach (ExpressionItemWidget childWidget in 
+				         expGroupItemsBox.Children) 
+				{
+					
+					items.Add(childWidget.ExpressionItem);
+				}
+				
+				
+				
+				res.ChildrenItems = items;
+				
+				res.FormatString = expGroupFormatEntry.Text.Trim();
+				
+				res.Modifier = options.Modifier;
+				
+				
+				
 				return res;
 			}
 			set 
@@ -102,6 +124,20 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				{
 					throw new ArgumentException("The type of the value wasn't ExpressionGroupItem");
 				}
+				
+				ExpressionGroupItem item = value as ExpressionGroupItem;
+				
+				expGroupFormatEntry.Text = item.FormatString;
+				
+				foreach (ExpressionItem childItem in item.ChildrenItems) 
+				{
+					ExpressionItemWidget childWidget =
+						ExpressionItemWidget.CreateWidget(childItem, this);
+					
+					AddItem(childWidget);
+				}
+				
+				options.Modifier = value.Modifier;								
 			}
 		}
 
@@ -260,17 +296,16 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			List<string> errorList = new List<string>();
 			
-			int position = container[this].Position + 1;
+			int position = this.Position;
+			
 			
 			if(expGroupItemsBox.Children.Length ==0)
 			{
-				errorList.Add(String.Format("· El item en la posición {0} no contiene ningún item.",
+				errorList.Add(String.Format("· El grupo en la posición {0} no contiene ningún item.",
 				                            position));
 			}
 			else
 			{
-				
-				
 				if(String.IsNullOrEmpty(expGroupFormatEntry.Text.Trim()))
 				{
 					errorList.Add("\t· La cadena de formato del grupo esta vacía.");
@@ -412,12 +447,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		
 		private void OnExpGroupOptionsBtnClicked(object sender, EventArgs args)
 		{
-			ExpressionItemOptionsDialog dialog =
-				new ExpressionItemOptionsDialog(container.Window,
-				                                typeof(ExpressionGroupItem));
-			
-			dialog.Show();
-			dialog.Destroy();
+			this.ShowOptions();
 		}
 
 #endregion Non-public methods

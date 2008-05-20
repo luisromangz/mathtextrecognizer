@@ -4,12 +4,17 @@
 using System;
 using System.Collections.Generic;
 
+using System.Xml.Serialization;
+
 namespace MathTextLibrary.Analisys
 {
 	
 	/// <summary>
 	/// This class implements the expressions used in syntactical analysis.
 	/// </summary>
+	[XmlInclude(typeof(ExpressionTokenItem))]
+	[XmlInclude(typeof(ExpressionGroupItem))]
+	[XmlInclude(typeof(ExpressionRuleCallItem))]
 	public class SyntacticalExpression : ISyntacticMatcher
 	{
 		
@@ -26,23 +31,6 @@ namespace MathTextLibrary.Analisys
 		
 #region Properties
 		
-		/// <value>
-		/// Contains the tokens that may appear if this rule can match 
-		/// the input.
-		/// </value>
-		public List<Token> FirstTokens
-		{
-			get
-			{
-				// We should calculate the first token set
-				if(firstTokens == null)
-				{
-					CreateFirstTokensSet();
-				}
-				return null;
-			}
-		} 
-
 		/// <value>
 		/// Contains the format string used to format the contents matched
 		/// by the expression.
@@ -130,38 +118,6 @@ namespace MathTextLibrary.Analisys
 		
 #region Non-public methods
 		
-		/// <summary>
-		/// Creates the set of first tokens of the expression.
-		/// </summary>
-		private void CreateFirstTokensSet() 
-		{
-			firstTokens = new List<Token>();
-			
-			// We test each child item.		
-			foreach (ExpressionItem item in items) 
-			{
-				foreach (Token t in item.FirstTokens) 
-				{
-					if(!firstTokens.Contains(t))
-					{
-						// We only add the token if it isn't already pressent.
-						firstTokens.Add(t);
-					}					
-				}
-				
-				if(!(item.Modifier == ExpressionItemModifier.NonCompulsory
-				     || item.Modifier == ExpressionItemModifier.RepeatingNonCompulsory))
-				{
-					// If the tested token isn't nullable,
-					// we can stop as the first token set won't change now.
-					// We can also remove the empty token from the list.
-					firstTokens.Remove(Token.Empty);
-					break;
-				}
-					
-			}
-			
-		}
 		
 #endregion Non-public methods
 		

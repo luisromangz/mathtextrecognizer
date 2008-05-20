@@ -77,6 +77,11 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				ExpressionTokenItem res = new ExpressionTokenItem();
 				res.TokenType = expTokenTypeEntry.Text.Trim();
 				
+				res.ForceTokenSearch =  options.ForceTokenSearch;
+				res.Modifier = options.Modifier;
+				res.FormatString = options.FormatString;
+				res.RelatedItems = options.RelatedItems;
+				
 				return res;
 			}
 			set 
@@ -86,7 +91,14 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 					throw new ArgumentException("The type of the value wasn't ExpressionTokenItem");
 				}
 				
-				expTokenTypeEntry.Text = (value as ExpressionTokenItem).TokenType;
+				ExpressionTokenItem item = value as ExpressionTokenItem;
+				
+				expTokenTypeEntry.Text = item.TokenType;
+				
+				options.Modifier = item.Modifier;
+				options.FormatString = item.FormatString;
+				options.RelatedItems = item.RelatedItems;
+				options.ForceTokenSearch =  item.ForceTokenSearch;
 			}
 		}
 		
@@ -128,7 +140,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </returns>
 		public override List<string> CheckErrors ()
 		{
-			int position =  container[this].Position +1;
+			int position = this.Position;
 			
 			List<string> errors = new List<string>();
 			
@@ -140,6 +152,8 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			return errors;
 		}
+		
+		
 
 		
 #endregion Public methods
@@ -172,12 +186,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		
 		private void OnExpTokenOptionsBtnClicked(object sender, EventArgs args)
 		{
-			ExpressionItemOptionsDialog dialog = 
-				new ExpressionItemOptionsDialog(this.container.Window , 
-				                                typeof(ExpressionTokenItem));
-			
-			dialog.Show();
-			dialog.Destroy();
+			this.ShowOptions();
 		}
 		
 #endregion Non-public methods
