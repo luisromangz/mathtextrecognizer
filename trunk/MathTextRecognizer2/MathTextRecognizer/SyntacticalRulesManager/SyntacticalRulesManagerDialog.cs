@@ -107,6 +107,21 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		
 #endregion Constructors
 		
+#region Properties
+		
+		/// <value>
+		/// Contains the dialog's window.
+		/// </value>
+		public Window Window
+		{
+			get
+			{
+				return this.syntacticalRulesManagerDialog;
+			}
+		}
+		
+#endregion Properties
+		
 #region Public methods
 		
 		/// <summary>
@@ -133,6 +148,29 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		public void Destroy()
 		{
 			syntacticalRulesManagerDialog.Destroy();
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="ruleName">
+		/// A <see cref="System.String"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
+		public bool ExistsRuleName(string ruleName)
+		{
+			foreach (object[] values in synRulesModel) 
+			{
+				if((values[1] as SyntacticalRule).Name == ruleName)
+				{
+					// We have found the name.
+					return true;
+				}
+			}
+			
+			return false;
 		}
 		
 #endregion Public methods
@@ -189,7 +227,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		private void OnAddSynRuleBtnClicked(object sender, EventArgs args)
 		{
 			SyntacticalRuleEditorDialog dialog = 
-				new SyntacticalRuleEditorDialog(syntacticalRulesManagerDialog);
+				new SyntacticalRuleEditorDialog(this);
 			
 			ResponseType res = dialog.Show();
 			if(res == ResponseType.Ok)
@@ -203,7 +241,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		private void OnSynRuleEditBtnClicked(object sender, EventArgs args)
 		{
 			SyntacticalRuleEditorDialog dialog = 
-				new SyntacticalRuleEditorDialog(syntacticalRulesManagerDialog);
+				new SyntacticalRuleEditorDialog(this);
 			
 			TreeIter iter;
 			synRulesTree.Selection.GetSelected(out iter);

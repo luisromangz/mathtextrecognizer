@@ -37,7 +37,11 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 #endregion Glade widgets
 		
 #region Fields
+		private SyntacticalRulesManagerDialog manager;
 		
+		private bool editing;
+		
+		private string oldRuleName;
 #endregion Fields
 		
 #region Constructors
@@ -48,14 +52,18 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// <param name="parent">
 		/// The dialog's parent <see cref="Window"/>.
 		/// </param>
-		public SyntacticalRuleEditorDialog(Window parent)
+		public SyntacticalRuleEditorDialog(SyntacticalRulesManagerDialog parent)
 		{
 			Glade.XML gladeXml = new XML("mathtextrecognizer.glade",
 			                             "syntacticalRuleEditorDialog");
 			
 			gladeXml.Autoconnect(this);
 			
-			this.syntacticalRuleEditorDialog.TransientFor = parent;
+			manager = parent;
+			
+			this.syntacticalRuleEditorDialog.TransientFor = manager.Window;
+			
+			editing = false;
 			
 			InitializeWidgets();
 		}
@@ -95,6 +103,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				SyntacticalRule rule = new SyntacticalRule();
 				rule.Name =  synEdRuleNameEntry.Text.Trim();
 				
+				
 				foreach (SyntacticalExpressionWidget widget in 
 				         synEdExpressionsVB.Children) 
 				{
@@ -105,7 +114,10 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			}
 			set
 			{
+				// We tell the dialog that we are in edit mode.
+				editing = true;
 				synEdRuleNameEntry.Text = value.Name;
+				oldRuleName = value.Name;
 				
 				foreach (SyntacticalExpression expression in value.Expressions) 
 				{
@@ -243,9 +255,17 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			List<string> errors = new List<string>();
 			
-			if(String.IsNullOrEmpty(synEdRuleNameEntry.Text.Trim()))
+			string ruleName = synEdRuleNameEntry.Text.Trim();
+			if(String.IsNullOrEmpty(ruleName))
 			{
 				errors.Add("· No se ha establecido un nombre para la regla");
+			}
+			else if(!editing || oldRuleName != ruleName)
+			{
+				if(manager.ExistsRuleName(ruleName))
+				{
+					errors.Add("· Ya existe una regla con el nombre usado.");
+				}
 			}
 			
 			if(synEdExpressionsVB.Children.Length == 0)
@@ -260,7 +280,6 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 					List<string> expressionErrors = widget.CheckErrors();
 					
 					errors.AddRange(expressionErrors);
-					
 				}
 			}
 			
