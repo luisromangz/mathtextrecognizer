@@ -2799,12 +2799,17 @@ MathML</property>
       </widget>
     </child>
   </widget>
-  <widget class="GtkWindow" id="formulaMatchingStageWidget">
+  <widget class="GtkWindow" id="parsingStageWidget">
     <child>
-      <widget class="GtkHBox" id="hbox40">
+      <widget class="GtkHBox" id="parsingStageBaseWidget">
         <property name="visible">True</property>
         <child>
-          <placeholder/>
+          <widget class="GtkAlignment" id="syntacticalTreePlaceholder">
+            <property name="visible">True</property>
+            <child>
+              <placeholder/>
+            </child>
+          </widget>
         </child>
         <child>
           <widget class="GtkVBox" id="vbox10">
@@ -2813,13 +2818,13 @@ MathML</property>
               <placeholder/>
             </child>
             <child>
-              <widget class="GtkNotebook" id="tokenizingButtonsNB1">
+              <widget class="GtkNotebook" id="parsingButtonsNB">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="show_tabs">False</property>
                 <property name="show_border">False</property>
                 <child>
-                  <widget class="GtkAlignment" id="tokenizingControlAlign1">
+                  <widget class="GtkAlignment" id="parsingControlsAlign">
                     <property name="visible">True</property>
                     <property name="xscale">0</property>
                     <child>
@@ -2834,7 +2839,7 @@ MathML</property>
                             <property name="xalign">1</property>
                             <property name="xscale">0</property>
                             <child>
-                              <widget class="GtkButton" id="synProcessBtn">
+                              <widget class="GtkButton" id="parsingProcessBtn">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
@@ -2855,7 +2860,7 @@ MathML</property>
                                           </widget>
                                         </child>
                                         <child>
-                                          <widget class="GtkLabel" id="synProcessBtnLbl">
+                                          <widget class="GtkLabel" id="parsingProcessBtnLbl">
                                             <property name="visible">True</property>
                                             <property name="label" translatable="yes">A_nalizar</property>
                                             <property name="use_underline">True</property>
@@ -2881,7 +2886,7 @@ MathML</property>
                             <property name="xalign">0</property>
                             <property name="xscale">0</property>
                             <child>
-                              <widget class="GtkButton" id="synShowOutputBtn">
+                              <widget class="GtkButton" id="parsingShowOutputBtn">
                                 <property name="visible">True</property>
                                 <property name="sensitive">False</property>
                                 <property name="can_focus">True</property>
@@ -2937,7 +2942,7 @@ MathML</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkAlignment" id="tokenizingNextButtonsAlign1">
+                  <widget class="GtkAlignment" id="parsingNextButtonsAlign">
                     <property name="visible">True</property>
                     <property name="has_tooltip">True</property>
                     <property name="tooltip_text">El nodo procesado según cada base de datos</property>
@@ -2947,7 +2952,7 @@ MathML</property>
                         <property name="visible">True</property>
                         <property name="spacing">10</property>
                         <child>
-                          <widget class="GtkButton" id="tokenizingNextStepBtn1">
+                          <widget class="GtkButton" id="parsingNextStepBtn">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
@@ -2986,7 +2991,7 @@ MathML</property>
                           </widget>
                         </child>
                         <child>
-                          <widget class="GtkButton" id="tokenizingNextNodeBtn1">
+                          <widget class="GtkButton" id="parsingNextNodeBtn">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
@@ -3030,7 +3035,7 @@ MathML</property>
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkButton" id="tokenizingTilEndBtn1">
+                          <widget class="GtkButton" id="parsingTillEndBtn">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>

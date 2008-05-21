@@ -14,12 +14,12 @@ namespace MathTextRecognizer.Controllers
 	/// This class implements the controller for the formula construction 
 	/// process.
 	/// </summary>
-	public class FormulaMatchingController : ControllerBase
+	public class ParsingController : ControllerBase
 	{
 		/// <summary>
 		/// <c>FormulaMatchingController</c>'s contructor.
 		/// </summary>
-		public FormulaMatchingController() : base()
+		public ParsingController() : base()
 		{
 		}
 		
