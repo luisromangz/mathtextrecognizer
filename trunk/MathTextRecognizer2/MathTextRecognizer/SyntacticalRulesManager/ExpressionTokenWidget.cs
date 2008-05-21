@@ -79,6 +79,8 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				
 				res.ForceTokenSearch =  options.ForceTokenSearch;
 				res.Modifier = options.Modifier;
+				
+				
 				res.FormatString = options.FormatString;
 				res.RelatedItems = options.RelatedItems;
 				

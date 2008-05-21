@@ -76,7 +76,8 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			get 
 			{
-				ExpressionItem item = itemWidget.ExpressionItem;
+				ExpressionItem item = itemWidget.ExpressionItem;				
+				
 				item.Position = 
 					(ExpressionItemPosition)(relatedItemPositionCombo.Active+1);
 				return item;
