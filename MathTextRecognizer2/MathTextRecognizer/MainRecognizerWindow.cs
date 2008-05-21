@@ -83,7 +83,7 @@ namespace MathTextRecognizer
 		
 		private OCRStageWidget ocrWidget;		
 		private TokenizingStageWidget  tokenizingWidget;		
-		private FormulaMatchingStageWidget formulaMatchingWidget;
+		private ParsingStageWidget formulaMatchingWidget;
 			
 		private LogView logView;
 		
@@ -247,7 +247,7 @@ namespace MathTextRecognizer
 		/// <value>
 		/// Contains the widget used to show the syntactical analysis.
 		/// </value>
-		public FormulaMatchingStageWidget FormulaMatchingWidget 
+		public ParsingStageWidget FormulaMatchingWidget 
 		{
 			get 
 			{
@@ -324,9 +324,9 @@ namespace MathTextRecognizer
 			                              new Label(TokenizingStageWidget.WidgetLabel));
 			
 			
-			formulaMatchingWidget = new FormulaMatchingStageWidget(this);
+			formulaMatchingWidget = new ParsingStageWidget(this);
 			recognizingStepsNB.AppendPage(formulaMatchingWidget,
-			                              new Label(FormulaMatchingStageWidget.WidgetLabel));
+			                              new Label(ParsingStageWidget.WidgetLabel));
 			
 			
 			mainWindow.ShowAll();

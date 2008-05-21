@@ -43,8 +43,8 @@
     <File name="Tests" subtype="Directory" buildaction="Compile" />
     <File name="Controllers/RecognizingControllerEvents.cs" subtype="Code" buildaction="Compile" />
     <File name="Controllers/Nodes/SequenceNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="Stages/FormulaMatchingStageWidget.cs" subtype="Code" buildaction="Compile" />
-    <File name="Controllers/FormulaMatchingController.cs" subtype="Code" buildaction="Compile" />
+    <File name="Stages/ParsingStageWidget.cs" subtype="Code" buildaction="Compile" />
+    <File name="Controllers/ParsingController.cs" subtype="Code" buildaction="Compile" />
     <File name="SyntacticalRulesManager/SyntacticalRulesManagerDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="SyntacticalRulesManager/SyntacticalRuleEditorDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="LexicalRulesManager/LexicalExpressionWidget.cs" subtype="Code" buildaction="Compile" />

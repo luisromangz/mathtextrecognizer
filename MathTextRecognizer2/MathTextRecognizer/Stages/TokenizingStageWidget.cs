@@ -891,6 +891,10 @@ namespace MathTextRecognizer.Stages
 				              + "debes solucionar los siguentes problemas:\n\n{0}",
 				              errorss);
 			}
+			else
+			{
+				this.NextStage();
+			}
 		}
 		
 		/// <summary>

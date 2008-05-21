@@ -13,32 +13,53 @@ using MathTextRecognizer.Controllers;
 
 namespace MathTextRecognizer.Stages
 {
+
 	
 	/// <summary>
 	/// This class implements a widget to be used as interface to show 
 	/// the progress in the formula matching process.
 	/// </summary>
-	public class FormulaMatchingStageWidget : RecognizingStageWidget
-	{
-		FormulaMatchingController controller;
+	public class ParsingStageWidget : RecognizingStageWidget
+	{		
+			
+#region Glade widgets
+		[Widget]
+		private HBox parsingStageBaseWidget = null;
+	
+#endregion Glade widgets
+	
+		
+#region Fields
+		ParsingController controller;
+		
+#endregion Fields
 		
 		/// <summary>
-		/// <c>FormulaMatchingStageWidget</c>'s constructor.
+		/// <see cref="ParsingStageWidget"/>'s constructor.
 		/// </summary>
 		/// <param name="window">
 		/// The <see cref="MainRecognizerWindow"/> that contains the widget.
 		/// </param>
-		public FormulaMatchingStageWidget(MainRecognizerWindow window) : base(window)
+		public ParsingStageWidget(MainRecognizerWindow window) : base(window)
 		{
-			controller = new FormulaMatchingController();
+			Glade.XML gladeXml = new XML("mathtextrecognizer.glade",
+			                             "parsingStageBaseWidget");
+			
+			gladeXml.Autoconnect(this);
+			
+			this.Add(parsingStageBaseWidget);
+			
+			controller = new ParsingController();
 			controller.MessageLogSent += 
 				new MessageLogSentHandler(OnControllerMessageLogSent);
+			
+			this.ShowAll();
 		}
 		
 		/// <summary>
 		/// <c>FormulaMatchingStageWidget</c>'s static fields initializer.
 		/// </summary>
-		static FormulaMatchingStageWidget()
+		static ParsingStageWidget()
 		{
 			widgetLabel = "Construcción de fórmulas";
 		}

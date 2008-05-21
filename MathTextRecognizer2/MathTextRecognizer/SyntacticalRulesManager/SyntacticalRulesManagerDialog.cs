@@ -86,7 +86,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				
 				foreach (object [] values in synRulesModel) 
 				{
-					rules.Add(values[1] as SyntacticalRule);
+					rules.Add((SyntacticalRule)values[2]);
 				}
 				
 				return rules;
@@ -96,7 +96,6 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				foreach (SyntacticalRule rule in value) 
 				{
 					AddRule(rule);
-					
 				}
 				
 				synRulesTree.Selection.UnselectAll();
@@ -179,11 +178,14 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		private void AddRule(SyntacticalRule rule)
 		{
 			string [] parts = rule.ToString().Split(':');
+			
 			TreeIter iter = synRulesModel.AppendValues(parts[0]+" :",
 			                                           parts[1],
 			                                           rule);
-				
+			
 			synRulesTree.Selection.SelectIter(iter);
+			
+			
 			synRulesTree.ScrollToCell(synRulesModel.GetPath(iter), 
 			                          synRulesTree.Columns[0],
 			                          true,0.5f,0);
