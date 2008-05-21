@@ -887,8 +887,7 @@ namespace MathTextRecognizer.Stages
 				
 				OkDialog.Show(this.MainRecognizerWindow.Window,
 				              MessageType.Info,
-				              "Para continuar a la siguente fase de procesado,"
-				              + "debes solucionar los siguentes problemas:\n\n{0}",
+				              "Para continuar a la siguente fase de procesado, debes solucionar los siguentes problemas:\n\n{0}",
 				              errorss);
 			}
 			else
