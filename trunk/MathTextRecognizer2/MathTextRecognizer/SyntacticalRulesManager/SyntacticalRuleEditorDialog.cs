@@ -156,26 +156,13 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </param>
 		public void RemoveExpression(SyntacticalExpressionWidget widget)
 		{
-			
-			for(int i = 0; i<synEdExpressionsVB.Children.Length; i++)
-			{
-				if(synEdExpressionsVB.Children[i] == widget)
-				{
-					// Whe remove the separator.
-					if(i > 0)
-					{
-						synEdExpressionsVB.Remove(synEdExpressionsVB.Children[i-1]);
-					}
-					else if(synEdExpressionsVB.Children.Length > 1)
-					{
-						synEdExpressionsVB.Remove(synEdExpressionsVB.Children[1]);
-					}
-					
-					break;
-				}
-			}
-			
 			synEdExpressionsVB.Remove(widget);
+			
+			foreach (SyntacticalExpressionWidget childWidget in 
+			         synEdExpressionsVB.Children) 
+			{
+				childWidget.CheckPosition();
+			}
 		}
 		
 #endregion Public methods
