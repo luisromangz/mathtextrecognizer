@@ -121,7 +121,7 @@ namespace MathTextLibrary.Analisys
 			
 			return String.Format("{0} : {1}",
 			                     this.ruleName,
-			                     String.Join(" | ", expressionStrings.ToArray()));
+			                     String.Join("\n| ", expressionStrings.ToArray()));
 		}
 
 		

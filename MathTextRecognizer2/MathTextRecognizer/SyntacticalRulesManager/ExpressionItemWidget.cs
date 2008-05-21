@@ -198,6 +198,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			if(res == ResponseType.Ok)
 			{
 				this.options = dialog.Options;
+				
 			}
 			dialog.Destroy();
 		}

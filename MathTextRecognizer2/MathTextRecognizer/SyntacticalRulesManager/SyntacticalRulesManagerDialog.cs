@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 using Gtk;
 using Glade;
-
 using MathTextLibrary.Analisys;
 using MathTextCustomWidgets.Dialogs;
 
@@ -179,8 +178,10 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		
 		private void AddRule(SyntacticalRule rule)
 		{
-			TreeIter iter = synRulesModel.AppendValues(rule.ToString(),
-				                                           rule);
+			string [] parts = rule.ToString().Split(':');
+			TreeIter iter = synRulesModel.AppendValues(parts[0]+" :",
+			                                           parts[1],
+			                                           rule);
 				
 			synRulesTree.Selection.SelectIter(iter);
 			synRulesTree.ScrollToCell(synRulesModel.GetPath(iter), 
@@ -196,6 +197,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			// We create the tree's model, and asign it.
 			synRulesModel = new ListStore(typeof(string),
+			                              typeof(string),
 			                              typeof(SyntacticalRule));
 			
 			synRulesTree.Model = synRulesModel;
@@ -209,10 +211,18 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			
 			// We add the columsn of the treeview.
+			
+			CellRendererText cellRenderer = new CellRendererText();
+			cellRenderer.Yalign = 0;
 			synRulesTree.AppendColumn("Regla", 
-			                          new CellRendererText(),
+			                          cellRenderer,
 			                          "markup" ,0);
 			synRulesTree.Columns[0].Sizing = TreeViewColumnSizing.Autosize;
+			
+			synRulesTree.AppendColumn("Expresión", 
+			                          new CellRendererText(),
+			                          "markup" ,1);
+			synRulesTree.Columns[1].Sizing = TreeViewColumnSizing.Autosize;
 		}
 		
 		/// <summary>
@@ -238,6 +248,15 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			dialog.Destroy();
 		}	
 		
+		/// <summary>
+		/// Launches the rule editor dialog for the selected rule.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
 		private void OnSynRuleEditBtnClicked(object sender, EventArgs args)
 		{
 			SyntacticalRuleEditorDialog dialog = 
@@ -246,14 +265,16 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			TreeIter iter;
 			synRulesTree.Selection.GetSelected(out iter);
 			
-			dialog.Rule = synRulesModel.GetValue(iter, 1) as  SyntacticalRule;
+			dialog.Rule = synRulesModel.GetValue(iter, 2) as  SyntacticalRule;
 			
 			ResponseType res = dialog.Show();
 			if(res == ResponseType.Ok)
-			{
+			{			
 				SyntacticalRule rule = dialog.Rule;
+				string [] parts = rule.ToString().Split(':');
 				synRulesModel.SetValues(iter,
-				                        rule.ToString(),				                      
+				                        parts[0] +" :",
+				                        parts[1],				                      
 				                        rule);
 			}
 			
@@ -385,7 +406,6 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		                                            ButtonPressEventArgs args)
 		{
 			
-			Console.WriteLine("meh");
 			// Have the user pressed the right mouse button?
 			if(args.Event.Button == 3)
 			{

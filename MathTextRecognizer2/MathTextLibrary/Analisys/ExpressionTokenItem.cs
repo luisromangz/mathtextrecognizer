@@ -164,7 +164,7 @@ namespace MathTextLibrary.Analisys
 							
 					}
 					
-					res+= "{"+item.ToString()+"}";
+					res+= item.ToString();
 				}
 				
 				res +="}";

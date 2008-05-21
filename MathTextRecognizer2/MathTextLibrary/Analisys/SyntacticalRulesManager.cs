@@ -72,6 +72,14 @@ namespace MathTextLibrary.Analisys
 			this.rules.Add(rule.Name, rule);
 		}
 		
+		/// <summary>
+		/// Removes all rules from the mananager.
+		/// </summary>
+		public void ClearRules()
+		{
+			this.rules.Clear();
+		}
+		
 #endregion Public methods
 	}
 }
