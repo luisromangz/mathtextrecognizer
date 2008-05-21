@@ -195,7 +195,6 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			if(res == ResponseType.Ok)
 			{
 				AddRule(dialog.Rule);
-				
 			}
 			
 			dialog.Destroy();
