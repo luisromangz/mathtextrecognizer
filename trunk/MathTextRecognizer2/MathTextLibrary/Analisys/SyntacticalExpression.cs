@@ -15,7 +15,7 @@ namespace MathTextLibrary.Analisys
 	[XmlInclude(typeof(ExpressionTokenItem))]
 	[XmlInclude(typeof(ExpressionGroupItem))]
 	[XmlInclude(typeof(ExpressionRuleCallItem))]
-	public class SyntacticalExpression : ISyntacticMatcher
+	public class SyntacticalExpression : SyntacticalMatcher
 	{
 		
 		private List<ExpressionItem> items;
@@ -63,13 +63,22 @@ namespace MathTextLibrary.Analisys
 			}
 		}
 		
+		/// <value>
+		/// Contains the label showed by the expression.
+		/// </value>
+		public override string Label 
+		{
+			get { return this.ToString(); }
+		}
+
+		
 		
 #endregion Properties
 		
 #region Public methods
 		
 		
-		public bool Match(TokenSequence sequence, out string output)
+		public override bool Match(TokenSequence sequence, out string output)
 		{		
 
 			List<string> outputList = new List<string>();

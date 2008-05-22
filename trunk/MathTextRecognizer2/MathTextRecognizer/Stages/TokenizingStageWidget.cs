@@ -175,6 +175,24 @@ namespace MathTextRecognizer.Stages
 		
 #region Properties
 		
+		/// <value>
+		/// Contains the tokens returned by the lexical analisys.
+		/// </value>
+		public List<Token> ResultTokens
+		{
+			get
+			{
+				List<Token> result = new List<Token>();
+				foreach (SequenceNode node in sequencesModel) 
+				{
+					result.AddRange(GetTokens(node));
+				}
+				
+				result.Sort();
+				return result;
+			}
+		}
+		
 #endregion Properties
 		
 #region Public methods
@@ -257,6 +275,34 @@ namespace MathTextRecognizer.Stages
 #endregion Public methods
 		
 #region Non-public methods
+		
+		/// <summary>
+		/// Gets the tokens of a given node.
+		/// </summary>
+		/// <param name="node">
+		/// A <see cref="SequencedNode"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="List`1"/>
+		/// </returns>
+		private List<Token> GetTokens(SequenceNode node)
+		{
+			List<Token> res = new List<Token>();
+			if(node.ChildCount ==0)
+			{
+				// It should have a token;
+				res.Add(node.FoundToken);
+			}
+			else
+			{
+				for(int i = 0; i< node.ChildCount; i++)
+				{
+					res.AddRange(GetTokens(node[i] as SequenceNode));
+				}
+			}
+			
+			return res;
+		}
 		
 		/// <summary>
 		/// Initialize the widget's children widgets.
