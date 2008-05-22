@@ -8,23 +8,27 @@ namespace MathTextLibrary.Analisys
 {
 	
 	/// <summary>
-	/// This class implements a manager of syntactical rules as a 
+	/// This class implements a library of syntactical rules as a 
 	/// singleton.
 	/// </summary>
-	public class SyntacticalRulesManager
+	public class SyntacticalRulesLibrary
 	{
 		private Dictionary<string, SyntacticalRule> rules;
 		
-		private static SyntacticalRulesManager instance;
+		private static SyntacticalRulesLibrary instance;
+		
+		private SyntacticalRule startRule;
 		
 		
 		/// <summary>
-		/// <see cref="SyntacticalRulesManager"/>'s constructor.
-		/// </summary>
-		private SyntacticalRulesManager()
+		/// <see cref=""/>'s constructor.
+		//SyntacticalRulesLibrary/ </summary>
+		private SyntacticalRulesLibrary()
 		{
 			rules = new Dictionary<string,SyntacticalRule>();
 		}
+		
+	
 		
 		
 #region Properties
@@ -44,16 +48,31 @@ namespace MathTextLibrary.Analisys
 		/// <summary>
 		/// Contains the only instance allowed for this class.
 		/// </summary>
-		public static SyntacticalRulesManager Instance
+		public static SyntacticalRulesLibrary Instance
 		{
 			get
 			{
 				if(instance == null)
 				{
-					instance = new SyntacticalRulesManager();
+					instance = new SyntacticalRulesLibrary();
 				}
 				
 				return instance;
+			}
+		}
+		
+		/// <value>
+		/// Contains the start rule.
+		/// </value>
+		public SyntacticalRule StartRule
+		{
+			get
+			{
+				return startRule; 
+			}
+			set
+			{
+				startRule = value;
 			}
 		}
 		

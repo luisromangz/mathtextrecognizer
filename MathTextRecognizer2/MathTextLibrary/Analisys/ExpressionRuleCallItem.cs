@@ -42,6 +42,14 @@ namespace MathTextLibrary.Analisys
 			}
 		}
 		
+		/// <value>
+		/// Contains the label shown by the item.
+		/// </value>
+		public override string Label {
+			get { return RuleName; }
+		}
+
+		
 #endregion Properties
 
 #region Public methods
@@ -54,7 +62,7 @@ namespace MathTextLibrary.Analisys
 		protected override bool MatchSequence (TokenSequence sequence, out string output)
 		{
 			// The actual matching is done by the rule.
-			return SyntacticalRulesManager.Instance[expressionName].Match(sequence, out output);
+			return SyntacticalRulesLibrary.Instance[expressionName].Match(sequence, out output);
 		}
 
 		protected override string ToStringAux ()

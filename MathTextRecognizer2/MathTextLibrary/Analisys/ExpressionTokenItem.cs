@@ -100,6 +100,14 @@ namespace MathTextLibrary.Analisys
 			}
 		}
 		
+		/// <value>
+		/// Contains the label shown by the item.
+		/// </value>
+		public override string Label {
+			get { return this.tokenType; }
+		}
+
+		
 #endregion Properties
 		
 #region Non-public methods

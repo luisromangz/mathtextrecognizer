@@ -57,6 +57,14 @@ namespace MathTextLibrary.Analisys
 			}
 		}
 		
+		/// <value>
+		/// Contains the label shown by the item.
+		/// </value>
+		public override string Label {
+			get { return this.ToString(); }
+		}
+
+		
 #endregion Properties
 		
 #region Public methods

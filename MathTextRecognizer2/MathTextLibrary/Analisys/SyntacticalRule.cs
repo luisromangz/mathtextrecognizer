@@ -14,7 +14,7 @@ namespace MathTextLibrary.Analisys
 	/// This class represent the rules used for syntactila analysis.
 	/// </summary>
 	[XmlInclude(typeof(SyntacticalExpression))]
-	public class SyntacticalRule : ISyntacticMatcher
+	public class SyntacticalRule : SyntacticalMatcher
 	{
 		private List<SyntacticalExpression> expressions;
 		private string ruleName;
@@ -50,7 +50,15 @@ namespace MathTextLibrary.Analisys
 		}
 		
 		/// <value>
-		/// Contains the expressions used to 
+		/// Contains the label used by the rule.
+		/// </value>
+		public override string Label {
+			get { return Name; }
+		}
+
+		
+		/// <value>
+		/// Contains the expressions used to actually match the rule.
 		/// </value>
 		public List<SyntacticalExpression> Expressions
 		{
@@ -84,7 +92,7 @@ namespace MathTextLibrary.Analisys
 		/// <c>true</c> it the sequence was matched correctly, <c>false</c>
 		/// if there were errors.
 		/// </returns>
-		public bool Match(TokenSequence sequence, out string text)
+		public override bool Match(TokenSequence sequence, out string text)
 		{
 
 			foreach (SyntacticalExpression expression in expressions)  

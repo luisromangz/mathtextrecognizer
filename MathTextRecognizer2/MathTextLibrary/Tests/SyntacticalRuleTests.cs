@@ -142,7 +142,7 @@ namespace MathTextLibrary.Tests
 			
 			
 			SyntacticalRule rule = new SyntacticalRule("multiplicacion");
-			SyntacticalRulesManager.Instance.AddRule(rule);
+			SyntacticalRulesLibrary.Instance.AddRule(rule);
 			
 			SyntacticalExpression exp = new SyntacticalExpression();
 			exp.FormatString="{0}{1}";
@@ -167,7 +167,7 @@ namespace MathTextLibrary.Tests
 			rule.Expressions.Add(exp);
 			
 			rule = new SyntacticalRule("formula");
-			SyntacticalRulesManager.Instance.AddRule(rule);
+			SyntacticalRulesLibrary.Instance.AddRule(rule);
 			
 			exp = new SyntacticalExpression();
 			exp.FormatString="{0}{1}";

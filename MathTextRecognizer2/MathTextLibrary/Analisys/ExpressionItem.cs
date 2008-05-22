@@ -82,7 +82,7 @@ namespace MathTextLibrary.Analisys
 	/// </summary>
 	[XmlInclude(typeof(ExpressionItemModifier))]
 	[XmlInclude(typeof(ExpressionItemPosition))]
-	public abstract class ExpressionItem : ISyntacticMatcher
+	public abstract class ExpressionItem : SyntacticalMatcher
 	{
 		private ExpressionItemPosition position;
 		
@@ -154,7 +154,7 @@ namespace MathTextLibrary.Analisys
 #region Public methods
 		
 	
-		public bool Match (TokenSequence sequence, out string res)
+		public override bool Match (TokenSequence sequence, out string res)
 		{
 
 			res = "";

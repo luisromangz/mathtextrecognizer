@@ -11,8 +11,13 @@ namespace MathTextLibrary.Analisys
 	/// This interface must be implemented by classes which performs 
 	/// the task of syntactical matching.
 	/// </summary>
-	public interface ISyntacticMatcher
+	public abstract class SyntacticalMatcher
 	{
-		bool Match(TokenSequence sequence, out string text);
+		public abstract bool Match(TokenSequence sequence, out string text);
+		
+		public abstract string Label
+		{
+			get;
+		}
 	}
 }

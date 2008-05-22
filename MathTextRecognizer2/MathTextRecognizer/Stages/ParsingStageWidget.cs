@@ -2,14 +2,16 @@
 // User: luis at 12:47 09/05/2008
 
 using System;
+using System.Collections.Generic;
 
 using Gtk;
 using Glade;
 
 using MathTextCustomWidgets.Dialogs;
+using MathTextLibrary.Analisys;
 using MathTextLibrary.Controllers;
-
 using MathTextRecognizer.Controllers;
+using MathTextRecognizer.Controllers.Nodes;
 
 namespace MathTextRecognizer.Stages
 {
@@ -24,13 +26,22 @@ namespace MathTextRecognizer.Stages
 			
 #region Glade widgets
 		[Widget]
-		private HBox parsingStageBaseWidget = null;
+		private HPaned parsingStageBaseWidget = null;
+		
+		[Widget]
+		private ScrolledWindow syntacticalTreePlaceholder = null;
+		
+		[Widget]
+		private Notebook parsingButtonsNB = null;
 	
 #endregion Glade widgets
 	
 		
 #region Fields
-		ParsingController controller;
+		private ParsingController controller;
+		
+		private NodeView syntacticalCoverTree;
+		private NodeStore syntacticalCoverModel;
 		
 #endregion Fields
 		
@@ -53,6 +64,8 @@ namespace MathTextRecognizer.Stages
 			controller.MessageLogSent += 
 				new MessageLogSentHandler(OnControllerMessageLogSent);
 			
+			InitializeWidgets();
+			
 			this.ShowAll();
 		}
 		
@@ -61,7 +74,7 @@ namespace MathTextRecognizer.Stages
 		/// </summary>
 		static ParsingStageWidget()
 		{
-			widgetLabel = "Construcción de fórmulas";
+			widgetLabel = "Reconstrucción de la fórmula";
 		}
 		
 #region Public methods
@@ -84,10 +97,56 @@ namespace MathTextRecognizer.Stages
 		
 #region Non-public methods		
 	
+		/// <summary>
+		/// Initializes the child widgets of the widget.
+		/// </summary>
+		private void InitializeWidgets()
+		{
+			syntacticalCoverModel = 
+				new NodeStore(typeof(SyntacticalCoverNode));
+			
+			syntacticalCoverTree = new NodeView(syntacticalCoverModel);
+			
+			syntacticalCoverTree.AppendColumn("Elemento que reconoce",
+			                                  new CellRendererText(),
+			                                  "markup" ,0);
+			
+			syntacticalCoverTree.Columns[0].Sizing = 
+				TreeViewColumnSizing.Autosize;
+			
+			syntacticalTreePlaceholder.Add(syntacticalCoverTree);
+		}
 		
 		protected override void NextStep (ControllerStepMode mode)
 		{
 			controller.Next(mode);
+		}
+		
+		
+		private void OnParsingProcessBtnClicked(object sender, EventArgs args)
+		{
+			// We set the tokens from the previous step.
+			controller.SetStartTokens(MainRecognizerWindow.TokenizingWidget.ResultTokens);
+			
+			// We set the rules library.
+			SyntacticalRulesLibrary.Instance.ClearRules();
+			
+			List<SyntacticalRule> rules = 
+				MainRecognizerWindow.SyntacticalRulesManager.SyntacticalRules;
+			
+			foreach (SyntacticalRule rule in  rules) 
+			{
+				SyntacticalRulesLibrary.Instance.AddRule(rule);
+			}
+			
+			SyntacticalRulesLibrary.Instance.StartRule = rules[0];
+			
+			SyntacticalCoverNode node = 
+				new SyntacticalCoverNode(rules[0]);
+			
+			syntacticalCoverModel.AddNode(node);
+			
+			parsingButtonsNB.Page = 1;
 		}
 	
 #endregion Non-public methods
