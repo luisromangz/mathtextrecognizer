@@ -23,7 +23,6 @@
     <File name="DatabaseManager/DatabaseManagerDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="DatabaseManager/DatabaseFileInfo.cs" subtype="Code" buildaction="Compile" />
     <File name="Controllers" subtype="Directory" buildaction="Compile" />
-    <File name="Controllers/OutputController.cs" subtype="Code" buildaction="Compile" />
     <File name="Config" subtype="Directory" buildaction="Compile" />
     <File name="Config/RecognizerConfig.cs" subtype="Code" buildaction="Compile" />
     <File name="defaultConfig" subtype="Code" buildaction="EmbedAsResource" />

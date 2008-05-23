@@ -156,8 +156,7 @@ namespace MathTextRecognizer.DatabaseManager
 				// No se abrio un archivo de base de datos, informamos.
 				OkDialog.Show(this.databaseManagerDialog,
 				              MessageType.Warning,
-				              "El archivo «{0}» no contiene una base"
-				              + " de datos correcta, y no se pudo abrir.",
+				              "El archivo «{0}» no contiene una base de datos correcta, y no se pudo abrir.",
 				              databasePath);
 				return;
 			}
@@ -193,8 +192,7 @@ namespace MathTextRecognizer.DatabaseManager
 			{
 				OkDialog.Show(this.databaseManagerDialog,
 				              MessageType.Info,
-				              "La base de datos del fichero «{0}» ya se encuentra"
-				              + " en la lista y no se añadirá de nuevo.",
+				              "La base de datos del fichero «{0}» ya se encuentra en la lista y no se añadirá de nuevo.",
 				              Path.GetFileName(databasePath));
 			}
 		}
@@ -212,8 +210,7 @@ namespace MathTextRecognizer.DatabaseManager
 				// No se abrio un archivo de base de datos, informamos.
 				OkDialog.Show(this.databaseManagerDialog,
 				              MessageType.Warning,
-				              "El archivo «{0}» no existe o no contiene " 
-				              +"una base de datos correcta, y no se pudo abrir.",
+				              "El archivo «{0}» no existe o no contiene una base de datos correcta, y no se pudo abrir.",
 				              databaseInfo.Path);
 				return;
 			}
@@ -367,8 +364,9 @@ namespace MathTextRecognizer.DatabaseManager
 		/// </param>
 		private void OnMakeDefaultBtnClicked(object sender, EventArgs args)
 		{
-			ResponseType res = ConfirmDialog.Show(this.databaseManagerDialog,
-			                                      "Se va a cambiar la configuración por defecto, ¿desea continuar?");
+			ResponseType res = 
+				ConfirmDialog.Show(this.databaseManagerDialog,
+				                   "Se va a cambiar la configuración por defecto, ¿desea continuar?");
 			
 			if(res == ResponseType.Yes)
 			{

@@ -151,8 +151,7 @@ namespace MathTextRecognizer.Stages
 			controller.MessageLogSent+=
 				new MessageLogSentHandler(OnControllerMessageLogSent);
 			
-			controller.ProcessFinished += 
-				new ProcessFinishedHandler(OnControllerProcessFinished);
+			controller.ProcessFinished += OnControllerProcessFinished;
 			controller.SequenceBeingMatched +=
 				new SequenceBeingMatchedHandler(OnControllerSequenceBeingMatched);
 			

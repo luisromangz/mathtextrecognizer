@@ -125,8 +125,7 @@ namespace MathTextRecognizer.Stages
 			controller.NodeBeingProcessed += 
 				new NodeBeingProcessedHandler(OnControllerNodeBeingProcessed);
 			    		
-			controller.ProcessFinished +=
-			    new ProcessFinishedHandler(OnControllerProcessFinished);
+			controller.ProcessFinished += OnControllerProcessFinished;
 			    
 			controller.BitmapProcessedByDatabase +=
 			    new BitmapProcessedHandler(OnControllerBitmapProcessedByDatabase);

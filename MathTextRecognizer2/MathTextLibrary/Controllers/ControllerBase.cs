@@ -27,7 +27,7 @@ namespace MathTextLibrary.Controllers
 		/// Evento usado para notificar a la interfaz de que se ha terminado de
 		/// realizar un proceso.
 		/// </summary>
-		public event ProcessFinishedHandler ProcessFinished;
+		public event EventHandler ProcessFinished;
 		
 		public event NodeBeingProcessedHandler NodeBeingProcessed;
 		

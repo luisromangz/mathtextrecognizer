@@ -64,6 +64,8 @@ namespace MathTextRecognizer.Stages
 			controller.MessageLogSent += 
 				new MessageLogSentHandler(OnControllerMessageLogSent);
 			
+			controller.ProcessFinished += OnControllerProcessFinishedHandler;
+			
 			InitializeWidgets();
 			
 			this.ShowAll();
@@ -122,6 +124,35 @@ namespace MathTextRecognizer.Stages
 			controller.Next(mode);
 		}
 		
+		/// <summary>
+		/// Handles the end of the syntactical analisys process.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnControllerProcessFinishedHandler(object sender, EventArgs args)
+		{
+			Application.Invoke(OnControllerProcessFinishedHandlerInThread);
+		}
+		
+		private void OnControllerProcessFinishedHandlerInThread(object sender, 
+		                                                        EventArgs args)
+		{
+			if(controller.ParsingResult)
+			{
+				OkDialog.Show(this.MainRecognizerWindow.Window,
+				              MessageType.Info,
+				              controller.Output);
+			}
+			{
+				OkDialog.Show(this.MainRecognizerWindow.Window,
+				              MessageType.Info,
+				              "El proceso de análisis sintáctico no tuvo éxito.");		
+			}
+		}
 		
 		private void OnParsingProcessBtnClicked(object sender, EventArgs args)
 		{
@@ -147,6 +178,8 @@ namespace MathTextRecognizer.Stages
 			syntacticalCoverModel.AddNode(node);
 			
 			parsingButtonsNB.Page = 1;
+			
+			controller.Next(ControllerStepMode.StepByStep);
 		}
 	
 #endregion Non-public methods
