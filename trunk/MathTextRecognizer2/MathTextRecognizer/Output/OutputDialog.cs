@@ -31,8 +31,6 @@ namespace MathTextRecognizer.Output
 		[WidgetAttribute]
 		private ComboBox comboOutputType = null;
 		
-		private OutputController controller = null;
-		
 		private FileChooserDialog fileSaveDialog = null;
 		
 		/// <summary>
@@ -48,11 +46,7 @@ namespace MathTextRecognizer.Output
 			
 			gxml.Autoconnect (this);			
 			
-			controller=new OutputController();
-			controller.StartImage=rootBitmap;
-			controller.OutputCreated+=new ProcessFinishedHandler(OnOutputCreated);
-						
-			controller.MakeOutput();
+			
 		}
 		
 		/// <summary>

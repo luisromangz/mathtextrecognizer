@@ -18,13 +18,6 @@ namespace MathTextLibrary.Controllers
 	                                           MessageLogSentArgs logMsg);
 
 	/// <summary>
-	/// Delegado para los manejadores de eventos que se envian cuando un controlador
-	/// desea notificar que ha finalizado un determinado proceso.
-	/// </summary>
-	public delegate void ProcessFinishedHandler(object sender, EventArgs arg);
-	
-	
-	/// <summary>
 	/// Clase que implementa los argumentos necesarios en la transimisión de un
 	/// mensaje indicando que un paso del reconocimiento se ha producido.
 	/// </summary>

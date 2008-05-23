@@ -161,7 +161,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			foreach (object[] values in synRulesModel) 
 			{
-				if((values[1] as SyntacticalRule).Name == ruleName)
+				if((values[2] as SyntacticalRule).Name == ruleName)
 				{
 					// We have found the name.
 					return true;
