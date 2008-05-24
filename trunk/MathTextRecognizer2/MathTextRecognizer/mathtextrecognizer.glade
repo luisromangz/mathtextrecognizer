@@ -338,91 +338,69 @@
     </child>
   </widget>
   <widget class="GtkDialog" id="outputDialog">
-    <property name="width_request">352</property>
-    <property name="height_request">336</property>
+    <property name="width_request">410</property>
+    <property name="height_request">420</property>
     <property name="visible">True</property>
-    <property name="title" translatable="yes">Resultado del procesado</property>
-    <property name="resizable">False</property>
+    <property name="border_width">3</property>
+    <property name="title" translatable="yes">Resultado del reconocimiento</property>
+    <property name="modal">True</property>
     <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
+        <property name="spacing">5</property>
         <child>
-          <widget class="GtkVBox" id="vbox5">
+          <widget class="GtkFrame" id="frame8">
+            <property name="height_request">130</property>
             <property name="visible">True</property>
+            <property name="label_xalign">0</property>
             <child>
-              <widget class="GtkAlignment" id="alignment2">
-                <property name="visible">True</property>
-                <property name="xalign">0</property>
-                <property name="xscale">0</property>
-                <property name="yscale">0</property>
-                <child>
-                  <widget class="GtkHBox" id="hbox11">
-                    <property name="visible">True</property>
-                    <property name="border_width">6</property>
-                    <property name="spacing">13</property>
-                    <child>
-                      <widget class="GtkLabel" id="label5">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">Tipo de salida:</property>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkComboBox" id="comboOutputType">
-                        <property name="visible">True</property>
-                        <property name="active">0</property>
-                        <property name="items" translatable="yes">LaTeX
-MathML</property>
-                        <signal name="changed" handler="OnComboOutputTypeChanged"/>
-                      </widget>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                  </widget>
-                </child>
-              </widget>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-              </packing>
+              <placeholder/>
             </child>
             <child>
-              <widget class="GtkFrame" id="frame3">
+              <widget class="GtkLabel" id="label5">
                 <property name="visible">True</property>
-                <property name="border_width">3</property>
-                <property name="label_xalign">0</property>
-                <property name="shadow_type">GTK_SHADOW_NONE</property>
-                <child>
-                  <widget class="GtkScrolledWindow" id="scrolledwindow4">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-                    <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-                    <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
-                    <child>
-                      <widget class="GtkTextView" id="textviewOutput">
-                        <property name="visible">True</property>
-                        <property name="sensitive">False</property>
-                        <property name="can_focus">True</property>
-                      </widget>
-                    </child>
-                  </widget>
-                </child>
-                <child>
-                  <widget class="GtkLabel" id="label16">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">Salida:</property>
-                    <property name="use_markup">True</property>
-                  </widget>
-                  <packing>
-                    <property name="type">label_item</property>
-                  </packing>
-                </child>
+                <property name="label" translatable="yes">Imagen original</property>
+                <property name="use_markup">True</property>
               </widget>
               <packing>
-                <property name="position">1</property>
+                <property name="type">label_item</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="GtkFrame" id="frame3">
+            <property name="visible">True</property>
+            <property name="label_xalign">0</property>
+            <property name="shadow_type">GTK_SHADOW_NONE</property>
+            <child>
+              <widget class="GtkScrolledWindow" id="scrolledwindow4">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+                <child>
+                  <widget class="GtkTextView" id="textviewOutput">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="label16">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Salida:</property>
+                <property name="use_markup">True</property>
+              </widget>
+              <packing>
+                <property name="type">label_item</property>
               </packing>
             </child>
           </widget>
@@ -430,12 +408,70 @@ MathML</property>
             <property name="position">2</property>
           </packing>
         </child>
+        <child>
+          <widget class="GtkFrame" id="frame14">
+            <property name="height_request">130</property>
+            <property name="visible">True</property>
+            <property name="label_xalign">0</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <widget class="GtkHBox" id="hbox11">
+                <property name="visible">True</property>
+                <property name="spacing">5</property>
+                <child>
+                  <widget class="GtkLabel" id="label15">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Imagen generada a partir de la salida</property>
+                    <property name="use_markup">True</property>
+                  </widget>
+                </child>
+                <child>
+                  <widget class="GtkButton" id="outputRefreshBtn">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="label" translatable="yes">_Refrescar</property>
+                    <property name="use_underline">True</property>
+                    <property name="response_id">0</property>
+                    <signal name="clicked" handler="OnOutputRefreshBtnClicked"/>
+                  </widget>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="type">label_item</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="position">3</property>
+          </packing>
+        </child>
         <child internal-child="action_area">
           <widget class="GtkHButtonBox" id="dialog-action_area1">
             <property name="visible">True</property>
             <property name="layout_style">GTK_BUTTONBOX_END</property>
             <child>
-              <widget class="GtkButton" id="closebutton1">
+              <widget class="GtkButton" id="outputSaveBtn">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="has_focus">True</property>
+                <property name="label" translatable="yes">gtk-save</property>
+                <property name="use_stock">True</property>
+                <property name="response_id">0</property>
+                <signal name="clicked" handler="OnBtnSaveClicked"/>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkButton" id="outputCloseBtn">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
@@ -443,53 +479,7 @@ MathML</property>
                 <property name="use_stock">True</property>
                 <property name="response_id">-7</property>
               </widget>
-            </child>
-            <child>
-              <widget class="GtkButton" id="btnSave">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="has_focus">True</property>
-                <property name="response_id">0</property>
-                <signal name="clicked" handler="OnBtnSaveClicked"/>
-                <child>
-                  <widget class="GtkAlignment" id="alignment13">
-                    <property name="visible">True</property>
-                    <property name="xscale">0</property>
-                    <property name="yscale">0</property>
-                    <child>
-                      <widget class="GtkHBox" id="hbox12">
-                        <property name="visible">True</property>
-                        <property name="spacing">2</property>
-                        <child>
-                          <widget class="GtkImage" id="image23">
-                            <property name="visible">True</property>
-                            <property name="stock">gtk-save</property>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkLabel" id="label15">
-                            <property name="visible">True</property>
-                            <property name="label" translatable="yes">Guardar</property>
-                            <property name="use_underline">True</property>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </widget>
-                    </child>
-                  </widget>
-                </child>
-              </widget>
               <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -2943,6 +2933,7 @@ MathML</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="response_id">0</property>
+                                <signal name="clicked" handler="OnParsingShowOutputBtnClicked"/>
                                 <child>
                                   <widget class="GtkAlignment" id="alignment83">
                                     <property name="visible">True</property>
@@ -3899,7 +3890,7 @@ MathML</property>
         <property name="spacing">2</property>
         <child>
           <widget class="GtkHBox" id="expressionTokenWidgetBase">
-            <property name="height_request">88</property>
+            <property name="height_request">93</property>
             <property name="visible">True</property>
             <property name="spacing">2</property>
             <child>
@@ -4129,7 +4120,7 @@ MathML</property>
         <property name="spacing">2</property>
         <child>
           <widget class="GtkHBox" id="expressionRuleWidgetBase">
-            <property name="height_request">88</property>
+            <property name="height_request">93</property>
             <property name="visible">True</property>
             <property name="spacing">2</property>
             <child>
