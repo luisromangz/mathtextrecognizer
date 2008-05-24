@@ -1,15 +1,15 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{603789E4-51B9-4A31-B38B-165B7C6EABB4}</ProjectGuid>
+    <ProjectGuid>{2317FF6F-6FAE-4DED-B2C0-06BC1A30CE35}</ProjectGuid>
+    <RootNamespace>
+    </RootNamespace>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <AssemblyName>mathtextlibrary</AssemblyName>
-    <OutputType>Library</OutputType>
-    <NoStdLib>False</NoStdLib>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputType>Library</OutputType>
+    <AssemblyName>MathTextLibrary</AssemblyName>
     <OutputPath>bin\Debug\</OutputPath>
     <DebugSymbols>true</DebugSymbols>
     <RootNamespace>
@@ -17,10 +17,14 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Optimize>true</Optimize>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>
+    </DefineConstants>
     <WarningLevel>4</WarningLevel>
-    <DebugType>Full</DebugType>
+    <ApplicationIcon>.</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputType>Library</OutputType>
+    <AssemblyName>MathTextLibrary</AssemblyName>
     <OutputPath>bin\Release\</OutputPath>
     <DebugSymbols>false</DebugSymbols>
     <RootNamespace>
@@ -31,30 +35,17 @@
     <DefineConstants>
     </DefineConstants>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <FileAlignment>4096</FileAlignment>
+    <ApplicationIcon>.</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="gdk-sharp" />
-    <Reference Include="glib-sharp" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
+    <Reference Include="nunit.core, Version=2.2.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <Reference Include="nunit.framework, Version=2.2.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Analisys\Lexical\LexicalRule.cs">
-      <Link>LexicalRule.cs</Link>
-    </Compile>
-    <Compile Include="Analisys\Lexical\Token.cs">
-      <Link>Token.cs</Link>
-    </Compile>
-    <Compile Include="Analisys\Lexical\TokenSequence.cs">
-      <Link>TokenSequence.cs</Link>
-    </Compile>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="BitmapProcesses\BitmapFixedThresholder.cs" />
     <Compile Include="BitmapProcesses\BitmapFramer.cs" />
@@ -66,7 +57,6 @@
     <Compile Include="BitmapSegmenters\BitmapSegmenter.cs" />
     <Compile Include="BitmapSegmenters\ProjectionSegmenter.cs" />
     <Compile Include="Controllers\ControllerEvents.cs" />
-    <Compile Include="Controllers\TokenizingController.cs" />
     <Compile Include="Projection\Hole.cs" />
     <Compile Include="Projection\HorizontalBitmapProjection.cs" />
     <Compile Include="Projection\ProjectionMode.cs" />
@@ -117,10 +107,12 @@
     <Compile Include="Databases\Characteristic\CharacteristicFactory.cs" />
     <Compile Include="Databases\DatabaseEvents.cs" />
     <Compile Include="Databases\ISymbolProcess.cs" />
-    <Compile Include="Databases\DatabaseBase.cs" />
+    <Compile Include="Databases\Database.cs" />
     <Compile Include="Bitmap\MathTextBitmap.cs" />
     <Compile Include="Symbol\MathSymbol.cs" />
     <Compile Include="Utils\PathUtils.cs" />
+    <Compile Include="Tests\UtilsTests.cs" />
+    <Compile Include="Tests\CharacteristicTreeDatabaseTests.cs" />
     <Compile Include="BitmapProcesses\BitmapProcessPropertyDescription.cs" />
     <Compile Include="BitmapProcesses\BitmapProcessDescription.cs" />
     <Compile Include="Databases\DatabaseTypeInfo.cs" />
@@ -129,10 +121,29 @@
     <Compile Include="BitmapSegmenters\WaterfallSegmenter.cs" />
     <Compile Include="BitmapSegmenters\WaterfallSegmenterMode.cs" />
     <Compile Include="Bitmap\FloatBitmap.cs" />
+    <Compile Include="Tests\BitmapTests.cs" />
     <Compile Include="Config\LibraryConfig.cs" />
+    <Compile Include="Tests\BinaryCharacteristicsTests.cs" />
     <Compile Include="Databases\Characteristic\CharacteristicHashDatabase.cs" />
-    <Compile Include="Databases\Characteristic\CharacteristicVector.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Tests\CharacteristicHashDatabaseTests.cs" />
+    <Compile Include="Tests\LexicalRuleTests.cs" />
+    <Compile Include="Databases\Receptors\ReceptorVectorDatabase.cs" />
+    <Compile Include="Databases\Receptors\Receptor.cs" />
+    <Compile Include="Databases\CheckVector.cs" />
+    <Compile Include="Tests\ReceptorDatabaseTests.cs" />
+    <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Analisys\LexicalRule.cs" />
+    <Compile Include="Analisys\Token.cs" />
+    <Compile Include="Analisys\TokenSequence.cs" />
+    <Compile Include="Analisys\SyntacticalRule.cs" />
+    <Compile Include="Analisys\SyntacticalExpression.cs" />
+    <Compile Include="Analisys\SyntacticalMatcher.cs" />
+    <Compile Include="Analisys\ExpressionItem.cs" />
+    <Compile Include="Analisys\ExpressionGroupItem.cs" />
+    <Compile Include="Analisys\ExpressionTokenItem.cs" />
+    <Compile Include="Analisys\ExpressionRuleCallItem.cs" />
+    <Compile Include="Analisys\SyntacticalRulesLibrary.cs" />
+    <Compile Include="Tests\SyntacticalRuleTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

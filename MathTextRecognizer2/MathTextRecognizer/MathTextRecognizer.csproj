@@ -1,26 +1,30 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{68F1CF2A-5683-4B48-933D-F32BA3707867}</ProjectGuid>
+    <ProjectGuid>{A031DE4B-2900-479E-A068-39D0F9E02581}</ProjectGuid>
+    <RootNamespace>
+    </RootNamespace>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <AssemblyName>mathtextrecognizer</AssemblyName>
-    <OutputType>WinExe</OutputType>
-    <NoStdLib>False</NoStdLib>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>MathTextRecognizer</AssemblyName>
     <OutputPath>bin\Debug\</OutputPath>
     <DebugSymbols>true</DebugSymbols>
     <RootNamespace>
     </RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>
+    </DefineConstants>
     <WarningLevel>4</WarningLevel>
-    <DebugType>Full</DebugType>
+    <ApplicationIcon>.</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>MathTextRecognizer</AssemblyName>
     <OutputPath>bin\Release\</OutputPath>
     <DebugSymbols>false</DebugSymbols>
     <RootNamespace>
@@ -31,45 +35,32 @@
     <DefineConstants>
     </DefineConstants>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <FileAlignment>4096</FileAlignment>
+    <ApplicationIcon>.</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="atk-sharp" />
-    <Reference Include="gdk-sharp" />
-    <Reference Include="glade-sharp" />
-    <Reference Include="glib-sharp" />
-    <Reference Include="gtk-sharp" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
-    <Reference Include="System.Drawing" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-dotnet, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="nunit.framework, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MathTextLibrary\MathTextLibrary.csproj">
-      <Project>{603789E4-51B9-4A31-B38B-165B7C6EABB4}</Project>
+      <Project>{2317FF6F-6FAE-4DED-B2C0-06BC1A30CE35}</Project>
       <Name>MathTextLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\MathTextCustomWidgets\MathTextCustomWidgets.csproj">
       <Name>MathTextCustomWidgets</Name>
-      <Project>{D526D55E-96FB-4E1F-876C-8CAC1B5A5E15}</Project>
+      <Project>{50223E7F-60A8-4BFF-816A-BA553CB41956}</Project>
     </ProjectReference>
     <ProjectReference Include="..\MathTextLearner\MathTextLearner.csproj">
-      <Project>{4A95EA54-B832-45C2-A412-4F8689703D25}</Project>
+      <Project>{5CA4FB9B-23A1-4CDA-ACDD-BF9453BC8609}</Project>
       <Name>MathTextLearner</Name>
     </ProjectReference>
-    <Compile Include="Controllers\OCRController.cs" />
-    <Compile Include="LexicalRulesManager\LexicalRuleEditorDialog.cs">
-      <Link>LexicalRuleEditorDialog.cs</Link>
-    </Compile>
-    <Compile Include="LexicalRulesManager\LexicalRulesManagerDialog.cs">
-      <Link>LexicalRulesManagerDialog.cs</Link>
-    </Compile>
-    <Compile Include="Stages\OCRStageWidget.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
@@ -77,13 +68,34 @@
     <Compile Include="Output\OutputDialog.cs" />
     <Compile Include="DatabaseManager\DatabaseManagerDialog.cs" />
     <Compile Include="DatabaseManager\DatabaseFileInfo.cs" />
-    <Compile Include="Controllers\OutputController.cs" />
     <Compile Include="Config\RecognizerConfig.cs" />
     <Compile Include="Stages\RecognizingStageWidget.cs" />
     <Compile Include="Stages\Dialogs\SymbolLabelEditorDialog.cs" />
-    <Compile Include="Stages\Nodes\SegmentedNode.cs" />
     <Compile Include="Stages\Dialogs\LearnSymbolDatabaseChooserDialog.cs" />
     <Compile Include="Stages\TokenizingStageWidget.cs" />
+    <Compile Include="Stages\OCRStageWidget.cs" />
+    <Compile Include="Controllers\OCRController.cs" />
+    <Compile Include="LexicalRulesManager\LexicalRuleEditorDialog.cs" />
+    <Compile Include="LexicalRulesManager\LexicalRulesManagerDialog.cs" />
+    <Compile Include="Controllers\TokenizingController.cs" />
+    <Compile Include="Controllers\Nodes\SegmentedNode.cs" />
+    <Compile Include="Controllers\RecognizingControllerEvents.cs" />
+    <Compile Include="Controllers\Nodes\SequenceNode.cs" />
+    <Compile Include="Stages\ParsingStageWidget.cs" />
+    <Compile Include="Controllers\ParsingController.cs" />
+    <Compile Include="SyntacticalRulesManager\SyntacticalRulesManagerDialog.cs" />
+    <Compile Include="SyntacticalRulesManager\SyntacticalRuleEditorDialog.cs" />
+    <Compile Include="LexicalRulesManager\LexicalExpressionWidget.cs" />
+    <Compile Include="SyntacticalRulesManager\SyntacticalExpressionWidget.cs" />
+    <Compile Include="SyntacticalRulesManager\AddSubItemMenu.cs" />
+    <Compile Include="SyntacticalRulesManager\IExpressionItemContainer.cs" />
+    <Compile Include="SyntacticalRulesManager\ExpressionItemWidget.cs" />
+    <Compile Include="SyntacticalRulesManager\ExpressionTokenWidget.cs" />
+    <Compile Include="SyntacticalRulesManager\ExpressionRuleCallWidget.cs" />
+    <Compile Include="SyntacticalRulesManager\ExpressionGroupWidget.cs" />
+    <Compile Include="SyntacticalRulesManager\RelatedItemWidget.cs" />
+    <Compile Include="SyntacticalRulesManager\ExpressionItemOptionsDialog.cs" />
+    <Compile Include="Controllers\Nodes\SyntacticalCoverNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="mathtextrecognizer.glade" />

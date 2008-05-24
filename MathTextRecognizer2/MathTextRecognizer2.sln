@@ -1,36 +1,47 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 9.00
 # Visual Studio 2005
-# SharpDevelop 2.2.1.2648
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathTextCustomWidgets", "MathTextCustomWidgets\MathTextCustomWidgets.csproj", "{D526D55E-96FB-4E1F-876C-8CAC1B5A5E15}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathTextLearner", "MathTextLearner\MathTextLearner.csproj", "{5CA4FB9B-23A1-4CDA-ACDD-BF9453BC8609}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathTextLearner", "MathTextLearner\MathTextLearner.csproj", "{4A95EA54-B832-45C2-A412-4F8689703D25}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathTextLibrary", "MathTextLibrary\MathTextLibrary.csproj", "{2317FF6F-6FAE-4DED-B2C0-06BC1A30CE35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathTextLibrary", "MathTextLibrary\MathTextLibrary.csproj", "{603789E4-51B9-4A31-B38B-165B7C6EABB4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathTextRecognizer", "MathTextRecognizer\MathTextRecognizer.csproj", "{A031DE4B-2900-479E-A068-39D0F9E02581}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathTextRecognizer", "MathTextRecognizer\MathTextRecognizer.csproj", "{68F1CF2A-5683-4B48-933D-F32BA3707867}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathTextCustomWidgets", "MathTextCustomWidgets\MathTextCustomWidgets.csproj", "{50223E7F-60A8-4BFF-816A-BA553CB41956}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathTextLearnerLauncher", "MathTextLearnerLauncher\MathTextLearnerLauncher.csproj", "{5955E8B1-5909-4955-84A8-D8AE971116FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Debug = Debug
+		Release = Release
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D526D55E-96FB-4E1F-876C-8CAC1B5A5E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D526D55E-96FB-4E1F-876C-8CAC1B5A5E15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D526D55E-96FB-4E1F-876C-8CAC1B5A5E15}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D526D55E-96FB-4E1F-876C-8CAC1B5A5E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A95EA54-B832-45C2-A412-4F8689703D25}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A95EA54-B832-45C2-A412-4F8689703D25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A95EA54-B832-45C2-A412-4F8689703D25}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A95EA54-B832-45C2-A412-4F8689703D25}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{603789E4-51B9-4A31-B38B-165B7C6EABB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{603789E4-51B9-4A31-B38B-165B7C6EABB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{603789E4-51B9-4A31-B38B-165B7C6EABB4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{603789E4-51B9-4A31-B38B-165B7C6EABB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68F1CF2A-5683-4B48-933D-F32BA3707867}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68F1CF2A-5683-4B48-933D-F32BA3707867}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68F1CF2A-5683-4B48-933D-F32BA3707867}.Release|Any CPU.Build.0 = Release|Any CPU
-		{68F1CF2A-5683-4B48-933D-F32BA3707867}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2317FF6F-6FAE-4DED-B2C0-06BC1A30CE35}.Debug.ActiveCfg = Debug
+		{2317FF6F-6FAE-4DED-B2C0-06BC1A30CE35}.Debug.Build.0 = Debug
+		{2317FF6F-6FAE-4DED-B2C0-06BC1A30CE35}.Release.ActiveCfg = Release
+		{2317FF6F-6FAE-4DED-B2C0-06BC1A30CE35}.Release.Build.0 = Release
+		{50223E7F-60A8-4BFF-816A-BA553CB41956}.Debug.ActiveCfg = Debug
+		{50223E7F-60A8-4BFF-816A-BA553CB41956}.Debug.ActiveCfg = Debug
+		{50223E7F-60A8-4BFF-816A-BA553CB41956}.Debug.Build.0 = Debug
+		{50223E7F-60A8-4BFF-816A-BA553CB41956}.Debug.Build.0 = Debug
+		{50223E7F-60A8-4BFF-816A-BA553CB41956}.Release.ActiveCfg = Release
+		{50223E7F-60A8-4BFF-816A-BA553CB41956}.Release.ActiveCfg = Release
+		{50223E7F-60A8-4BFF-816A-BA553CB41956}.Release.Build.0 = Release
+		{50223E7F-60A8-4BFF-816A-BA553CB41956}.Release.Build.0 = Release
+		{5955E8B1-5909-4955-84A8-D8AE971116FF}.Debug.ActiveCfg = Debug
+		{5955E8B1-5909-4955-84A8-D8AE971116FF}.Debug.Build.0 = Debug
+		{5955E8B1-5909-4955-84A8-D8AE971116FF}.Release.ActiveCfg = Release
+		{5955E8B1-5909-4955-84A8-D8AE971116FF}.Release.Build.0 = Release
+		{5CA4FB9B-23A1-4CDA-ACDD-BF9453BC8609}.Debug.ActiveCfg = Debug
+		{5CA4FB9B-23A1-4CDA-ACDD-BF9453BC8609}.Debug.Build.0 = Debug
+		{5CA4FB9B-23A1-4CDA-ACDD-BF9453BC8609}.Release.ActiveCfg = Release
+		{5CA4FB9B-23A1-4CDA-ACDD-BF9453BC8609}.Release.Build.0 = Release
+		{A031DE4B-2900-479E-A068-39D0F9E02581}.Debug.ActiveCfg = Debug
+		{A031DE4B-2900-479E-A068-39D0F9E02581}.Debug.Build.0 = Debug
+		{A031DE4B-2900-479E-A068-39D0F9E02581}.Release.ActiveCfg = Release
+		{A031DE4B-2900-479E-A068-39D0F9E02581}.Release.Build.0 = Release
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 EndGlobal
