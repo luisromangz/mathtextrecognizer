@@ -1,4 +1,4 @@
-// AssemblyInfo.cs created with MonoDevelop
+﻿// AssemblyInfo.cs created with MonoDevelop
 // User: luis at 12:54 24/04/2008
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -18,7 +18,7 @@ using System.Runtime.CompilerServices;
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
 // If the build and revision are set to '*' they will be updated automatically.
 
-[assembly: AssemblyVersion("1.0.*.*")]
+[assembly: AssemblyVersion("1.0.0.*")]
 
 // The following attributes are used to specify the signing key for the assembly, 
 // if desired. See the Mono documentation for more information about signing.

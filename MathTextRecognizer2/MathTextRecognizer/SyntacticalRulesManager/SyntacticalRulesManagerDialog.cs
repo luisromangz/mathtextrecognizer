@@ -1,4 +1,4 @@
-// SyntacticalRulesManagerDialog.cs created with MonoDevelop
+﻿// SyntacticalRulesManagerDialog.cs created with MonoDevelop
 // User: luis at 11:24 16/05/2008
 
 using System;
@@ -274,10 +274,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			{			
 				SyntacticalRule rule = dialog.Rule;
 				string [] parts = rule.ToString().Split(':');
-				synRulesModel.SetValues(iter,
-				                        parts[0] +" :",
-				                        parts[1],				                      
-				                        rule);
+				synRulesModel.SetValue(iter, 0,parts[0] +" :");
+				synRulesModel.SetValue(iter, 1,parts[1]);
+				synRulesModel.SetValue(iter, 2,rule);
 			}
 			
 			dialog.Destroy();

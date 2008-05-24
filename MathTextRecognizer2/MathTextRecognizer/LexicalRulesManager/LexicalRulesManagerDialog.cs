@@ -1,4 +1,4 @@
-// LexicalRulesManagerDialog.cs created with MonoDevelop
+﻿// LexicalRulesManagerDialog.cs created with MonoDevelop
 // User: luis at 19:10 28/04/2008
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
@@ -343,6 +343,7 @@ namespace MathTextRecognizer.LexicalRulesManager
 				                    1,
 				            	   	String.Join(" | ", 
 				                                rule.LexicalExpressions.ToArray()));
+				rulesStore.SetValue(selected, 2,rule);
 			}
 			
 			dialog.Destroy();
