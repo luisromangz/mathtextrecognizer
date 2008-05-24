@@ -1,13 +1,15 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{4A95EA54-B832-45C2-A412-4F8689703D25}</ProjectGuid>
+    <ProjectGuid>{5CA4FB9B-23A1-4CDA-ACDD-BF9453BC8609}</ProjectGuid>
+    <RootNamespace>
+    </RootNamespace>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <AssemblyName>mathtextlearner</AssemblyName>
-    <OutputType>Library</OutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputType>Library</OutputType>
+    <AssemblyName>MathTextLearner</AssemblyName>
     <OutputPath>bin\Debug\</OutputPath>
     <DebugSymbols>true</DebugSymbols>
     <RootNamespace>
@@ -18,8 +20,11 @@
     <DefineConstants>
     </DefineConstants>
     <WarningLevel>4</WarningLevel>
+    <ApplicationIcon>.</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputType>Library</OutputType>
+    <AssemblyName>MathTextLearner</AssemblyName>
     <OutputPath>bin\Release\</OutputPath>
     <DebugSymbols>false</DebugSymbols>
     <RootNamespace>
@@ -30,24 +35,26 @@
     <DefineConstants>
     </DefineConstants>
     <WarningLevel>4</WarningLevel>
+    <ApplicationIcon>.</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="atk-sharp" />
-    <Reference Include="gdk-sharp" />
-    <Reference Include="glade-sharp" />
-    <Reference Include="glib-sharp" />
-    <Reference Include="gtk-sharp" />
+    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
+    <Reference Include="nunit.framework, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <Reference Include="nunit.core, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MathTextLibrary\MathTextLibrary.csproj">
       <Name>MathTextLibrary</Name>
-      <Project>{603789E4-51B9-4A31-B38B-165B7C6EABB4}</Project>
+      <Project>{2317FF6F-6FAE-4DED-B2C0-06BC1A30CE35}</Project>
     </ProjectReference>
     <ProjectReference Include="..\MathTextCustomWidgets\MathTextCustomWidgets.csproj">
       <Name>MathTextCustomWidgets</Name>
-      <Project>{D526D55E-96FB-4E1F-876C-8CAC1B5A5E15}</Project>
+      <Project>{50223E7F-60A8-4BFF-816A-BA553CB41956}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
