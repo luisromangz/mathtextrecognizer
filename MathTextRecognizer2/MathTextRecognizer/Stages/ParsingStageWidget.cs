@@ -33,6 +33,12 @@ namespace MathTextRecognizer.Stages
 		
 		[Widget]
 		private Notebook parsingButtonsNB = null;
+		
+		[Widget]
+		private Button parsingProcessBtn = null;
+		
+		[Widget]
+		private Button parsingShowOutputBtn = null;
 	
 #endregion Glade widgets
 	
@@ -85,7 +91,13 @@ namespace MathTextRecognizer.Stages
 		/// </summary>
 		public override void ResetState ()
 		{
+			parsingButtonsNB.Page = 0;
 			
+			parsingProcessBtn.Sensitive = true;
+			
+			parsingShowOutputBtn.Sensitive = false;
+			
+			syntacticalCoverModel.Clear();
 		}
 		
 			
@@ -145,11 +157,17 @@ namespace MathTextRecognizer.Stages
 			{
 				OkDialog.Show(this.MainRecognizerWindow.Window,
 				              MessageType.Info,
-				              controller.Output);
+				              "¡El proceso de análisis sintáctico fue un éxito!");		
+				
+				parsingButtonsNB.Page = 0;
+				
+				parsingShowOutputBtn.Sensitive = true;
+				parsingProcessBtn.Sensitive = false;
 			}
+			else
 			{
 				OkDialog.Show(this.MainRecognizerWindow.Window,
-				              MessageType.Info,
+				              MessageType.Warning,
 				              "El proceso de análisis sintáctico no tuvo éxito.");		
 			}
 		}
@@ -180,6 +198,29 @@ namespace MathTextRecognizer.Stages
 			parsingButtonsNB.Page = 1;
 			
 			controller.Next(ControllerStepMode.StepByStep);
+		}
+		
+		/// <summary>
+		/// Shows the dialog with the output produced by the syntactical
+		/// analisys process.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnParsingShowOutputBtnClicked(object sender, EventArgs args)
+		{
+			// We know the output is correct because if not the button 
+			// wouldn't have been sensitivized.
+			string output =  controller.Output;
+			
+			Output.OutputDialog dialog = 
+				new Output.OutputDialog(MainRecognizerWindow.Window,output);
+			
+			dialog.Show();
+			dialog.Destroy();
 		}
 	
 #endregion Non-public methods

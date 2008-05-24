@@ -83,7 +83,7 @@ namespace MathTextRecognizer
 		
 		private OCRStageWidget ocrWidget;		
 		private TokenizingStageWidget  tokenizingWidget;		
-		private ParsingStageWidget formulaMatchingWidget;
+		private ParsingStageWidget parsingWidget;
 			
 		private LogView logView;
 		
@@ -251,7 +251,7 @@ namespace MathTextRecognizer
 		{
 			get 
 			{
-				return formulaMatchingWidget;
+				return parsingWidget;
 			}
 		}
 
@@ -324,8 +324,8 @@ namespace MathTextRecognizer
 			                              new Label(TokenizingStageWidget.WidgetLabel));
 			
 			
-			formulaMatchingWidget = new ParsingStageWidget(this);
-			recognizingStepsNB.AppendPage(formulaMatchingWidget,
+			parsingWidget = new ParsingStageWidget(this);
+			recognizingStepsNB.AppendPage(parsingWidget,
 			                              new Label(ParsingStageWidget.WidgetLabel));
 			
 			
@@ -498,7 +498,7 @@ namespace MathTextRecognizer
 		{
 			ocrWidget.Abort();
 			tokenizingWidget.Abort();
-			formulaMatchingWidget.Abort();
+			parsingWidget.Abort();
 			Application.Quit();			
 		}	
 		
@@ -532,8 +532,12 @@ namespace MathTextRecognizer
 			toolLoadImage.Sensitive=true;
 			toolDatabase.Sensitive=true;
 			
+			// We reset the state of the stage widgets,
+			// so the information generated for previous seasons is discarded.
 			ocrWidget.ResetState();
 			tokenizingWidget.ResetState();
+			parsingWidget.ResetState();
+			
 			
 			recognizementFinished=true;
 			
