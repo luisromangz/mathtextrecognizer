@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using Gtk;
 using Glade;
@@ -24,7 +24,7 @@ namespace MathTextCustomWidgets.Dialogs
 		    appInfoDialog.TransientFor = parent;
 		    appInfoDialog.Modal = true;
 		    
-		    appInfoDialog.ProgramName = title;
+		    appInfoDialog.Name = title;
 		    appInfoDialog.Comments = msg + 
 		    	"\n\nDesarrollado como proyecto de fin de carrera por:\n\n"+
 		    	"Luis Román Gutiérrez\n\n"+

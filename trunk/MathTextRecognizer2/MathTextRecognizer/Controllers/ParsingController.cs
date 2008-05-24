@@ -1,4 +1,4 @@
-// FormulaMatchingController.cs created with MonoDevelop
+﻿// FormulaMatchingController.cs created with MonoDevelop
 // User: luis at 12:57 09/05/2008
 
 using System;
