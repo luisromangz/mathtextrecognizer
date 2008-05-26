@@ -124,6 +124,7 @@ namespace MathTextRecognizer.Stages
 			
 			syntacticalCoverTree = new NodeView(syntacticalCoverModel);
 			
+			
 			syntacticalCoverTree.AppendColumn("Elemento que reconoce",
 			                                  new CellRendererText(),
 			                                  "markup" ,0);
@@ -237,7 +238,7 @@ namespace MathTextRecognizer.Stages
 			SyntacticalRulesLibrary.Instance.StartRule = rules[0];
 			
 			SyntacticalCoverNode node = 
-				new SyntacticalCoverNode(rules[0]);
+				new SyntacticalCoverNode(rules[0], this.syntacticalCoverTree);
 			
 			syntacticalCoverModel.AddNode(node);
 			

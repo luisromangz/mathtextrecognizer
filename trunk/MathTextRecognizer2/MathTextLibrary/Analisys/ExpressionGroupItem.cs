@@ -79,6 +79,7 @@ namespace MathTextLibrary.Analisys
 		protected override bool MatchSequence(TokenSequence sequence, 
 		                                      out string output)
 		{
+			MatchingInvoker();
 			output="";
 			List<string> res = new List<string>();
 			foreach (ExpressionItem item in childrenItems) 

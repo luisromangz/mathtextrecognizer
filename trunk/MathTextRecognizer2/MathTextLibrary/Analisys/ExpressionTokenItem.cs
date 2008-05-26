@@ -115,6 +115,7 @@ namespace MathTextLibrary.Analisys
 		protected override bool MatchSequence (TokenSequence sequence, 
 		                                       out string output)
 		{
+			MatchingInvoker();
 			output ="";
 			int idx = 0;
 			if(forceTokenSearch)
