@@ -1017,7 +1017,7 @@
                                     <child>
                                       <widget class="GtkLabel" id="label20">
                                         <property name="visible">True</property>
-                                        <property name="label" translatable="yes">_Ir al tokenizado</property>
+                                        <property name="label" translatable="yes">_Ir al análisis léxico</property>
                                         <property name="use_underline">True</property>
                                       </widget>
                                     </child>
@@ -2347,7 +2347,6 @@
                         <child>
                           <widget class="GtkAlignment" id="alignment34">
                             <property name="visible">True</property>
-                            <property name="xscale">0</property>
                             <property name="yscale">0</property>
                             <child>
                               <widget class="GtkLabel" id="label36">
@@ -2539,91 +2538,74 @@
                             <property name="homogeneous">True</property>
                             <property name="layout_style">GTK_BUTTONBOX_SPREAD</property>
                             <child>
-                              <widget class="GtkAlignment" id="alignment32">
+                              <widget class="GtkButton" id="processBtn">
                                 <property name="visible">True</property>
-                                <property name="xalign">1</property>
-                                <property name="xscale">0</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="response_id">0</property>
+                                <signal name="clicked" handler="OnProcessBtnClicked"/>
                                 <child>
-                                  <widget class="GtkButton" id="processBtn">
+                                  <widget class="GtkAlignment" id="alignment37">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">True</property>
-                                    <property name="response_id">0</property>
-                                    <signal name="clicked" handler="OnProcessBtnClicked"/>
+                                    <property name="xscale">0</property>
+                                    <property name="yscale">0.79000002145767212</property>
                                     <child>
-                                      <widget class="GtkAlignment" id="alignment37">
+                                      <widget class="GtkHBox" id="hbox30">
                                         <property name="visible">True</property>
-                                        <property name="xscale">0</property>
-                                        <property name="yscale">0.79000002145767212</property>
+                                        <property name="spacing">5</property>
                                         <child>
-                                          <widget class="GtkHBox" id="hbox30">
+                                          <widget class="GtkImage" id="image28">
                                             <property name="visible">True</property>
-                                            <property name="spacing">5</property>
-                                            <child>
-                                              <widget class="GtkImage" id="image28">
-                                                <property name="visible">True</property>
-                                                <property name="stock">gtk-convert</property>
-                                              </widget>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkLabel" id="processBtnLbl">
-                                                <property name="visible">True</property>
-                                                <property name="label" translatable="yes">_Secuenciar</property>
-                                                <property name="use_underline">True</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="position">1</property>
-                                              </packing>
-                                            </child>
+                                            <property name="stock">gtk-convert</property>
                                           </widget>
+                                        </child>
+                                        <child>
+                                          <widget class="GtkLabel" id="processBtnLbl">
+                                            <property name="visible">True</property>
+                                            <property name="label" translatable="yes">_Secuenciar</property>
+                                            <property name="use_underline">True</property>
+                                          </widget>
+                                          <packing>
+                                            <property name="position">1</property>
+                                          </packing>
                                         </child>
                                       </widget>
                                     </child>
                                   </widget>
                                 </child>
                               </widget>
-                              <packing>
-                                <property name="fill">False</property>
-                              </packing>
                             </child>
                             <child>
-                              <widget class="GtkAlignment" id="alignment30">
+                              <widget class="GtkButton" id="nextStageBtn">
                                 <property name="visible">True</property>
-                                <property name="xalign">0</property>
-                                <property name="xscale">0</property>
+                                <property name="sensitive">False</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="response_id">0</property>
+                                <signal name="clicked" handler="OnNextStageBtnClicked"/>
                                 <child>
-                                  <widget class="GtkButton" id="nextStageBtn">
+                                  <widget class="GtkAlignment" id="alignment38">
                                     <property name="visible">True</property>
-                                    <property name="sensitive">False</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">True</property>
-                                    <property name="response_id">0</property>
-                                    <signal name="clicked" handler="OnNextStageBtnClicked"/>
+                                    <property name="xscale">0</property>
                                     <child>
-                                      <widget class="GtkAlignment" id="alignment38">
+                                      <widget class="GtkHBox" id="hbox31">
                                         <property name="visible">True</property>
-                                        <property name="xscale">0</property>
+                                        <property name="spacing">5</property>
                                         <child>
-                                          <widget class="GtkHBox" id="hbox31">
+                                          <widget class="GtkLabel" id="label42">
                                             <property name="visible">True</property>
-                                            <property name="spacing">5</property>
-                                            <child>
-                                              <widget class="GtkLabel" id="label42">
-                                                <property name="visible">True</property>
-                                                <property name="label" translatable="yes">_Ir al análisis sintáctico</property>
-                                                <property name="use_underline">True</property>
-                                              </widget>
-                                            </child>
-                                            <child>
-                                              <widget class="GtkImage" id="image29">
-                                                <property name="visible">True</property>
-                                                <property name="stock">gtk-media-next</property>
-                                              </widget>
-                                              <packing>
-                                                <property name="position">1</property>
-                                              </packing>
-                                            </child>
+                                            <property name="label" translatable="yes">_Ir al análisis sintáctico</property>
+                                            <property name="use_underline">True</property>
                                           </widget>
+                                        </child>
+                                        <child>
+                                          <widget class="GtkImage" id="image29">
+                                            <property name="visible">True</property>
+                                            <property name="stock">gtk-media-next</property>
+                                          </widget>
+                                          <packing>
+                                            <property name="position">1</property>
+                                          </packing>
                                         </child>
                                       </widget>
                                     </child>
@@ -2905,91 +2887,74 @@
                         <property name="homogeneous">True</property>
                         <property name="layout_style">GTK_BUTTONBOX_SPREAD</property>
                         <child>
-                          <widget class="GtkAlignment" id="alignment78">
+                          <widget class="GtkButton" id="parsingProcessBtn">
                             <property name="visible">True</property>
-                            <property name="xalign">1</property>
-                            <property name="xscale">0</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="response_id">0</property>
+                            <signal name="clicked" handler="OnParsingProcessBtnClicked"/>
                             <child>
-                              <widget class="GtkButton" id="parsingProcessBtn">
+                              <widget class="GtkAlignment" id="alignment78">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="response_id">0</property>
-                                <signal name="clicked" handler="OnParsingProcessBtnClicked"/>
+                                <property name="xscale">0</property>
+                                <property name="yscale">0.79000002145767212</property>
                                 <child>
-                                  <widget class="GtkAlignment" id="alignment78">
+                                  <widget class="GtkHBox" id="hbox47">
                                     <property name="visible">True</property>
-                                    <property name="xscale">0</property>
-                                    <property name="yscale">0.79000002145767212</property>
+                                    <property name="spacing">5</property>
                                     <child>
-                                      <widget class="GtkHBox" id="hbox47">
+                                      <widget class="GtkImage" id="image53">
                                         <property name="visible">True</property>
-                                        <property name="spacing">5</property>
-                                        <child>
-                                          <widget class="GtkImage" id="image53">
-                                            <property name="visible">True</property>
-                                            <property name="stock">gtk-find-and-replace</property>
-                                          </widget>
-                                        </child>
-                                        <child>
-                                          <widget class="GtkLabel" id="parsingProcessBtnLbl">
-                                            <property name="visible">True</property>
-                                            <property name="label" translatable="yes">A_nalizar</property>
-                                            <property name="use_underline">True</property>
-                                          </widget>
-                                          <packing>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
+                                        <property name="stock">gtk-find-and-replace</property>
                                       </widget>
+                                    </child>
+                                    <child>
+                                      <widget class="GtkLabel" id="parsingProcessBtnLbl">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">A_nalizar</property>
+                                        <property name="use_underline">True</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="position">1</property>
+                                      </packing>
                                     </child>
                                   </widget>
                                 </child>
                               </widget>
                             </child>
                           </widget>
-                          <packing>
-                            <property name="fill">False</property>
-                          </packing>
                         </child>
                         <child>
-                          <widget class="GtkAlignment" id="alignment79">
+                          <widget class="GtkButton" id="parsingShowOutputBtn">
                             <property name="visible">True</property>
-                            <property name="xalign">0</property>
-                            <property name="xscale">0</property>
+                            <property name="sensitive">False</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="response_id">0</property>
+                            <signal name="clicked" handler="OnParsingShowOutputBtnClicked"/>
                             <child>
-                              <widget class="GtkButton" id="parsingShowOutputBtn">
+                              <widget class="GtkAlignment" id="alignment83">
                                 <property name="visible">True</property>
-                                <property name="sensitive">False</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="response_id">0</property>
-                                <signal name="clicked" handler="OnParsingShowOutputBtnClicked"/>
+                                <property name="xscale">0</property>
                                 <child>
-                                  <widget class="GtkAlignment" id="alignment83">
+                                  <widget class="GtkHBox" id="hbox48">
                                     <property name="visible">True</property>
-                                    <property name="xscale">0</property>
+                                    <property name="spacing">5</property>
                                     <child>
-                                      <widget class="GtkHBox" id="hbox48">
+                                      <widget class="GtkImage" id="image54">
                                         <property name="visible">True</property>
-                                        <property name="spacing">5</property>
-                                        <child>
-                                          <widget class="GtkImage" id="image54">
-                                            <property name="visible">True</property>
-                                            <property name="stock">gtk-convert</property>
-                                          </widget>
-                                        </child>
-                                        <child>
-                                          <widget class="GtkLabel" id="label50">
-                                            <property name="visible">True</property>
-                                            <property name="label" translatable="yes">_Ver la salida</property>
-                                            <property name="use_underline">True</property>
-                                          </widget>
-                                          <packing>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
+                                        <property name="stock">gtk-convert</property>
                                       </widget>
+                                    </child>
+                                    <child>
+                                      <widget class="GtkLabel" id="label50">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">_Ver la salida</property>
+                                        <property name="use_underline">True</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="position">1</property>
+                                      </packing>
                                     </child>
                                   </widget>
                                 </child>
