@@ -145,19 +145,18 @@ namespace MathTextRecognizer.Controllers
 			nodeContainer.ColumnsAutosize();
 			currentNode = newNode;
 			currentNode.Select();
-			nodeContainer.ExpandAll();
+			nodeContainer.ExpandAll();		
 			
 		}
 		
 		private void OnMatcherMatchingFinished(object sender, EventArgs args)
 		{
 			Application.Invoke(OnMatcherFinishedInThread);
-			SuspendByNode();
 		}
 		
 		private void OnMatcherFinishedInThread(object sender, EventArgs args)
 		{
-			StepDoneInvoker();
+			
 			if(currentNode.Parent !=null)
 			{
 				currentNode =  currentNode.Parent as SyntacticalCoverNode;
