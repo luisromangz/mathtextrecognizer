@@ -15,9 +15,23 @@ namespace MathTextLibrary.Analisys
 	{
 		public abstract bool Match(TokenSequence sequence, out string text);
 		
+		/// <value>
+		/// This event is launched when the matcher starts matching tokens.
+		/// </value>
+		public event EventHandler Matching;
+		
 		public abstract string Label
 		{
 			get;
+		}
+		
+		/// <summary>
+		/// Launches the <see cref="Matching"/> event.
+		/// </summary>
+		protected void MatchingInvoker()
+		{
+			if(Matching!=null)
+				Matching(this, EventArgs.Empty);
 		}
 	}
 }

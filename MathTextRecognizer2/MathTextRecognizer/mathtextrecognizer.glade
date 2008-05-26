@@ -427,11 +427,25 @@
             <property name="visible">True</property>
             <property name="label_xalign">0</property>
             <child>
-              <widget class="GtkAlignment" id="outputOutputPlaceholder">
+              <widget class="GtkVBox" id="vbox20">
                 <property name="visible">True</property>
-                <property name="top_padding">2</property>
                 <child>
-                  <placeholder/>
+                  <widget class="GtkAlignment" id="outputOutputPlaceholder">
+                    <property name="visible">True</property>
+                    <property name="top_padding">2</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </widget>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="outputRefreshingLabel">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Generando imagen...</property>
+                  </widget>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
               </widget>
             </child>
