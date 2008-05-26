@@ -3,9 +3,14 @@
 using System;
 using System.IO;
 using System.Threading;
+using System.Diagnostics;
+using System.ComponentModel;
 
 using Gtk;
 using Glade;
+
+using MathTextCustomWidgets.Dialogs;
+using MathTextCustomWidgets.Widgets.ImageArea;
 
 using MathTextLibrary;
 using MathTextLibrary.Bitmap;
@@ -30,9 +35,27 @@ namespace MathTextRecognizer.Output
 		[Widget]
 		private Dialog outputDialog = null;
 		
+		[Widget]
+		private Frame outputOutputFrame = null;
+		
+		[Widget]
+		private Alignment outputOutputPlaceholder = null;
+		
+		[Widget]
+		private Alignment outputOriginalPlaceholder = null;
+		
 #endregion Glade widgets
 		
+#region Fields
 		private string output;
+		
+		private ImageArea originalImageArea;
+		
+		private ImageArea outputImageArea;
+		
+		private MainRecognizerWindow mainWindow;
+		
+#endregion Fields
 		
 		/// <summary>
 		/// Constructor de <code>OutputWindow</code>.
@@ -40,7 +63,7 @@ namespace MathTextRecognizer.Output
 		/// <param name="rootBitmap">
 		/// El <code>MathTextBitmap</code> reconocido para generar la salida a partir de el.
 		/// </param>
-		public OutputDialog(Window parent, string output)
+		public OutputDialog(MainRecognizerWindow parent, string output)
 		{
 			Glade.XML gxml = new Glade.XML ("mathtextrecognizer.glade",
 			                                "outputDialog");
@@ -49,7 +72,12 @@ namespace MathTextRecognizer.Output
 			
 			this.output = output;
 			
-			textviewOutput.Buffer.Text = output;
+			this.outputDialog.TransientFor = parent.Window;
+			mainWindow = parent;
+			
+			InitializeWidgets();
+			
+		
 			
 		}
 	
@@ -78,9 +106,122 @@ namespace MathTextRecognizer.Output
 		
 #endregion Public methods
 		
+#region Private methods
+		
 		/// <summary>
-		/// Manejo del evento provocado al pulsar el boton "Guardar".
+		/// Refresh the output view with the changes made in the editor.
 		/// </summary>
+		private void RefreshOutputView()
+		{
+			string tempOutput = Path.GetTempFileName()+".png";
+			string tempInput = Path.GetTempFileName();
+			
+			StreamWriter writer = new StreamWriter(tempInput, false);
+			writer.Write(textviewOutput.Buffer.Text.Trim());
+			
+			writer.Close();
+			
+		 
+			
+			string command = 
+				String.Format(Config.RecognizerConfig.Instance.OutputConversionCommand,
+				              tempInput,
+				              tempOutput);
+			
+			Console.WriteLine(command);
+			Process conversionProcess = null;
+			
+					
+			ProcessStartInfo processInfo = new ProcessStartInfo();
+			
+			int idx = command.IndexOf(' ');
+			
+			processInfo.FileName = command.Substring(0, idx);
+			processInfo.Arguments= command.Substring(idx);
+			processInfo.RedirectStandardError = true;
+			processInfo.UseShellExecute = false;
+			
+			conversionProcess = Process.Start(processInfo);
+			
+			
+			conversionProcess.WaitForExit();
+		
+			
+			
+			
+			if(conversionProcess.ExitCode ==0)
+			{
+				Gdk.Pixbuf outPixbuf = new Gdk.Pixbuf(tempOutput);
+				this.outputImageArea.Image = outPixbuf;
+			}
+			else
+			{
+				string processOutput = conversionProcess.StandardError.ReadToEnd();
+				
+				mainWindow.Log("===================================================");
+				mainWindow.Log(" Error al generar la previsualización de la salida");
+				mainWindow.Log("===================================================");
+				mainWindow.Log(processOutput);
+				OkDialog.Show(this.outputDialog,
+			              MessageType.Warning,
+				         "Hubo un error al generar la imagen a partir de la salida, puedes encontrar la descripción en la ventana de información de proceso.");
+			}
+		}
+		
+		/// <summary>
+		/// Initializes the dialog's widgets.
+		/// </summary>
+		private void InitializeWidgets()
+		{	
+			textviewOutput.Buffer.Text = output;
+			
+			
+			originalImageArea = new ImageArea();
+			originalImageArea.ImageMode = ImageAreaMode.Zoom;
+			this.outputOriginalPlaceholder.Add(originalImageArea);
+			
+			if(Config.RecognizerConfig.Instance.ShowOutputConversion)
+			{
+				this.outputImageArea = new ImageArea();
+				this.outputImageArea.ImageMode = ImageAreaMode.Zoom;
+				
+				this.outputOutputPlaceholder.Add(outputImageArea);
+				
+				RefreshOutputView();
+			}
+			else
+			{
+				this.outputOutputFrame.Visible=false;
+			}
+		}
+		
+#endregion Private methods
+		
+#region Event handlers
+		
+		/// <summary>
+		/// Refresh
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnOutputRefreshBtnClicked(object sender, EventArgs args)
+		{
+			RefreshOutputView();
+		}
+		
+		/// <summary>
+		/// Asks the user for a place to store the output.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
 		private void OnBtnSaveClicked(object sender, EventArgs args)
 		{
 			
@@ -119,6 +260,8 @@ namespace MathTextRecognizer.Output
 			fileSaveDialog.Destroy();
 			
 		}
+		
+#endregion Event handlers
 		
 	}
 }

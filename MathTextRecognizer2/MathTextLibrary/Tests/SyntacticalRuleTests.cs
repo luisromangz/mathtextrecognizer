@@ -139,7 +139,7 @@ namespace MathTextLibrary.Tests
 			t.Text="14";
 			sequence.Append(t);			
 			
-			
+			SyntacticalRulesLibrary.Instance.ClearRules();
 			
 			SyntacticalRule rule = new SyntacticalRule("multiplicacion");
 			SyntacticalRulesLibrary.Instance.AddRule(rule);

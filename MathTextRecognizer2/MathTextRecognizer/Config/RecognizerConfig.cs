@@ -23,7 +23,12 @@ namespace MathTextRecognizer.Config
 		private List<LexicalRule> lexicalRules;
 		private List<SyntacticalRule> syntacticalRules;
 		
+		private bool showOutputConversion;
+		private string outputConversionCommand;
+		
 		private static RecognizerConfig config;
+		
+	
 		
 		public RecognizerConfig()
 		{
@@ -74,6 +79,9 @@ namespace MathTextRecognizer.Config
 			}
 		}
 
+		/// <value>
+		/// Contains the rules used in the syntactical analisys process.
+		/// </value>
 		public List<SyntacticalRule> SyntacticalRules 
 		{
 			get 
@@ -83,6 +91,37 @@ namespace MathTextRecognizer.Config
 			set 
 			{
 				syntacticalRules = value;
+			}
+		}
+
+		/// <value>
+		/// Contains the setting telling the output dialog if it must
+		/// show an image with the app's text output converted into a image.
+		/// </value>
+		public bool ShowOutputConversion 
+		{
+			get 
+			{
+				return showOutputConversion;
+			}
+			set 
+			{
+				showOutputConversion = value;
+			}
+		}
+
+		/// <value>
+		/// The command used for converting the text output into an image.
+		/// </value>
+		public string OutputConversionCommand 
+		{
+			get 
+			{
+				return outputConversionCommand;
+			}
+			set 
+			{
+				outputConversionCommand = value;
 			}
 		}
 		

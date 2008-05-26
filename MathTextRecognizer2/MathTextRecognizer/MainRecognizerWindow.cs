@@ -573,6 +573,24 @@ namespace MathTextRecognizer
 		{
 			syntacticalRulesManagerDialog.Show();
 		}
+		
+		/// <summary>
+		/// Shows the output settings dialog.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnOutputSettingsItemActivate(object sender, EventArgs args)
+		{
+			Output.OutputSettingsDialog dialog = 
+				new Output.OutputSettingsDialog(this.Window);
+			
+			dialog.Show();
+			dialog.Destroy();
+		}
 	}
 	
 #endregion Metodos privados

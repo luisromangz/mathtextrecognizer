@@ -39,6 +39,9 @@ namespace MathTextRecognizer.Stages
 		
 		[Widget]
 		private Button parsingShowOutputBtn = null;
+		
+		[Widget]
+		private Alignment parsingNextButtonsAlign = null;
 	
 #endregion Glade widgets
 	
@@ -133,6 +136,7 @@ namespace MathTextRecognizer.Stages
 		
 		protected override void NextStep (ControllerStepMode mode)
 		{
+			parsingNextButtonsAlign.Sensitive = false;
 			controller.Next(mode);
 		}
 		
@@ -170,6 +174,48 @@ namespace MathTextRecognizer.Stages
 				              MessageType.Warning,
 				              "El proceso de análisis sintáctico no tuvo éxito.");		
 			}
+		}
+		
+		/// <summary>
+		/// Tells the controller to process a new step.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnParsingNextStepBtnClicked(object sender, EventArgs args)
+		{
+			NextStep(ControllerStepMode.StepByStep);
+		}
+		
+		/// <summary>
+		/// Tells the controller to process a new node.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnParsingNextNodeBtnClicked(object sender, EventArgs args)
+		{
+			NextStep(ControllerStepMode.NodeByNode);
+		}
+		
+		/// <summary>
+		/// Tells the controller to process until it has finished.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void OnParsingTillEndBtnClicked(object sender, EventArgs args)
+		{
+			NextStep(ControllerStepMode.UntilEnd);
 		}
 		
 		private void OnParsingProcessBtnClicked(object sender, EventArgs args)
@@ -217,7 +263,7 @@ namespace MathTextRecognizer.Stages
 			string output =  controller.Output;
 			
 			Output.OutputDialog dialog = 
-				new Output.OutputDialog(MainRecognizerWindow.Window,output);
+				new Output.OutputDialog(MainRecognizerWindow,output);
 			
 			dialog.Show();
 			dialog.Destroy();
