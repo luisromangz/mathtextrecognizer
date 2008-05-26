@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 using Gdk;
@@ -20,10 +20,6 @@ namespace MathTextLibrary.Bitmap
 
 		
 #region Atributos privados
-		
-		// Imagen sólo binarizada
-		private FloatBitmap binaryzedImage;
-		
 		
 		// Altura de la imagen sin procesar
 		private int height;

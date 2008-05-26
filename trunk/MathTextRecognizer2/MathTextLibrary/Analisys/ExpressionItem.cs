@@ -1,4 +1,4 @@
-// SyntacticExpressionItem.cs created with MonoDevelop
+﻿// SyntacticExpressionItem.cs created with MonoDevelop
 // User: luis at 22:58 12/05/2008
 
 using System;
@@ -87,8 +87,6 @@ namespace MathTextLibrary.Analisys
 		private ExpressionItemPosition position;
 		
 		private ExpressionItemModifier modifier;
-		private List<Token> firstTokens;
-		
 		
 		/// <summary>
 		/// <see cref="ExpressionItem"/>'s constructor
