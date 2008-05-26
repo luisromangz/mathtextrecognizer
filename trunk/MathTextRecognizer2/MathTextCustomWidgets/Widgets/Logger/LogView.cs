@@ -75,26 +75,16 @@ namespace MathTextCustomWidgets.Widgets.Logger
 		/// </param>
         public void LogLine(string message, params object [] args)
 		{	
-					
-			if(txtLog.Buffer.LineCount > MAX_LINES)
+			if(args.Length > 0)
 			{
-				TextIter start =txtLog.Buffer.GetIterAtLine(0);
-				TextIter end =txtLog.Buffer.GetIterAtLine(1);
-				
-				txtLog.Buffer.Delete(ref start, ref end);
+				LogLineSimple(String.Format(message,args));
 			}
-			
-			TextIter endIter = txtLog.Buffer.EndIter;
-			txtLog.Buffer.Insert(ref endIter,
-			                     String.Format(message+"\n",args));
-			
-			
-			if(follow)
+			else
 			{
-				txtLogScroll.Vadjustment.Value = txtLogScroll.Vadjustment.Upper;
+				LogLineSimple(message);
 			}
-				
 		}
+		
 		
 		/// <summary>
 		/// Limpia el registro de mensajes.
@@ -105,6 +95,31 @@ namespace MathTextCustomWidgets.Widgets.Logger
 		}
 		
 #endregion Público
+		
+#region Private methods
+		
+		private void LogLineSimple(string message)
+		{
+			if(txtLog.Buffer.LineCount > MAX_LINES)
+			{
+				TextIter start =txtLog.Buffer.GetIterAtLine(0);
+				TextIter end =txtLog.Buffer.GetIterAtLine(1);
+				
+				txtLog.Buffer.Delete(ref start, ref end);
+			}
+			
+			TextIter endIter = txtLog.Buffer.EndIter;
+			txtLog.Buffer.Insert(ref endIter,message+"\n");
+			
+			
+			if(follow)
+			{
+				txtLogScroll.Vadjustment.Value = txtLogScroll.Vadjustment.Upper;
+			}
+		}
+		
+		
+#endregion Private methods
 		
 #region Manejadores de eventos
 		

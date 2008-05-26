@@ -1,4 +1,4 @@
-﻿// FormulaMatchingController.cs created with MonoDevelop
+// FormulaMatchingController.cs created with MonoDevelop
 // User: luis at 12:57 09/05/2008
 
 using System;
@@ -79,11 +79,10 @@ namespace MathTextRecognizer.Controllers
 			MessageLogSentInvoker(" Comenzando proceso de análisis sintáctico");
 			MessageLogSentInvoker("===========================================");
 			
-			
 			SyntacticalRule startRule = 
 				SyntacticalRulesLibrary.Instance.StartRule;
 			
-			//Suspend();
+			SuspendByStep();
 			
 			parsingResult = 
 				startRule.Match(new TokenSequence(startTokens), out output);
@@ -100,3 +99,4 @@ namespace MathTextRecognizer.Controllers
 		
 	}
 }
+

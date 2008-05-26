@@ -86,7 +86,6 @@
     <File name="Symbol/MathSymbol.cs" subtype="Code" buildaction="Compile" />
     <File name="Utils/PathUtils.cs" subtype="Code" buildaction="Compile" />
     <File name="Tests" subtype="Directory" buildaction="Compile" />
-    <File name="Tests/UtilsTests.cs" subtype="Code" buildaction="Compile" />
     <File name="Tests/CharacteristicTreeDatabaseTests.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapProcesses/BitmapProcessPropertyDescription.cs" subtype="Code" buildaction="Compile" />
     <File name="BitmapProcesses/BitmapProcessDescription.cs" subtype="Code" buildaction="Compile" />

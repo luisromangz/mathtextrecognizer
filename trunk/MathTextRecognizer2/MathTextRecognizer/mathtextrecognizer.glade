@@ -100,6 +100,14 @@
                         <signal name="activate" handler="OnSyntacticalManagerItemActivate"/>
                       </widget>
                     </child>
+                    <child>
+                      <widget class="GtkMenuItem" id="outputSettingsItem">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">_Preferencias de la salida...</property>
+                        <property name="use_underline">True</property>
+                        <signal name="activate" handler="OnOutputSettingsItemActivate"/>
+                      </widget>
+                    </child>
                   </widget>
                 </child>
               </widget>
@@ -356,7 +364,12 @@
             <property name="visible">True</property>
             <property name="label_xalign">0</property>
             <child>
-              <placeholder/>
+              <widget class="GtkAlignment" id="outputOriginalPlaceholder">
+                <property name="visible">True</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </widget>
             </child>
             <child>
               <widget class="GtkLabel" id="label5">
@@ -409,12 +422,18 @@
           </packing>
         </child>
         <child>
-          <widget class="GtkFrame" id="frame14">
+          <widget class="GtkFrame" id="outputOutputFrame">
             <property name="height_request">130</property>
             <property name="visible">True</property>
             <property name="label_xalign">0</property>
             <child>
-              <placeholder/>
+              <widget class="GtkAlignment" id="outputOutputPlaceholder">
+                <property name="visible">True</property>
+                <property name="top_padding">2</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </widget>
             </child>
             <child>
               <widget class="GtkHBox" id="hbox11">
@@ -432,8 +451,8 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="label" translatable="yes">_Refrescar</property>
-                    <property name="use_underline">True</property>
+                    <property name="label" translatable="yes">gtk-refresh</property>
+                    <property name="use_stock">True</property>
                     <property name="response_id">0</property>
                     <signal name="clicked" handler="OnOutputRefreshBtnClicked"/>
                   </widget>
@@ -2799,7 +2818,6 @@
           <widget class="GtkScrolledWindow" id="syntacticalTreePlaceholder">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="border_width">4</property>
             <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
             <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
             <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
@@ -2815,7 +2833,6 @@
         <child>
           <widget class="GtkVBox" id="vbox10">
             <property name="visible">True</property>
-            <property name="border_width">3</property>
             <child>
               <widget class="GtkFrame" id="itemsFrame">
                 <property name="visible">True</property>
@@ -2999,6 +3016,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="response_id">1</property>
+                            <signal name="clicked" handler="OnParsingNextStepBtnClicked"/>
                             <child>
                               <widget class="GtkAlignment" id="alignment84">
                                 <property name="visible">True</property>
@@ -3038,6 +3056,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="response_id">0</property>
+                            <signal name="clicked" handler="OnParsingNextNodeBtnClicked"/>
                             <child>
                               <widget class="GtkAlignment" id="alignment85">
                                 <property name="visible">True</property>
@@ -3082,6 +3101,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
                             <property name="response_id">0</property>
+                            <signal name="clicked" handler="OnParsingTillEndBtnClicked"/>
                             <child>
                               <widget class="GtkAlignment" id="alignment86">
                                 <property name="visible">True</property>
@@ -5040,6 +5060,139 @@ Interior</property>
               </packing>
             </child>
           </widget>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="GtkDialog" id="outputSettingsDialog">
+    <property name="border_width">5</property>
+    <property name="title" translatable="yes">Opciones de la salida</property>
+    <property name="resizable">False</property>
+    <property name="modal">True</property>
+    <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+    <property name="has_separator">False</property>
+    <child internal-child="vbox">
+      <widget class="GtkVBox" id="dialog-vbox16">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child>
+          <widget class="GtkVBox" id="vbox5">
+            <property name="visible">True</property>
+            <property name="spacing">2</property>
+            <child>
+              <widget class="GtkCheckButton" id="outSettingsShowOutputCheck">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="has_tooltip">True</property>
+                <property name="tooltip_text">Indica si se debe mostrar una imagen a partir del código LaTeX obtenido por la aplicación</property>
+                <property name="label" translatable="yes">Mostrar imagen a partir de la salida LaTeX generada</property>
+                <property name="response_id">0</property>
+                <property name="draw_indicator">True</property>
+                <signal name="toggled" handler="OnOutSettingsShowOutputCheckToggled"/>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkFrame" id="outSettingsCommandFrame">
+                <property name="visible">True</property>
+                <property name="sensitive">False</property>
+                <property name="label_xalign">0</property>
+                <property name="shadow_type">GTK_SHADOW_NONE</property>
+                <child>
+                  <widget class="GtkAlignment" id="alignment2">
+                    <property name="visible">True</property>
+                    <property name="left_padding">5</property>
+                    <child>
+                      <widget class="GtkHBox" id="hbox12">
+                        <property name="visible">True</property>
+                        <property name="spacing">3</property>
+                        <child>
+                          <widget class="GtkEntry" id="outSettingsCommandEntry">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="has_tooltip">True</property>
+                            <property name="tooltip_markup">Escribe aquí la ruta del programa que se usará para generar la imagen a partir del código LaTeX generado.Usa &lt;b&gt;{0}&lt;/b&gt; para indicar el nombre del archivo temporal al que se guardará la salida LaTeX, y &lt;b&gt;{1}&lt;/b&gt; para el nombre del archivo temporal en el que se almacenará la imagen generada por el programa.</property>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkButton" id="outSettingsSearchCommandBtn">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="label" translatable="yes">_Examinar...</property>
+                            <property name="use_underline">True</property>
+                            <property name="response_id">0</property>
+                            <signal name="clicked" handler="OnOutSettingsSearchCommandBtnClicked"/>
+                          </widget>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">False</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </widget>
+                    </child>
+                  </widget>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="label69">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Comando:</property>
+                    <property name="use_markup">True</property>
+                  </widget>
+                  <packing>
+                    <property name="type">label_item</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <widget class="GtkHButtonBox" id="dialog-action_area16">
+            <property name="visible">True</property>
+            <property name="layout_style">GTK_BUTTONBOX_END</property>
+            <child>
+              <widget class="GtkButton" id="outSettingsCancelBtn">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-cancel</property>
+                <property name="use_stock">True</property>
+                <property name="response_id">0</property>
+              </widget>
+            </child>
+            <child>
+              <widget class="GtkButton" id="outSettingsOkBtn">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-ok</property>
+                <property name="use_stock">True</property>
+                <property name="response_id">0</property>
+                <signal name="clicked" handler="OnOutSettingsOkBtnClicked"/>
+              </widget>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">GTK_PACK_END</property>
+          </packing>
         </child>
       </widget>
     </child>
