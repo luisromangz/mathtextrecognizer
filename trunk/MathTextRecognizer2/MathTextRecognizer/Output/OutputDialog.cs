@@ -44,6 +44,12 @@ namespace MathTextRecognizer.Output
 		[Widget]
 		private Alignment outputOriginalPlaceholder = null;
 		
+		[Widget]
+		private Button outputRefreshBtn = null;
+		
+		[Widget]
+		private Label outputRefreshingLabel = null;
+		
 #endregion Glade widgets
 		
 #region Fields
@@ -108,10 +114,20 @@ namespace MathTextRecognizer.Output
 		
 #region Private methods
 		
+		private void RefreshOutputView()
+		{
+			outputRefreshBtn.Sensitive = false;
+			this.outputRefreshingLabel.Visible=true;
+			this.outputOutputPlaceholder.Visible=false;
+		
+			Thread refreshThread = new Thread(RefreshOutputViewInThread);
+			refreshThread.Start();
+		}
+		
 		/// <summary>
 		/// Refresh the output view with the changes made in the editor.
 		/// </summary>
-		private void RefreshOutputView()
+		private void RefreshOutputViewInThread()
 		{
 			string tempOutput = Path.GetTempFileName()+".png";
 			string tempInput = Path.GetTempFileName();
@@ -128,7 +144,6 @@ namespace MathTextRecognizer.Output
 				              tempInput,
 				              tempOutput);
 			
-			Console.WriteLine(command);
 			Process conversionProcess = null;
 			
 					
@@ -147,16 +162,17 @@ namespace MathTextRecognizer.Output
 			conversionProcess.WaitForExit();
 		
 			
-			
+			Gdk.Pixbuf outPixbuf =null;
 			
 			if(conversionProcess.ExitCode ==0)
 			{
-				Gdk.Pixbuf outPixbuf = new Gdk.Pixbuf(tempOutput);
-				this.outputImageArea.Image = outPixbuf;
+				outPixbuf = new Gdk.Pixbuf(tempOutput);
 			}
 			else
 			{
 				string processOutput = conversionProcess.StandardError.ReadToEnd();
+				
+				outPixbuf=null;
 				
 				mainWindow.Log("===================================================");
 				mainWindow.Log(" Error al generar la previsualización de la salida");
@@ -166,6 +182,32 @@ namespace MathTextRecognizer.Output
 			              MessageType.Warning,
 				         "Hubo un error al generar la imagen a partir de la salida, puedes encontrar la descripción en la ventana de información de proceso.");
 			}
+			
+			Application.Invoke(this, 
+			                   new OutputRefreshedArgs(outPixbuf),
+			                   ImageRefreshed);
+			
+		}
+		
+		/// <summary>
+		/// Update the interface when the image gets refreshed.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
+		private void ImageRefreshed(object sender, EventArgs args)
+		{
+			OutputRefreshedArgs a = args as OutputRefreshedArgs;
+			
+			this.outputImageArea.Image = a.Output;
+			
+			this.outputRefreshingLabel.Visible=false;
+			this.outputOutputPlaceholder.Visible=true;
+			outputRefreshBtn.Sensitive = true;
+			this.outputDialog.QueueResize();
 		}
 		
 		/// <summary>
@@ -179,6 +221,8 @@ namespace MathTextRecognizer.Output
 			originalImageArea = new ImageArea();
 			originalImageArea.ImageMode = ImageAreaMode.Zoom;
 			this.outputOriginalPlaceholder.Add(originalImageArea);
+			
+			originalImageArea.Image = this.mainWindow.OCRWidget.StartImage;
 			
 			if(Config.RecognizerConfig.Instance.ShowOutputConversion)
 			{
@@ -262,6 +306,39 @@ namespace MathTextRecognizer.Output
 		}
 		
 #endregion Event handlers
+		
+	}
+	
+	/// <summary>
+	/// Auxiliary class used to pass the generated pixbuf when the output dialog's
+	/// generated image is refreshed.
+	/// </summary>
+	class OutputRefreshedArgs : EventArgs
+	{
+		private Gdk.Pixbuf output;
+		
+		/// <summary>
+		/// <see cref="OutputRefreshedArgs"/>'s constructor
+		/// </summary>
+		/// <param name="generated">
+		/// A <see cref="Gdk.Pixbuf"/>
+		/// </param>
+		public OutputRefreshedArgs(Gdk.Pixbuf generated)
+		{
+			this.output  = generated;
+		}
+		
+		/// <value>
+		/// Contains the <see cref="Pixbuf"/> generated from the output.
+		/// </value>
+		public Gdk.Pixbuf Output 
+		{
+			get 
+			{
+				return output;
+			}
+		}
+		
 		
 	}
 }

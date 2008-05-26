@@ -155,10 +155,21 @@ namespace MathTextRecognizer.Stages
 				return GetLeafs(rootNode);
 			}
 		}
+
+		/// <value>
+		/// Contains the image being recognized originally.
+		/// </value>
+		public Pixbuf StartImage
+		{
+			get 
+			{
+				return imageOriginal;
+			}
+		}
 		
 #endregion Properties
 		
-#region Metodos publicos
+#region Public methods
 		/// <summary>
 		/// Establece la imagen inicial para segmentar y reconocer sus
 		/// caracteres. 
