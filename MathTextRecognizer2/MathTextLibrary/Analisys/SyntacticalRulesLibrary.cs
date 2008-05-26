@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 
+using MathTextLibrary.Controllers;
+
 namespace MathTextLibrary.Analisys
 {
 	
@@ -18,6 +20,10 @@ namespace MathTextLibrary.Analisys
 		private static SyntacticalRulesLibrary instance;
 		
 		private SyntacticalRule startRule;
+		
+		public event MatchingHandler Matching;
+		
+		public event EventHandler MatchingFinished;
 		
 		
 		/// <summary>
@@ -40,7 +46,7 @@ namespace MathTextLibrary.Analisys
 		{
 			get
 			{
-				return rules[ruleName];
+				return new SyntacticalRule(rules[ruleName]);
 			}
 		}
 		
@@ -78,6 +84,8 @@ namespace MathTextLibrary.Analisys
 		
 #endregion Properties
 		
+
+		
 #region Public methods
 		
 		/// <summary>
@@ -97,6 +105,21 @@ namespace MathTextLibrary.Analisys
 		public void ClearRules()
 		{
 			this.rules.Clear();
+		}
+		
+		/// <summary>
+		/// Launches the <see cref="Matching"/> event.
+		/// </summary>
+		public void MatchingInvoker(SyntacticalMatcher matcher)
+		{
+			if(Matching!=null)
+				Matching(this, new MatchingArgs(matcher));
+		}
+		
+		public void MatchingFinishedInvoker()
+		{
+			if(MatchingFinished!=null)
+				MatchingFinished(this, EventArgs.Empty);
 		}
 		
 #endregion Public methods

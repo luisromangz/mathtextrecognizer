@@ -104,7 +104,11 @@ namespace MathTextLibrary.Analisys
 		/// Contains the label shown by the item.
 		/// </value>
 		public override string Label {
-			get { return this.tokenType; }
+			get { return this.ToString(); }
+		}
+
+		public override string Type {
+			get { return "Item"; }
 		}
 
 		
@@ -115,7 +119,7 @@ namespace MathTextLibrary.Analisys
 		protected override bool MatchSequence (TokenSequence sequence, 
 		                                       out string output)
 		{
-			MatchingInvoker();
+			
 			output ="";
 			int idx = 0;
 			if(forceTokenSearch)
@@ -125,11 +129,13 @@ namespace MathTextLibrary.Analisys
 			
 			if(idx==-1 || this.tokenType != sequence[idx].Type)
 			{
+				
 				return false || !IsCompulsory;
 			}
 			
 			output= sequence[idx].Text;
 			sequence.RemoveAt(idx);
+			
 			return true;
 			
 		}

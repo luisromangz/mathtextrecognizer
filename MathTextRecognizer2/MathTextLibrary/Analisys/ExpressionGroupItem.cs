@@ -63,6 +63,11 @@ namespace MathTextLibrary.Analisys
 		public override string Label {
 			get { return this.ToString(); }
 		}
+		
+		public override string Type {
+			get { return "Grupo de elementos"; }
+		}
+
 
 		
 #endregion Properties
@@ -79,7 +84,7 @@ namespace MathTextLibrary.Analisys
 		protected override bool MatchSequence(TokenSequence sequence, 
 		                                      out string output)
 		{
-			MatchingInvoker();
+			
 			output="";
 			List<string> res = new List<string>();
 			foreach (ExpressionItem item in childrenItems) 
@@ -91,11 +96,13 @@ namespace MathTextLibrary.Analisys
 				}
 				else
 				{
+					
 					return false;
 				}	
 				
 			}
 			output = String.Format(FormatString, res.ToArray());
+			
 			return true;
 		}
 		

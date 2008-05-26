@@ -4,8 +4,14 @@
 using System;
 using System.Collections.Generic;
 
+using System.Threading;
+
+using Gtk;
+
 using MathTextLibrary.Analisys;
 using MathTextLibrary.Controllers;
+
+using MathTextRecognizer.Controllers.Nodes;
 
 namespace MathTextRecognizer.Controllers
 {
@@ -21,13 +27,16 @@ namespace MathTextRecognizer.Controllers
 		private string output;
 		private bool parsingResult;
 		
+		private NodeView nodeContainer;
 		
-		
+		private SyntacticalCoverNode currentNode;
+	
 		/// <summary>
 		/// <c>FormulaMatchingController</c>'s contructor.
 		/// </summary>
-		public ParsingController() : base()
+		public ParsingController(NodeView container) : base()
 		{
+			this.nodeContainer = container;
 		}
 		
 #region Properties
@@ -82,10 +91,22 @@ namespace MathTextRecognizer.Controllers
 			SyntacticalRule startRule = 
 				SyntacticalRulesLibrary.Instance.StartRule;
 			
+			SyntacticalRulesLibrary.Instance.Matching += 
+				new MatchingHandler(OnMatcherMatching);
+			SyntacticalRulesLibrary.Instance.MatchingFinished += 
+				new EventHandler(OnMatcherMatchingFinished);
+			
+			currentNode =
+				new SyntacticalCoverNode(SyntacticalRulesLibrary.Instance.StartRule, 
+				                         nodeContainer);
+			nodeContainer.NodeStore.AddNode(currentNode);
+			
 			SuspendByStep();
 			
 			parsingResult = 
 				startRule.Match(new TokenSequence(startTokens), out output);
+			
+			
 			
 			ProcessFinishedInvoker();
 		}
@@ -94,6 +115,57 @@ namespace MathTextRecognizer.Controllers
 #endregion Public methods
 		
 #region Private methods
+		
+		private void OnMatcherMatching(object sender, MatchingArgs args)
+		{
+			Application.Invoke(sender, args, OnMatcherMatchingInThread);			
+			
+			SuspendByStep();
+		}
+		
+		private void OnMatcherMatchingInThread(object sender, EventArgs args)
+		{
+			
+			MatchingArgs margs = args as MatchingArgs;			
+			
+			SyntacticalCoverNode newNode =
+				new SyntacticalCoverNode(margs.Matcher, nodeContainer);
+			
+			NodeBeingProcessedInvoker(newNode);
+			
+			if(currentNode == null)
+			{
+				this.nodeContainer.NodeStore.AddNode(newNode);
+			}
+			else
+			{
+				currentNode.AddChild(newNode);
+			}
+			
+			nodeContainer.ColumnsAutosize();
+			currentNode = newNode;
+			currentNode.Select();
+			nodeContainer.ExpandAll();
+			
+		}
+		
+		private void OnMatcherMatchingFinished(object sender, EventArgs args)
+		{
+			Application.Invoke(OnMatcherFinishedInThread);
+			SuspendByNode();
+		}
+		
+		private void OnMatcherFinishedInThread(object sender, EventArgs args)
+		{
+			StepDoneInvoker();
+			if(currentNode.Parent !=null)
+			{
+				currentNode =  currentNode.Parent as SyntacticalCoverNode;
+				currentNode.Select();
+			}
+		}
+		
+				
 		
 #endregion Private methods
 		

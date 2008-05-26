@@ -199,10 +199,15 @@ namespace MathTextRecognizer.Controllers
 		/// <value>
 		/// <c>true</c> if the found token is a valid one.
 		/// </value>
-		public bool Found {
-			get {
+		public bool Found 
+		{
+			get 
+			{
 				return found;
 			}
 		}
 	}
+	
+	
+	
 }

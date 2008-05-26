@@ -48,6 +48,11 @@ namespace MathTextLibrary.Analisys
 		public override string Label {
 			get { return RuleName; }
 		}
+		
+		public override string Type {
+			get { return "Llamada a regla"; }
+		}
+
 
 		
 #endregion Properties
@@ -61,7 +66,6 @@ namespace MathTextLibrary.Analisys
 		
 		protected override bool MatchSequence (TokenSequence sequence, out string output)
 		{
-			MatchingInvoker();
 			// The actual matching is done by the rule.
 			return SyntacticalRulesLibrary.Instance[expressionName].Match(sequence, out output);
 		}

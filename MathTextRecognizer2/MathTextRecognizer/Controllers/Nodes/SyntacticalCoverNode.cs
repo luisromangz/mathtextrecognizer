@@ -16,7 +16,8 @@ namespace MathTextRecognizer.Controllers.Nodes
 	public class SyntacticalCoverNode : TreeNode
 	{
 	
-		private SyntacticalMatcher matcher;
+		private string matcherLabel;
+		private string matcherType;
 		
 		private NodeView container;
 	
@@ -24,8 +25,9 @@ namespace MathTextRecognizer.Controllers.Nodes
 		public SyntacticalCoverNode(SyntacticalMatcher matcher, NodeView container)
 		{
 			this.container = container;
-			this.matcher = matcher;
-			matcher.Matching += OnMatcherMatching;
+			this.matcherLabel = matcher.Label;
+			
+			this.matcherType = matcher.Type;
 		}
 		
 #region Properties
@@ -38,81 +40,51 @@ namespace MathTextRecognizer.Controllers.Nodes
 		{
 			get
 			{
-				return matcher.Label;
+				return matcherLabel;
 			}
-			
-			
 		}
 		
 		/// <value>
-		/// Contains the element matching in this node.
+		/// Contains the node's item type.
 		/// </value>
-		public SyntacticalMatcher Matcher
+		[TreeNodeValue(Column = 1)]
+		public string MatcherType
 		{
-			get 
+			get
 			{
-				return matcher;
-			}
-			set 
-			{
-				matcher = value;
+				
+				return matcherType;
 			}
 		}
 		
 #endregion Properties
 		
+#region Public methods
+		
+		public void Select()
+		{
+			Application.Invoke(SelectInThread);
+		}
+		
+#endregion Public methods
+		
 #region Non-public methods
 		
-		private void OnMatcherMatchingInThread(object sender, EventArgs args)
+		private void SelectInThread(object sender, EventArgs args)
 		{
 			container.NodeSelection.SelectNode(this);
 			
 			container.ScrollToCell(container.Selection.GetSelectedRows()[0],
 			                       container.Columns[0],
 			                       true, 0.5f, 0f);
-			
-			Type type = this.matcher.GetType();
-			Console.WriteLine(matcher.ToString());
-			
-			if(type == typeof(SyntacticalRule))
-			{
-				SyntacticalRule rule = matcher as SyntacticalRule;
-				foreach (SyntacticalExpression exp in rule.Expressions) 
-				{
-					this.AddChild(new SyntacticalCoverNode(exp, container));
-				}
-			}
-			else if(type == typeof(SyntacticalExpression))
-			{
-				SyntacticalExpression exp = matcher as SyntacticalExpression;
-				
-				foreach (ExpressionItem item in exp.Items) 
-				{
-					
-					this.AddChild(new SyntacticalCoverNode(item, container));
-				}
-			}
-			else if(type.GetType() == typeof(ExpressionGroupItem))
-			{
-				ExpressionGroupItem group = matcher as ExpressionGroupItem;
-				
-				foreach (ExpressionItem item in group.ChildrenItems) 
-				{
-					this.AddChild(new SyntacticalCoverNode(item, container));
-				}
-			}
-			
-			container.ExpandAll();
 		}
+		
+	
 		
 #endregion Non-public methods
 		
 #region Event handlers
 		
-		private void OnMatcherMatching(object sender, EventArgs args)
-		{
-			Application.Invoke(OnMatcherMatchingInThread);
-		}
 		
 #endregion Event handlers
 	}

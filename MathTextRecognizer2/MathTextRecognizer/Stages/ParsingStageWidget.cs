@@ -69,13 +69,20 @@ namespace MathTextRecognizer.Stages
 			
 			this.Add(parsingStageBaseWidget);
 			
-			controller = new ParsingController();
+			
+			
+			InitializeWidgets();
+			
+			controller = new ParsingController(syntacticalCoverTree);
 			controller.MessageLogSent += 
 				new MessageLogSentHandler(OnControllerMessageLogSent);
 			
 			controller.ProcessFinished += OnControllerProcessFinishedHandler;
 			
-			InitializeWidgets();
+			controller.NodeBeingProcessed += 
+				new NodeBeingProcessedHandler(OnControllerNodeBeingProcessed);
+			
+			controller.StepDone += new EventHandler(OnControllerStepDone);
 			
 			this.ShowAll();
 		}
@@ -85,7 +92,7 @@ namespace MathTextRecognizer.Stages
 		/// </summary>
 		static ParsingStageWidget()
 		{
-			widgetLabel = "Reconstrucción de la fórmula";
+			widgetLabel = "Análisis sintáctico";
 		}
 		
 #region Public methods
@@ -123,13 +130,20 @@ namespace MathTextRecognizer.Stages
 				new NodeStore(typeof(SyntacticalCoverNode));
 			
 			syntacticalCoverTree = new NodeView(syntacticalCoverModel);
+			syntacticalCoverTree.RulesHint = true;
 			
-			
-			syntacticalCoverTree.AppendColumn("Elemento que reconoce",
+			syntacticalCoverTree.AppendColumn("Elemento",
 			                                  new CellRendererText(),
 			                                  "markup" ,0);
 			
+			syntacticalCoverTree.AppendColumn("Tipo",
+			                                  new CellRendererText(),
+			                                  "markup" ,1);
+			
 			syntacticalCoverTree.Columns[0].Sizing = 
+				TreeViewColumnSizing.Autosize;
+			
+			syntacticalCoverTree.Columns[1].Sizing = 
 				TreeViewColumnSizing.Autosize;
 			
 			syntacticalTreePlaceholder.Add(syntacticalCoverTree);
@@ -153,6 +167,19 @@ namespace MathTextRecognizer.Stages
 		private void OnControllerProcessFinishedHandler(object sender, EventArgs args)
 		{
 			Application.Invoke(OnControllerProcessFinishedHandlerInThread);
+		}
+		
+		private void OnControllerNodeBeingProcessed(object sender, 
+		                                            NodeBeingProcessedArgs args)
+		{
+			parsingNextButtonsAlign.Sensitive = 
+				controller.StepMode == ControllerStepMode.StepByStep;
+		}
+		
+		private void OnControllerStepDone(object sender, EventArgs args)
+		{
+			parsingNextButtonsAlign.Sensitive = 
+				controller.StepMode != ControllerStepMode.UntilEnd;
 		}
 		
 		private void OnControllerProcessFinishedHandlerInThread(object sender, 
@@ -236,11 +263,6 @@ namespace MathTextRecognizer.Stages
 			}
 			
 			SyntacticalRulesLibrary.Instance.StartRule = rules[0];
-			
-			SyntacticalCoverNode node = 
-				new SyntacticalCoverNode(rules[0], this.syntacticalCoverTree);
-			
-			syntacticalCoverModel.AddNode(node);
 			
 			parsingButtonsNB.Page = 1;
 			

@@ -157,6 +157,8 @@ namespace MathTextRecognizer.Stages
 			
 			controller.MatchingFailed += OnControllerMatchingFailed;
 			
+		
+			
 			InitializeWidgets();
 			
 			this.ShowAll();
@@ -442,6 +444,8 @@ namespace MathTextRecognizer.Stages
 		{
 			Application.Invoke(OnControllerMatchingFailedInThread);
 		}
+		
+		
 		
 		private void OnControllerMatchingFailedInThread(object sender, EventArgs a)
 		{
