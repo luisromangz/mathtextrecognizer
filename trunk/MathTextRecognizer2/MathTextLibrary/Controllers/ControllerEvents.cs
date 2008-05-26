@@ -7,6 +7,8 @@ using Gtk;
 
 using MathTextLibrary.Bitmap;
 
+using MathTextLibrary.Analisys;
+
 namespace MathTextLibrary.Controllers
 {
 
@@ -68,6 +70,29 @@ namespace MathTextLibrary.Controllers
 				return node;
 			}
 		}
+	}
+	
+	public delegate void MatchingHandler (object sender, MatchingArgs args);
+	
+	public class MatchingArgs : EventArgs
+	{
+		private SyntacticalMatcher matcher;
+		
+		
+		public MatchingArgs (SyntacticalMatcher matcher)
+		{
+			this.matcher = matcher;			
+		}
+		
+		public SyntacticalMatcher Matcher 
+		{
+			get 
+			{
+				return matcher;
+			}
+		}
+		
+		
 	}
 	
 	

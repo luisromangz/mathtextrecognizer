@@ -1,4 +1,4 @@
-﻿// SyntacticExpressionItem.cs created with MonoDevelop
+// SyntacticExpressionItem.cs created with MonoDevelop
 // User: luis at 22:58 12/05/2008
 
 using System;
@@ -87,6 +87,8 @@ namespace MathTextLibrary.Analisys
 		private ExpressionItemPosition position;
 		
 		private ExpressionItemModifier modifier;
+		private List<Token> firstTokens;
+		
 		
 		/// <summary>
 		/// <see cref="ExpressionItem"/>'s constructor
@@ -154,7 +156,9 @@ namespace MathTextLibrary.Analisys
 	
 		public override bool Match (TokenSequence sequence, out string res)
 		{
-
+			MatchingInvoker();
+			
+			bool result = true;
 			res = "";
 			int counter =0;			
 			string auxOutput;
@@ -169,7 +173,7 @@ namespace MathTextLibrary.Analisys
 					}		
 					if(counter > 0)
 					{
-						return false;
+						result =  false;
 					}
 										
 					break;
@@ -198,11 +202,13 @@ namespace MathTextLibrary.Analisys
 					}
 					else
 					{
-						return false;
+						result = false;
 					}
 					break;
 			}
-			return true;
+			
+			MatchingFinishedInvoker();
+			return result;
 		}
 		
 		public override string ToString ()
@@ -243,3 +249,4 @@ namespace MathTextLibrary.Analisys
 	}
 	
 }
+

@@ -32,6 +32,12 @@ namespace MathTextLibrary.Analisys
 			this.ruleName = ruleName;
 		}
 		
+		public SyntacticalRule(SyntacticalRule rule)
+		{
+			this.expressions =rule.expressions;
+			this.ruleName = rule.ruleName;
+		}
+		
 #region Properties
 		
 		/// <summary>
@@ -55,6 +61,11 @@ namespace MathTextLibrary.Analisys
 		public override string Label {
 			get { return Name; }
 		}
+		
+		public override string Type {
+			get { return "Regla"; }
+		}
+
 
 		
 		/// <value>
@@ -95,7 +106,6 @@ namespace MathTextLibrary.Analisys
 		public override bool Match(TokenSequence sequence, out string text)
 		{
 
-			MatchingInvoker();
 			foreach (SyntacticalExpression expression in expressions)  
 			{
 				

@@ -1,4 +1,4 @@
-﻿// SyntacticExpression.cs created with MonoDevelop
+// SyntacticExpression.cs created with MonoDevelop
 // User: luis at 14:19 12/05/2008
 
 using System;
@@ -19,6 +19,9 @@ namespace MathTextLibrary.Analisys
 	{
 		
 		private List<ExpressionItem> items;
+		
+		private List<Token> firstTokens;
+		
 		private string formatString;
 		
 		public SyntacticalExpression()
@@ -67,6 +70,12 @@ namespace MathTextLibrary.Analisys
 		{
 			get { return this.ToString(); }
 		}
+		
+		
+		public override string Type {
+			get { return "Expresión"; }
+		}
+
 
 		
 		
@@ -98,6 +107,7 @@ namespace MathTextLibrary.Analisys
 					output="";
 					// We revert the state to the original.
 					sequence = backupSequence;
+					MatchingFinishedInvoker();
 					return false;
 				}
 				
@@ -105,7 +115,7 @@ namespace MathTextLibrary.Analisys
 			}
 			
 			output = String.Format(formatString, outputList.ToArray());
-			
+			MatchingFinishedInvoker();
 			return true;
 		}
 		
