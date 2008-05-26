@@ -81,6 +81,7 @@ namespace MathTextLibrary.Analisys
 		public override bool Match(TokenSequence sequence, out string output)
 		{		
 
+			MatchingInvoker();
 			List<string> outputList = new List<string>();
 			
 			bool res;

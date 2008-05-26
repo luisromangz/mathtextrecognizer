@@ -95,6 +95,7 @@ namespace MathTextLibrary.Analisys
 		public override bool Match(TokenSequence sequence, out string text)
 		{
 
+			MatchingInvoker();
 			foreach (SyntacticalExpression expression in expressions)  
 			{
 				
