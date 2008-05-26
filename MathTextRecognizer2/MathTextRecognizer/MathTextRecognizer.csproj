@@ -58,6 +58,7 @@
       <Project>{5CA4FB9B-23A1-4CDA-ACDD-BF9453BC8609}</Project>
       <Name>MathTextLearner</Name>
     </ProjectReference>
+    <Compile Include="Output\OutputSettingsDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />

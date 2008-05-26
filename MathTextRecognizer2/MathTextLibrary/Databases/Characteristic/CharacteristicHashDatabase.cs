@@ -1,4 +1,4 @@
-// CharacteristicHash.cs created with MonoDevelop
+﻿// CharacteristicHash.cs created with MonoDevelop
 // User: luis at 13:37 19/04/2008
 
 using System;
@@ -113,9 +113,7 @@ namespace MathTextLibrary.Databases.Characteristic
 		{
 			if(characteristics == null)
 				characteristics=CharacteristicFactory.CreateCharacteristicList();
-			
-			bool characteristicValue;	
-			
+		
 			FloatBitmap processedBitmap = bitmap.LastProcessedImage;
 			CheckVector vector = CreateVector(processedBitmap);
 			

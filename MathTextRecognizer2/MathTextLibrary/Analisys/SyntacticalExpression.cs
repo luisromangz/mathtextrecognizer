@@ -1,4 +1,4 @@
-// SyntacticExpression.cs created with MonoDevelop
+﻿// SyntacticExpression.cs created with MonoDevelop
 // User: luis at 14:19 12/05/2008
 
 using System;
@@ -19,9 +19,6 @@ namespace MathTextLibrary.Analisys
 	{
 		
 		private List<ExpressionItem> items;
-		
-		private List<Token> firstTokens;
-		
 		private string formatString;
 		
 		public SyntacticalExpression()

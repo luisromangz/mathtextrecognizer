@@ -1,4 +1,4 @@
-// SegmentingAndMathingStepWidget.cs created with MonoDevelop
+﻿// SegmentingAndMathingStepWidget.cs created with MonoDevelop
 // User: luis at 20:16 14/04/2008
 
 using System;
@@ -61,8 +61,6 @@ namespace MathTextRecognizer.Stages
 		[WidgetAttribute]
 		private ImageMenuItem learnImageItem = null;
 		
-		[WidgetAttribute]
-		private MenuItem forceSegmentItem = null;
 		
 		[WidgetAttribute]
 		private Notebook buttonsNB = null;

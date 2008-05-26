@@ -1,4 +1,4 @@
-// CharacteristicHash.cs created with MonoDevelop
+﻿// CharacteristicHash.cs created with MonoDevelop
 // User: luis at 13:37 19/04/2008
 
 using System;
@@ -125,8 +125,6 @@ namespace MathTextLibrary.Databases.Receptors
 		/// </param>
 		public override bool Learn(MathTextBitmap bitmap,MathSymbol symbol)
 		{
-			bool receptorValue;	
-			
 			FloatBitmap processedBitmap = bitmap.LastProcessedImage;
 			CheckVector vector = CreateVector(processedBitmap);			
 			
