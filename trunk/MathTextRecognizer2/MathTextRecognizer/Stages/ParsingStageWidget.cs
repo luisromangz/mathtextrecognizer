@@ -26,7 +26,7 @@ namespace MathTextRecognizer.Stages
 			
 #region Glade widgets
 		[Widget]
-		private HPaned parsingStageBaseWidget = null;
+		private VBox parsingStageBaseWidget = null;
 		
 		[Widget]
 		private ScrolledWindow syntacticalTreePlaceholder = null;
