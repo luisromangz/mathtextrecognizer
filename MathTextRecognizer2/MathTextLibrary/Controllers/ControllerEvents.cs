@@ -95,5 +95,48 @@ namespace MathTextLibrary.Controllers
 		
 	}
 	
+	public delegate void TokenMatchingHandler(object sender, 
+	                                          TokenMatchingArgs args);
+	
+	public class TokenMatchingArgs : EventArgs
+	{
+		private int firstIndex;
+		
+		public TokenMatchingArgs(int firstIndex) : base()
+		{
+			this.firstIndex = firstIndex;
+		}
+		
+		public int FirstIndex
+		{
+			get
+			{
+				return firstIndex;
+			}
+		}
+	}
+	
+	public delegate void TokenMatchingFinishedHandler(object sender,
+	                                                  TokenMatchingFinishedArgs args);
+	
+	public class TokenMatchingFinishedArgs : EventArgs
+	{
+		private Token matchedToken;
+		
+		public TokenMatchingFinishedArgs(Token matchedToken)
+		{
+			this.matchedToken = matchedToken;
+		}
+		
+		public Token MatchedToken
+		{
+			get
+			{
+				return matchedToken;
+			}
+		}
+	}
+		
+	
 	
 }

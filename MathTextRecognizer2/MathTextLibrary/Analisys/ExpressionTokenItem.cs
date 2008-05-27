@@ -4,6 +4,8 @@
 using System;
 using System.Collections.Generic;
 
+using MathTextLibrary.Controllers;
+
 namespace MathTextLibrary.Analisys
 {
 	
@@ -22,7 +24,9 @@ namespace MathTextLibrary.Analisys
 		private string formatString;
 		
 		
+		public static event TokenMatchingHandler TokenMatching;
 		
+		public static event TokenMatchingFinishedHandler TokenMatchingFinished;
 		
 		/// <summary>
 		/// <see cref="ExpressionTokenItem"/>'s constructor.
@@ -127,16 +131,27 @@ namespace MathTextLibrary.Analisys
 				idx = sequence.SearchToken(new Token(this.tokenType));
 			}		
 			
+			// We tell the controller we are trying to match this token.
+			TokenMatchingInvoker(idx);
+			
+			// By default, we say we had a success
+			bool res = true;
+			Token matched = null;
 			if(idx==-1 || this.tokenType != sequence[idx].Type)
 			{
 				
-				return false || !IsCompulsory;
+				res = !IsCompulsory;
 			}
+			else
+			{
+				output= sequence[idx].Text;
+				matched = sequence.RemoveAt(idx);
+			}
+						
+			// We tell the controller we finished matching the token.
+			TokenMatchingFinishedInvoker(matched);
 			
-			output= sequence[idx].Text;
-			sequence.RemoveAt(idx);
-			
-			return true;
+			return res;
 			
 		}
 
@@ -201,6 +216,37 @@ namespace MathTextLibrary.Analisys
 		private void MatchRelatedItems(int index, TokenSequence sequence)
 		{
 			
+		}
+		
+		/// <summary>
+		/// Launches the <see cref="TokenMatching"/> event.
+		/// </summary>
+		/// <param name="idx">
+		/// The index in the sequence of the "first" <see cref="Token"/>
+		/// being considered by the <see cref="TokenItem"/> for matching.
+		/// </param>
+		protected void TokenMatchingInvoker(int idx)
+		{
+			if(TokenMatching != null)
+			{
+				TokenMatching(this, new TokenMatchingArgs(idx));
+			}
+		}
+		
+		/// <summary>
+		/// Launches the <see cref="TokenMatchingFinished"/> event.
+		/// </summary>
+		/// <param name="t">
+		/// The token matched, or <c>null</c> if the matching was
+		/// unsuccesful.
+		/// </param>
+		protected void TokenMatchingFinishedInvoker(Token t)
+		{
+			if(TokenMatchingFinished !=null)
+			{
+				TokenMatchingFinished(this, 
+				                      new TokenMatchingFinishedArgs(t));
+			}
 		}
 
 		

@@ -170,6 +170,8 @@ namespace MathTextRecognizer.Controllers.Nodes
 			
 			view.ColumnsAutosize();
 			
+			view.QueueDraw();
+			
 		}
 		 
 		/// <summary>

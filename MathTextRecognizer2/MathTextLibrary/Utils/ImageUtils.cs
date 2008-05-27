@@ -28,23 +28,33 @@ namespace MathTextLibrary.Utils
 		/// </param>
 		public static Gdk.Pixbuf MakeThumbnail(Gdk.Pixbuf image, int size)
 		{
-			float scaleX, scaleY;
+			float scale;
 			
 			// La escalamos para que no se distorsione.
 			if(image.Width > image.Height)
 			{
-				scaleX = 1;
-				scaleY = (float)(image.Height)/image.Width;
+				scale = (float)(size)/image.Width;
 			}
 			else
 			{
-				scaleX = (float)(image.Width)/image.Height;
-				scaleY = 1;
+				scale = (float)(size)/image.Height;
 			}
 			
-			Pixbuf res = image.ScaleSimple((int)(size*scaleX),
-			                               (int)(size*scaleY), 
-			                               Gdk.InterpType.Bilinear);
+			int newWidth = (int)(scale*image.Width);
+			int newHeight = (int)(scale*image.Height);
+			
+			Pixbuf res = 
+				new Pixbuf(image.Colorspace, image.HasAlpha, image.BitsPerSample, size, size);
+			
+			res.Fill(0xFFFFFFFF);
+				
+			image.Scale(res,
+			            0,0,
+			            size, size,
+			            (size -newWidth)/2,(size-newHeight)/2,
+			            scale, scale, 
+			            Gdk.InterpType.Bilinear );
+			
 				
 			return res;
 			

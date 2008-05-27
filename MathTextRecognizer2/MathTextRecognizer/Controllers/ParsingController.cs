@@ -24,6 +24,9 @@ namespace MathTextRecognizer.Controllers
 	{
 		private List<Token> startTokens;
 		
+		public event TokenMatchingHandler TokenMatching;
+		public event TokenMatchingFinishedHandler TokenMatchingFinished;
+		
 		private string output;
 		private bool parsingResult;
 		
@@ -37,6 +40,18 @@ namespace MathTextRecognizer.Controllers
 		public ParsingController(NodeView container) : base()
 		{
 			this.nodeContainer = container;
+			
+			SyntacticalMatcher.Matching += 
+				new MatchingHandler(OnMatcherMatching);
+			
+			SyntacticalMatcher.MatchingFinished += 
+				new EventHandler(OnMatcherMatchingFinished);
+			
+			ExpressionTokenItem.TokenMatching += 
+				new TokenMatchingHandler(OnTokenItemMatching);
+			
+			ExpressionTokenItem.TokenMatchingFinished +=
+				new TokenMatchingFinishedHandler(OnTokenItemMatchingFinished);
 		}
 		
 #region Properties
@@ -90,11 +105,7 @@ namespace MathTextRecognizer.Controllers
 			
 			SyntacticalRule startRule = 
 				SyntacticalRulesLibrary.Instance.StartRule;
-			
-			SyntacticalRulesLibrary.Instance.Matching += 
-				new MatchingHandler(OnMatcherMatching);
-			SyntacticalRulesLibrary.Instance.MatchingFinished += 
-				new EventHandler(OnMatcherMatchingFinished);
+		
 			
 			currentNode =
 				new SyntacticalCoverNode(SyntacticalRulesLibrary.Instance.StartRule, 
@@ -162,6 +173,26 @@ namespace MathTextRecognizer.Controllers
 				currentNode =  currentNode.Parent as SyntacticalCoverNode;
 				currentNode.Select();
 			}
+		}
+		
+		private void OnTokenItemMatching(object sender, TokenMatchingArgs args)
+		{
+			if(TokenMatching !=null)
+			{
+				TokenMatching(this, args);
+			}
+			SuspendByStep();
+		}
+		
+		private void OnTokenItemMatchingFinished(object sender, TokenMatchingFinishedArgs args)
+		{
+			
+			if(TokenMatchingFinished!=null)
+			{
+				TokenMatchingFinished(this, args);
+			}
+			
+			SuspendByNode();
 		}
 		
 				
