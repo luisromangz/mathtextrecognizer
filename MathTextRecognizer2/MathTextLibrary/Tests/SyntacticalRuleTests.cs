@@ -65,7 +65,7 @@ namespace MathTextLibrary.Tests
 			rule.Expressions.Add(exp);
 			
 			string output;
-			bool res = rule.Match(sequence, out output);
+			bool res = rule.Match(ref sequence, out output);
 			
 			Assert.IsTrue(res, "Matching wasn't succesfull");
 			Assert.AreEqual("200.9 + 14 + 28", output, "Output isn't correct.'");
@@ -108,7 +108,7 @@ namespace MathTextLibrary.Tests
 			rule.Expressions.Add(exp);
 			
 			string output;
-			bool res = rule.Match(sequence, out output);
+			bool res = rule.Match(ref sequence, out output);
 			
 			Assert.IsTrue(res, "Matching wasn't succesfull");
 			Assert.AreEqual("200.9", output, "Output isn't correct.'");
@@ -195,7 +195,7 @@ namespace MathTextLibrary.Tests
 			
 			
 			string output;
-			bool res = rule.Match(sequence, out output);
+			bool res = rule.Match(ref sequence, out output);
 			
 			Assert.IsTrue(res, "Matching wasn't succesfull");
 			Assert.AreEqual("200.9 + 28 x 14", output, "Output isn't correct.'");

@@ -81,7 +81,7 @@ namespace MathTextLibrary.Analisys
 		
 #region Non-public methods
 	
-		protected override bool MatchSequence(TokenSequence sequence, 
+		protected override bool MatchSequence(ref TokenSequence sequence, 
 		                                      out string output)
 		{
 			
@@ -90,7 +90,7 @@ namespace MathTextLibrary.Analisys
 			foreach (ExpressionItem item in childrenItems) 
 			{
 				string auxOutput;
-				if(item.Match(sequence, out auxOutput))
+				if(item.Match(ref sequence, out auxOutput))
 				{
 					res.Add(auxOutput);
 				}
@@ -108,7 +108,7 @@ namespace MathTextLibrary.Analisys
 		
 	
 		
-		protected override string ToStringAux ()
+		protected override string SpecificToString ()
 		{
 			List<string> resList = new List<string>();
 			foreach (ExpressionItem item in childrenItems) 

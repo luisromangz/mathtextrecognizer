@@ -64,13 +64,16 @@ namespace MathTextLibrary.Analisys
 		
 #region Non-public methods
 		
-		protected override bool MatchSequence (TokenSequence sequence, out string output)
+		protected override bool MatchSequence (ref TokenSequence sequence, out string output)
 		{
 			// The actual matching is done by the rule.
-			return SyntacticalRulesLibrary.Instance[expressionName].Match(sequence, out output);
+			SyntacticalRule ruleCalled = 
+				SyntacticalRulesLibrary.Instance[expressionName];
+			
+			return ruleCalled.Match(ref sequence, out output);
 		}
 
-		protected override string ToStringAux ()
+		protected override string SpecificToString ()
 		{
 			return this.expressionName;
 		}

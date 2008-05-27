@@ -37,7 +37,7 @@ namespace MathTextLibrary.Analisys
 		
 #region Public methods
 		
-		public abstract bool Match(TokenSequence sequence, out string text);
+		public abstract bool Match(ref TokenSequence sequence, out string text);
 		
 #endregion Public methods
 		

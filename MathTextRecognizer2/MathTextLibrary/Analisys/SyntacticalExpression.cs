@@ -84,7 +84,7 @@ namespace MathTextLibrary.Analisys
 #region Public methods
 		
 		
-		public override bool Match(TokenSequence sequence, out string output)
+		public override bool Match(ref TokenSequence sequence, out string output)
 		{		
 
 			MatchingInvoker();
@@ -96,11 +96,10 @@ namespace MathTextLibrary.Analisys
 			foreach (ExpressionItem item in items) 
 			{
 				string expressionString;
-				res = item.Match(sequence,out expressionString);
+				res = item.Match(ref sequence,out expressionString);
 				if(!res)
 				{
-					output="";
-					// We revert the state to the original.					
+					output="";				
 					MatchingFinishedInvoker();
 					return false;
 				}

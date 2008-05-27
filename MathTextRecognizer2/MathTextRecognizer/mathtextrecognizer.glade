@@ -1956,9 +1956,6 @@
                             <child>
                               <widget class="GtkVBox" id="expressionsVB">
                                 <property name="visible">True</property>
-                                <child>
-                                  <placeholder/>
-                                </child>
                               </widget>
                             </child>
                           </widget>
@@ -2217,7 +2214,6 @@
             </child>
             <child>
               <widget class="GtkHSeparator" id="lexExpSeparator">
-                <property name="visible">True</property>
               </widget>
               <packing>
                 <property name="expand">False</property>
