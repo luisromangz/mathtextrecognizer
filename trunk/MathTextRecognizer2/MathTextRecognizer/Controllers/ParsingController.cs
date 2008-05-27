@@ -114,10 +114,16 @@ namespace MathTextRecognizer.Controllers
 			
 			SuspendByStep();
 			
+			TokenSequence inputTokens = new TokenSequence(startTokens);
 			parsingResult = 
-				startRule.Match(new TokenSequence(startTokens), out output);
+				startRule.Match(ref inputTokens, out output);
 			
-			
+			if(inputTokens.Count > 0)
+			{
+				// Not all tokens were matched, so the parsing process
+				// was unsuccessfull.
+				parsingResult = false;
+			}
 			
 			ProcessFinishedInvoker();
 		}
@@ -170,6 +176,7 @@ namespace MathTextRecognizer.Controllers
 			
 			if(currentNode.Parent !=null)
 			{
+				Console.WriteLine("subiendo");
 				currentNode =  currentNode.Parent as SyntacticalCoverNode;
 				currentNode.Select();
 			}

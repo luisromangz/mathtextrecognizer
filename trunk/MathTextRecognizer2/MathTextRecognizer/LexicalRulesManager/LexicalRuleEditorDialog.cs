@@ -49,9 +49,11 @@ namespace MathTextRecognizer.LexicalRulesManager
 			
 			
 			lexicalRuleEditorDialog.TransientFor = parent;
-			AddExpression("");	
+				
 			
 			lexicalRuleEditorDialog.ShowAll();
+			
+			AddExpression("");
 		}
 		
 #region Properties
@@ -80,10 +82,9 @@ namespace MathTextRecognizer.LexicalRulesManager
 				ruleNameEntry.Text = value.Name;
 				
 				// We clear the vertical box.
-				foreach (LexicalExpressionWidget widget 
-				         in expressionsVB.AllChildren ) 
+				while(expressionsVB.Children.Length >0)
 				{
-					widget.Destroy();
+					expressionsVB.Remove(expressionsVB.Children[0]);
 				}
 				
 				foreach (string expression in value.LexicalExpressions) 
@@ -138,9 +139,9 @@ namespace MathTextRecognizer.LexicalRulesManager
 			LexicalExpressionWidget widget = 
 				new LexicalExpressionWidget(this.lexicalRuleEditorDialog,
 				                            expressionsVB);
-			widget.Expression = expression;
-			
+			widget.Expression = expression;			
 			expressionsVB.Add(widget);
+			widget.CheckPosition();
 		}
 		
 		/// <summary>

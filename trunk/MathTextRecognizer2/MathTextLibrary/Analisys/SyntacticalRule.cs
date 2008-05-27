@@ -103,7 +103,7 @@ namespace MathTextLibrary.Analisys
 		/// <c>true</c> it the sequence was matched correctly, <c>false</c>
 		/// if there were errors.
 		/// </returns>
-		public override bool Match(TokenSequence sequence, out string text)
+		public override bool Match(ref TokenSequence sequence, out string text)
 		{
 			
 			TokenSequence backupSequence = new TokenSequence(sequence);
@@ -114,7 +114,7 @@ namespace MathTextLibrary.Analisys
 			{
 				
 				string expressionRes;
-				if(expression.Match(sequence, out expressionRes))
+				if(expression.Match(ref sequence, out expressionRes))
 				{
 					// If the matching is successful, we consider 
 					// the output valid.
@@ -123,8 +123,10 @@ namespace MathTextLibrary.Analisys
 				}
 				else
 				{
-					sequence = new TokenSequence(backupSequence);
-					
+					Console.WriteLine("La expresión «{0}» falló el reconocimiento, restaurando la secuencia ({1})",
+					                  expression.ToString(),
+					                  backupSequence);
+					sequence = new TokenSequence(backupSequence);					
 				}
 				
 			}

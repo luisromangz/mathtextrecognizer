@@ -154,7 +154,7 @@ namespace MathTextLibrary.Analisys
 #region Public methods
 		
 	
-		public override bool Match (TokenSequence sequence, out string res)
+		public override bool Match (ref TokenSequence sequence, out string res)
 		{
 			MatchingInvoker();
 			
@@ -166,7 +166,7 @@ namespace MathTextLibrary.Analisys
 			{
 				case ExpressionItemModifier.Repeating:
 					while(sequence.Count > 0 
-					      && this.MatchSequence(sequence, out auxOutput))
+					      && this.MatchSequence(ref sequence, out auxOutput))
 					{
 						counter++;
 						res +=auxOutput;
@@ -180,7 +180,7 @@ namespace MathTextLibrary.Analisys
 				case ExpressionItemModifier.RepeatingNonCompulsory:
 				
 					while(sequence.Count > 0
-					      && this.MatchSequence(sequence, out auxOutput))
+					      && this.MatchSequence(ref sequence, out auxOutput))
 					{
 						res+= auxOutput;
 					}
@@ -188,7 +188,7 @@ namespace MathTextLibrary.Analisys
 				case ExpressionItemModifier.NonCompulsory:
 				
 					if(sequence.Count>0
-					   && this.MatchSequence(sequence, out auxOutput))
+					   && this.MatchSequence(ref sequence, out auxOutput))
 					{
 						res= auxOutput;
 					}
@@ -196,7 +196,7 @@ namespace MathTextLibrary.Analisys
 				
 				default:
 					if(sequence.Count>0
-					   && this.MatchSequence(sequence, out auxOutput))
+					   && this.MatchSequence(ref sequence, out auxOutput))
 					{
 						res= auxOutput;
 					}
@@ -213,7 +213,31 @@ namespace MathTextLibrary.Analisys
 		
 		public override string ToString ()
 		{
-			String res = this.ToStringAux();
+			String res ="";
+			switch(this.Position)
+			{
+				case ExpressionItemPosition.Above:
+					res+="↑";
+					break;
+				case ExpressionItemPosition.Below:
+					res+="↓";
+					break;
+				case ExpressionItemPosition.Inside:
+					res+="↶";
+					break;
+				case ExpressionItemPosition.RootIndex:
+					res+="↖";
+					break;						
+				case ExpressionItemPosition.SubIndex:
+					res+="↘";
+					break;						
+				case ExpressionItemPosition.SuperIndex:
+					res+="↗";
+					break;
+					
+			}	
+			
+			res += this.SpecificToString();
 			
 			switch(modifier)
 			{
@@ -238,10 +262,10 @@ namespace MathTextLibrary.Analisys
 		
 #region Non-public methods
 		
-		protected abstract bool MatchSequence(TokenSequence sequence, out string output);
+		protected abstract bool MatchSequence(ref TokenSequence sequence, out string output);
 				      
 		
-		protected abstract string ToStringAux();
+		protected abstract string SpecificToString();
 		
 #endregion Non-public methods
 		

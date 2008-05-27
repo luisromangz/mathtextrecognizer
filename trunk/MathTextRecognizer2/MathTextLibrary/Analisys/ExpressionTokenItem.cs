@@ -120,7 +120,7 @@ namespace MathTextLibrary.Analisys
 		
 #region Non-public methods
 		
-		protected override bool MatchSequence (TokenSequence sequence, 
+		protected override bool MatchSequence (ref TokenSequence sequence, 
 		                                       out string output)
 		{
 			
@@ -139,13 +139,21 @@ namespace MathTextLibrary.Analisys
 			Token matched = null;
 			if(idx==-1 || this.tokenType != sequence[idx].Type)
 			{
-				
+				Console.WriteLine("not matching: {0} and {1}", this.tokenType, sequence[idx].Text);
 				res = !IsCompulsory;
 			}
 			else
 			{
-				output= sequence[idx].Text;
+				
 				matched = sequence.RemoveAt(idx);
+				if(this.relatedItems.Count ==0)
+				{
+					output= matched.Text;
+				}
+				else
+				{
+					res = MatchRelatedItems(matched, sequence, out output);
+				}
 			}
 						
 			// We tell the controller we finished matching the token.
@@ -157,65 +165,90 @@ namespace MathTextLibrary.Analisys
 
 		
 
-		protected override string ToStringAux ()
+		protected override string SpecificToString ()
 		{
 			
 			
 			if(relatedItems.Count == 0)
 			{
-				return this.tokenType;
+				string res="";
+				
+				res+=this.tokenType;
+				return res;
 			}
 			else
 			{
-				string res="{" + this.TokenType;
 				
+				List<string> itemTexts = new List<string>();
+				itemTexts.Add(this.tokenType);
 				foreach (ExpressionItem item in relatedItems)
 				{
-					switch(item.Position)
-					{
-						case ExpressionItemPosition.Above:
-							res+= "↑";
-							break;
-						case ExpressionItemPosition.Below:
-							res+="";
-							break;
-						case ExpressionItemPosition.Inside:
-							res+="↶";
-							break;
-						case ExpressionItemPosition.RootIndex:
-							res+="↖";
-							break;						
-						case ExpressionItemPosition.SubIndex:
-							res+="↘";
-							break;						
-						case ExpressionItemPosition.SuperIndex:
-							res+="↗";
-							break;
-							
-					}
-					
-					res+= item.ToString();
+					itemTexts.Add(item.ToString());
 				}
 				
-				res +="}";
-				
-				return res;
+				return "{"+String.Join(" ", itemTexts.ToArray()) +"}";
 			}
+			
 			
 		}
 		
 		/// <summary>
-		/// Tries to match the tokens related items.
+		/// Tries to match the token's related items.
 		/// </summary>
-		/// <param name="index">
-		/// A <see cref="System.Int32"/>
+		/// <param name="matched">
+		/// The <see cref="Token"/> matched token.  
 		/// </param>
 		/// <param name="sequence">
-		/// A <see cref="TokenSequence"/>
+		/// The remaining tokens.
 		/// </param>
-		private void MatchRelatedItems(int index, TokenSequence sequence)
+		/// <param name="output">
+		/// A <see cref="System.String"/> containing the output.
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/> indicating if the matching was 
+		/// successfull.
+		/// </returns>
+		private bool MatchRelatedItems(Token matched, 
+		                               TokenSequence sequence, 
+		                               out string output)
 		{
+			output = "";
 			
+			// We return true unless we found a matching error in one of the
+			// related items.
+			bool res = true;
+			
+			// We have to create a list of outputs, so we can apply the 
+			// output format string later.
+			List<string> outputs = new List<string>();
+			
+			// We add the matched token own text as the first element
+			outputs.Add(matched.Text); 
+			
+			foreach(ExpressionItem relatedItem in this.relatedItems)
+			{
+				string relatedItemOutput;
+				TokenSequence relatedRemnant = 
+					GetRelatedItems(matched,sequence,relatedItem.Position);
+				
+				if(relatedItem.Match(ref relatedRemnant, 
+				                     out relatedItemOutput))
+				{
+					outputs.Add(relatedItemOutput);
+				}
+				else
+				{
+					res = false;
+					break;
+				}
+			}				
+			
+			if(res)
+			{
+				output = String.Format(this.formatString, outputs.ToArray());
+			}
+			
+			return res;
 		}
 		
 		/// <summary>
@@ -248,8 +281,93 @@ namespace MathTextLibrary.Analisys
 				                      new TokenMatchingFinishedArgs(t));
 			}
 		}
-
 		
+		/// <summary>
+		/// Retrives the related items for a token from the remaining items list.
+		/// </summary>
+		/// <param name="matched">
+		/// The <see cref="Token"/> the items we are looking for are related to.
+		/// </param>
+		/// <param name="remainingItems">
+		/// A <see cref="TokenSequence"/> containing the yet to be matched items.
+		/// </param>
+		/// <param name="position">
+		/// A <see cref="ExpressionItemPosition"/> the position of the related item.
+		/// </param>
+		/// <returns>
+		/// A <see cref="TokenSequence"/> containing the items related to the
+		/// matched item found in the given position.
+		/// </returns>
+		protected TokenSequence GetRelatedItems(Token matched,
+		                                        TokenSequence remainingItems, 
+		                                        ExpressionItemPosition position)
+		{
+			TokenSequence sequence = new TokenSequence();
+			
+			
+			for (int i = 0; i < remainingItems.Count; i++)
+			{
+				Token checkedItem = remainingItems[i];
+				
+				if(CheckInRelatedItemSequence(matched, checkedItem, position))
+				{
+					sequence.Append(checkedItem);
+					remainingItems.RemoveAt(i);
+				}
+				else
+				{
+					break;
+				}
+			}
+			
+			
+			return sequence;
+		}
+		
+		/// <summary>
+		/// Checks if a token is in a given position related to the matched token.
+		/// </summary>
+		/// <param name="matched">
+		/// A <see cref="Token"/> which the checked token will be checked to.
+		/// </param>
+		/// <param name="checkedItem">
+		/// A <see cref="Token"/> that we want to know if it is in the related 
+		/// position especified respect to the matched token.
+		/// </param>
+		/// <param name="position">
+		/// A <see cref="ExpressionItemPosition"/> specifiying the position the 
+		/// checked item should be.
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/> indicating if the checked item is in the
+		/// given position related to the matched token.
+		/// </returns>
+		protected bool CheckInRelatedItemSequence(Token matched, 
+		                                          Token checkedItem, 
+		                                          ExpressionItemPosition position)
+		{
+			bool res =  false;
+			switch(position)
+			{
+				case ExpressionItemPosition.Above:
+					res = checkedItem.Y + checkedItem.Height < matched.Y;
+					break;
+				case ExpressionItemPosition.Below:
+					res = checkedItem.Y > matched.Y + matched.Height;
+					break;
+				case ExpressionItemPosition.Inside:
+					break;
+				case ExpressionItemPosition.RootIndex:
+					break;
+				case ExpressionItemPosition.SubIndex:
+					break;					
+				case ExpressionItemPosition.SuperIndex:
+					break;
+			}
+			
+			return res;
+			
+		}
 #endregion Non-public methods
 	}
 }
