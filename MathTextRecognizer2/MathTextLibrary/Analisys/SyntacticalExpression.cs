@@ -92,11 +92,6 @@ namespace MathTextLibrary.Analisys
 			
 			bool res;
 			
-			TokenSequence backupSequence = new TokenSequence();
-			foreach (Token t in sequence) 
-			{
-				backupSequence.Append(t);
-			}
 			
 			foreach (ExpressionItem item in items) 
 			{
@@ -105,8 +100,7 @@ namespace MathTextLibrary.Analisys
 				if(!res)
 				{
 					output="";
-					// We revert the state to the original.
-					sequence = backupSequence;
+					// We revert the state to the original.					
 					MatchingFinishedInvoker();
 					return false;
 				}
