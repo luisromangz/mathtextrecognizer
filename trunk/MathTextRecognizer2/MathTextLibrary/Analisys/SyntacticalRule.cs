@@ -105,6 +105,10 @@ namespace MathTextLibrary.Analisys
 		/// </returns>
 		public override bool Match(TokenSequence sequence, out string text)
 		{
+			
+			TokenSequence backupSequence = new TokenSequence(sequence);
+			
+			
 
 			foreach (SyntacticalExpression expression in expressions)  
 			{
@@ -116,6 +120,11 @@ namespace MathTextLibrary.Analisys
 					// the output valid.
 					text = expressionRes;
 					return true;
+				}
+				else
+				{
+					sequence = new TokenSequence(backupSequence);
+					
 				}
 				
 			}

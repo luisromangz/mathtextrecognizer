@@ -31,6 +31,14 @@ namespace MathTextLibrary.Analisys
 			sequence = tokens;
 		}
 		
+		public TokenSequence(TokenSequence source) : this()
+		{
+			foreach (Token t in source) 
+			{
+				sequence.Add(t);
+			}
+		}
+		
 #region Properties
 		
 		/// <value>
