@@ -15,9 +15,14 @@ namespace MathTextLibrary.Analisys
 	/// </summary>
 	public abstract class SyntacticalMatcher
 	{
-		public abstract bool Match(TokenSequence sequence, out string text);
 		
+		
+		public static event MatchingHandler Matching;
+		
+		public static event EventHandler MatchingFinished;
 	
+		
+#region Properties
 		public abstract string Type
 		{
 			get;
@@ -28,14 +33,33 @@ namespace MathTextLibrary.Analisys
 			get;
 		}
 		
+#endregion Properties
+		
+#region Public methods
+		
+		public abstract bool Match(TokenSequence sequence, out string text);
+		
+#endregion Public methods
+		
+#region Non-public methods
+		/// <summary>
+		/// Launches the <see cref="Matching"/> event.
+		/// </summary>
 		protected void MatchingInvoker()
 		{
-			SyntacticalRulesLibrary.Instance.MatchingInvoker(this);
+			if(Matching!=null)
+				Matching(this, new MatchingArgs(this));
 		}
 		
+		/// <summary>
+		/// Launches the <see cref="MatchingFinished"/> event.
+		/// </summary>
 		protected void MatchingFinishedInvoker()
 		{
-			SyntacticalRulesLibrary.Instance.MatchingFinishedInvoker();
+			if(MatchingFinished!=null)
+				MatchingFinished(this, EventArgs.Empty);
 		}
+#endregion Non-public methods		
+	
 	}
 }

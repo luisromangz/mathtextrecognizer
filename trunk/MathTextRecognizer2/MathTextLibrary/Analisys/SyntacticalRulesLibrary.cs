@@ -19,16 +19,11 @@ namespace MathTextLibrary.Analisys
 		
 		private static SyntacticalRulesLibrary instance;
 		
-		private SyntacticalRule startRule;
-		
-		public event MatchingHandler Matching;
-		
-		public event EventHandler MatchingFinished;
-		
+		private SyntacticalRule startRule;		
 		
 		/// <summary>
-		/// <see cref=""/>'s constructor.
-		//SyntacticalRulesLibrary/ </summary>
+		/// <see cref="SyntacticalRulesLibrary"/>'s constructor.
+		/// </summary>
 		private SyntacticalRulesLibrary()
 		{
 			rules = new Dictionary<string,SyntacticalRule>();
@@ -107,20 +102,7 @@ namespace MathTextLibrary.Analisys
 			this.rules.Clear();
 		}
 		
-		/// <summary>
-		/// Launches the <see cref="Matching"/> event.
-		/// </summary>
-		public void MatchingInvoker(SyntacticalMatcher matcher)
-		{
-			if(Matching!=null)
-				Matching(this, new MatchingArgs(matcher));
-		}
-		
-		public void MatchingFinishedInvoker()
-		{
-			if(MatchingFinished!=null)
-				MatchingFinished(this, EventArgs.Empty);
-		}
+	
 		
 #endregion Public methods
 	}

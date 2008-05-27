@@ -20,6 +20,8 @@ namespace MathTextRecognizer.Controllers.Nodes
 		private string matcherType;
 		
 		private NodeView container;
+		
+		private string matchedTokens;
 	
 		
 		public SyntacticalCoverNode(SyntacticalMatcher matcher, NodeView container)
@@ -57,6 +59,15 @@ namespace MathTextRecognizer.Controllers.Nodes
 			}
 		}
 		
+		[TreeNodeValue(Column = 2)]
+		public string MatchedTokens
+		{
+			get
+			{
+				return matchedTokens;
+			}
+		}
+		
 #endregion Properties
 		
 #region Public methods
@@ -64,6 +75,28 @@ namespace MathTextRecognizer.Controllers.Nodes
 		public void Select()
 		{
 			Application.Invoke(SelectInThread);
+		}
+		
+		/// <summary>
+		/// Adds a token to the items list of matched tokens.
+		/// </summary>
+		/// <param name="matchedToken">
+		/// A <see cref="Token"/>
+		/// </param>
+		public void AddMatchedToken(Token matchedToken)
+		{
+			string newText = String.Format("«{0}»", matchedToken.Text);
+			if(String.IsNullOrEmpty(matchedTokens))
+			{
+				matchedTokens = newText;
+				
+			}
+			else
+			{
+				matchedTokens = ", " +newText;
+			}
+			
+			container.QueueDraw();
 		}
 		
 #endregion Public methods

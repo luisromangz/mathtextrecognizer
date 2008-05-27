@@ -8,8 +8,11 @@ using Gtk;
 using Glade;
 
 using MathTextCustomWidgets.Dialogs;
+
 using MathTextLibrary.Analisys;
 using MathTextLibrary.Controllers;
+using MathTextLibrary.Utils;
+
 using MathTextRecognizer.Controllers;
 using MathTextRecognizer.Controllers.Nodes;
 
@@ -42,6 +45,9 @@ namespace MathTextRecognizer.Stages
 		
 		[Widget]
 		private Alignment parsingNextButtonsAlign = null;
+		
+		[Widget]
+		private IconView remainingItemsIconView = null;
 	
 #endregion Glade widgets
 	
@@ -51,6 +57,12 @@ namespace MathTextRecognizer.Stages
 		
 		private NodeView syntacticalCoverTree;
 		private NodeStore syntacticalCoverModel;
+		
+		private SyntacticalCoverNode currentNode;
+		
+		private ListStore remainingItemsStore;
+		
+		private TreeIter selectedRemainingItem;
 		
 #endregion Fields
 		
@@ -82,7 +94,11 @@ namespace MathTextRecognizer.Stages
 			controller.NodeBeingProcessed += 
 				new NodeBeingProcessedHandler(OnControllerNodeBeingProcessed);
 			
-			controller.StepDone += new EventHandler(OnControllerStepDone);
+			controller.TokenMatching +=
+				new TokenMatchingHandler(OnControllerTokenMatching);
+			
+			controller.TokenMatchingFinished+=
+				new TokenMatchingFinishedHandler(OnControllerTokenMatchingFinished);
 			
 			this.ShowAll();
 		}
@@ -108,6 +124,7 @@ namespace MathTextRecognizer.Stages
 			parsingShowOutputBtn.Sensitive = false;
 			
 			syntacticalCoverModel.Clear();
+			remainingItemsStore.Clear();
 		}
 		
 			
@@ -140,13 +157,30 @@ namespace MathTextRecognizer.Stages
 			                                  new CellRendererText(),
 			                                  "markup" ,1);
 			
+			syntacticalCoverTree.AppendColumn("Items asignados",
+			                                  new CellRendererText(),
+			                                  "markup", 2);
+			
 			syntacticalCoverTree.Columns[0].Sizing = 
 				TreeViewColumnSizing.Autosize;
 			
 			syntacticalCoverTree.Columns[1].Sizing = 
 				TreeViewColumnSizing.Autosize;
 			
+			syntacticalCoverTree.Columns[2].Sizing = 
+				TreeViewColumnSizing.Autosize;
+			
 			syntacticalTreePlaceholder.Add(syntacticalCoverTree);
+			
+			
+			remainingItemsStore = new ListStore(typeof(Gdk.Pixbuf),
+			                                    typeof(string));
+			remainingItemsIconView.Model = remainingItemsStore;
+			
+			remainingItemsIconView.PixbufColumn =0;
+			remainingItemsIconView.TextColumn = 1;
+			
+			
 		}
 		
 		protected override void NextStep (ControllerStepMode mode)
@@ -172,14 +206,10 @@ namespace MathTextRecognizer.Stages
 		private void OnControllerNodeBeingProcessed(object sender, 
 		                                            NodeBeingProcessedArgs args)
 		{
+			
+			currentNode = args.Node as SyntacticalCoverNode;
 			parsingNextButtonsAlign.Sensitive = 
 				controller.StepMode == ControllerStepMode.StepByStep;
-		}
-		
-		private void OnControllerStepDone(object sender, EventArgs args)
-		{
-			parsingNextButtonsAlign.Sensitive = 
-				controller.StepMode != ControllerStepMode.UntilEnd;
 		}
 		
 		private void OnControllerProcessFinishedHandlerInThread(object sender, 
@@ -201,6 +231,56 @@ namespace MathTextRecognizer.Stages
 				OkDialog.Show(this.MainRecognizerWindow.Window,
 				              MessageType.Warning,
 				              "El proceso de análisis sintáctico no tuvo éxito.");		
+			}
+		}
+		
+		private void OnControllerTokenMatching(object sender, TokenMatchingArgs args)
+		{
+			Application.Invoke(sender, args, OnControllerTokenMatchingInThread);
+		}
+		
+		private void OnControllerTokenMatchingInThread(object sender, EventArgs a)
+		{
+			TokenMatchingArgs args = a as TokenMatchingArgs;
+			
+			
+			remainingItemsStore.IterNthChild(out selectedRemainingItem,
+			                                 args.FirstIndex);
+			TreePath selectedPath = 
+				remainingItemsStore.GetPath(selectedRemainingItem);
+			
+			remainingItemsIconView.SelectPath(selectedPath);
+			remainingItemsIconView.ScrollToPath(selectedPath, 0.5f, 0f);
+			
+			if(controller.StepMode == ControllerStepMode.StepByStep)
+			{
+				parsingNextButtonsAlign.Sensitive = true;
+			}
+		}
+		
+		private void OnControllerTokenMatchingFinished(object sender, 
+		                                               TokenMatchingFinishedArgs args)
+		{
+			Application.Invoke(sender, 
+			                   args, 
+			                   OnControllerTokenMatchingFinishedInThread);
+		}
+		
+		private void OnControllerTokenMatchingFinishedInThread(object sender, 
+		                                                       EventArgs a)
+		{
+			TokenMatchingFinishedArgs args = a as TokenMatchingFinishedArgs;
+			
+			if(args.MatchedToken != null)
+			{
+				currentNode.AddMatchedToken(args.MatchedToken);
+				
+				remainingItemsStore.Remove(ref selectedRemainingItem);
+			}
+			
+			if(controller.StepMode != ControllerStepMode.UntilEnd)
+			{
+				parsingNextButtonsAlign.Sensitive = true;
 			}
 		}
 		
@@ -248,6 +328,10 @@ namespace MathTextRecognizer.Stages
 		
 		private void OnParsingProcessBtnClicked(object sender, EventArgs args)
 		{
+		
+			SetRemainingTokens(MainRecognizerWindow.TokenizingWidget.ResultTokens);
+			
+			
 			// We set the tokens from the previous step.
 			controller.SetStartTokens(MainRecognizerWindow.TokenizingWidget.ResultTokens);
 			
@@ -291,6 +375,26 @@ namespace MathTextRecognizer.Stages
 			dialog.Show();
 			dialog.Destroy();
 		}
+		
+		/// <summary>
+		/// Adds the remaining tokens to the icon view.
+		/// </summary>
+		/// <param name="remainingTokens">
+		/// A <see cref="List`1"/>
+		/// </param>
+		private void SetRemainingTokens(List<Token> remainingTokens)
+		{
+			remainingItemsIconView.Columns = remainingTokens.Count;
+			foreach (Token remainingToken in remainingTokens) 
+			{
+				Gdk.Pixbuf thumbnail = 
+					ImageUtils.MakeThumbnail(remainingToken.Image.CreatePixbuf(),
+					                         48);
+				remainingItemsStore.AppendValues(thumbnail,
+				                                 remainingToken.Text);
+			}
+		}
+		
 	
 #endregion Non-public methods
 	}

@@ -266,6 +266,7 @@ namespace MathTextRecognizer.Output
 		/// <param name="args">
 		/// A <see cref="EventArgs"/>
 		/// </param>
+		[GLib.ConnectBefore]
 		private void OnBtnSaveClicked(object sender, EventArgs args)
 		{
 			
@@ -302,6 +303,8 @@ namespace MathTextRecognizer.Output
 			}
 			
 			fileSaveDialog.Destroy();
+			
+			this.outputDialog.Respond(ResponseType.None);
 			
 		}
 		
