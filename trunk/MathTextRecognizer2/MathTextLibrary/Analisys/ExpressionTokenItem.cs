@@ -230,6 +230,10 @@ namespace MathTextLibrary.Analisys
 				string relatedItemOutput;
 				TokenSequence relatedRemnant = 
 					GetRelatedItems(matched,sequence,relatedItem.Position);
+
+				Console.WriteLine("Reconociendo items ({0}) con el elemento «{1}»",
+				                  relatedRemnant,
+				                  relatedItem.ToString());
 				
 				if(relatedItem.Match(ref relatedRemnant, 
 				                     out relatedItemOutput))
@@ -304,8 +308,10 @@ namespace MathTextLibrary.Analisys
 		{
 			TokenSequence sequence = new TokenSequence();
 			
+			string remainingItemsString = remainingItems.ToString();
 			
-			for (int i = 0; i < remainingItems.Count; i++)
+			int i= 0;
+			while (i < remainingItems.Count)
 			{
 				Token checkedItem = remainingItems[i];
 				
@@ -314,12 +320,20 @@ namespace MathTextLibrary.Analisys
 					sequence.Append(checkedItem);
 					remainingItems.RemoveAt(i);
 				}
-				else
+				else if(!SpecialPosition(matched, checkedItem))
 				{
 					break;
 				}
+				else
+				{
+					i++;
+				}
 			}
 			
+			Console.WriteLine("Extraida la secuencia ({0}) en posicion {1} de entre los elementos de ({2})",
+			                  sequence,
+			                  position,
+			                  remainingItemsString);
 			
 			return sequence;
 		}
@@ -346,14 +360,17 @@ namespace MathTextLibrary.Analisys
 		                                          Token checkedItem, 
 		                                          ExpressionItemPosition position)
 		{
+			
 			bool res =  false;
 			switch(position)
 			{
 				case ExpressionItemPosition.Above:
-					res = checkedItem.Y + checkedItem.Height < matched.Y;
+					res = (checkedItem.Y + checkedItem.Height )< matched.Y;
 					break;
 				case ExpressionItemPosition.Below:
-					res = checkedItem.Y > matched.Y + matched.Height;
+					res = checkedItem.Y > (matched.Y + matched.Height);
+					
+					Console.WriteLine("mmm {0} {1} {2} {3}", matched,matched.Y + matched.Height, checkedItem,checkedItem.Y);
 					break;
 				case ExpressionItemPosition.Inside:
 					break;
@@ -365,8 +382,38 @@ namespace MathTextLibrary.Analisys
 					break;
 			}
 			
+			
+			
 			return res;
 			
+		}
+		
+		/// <summary>
+		/// Checks if a token is placed in a special position regarding other token.
+		/// </summary>
+		/// <param name="referenceToken">
+		/// A <see cref="Token"/>
+		/// </param>
+		/// <param name="checkedToken">
+		/// A <see cref="Token"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
+		protected bool SpecialPosition(Token referenceToken, Token checkedToken)
+		{
+			if(checkedToken.X < referenceToken.X)
+				return true;
+			
+			int referenceCenter = referenceToken.Y + referenceToken.Height/2;
+			if(checkedToken.Y + checkedToken.Height < referenceCenter)
+				return true;
+			
+			if(checkedToken.Y > referenceCenter)
+				return true;
+			
+			return false;
+				
 		}
 #endregion Non-public methods
 	}
