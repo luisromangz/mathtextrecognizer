@@ -46,7 +46,7 @@ namespace MathTextLibrary.Analisys
 		/// Contains the label shown by the item.
 		/// </value>
 		public override string Label {
-			get { return RuleName; }
+			get { return ToString(); }
 		}
 		
 		public override string Type {

@@ -119,6 +119,7 @@ namespace MathTextRecognizer.Stages
 		{
 			parsingButtonsNB.Page = 0;
 			
+			parsingNextButtonsAlign.Sensitive = true;
 			parsingProcessBtn.Sensitive = true;
 			
 			parsingShowOutputBtn.Sensitive = false;
@@ -221,7 +222,7 @@ namespace MathTextRecognizer.Stages
 				              MessageType.Info,
 				              "¡El proceso de análisis sintáctico fue un éxito!");		
 				
-				parsingButtonsNB.Page = 0;
+				
 				
 				parsingShowOutputBtn.Sensitive = true;
 				parsingProcessBtn.Sensitive = false;
@@ -230,8 +231,13 @@ namespace MathTextRecognizer.Stages
 			{
 				OkDialog.Show(this.MainRecognizerWindow.Window,
 				              MessageType.Warning,
-				              "El proceso de análisis sintáctico no tuvo éxito.");		
+				              "El proceso de análisis sintáctico no tuvo éxito.");	
+				
+				
+				
 			}
+			
+			parsingButtonsNB.Page = 0;
 		}
 		
 		private void OnControllerTokenMatching(object sender, TokenMatchingArgs args)
