@@ -1427,10 +1427,16 @@
             <property name="label_xalign">0</property>
             <property name="shadow_type">GTK_SHADOW_NONE</property>
             <child>
-              <widget class="GtkVBox" id="optionsVB">
+              <widget class="GtkAlignment" id="alignment13">
                 <property name="visible">True</property>
+                <property name="top_padding">5</property>
                 <child>
-                  <placeholder/>
+                  <widget class="GtkVBox" id="optionsVB">
+                    <property name="visible">True</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </widget>
                 </child>
               </widget>
             </child>
@@ -2699,7 +2705,7 @@
                                         <child>
                                           <widget class="GtkLabel" id="label45">
                                             <property name="visible">True</property>
-                                            <property name="label" translatable="yes">Siguiente _nodo</property>
+                                            <property name="label" translatable="yes">Siguiente _elemento</property>
                                             <property name="use_underline">True</property>
                                           </widget>
                                           <packing>
@@ -2819,6 +2825,7 @@
                 <property name="visible">True</property>
                 <child>
                   <widget class="GtkScrolledWindow" id="scrolledwindow7">
+                    <property name="height_request">95</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
@@ -3045,7 +3052,7 @@
                                 <child>
                                   <widget class="GtkLabel" id="label65">
                                     <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Siguiente _nodo</property>
+                                    <property name="label" translatable="yes">Siguiente _item</property>
                                     <property name="use_underline">True</property>
                                   </widget>
                                   <packing>
