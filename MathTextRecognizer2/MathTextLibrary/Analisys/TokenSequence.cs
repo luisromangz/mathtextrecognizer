@@ -187,13 +187,13 @@ namespace MathTextLibrary.Analisys
 		/// Searchs for a token in the sequence, and retrieves the tallest 
 		/// (and thus more important) instance.
 		/// </summary>
-		/// <param name="t">
-		/// The searched <see cref="Token"/>.
+		/// <param name="type">
+		/// The searched token's type name.
 		/// </param>
 		/// <returns>
 		/// The position of the tallest found token.
 		/// </returns>
-		public int SearchToken(Token t)
+		public int SearchToken(string type)
 		{
 			int idx = -1;
 			int maxHeight = -1;
@@ -201,14 +201,51 @@ namespace MathTextLibrary.Analisys
 			for(int i=0; i< sequence.Count; i++)
 			{
 				testedToken = sequence[i];
-				if(testedToken == t && testedToken.Height > maxHeight)
+				if(testedToken.Height > maxHeight)
 				{
 					maxHeight = testedToken.Height;
-					idx = i;
+					
+					if(testedToken.Type == type 
+					   && !ShadedByPreviousToken(testedToken))
+					{
+						idx = i;
+					}
+					
 				}
 			}
 			
+			if(idx >=0 && sequence[idx].Height < maxHeight)
+			{
+				// The symbol found wasnt the heightst, so it nos the main one.
+				idx = -1;
+			}
+			
 			return idx;
+		}
+		
+		/// <summary>
+		/// Tests if there isn't a path from every pixel of the token's left
+		/// side to the sequence beginning.
+		/// </summary>
+		/// <param name="tested">
+		/// A <see cref="Token"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
+		private bool ShadedByPreviousToken(Token tested)
+		{
+			for(int i =0 ; i<this.Count && sequence[i] != tested; i++)
+			{
+				Token shading =  sequence[i];
+				if(shading.Y > tested.Y 
+				   || shading.Y+  shading.Height < tested.Y + tested.Height )
+				{
+					return true;
+				}
+			}
+			
+			return false;
 		}
 
 		
