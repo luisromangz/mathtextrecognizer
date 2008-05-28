@@ -8,6 +8,7 @@ using Gtk;
 using Glade;
 
 using MathTextCustomWidgets.Dialogs;
+using MathTextCustomWidgets.Widgets.ImageArea;
 
 using MathTextLibrary.Analisys;
 using MathTextLibrary.Controllers;
@@ -48,6 +49,9 @@ namespace MathTextRecognizer.Stages
 		
 		[Widget]
 		private IconView remainingItemsIconView = null;
+		
+		[Widget]
+		private Alignment synImageOriginalPlaceholder = null;
 	
 #endregion Glade widgets
 	
@@ -63,6 +67,10 @@ namespace MathTextRecognizer.Stages
 		private ListStore remainingItemsStore;
 		
 		private TreeIter selectedRemainingItem;
+		
+		private ImageArea originalImageArea;
+		
+		private Gdk.Pixbuf originalImage;
 		
 #endregion Fields
 		
@@ -94,6 +102,9 @@ namespace MathTextRecognizer.Stages
 			controller.NodeBeingProcessed += 
 				new NodeBeingProcessedHandler(OnControllerNodeBeingProcessed);
 			
+			controller.MatchingFinished += 
+				new EventHandler(OnControllerMatchingFinished);
+			
 			controller.TokenMatching +=
 				new TokenMatchingHandler(OnControllerTokenMatching);
 			
@@ -110,6 +121,8 @@ namespace MathTextRecognizer.Stages
 		{
 			widgetLabel = "Análisis sintáctico";
 		}
+		
+
 		
 #region Public methods
 			/// <summary>
@@ -135,9 +148,18 @@ namespace MathTextRecognizer.Stages
 		}
 		
 		
+		
+		
 #endregion Public methods
 		
 #region Non-public methods		
+		
+		protected override void SetInitialData()			
+		{
+			originalImage = MainRecognizerWindow.OCRWidget.StartImage;
+			this.originalImageArea.Image = originalImage;
+			SetRemainingTokens(MainRecognizerWindow.TokenizingWidget.ResultTokens);
+		}
 	
 		/// <summary>
 		/// Initializes the child widgets of the widget.
@@ -175,19 +197,46 @@ namespace MathTextRecognizer.Stages
 			
 			
 			remainingItemsStore = new ListStore(typeof(Gdk.Pixbuf),
-			                                    typeof(string));
+			                                    typeof(string),
+			                                    typeof(Token));
 			remainingItemsIconView.Model = remainingItemsStore;
 			
 			remainingItemsIconView.PixbufColumn =0;
 			remainingItemsIconView.TextColumn = 1;
 			
+			originalImageArea = new  ImageArea();
+			originalImageArea.ImageMode = ImageAreaMode.Zoom;
 			
+			synImageOriginalPlaceholder.Add(originalImageArea);
+			
+			originalImageArea.ShowAll();
 		}
 		
 		protected override void NextStep (ControllerStepMode mode)
 		{
 			parsingNextButtonsAlign.Sensitive = false;
 			controller.Next(mode);
+		}
+		
+		private void OnControllerMatchingFinished(object sender, EventArgs args)
+		{
+			Application.Invoke(OnControllerMatchingFinishedInThread);
+		}
+		
+		private void OnControllerMatchingFinishedInThread(object sender,
+		                                                 EventArgs args)
+		{
+			if(controller.StepMode == ControllerStepMode.StepByStep)
+			{
+				parsingNextButtonsAlign.Sensitive = true;
+			}
+			
+			if(currentNode.Parent !=null)
+			{
+				Console.WriteLine("subiendo");
+				currentNode =  currentNode.Parent as SyntacticalCoverNode;
+				currentNode.Select();
+			}
 		}
 		
 		/// <summary>
@@ -207,8 +256,35 @@ namespace MathTextRecognizer.Stages
 		private void OnControllerNodeBeingProcessed(object sender, 
 		                                            NodeBeingProcessedArgs args)
 		{
+			Application.Invoke(sender, 
+			                   args,
+			                   OnControllerNodeBeingProcessedInThread);
+		}
+		
+		private void OnControllerNodeBeingProcessedInThread(object sender, 
+		                                                    EventArgs a)
+		{
 			
-			currentNode = args.Node as SyntacticalCoverNode;
+			NodeBeingProcessedArgs args = a as NodeBeingProcessedArgs;
+			SyntacticalCoverNode newNode = args.Node as SyntacticalCoverNode;
+			
+			if(currentNode == null)
+			{
+				syntacticalCoverModel.AddNode(newNode);
+			}
+			else
+			{
+				Console.WriteLine("Peta {0} {1}",currentNode.Label, newNode.Label);
+				currentNode.AddChild(newNode);
+			}
+			
+			syntacticalCoverTree.ColumnsAutosize();
+			currentNode = newNode;
+			
+			syntacticalCoverTree.ExpandAll();	
+			
+			currentNode.Select();
+			
 			parsingNextButtonsAlign.Sensitive = 
 				controller.StepMode == ControllerStepMode.StepByStep;
 		}
@@ -250,13 +326,20 @@ namespace MathTextRecognizer.Stages
 			TokenMatchingArgs args = a as TokenMatchingArgs;
 			
 			
-			remainingItemsStore.IterNthChild(out selectedRemainingItem,
-			                                 args.FirstIndex);
-			TreePath selectedPath = 
-				remainingItemsStore.GetPath(selectedRemainingItem);
+			if(args.Matchable != null)
+			{
+				int idx = SearchToken(args.Matchable);
+				remainingItemsStore.IterNthChild(out selectedRemainingItem,
+				                                 idx);
+				TreePath selectedPath = 
+					remainingItemsStore.GetPath(selectedRemainingItem);
 			
-			remainingItemsIconView.SelectPath(selectedPath);
-			remainingItemsIconView.ScrollToPath(selectedPath, 0.5f, 0f);
+				remainingItemsIconView.SelectPath(selectedPath);
+				remainingItemsIconView.ScrollToPath(selectedPath, 0.5f, 0f);
+				
+				this.MarkImage(args.Matchable);
+			}
+				
 			
 			if(controller.StepMode == ControllerStepMode.StepByStep)
 			{
@@ -335,7 +418,7 @@ namespace MathTextRecognizer.Stages
 		private void OnParsingProcessBtnClicked(object sender, EventArgs args)
 		{
 		
-			SetRemainingTokens(MainRecognizerWindow.TokenizingWidget.ResultTokens);
+			
 			
 			
 			// We set the tokens from the previous step.
@@ -355,6 +438,8 @@ namespace MathTextRecognizer.Stages
 			SyntacticalRulesLibrary.Instance.StartRule = rules[0];
 			
 			parsingButtonsNB.Page = 1;
+			
+			currentNode = null;
 			
 			controller.Next(ControllerStepMode.StepByStep);
 		}
@@ -390,6 +475,7 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		private void SetRemainingTokens(List<Token> remainingTokens)
 		{
+			remainingItemsStore.Clear();
 			remainingItemsIconView.Columns = remainingTokens.Count;
 			foreach (Token remainingToken in remainingTokens) 
 			{
@@ -397,8 +483,58 @@ namespace MathTextRecognizer.Stages
 					ImageUtils.MakeThumbnail(remainingToken.Image.CreatePixbuf(),
 					                         48);
 				remainingItemsStore.AppendValues(thumbnail,
-				                                 remainingToken.Text);
+				                                 remainingToken.Text,
+				                                 remainingToken);
 			}
+		}
+		
+		private void MarkImage(Token t)
+		{
+			if(t ==null)
+			{
+				originalImageArea.Image=originalImage;
+				return;
+			}
+			
+			Gdk.Pixbuf originalMarked= originalImage.Copy();	
+			
+			// We tint the copy in red.
+			originalMarked = 
+				originalMarked.CompositeColorSimple(originalMarked.Width,
+				                                    originalMarked.Height,
+				                                    Gdk.InterpType.Bilinear,
+				                                    100,1,
+				                                    0xAAAAAA,0xAAAAAA);
+				
+			// Over the red tinted copy, we place the piece we want to be
+			// normal.
+			originalImage.CopyArea(t.X,
+			                       t.Y,
+			                       t.Width,
+			                       t.Height,
+			                       originalMarked,
+			                       t.X,
+			                       t.Y);
+		
+			
+			originalImageArea.Image=originalMarked;
+			
+		}
+		
+		
+		public int SearchToken(Token lookedUpon)
+		{
+			int i = -1;
+			foreach (object[] values in remainingItemsStore) 
+			{
+				i++;
+				if(((Token)(values[2]))==lookedUpon)
+				{
+					return i;
+				}
+			}
+			
+			return i;
 		}
 		
 	

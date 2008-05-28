@@ -24,6 +24,7 @@ namespace MathTextRecognizer.Controllers
 	{
 		private List<Token> startTokens;
 		
+		public event EventHandler MatchingFinished;
 		public event TokenMatchingHandler TokenMatching;
 		public event TokenMatchingFinishedHandler TokenMatchingFinished;
 		
@@ -32,7 +33,7 @@ namespace MathTextRecognizer.Controllers
 		
 		private NodeView nodeContainer;
 		
-		private SyntacticalCoverNode currentNode;
+		
 	
 		/// <summary>
 		/// <c>FormulaMatchingController</c>'s contructor.
@@ -107,10 +108,11 @@ namespace MathTextRecognizer.Controllers
 				SyntacticalRulesLibrary.Instance.StartRule;
 		
 			
-			currentNode =
+			SyntacticalCoverNode startNode=
 				new SyntacticalCoverNode(SyntacticalRulesLibrary.Instance.StartRule, 
 				                         nodeContainer);
-			nodeContainer.NodeStore.AddNode(currentNode);
+			
+			NodeBeingProcessedInvoker(startNode);
 			
 			SuspendByStep();
 			
@@ -133,14 +135,8 @@ namespace MathTextRecognizer.Controllers
 		
 #region Private methods
 		
-		private void OnMatcherMatching(object sender, MatchingArgs args)
-		{
-			Application.Invoke(sender, args, OnMatcherMatchingInThread);			
-			
-			SuspendByStep();
-		}
-		
-		private void OnMatcherMatchingInThread(object sender, EventArgs args)
+	
+		private void OnMatcherMatching(object sender, EventArgs args)
 		{
 			
 			MatchingArgs margs = args as MatchingArgs;			
@@ -150,37 +146,24 @@ namespace MathTextRecognizer.Controllers
 			
 			NodeBeingProcessedInvoker(newNode);
 			
-			if(currentNode == null)
-			{
-				this.nodeContainer.NodeStore.AddNode(newNode);
-			}
-			else
-			{
-				currentNode.AddChild(newNode);
-			}
+			SuspendByStep();
 			
-			nodeContainer.ColumnsAutosize();
-			currentNode = newNode;
-			currentNode.Select();
-			nodeContainer.ExpandAll();		
+			
 			
 		}
 		
 		private void OnMatcherMatchingFinished(object sender, EventArgs args)
 		{
-			Application.Invoke(OnMatcherFinishedInThread);
+			
+			if(MatchingFinished !=null)
+			{
+				MatchingFinished(this, args);
+			}
+			SuspendByStep();
+			
 		}
 		
-		private void OnMatcherFinishedInThread(object sender, EventArgs args)
-		{
-			
-			if(currentNode.Parent !=null)
-			{
-				Console.WriteLine("subiendo");
-				currentNode =  currentNode.Parent as SyntacticalCoverNode;
-				currentNode.Select();
-			}
-		}
+		
 		
 		private void OnTokenItemMatching(object sender, TokenMatchingArgs args)
 		{

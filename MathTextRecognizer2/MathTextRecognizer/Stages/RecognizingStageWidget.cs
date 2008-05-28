@@ -94,6 +94,8 @@ namespace MathTextRecognizer.Stages
 			mainWindow.Log(format, pars);
 		}
 		
+		protected abstract void SetInitialData();
+		
 		/// <summary>
 		/// Resets the widget's children widget to a state suitable for a 
 		/// new recognizement session.
@@ -110,8 +112,11 @@ namespace MathTextRecognizer.Stages
 		{
 			Gtk.Notebook parentNB = (Gtk.Notebook)(this.Parent);
 			parentNB.NextPage();
-			
-			return (RecognizingStageWidget)(parentNB.GetNthPage(parentNB.Page));
+			RecognizingStageWidget widget = 
+				(RecognizingStageWidget)(parentNB.GetNthPage(parentNB.Page));
+					
+			widget.SetInitialData();
+			return widget;
 		}
 		
 		

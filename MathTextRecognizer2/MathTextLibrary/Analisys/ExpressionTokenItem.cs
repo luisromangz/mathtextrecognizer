@@ -132,20 +132,22 @@ namespace MathTextLibrary.Analisys
 			}		
 			
 			// We tell the controller we are trying to match this token.
-			TokenMatchingInvoker(idx);
+			
 			
 			// By default, we say we had a success
 			bool res = true;
 			Token matched = null;
 			if(idx==-1 || this.tokenType != sequence[idx].Type)
 			{
-				Console.WriteLine("not matching: {0} and {1}", this.tokenType, sequence[idx].Text);
+				TokenMatchingInvoker(null);
+				Console.WriteLine("Not matched: {0}", this.tokenType);
 				res = !IsCompulsory;
 			}
 			else
 			{
 				
 				matched = sequence.RemoveAt(idx);
+				TokenMatchingInvoker(matched);
 				if(this.relatedItems.Count ==0)
 				{
 					output= matched.Text;
@@ -258,15 +260,15 @@ namespace MathTextLibrary.Analisys
 		/// <summary>
 		/// Launches the <see cref="TokenMatching"/> event.
 		/// </summary>
-		/// <param name="idx">
-		/// The index in the sequence of the "first" <see cref="Token"/>
+		/// <param name="matchable">
+		/// The "first" <see cref="Token"/>
 		/// being considered by the <see cref="TokenItem"/> for matching.
 		/// </param>
-		protected void TokenMatchingInvoker(int idx)
+		protected void TokenMatchingInvoker(Token matchable)
 		{
 			if(TokenMatching != null)
 			{
-				TokenMatching(this, new TokenMatchingArgs(idx));
+				TokenMatching(this, new TokenMatchingArgs(matchable));
 			}
 		}
 		
@@ -369,10 +371,14 @@ namespace MathTextLibrary.Analisys
 					break;
 				case ExpressionItemPosition.Below:
 					res = checkedItem.Y > (matched.Y + matched.Height);
-					
-					Console.WriteLine("mmm {0} {1} {2} {3}", matched,matched.Y + matched.Height, checkedItem,checkedItem.Y);
 					break;
 				case ExpressionItemPosition.Inside:
+					int x = matched.TopmostX;
+					res = ((checkedItem.X >= x )
+						&& (checkedItem.X+checkedItem.Width < matched.X + matched.Width)
+						&& (checkedItem.Y> matched.Y)
+						&& (checkedItem.Y+ checkedItem.Height < matched.Y + matched.Height));
+							
 					break;
 				case ExpressionItemPosition.RootIndex:
 					break;

@@ -1,4 +1,4 @@
-﻿// SegmentingAndMathingStepWidget.cs created with MonoDevelop
+// SegmentingAndMathingStepWidget.cs created with MonoDevelop
 // User: luis at 20:16 14/04/2008
 
 using System;
@@ -207,6 +207,11 @@ namespace MathTextRecognizer.Stages
 		
 #region Metodos privados
 		
+		protected override void SetInitialData()
+		{
+			
+		}
+		
 		protected void InitializeWidgets()
 		{
 			store = new NodeStore(typeof(SegmentedNode));
@@ -394,10 +399,7 @@ namespace MathTextRecognizer.Stages
 			
 			if(errors.Count == 0)
 			{
-				TokenizingStageWidget tokenizingWidget =  
-					NextStage() as TokenizingStageWidget;
-				
-				tokenizingWidget.SetStartSymbols(this.LeafNodes);				
+				NextStage();			
 				
 			}			
 			else

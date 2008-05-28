@@ -225,6 +225,19 @@ namespace MathTextRecognizer.Stages
 			sequenceMatchingImageArea.Image =null;
 		}
 		
+		
+		
+		public override void Abort ()
+		{
+			controller.TryAbort();
+		}
+
+
+		
+#endregion Public methods
+		
+#region Non-public methods
+		
 		/// <summary>
 		/// Sets the product of the segmentation stage as the start point
 		/// for the tokenizing stage.
@@ -232,7 +245,7 @@ namespace MathTextRecognizer.Stages
 		/// <param name="segmentationResult">
 		/// A list made with the leaf of the segmentation tree.
 		/// </param>
-		public void SetStartSymbols(List<SegmentedNode> segmentationResult)
+		private void SetStartSymbols(List<SegmentedNode> segmentationResult)
 		{
 			// Transforms the segmented nodes to tokens.
 			List<Token> tokens = new List<Token>();
@@ -266,16 +279,11 @@ namespace MathTextRecognizer.Stages
 		
 		
 		
-		public override void Abort ()
+		protected override void SetInitialData ()
 		{
-			controller.TryAbort();
+			this.SetStartSymbols(MainRecognizerWindow.OCRWidget.LeafNodes);	
 		}
 
-
-		
-#endregion Public methods
-		
-#region Non-public methods
 		
 		/// <summary>
 		/// Gets the tokens of a given node.
