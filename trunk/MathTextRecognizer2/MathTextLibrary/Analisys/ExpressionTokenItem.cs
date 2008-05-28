@@ -126,12 +126,17 @@ namespace MathTextLibrary.Analisys
 			
 			output ="";
 			int idx = 0;
+			
+			// We tell the controller we are trying to match this token.			
+			TokenMatchingInvoker(this.TokenType);
+			
 			if(forceTokenSearch)
 			{
-				idx = sequence.SearchToken(new Token(this.tokenType));
+				idx = sequence.SearchToken(this.tokenType);
+				Console.WriteLine("Forzada búsqueda de {0}, posición {1}",
+				                  this.tokenType,
+				                  idx);
 			}		
-			
-			// We tell the controller we are trying to match this token.
 			
 			
 			// By default, we say we had a success
@@ -139,15 +144,14 @@ namespace MathTextLibrary.Analisys
 			Token matched = null;
 			if(idx==-1 || this.tokenType != sequence[idx].Type)
 			{
-				TokenMatchingInvoker(null);
+				
 				Console.WriteLine("Not matched: {0}", this.tokenType);
 				res = !IsCompulsory;
 			}
 			else
 			{
 				
-				matched = sequence.RemoveAt(idx);
-				TokenMatchingInvoker(matched);
+				matched = sequence.RemoveAt(idx);				
 				if(this.relatedItems.Count ==0)
 				{
 					output= matched.Text;
@@ -157,6 +161,8 @@ namespace MathTextLibrary.Analisys
 					res = MatchRelatedItems(matched, sequence, out output);
 				}
 			}
+			
+			
 						
 			// We tell the controller we finished matching the token.
 			TokenMatchingFinishedInvoker(matched);
@@ -169,7 +175,6 @@ namespace MathTextLibrary.Analisys
 
 		protected override string SpecificToString ()
 		{
-			
 			
 			if(relatedItems.Count == 0)
 			{
@@ -260,15 +265,15 @@ namespace MathTextLibrary.Analisys
 		/// <summary>
 		/// Launches the <see cref="TokenMatching"/> event.
 		/// </summary>
-		/// <param name="matchable">
+		/// <param name="matchableType">
 		/// The "first" <see cref="Token"/>
 		/// being considered by the <see cref="TokenItem"/> for matching.
 		/// </param>
-		protected void TokenMatchingInvoker(Token matchable)
+		protected void TokenMatchingInvoker(String matchableType)
 		{
 			if(TokenMatching != null)
 			{
-				TokenMatching(this, new TokenMatchingArgs(matchable));
+				TokenMatching(this, new TokenMatchingArgs(matchableType));
 			}
 		}
 		

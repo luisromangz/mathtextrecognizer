@@ -148,22 +148,16 @@ namespace MathTextRecognizer.Controllers
 			
 			SuspendByStep();
 			
-			
-			
 		}
 		
 		private void OnMatcherMatchingFinished(object sender, EventArgs args)
 		{
-			
 			if(MatchingFinished !=null)
 			{
 				MatchingFinished(this, args);
 			}
-			SuspendByStep();
-			
+			SuspendByStep();			
 		}
-		
-		
 		
 		private void OnTokenItemMatching(object sender, TokenMatchingArgs args)
 		{

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
@@ -404,6 +404,8 @@ namespace MathTextLearner.Assistant
 		    }
 			
 			int count = 0;
+			
+			
 			
 			foreach(TreeNode n in processesView.NodeStore)
 			{

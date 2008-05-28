@@ -78,7 +78,7 @@ namespace MathTextRecognizer.Controllers.Nodes
 			
 			container.ScrollToCell(container.Selection.GetSelectedRows()[0],
 			                       container.Columns[0],
-			                       true, 0.5f, 0f);
+			                       true, 0.5f, 0.5f);
 		}
 		
 		/// <summary>

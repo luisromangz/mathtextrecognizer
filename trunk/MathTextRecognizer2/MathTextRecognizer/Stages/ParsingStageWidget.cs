@@ -237,6 +237,8 @@ namespace MathTextRecognizer.Stages
 				currentNode =  currentNode.Parent as SyntacticalCoverNode;
 				currentNode.Select();
 			}
+			
+			MarkImage(null);
 		}
 		
 		/// <summary>
@@ -326,19 +328,9 @@ namespace MathTextRecognizer.Stages
 			TokenMatchingArgs args = a as TokenMatchingArgs;
 			
 			
-			if(args.Matchable != null)
-			{
-				int idx = SearchToken(args.Matchable);
-				remainingItemsStore.IterNthChild(out selectedRemainingItem,
-				                                 idx);
-				TreePath selectedPath = 
-					remainingItemsStore.GetPath(selectedRemainingItem);
 			
-				remainingItemsIconView.SelectPath(selectedPath);
-				remainingItemsIconView.ScrollToPath(selectedPath, 0.5f, 0f);
 				
-				this.MarkImage(args.Matchable);
-			}
+			
 				
 			
 			if(controller.StepMode == ControllerStepMode.StepByStep)
@@ -362,8 +354,18 @@ namespace MathTextRecognizer.Stages
 			
 			if(args.MatchedToken != null)
 			{
-				currentNode.AddMatchedToken(args.MatchedToken);
+				int idx = SearchToken(args.MatchedToken);
+				remainingItemsStore.IterNthChild(out selectedRemainingItem,
+				                                 idx);
+				TreePath selectedPath = 
+					remainingItemsStore.GetPath(selectedRemainingItem);
+			
+				remainingItemsIconView.SelectPath(selectedPath);
+				remainingItemsIconView.ScrollToPath(selectedPath, 0.5f, 0f);
 				
+				this.MarkImage(args.MatchedToken);
+				
+				currentNode.AddMatchedToken(args.MatchedToken);				
 				remainingItemsStore.Remove(ref selectedRemainingItem);
 			}
 			
