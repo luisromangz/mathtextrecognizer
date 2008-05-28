@@ -74,7 +74,11 @@ namespace MathTextRecognizer.Controllers.Nodes
 		
 		public void Select()
 		{
-			Application.Invoke(SelectInThread);
+			container.NodeSelection.SelectNode(this);
+			
+			container.ScrollToCell(container.Selection.GetSelectedRows()[0],
+			                       container.Columns[0],
+			                       true, 0.5f, 0f);
 		}
 		
 		/// <summary>
@@ -100,25 +104,8 @@ namespace MathTextRecognizer.Controllers.Nodes
 		}
 		
 #endregion Public methods
+
 		
-#region Non-public methods
-		
-		private void SelectInThread(object sender, EventArgs args)
-		{
-			container.NodeSelection.SelectNode(this);
-			
-			container.ScrollToCell(container.Selection.GetSelectedRows()[0],
-			                       container.Columns[0],
-			                       false, 0.5f, 1f);
-		}
-		
-	
-		
-#endregion Non-public methods
-		
-#region Event handlers
-		
-		
-#endregion Event handlers
+
 	}
 }

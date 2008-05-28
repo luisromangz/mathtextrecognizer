@@ -100,18 +100,18 @@ namespace MathTextLibrary.Controllers
 	
 	public class TokenMatchingArgs : EventArgs
 	{
-		private int firstIndex;
+		private Token matchable;
 		
-		public TokenMatchingArgs(int firstIndex) : base()
+		public TokenMatchingArgs(Token matchable) : base()
 		{
-			this.firstIndex = firstIndex;
+			this.matchable = matchable;
 		}
 		
-		public int FirstIndex
+		public Token Matchable
 		{
 			get
 			{
-				return firstIndex;
+				return matchable;
 			}
 		}
 	}

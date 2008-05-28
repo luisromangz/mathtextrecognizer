@@ -230,6 +230,28 @@ namespace MathTextLibrary.Analisys
 			}
 		}
 		
+		/// <value>
+		/// Contains the x position of the topmost left first black.
+		/// </value>
+		public int TopmostX
+		{
+			get
+			{
+				for(int j=0;j<image.Height; j++)
+				{
+					for(int i =0;i<image.Width; i++)
+					{
+						if(image[i,j]!=FloatBitmap.White)
+						{
+							return i + x;
+						}
+					}
+				}
+				
+				return -1;
+			}
+		}
+		
 #endregion Properties
 		
 #region Public methods
@@ -238,7 +260,7 @@ namespace MathTextLibrary.Analisys
 		/// Joins several tokens in one token.
 		/// </summary>
 		/// <param name="tokens">
-		/// A <see cref="List`1"/>
+		/// A <see cref="TokenSequence"/>
 		/// </param>
 		/// <param name="tokenType">
 		/// The new token's type.
