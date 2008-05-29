@@ -758,6 +758,8 @@ namespace MathTextRecognizer.Stages
 				{
 					string extension = 
 						System.IO.Path.GetExtension(filename).ToLower().Trim('.');
+					if(String.IsNullOrEmpty(extension))
+						extension = "png";
 					selectedNode.MathTextBitmap.Pixbuf.Save(filename,extension);
 				}
 			}

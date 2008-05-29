@@ -38,9 +38,6 @@ namespace MathTextRecognizer.Controllers
 		
 		public event SequenceBeingMatchedHandler SequenceBeingMatched;
 		
-		
-		
-		
 		/// <summary>
 		/// <c>TokenizingController</c>'s constructor.
 		/// </summary>

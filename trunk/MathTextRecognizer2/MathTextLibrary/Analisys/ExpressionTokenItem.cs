@@ -107,12 +107,23 @@ namespace MathTextLibrary.Analisys
 		/// <value>
 		/// Contains the label shown by the item.
 		/// </value>
-		public override string Label {
-			get { return this.ToString(); }
+		public override string Label 
+		{
+			get 
+			{ 
+				return this.ToString(); 
+			}
 		}
 
-		public override string Type {
-			get { return "Item"; }
+		/// <value>
+		/// Contains the type of the node's matcher element.
+		/// </value>
+		public override string Type 
+		{
+			get 
+			{ 
+				return "Item"; 
+			}
 		}
 
 		
@@ -120,6 +131,19 @@ namespace MathTextLibrary.Analisys
 		
 #region Non-public methods
 		
+		/// <summary>
+		/// Tries to match the expetect token with one from the given sequence.
+		/// </summary>
+		/// <param name="sequence">
+		/// A <see cref="TokenSequence"/> containing the items not yet matched.
+		/// </param>
+		/// <param name="output">
+		/// The output in a <see cref="System.String"/>.
+		/// </param>
+		/// <returns>
+		/// A <see cref="System.Boolean"/> that tells if the matching process
+		/// was successful.
+		/// </returns>
 		protected override bool MatchSequence (ref TokenSequence sequence, 
 		                                       out string output)
 		{
@@ -329,6 +353,10 @@ namespace MathTextLibrary.Analisys
 				}
 				else if(!SpecialPosition(matched, checkedItem))
 				{
+					Console.WriteLine("Encontrado {0}, cancelando la creación de la secuencia de items {1} de {2}",
+					                  checkedItem.Type,
+					                  position,
+					                  matched.Type);
 					break;
 				}
 				else
@@ -369,23 +397,30 @@ namespace MathTextLibrary.Analisys
 		{
 			
 			bool res =  false;
+			
+			int matchedBottom = matched.Y + matched.Height;
+			int checkedBottom = checkedItem.Y + checkedItem.Height;
+			int matchedRight = matched.X + matched.Width;
+			int checkedRight = checkedItem.X + checkedItem.Width;
 			switch(position)
 			{
 				case ExpressionItemPosition.Above:
-					res = (checkedItem.Y + checkedItem.Height )< matched.Y;
+					res = checkedBottom< matched.Y;
 					break;
 				case ExpressionItemPosition.Below:
-					res = checkedItem.Y > (matched.Y + matched.Height);
+					res = checkedItem.Y > matchedBottom;
 					break;
 				case ExpressionItemPosition.Inside:
-					int x = matched.TopmostX;
-					res = ((checkedItem.X >= x )
-						&& (checkedItem.X+checkedItem.Width < matched.X + matched.Width)
+					res = ((checkedItem.X >= matched.TopmostX )
+						&& (checkedRight < matchedRight)
 						&& (checkedItem.Y> matched.Y)
-						&& (checkedItem.Y+ checkedItem.Height < matched.Y + matched.Height));
+						&& (checkedBottom < matchedBottom));
 							
 					break;
 				case ExpressionItemPosition.RootIndex:
+					int line06 = matched.Y +(int)( matched.Height*0.66f);
+					res = ((checkedItem.X < matched.TopmostX)
+					       && (checkedBottom < line06));
 					break;
 				case ExpressionItemPosition.SubIndex:
 					break;					
@@ -416,11 +451,13 @@ namespace MathTextLibrary.Analisys
 			if(checkedToken.X < referenceToken.X)
 				return true;
 			
-			int referenceCenter = referenceToken.Y + referenceToken.Height/2;
-			if(checkedToken.Y + checkedToken.Height < referenceCenter)
+			
+			int line066 = referenceToken.Y + (int)(referenceToken.Height * 0.66f);
+			if(checkedToken.Y + checkedToken.Height < line066)
 				return true;
 			
-			if(checkedToken.Y > referenceCenter)
+			int line033 = referenceToken.Y + (int)(referenceToken.Height * 0.33f);
+			if(checkedToken.Y > line033)
 				return true;
 			
 			return false;

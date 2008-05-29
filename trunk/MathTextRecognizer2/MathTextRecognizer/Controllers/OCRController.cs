@@ -61,10 +61,15 @@ namespace MathTextRecognizer.Controllers
 			segmenters.Add(new AllHolesProjectionSegmenter(ProjectionMode.Horizontal));
 			segmenters.Add(new AllHolesProjectionSegmenter(ProjectionMode.Vertical));
 			
-			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.RightToLeft));
-			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.BottomToTop));
-			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.TopToBottom));
-			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.LeftToRight));
+			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.RightToLeft, false));
+			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.BottomToTop, false));
+			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.TopToBottom, false));
+			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.LeftToRight, false));
+			
+			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.RightToLeft, true));
+			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.BottomToTop, true));
+			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.TopToBottom, true));
+			segmenters.Add(new WaterfallSegmenter(WaterfallSegmenterMode.LeftToRight, true));
 			
 			
 			

@@ -201,20 +201,16 @@ namespace MathTextLibrary.Analisys
 			for(int i=0; i< sequence.Count; i++)
 			{
 				testedToken = sequence[i];
-				if(testedToken.Height > maxHeight)
+				if(testedToken.Height > maxHeight 
+				   && !CoveredByPreviousToken(testedToken))
 				{
 					maxHeight = testedToken.Height;
-					
-					if(testedToken.Type == type 
-					   && !ShadedByPreviousToken(testedToken))
-					{
-						idx = i;
-					}
+					idx = i;
 					
 				}
 			}
 			
-			if(idx >=0 && sequence[idx].Height < maxHeight)
+			if(idx >=0 && sequence[idx].Type != type)
 			{
 				// The symbol found wasnt the heightst, so it nos the main one.
 				idx = -1;
@@ -233,17 +229,20 @@ namespace MathTextLibrary.Analisys
 		/// <returns>
 		/// A <see cref="System.Boolean"/>
 		/// </returns>
-		private bool ShadedByPreviousToken(Token tested)
+		private bool CoveredByPreviousToken(Token tested)
 		{
 			for(int i =0 ; i<this.Count && sequence[i] != tested; i++)
 			{
-				Token shading =  sequence[i];
-				if(shading.Y > tested.Y 
-				   || shading.Y+  shading.Height < tested.Y + tested.Height )
+				Token covering =  sequence[i];
+				if((covering.Y + covering.Height) > ( tested.Y + (int)(tested.Height*0.6f))
+				   || (covering.X + covering.Width) > (tested.X + tested.Width))
 				{
+					Console.WriteLine("{0} cubierto por {1}", 
+					                  tested.Text,
+					                  covering.Text);
 					return true;
 				}
-			}
+			}		
 			
 			return false;
 		}
