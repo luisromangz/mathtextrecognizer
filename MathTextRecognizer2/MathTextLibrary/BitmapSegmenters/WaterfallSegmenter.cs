@@ -18,6 +18,7 @@ namespace MathTextLibrary.BitmapSegmenters
 	public class WaterfallSegmenter : BitmapSegmenter
 	{
 		private WaterfallSegmenterMode mode;
+		private bool reflection;
 		
 		/// <summary>
 		/// Constructor de <c>WaterfallSegmenter</c>
@@ -25,9 +26,10 @@ namespace MathTextLibrary.BitmapSegmenters
 		/// <param name="mode">
 		/// A <see cref="WaterfallSegmenterMode"/>
 		/// </param>
-		public WaterfallSegmenter(WaterfallSegmenterMode mode)
+		public WaterfallSegmenter(WaterfallSegmenterMode mode, bool reflection)
 		{
 			this.mode = mode;
+			this.reflection = reflection;
 		}
 
 		/// <summary>
@@ -48,6 +50,12 @@ namespace MathTextLibrary.BitmapSegmenters
 		private List<MathTextBitmap> WaterfallSegment(MathTextBitmap bitmap)
 		{
 			FloatBitmap image = Rotate(bitmap.FloatImage);
+			
+			if(reflection)
+			{
+				image = Reflect(image);
+			}
+			
 			
 			// Buscamos un pixel blanco en el que empezar.
 					
@@ -91,7 +99,7 @@ namespace MathTextLibrary.BitmapSegmenters
 				
 			bool newPoints = true;
 			bool borderFound = false;
-			while(x < image.Width && y < image.Height && newPoints && !borderFound)
+			while(newPoints && !borderFound)
 			{
 				if(x == image.Width -1
 				   || y == image.Height -1)
@@ -162,8 +170,15 @@ namespace MathTextLibrary.BitmapSegmenters
 					}
 				}
 				
+				if(reflection)
+					cutImage = Reflect(cutImage);
+				
 				// Tenemos que rotar la imagen de corte para alinearla con la orginal.				
 				cutImage = UndoRotate(cutImage);
+#if DEBUG			
+				string path = System.IO.Path.GetTempFileName();
+				cutImage.CreatePixbuf().Save(String.Format(path+"_{0}_{1}", mode, reflection), "png");
+#endif
 				
 				// Rellenamos la imagen de negro a partir del punto encontrado.
 				cutImage.Fill(x0, y0, FloatBitmap.Black);
@@ -221,8 +236,17 @@ namespace MathTextLibrary.BitmapSegmenters
 					children.Add(new MathTextBitmap(res2, 
 					                                new Gdk.Point(bitmap.Position.X+pd.X,
 					                                              bitmap.Position.Y+pd.Y)));
-				}				
+
+				}	
+
 			}
+#if DEBUG
+			
+			else
+			{
+				Console.WriteLine("Not border found {0}", mode);
+			}
+#endif
 			
 			return children;
 			
@@ -258,6 +282,33 @@ namespace MathTextLibrary.BitmapSegmenters
 			}
 			
 			return image;
+		
+		}
+		
+		/// <summary>
+		/// Reflects an image horizontally.
+		/// </summary>
+		/// <param name="image">
+		/// A <see cref="FloatBitmap"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="FloatBitmap"/>
+		/// </returns>
+		private FloatBitmap Reflect(FloatBitmap image)
+		{
+			FloatBitmap reflected = new FloatBitmap(image.Width, image.Height);
+			
+			int offset = image.Width -1;
+			
+			for(int i =0; i < image.Width; i++)
+			{
+				for(int j=0; j < image.Height; j++)
+				{
+					reflected[offset - i, j] = image[i,j];
+				}
+			}
+			
+			return reflected;
 		}
 		
 		/// <summary>

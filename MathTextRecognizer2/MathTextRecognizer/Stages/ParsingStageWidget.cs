@@ -276,7 +276,6 @@ namespace MathTextRecognizer.Stages
 			}
 			else
 			{
-				Console.WriteLine("Peta {0} {1}",currentNode.Label, newNode.Label);
 				currentNode.AddChild(newNode);
 			}
 			
