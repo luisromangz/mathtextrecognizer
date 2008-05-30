@@ -95,15 +95,13 @@ namespace MathTextRecognizer.Controllers
 	/// </summary>
 	public class TokenCheckedArgs : EventArgs
 	{
-		private Token lastToken;
 		private Token currentToken;
+		private TokenSequence lastSequence;
 		
-		
-		
-		public TokenCheckedArgs (Token lastToken, Token currentToken)
+		public TokenCheckedArgs (TokenSequence lastSequence, Token currentToken)
 			: base ()
 		{
-			this.lastToken = lastToken;
+			this.lastSequence = lastSequence;
 			this.currentToken= currentToken;
 		}
 		
@@ -111,10 +109,11 @@ namespace MathTextRecognizer.Controllers
 		/// Contains the last token in the sequence the current token is being
 		/// checked with.
 		/// </value>
-		public Token LastToken 
+		public TokenSequence LastSequence 
 		{
-			get {
-				return lastToken;
+			get
+			{
+				return lastSequence;
 			}
 		}
 

@@ -1,4 +1,4 @@
-﻿// CharacteristicHash.cs created with MonoDevelop
+// CharacteristicHash.cs created with MonoDevelop
 // User: luis at 13:37 19/04/2008
 
 using System;
@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using MathTextLibrary.Bitmap;
 using MathTextLibrary.Symbol;
 using MathTextLibrary.Databases;
+using MathTextLibrary.Databases.Characteristic;
+using MathTextLibrary.Databases.Characteristic.Characteristics;
 
 
 
@@ -29,11 +31,13 @@ namespace MathTextLibrary.Databases.Receptors
 	{
 #region Atributos
 		
-		private const float epsilon = 0.1f;  
+		private const float epsilon = 0.05f;  
 		
 		private List<Receptor> receptors;
 		
 		private List<CheckVector> symbolsDict;
+		
+		private List<IBinaryCharacteristic> characteristics;
 		
 #endregion Atributos
 		
@@ -108,6 +112,10 @@ namespace MathTextLibrary.Databases.Receptors
 		public ReceptorVectorDatabase() : base()
 		{	
 			symbolsDict = new List<CheckVector>();
+			
+			characteristics = new List<IBinaryCharacteristic>();
+			
+			characteristics.Add(new TallerThanWiderCharacteristic());
 		}
 		
 		/// <summary>
@@ -234,10 +242,12 @@ namespace MathTextLibrary.Databases.Receptors
 		/// </returns>
 		private CheckVector CreateVector(FloatBitmap image)
 		{
+			
+			
 			// We create the receptors list.
 			if(receptors == null)
 			{
-				receptors = Receptor.GenerateList(50);
+				receptors = Receptor.GenerateList(40);
 			}
 			
 			CheckVector vector = new CheckVector();
@@ -286,6 +296,12 @@ namespace MathTextLibrary.Databases.Receptors
 					}
 				}
 			}
+			
+			foreach (IBinaryCharacteristic characteristic in characteristics) 
+			{
+				vector.Values.Add(characteristic.Apply(image));
+			}
+			
 			return vector;
 		}
 		

@@ -100,7 +100,7 @@ namespace MathTextLibrary.Analisys
 				if(!res)
 				{
 					output="";				
-					MatchingFinishedInvoker();
+					MatchingFinishedInvoker(output);
 					return false;
 				}
 				
@@ -108,7 +108,7 @@ namespace MathTextLibrary.Analisys
 			}
 			
 			output = String.Format(formatString, outputList.ToArray());
-			MatchingFinishedInvoker();
+			MatchingFinishedInvoker(output);
 			return true;
 		}
 		

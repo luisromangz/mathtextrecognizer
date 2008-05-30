@@ -95,6 +95,27 @@ namespace MathTextLibrary.Controllers
 		
 	}
 	
+	public delegate void MatchingFinishedHandler(object sender, MatchingFinishedArgs args);
+	
+	public class MatchingFinishedArgs : EventArgs
+	{
+		private string output;
+		
+		public MatchingFinishedArgs(string output)
+		{
+			this.output = output;
+		}
+		
+		public string Output
+		{
+			get
+			{
+				return output;
+			}
+		}
+	}
+		
+	
 	public delegate void TokenMatchingHandler(object sender, 
 	                                          TokenMatchingArgs args);
 	
@@ -137,6 +158,27 @@ namespace MathTextLibrary.Controllers
 		}
 	}
 		
+	public delegate void SequenceSetHandler(object sender,
+	                                       SequenceSetArgs args);
+	
+	public class SequenceSetArgs : EventArgs
+	{
+		private TokenSequence newSequence;
+		
+		public SequenceSetArgs(TokenSequence newSequence)
+		{
+			this.newSequence = newSequence;
+		}
+		
+		public TokenSequence NewSequence
+		{
+			get
+			{
+				return newSequence;
+			}
+		}
+	}
+	
 	
 	
 }

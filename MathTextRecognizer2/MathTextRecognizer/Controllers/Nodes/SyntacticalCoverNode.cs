@@ -19,17 +19,24 @@ namespace MathTextRecognizer.Controllers.Nodes
 		private string matcherLabel;
 		private string matcherType;
 		
+		private string output;
+		
 		private NodeView container;
 		
 		private string matchedTokens;
+		
+		private SyntacticalMatcher matcher;
 	
 		
 		public SyntacticalCoverNode(SyntacticalMatcher matcher, NodeView container)
 		{
 			this.container = container;
 			this.matcherLabel = matcher.Label;
+			this.matcher = matcher;
 			
 			this.matcherType = matcher.Type;
+			
+			matchedTokens ="";
 		}
 		
 #region Properties
@@ -42,29 +49,19 @@ namespace MathTextRecognizer.Controllers.Nodes
 		{
 			get
 			{
-				return matcherLabel;
+				return String.Format("{0}: {1}{2}{3}", 
+					                 matcherType, 
+					                 matcherLabel,
+					                 matchedTokens,
+					                 output);
 			}
 		}
 		
-		/// <value>
-		/// Contains the node's item type.
-		/// </value>
-		[TreeNodeValue(Column = 1)]
-		public string MatcherType
+		public SyntacticalMatcher Matcher
 		{
 			get
 			{
-				
-				return matcherType;
-			}
-		}
-		
-		[TreeNodeValue(Column = 2)]
-		public string MatchedTokens
-		{
-			get
-			{
-				return matchedTokens;
+				return matcher;
 			}
 		}
 		
@@ -78,7 +75,9 @@ namespace MathTextRecognizer.Controllers.Nodes
 			
 			container.ScrollToCell(container.Selection.GetSelectedRows()[0],
 			                       container.Columns[0],
-			                       true, 0.5f, 0.5f);
+			                       true, 0.5f, 1f);
+			container.QueueResize();
+			container.QueueDraw();
 		}
 		
 		/// <summary>
@@ -89,18 +88,29 @@ namespace MathTextRecognizer.Controllers.Nodes
 		/// </param>
 		public void AddMatchedToken(Token matchedToken)
 		{
-			string newText = String.Format("«{0}»", matchedToken.Text);
+		
 			if(String.IsNullOrEmpty(matchedTokens))
 			{
-				matchedTokens = newText;
+				matchedTokens = "; Reconocido: "+ matchedToken.Text;
 				
 			}
 			else
 			{
-				matchedTokens = ", " +newText;
+				matchedTokens = ", " +matchedToken.Text;
 			}
 			
 			container.QueueDraw();
+		}
+		
+		public void SetOutput(string output)
+		{
+			if(output != "")
+			{
+				this.output = "; «"+output +"»";
+				container.QueueDraw();
+			}
+			
+				
 		}
 		
 #endregion Public methods

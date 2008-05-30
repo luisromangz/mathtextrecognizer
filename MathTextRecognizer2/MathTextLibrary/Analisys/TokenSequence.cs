@@ -77,6 +77,17 @@ namespace MathTextLibrary.Analisys
 			}
 		}
 		
+		/// <value>
+		/// Contains the list used to store the sequence.
+		/// </value>
+		public List<Token> Sequence
+		{
+			get
+			{
+				return sequence;
+			}
+		}
+		
 #endregion Properties
 		
 #region Public methods

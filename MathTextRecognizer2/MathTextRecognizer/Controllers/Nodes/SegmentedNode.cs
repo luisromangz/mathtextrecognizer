@@ -205,7 +205,7 @@ namespace MathTextRecognizer.Controllers.Nodes
 			if(this.Parent ==null)
 			{
 				// Si no tiene padre
-				a.Node.name = String.Format("Imagen {0}",this.ChildCount);
+				a.Node.name = String.Format("Img. {0}",this.ChildCount);
 			}
 			else
 			{
@@ -231,7 +231,7 @@ namespace MathTextRecognizer.Controllers.Nodes
 		{
 			view.NodeSelection.SelectNode(this);
 			TreePath path = view.Selection.GetSelectedRows()[0];
-			view.ScrollToCell(path,view.Columns[0],true,1,0);
+			view.ScrollToCell(path,view.Columns[1],true,0.5f,0.5f);
 		}
 		
 		/// <summary>

@@ -24,14 +24,18 @@ namespace MathTextRecognizer.Controllers
 	{
 		private List<Token> startTokens;
 		
-		public event EventHandler MatchingFinished;
+		public event MatchingFinishedHandler MatchingFinished;
 		public event TokenMatchingHandler TokenMatching;
 		public event TokenMatchingFinishedHandler TokenMatchingFinished;
+		public event SequenceSetHandler RuleSequenceRestored;
+		public event SequenceSetHandler RelatedSequenceSet;
 		
 		private string output;
 		private bool parsingResult;
 		
 		private NodeView nodeContainer;
+		
+		
 		
 		
 	
@@ -46,13 +50,19 @@ namespace MathTextRecognizer.Controllers
 				new MatchingHandler(OnMatcherMatching);
 			
 			SyntacticalMatcher.MatchingFinished += 
-				new EventHandler(OnMatcherMatchingFinished);
+				new MatchingFinishedHandler(OnMatcherMatchingFinished);
+			
+			SyntacticalRule.SequenceRestored += 
+				new SequenceSetHandler(OnSyntacticalRuleSequenceRestored);
 			
 			ExpressionTokenItem.TokenMatching += 
 				new TokenMatchingHandler(OnTokenItemMatching);
 			
 			ExpressionTokenItem.TokenMatchingFinished +=
 				new TokenMatchingFinishedHandler(OnTokenItemMatchingFinished);
+			
+			ExpressionTokenItem.RelatedSequenceSet+=
+				new SequenceSetHandler(OnTokenItemRelatedSequenceSet);
 		}
 		
 #region Properties
@@ -145,18 +155,22 @@ namespace MathTextRecognizer.Controllers
 				new SyntacticalCoverNode(margs.Matcher, nodeContainer);
 			
 			NodeBeingProcessedInvoker(newNode);
-			
+			Thread.Sleep(50);
 			SuspendByStep();
 			
 		}
 		
-		private void OnMatcherMatchingFinished(object sender, EventArgs args)
+		private void OnMatcherMatchingFinished(object sender,
+		                                       MatchingFinishedArgs args)
 		{
 			if(MatchingFinished !=null)
 			{
 				MatchingFinished(this, args);
 			}
-			SuspendByStep();			
+			SuspendByNode();	
+			
+			StepDoneInvoker();
+			SuspendByStep();
 		}
 		
 		private void OnTokenItemMatching(object sender, TokenMatchingArgs args)
@@ -175,8 +189,26 @@ namespace MathTextRecognizer.Controllers
 			{
 				TokenMatchingFinished(this, args);
 			}
-			
+			SuspendByStep();
+		
+		}
+		private void OnTokenItemRelatedSequenceSet(object sender, SequenceSetArgs args)
+		{
+			if(RelatedSequenceSet != null)
+			{
+				RelatedSequenceSet(this, args);
+			}
 			SuspendByNode();
+		}
+		
+		
+		private void OnSyntacticalRuleSequenceRestored(object sender, 
+		                                               SequenceSetArgs args)
+		{
+			if(this.RuleSequenceRestored!=null)
+			{
+				RuleSequenceRestored(this, args);
+			}
 		}
 		
 				

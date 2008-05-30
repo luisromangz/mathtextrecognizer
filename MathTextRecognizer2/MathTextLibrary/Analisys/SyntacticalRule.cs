@@ -6,6 +6,8 @@ using System.Collections.Generic;
 
 using System.Xml.Serialization;
 
+using MathTextLibrary.Controllers;
+
 namespace MathTextLibrary.Analisys
 {
 	
@@ -18,6 +20,8 @@ namespace MathTextLibrary.Analisys
 	{
 		private List<SyntacticalExpression> expressions;
 		private string ruleName;
+		
+		public static event SequenceSetHandler SequenceRestored;
 		
 		/// <summary>
 		/// <see cref="SyntacticRule"/>'s default constructor.
@@ -126,7 +130,9 @@ namespace MathTextLibrary.Analisys
 					Console.WriteLine("La expresión «{0}» falló el reconocimiento, restaurando la secuencia ({1})",
 					                  expression.ToString(),
 					                  backupSequence);
-					sequence = new TokenSequence(backupSequence);					
+					sequence = new TokenSequence(backupSequence);	
+					
+					SequenceRestoredInvoker(sequence);
 				}
 				
 			}
@@ -156,6 +162,19 @@ namespace MathTextLibrary.Analisys
 
 		
 #endregion Public methods
+		
+#region Private methods
+		
+		private void SequenceRestoredInvoker(TokenSequence backupSequence)
+		{
+			if(SequenceRestored != null)
+			{
+				SequenceRestored(this, 
+				                 new SequenceSetArgs(backupSequence));
+			}
+		}
+		
+#endregion Private methods
 		
 	}
 }

@@ -579,72 +579,67 @@ namespace MathTextRecognizer.Stages
 		{
 			Application.Invoke(sender,
 			                   args,
-			                   OnControllerSequenceBeingMatchedInThread);
-		}
-		
-		private void OnControllerSequenceBeingMatchedInThread(object sender,
-		                                                      EventArgs args)
-		{
-			
-			
-			SequenceBeingMatchedArgs a =  args as SequenceBeingMatchedArgs;
-			
-			
-			Gdk.Pixbuf sequenceImage = a.JoinedToken.Image.CreatePixbuf();
-			
-			Gdk.Pixbuf drawnImage = sequenceNodeImage.Copy();
-			
-			sequenceImage.CopyArea(0, 0, 
-			                       sequenceImage.Width, sequenceImage.Height,
-			                       drawnImage,
-			                       0,0);
-			
-			sequenceMatchingImageArea.Image = drawnImage;
-			
-			TreeIter iter;
-			tokenizingRulesTV.Model.GetIterFirst(out iter);
-			
-			TreePath path = tokenizingRulesTV.Model.GetPath(iter);
-			
-			tokenizingRulesTV.Selection.UnselectAll();
-				
-			string ruleName;
-			do
+			                   delegate(object resender, EventArgs _args)
 			{
-				ruleName = tokenizingRulesTV.Model.GetValue(iter,0) as string;
+				SequenceBeingMatchedArgs a =  _args as SequenceBeingMatchedArgs;
+			
+			
+				Gdk.Pixbuf sequenceImage = a.JoinedToken.Image.CreatePixbuf();
 				
-				if(ruleName == a.MatchingRule.Name)
+				Gdk.Pixbuf drawnImage = sequenceNodeImage.Copy();
+				
+				sequenceImage.CopyArea(0, 0, 
+				                       sequenceImage.Width, sequenceImage.Height,
+				                       drawnImage,
+				                       0,0);
+				
+				sequenceMatchingImageArea.Image = drawnImage;
+				
+				TreeIter iter;
+				tokenizingRulesTV.Model.GetIterFirst(out iter);
+				
+				TreePath path = tokenizingRulesTV.Model.GetPath(iter);
+				
+				tokenizingRulesTV.Selection.UnselectAll();
+					
+				string ruleName;
+				do
 				{
-					tokenizingRulesTV.Selection.SelectPath(path);
-					tokenizingRulesTV.ScrollToCell(path,
-					                               tokenizingRulesTV.Columns[0],
-					                               true,
-					                               0.5f, 0);
-					break;
+					ruleName = tokenizingRulesTV.Model.GetValue(iter,0) as string;
+					
+					if(ruleName == a.MatchingRule.Name)
+					{
+						tokenizingRulesTV.Selection.SelectPath(path);
+						tokenizingRulesTV.ScrollToCell(path,
+						                               tokenizingRulesTV.Columns[0],
+						                               true,
+						                               0.5f, 0);
+						break;
+					}
+					
+					path.Next();
+						
+					
+				}while(tokenizingRulesTV.Model.GetIter(out iter, path));
+				
+				if(a.Found)
+				{
+					matchingResultLbl.Markup=
+						String.Format("<b>Sí, se le asigna el item «{0}» a la secuencia actual</b>",
+						              a.JoinedToken.Type);
+				}
+				else
+				{
+					matchingResultLbl.Markup=
+						String.Format("<b>No, la regla actual no concuerda con la secuencia</b>");
 				}
 				
-				path.Next();
-					
-				
-			}while(tokenizingRulesTV.Model.GetIter(out iter, path));
-			
-			if(a.Found)
-			{
-				matchingResultLbl.Markup=
-					String.Format("<b>Sí, se le asigna el item «{0}» a la secuencia actual</b>",
-					              a.JoinedToken.Type);
-			}
-			else
-			{
-				matchingResultLbl.Markup=
-					String.Format("<b>No, la regla actual no concuerda con la secuencia</b>");
-			}
-			
-			// Activate the buttons if necessary.
-			if(controller.StepMode == ControllerStepMode.StepByStep)
-				tokenizingNextButtonsAlign.Sensitive = true;
-			
+				// Activate the buttons if necessary.
+				if(controller.StepMode == ControllerStepMode.StepByStep)
+					tokenizingNextButtonsAlign.Sensitive = true;
+			});
 		}
+		
 		
 		/// <summary>
 		/// Reacts to the controller saying has done a new step.
@@ -657,17 +652,14 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		private void OnControllerStepDone(object sender, EventArgs args)
 		{
-			Application.Invoke(OnControllerStepDoneInThread);
+			Application.Invoke(delegate(object resender, EventArgs _args)
+			{
+				if(controller.StepMode != ControllerStepMode.UntilEnd)
+					tokenizingNextButtonsAlign.Sensitive = true;
+			});
 		}
 		
-		private void OnControllerStepDoneInThread(object sender, 
-		                                          EventArgs args)
-		{
-			if(controller.StepMode != ControllerStepMode.UntilEnd)
-				tokenizingNextButtonsAlign.Sensitive = true;
-			
-		}
-		
+	
 		/// <summary>
 		/// Handles the start of processing of a new node.
 		/// </summary>
@@ -680,107 +672,115 @@ namespace MathTextRecognizer.Stages
 		private void OnControllerTokenChecked(object sender, 
 		                                            TokenCheckedArgs args)
 		{
-			Application.Invoke(sender, args,OnControllerTokenCheckedInThread);
-		}
-		
-		private void OnControllerTokenCheckedInThread(object sender,
-		                                                  EventArgs args)
-		{
-			TokenCheckedArgs a = args as TokenCheckedArgs;
-			
-			if(!sequencingFinished)
+			Application.Invoke(sender, args,
+			                   delegate(object resender, EventArgs _args)
 			{
-				currentToken = a.CurrentToken;
-				lastToken = a.LastToken;
+				TokenCheckedArgs a = _args as TokenCheckedArgs;
 			
-				FloatBitmap sequenceImage;
-				if(this.lastToken != null)
+				if(!sequencingFinished)
 				{
-					TokenSequence seq = new TokenSequence();
-					seq.Append(lastToken);
-					seq.Append(currentToken);
-					Token joinedToken =Token.Join(seq, "");
+					currentToken = a.CurrentToken;
 					
-					sequenceImage = joinedToken.Image;
+				
+					FloatBitmap sequenceImage;
 					
-				}
-				else
-				{
-					sequenceImage = currentToken.Image;					
-				}
-				
-				// We add a border to the orginal image.
-				
-				Gdk.Pixbuf sequencePixbuf = sequenceImage.CreatePixbuf();
-				
-				Gdk.Pixbuf drawnImage = 
-					new Gdk.Pixbuf(sequencePixbuf.Colorspace,false, 8, 
-					               sequencePixbuf.Width+10, 
-					               sequencePixbuf.Height+10);
-				
-				drawnImage.Fill(0xFFFFFFFF);
-				
-				sequencePixbuf.CopyArea(0, 0, 
-			                        sequencePixbuf.Width, 
-			                        sequencePixbuf.Height,
-			                        drawnImage,
-			                        5,5);
-				
-				if(lastToken!=null)
-				{
-					// We are going to mark the image of the to symbols being considered
-					// with their baselines.
-					
-					int offset = Math.Min(lastToken.Y, currentToken.Y);
-					int lastBaseline = lastToken.Baseline - offset;
-					int currentBaseline = currentToken.Baseline - offset;
-					
-					uint color;
-					if(currentToken.CloseFollows(lastToken))
+					if(a.LastSequence!= null)
 					{
-						color = 0x00FF00;
-						sequencingStepResultLbl.Markup = 
-							String.Format("<b>Sí, el símbolo «{0}» se añadirá a la secuencia actual</b>",
-							              currentToken.Text);
+						TokenSequence joinSeq = 
+							new TokenSequence(a.LastSequence);
+						lastToken = joinSeq.Last;	
+						joinSeq.Append(currentToken);
+						Token joinedToken =Token.Join(joinSeq, "");
+						
+						sequenceImage = joinedToken.Image;
 						
 					}
 					else
 					{
-						color = 0xFF0000;
-						sequencingStepResultLbl.Markup = 
-							String.Format("<b>No, «{0}» no puede ser considerado parte de la secuencia</b>",
-							              currentToken.Text);
+						sequenceImage = currentToken.Image;					
+						lastToken = null;
 					}
 					
+					// We add a border to the orginal image.
 					
-					Gdk.Pixbuf markedImage = drawnImage.Copy();
+					Gdk.Pixbuf sequencePixbuf = sequenceImage.CreatePixbuf();
 					
-					// We paint the image of the color
-					markedImage = 
-						markedImage.CompositeColorSimple(markedImage.Width, 
-						                                 markedImage.Height,
-						                                 Gdk.InterpType.Nearest,
-						                                 100, 1, color, color);
+					Gdk.Pixbuf drawnImage = 
+						new Gdk.Pixbuf(sequencePixbuf.Colorspace,false, 8, 
+						               sequencePixbuf.Width+10, 
+						               sequencePixbuf.Height+10);
 					
-					markedImage.CopyArea(0, lastBaseline, 
-					                     markedImage.Width, 5,
-					                     drawnImage, 
-					                     0,lastBaseline);
+					drawnImage.Fill(0xFFFFFFFF);
 					
-					markedImage.CopyArea(0, currentBaseline, 
-					                     markedImage.Width,5, 
-					                     drawnImage, 
-					                     0,currentBaseline);
+					sequencePixbuf.CopyArea(0, 0, 
+				                        sequencePixbuf.Width, 
+				                        sequencePixbuf.Height,
+				                        drawnImage,
+				                        5,5);
+					
+					if(lastToken!=null)
+					{
+						uint color;
+						if(currentToken.CloseFollows(lastToken))
+						{
+							color = 0x00FF00;
+							sequencingStepResultLbl.Markup = 
+								String.Format("<b>Sí, el símbolo «{0}» se añadirá a la secuencia actual</b>",
+								              currentToken.Text);
+							
+						}
+						else
+						{
+							color = 0xFF0000;
+							sequencingStepResultLbl.Markup = 
+								String.Format("<b>No, «{0}» no puede ser considerado parte de la secuencia ({1})</b>",
+								              currentToken.Text,
+								              a.LastSequence.ToString());
+						}
+						
+						
+						Gdk.Pixbuf markedImage = drawnImage.Copy();
+						
+						// We paint the image of the color
+						markedImage = 
+							markedImage.CompositeColorSimple(markedImage.Width, 
+							                                 markedImage.Height,
+							                                 Gdk.InterpType.Nearest,
+							                                 100, 1, color, color);
+						
+						// We are going to mark the image of the to symbols being considered
+						// with their baselines.
+						int min = int.MaxValue;
+						foreach (Token t in a.LastSequence ) 
+						{
+							if(t.Y < min)
+								min =t.Y;
+						}
+						
+						int offset = Math.Min(min, currentToken.Y);
+						int lastBaseline = lastToken.Baseline - offset;
+						int currentBaseline = currentToken.Baseline - offset;
+						
+						markedImage.CopyArea(0, lastBaseline, 
+						                     markedImage.Width, 5,
+						                     drawnImage, 
+						                     0,lastBaseline);
+						
+						markedImage.CopyArea(0, currentBaseline, 
+						                     markedImage.Width,5, 
+						                     drawnImage, 
+						                     0,currentBaseline);
+					}
+					
+							
+					baselineImageArea.Image = drawnImage;
 				}
 				
-						
-				baselineImageArea.Image = drawnImage;
-			}
-			
-			if(controller.StepMode == ControllerStepMode.StepByStep)
-				tokenizingNextButtonsAlign.Sensitive = true;
-			
+				if(controller.StepMode == ControllerStepMode.StepByStep)
+					tokenizingNextButtonsAlign.Sensitive = true;
+			});
 		}
+	
 				
 		/// <summary>
 		/// Launches the sequencing process.

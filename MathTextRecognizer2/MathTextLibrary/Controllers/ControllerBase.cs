@@ -79,6 +79,7 @@ namespace MathTextLibrary.Controllers
 			if(processThread == null || !processThread.IsAlive)
 			{
 				processThread = new Thread(new ThreadStart(Process));
+				processThread.Priority = ThreadPriority.Lowest;
 				processThread.Start();				
 			}
 			else if (processThread.ThreadState == ThreadState.Suspended)
@@ -114,6 +115,7 @@ namespace MathTextLibrary.Controllers
 			{
 				processThread.Suspend();
 			}
+			
 		}
 		
 		/// <summary>
@@ -126,6 +128,7 @@ namespace MathTextLibrary.Controllers
 			{				
 				processThread.Suspend();					
 			}
+			
 
 		}
 		
