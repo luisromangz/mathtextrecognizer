@@ -207,7 +207,7 @@ namespace MathTextLibrary.Analisys
 					break;
 			}
 			
-			MatchingFinishedInvoker();
+			MatchingFinishedInvoker(res);
 			return result;
 		}
 		

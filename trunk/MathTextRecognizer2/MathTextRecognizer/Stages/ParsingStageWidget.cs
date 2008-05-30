@@ -2,6 +2,7 @@
 // User: luis at 12:47 09/05/2008
 
 using System;
+using System.Threading;
 using System.Collections.Generic;
 
 using Gtk;
@@ -72,6 +73,7 @@ namespace MathTextRecognizer.Stages
 		
 		private Gdk.Pixbuf originalImage;
 		
+		
 #endregion Fields
 		
 		/// <summary>
@@ -103,13 +105,22 @@ namespace MathTextRecognizer.Stages
 				new NodeBeingProcessedHandler(OnControllerNodeBeingProcessed);
 			
 			controller.MatchingFinished += 
-				new EventHandler(OnControllerMatchingFinished);
+				new MatchingFinishedHandler(OnControllerMatchingFinished);
+			
+			controller.StepDone += 
+				new EventHandler(OnControllerStepDone);
 			
 			controller.TokenMatching +=
 				new TokenMatchingHandler(OnControllerTokenMatching);
 			
 			controller.TokenMatchingFinished+=
 				new TokenMatchingFinishedHandler(OnControllerTokenMatchingFinished);
+			
+			controller.RuleSequenceRestored += 
+				new SequenceSetHandler(OnControllerSequenceRestored);
+			
+			controller.RelatedSequenceSet += 
+				new SequenceSetHandler(OnControllerRelatedSequenceSet);
 			
 			this.ShowAll();
 		}
@@ -176,23 +187,9 @@ namespace MathTextRecognizer.Stages
 			                                  new CellRendererText(),
 			                                  "markup" ,0);
 			
-			syntacticalCoverTree.AppendColumn("Tipo",
-			                                  new CellRendererText(),
-			                                  "markup" ,1);
-			
-			syntacticalCoverTree.AppendColumn("Items asignados",
-			                                  new CellRendererText(),
-			                                  "markup", 2);
-			
 			syntacticalCoverTree.Columns[0].Sizing = 
 				TreeViewColumnSizing.Autosize;
-			
-			syntacticalCoverTree.Columns[1].Sizing = 
-				TreeViewColumnSizing.Autosize;
-			
-			syntacticalCoverTree.Columns[2].Sizing = 
-				TreeViewColumnSizing.Autosize;
-			
+		
 			syntacticalTreePlaceholder.Add(syntacticalCoverTree);
 			
 			
@@ -218,28 +215,21 @@ namespace MathTextRecognizer.Stages
 			controller.Next(mode);
 		}
 		
-		private void OnControllerMatchingFinished(object sender, EventArgs args)
+		private void OnControllerMatchingFinished(object sender, MatchingFinishedArgs args)
 		{
-			Application.Invoke(OnControllerMatchingFinishedInThread);
+			Application.Invoke(sender, args, delegate(object resender, EventArgs a)
+			{
+				MatchingFinishedArgs _args = a as MatchingFinishedArgs;
+				if(controller.StepMode != ControllerStepMode.UntilEnd)
+				{
+					parsingNextButtonsAlign.Sensitive = true;
+				}
+				
+				currentNode.SetOutput(_args.Output);
+				
+			});
 		}
 		
-		private void OnControllerMatchingFinishedInThread(object sender,
-		                                                 EventArgs args)
-		{
-			if(controller.StepMode == ControllerStepMode.StepByStep)
-			{
-				parsingNextButtonsAlign.Sensitive = true;
-			}
-			
-			if(currentNode.Parent !=null)
-			{
-				Console.WriteLine("subiendo");
-				currentNode =  currentNode.Parent as SyntacticalCoverNode;
-				currentNode.Select();
-			}
-			
-			MarkImage(null);
-		}
 		
 		/// <summary>
 		/// Handles the end of the syntactical analisys process.
@@ -252,127 +242,174 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		private void OnControllerProcessFinishedHandler(object sender, EventArgs args)
 		{
-			Application.Invoke(OnControllerProcessFinishedHandlerInThread);
+			Application.Invoke(delegate(object resender, EventArgs a)
+			{
+				if(controller.ParsingResult)
+				{
+					OkDialog.Show(this.MainRecognizerWindow.Window,
+					              MessageType.Info,
+					              "¡El proceso de análisis sintáctico fue un éxito!");		
+					
+					
+					
+					parsingShowOutputBtn.Sensitive = true;
+					parsingProcessBtn.Sensitive = false;
+				}
+				else
+				{
+					OkDialog.Show(this.MainRecognizerWindow.Window,
+					              MessageType.Warning,
+					              "El proceso de análisis sintáctico no tuvo éxito.");	
+					
+					
+					
+				}
+				
+				parsingButtonsNB.Page = 0;
+			});
 		}
 		
 		private void OnControllerNodeBeingProcessed(object sender, 
-		                                            NodeBeingProcessedArgs args)
+		                                            NodeBeingProcessedArgs _args)
 		{
 			Application.Invoke(sender, 
-			                   args,
-			                   OnControllerNodeBeingProcessedInThread);
+			                   _args,
+			                   delegate(object resender, EventArgs a)
+			{
+				NodeBeingProcessedArgs args = a as NodeBeingProcessedArgs;
+				SyntacticalCoverNode newNode = args.Node as SyntacticalCoverNode;
+				
+				if(currentNode == null)
+				{
+					syntacticalCoverModel.AddNode(newNode);
+				}
+				else
+				{
+					currentNode.AddChild(newNode);
+				}
+				
+				syntacticalCoverTree.ColumnsAutosize();
+				currentNode = newNode;
+				
+				syntacticalCoverTree.ExpandAll();	
+				
+				currentNode.Select();
+				
+				syntacticalCoverTree.Vadjustment.Value = 
+					syntacticalCoverTree.Vadjustment.Upper;
+				
+				parsingNextButtonsAlign.Sensitive = 
+					controller.StepMode == ControllerStepMode.StepByStep;
+			});
 		}
 		
-		private void OnControllerNodeBeingProcessedInThread(object sender, 
-		                                                    EventArgs a)
+		
+		private void OnControllerRelatedSequenceSet(object sender, 
+		                                            SequenceSetArgs a)
 		{
-			
-			NodeBeingProcessedArgs args = a as NodeBeingProcessedArgs;
-			SyntacticalCoverNode newNode = args.Node as SyntacticalCoverNode;
-			
-			if(currentNode == null)
+			Application.Invoke(sender, a, 
+			                   delegate(object resender, EventArgs _a)
 			{
-				syntacticalCoverModel.AddNode(newNode);
-			}
-			else
-			{
-				currentNode.AddChild(newNode);
-			}
-			
-			syntacticalCoverTree.ColumnsAutosize();
-			currentNode = newNode;
-			
-			syntacticalCoverTree.ExpandAll();	
-			
-			currentNode.Select();
-			
-			parsingNextButtonsAlign.Sensitive = 
-				controller.StepMode == ControllerStepMode.StepByStep;
+				SequenceSetArgs args = _a as SequenceSetArgs;
+				
+				this.SetRemainingTokens(args.NewSequence.Sequence);
+				
+				if(controller.StepMode != ControllerStepMode.UntilEnd)
+				{
+					parsingNextButtonsAlign.Sensitive = true;
+				}
+					
+			});
 		}
 		
-		private void OnControllerProcessFinishedHandlerInThread(object sender, 
-		                                                        EventArgs args)
+		
+		private void OnControllerSequenceRestored(object sender, 
+		                                          SequenceSetArgs args)
 		{
-			if(controller.ParsingResult)
-			{
-				OkDialog.Show(this.MainRecognizerWindow.Window,
-				              MessageType.Info,
-				              "¡El proceso de análisis sintáctico fue un éxito!");		
-				
-				
-				
-				parsingShowOutputBtn.Sensitive = true;
-				parsingProcessBtn.Sensitive = false;
-			}
-			else
-			{
-				OkDialog.Show(this.MainRecognizerWindow.Window,
-				              MessageType.Warning,
-				              "El proceso de análisis sintáctico no tuvo éxito.");	
-				
-				
-				
-			}
 			
-			parsingButtonsNB.Page = 0;
+			Application.Invoke(sender, args, delegate(object resender, 
+			                                          EventArgs a)
+			{
+				this.SetRemainingTokens(args.NewSequence.Sequence);
+			});
 		}
 		
-		private void OnControllerTokenMatching(object sender, TokenMatchingArgs args)
+		private void OnControllerStepDone(object sender, 
+		                                  EventArgs args)
 		{
-			Application.Invoke(sender, args, OnControllerTokenMatchingInThread);
+			Application.Invoke(delegate(object resender, EventArgs a)
+			{
+				
+				if(currentNode.Parent !=null)
+				{
+					Console.WriteLine("subiendo");
+					
+					currentNode =  currentNode.Parent as SyntacticalCoverNode;
+					currentNode.Select();
+				}
+				
+				MarkImage(null);
+				
+				if(controller.StepMode == ControllerStepMode.StepByStep)
+				{
+					parsingNextButtonsAlign.Sensitive = true;
+				}
+			});
+				
 		}
 		
-		private void OnControllerTokenMatchingInThread(object sender, EventArgs a)
+		private void OnControllerTokenMatching(object sender, TokenMatchingArgs _args)
 		{
-			TokenMatchingArgs args = a as TokenMatchingArgs;
+			Application.Invoke(sender, _args, 
+			                   delegate(object resender, EventArgs a)
+            {
+				TokenMatchingArgs args = a as TokenMatchingArgs;
 			
-			
-			
-				
-			
-				
-			
-			if(controller.StepMode == ControllerStepMode.StepByStep)
-			{
-				parsingNextButtonsAlign.Sensitive = true;
-			}
+				if(controller.StepMode == ControllerStepMode.StepByStep)
+				{
+					parsingNextButtonsAlign.Sensitive = true;
+				}
+			});
 		}
+		
+		
 		
 		private void OnControllerTokenMatchingFinished(object sender, 
-		                                               TokenMatchingFinishedArgs args)
+		                                               TokenMatchingFinishedArgs _args)
 		{
 			Application.Invoke(sender, 
-			                   args, 
-			                   OnControllerTokenMatchingFinishedInThread);
+			                   _args, 
+			                   delegate(object resender, EventArgs a)
+			{
+				TokenMatchingFinishedArgs args = a as TokenMatchingFinishedArgs;
+			
+				if(args.MatchedToken != null)
+				{
+					int idx = SearchToken(args.MatchedToken);
+					remainingItemsStore.IterNthChild(out selectedRemainingItem,
+					                                 idx);
+					TreePath selectedPath = 
+						remainingItemsStore.GetPath(selectedRemainingItem);
+				
+					remainingItemsIconView.SelectPath(selectedPath);
+					remainingItemsIconView.ScrollToPath(selectedPath, 0.5f, 0f);
+					
+					this.MarkImage(args.MatchedToken);
+					
+					currentNode.AddMatchedToken(args.MatchedToken);	
+					
+					remainingItemsStore.Remove(ref selectedRemainingItem);
+					
+					
+				}
+				
+				if(controller.StepMode != ControllerStepMode.UntilEnd)
+				{
+					parsingNextButtonsAlign.Sensitive = true;
+				}
+			});
 		}
 		
-		private void OnControllerTokenMatchingFinishedInThread(object sender, 
-		                                                       EventArgs a)
-		{
-			TokenMatchingFinishedArgs args = a as TokenMatchingFinishedArgs;
-			
-			if(args.MatchedToken != null)
-			{
-				int idx = SearchToken(args.MatchedToken);
-				remainingItemsStore.IterNthChild(out selectedRemainingItem,
-				                                 idx);
-				TreePath selectedPath = 
-					remainingItemsStore.GetPath(selectedRemainingItem);
-			
-				remainingItemsIconView.SelectPath(selectedPath);
-				remainingItemsIconView.ScrollToPath(selectedPath, 0.5f, 0f);
-				
-				this.MarkImage(args.MatchedToken);
-				
-				currentNode.AddMatchedToken(args.MatchedToken);				
-				remainingItemsStore.Remove(ref selectedRemainingItem);
-			}
-			
-			if(controller.StepMode != ControllerStepMode.UntilEnd)
-			{
-				parsingNextButtonsAlign.Sensitive = true;
-			}
-		}
 		
 		/// <summary>
 		/// Tells the controller to process a new step.
@@ -472,13 +509,15 @@ namespace MathTextRecognizer.Stages
 		/// Adds the remaining tokens to the icon view.
 		/// </summary>
 		/// <param name="remainingTokens">
-		/// A <see cref="List`1"/>
+		/// A <see cref="List'1"/> containing the remaining tokens.
 		/// </param>
 		private void SetRemainingTokens(List<Token> remainingTokens)
 		{
 			remainingItemsStore.Clear();
+			
+			
 			remainingItemsIconView.Columns = remainingTokens.Count;
-			foreach (Token remainingToken in remainingTokens) 
+			foreach (Token remainingToken in remainingTokens.ToArray()) 
 			{
 				Gdk.Pixbuf thumbnail = 
 					ImageUtils.MakeThumbnail(remainingToken.Image.CreatePixbuf(),
@@ -523,9 +562,10 @@ namespace MathTextRecognizer.Stages
 		}
 		
 		
-		public int SearchToken(Token lookedUpon)
+		private int SearchToken(Token lookedUpon)
 		{
 			int i = -1;
+			
 			foreach (object[] values in remainingItemsStore) 
 			{
 				i++;
@@ -533,7 +573,7 @@ namespace MathTextRecognizer.Stages
 				{
 					return i;
 				}
-			}
+			}			
 			
 			return i;
 		}

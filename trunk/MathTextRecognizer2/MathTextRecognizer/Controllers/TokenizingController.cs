@@ -5,6 +5,7 @@
 //
 
 using System;
+using System.Threading;
 using System.Collections.Generic;
 
 using Gtk;
@@ -159,7 +160,7 @@ namespace MathTextRecognizer.Controllers
 				foreach (SequenceNode storedNode in tokenSequences) 
 				{					
 					// We search the stored sequences so we may find one that
-					// has the same baseline as the 
+					// has the same baseline as the one being checked.
 					storedNode.Select();
 					
 					this.MessageLogSentInvoker("Comprobando si «{0}» puede formar parte de la secuencia {1}",
@@ -168,16 +169,19 @@ namespace MathTextRecognizer.Controllers
 					
 					lastToken = storedNode.Sequence.Last;
 					
-					TokenCheckedInvoker(lastToken, currentToken);
+					TokenCheckedInvoker(new TokenSequence(storedNode.Sequence),
+					                    currentToken);
 					if(tokenSequences.Count>1)
 						SuspendByStep();
 					
 					if(currentToken.CloseFollows(lastToken))
 					{
-						
 						foundSequence = storedNode.Sequence;
 						break;
 					}
+					
+					Thread.Sleep(150);
+					
 				}
 				
 				
@@ -191,7 +195,6 @@ namespace MathTextRecognizer.Controllers
 					tokenSequences.Add(node);
 					node.NodeName = tokenSequences.Count.ToString();
 					SequenceAddedInvoker(node);
-					
 					MessageLogSentInvoker("===== Secuencia {0} añadida =====", 
 					                      node.NodeName);
 				}
@@ -269,6 +272,7 @@ namespace MathTextRecognizer.Controllers
 						// We search no more.
 						break;
 					}				
+					Thread.Sleep(50);
 				}
 				
 				// We check if a token was found
@@ -343,12 +347,12 @@ namespace MathTextRecognizer.Controllers
 				SequenceAdded(this, new SequenceAddedArgs(sequence));
 		}
 		
-		private void TokenCheckedInvoker(Token lastToken, Token currentToken)
+		private void TokenCheckedInvoker(TokenSequence lastSequence, Token currentToken)
 		{
 			if(TokenChecked !=null)
 			{
 				TokenChecked(this, 
-				             new TokenCheckedArgs(lastToken, currentToken));
+				             new TokenCheckedArgs(lastSequence, currentToken));
 			}
 				
 		}

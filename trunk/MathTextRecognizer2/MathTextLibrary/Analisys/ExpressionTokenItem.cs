@@ -28,6 +28,8 @@ namespace MathTextLibrary.Analisys
 		
 		public static event TokenMatchingFinishedHandler TokenMatchingFinished;
 		
+		public static event SequenceSetHandler RelatedSequenceSet;
+		
 		/// <summary>
 		/// <see cref="ExpressionTokenItem"/>'s constructor.
 		/// </summary>
@@ -168,7 +170,6 @@ namespace MathTextLibrary.Analisys
 			Token matched = null;
 			if(idx==-1 || this.tokenType != sequence[idx].Type)
 			{
-				
 				Console.WriteLine("Not matched: {0}", this.tokenType);
 				res = !IsCompulsory;
 			}
@@ -183,6 +184,12 @@ namespace MathTextLibrary.Analisys
 				else
 				{
 					res = MatchRelatedItems(matched, sequence, out output);
+					if(!res)
+					{
+						matched = null;
+					}
+					
+					RelatedSequenceSetInvoker(sequence);
 				}
 			}
 			
@@ -194,8 +201,6 @@ namespace MathTextLibrary.Analisys
 			return res;
 			
 		}
-
-		
 
 		protected override string SpecificToString ()
 		{
@@ -261,10 +266,15 @@ namespace MathTextLibrary.Analisys
 				string relatedItemOutput;
 				TokenSequence relatedRemnant = 
 					GetRelatedItems(matched,sequence,relatedItem.Position);
+				
+				
 
-				Console.WriteLine("Reconociendo items ({0}) con el elemento «{1}»",
+				Console.WriteLine("Reconociendo los items relacionados ({0}) de {1} con el elemento «{2}»",
 				                  relatedRemnant,
+				                  matched.Type,
 				                  relatedItem.ToString());
+				
+				RelatedSequenceSetInvoker(relatedRemnant);
 				
 				if(relatedItem.Match(ref relatedRemnant, 
 				                     out relatedItemOutput))
@@ -460,8 +470,16 @@ namespace MathTextLibrary.Analisys
 			if(checkedToken.Y > line033)
 				return true;
 			
-			return false;
-				
+			return false;				
+		}
+		
+		private void RelatedSequenceSetInvoker(TokenSequence relatedSequence)
+		{
+			if(RelatedSequenceSet != null)
+			{
+				RelatedSequenceSet(this, 
+				                   new SequenceSetArgs(relatedSequence));
+			}
 		}
 #endregion Non-public methods
 	}

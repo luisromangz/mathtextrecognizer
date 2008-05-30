@@ -19,7 +19,9 @@ namespace MathTextLibrary.Analisys
 		
 		public static event MatchingHandler Matching;
 		
-		public static event EventHandler MatchingFinished;
+		public static event MatchingFinishedHandler MatchingFinished;
+		
+		public static event MessageLogSentHandler LogSent;
 	
 		
 #region Properties
@@ -54,10 +56,18 @@ namespace MathTextLibrary.Analisys
 		/// <summary>
 		/// Launches the <see cref="MatchingFinished"/> event.
 		/// </summary>
-		protected void MatchingFinishedInvoker()
+		protected void MatchingFinishedInvoker(string output)
 		{
 			if(MatchingFinished!=null)
-				MatchingFinished(this, EventArgs.Empty);
+				MatchingFinished(this, new MatchingFinishedArgs(output));
+		}
+		
+		protected void LogSentInvoker(string format, params object [] args)
+		{
+			if(LogSent != null)
+			{
+				LogSent(this, new MessageLogSentArgs(String.Format(format, args)));
+			}
 		}
 #endregion Non-public methods		
 	
