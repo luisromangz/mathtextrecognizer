@@ -180,7 +180,6 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				relWidget.CheckPosition();
 			}
 			
-			itemOpFormatAlignment.Sensitive = true;
 			
 			itemOpRelatedItemsScroller.Vadjustment.Value = 
 				itemOpRelatedItemsScroller.Vadjustment.Upper;
@@ -287,9 +286,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			{
 				relWidget.CheckPosition();
 			}
-			
-			itemOpFormatAlignment.Sensitive = true;
-			
+						
 			itemOpRelatedItemsScroller.Vadjustment.Value = 
 				itemOpRelatedItemsScroller.Vadjustment.Upper;
 			
@@ -302,14 +299,26 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			this.itemOpModifierCombo.Active = 0;
 			
 			bool isToken = expressionType == typeof(ExpressionTokenWidget);
+			bool isGroup = typeof(ExpressionGroupWidget) != expressionType;
 			
 			itemOpForceSearchCheck.Visible = isToken;
-			itemOpFormatAlignment.Visible =  isToken;
+			
+			itemOpFormatAlignment.Visible = isGroup;
+			
 			itemOpRelatedItemsFrame.Visible =  isToken;
 			
 			if(isToken)
 			{
 				this.expressionItemOptionsDialog.WidthRequest = 520;
+				this.expressionItemOptionsDialog.Title+= "l item";
+			}
+			else if(isGroup)
+			{
+				this.expressionItemOptionsDialog.Title+="l grupo de elementos";
+			}
+			else
+			{
+				this.expressionItemOptionsDialog.Title+= " la llamada a regla";
 			}
 			
 			itemOpRelatedItemsScroller.Vadjustment.ValueChanged+=
@@ -339,13 +348,13 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			List<string> errors = new List<string>();
 			
-			if(itemOpRelatedItemsBox.Children.Length > 0)
+			if(itemOpFormatEntry.Visible)
 			{
 				if(String.IsNullOrEmpty(itemOpFormatEntry.Text.Trim()))
 				{
-					errors.Add("· No hay definida cadena de formato para el item y sus elementos relacionados.");
+					errors.Add("· No hay definida cadena de formato para el item.");
 				}
-				
+			
 				List<string> checkList =  new List<string>();
 				// The checking string has to contemplate the token the 
 				/// expresions are related to (hence the +1)
@@ -369,6 +378,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 					errors.AddRange(relatedWidget.CheckErrors());
 				}
 			}
+			
 			
 			
 			if(errors.Count> 0)

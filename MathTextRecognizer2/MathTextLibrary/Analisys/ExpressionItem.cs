@@ -86,8 +86,9 @@ namespace MathTextLibrary.Analisys
 	{
 		private ExpressionItemPosition position;
 		
+		protected string formatString;		
+		
 		private ExpressionItemModifier modifier;
-		private List<Token> firstTokens;
 		
 		
 		/// <summary>
@@ -95,7 +96,7 @@ namespace MathTextLibrary.Analisys
 		/// </summary>
 		public ExpressionItem()
 		{
-				
+				formatString = "{0}";
 		}
 
 		
@@ -146,6 +147,21 @@ namespace MathTextLibrary.Analisys
 			set 
 			{
 				modifier = value;
+			}
+		}
+		
+		/// <value>
+		/// Contains the string used to format the group's matched contents.
+		/// </value>
+		public string FormatString 
+		{
+			get 
+			{
+				return formatString;
+			}
+			set 
+			{
+				formatString = value;
 			}
 		}
 		
@@ -202,11 +218,12 @@ namespace MathTextLibrary.Analisys
 					break;
 				case ExpressionItemModifier.NonCompulsory:
 				
-					if(sequence.Count>0
-					   && this.MatchSequence(ref sequence, out auxOutput))
+					if(sequence.Count>0)
 					{
+						result = this.MatchSequence(ref sequence, out auxOutput);
 						res= auxOutput;
 					}
+					
 					break;
 				
 				default:
