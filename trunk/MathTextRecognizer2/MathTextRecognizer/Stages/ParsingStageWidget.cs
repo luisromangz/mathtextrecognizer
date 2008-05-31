@@ -550,13 +550,13 @@ namespace MathTextRecognizer.Stages
 				
 			// Over the red tinted copy, we place the piece we want to be
 			// normal.
-			originalImage.CopyArea(t.X,
-			                       t.Y,
+			originalImage.CopyArea(t.Left,
+			                       t.Top,
 			                       t.Width,
 			                       t.Height,
 			                       originalMarked,
-			                       t.X,
-			                       t.Y);
+			                       t.Left,
+			                       t.Top);
 		
 			
 			originalImageArea.Image=originalMarked;

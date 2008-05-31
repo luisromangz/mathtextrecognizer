@@ -409,50 +409,47 @@ namespace MathTextLibrary.Analisys
 			
 			bool res =  false;
 			
-			int matchedBottom = matched.Y + matched.Height;
-			int checkedBottom = checkedItem.Y + checkedItem.Height;
-			int matchedRight = matched.X + matched.Width;
-			int checkedRight = checkedItem.X + checkedItem.Width;
+		
 			
 			switch(position)
 			{
 				case ExpressionItemPosition.Above:
 					// This condition is used for upper fraction operands
 					// and summatory-like limit expression.
-					res = checkedBottom< matched.Y;
+					res = checkedItem.Bottom< matched.Top;
 					break;
 				case ExpressionItemPosition.Below:
 					// This condition is used for lower fraction operands
 					// and summatory-like initialization expressions.
-					res = checkedItem.Y > matchedBottom;
+					res = checkedItem.Top > matched.Bottom;
 					break;
 				case ExpressionItemPosition.Inside:
 					// This condition is used for roots' inner expressions.
-					res = ((checkedItem.X >= matched.TopmostX )
-						&& (checkedRight < matchedRight)
-						&& (checkedItem.Y> matched.Y)
-						&& (checkedBottom < matchedBottom));
+					res = ((checkedItem.Left >= matched.TopmostX )
+						&& (checkedItem.Right < matched.Right)
+						&& (checkedItem.Top> matched.Top)
+						&& (checkedItem.Bottom < matched.Bottom));
 							
 					break;
 				case ExpressionItemPosition.RootIndex:
 					// This condition is used for roots' index expressions.
-					int line06 = matched.Y +(int)( matched.Height*0.66f);
-					res = ((checkedItem.X < matched.TopmostX)
-					       && (checkedBottom < line06));
+					int line06 = matched.Top +(int)( matched.Height*0.66f);
+					res = ((checkedItem.Left < matched.TopmostX)
+					       && (checkedItem.Bottom < line06));
 					break;
 				case ExpressionItemPosition.SubIndex:
 					// This condition is used for subindexes and
 					// integral-like initialization expressions.
-					int line033 = matched.Y +(int)( matched.Height*0.33f);
-					res = (matched.X< checkedItem.X 
-					       && matched.Y > line033);
+					int line033 = matched.Top +(int)( matched.BodyHeight*0.33f);
+					res = (matched.Left< checkedItem.Left 
+					       && checkedItem.Top > line033);
 					break;					
 				case ExpressionItemPosition.SuperIndex:
 					// This condition is used for superindexe and
 					// integral-like limit expressions.
-					int line066 = matched.Y +(int)( matched.Height*0.66f);
-					res = (matched.X < checkedItem.X
-					       && checkedBottom < line066);
+					int line020 = matched.Top +(int)( matched.BodyHeight*0.20f);
+					res = (matched.Left < checkedItem.Left
+					       && checkedItem.Bottom < line020);
 					break;
 			}
 			
@@ -476,16 +473,16 @@ namespace MathTextLibrary.Analisys
 		/// </returns>
 		protected bool SpecialPosition(Token referenceToken, Token checkedToken)
 		{
-			if(checkedToken.X < referenceToken.X)
+			if(checkedToken.Left < referenceToken.Left)
 				return true;
 			
 			
-			int line066 = referenceToken.Y + (int)(referenceToken.Height * 0.66f);
-			if(checkedToken.Y + checkedToken.Height < line066)
+			int line066 = referenceToken.Top + (int)(referenceToken.BodyHeight * 0.66f);
+			if(checkedToken.Top + checkedToken.Height < line066)
 				return true;
 			
-			int line033 = referenceToken.Y + (int)(referenceToken.Height * 0.33f);
-			if(checkedToken.Y > line033)
+			int line033 = referenceToken.Top + (int)(referenceToken.BodyHeight * 0.33f);
+			if(checkedToken.Top > line033)
 				return true;
 			
 			return false;				

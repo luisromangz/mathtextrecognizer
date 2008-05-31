@@ -33,9 +33,13 @@ namespace MathTextLibrary.Analisys
 		
 		private static Token empty = new Token("");
 		
+		private int baseline;
+		private int bodyline;
+		
 		public Token()
 		{
-			
+			baseline = -1;
+			bodyline = -1;
 		}
 			
 		/// <summary>
@@ -44,7 +48,8 @@ namespace MathTextLibrary.Analisys
 		/// <param name="tokenType">
 		/// A <see cref="System.String"/>
 		/// </param>
-		public Token(string tokenType)
+		public Token(string tokenType) 
+			: this()
 		{
 			this.type = tokenType;
 		}
@@ -66,6 +71,7 @@ namespace MathTextLibrary.Analisys
 		/// The image which represents the new token.
 		/// </param>
 		public Token(string text, int x, int y, FloatBitmap image)
+			: this()
 		{			
 			this.text = text;
 			this.x = x;
@@ -118,7 +124,7 @@ namespace MathTextLibrary.Analisys
 		/// <value>
 		/// Contains the X coordinate of the imagen the token is symbolizing.
 		/// </value>
-		public int X 
+		public int Left 
 		{
 			get 
 			{
@@ -129,11 +135,33 @@ namespace MathTextLibrary.Analisys
 		/// <value>
 		/// Contains the Y coordinate of the image the token is symbolizing.
 		/// </value>
-		public int Y
+		public int Top
 		{
 			get 
 			{
 				return y;
+			}
+		}
+		
+		/// <value>
+		/// Contains the token's bottom.
+		/// </value>
+		public int Bottom
+		{
+			get
+			{
+				return y + this.Height;
+			}
+		}
+		
+		/// <value>
+		/// Contains the token's right pixel.
+		/// </value>
+		public int Right
+		{
+			get
+			{
+				return x + this.Width;
 			}
 		}
 		
@@ -166,27 +194,31 @@ namespace MathTextLibrary.Analisys
 		{
 			get
 			{
-				
-				int baseline = this.Height;
-				
-				bool isAscender = (ASCENDERS.Contains(this.text) 
-				                   || char.IsUpper(this.Text[0])
-				                   || char.IsNumber(this.text[0]));
-				
-				
-				if(DESCENDERS.Contains(this.text)
-				   && !isAscender)
+				if(baseline== -1)
 				{
-					baseline = (int)(baseline*0.66f);
-				}
-				else if(DESCENDERS.Contains(this.text)
-				        && isAscender)
-				{
-					baseline = (int)(baseline*0.87f);
+					baseline = this.Height;
+				
+					bool isAscender = (ASCENDERS.Contains(this.text) 
+					                   || char.IsUpper(this.Text[0])
+					                   || char.IsNumber(this.text[0]));
+					
+					
+					if(DESCENDERS.Contains(this.text)
+					   && !isAscender)
+					{
+						baseline = (int)(baseline*0.66f);
+					}
+					else if(DESCENDERS.Contains(this.text)
+					        && isAscender)
+					{
+						baseline = (int)(baseline*0.87f);
+					}
+					
+					baseline = this.y + baseline;
+					
 				}
 				
-				
-				return this.y + baseline;
+				return baseline;				
 			}
 		}
 		
@@ -197,25 +229,40 @@ namespace MathTextLibrary.Analisys
 		{
 			get
 			{
-				int bodyline = this.y;
-				
-				bool isAscender = (ASCENDERS.Contains(this.text) 
-				                   || char.IsUpper(this.Text[0])
-				                   || char.IsNumber(this.text[0]));
-				
-				if(isAscender
-				   && !DESCENDERS.Contains(this.text))
+				if(bodyline == -1)
 				{
-					bodyline += (int)(this.Height*0.33f);
-				}
-				else if(isAscender
-				        && DESCENDERS.Contains(this.text))
-				{
-					bodyline += (int)(this.Height*0.13f);
-				}
+					bodyline = this.y;
 				
+					bool isAscender = (ASCENDERS.Contains(this.text) 
+					                   || char.IsUpper(this.Text[0])
+					                   || char.IsNumber(this.text[0]));
+					
+					if(isAscender
+					   && !DESCENDERS.Contains(this.text))
+					{
+						bodyline += (int)(this.Height*0.33f);
+					}
+					else if(isAscender
+					        && DESCENDERS.Contains(this.text))
+					{
+						bodyline += (int)(this.Height*0.13f);
+					}
+				}
 				
 				return bodyline;
+			}
+		}
+		
+		/// <value>
+		/// This property contains the height of the <see cref="Token"/>'s
+		/// body portion.
+		/// </value>
+		public int BodyHeight
+		{
+			
+			get
+			{
+				return this.Baseline - this.Bodyline;
 			}
 		}
 
@@ -318,8 +365,8 @@ namespace MathTextLibrary.Analisys
 					{
 						// We transform the coordinates so we place the 
 						// pixel correctly on the new image.
-						int x = i + t.X - minX;
-						int y =  j + t.Y - minY;
+						int x = i + t.Left - minX;
+						int y =  j + t.Top - minY;
 						image[x, y] = t.image[i, j];
 					}
 				}
@@ -327,6 +374,12 @@ namespace MathTextLibrary.Analisys
 			
 			Token newToken = new Token(newText, minX, minY, image);
 			newToken.type = tokenType;			
+			
+			// We are going to suppose that we are joining a sequence that
+			// shares baseline and bodyline, because all other joined tokens
+			// won't be used.
+			newToken.baseline = tokens.Last.Baseline;
+			newToken.bodyline = tokens.Last.Bodyline;
 			
 			return newToken;
 			
@@ -343,7 +396,7 @@ namespace MathTextLibrary.Analisys
 		/// </returns>
 		public int CompareTo (Token other)
 		{
-			return this.X - other.X;
+			return this.Left - other.Left;
 		}
 		
 		/// <summary>

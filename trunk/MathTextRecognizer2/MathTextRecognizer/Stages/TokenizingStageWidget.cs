@@ -753,11 +753,11 @@ namespace MathTextRecognizer.Stages
 						int min = int.MaxValue;
 						foreach (Token t in a.LastSequence ) 
 						{
-							if(t.Y < min)
-								min =t.Y;
+							if(t.Top < min)
+								min =t.Top;
 						}
 						
-						int offset = Math.Min(min, currentToken.Y);
+						int offset = Math.Min(min, currentToken.Top);
 						int lastBaseline = lastToken.Baseline - offset;
 						int currentBaseline = currentToken.Baseline - offset;
 						
