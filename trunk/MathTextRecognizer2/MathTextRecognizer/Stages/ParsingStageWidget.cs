@@ -256,6 +256,8 @@ namespace MathTextRecognizer.Stages
 					
 					parsingShowOutputBtn.Sensitive = true;
 					parsingProcessBtn.Sensitive = false;
+					
+					currentNode.SetOutput(controller.Output);
 				}
 				else
 				{

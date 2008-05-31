@@ -231,7 +231,7 @@ namespace MathTextRecognizer.Controllers.Nodes
 		{
 			view.NodeSelection.SelectNode(this);
 			TreePath path = view.Selection.GetSelectedRows()[0];
-			view.ScrollToCell(path,view.Columns[1],true,0.5f,0.5f);
+			view.ScrollToCell(path,view.Columns[0],true,0.5f,0f);
 		}
 		
 		/// <summary>

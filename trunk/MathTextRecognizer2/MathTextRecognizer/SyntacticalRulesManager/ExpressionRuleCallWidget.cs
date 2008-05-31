@@ -76,6 +76,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				ExpressionRuleCallItem res = new ExpressionRuleCallItem();
 				res.RuleName = expRuleNameEntry.Text.Trim();
 				
+				res.FormatString = options.FormatString;
 				res.Modifier = options.Modifier;
 				
 				return res;
@@ -88,6 +89,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				}
 				
 				options.Modifier = value.Modifier;
+				options.FormatString = value.FormatString;
 				
 				expRuleNameEntry.Text = (value as ExpressionRuleCallItem).RuleName;
 			}

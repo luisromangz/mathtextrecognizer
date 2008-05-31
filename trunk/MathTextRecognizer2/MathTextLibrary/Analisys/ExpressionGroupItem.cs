@@ -14,8 +14,7 @@ namespace MathTextLibrary.Analisys
 	{
 		private List<ExpressionItem> childrenItems;
 		
-		private string formatString;
-		
+	
 		
 		/// <summary>
 		/// <see cref="ExpressionItemGroup"/>'s constructor.
@@ -42,20 +41,7 @@ namespace MathTextLibrary.Analisys
 			}
 		}
 
-		/// <value>
-		/// Contains the string used to format the group's matched contents.
-		/// </value>
-		public string FormatString 
-		{
-			get 
-			{
-				return formatString;
-			}
-			set 
-			{
-				formatString = value;
-			}
-		}
+	
 		
 		/// <value>
 		/// Contains the label shown by the item.

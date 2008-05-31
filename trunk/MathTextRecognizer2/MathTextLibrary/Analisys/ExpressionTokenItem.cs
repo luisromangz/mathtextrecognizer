@@ -21,9 +21,6 @@ namespace MathTextLibrary.Analisys
 		
 		private List<ExpressionItem> relatedItems;
 		
-		private string formatString;
-		
-		
 		public static event TokenMatchingHandler TokenMatching;
 		
 		public static event TokenMatchingFinishedHandler TokenMatchingFinished;
@@ -90,22 +87,7 @@ namespace MathTextLibrary.Analisys
 			}
 		}
 
-		/// <value>
-		/// Contains the format string for the token in case it has 
-		/// related items.
-		/// </value>
-		public string FormatString
-		{
-			get 
-			{
-				return formatString;
-			}
-			set
-			{
-				formatString = value;
-			}
-		}
-		
+	
 		/// <value>
 		/// Contains the label shown by the item.
 		/// </value>
@@ -179,7 +161,7 @@ namespace MathTextLibrary.Analisys
 				matched = sequence.RemoveAt(idx);				
 				if(this.relatedItems.Count ==0)
 				{
-					output= matched.Text;
+					output= String.Format(formatString, matched.Text);
 				}
 				else
 				{
@@ -433,23 +415,22 @@ namespace MathTextLibrary.Analisys
 					break;
 				case ExpressionItemPosition.RootIndex:
 					// This condition is used for roots' index expressions.
-					int line06 = matched.Top +(int)( matched.Height*0.66f);
 					res = ((checkedItem.Left < matched.TopmostX)
-					       && (checkedItem.Bottom < line06));
+					       && (checkedItem.Bottom < matched.Percent0_66Line));
 					break;
 				case ExpressionItemPosition.SubIndex:
 					// This condition is used for subindexes and
 					// integral-like initialization expressions.
-					int line033 = matched.Top +(int)( matched.BodyHeight*0.33f);
 					res = (matched.Left< checkedItem.Left 
-					       && checkedItem.Top > line033);
+					       && checkedItem.Bodyline > matched.Percent0_33Line);
+					
 					break;					
 				case ExpressionItemPosition.SuperIndex:
 					// This condition is used for superindexe and
 					// integral-like limit expressions.
-					int line020 = matched.Top +(int)( matched.BodyHeight*0.20f);
+					
 					res = (matched.Left < checkedItem.Left
-					       && checkedItem.Bottom < line020);
+					       && checkedItem.Baseline < matched.Percent0_33Line);
 					break;
 			}
 			
@@ -473,17 +454,12 @@ namespace MathTextLibrary.Analisys
 		/// </returns>
 		protected bool SpecialPosition(Token referenceToken, Token checkedToken)
 		{
-			if(checkedToken.Left < referenceToken.Left)
+			if(checkedToken.Left < referenceToken.Left
+			   || checkedToken.Baseline < referenceToken.Percent0_66Line
+			   || checkedToken.Bodyline > referenceToken.Percent0_33Line)
+			{
 				return true;
-			
-			
-			int line066 = referenceToken.Top + (int)(referenceToken.BodyHeight * 0.66f);
-			if(checkedToken.Top + checkedToken.Height < line066)
-				return true;
-			
-			int line033 = referenceToken.Top + (int)(referenceToken.BodyHeight * 0.33f);
-			if(checkedToken.Top > line033)
-				return true;
+			}
 			
 			return false;				
 		}

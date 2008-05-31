@@ -36,10 +36,17 @@ namespace MathTextLibrary.Analisys
 		private int baseline;
 		private int bodyline;
 		
+		private int percent033line;
+		private int percent066line;
+		private int percent120line;
+		
 		public Token()
 		{
 			baseline = -1;
 			bodyline = -1;
+			percent033line = -1;
+			percent066line = -1;
+			percent120line = -1;
 		}
 			
 		/// <summary>
@@ -265,6 +272,43 @@ namespace MathTextLibrary.Analisys
 				return this.Baseline - this.Bodyline;
 			}
 		}
+		
+		public int Percent0_33Line
+		{
+			get
+			{
+				if(percent033line==-1)
+				{
+					percent033line = Bodyline +(int)(BodyHeight*0.33f);
+				}
+				
+				return percent033line;
+			}
+		}
+		
+		
+		public int Percent0_66Line {
+			get {
+				if(percent066line==-1)
+				{
+					percent066line = Bodyline +(int)(BodyHeight*0.66f);
+				}
+				
+				return percent066line;
+			}
+		}
+
+		public int Percent1_20Line {
+			get {
+				if(percent120line==-1)
+				{
+					percent120line = Bodyline +(int)(BodyHeight*1.20f);
+				}
+				
+				return percent120line;
+			}
+		}
+
 
 		/// <value>
 		/// Contains an empty token.

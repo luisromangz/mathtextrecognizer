@@ -70,7 +70,13 @@ namespace MathTextLibrary.Analisys
 			SyntacticalRule ruleCalled = 
 				SyntacticalRulesLibrary.Instance[expressionName];
 			
-			return ruleCalled.Match(ref sequence, out output);
+			bool res =  ruleCalled.Match(ref sequence, out output);
+			if(res)
+			{
+				output = String.Format(formatString, output);
+			}
+			
+			return res;
 		}
 
 		protected override string SpecificToString ()
