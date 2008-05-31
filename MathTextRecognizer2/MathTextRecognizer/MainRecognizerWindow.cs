@@ -401,7 +401,7 @@ namespace MathTextRecognizer
 			{			
 				LoadImage();
 				
-				ResetState();
+				
 			}
 		}
 		
@@ -467,8 +467,8 @@ namespace MathTextRecognizer
 			{			
 				// Cargamos la imagen desde disco
 					
-				LoadImage(filename);
-				
+				LoadImage(filename);	
+				ResetState();
 			}
 		}
 		
