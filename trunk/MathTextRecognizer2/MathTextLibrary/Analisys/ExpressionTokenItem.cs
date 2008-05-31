@@ -357,7 +357,7 @@ namespace MathTextLibrary.Analisys
 			{
 				Token checkedItem = remainingItems[i];
 				
-				if(CheckInRelatedItemSequence(matched, checkedItem, position))
+				if(CheckTokenInRelatedSequence(matched, checkedItem, position))
 				{
 					sequence.Append(checkedItem);
 					remainingItems.RemoveAt(i);
@@ -402,7 +402,7 @@ namespace MathTextLibrary.Analisys
 		/// A <see cref="System.Boolean"/> indicating if the checked item is in the
 		/// given position related to the matched token.
 		/// </returns>
-		protected bool CheckInRelatedItemSequence(Token matched, 
+		protected bool CheckTokenInRelatedSequence(Token matched, 
 		                                          Token checkedItem, 
 		                                          ExpressionItemPosition position)
 		{
@@ -413,15 +413,21 @@ namespace MathTextLibrary.Analisys
 			int checkedBottom = checkedItem.Y + checkedItem.Height;
 			int matchedRight = matched.X + matched.Width;
 			int checkedRight = checkedItem.X + checkedItem.Width;
+			
 			switch(position)
 			{
 				case ExpressionItemPosition.Above:
+					// This condition is used for upper fraction operands
+					// and summatory-like limit expression.
 					res = checkedBottom< matched.Y;
 					break;
 				case ExpressionItemPosition.Below:
+					// This condition is used for lower fraction operands
+					// and summatory-like initialization expressions.
 					res = checkedItem.Y > matchedBottom;
 					break;
 				case ExpressionItemPosition.Inside:
+					// This condition is used for roots' inner expressions.
 					res = ((checkedItem.X >= matched.TopmostX )
 						&& (checkedRight < matchedRight)
 						&& (checkedItem.Y> matched.Y)
@@ -429,13 +435,24 @@ namespace MathTextLibrary.Analisys
 							
 					break;
 				case ExpressionItemPosition.RootIndex:
+					// This condition is used for roots' index expressions.
 					int line06 = matched.Y +(int)( matched.Height*0.66f);
 					res = ((checkedItem.X < matched.TopmostX)
 					       && (checkedBottom < line06));
 					break;
 				case ExpressionItemPosition.SubIndex:
+					// This condition is used for subindexes and
+					// integral-like initialization expressions.
+					int line033 = matched.Y +(int)( matched.Height*0.33f);
+					res = (matched.X< checkedItem.X 
+					       && matched.Y > line033);
 					break;					
 				case ExpressionItemPosition.SuperIndex:
+					// This condition is used for superindexe and
+					// integral-like limit expressions.
+					int line066 = matched.Y +(int)( matched.Height*0.66f);
+					res = (matched.X < checkedItem.X
+					       && checkedBottom < line066);
 					break;
 			}
 			
