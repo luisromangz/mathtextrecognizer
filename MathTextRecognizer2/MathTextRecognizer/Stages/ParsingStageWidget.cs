@@ -189,6 +189,8 @@ namespace MathTextRecognizer.Stages
 			
 			syntacticalCoverTree.Columns[0].Sizing = 
 				TreeViewColumnSizing.Autosize;
+			
+			syntacticalCoverTree.ShowExpanders = false;
 		
 			syntacticalTreePlaceholder.Add(syntacticalCoverTree);
 			
