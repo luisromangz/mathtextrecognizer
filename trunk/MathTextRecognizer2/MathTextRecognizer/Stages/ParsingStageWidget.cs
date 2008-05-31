@@ -183,7 +183,7 @@ namespace MathTextRecognizer.Stages
 			syntacticalCoverTree = new NodeView(syntacticalCoverModel);
 			syntacticalCoverTree.RulesHint = true;
 			
-			syntacticalCoverTree.AppendColumn("Elemento",
+			syntacticalCoverTree.AppendColumn("Elemento de análisis",
 			                                  new CellRendererText(),
 			                                  "markup" ,0);
 			
@@ -293,10 +293,12 @@ namespace MathTextRecognizer.Stages
 				
 				syntacticalCoverTree.ExpandAll();	
 				
-				currentNode.Select();
+				
 				
 				syntacticalCoverTree.Vadjustment.Value = 
 					syntacticalCoverTree.Vadjustment.Upper;
+				
+				currentNode.Select();
 				
 				parsingNextButtonsAlign.Sensitive = 
 					controller.StepMode == ControllerStepMode.StepByStep;
