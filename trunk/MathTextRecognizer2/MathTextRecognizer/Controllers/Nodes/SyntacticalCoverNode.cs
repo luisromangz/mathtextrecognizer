@@ -26,6 +26,8 @@ namespace MathTextRecognizer.Controllers.Nodes
 		private string matchedTokens;
 		
 		private SyntacticalMatcher matcher;
+		
+		private string padding ;
 	
 		
 		public SyntacticalCoverNode(SyntacticalMatcher matcher, NodeView container)
@@ -37,6 +39,10 @@ namespace MathTextRecognizer.Controllers.Nodes
 			this.matcherType = matcher.Type;
 			
 			matchedTokens ="";
+			
+			padding = "";
+			
+			this.ChildAdded += new TreeNodeAddedHandler(OnChildAdded);
 		}
 		
 #region Properties
@@ -49,7 +55,8 @@ namespace MathTextRecognizer.Controllers.Nodes
 		{
 			get
 			{
-				return String.Format("{0}: {1}{2}{3}", 
+				return String.Format("{0}{1}: {2}{3}{4}", 
+				                     padding,
 					                 matcherType, 
 					                 matcherLabel,
 					                 matchedTokens,
@@ -75,8 +82,8 @@ namespace MathTextRecognizer.Controllers.Nodes
 			
 			container.ScrollToCell(container.Selection.GetSelectedRows()[0],
 			                       container.Columns[0],
-			                       true, 0.5f, 1f);
-			container.QueueResize();
+			                       true, 0.5f, 0.5f);
+			
 			container.QueueDraw();
 		}
 		
@@ -114,6 +121,17 @@ namespace MathTextRecognizer.Controllers.Nodes
 		}
 		
 #endregion Public methods
+		
+#region Private methods
+		
+		private void OnChildAdded(object sender, ITreeNode _child)
+		{
+			SyntacticalCoverNode child = (SyntacticalCoverNode)_child;
+			
+			child.padding = this.padding +"   ";
+		}
+		
+#endregion Private methods
 
 		
 
