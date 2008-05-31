@@ -160,7 +160,8 @@ namespace MathTextLibrary.Analisys
 			
 			bool result = true;
 			res = "";
-			int counter =0;			
+			int counter =0;		
+			int initialCount =  sequence.Count;
 			string auxOutput;
 			switch(modifier)				
 			{
@@ -171,7 +172,7 @@ namespace MathTextLibrary.Analisys
 						counter++;
 						res +=auxOutput;
 					}		
-					if(counter > 0)
+					if(counter == 0)
 					{
 						result =  false;
 					}
@@ -179,11 +180,25 @@ namespace MathTextLibrary.Analisys
 					break;
 				case ExpressionItemModifier.RepeatingNonCompulsory:
 				
-					while(sequence.Count > 0
-					      && this.MatchSequence(ref sequence, out auxOutput))
+					while(sequence.Count > 0)
 					{
-						res+= auxOutput;
+						initialCount = sequence.Count;
+						if(this.MatchSequence(ref sequence, out auxOutput))
+						{
+							counter++;
+							res+= auxOutput;
+						}
+						else if (initialCount != sequence.Count)
+						{
+							result = false;
+							break;
+						}					
+						else
+						{
+							break;
+						}
 					}
+					
 					break;
 				case ExpressionItemModifier.NonCompulsory:
 				
