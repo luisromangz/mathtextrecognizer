@@ -183,7 +183,7 @@ namespace MathTextLibrary.Analisys
 				}
 				else
 				{
-					res = MatchRelatedItems(matched, sequence, out output);
+					res = MatchRelatedItems(matched, ref sequence, out output);
 					if(!res)
 					{
 						matched = null;
@@ -245,7 +245,7 @@ namespace MathTextLibrary.Analisys
 		/// successfull.
 		/// </returns>
 		private bool MatchRelatedItems(Token matched, 
-		                               TokenSequence sequence, 
+		                               ref TokenSequence sequence, 
 		                               out string output)
 		{
 			output = "";
@@ -277,7 +277,8 @@ namespace MathTextLibrary.Analisys
 				RelatedSequenceSetInvoker(relatedRemnant);
 				
 				if(relatedItem.Match(ref relatedRemnant, 
-				                     out relatedItemOutput))
+				                     out relatedItemOutput)
+				   && relatedRemnant.Count == 0)
 				{
 					outputs.Add(relatedItemOutput);
 				}
