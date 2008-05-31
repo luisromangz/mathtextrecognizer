@@ -245,8 +245,8 @@ namespace MathTextLibrary.Analisys
 			for(int i =0 ; i<this.Count && sequence[i] != tested; i++)
 			{
 				Token covering =  sequence[i];
-				if((covering.Y + covering.Height) > ( tested.Y + (int)(tested.Height*0.6f))
-				   || (covering.X + covering.Width) > (tested.X + tested.Width))
+				if((covering.Top + covering.Height) > ( tested.Top + (int)(tested.Height*0.6f))
+				   || (covering.Left + covering.Width) > (tested.Left + tested.Width))
 				{
 					Console.WriteLine("{0} cubierto por {1}", 
 					                  tested.Text,
