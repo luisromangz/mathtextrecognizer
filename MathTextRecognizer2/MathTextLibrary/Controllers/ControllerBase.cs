@@ -1,4 +1,4 @@
-// BaseController.cs created with MonoDevelop
+﻿// BaseController.cs created with MonoDevelop
 // User: luis at 16:01 26/04/2008
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
