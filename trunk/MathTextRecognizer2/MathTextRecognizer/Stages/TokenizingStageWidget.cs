@@ -949,6 +949,7 @@ namespace MathTextRecognizer.Stages
 			}
 			else
 			{
+				MainRecognizerWindow.CreateParsingWidget();
 				this.NextStage();
 			}
 		}

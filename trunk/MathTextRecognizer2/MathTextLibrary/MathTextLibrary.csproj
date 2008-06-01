@@ -1,47 +1,65 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{2317FF6F-6FAE-4DED-B2C0-06BC1A30CE35}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <ProjectGuid>{6EF2865B-C92B-478D-88FE-373611EE2559}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <NoStdLib>False</NoStdLib>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <AssemblyName>mathtextlibrary</AssemblyName>
+    <AssemblyName>MathTextLibrary</AssemblyName>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>bin\Debug</OutputPath>
-    <Optimize>False</Optimize>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <DebugType>Full</DebugType>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ApplicationIcon>.</ApplicationIcon>
+    <GenerateDocumentation>true</GenerateDocumentation>
+    <StartupObject />
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <DebugType>Full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
+    <ConsolePause>false</ConsolePause>
+    <AssemblyKeyFile>.</AssemblyKeyFile>
+    <Execution>
+      <Execution xmlns="" />
+    </Execution>
+    <Build>
+      <Build xmlns="" />
+    </Build>
+    <Output>
+      <Output xmlns="" />
+    </Output>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'Debug' ">
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <FileAlignment>4096</FileAlignment>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ApplicationIcon>.</ApplicationIcon>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <StartupObject />
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <ConsolePause>false</ConsolePause>
+    <Output>
+      <Output xmlns="" />
+    </Output>
+    <Execution>
+      <Execution xmlns="" />
+    </Execution>
+    <Build>
+      <Build xmlns="" />
+    </Build>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="gdk-sharp" />
-    <Reference Include="glib-sharp" />
-    <Reference Include="gtk-sharp" />
-    <Reference Include="nunit.core" />
-    <Reference Include="nunit.framework" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
+    <Reference Include="nunit.core, Version=2.2.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <Reference Include="nunit.framework, Version=2.2.8.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
@@ -100,7 +118,6 @@
     <Compile Include="Databases\Characteristic\Characteristics\Helpers\CountPixelsWithXNeighboursHelper.cs" />
     <Compile Include="Databases\Characteristic\Characteristics\Helpers\ImageBoxerHelper.cs" />
     <Compile Include="Databases\MathTextDatabase.cs" />
-    <Compile Include="Databases\Momentum\MomentumDatabase.cs" />
     <Compile Include="Databases\Characteristic\CharacteristicNode.cs" />
     <Compile Include="Databases\Characteristic\CharacteristicFactory.cs" />
     <Compile Include="Databases\DatabaseEvents.cs" />
@@ -142,5 +159,5 @@
     <Compile Include="Analisys\SyntacticalRulesLibrary.cs" />
     <Compile Include="Tests\SyntacticalRuleTests.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

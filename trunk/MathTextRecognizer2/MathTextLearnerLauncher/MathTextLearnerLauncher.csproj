@@ -1,47 +1,60 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{5955E8B1-5909-4955-84A8-D8AE971116FF}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <ProjectGuid>{53B68E03-61CA-4054-9693-2803D794B57E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <NoStdLib>False</NoStdLib>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <AssemblyName>mathtextlearnerlauncher</AssemblyName>
+    <AssemblyName>MathTextLearner</AssemblyName>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>bin\Debug</OutputPath>
-    <Optimize>False</Optimize>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <DebugType>Full</DebugType>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ApplicationIcon>.</ApplicationIcon>
+    <StartupObject />
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <DebugType>None</DebugType>
-    <DebugSymbols>false</DebugSymbols>
+    <Output>
+      <Output xmlns="" />
+    </Output>
+    <Execution>
+      <Execution xmlns="" />
+    </Execution>
+    <Build>
+      <Build xmlns="" />
+    </Build>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'Debug' ">
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <FileAlignment>4096</FileAlignment>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ApplicationIcon>.</ApplicationIcon>
+    <StartupObject />
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <AssemblyKeyFile>.</AssemblyKeyFile>
+    <Output>
+      <Output xmlns="" />
+    </Output>
+    <Execution>
+      <Execution xmlns="" />
+    </Execution>
+    <Build>
+      <Build xmlns="" />
+    </Build>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="atk-sharp" />
-    <Reference Include="gtk-sharp" />
     <Reference Include="System" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MathTextLearner\MathTextLearner.csproj">
-      <Project>{5CA4FB9B-23A1-4CDA-ACDD-BF9453BC8609}</Project>
+      <Project>{53B68E03-61CA-4054-9693-2803D794B57E}</Project>
       <Name>MathTextLearner</Name>
     </ProjectReference>
   </ItemGroup>
@@ -49,5 +62,5 @@
     <Compile Include="Main.cs" />
     <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -238,9 +238,9 @@ namespace MathTextLearner
 				}				
 				
 				assistant.Destroy();
-				
-				
 			}
+			
+			mainWindow.Icon = ImageResources.LoadPixbuf("mathtextlearner16");
 		
 		}
 		
@@ -715,8 +715,8 @@ namespace MathTextLearner
 			AppInfoDialog.Show(
 				mainWindow,
 				"Aprendedor de caracteres matemáticos",
-				"Esta aplicación permite aprender un caracter y añadirlo a"+
-				" una base de datos de caracteres nueva o creada previamente.");	
+				"Esta aplicación permite aprender un caracter y añadirlo a una base de datos de caracteres nueva o creada previamente.",
+			    "mathtextlearner");	
 			
 		}
 		
