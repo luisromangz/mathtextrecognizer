@@ -136,8 +136,7 @@ namespace MathTextRecognizer.Stages
 		/// </summary>
 		static OCRStageWidget()
 		{
-			widgetLabel = 
-				"Segmentación de la imagen y reconocimiento de caracteres";
+			widgetLabel = "Segmentación de la imagen y reconocimiento de caracteres";
 		}
 		
 #region Properties
@@ -167,7 +166,10 @@ namespace MathTextRecognizer.Stages
 		
 #endregion Properties
 		
+		
 #region Public methods
+		
+			
 		/// <summary>
 		/// Establece la imagen inicial para segmentar y reconocer sus
 		/// caracteres. 
@@ -203,14 +205,22 @@ namespace MathTextRecognizer.Stages
 			gotoTokenizerBtn.Sensitive = false;
 			buttonsNB.Page = 0;
 		}
-#endregion Metodos publicos
 		
-#region Metodos privados
+		
+#endregion Public methods
+
+		
+#region Non-public methods
+	
+			
+		
 		
 		protected override void SetInitialData()
 		{
-			
+			MainRecognizerWindow.LoadImage();
 		}
+		
+		
 		
 		protected void InitializeWidgets()
 		{
@@ -399,6 +409,7 @@ namespace MathTextRecognizer.Stages
 			
 			if(errors.Count == 0)
 			{
+				MainRecognizerWindow.CreateTokenizingWidget();
 				NextStage();			
 				
 			}			
@@ -849,6 +860,6 @@ namespace MathTextRecognizer.Stages
 			
 		
 		
-#endregion Metodos privados
+#endregion Non-public methods
 	}
 }

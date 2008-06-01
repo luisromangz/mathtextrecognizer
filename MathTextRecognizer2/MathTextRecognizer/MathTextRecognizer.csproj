@@ -1,64 +1,79 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{A031DE4B-2900-479E-A068-39D0F9E02581}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <ProjectGuid>{2D5DF43C-C346-422D-89E1-69B8B3B10BB6}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <NoStdLib>False</NoStdLib>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <AssemblyName>mathtextrecognizer</AssemblyName>
+    <RootNamespace>MathTextRecognizer</RootNamespace>
+    <AssemblyName>MathTextRecognizer</AssemblyName>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DefineConstants>
-    </DefineConstants>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ApplicationIcon>.</ApplicationIcon>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <OutputPath>bin\Debug</OutputPath>
-    <DebugType>Full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
+    <GenerateDocumentation>true</GenerateDocumentation>
+    <StartupObject />
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Output>
+      <Output xmlns="" />
+    </Output>
+    <Execution>
+      <Execution xmlns="" />
+    </Execution>
+    <Build>
+      <Build xmlns="" />
+    </Build>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <Optimize>False</Optimize>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <OutputPath>bin\Debug</OutputPath>
-    <DebugType>Full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'Debug' ">
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <FileAlignment>4096</FileAlignment>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ApplicationIcon>.</ApplicationIcon>
+    <StartupObject />
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <Output>
+      <Output xmlns="" />
+    </Output>
+    <Execution>
+      <Execution xmlns="" />
+    </Execution>
+    <Build>
+      <Build xmlns="" />
+    </Build>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="atk-sharp" />
-    <Reference Include="gdk-sharp" />
-    <Reference Include="glade-sharp" />
-    <Reference Include="glib-sharp" />
-    <Reference Include="gtk-sharp" />
-    <Reference Include="nunit.core" />
-    <Reference Include="nunit.framework" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-dotnet, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="nunit.framework, Version=2.2.9.0, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77" />
+    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MathTextLibrary\MathTextLibrary.csproj">
-      <Project>{2317FF6F-6FAE-4DED-B2C0-06BC1A30CE35}</Project>
+      <Project>{2D5DF43C-C346-422D-89E1-69B8B3B10BB6}</Project>
       <Name>MathTextLibrary</Name>
     </ProjectReference>
     <ProjectReference Include="..\MathTextCustomWidgets\MathTextCustomWidgets.csproj">
+      <Project>{2D5DF43C-C346-422D-89E1-69B8B3B10BB6}</Project>
       <Name>MathTextCustomWidgets</Name>
-      <Project>{50223E7F-60A8-4BFF-816A-BA553CB41956}</Project>
     </ProjectReference>
     <ProjectReference Include="..\MathTextLearner\MathTextLearner.csproj">
-      <Project>{5CA4FB9B-23A1-4CDA-ACDD-BF9453BC8609}</Project>
+      <Project>{2D5DF43C-C346-422D-89E1-69B8B3B10BB6}</Project>
       <Name>MathTextLearner</Name>
     </ProjectReference>
-    <Compile Include="Output\OutputSettingsDialog.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
@@ -94,10 +109,16 @@
     <Compile Include="SyntacticalRulesManager\RelatedItemWidget.cs" />
     <Compile Include="SyntacticalRulesManager\ExpressionItemOptionsDialog.cs" />
     <Compile Include="Controllers\Nodes\SyntacticalCoverNode.cs" />
+    <Compile Include="Output\OutputSettingsDialog.cs" />
+    <Compile Include="Stages\InitialStageWidget.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="mathtextrecognizer.glade" />
-    <EmbeddedResource Include="defaultConfig" />
+    <EmbeddedResource Include="mathtextrecognizer.glade">
+      <LogicalName>mathtextrecognizer.glade</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="defaultConfig">
+      <LogicalName>defaultConfig</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

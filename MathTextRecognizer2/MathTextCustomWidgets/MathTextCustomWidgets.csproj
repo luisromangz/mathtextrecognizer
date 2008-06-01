@@ -1,53 +1,63 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <ProjectGuid>{50223E7F-60A8-4BFF-816A-BA553CB41956}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <ProjectGuid>{CED2CACF-94BC-46AD-B3DD-0DF6DE37BAB0}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
-    <NoStdLib>False</NoStdLib>
-    <WarningLevel>4</WarningLevel>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <AssemblyName>mathtextcustomwidgets</AssemblyName>
+    <AssemblyName>MathTextCustomWidgets</AssemblyName>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <OutputPath>bin\Debug</OutputPath>
-    <Optimize>False</Optimize>
-    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
-    <DebugType>Full</DebugType>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <StartupObject />
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <DebugType>Full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
+    <Output>
+      <Output xmlns="" />
+    </Output>
+    <Execution>
+      <Execution xmlns="" />
+    </Execution>
+    <Build>
+      <Build xmlns="" />
+    </Build>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Platform)' == 'Debug' ">
-    <RegisterForComInterop>False</RegisterForComInterop>
-    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <BaseAddress>4194304</BaseAddress>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <FileAlignment>4096</FileAlignment>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <StartupObject />
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <Output>
+      <Output xmlns="" />
+    </Output>
+    <Execution>
+      <Execution xmlns="" />
+    </Execution>
+    <Build>
+      <Build xmlns="" />
+    </Build>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="atk-sharp" />
-    <Reference Include="gdk-sharp" />
-    <Reference Include="glade-sharp" />
-    <Reference Include="glib-sharp" />
-    <Reference Include="gtk-dotnet" />
-    <Reference Include="gtk-sharp" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-dotnet, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System.Data" />
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="pango-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MathTextLibrary\MathTextLibrary.csproj">
-      <Project>{2317FF6F-6FAE-4DED-B2C0-06BC1A30CE35}</Project>
+      <Project>{CED2CACF-94BC-46AD-B3DD-0DF6DE37BAB0}</Project>
       <Name>MathTextLibrary</Name>
     </ProjectReference>
   </ItemGroup>
@@ -79,30 +89,19 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gui.glade" />
-    <EmbeddedResource Include="..\Common\Artwork\insert-image16.png">
-      <Link>insert-image16.png</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Common\Artwork\insert-image22.png">
-      <Link>insert-image22.png</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Common\Artwork\database16.png">
-      <Link>database16.png</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Common\Artwork\database22.png">
-      <Link>database22.png</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Common\Artwork\database-new16.png">
-      <Link>database-new16.png</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Common\Artwork\database-new22.png">
-      <Link>database-new22.png</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Common\Artwork\window-new16.png">
-      <Link>window-new16.png</Link>
-    </EmbeddedResource>
-    <EmbeddedResource Include="..\Common\Artwork\window-new22.png">
-      <Link>window-new22.png</Link>
-    </EmbeddedResource>
+    <EmbeddedResource Include="..\Common\Artwork\insert-image16.png" />
+    <EmbeddedResource Include="..\Common\Artwork\insert-image22.png" />
+    <EmbeddedResource Include="..\Common\Artwork\database16.png" />
+    <EmbeddedResource Include="..\Common\Artwork\database22.png" />
+    <EmbeddedResource Include="..\Common\Artwork\database-new16.png" />
+    <EmbeddedResource Include="..\Common\Artwork\database-new22.png" />
+    <EmbeddedResource Include="..\Common\Artwork\window-new16.png" />
+    <EmbeddedResource Include="..\Common\Artwork\window-new22.png" />
+    <EmbeddedResource Include="..\Common\Artwork\mathtextrecognizer.png" />
+    <EmbeddedResource Include="..\Common\Artwork\mathtextlearner16.png" />
+    <EmbeddedResource Include="..\Common\Artwork\mathtextlearner.png" />
+    <EmbeddedResource Include="..\Common\Artwork\mathtextrecognizer16.png" />
+    <EmbeddedResource Include="..\Common\Artwork\edu_miscellaneous32.png" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

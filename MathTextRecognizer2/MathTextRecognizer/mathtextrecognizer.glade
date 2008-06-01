@@ -38,6 +38,7 @@
                     <child>
                       <widget class="GtkImageMenuItem" id="menuLoadImage">
                         <property name="visible">True</property>
+                        <property name="sensitive">False</property>
                         <property name="label" translatable="yes">_Cargar imagen</property>
                         <property name="use_underline">True</property>
                         <signal name="activate" handler="OnLoadImageClicked"/>
@@ -193,6 +194,7 @@
             <child>
               <widget class="GtkToolButton" id="toolLoadImage">
                 <property name="visible">True</property>
+                <property name="sensitive">False</property>
                 <property name="has_tooltip">True</property>
                 <property name="tooltip_text">Abrir imagen para reconocer</property>
                 <property name="label" translatable="yes">Abrir imagen para procesar</property>
@@ -284,7 +286,7 @@
           </widget>
           <packing>
             <property name="expand">False</property>
-            <property name="position">3</property>
+            <property name="position">4</property>
           </packing>
         </child>
         <child>
@@ -317,7 +319,7 @@
             </child>
           </widget>
           <packing>
-            <property name="position">4</property>
+            <property name="position">5</property>
           </packing>
         </child>
         <child>
@@ -5206,6 +5208,136 @@ Interior</property>
             <property name="expand">False</property>
             <property name="pack_type">GTK_PACK_END</property>
           </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="GtkWindow" id="initialStageWidget">
+    <child>
+      <widget class="GtkAlignment" id="initialStageWidgetBase">
+        <property name="visible">True</property>
+        <child>
+          <widget class="GtkVButtonBox" id="vbuttonbox4">
+            <property name="visible">True</property>
+            <property name="spacing">25</property>
+            <property name="layout_style">GTK_BUTTONBOX_CENTER</property>
+            <child>
+              <widget class="GtkButton" id="educationalModeBtn">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="response_id">0</property>
+                <signal name="clicked" handler="OnEducationalModeBtnClicked"/>
+                <child>
+                  <widget class="GtkAlignment" id="alignment30">
+                    <property name="visible">True</property>
+                    <property name="xscale">0</property>
+                    <child>
+                      <widget class="GtkHBox" id="hbox52">
+                        <property name="visible">True</property>
+                        <property name="spacing">2</property>
+                        <child>
+                          <widget class="GtkImage" id="image23">
+                            <property name="visible">True</property>
+                            <property name="stock">gtk-media-pause</property>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkLabel" id="label71">
+                            <property name="visible">True</property>
+                            <property name="label" translatable="yes">Modo _educativo</property>
+                            <property name="use_underline">True</property>
+                          </widget>
+                          <packing>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </widget>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="GtkButton" id="autoModeBtn">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="response_id">0</property>
+                <child>
+                  <widget class="GtkAlignment" id="alignment32">
+                    <property name="visible">True</property>
+                    <property name="xscale">0</property>
+                    <child>
+                      <widget class="GtkHBox" id="hbox53">
+                        <property name="visible">True</property>
+                        <property name="spacing">2</property>
+                        <child>
+                          <widget class="GtkImage" id="image58">
+                            <property name="visible">True</property>
+                            <property name="stock">gtk-media-play</property>
+                            <property name="icon_size">5</property>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkLabel" id="label72">
+                            <property name="visible">True</property>
+                            <property name="label" translatable="yes">Modo _desasistido</property>
+                            <property name="use_underline">True</property>
+                          </widget>
+                          <packing>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </widget>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkButton" id="blackboardModeBtn">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="response_id">0</property>
+                <child>
+                  <widget class="GtkAlignment" id="alignment49">
+                    <property name="visible">True</property>
+                    <property name="xscale">0</property>
+                    <child>
+                      <widget class="GtkHBox" id="hbox54">
+                        <property name="visible">True</property>
+                        <property name="spacing">2</property>
+                        <child>
+                          <widget class="GtkImage" id="blackboardImage">
+                            <property name="visible">True</property>
+                            <property name="stock">gtk-missing-image</property>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkLabel" id="label73">
+                            <property name="visible">True</property>
+                            <property name="label" translatable="yes">Modo _pizarra</property>
+                            <property name="use_underline">True</property>
+                          </widget>
+                          <packing>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </widget>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </widget>
         </child>
       </widget>
     </child>

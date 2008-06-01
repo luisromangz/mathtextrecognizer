@@ -130,6 +130,8 @@ namespace MathTextRecognizer
 			
 			syntacticalRulesManagerDialog = 
 				new SyntacticalRulesManagerDialog(this.Window);
+			
+			this.mainWindow.Icon = ImageResources.LoadPixbuf("mathtextrecognizer16");
 		
 			
 		}
@@ -280,12 +282,77 @@ namespace MathTextRecognizer
 			logView.LogLine(message, args);
 		}
 		
+		public void CreateOCRWidget()
+		{
+			// We add the OCR widget.
+			ocrWidget = new OCRStageWidget(this);
+			
+			
+			recognizingStepsNB.AppendPage(ocrWidget,
+			                              new Label(OCRStageWidget.WidgetLabel));
+			
+			ocrWidget.ShowAll();
+			
+			
+		}
+		
+		public void CreateTokenizingWidget()
+		{
+			// We add the tokenizer widget.
+			tokenizingWidget = new TokenizingStageWidget(this);
+			recognizingStepsNB.AppendPage(tokenizingWidget,
+			                              new Label(TokenizingStageWidget.WidgetLabel));
+			tokenizingWidget.ShowAll();
+		}
+		
+		public void CreateParsingWidget()
+		{
+			parsingWidget = new ParsingStageWidget(this);
+			recognizingStepsNB.AppendPage(parsingWidget,
+			                              new Label(ParsingStageWidget.WidgetLabel));
+			parsingWidget.ShowAll();
+		}
+		
+		
+		/// <summary>
+		/// Metodo que maneja el evento provocado al cerrarse el dialogo de 
+		/// apertura de imagen.
+		/// </summary>
+		public void LoadImage()
+		{
+			string filename;
+			
+			if(ImageLoadDialog.Show(mainWindow, out filename)
+				== ResponseType.Ok)
+			{			
+				// Cargamos la imagen desde disco
+					
+				LoadImage(filename);	
+				ResetState();
+			}
+		}
 	
 		
 #endregion Metodos publicos
 		
 #region Metodos privados
 		
+		/// <summary>
+		/// Loads an image as the image to be processed.
+		/// </summary>
+		/// <param name="filename">
+		/// The image's path.
+		/// </param>
+		private void LoadImage(string filename)
+		{
+			ocrWidget.SetInitialImage(filename);
+				
+			this.mainWindow.Title = 
+				title + System.IO.Path.GetFileName(filename);
+		
+			recognizementFinished=false;
+			ClearLog();
+		}
 		
 		/// <summary>
 		/// Para facilitar la inicializacion de los widgets.
@@ -313,21 +380,8 @@ namespace MathTextRecognizer
 				recognizingStepsNB.RemovePage(0);
 			}
 			
-			// We add the OCR widget.
-			ocrWidget = new OCRStageWidget(this);			
-			recognizingStepsNB.AppendPage(ocrWidget,
-			                              new Label(OCRStageWidget.WidgetLabel));
-			
-			// We add the tokenizer widget.
-			tokenizingWidget = new TokenizingStageWidget(this);
-			recognizingStepsNB.AppendPage(tokenizingWidget,
-			                              new Label(TokenizingStageWidget.WidgetLabel));
-			
-			
-			parsingWidget = new ParsingStageWidget(this);
-			recognizingStepsNB.AppendPage(parsingWidget,
-			                              new Label(ParsingStageWidget.WidgetLabel));
-			
+			recognizingStepsNB.AppendPage(new InitialStageWidget(this),
+			                              new Label(InitialStageWidget.WidgetLabel));
 			
 			mainWindow.ShowAll();
 			
@@ -354,8 +408,8 @@ namespace MathTextRecognizer
 			AppInfoDialog.Show(
 				mainWindow,
 				"Reconocedor de caracteres matemáticos",
-				"Este programa se encarga de el reconocimiento del las "
-				+ "fórmulas contenidas en imágenes,y su posterior conversión.");
+				"Este programa se encarga de el reconocimiento del las fórmulas contenidas en imágenes,y su posterior conversión.",
+			     "mathtextrecognizer");
 		}
 		
 		/// <summary>
@@ -400,8 +454,6 @@ namespace MathTextRecognizer
 			if(res==ResponseType.Yes)
 			{			
 				LoadImage();
-				
-				
 			}
 		}
 		
@@ -453,41 +505,9 @@ namespace MathTextRecognizer
 			dialog.Show();
 			dialog.Destroy();
 		}
+	
 		
-		/// <summary>
-		/// Metodo que maneja el evento provocado al cerrarse el dialogo de 
-		/// apertura de imagen.
-		/// </summary>
-		private void LoadImage()
-		{
-			string filename;
-			
-			if(ImageLoadDialog.Show(mainWindow, out filename)
-				== ResponseType.Ok)
-			{			
-				// Cargamos la imagen desde disco
-					
-				LoadImage(filename);	
-				ResetState();
-			}
-		}
-		
-		/// <summary>
-		/// Loads an image as the image to be processed.
-		/// </summary>
-		/// <param name="filename">
-		/// The image's path.
-		/// </param>
-		private void LoadImage(string filename)
-		{
-			ocrWidget.SetInitialImage(filename);
-				
-			this.mainWindow.Title = 
-				title + System.IO.Path.GetFileName(filename);
-		
-			recognizementFinished=false;
-			ClearLog();
-		}
+	
 		
 		
 
@@ -496,9 +516,10 @@ namespace MathTextRecognizer
 		/// </summary>
 		private void OnExit()
 		{
-			ocrWidget.Abort();
-			tokenizingWidget.Abort();
-			parsingWidget.Abort();
+			foreach (RecognizingStageWidget widget in recognizingStepsNB) 
+			{
+				widget.Abort();
+			}
 			Application.Quit();			
 		}	
 		
@@ -526,22 +547,22 @@ namespace MathTextRecognizer
 		/// </summary>
 		private void ResetState()
 		{
-			menuLoadImage.Sensitive=true;
+			
 			menuOpenDatabaseManager.Sensitive=true;
 			
-			toolLoadImage.Sensitive=true;
 			toolDatabase.Sensitive=true;
 			
 			// We reset the state of the stage widgets,
 			// so the information generated for previous seasons is discarded.
-			ocrWidget.ResetState();
-			tokenizingWidget.ResetState();
-			parsingWidget.ResetState();
+			
+			while(recognizingStepsNB.NPages > 2)
+			{
+				recognizingStepsNB.RemovePage(2);
+			}
+			
 			
 			
 			recognizementFinished=true;
-			
-			recognizingStepsNB.Page=0;
 		}
 		
 		/// <summary>

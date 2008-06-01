@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using Gtk;
 using Glade;
@@ -16,13 +16,16 @@ namespace MathTextCustomWidgets.Dialogs
 		[WidgetAttribute]
 		private Gtk.AboutDialog appInfoDialog = null;	
 		
-		private AppInfoDialog(Window parent, string title, string msg)
+		private AppInfoDialog(Window parent, string title, string msg, 
+		                      string logoResource)
 		{
 			Glade.XML gxml = new Glade.XML (null, "gui.glade", "appInfoDialog", null);
 			gxml.Autoconnect (this);
 		    
 		    appInfoDialog.TransientFor = parent;
 		    appInfoDialog.Modal = true;
+			
+			appInfoDialog.Icon = parent.Icon;
 		    
 		    appInfoDialog.Name = title;
 		    appInfoDialog.Comments = msg + 
@@ -33,7 +36,10 @@ namespace MathTextCustomWidgets.Dialogs
 		    	"Fidel Ramos Sañudo\n" +
 				"Luis Román Gutiérrez\n" +
 				"Irene Román Rubio\n" +
-				"Francisco Javier Valdés López\n" ;	
+				"Francisco Javier Valdés López\n" ;
+			
+			appInfoDialog.Logo = ImageResources.LoadPixbuf(logoResource);
+			
 		}
 		
 		/// <summary>
@@ -48,9 +54,11 @@ namespace MathTextCustomWidgets.Dialogs
 		/// <param name = "msg">
 		/// El mensaje que aparecerá para describir la aplicación.
 		/// </param>		
-		public static void Show(Window parent, string title, string msg)
+		public static void Show(Window parent, string title, string msg, 
+		                        string logoResource)
 		{
-			AppInfoDialog dialog = new AppInfoDialog(parent, title, msg);
+			AppInfoDialog dialog = 
+				new AppInfoDialog(parent, title, msg, logoResource);
 			
 			dialog.appInfoDialog.Run();
 			dialog.appInfoDialog.Destroy();

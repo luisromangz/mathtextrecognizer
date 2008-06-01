@@ -94,13 +94,19 @@ namespace MathTextRecognizer.Stages
 			mainWindow.Log(format, pars);
 		}
 		
-		protected abstract void SetInitialData();
+		protected virtual void SetInitialData()
+		{
+			
+		}
 		
 		/// <summary>
 		/// Resets the widget's children widget to a state suitable for a 
 		/// new recognizement session.
 		/// </summary>
-		public abstract void ResetState();
+		public virtual void ResetState()
+		{
+			
+		}
 		
 		/// <summary>
 		/// Selects the next recognizing step.
@@ -151,12 +157,18 @@ namespace MathTextRecognizer.Stages
 		/// A <see cref="ControllerStepMode"/> indicating when the controller 
 		/// should stop.
 		/// </param>
-		protected abstract void NextStep(ControllerStepMode mode);
+		protected virtual void NextStep(ControllerStepMode mode)
+		{
+			
+		}
 		
 		/// <summary>
 		/// Abort this widget's controller thread.
 		/// </summary>
-		public abstract void Abort();
+		public virtual void Abort()
+		{
+			
+		}
 		
 	}
 }
