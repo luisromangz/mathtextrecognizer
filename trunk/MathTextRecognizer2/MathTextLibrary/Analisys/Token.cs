@@ -38,6 +38,7 @@ namespace MathTextLibrary.Analisys
 		
 		private int percent033line;
 		private int percent066line;
+		private int percent075line;
 		private int percent120line;
 		
 		public Token()
@@ -47,6 +48,7 @@ namespace MathTextLibrary.Analisys
 			percent033line = -1;
 			percent066line = -1;
 			percent120line = -1;
+			percent075line = -1;
 		}
 			
 		/// <summary>
@@ -295,6 +297,17 @@ namespace MathTextLibrary.Analisys
 				}
 				
 				return percent066line;
+			}
+		}
+		
+		public int Percent0_75Line {
+			get {
+				if(percent075line==-1)
+				{
+					percent075line = Bodyline +(int)(BodyHeight*0.75f);
+				}
+				
+				return percent075line;
 			}
 		}
 

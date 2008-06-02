@@ -141,9 +141,9 @@ namespace MathTextLibrary.Analisys
 			if(forceTokenSearch)
 			{
 				idx = sequence.SearchToken(this.tokenType);
-				Console.WriteLine("Forzada búsqueda de {0}, posición {1}",
-				                  this.tokenType,
-				                  idx);
+				LogSentInvoker("Forzada búsqueda de {0}, posición {1}",
+				               this.tokenType,
+				               idx);
 			}		
 			
 			
@@ -152,7 +152,7 @@ namespace MathTextLibrary.Analisys
 			Token matched = null;
 			if(idx==-1 || this.tokenType != sequence[idx].Type)
 			{
-				Console.WriteLine("Not matched: {0}", this.tokenType);
+				LogSentInvoker("El item esperado {0} no fue encontrado.", this.tokenType);
 				res = !IsCompulsory;
 			}
 			else
@@ -251,10 +251,10 @@ namespace MathTextLibrary.Analisys
 				
 				
 
-				Console.WriteLine("Reconociendo los items relacionados ({0}) de {1} con el elemento «{2}»",
-				                  relatedRemnant,
-				                  matched.Type,
-				                  relatedItem.ToString());
+				LogSentInvoker("Reconociendo los items relacionados ({0}) de {1} con el elemento «{2}»",
+				               relatedRemnant,
+				               matched.Type,
+				               relatedItem.ToString());
 				
 				RelatedSequenceSetInvoker(relatedRemnant);
 				
@@ -346,10 +346,10 @@ namespace MathTextLibrary.Analisys
 				}
 				else if(!SpecialPosition(matched, checkedItem))
 				{
-					Console.WriteLine("Encontrado {0}, cancelando la creación de la secuencia de items {1} de {2}",
-					                  checkedItem.Type,
-					                  position,
-					                  matched.Type);
+					LogSentInvoker("Encontrado {0}, cancelando la creación de la secuencia de items «{1}» {2}",
+					               checkedItem.Type,
+					               position,
+					               matched.Type);
 					break;
 				}
 				else
@@ -358,10 +358,10 @@ namespace MathTextLibrary.Analisys
 				}
 			}
 			
-			Console.WriteLine("Extraida la secuencia ({0}) en posicion {1} de entre los elementos de ({2})",
-			                  sequence,
-			                  position,
-			                  remainingItemsString);
+			LogSentInvoker("Extraida la secuencia ({0}) en posicion «{1}» de entre los elementos de ({2})",
+			               sequence,
+			               position,
+			               remainingItemsString);
 			
 			return sequence;
 		}
@@ -430,7 +430,7 @@ namespace MathTextLibrary.Analisys
 					// integral-like limit expressions.
 					
 					res = (matched.Left < checkedItem.Left
-					       && checkedItem.Baseline < matched.Percent0_66Line);
+					       && checkedItem.Baseline < matched.Percent0_75Line);
 					break;
 			}
 			
@@ -455,7 +455,7 @@ namespace MathTextLibrary.Analisys
 		protected bool SpecialPosition(Token referenceToken, Token checkedToken)
 		{
 			if(checkedToken.Left < referenceToken.Left
-			   || checkedToken.Baseline < referenceToken.Percent0_66Line
+			   || checkedToken.Baseline < referenceToken.Percent0_75Line
 			   || checkedToken.Bodyline > referenceToken.Percent0_33Line)
 			{
 				return true;

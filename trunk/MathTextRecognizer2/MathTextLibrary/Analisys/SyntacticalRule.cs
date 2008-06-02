@@ -112,29 +112,29 @@ namespace MathTextLibrary.Analisys
 			
 			TokenSequence backupSequence = new TokenSequence(sequence);
 			
-			
+			this.LogSentInvoker("Se intentará aplicar la regla «{0}»",
+			                    this.Label);
 
 			foreach (SyntacticalExpression expression in expressions)  
 			{
-				
+				this.LogSentInvoker("Se intentará aplicar la expresión «"
+				                    +expression.Label
+				                    +"»");
 				string expressionRes;
+				
 				if(expression.Match(ref sequence, out expressionRes))
 				{
 					// If the matching is successful, we consider 
 					// the output valid.
 					text = expressionRes;
+					
 					return true;
 				}
 				else
 				{
-					Console.WriteLine("La expresión «{0}» falló el reconocimiento, restaurando la secuencia ({1})",
-					                  expression.ToString(),
-					                  backupSequence);
-					sequence = new TokenSequence(backupSequence);	
-					
+					sequence = new TokenSequence(backupSequence);						
 					SequenceRestoredInvoker(sequence);
 				}
-				
 			}
 			
 			text ="";

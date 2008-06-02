@@ -131,7 +131,8 @@ namespace MathTextRecognizer
 			syntacticalRulesManagerDialog = 
 				new SyntacticalRulesManagerDialog(this.Window);
 			
-			this.mainWindow.Icon = ImageResources.LoadPixbuf("mathtextrecognizer16");
+			this.mainWindow.Icon = 
+				ImageResources.LoadPixbuf("mathtextrecognizer16");
 		
 			
 		}

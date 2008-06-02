@@ -122,6 +122,7 @@ namespace MathTextRecognizer.Stages
 			controller.RelatedSequenceSet += 
 				new SequenceSetHandler(OnControllerRelatedSequenceSet);
 			
+		
 			this.ShowAll();
 		}
 		
@@ -190,6 +191,9 @@ namespace MathTextRecognizer.Stages
 			syntacticalCoverTree.Columns[0].Sizing = 
 				TreeViewColumnSizing.Autosize;
 			
+			syntacticalCoverTree.RowActivated+= 
+				new RowActivatedHandler(OnSyntacticalCoverTreeRowActivated);
+			
 			syntacticalCoverTree.ShowExpanders = false;
 		
 			syntacticalTreePlaceholder.Add(syntacticalCoverTree);
@@ -222,6 +226,7 @@ namespace MathTextRecognizer.Stages
 			Application.Invoke(sender, args, delegate(object resender, EventArgs a)
 			{
 				MatchingFinishedArgs _args = a as MatchingFinishedArgs;
+				
 				if(controller.StepMode != ControllerStepMode.UntilEnd)
 				{
 					parsingNextButtonsAlign.Sensitive = true;
@@ -345,11 +350,8 @@ namespace MathTextRecognizer.Stages
 		{
 			Application.Invoke(delegate(object resender, EventArgs a)
 			{
-				
 				if(currentNode.Parent !=null)
 				{
-					Console.WriteLine("subiendo");
-					
 					currentNode =  currentNode.Parent as SyntacticalCoverNode;
 					currentNode.Select();
 				}
@@ -360,11 +362,11 @@ namespace MathTextRecognizer.Stages
 				{
 					parsingNextButtonsAlign.Sensitive = true;
 				}
-			});
-				
+			});				
 		}
 		
-		private void OnControllerTokenMatching(object sender, TokenMatchingArgs _args)
+		private void OnControllerTokenMatching(object sender,
+		                                       TokenMatchingArgs _args)
 		{
 			Application.Invoke(sender, _args, 
 			                   delegate(object resender, EventArgs a)
@@ -428,6 +430,7 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		private void OnParsingNextStepBtnClicked(object sender, EventArgs args)
 		{
+			MainRecognizerWindow.LogAreaExpanded = true;
 			NextStep(ControllerStepMode.StepByStep);
 		}
 		
@@ -522,8 +525,24 @@ namespace MathTextRecognizer.Stages
 				if(res == ResponseType.No)
 					return;
 			}
-			Abort();
+			
+			controller.DeregisterEvents();
 			PreviousStage();
+			
+		}
+		
+		private void OnSyntacticalCoverTreeRowActivated(object sender,
+		                                                RowActivatedArgs args)
+		{
+			if(syntacticalCoverTree.GetRowExpanded(args.Path))			
+			{
+				syntacticalCoverTree.CollapseRow(args.Path);
+			}
+			else
+			{
+				syntacticalCoverTree.ExpandRow(args.Path,true);
+			}
+			
 		}
 		
 		/// <summary>
