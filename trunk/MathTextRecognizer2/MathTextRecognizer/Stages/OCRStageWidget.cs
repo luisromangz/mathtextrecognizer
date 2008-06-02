@@ -37,7 +37,7 @@ namespace MathTextRecognizer.Stages
 	{
 #region Widgets
 		[WidgetAttribute]
-		private HPaned segmentingAndMatchingHPaned = null;
+		private VBox ocrStageWidgetBase = null;
 		
 		[WidgetAttribute]
 		private Frame frameOriginal = null;
@@ -99,11 +99,11 @@ namespace MathTextRecognizer.Stages
 			: base(window)
 		{
 			Glade.XML gxml = new Glade.XML("mathtextrecognizer.glade",
-			                               "segmentingAndMatchingHPaned");
+			                               "ocrStageWidgetBase");
 
 			gxml.Autoconnect(this);
 			
-			this.Add(segmentingAndMatchingHPaned);
+			this.Add(ocrStageWidgetBase);
 			
 			
 			// We load the contextual menu.
@@ -324,38 +324,35 @@ namespace MathTextRecognizer.Stages
 		private void OnControllerBitmapProcessedByDatabase(object sender, 
 		                                         BitmapProcessedArgs arg)
 		{
-			Gtk.Application.Invoke(sender, arg, OnBitmapProcessedByDatabaseInThread);
-		}
-		
-		private void OnBitmapProcessedByDatabaseInThread(object sender, EventArgs a)
-		{		
-			if(treeview.NodeSelection.SelectedNodes.Length>0)
+			Gtk.Application.Invoke(sender, arg,
+			                       delegate(object resender, EventArgs a)
 			{
-				// Si hay un simbolo seleccionado, 
-				// nos traemos sus imagenes procesadas.
-				SegmentedNode node = 
-					(SegmentedNode)(treeview.NodeSelection.SelectedNode);
-			
+				if(treeview.NodeSelection.SelectedNodes.Length>0)
+				{
+					// Si hay un simbolo seleccionado, 
+					// nos traemos sus imagenes procesadas.
+					SegmentedNode node = 
+						(SegmentedNode)(treeview.NodeSelection.SelectedNode);
 				
-				ImageArea imageAreaProcessed = new ImageArea();
-				imageAreaProcessed.Image=
-					node.MathTextBitmap.LastProcessedImage.CreatePixbuf();
-				imageAreaProcessed.ImageMode=ImageAreaMode.Zoom;
+					
+					ImageArea imageAreaProcessed = new ImageArea();
+					imageAreaProcessed.Image=
+						node.MathTextBitmap.LastProcessedImage.CreatePixbuf();
+					imageAreaProcessed.ImageMode=ImageAreaMode.Zoom;
+					
 				
-			
-				processedImageNB.AppendPage(imageAreaProcessed,
-				                            new Label(String.Format("BD {0}",
-				                                                    processedImageNB.NPages+1)));
-				
-				processedImageNB.Page=processedImageNB.NPages-1;
-				
-				// Solo mostramos los tabs si hay mas de una imagen procesada
-				processedImageNB.ShowTabs = 
-					node.MathTextBitmap.ProcessedImages.Count>1;
-			}
+					processedImageNB.AppendPage(imageAreaProcessed,
+					                            new Label(String.Format("BD {0}",
+					                                                    processedImageNB.NPages+1)));
+					
+					processedImageNB.Page=processedImageNB.NPages-1;
+					
+					// Solo mostramos los tabs si hay mas de una imagen procesada
+					processedImageNB.ShowTabs = 
+						node.MathTextBitmap.ProcessedImages.Count>1;
+				}
+			});
 		}
-		
-		
 		
 		/// <summary>
 		/// Método que maneja el evento provocado al hacerse click sobre 
@@ -479,13 +476,11 @@ namespace MathTextRecognizer.Stages
 		private void OnControllerNodeBeingProcessed(object sender, 
 		                                            NodeBeingProcessedArgs args)
 		{
-			Application.Invoke(OnNodeBeingProcessedInThread);
-		}
-		
-		private void OnNodeBeingProcessedInThread(object sender, EventArgs args)
-		{
-			if(controller.StepMode != ControllerStepMode.UntilEnd)
-				alignNextButtons.Sensitive=true;
+			Application.Invoke(delegate(object resender, EventArgs a)
+			{
+				if(controller.StepMode != ControllerStepMode.UntilEnd)
+					alignNextButtons.Sensitive=true;
+			});
 		}
 		
 		
@@ -573,18 +568,14 @@ namespace MathTextRecognizer.Stages
 						database = selectedDatabase.Database;
 						databasePath = selectedDatabase.Path;
 					}
-					
-				
+									
 					new MainLearnerWindow(this.MainRecognizerWindow.Window,
 					                      database,
 					                      databasePath,
 					                      selectedNode.MathTextBitmap.Pixbuf,
 					                      selectedNode.Name);
 				}
-				
-				
-			}
-				                                      
+			}                                     
 		}
 		
 		/// <summary>
@@ -596,28 +587,24 @@ namespace MathTextRecognizer.Stages
 		private void OnControllerProcessFinished(object sender, EventArgs arg)
 		{			
 		    // Llamamos a través de invoke para que funcione.
-			Gtk.Application.Invoke(OnRecognizeProcessFinishedInThread);			
-		}
-		
-		private void OnRecognizeProcessFinishedInThread(object sender,
-		                                                EventArgs a)
-		{
-		    Log("¡Reconocimiento terminado!");
+			Gtk.Application.Invoke(delegate(object resender, EventArgs args)
+            {
+				Log("¡Reconocimiento terminado!");
 			
-			OkDialog.Show(
-				MainRecognizerWindow.Window,
-				MessageType.Info,
-			    "¡Proceso de reconocimiento terminado!\n"
-			    + "Ahora puede revisar el resultado.");
-			    
-			
-						
-			ResetState();
-			
-			recognizementFinished = true;
-			
-			gotoTokenizerBtn.Sensitive = true;
-			
+				OkDialog.Show(
+					MainRecognizerWindow.Window,
+					MessageType.Info,
+				    "¡Proceso de reconocimiento terminado!\n"
+				    + "Ahora puede revisar el resultado.");
+				    
+				
+							
+				ResetState();
+				
+				recognizementFinished = true;
+				
+				gotoTokenizerBtn.Sensitive = true;
+			});			
 		}
 			
 		/// <summary>
@@ -858,6 +845,23 @@ namespace MathTextRecognizer.Stages
 		}
 		
 			
+		private void OnOcrBackBtnClicked(object sender, EventArgs args)
+		{
+			if(recognizementFinished)
+			{
+				
+				// The parsing finished and was successful
+				ResponseType res = ConfirmDialog.Show(MainRecognizerWindow.Window,
+				                                      "Si vuelves al paso anterior se perderá el segmentado realizado, ¿quieres continuar?");
+				
+				if(res == ResponseType.No)
+					return;
+			}
+			
+			Abort();
+			PreviousStage();
+			
+		}
 		
 		
 #endregion Non-public methods

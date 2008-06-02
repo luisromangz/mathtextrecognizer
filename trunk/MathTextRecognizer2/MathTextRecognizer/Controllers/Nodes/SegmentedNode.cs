@@ -184,56 +184,43 @@ namespace MathTextRecognizer.Controllers.Nodes
 		{		
 			Application.Invoke(this, 
 			                   new AddNodeArgs(node),
-			                   AddSegmentedChildInThread);
+			                   delegate(object sender, EventArgs arg)
+			                   {
+				AddNodeArgs a = arg as AddNodeArgs;
+				this.AddChild(a.Node);
+				
+				if(this.Parent ==null)
+				{
+					// Si no tiene padre
+					a.Node.name = String.Format("Img. {0}",this.ChildCount);
+				}
+				else
+				{
+					a.Node.name = String.Format("{0}.{1}",this.name, this.ChildCount);
+				}
+				
+				view.ExpandAll();
+				view.ColumnsAutosize();
+			});
 			
 		}
 		
-		/// <summary>
-		/// Auxiliary method used to add the node in the main app's thread.
-		/// </summary>
-		/// <param name="sender">
-		/// A <see cref="System.Object"/>
-		/// </param>
-		/// <param name="arg">
-		/// A <see cref="EventArgs"/>
-		/// </param>
-		private void AddSegmentedChildInThread(object sender, EventArgs arg)
-		{
-			AddNodeArgs a = arg as AddNodeArgs;
-			this.AddChild(a.Node);
-			
-			if(this.Parent ==null)
-			{
-				// Si no tiene padre
-				a.Node.name = String.Format("Img. {0}",this.ChildCount);
-			}
-			else
-			{
-				a.Node.name = String.Format("{0}.{1}",this.name, this.ChildCount);
-			}
-			
-			view.ExpandAll();
-			view.ColumnsAutosize();
-		}
 		
 		/// <summary>
 		/// Selecciona el nodo.
 		/// </summary>
 		public void Select()
 		{
-			Application.Invoke(new EventHandler(SelectInThread));
+			Application.Invoke(delegate(object sender, EventArgs args)
+			                   {
+				
+				view.NodeSelection.SelectNode(this);
+				TreePath path = view.Selection.GetSelectedRows()[0];
+				view.ScrollToCell(path,view.Columns[0],true,0.5f,0f);
+			});
 		}
 			
-		/// <summary>
-		/// Realiza la selecion del nodo en el hilo de la interfaz.
-		/// </summary>
-		private void SelectInThread(object sender, EventArgs args)
-		{
-			view.NodeSelection.SelectNode(this);
-			TreePath path = view.Selection.GetSelectedRows()[0];
-			view.ScrollToCell(path,view.Columns[0],true,0.5f,0f);
-		}
-		
+				
 		/// <summary>
 		/// Contains the arguments of the handler method for the addition
 		/// of children nodes in the gui's thread.

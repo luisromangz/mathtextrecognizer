@@ -511,6 +511,21 @@ namespace MathTextRecognizer.Stages
 			dialog.Destroy();
 		}
 		
+		private void OnParsingBackBtnClicked(object sender, EventArgs args)
+		{
+			if(parsingShowOutputBtn.Sensitive)
+			{
+				// The parsing finished and was successful
+				ResponseType res = ConfirmDialog.Show(MainRecognizerWindow.Window,
+				                                      "Si vuelves al paso anterior se perderá el análisis realizado, ¿quieres continuar?");
+				
+				if(res == ResponseType.No)
+					return;
+			}
+			Abort();
+			PreviousStage();
+		}
+		
 		/// <summary>
 		/// Adds the remaining tokens to the icon view.
 		/// </summary>

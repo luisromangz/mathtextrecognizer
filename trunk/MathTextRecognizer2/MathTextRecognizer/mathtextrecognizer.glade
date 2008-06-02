@@ -813,77 +813,51 @@
   </widget>
   <widget class="GtkWindow" id="segmentingAndMatchingWidget">
     <child>
-      <widget class="GtkHPaned" id="segmentingAndMatchingHPaned">
+      <widget class="GtkVBox" id="ocrStageWidgetBase">
         <property name="visible">True</property>
-        <property name="can_focus">True</property>
-        <property name="position">255</property>
-        <property name="position_set">True</property>
         <child>
-          <widget class="GtkScrolledWindow" id="scrolledtree">
-            <property name="width_request">210</property>
+          <widget class="GtkHPaned" id="segmentingAndMatchingHPaned">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="border_width">5</property>
-            <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-            <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-            <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+            <property name="position">255</property>
+            <property name="position_set">True</property>
             <child>
-              <placeholder/>
-            </child>
-          </widget>
-          <packing>
-            <property name="resize">False</property>
-            <property name="shrink">False</property>
-          </packing>
-        </child>
-        <child>
-          <widget class="GtkVBox" id="vbox2">
-            <property name="visible">True</property>
-            <child>
-              <widget class="GtkFrame" id="frameOriginal">
-                <property name="width_request">200</property>
-                <property name="height_request">200</property>
+              <widget class="GtkScrolledWindow" id="scrolledtree">
+                <property name="width_request">210</property>
                 <property name="visible">True</property>
-                <property name="has_tooltip">True</property>
-                <property name="tooltip_text">Muestra la imagen de partida, con el nodo seleccionado resaltado</property>
+                <property name="can_focus">True</property>
                 <property name="border_width">5</property>
-                <property name="label_xalign">0</property>
+                <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
                 <child>
                   <placeholder/>
                 </child>
-                <child>
-                  <widget class="GtkLabel" id="label10">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">Imagen original resaltada</property>
-                    <property name="use_markup">True</property>
-                  </widget>
-                  <packing>
-                    <property name="type">label_item</property>
-                  </packing>
-                </child>
               </widget>
+              <packing>
+                <property name="resize">False</property>
+                <property name="shrink">False</property>
+              </packing>
             </child>
             <child>
-              <widget class="GtkHBox" id="hbox2">
-                <property name="width_request">512</property>
-                <property name="height_request">230</property>
+              <widget class="GtkVBox" id="vbox10">
                 <property name="visible">True</property>
-                <property name="border_width">5</property>
-                <property name="spacing">11</property>
                 <child>
-                  <widget class="GtkFrame" id="frameNodeActual">
-                    <property name="width_request">240</property>
+                  <widget class="GtkFrame" id="frameOriginal">
+                    <property name="width_request">200</property>
+                    <property name="height_request">200</property>
                     <property name="visible">True</property>
                     <property name="has_tooltip">True</property>
-                    <property name="tooltip_text">Muestra la imagen del nodo</property>
+                    <property name="tooltip_text">Muestra la imagen de partida, con el nodo seleccionado resaltado</property>
+                    <property name="border_width">5</property>
                     <property name="label_xalign">0</property>
                     <child>
                       <placeholder/>
                     </child>
                     <child>
-                      <widget class="GtkLabel" id="label1">
+                      <widget class="GtkLabel" id="label10">
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">Nodo actual</property>
+                        <property name="label" translatable="yes">Imagen original resaltada</property>
                         <property name="use_markup">True</property>
                       </widget>
                       <packing>
@@ -893,54 +867,365 @@
                   </widget>
                 </child>
                 <child>
-                  <widget class="GtkFrame" id="frameNodeProcessed">
-                    <property name="width_request">240</property>
+                  <widget class="GtkHBox" id="hbox2">
+                    <property name="width_request">512</property>
+                    <property name="height_request">230</property>
                     <property name="visible">True</property>
-                    <property name="label_xalign">0</property>
+                    <property name="border_width">5</property>
+                    <property name="spacing">11</property>
                     <child>
-                      <widget class="GtkAlignment" id="alignment11">
+                      <widget class="GtkFrame" id="frameNodeActual">
+                        <property name="width_request">240</property>
                         <property name="visible">True</property>
-                        <property name="bottom_padding">1</property>
-                        <property name="left_padding">1</property>
-                        <property name="right_padding">1</property>
+                        <property name="has_tooltip">True</property>
+                        <property name="tooltip_text">Muestra la imagen del nodo</property>
+                        <property name="label_xalign">0</property>
                         <child>
-                          <widget class="GtkNotebook" id="processedImageNB">
+                          <placeholder/>
+                        </child>
+                        <child>
+                          <widget class="GtkLabel" id="label1">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="has_tooltip">True</property>
-                            <property name="tooltip_text">Muestra el nodo procesado según las distintas bases de datos</property>
-                            <property name="tab_pos">GTK_POS_BOTTOM</property>
-                            <child>
-                              <placeholder/>
-                            </child>
-                            <child>
-                              <widget class="GtkLabel" id="label17">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">page 1</property>
-                              </widget>
-                              <packing>
-                                <property name="type">tab</property>
-                                <property name="tab_fill">False</property>
-                              </packing>
-                            </child>
+                            <property name="label" translatable="yes">Nodo actual</property>
+                            <property name="use_markup">True</property>
                           </widget>
+                          <packing>
+                            <property name="type">label_item</property>
+                          </packing>
                         </child>
                       </widget>
                     </child>
                     <child>
-                      <widget class="GtkLabel" id="label2">
+                      <widget class="GtkFrame" id="frameNodeProcessed">
+                        <property name="width_request">240</property>
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">Nodo procesado</property>
-                        <property name="use_markup">True</property>
+                        <property name="label_xalign">0</property>
+                        <child>
+                          <widget class="GtkAlignment" id="alignment11">
+                            <property name="visible">True</property>
+                            <property name="bottom_padding">1</property>
+                            <property name="left_padding">1</property>
+                            <property name="right_padding">1</property>
+                            <child>
+                              <widget class="GtkNotebook" id="processedImageNB">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="has_tooltip">True</property>
+                                <property name="tooltip_text">Muestra el nodo procesado según las distintas bases de datos</property>
+                                <property name="tab_pos">GTK_POS_BOTTOM</property>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                                <child>
+                                  <widget class="GtkLabel" id="label17">
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">page 1</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="type">tab</property>
+                                    <property name="tab_fill">False</property>
+                                  </packing>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                        </child>
+                        <child>
+                          <widget class="GtkLabel" id="label2">
+                            <property name="visible">True</property>
+                            <property name="label" translatable="yes">Nodo procesado</property>
+                            <property name="use_markup">True</property>
+                          </widget>
+                          <packing>
+                            <property name="type">label_item</property>
+                          </packing>
+                        </child>
                       </widget>
                       <packing>
-                        <property name="type">label_item</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="position">1</property>
                   </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="resize">True</property>
+                <property name="shrink">True</property>
+              </packing>
+            </child>
+          </widget>
+        </child>
+        <child>
+          <widget class="GtkNotebook" id="buttonsNB">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="show_tabs">False</property>
+            <property name="show_border">False</property>
+            <child>
+              <widget class="GtkAlignment" id="controlButtonsAlign">
+                <property name="visible">True</property>
+                <property name="xscale">0</property>
+                <child>
+                  <widget class="GtkHButtonBox" id="hbuttonbox1">
+                    <property name="visible">True</property>
+                    <property name="spacing">10</property>
+                    <property name="layout_style">GTK_BUTTONBOX_CENTER</property>
+                    <child>
+                      <widget class="GtkButton" id="ocrBackBtn">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="has_tooltip">True</property>
+                        <property name="tooltip_text">Volver al paso anterior</property>
+                        <property name="label" translatable="yes">gtk-go-back</property>
+                        <property name="use_stock">True</property>
+                        <property name="xalign">0.50999999046325684</property>
+                        <property name="response_id">0</property>
+                        <signal name="clicked" handler="OnOcrBackBtnClicked"/>
+                      </widget>
+                      <packing>
+                        <property name="secondary">True</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkButton" id="segmentBtn">
+                        <property name="visible">True</property>
+                        <property name="sensitive">False</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="response_id">0</property>
+                        <signal name="clicked" handler="OnSegmentBtnClicked"/>
+                        <child>
+                          <widget class="GtkAlignment" id="alignment14">
+                            <property name="visible">True</property>
+                            <property name="xscale">0</property>
+                            <child>
+                              <widget class="GtkHBox" id="hbox15">
+                                <property name="visible">True</property>
+                                <property name="spacing">5</property>
+                                <child>
+                                  <widget class="GtkImage" id="image9">
+                                    <property name="visible">True</property>
+                                    <property name="stock">gtk-cut</property>
+                                  </widget>
+                                </child>
+                                <child>
+                                  <widget class="GtkLabel" id="label19">
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">_Segmentar</property>
+                                    <property name="use_underline">True</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkButton" id="gotoTokenizerBtn">
+                        <property name="visible">True</property>
+                        <property name="sensitive">False</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="response_id">0</property>
+                        <signal name="clicked" handler="OnGoToTokenizerBtnClicked"/>
+                        <child>
+                          <widget class="GtkAlignment" id="alignment15">
+                            <property name="visible">True</property>
+                            <property name="xscale">0</property>
+                            <child>
+                              <widget class="GtkHBox" id="hbox16">
+                                <property name="visible">True</property>
+                                <property name="spacing">5</property>
+                                <child>
+                                  <widget class="GtkLabel" id="label20">
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">_Ir al análisis léxico</property>
+                                    <property name="use_underline">True</property>
+                                  </widget>
+                                </child>
+                                <child>
+                                  <widget class="GtkImage" id="image11">
+                                    <property name="visible">True</property>
+                                    <property name="stock">gtk-media-next</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="label3">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">page 1</property>
+              </widget>
+              <packing>
+                <property name="type">tab</property>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkAlignment" id="alignNextButtons">
+                <property name="visible">True</property>
+                <property name="sensitive">False</property>
+                <property name="has_tooltip">True</property>
+                <property name="tooltip_text">El nodo procesado según cada base de datos</property>
+                <property name="xscale">0</property>
+                <child>
+                  <widget class="GtkHButtonBox" id="hbuttonbox2">
+                    <property name="visible">True</property>
+                    <property name="spacing">10</property>
+                    <child>
+                      <widget class="GtkButton" id="btnNextStep">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="response_id">1</property>
+                        <signal name="clicked" handler="OnBtnNextStepClicked"/>
+                        <child>
+                          <widget class="GtkAlignment" id="alignment4">
+                            <property name="visible">True</property>
+                            <property name="xscale">0</property>
+                            <property name="yscale">0</property>
+                            <child>
+                              <widget class="GtkHBox" id="hbox5">
+                                <property name="visible">True</property>
+                                <property name="spacing">2</property>
+                                <child>
+                                  <widget class="GtkLabel" id="label4">
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">Siguiente _paso</property>
+                                    <property name="use_underline">True</property>
+                                  </widget>
+                                </child>
+                                <child>
+                                  <widget class="GtkImage" id="image1">
+                                    <property name="visible">True</property>
+                                    <property name="stock">gtk-go-down</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="GtkButton" id="btnNextNode">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="response_id">0</property>
+                        <signal name="clicked" handler="OnBtnNextNodeClicked"/>
+                        <child>
+                          <widget class="GtkAlignment" id="alignment5">
+                            <property name="visible">True</property>
+                            <property name="xscale">0</property>
+                            <property name="yscale">0</property>
+                            <child>
+                              <widget class="GtkHBox" id="hbox6">
+                                <property name="visible">True</property>
+                                <property name="spacing">2</property>
+                                <child>
+                                  <widget class="GtkLabel" id="label9">
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">Siguiente _nodo</property>
+                                    <property name="use_underline">True</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="GtkImage" id="image2">
+                                    <property name="visible">True</property>
+                                    <property name="stock">gtk-go-forward</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkButton" id="btnTilEnd">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="response_id">0</property>
+                        <signal name="clicked" handler="OnBtnTilEndClicked"/>
+                        <child>
+                          <widget class="GtkAlignment" id="alignment7">
+                            <property name="visible">True</property>
+                            <property name="xscale">0</property>
+                            <property name="yscale">0</property>
+                            <child>
+                              <widget class="GtkHBox" id="hbox7">
+                                <property name="visible">True</property>
+                                <property name="spacing">2</property>
+                                <child>
+                                  <widget class="GtkLabel" id="label18">
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">Hasta el _final</property>
+                                    <property name="use_underline">True</property>
+                                  </widget>
+                                </child>
+                                <child>
+                                  <widget class="GtkImage" id="image10">
+                                    <property name="visible">True</property>
+                                    <property name="stock">gtk-goto-last</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                  </widget>
                 </child>
               </widget>
               <packing>
@@ -948,281 +1233,22 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkNotebook" id="buttonsNB">
+              <widget class="GtkLabel" id="label22">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="show_tabs">False</property>
-                <property name="show_border">False</property>
-                <child>
-                  <widget class="GtkAlignment" id="controlButtonsAlign">
-                    <property name="visible">True</property>
-                    <property name="xscale">0</property>
-                    <child>
-                      <widget class="GtkHButtonBox" id="hbuttonbox1">
-                        <property name="visible">True</property>
-                        <property name="spacing">10</property>
-                        <property name="layout_style">GTK_BUTTONBOX_CENTER</property>
-                        <child>
-                          <widget class="GtkButton" id="segmentBtn">
-                            <property name="visible">True</property>
-                            <property name="sensitive">False</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="response_id">0</property>
-                            <signal name="clicked" handler="OnSegmentBtnClicked"/>
-                            <child>
-                              <widget class="GtkAlignment" id="alignment14">
-                                <property name="visible">True</property>
-                                <property name="xscale">0</property>
-                                <child>
-                                  <widget class="GtkHBox" id="hbox15">
-                                    <property name="visible">True</property>
-                                    <property name="spacing">5</property>
-                                    <child>
-                                      <widget class="GtkImage" id="image9">
-                                        <property name="visible">True</property>
-                                        <property name="stock">gtk-cut</property>
-                                      </widget>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkLabel" id="label19">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">_Segmentar</property>
-                                        <property name="use_underline">True</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                  </widget>
-                                </child>
-                              </widget>
-                            </child>
-                          </widget>
-                        </child>
-                        <child>
-                          <widget class="GtkButton" id="gotoTokenizerBtn">
-                            <property name="visible">True</property>
-                            <property name="sensitive">False</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="response_id">0</property>
-                            <signal name="clicked" handler="OnGoToTokenizerBtnClicked"/>
-                            <child>
-                              <widget class="GtkAlignment" id="alignment15">
-                                <property name="visible">True</property>
-                                <property name="xscale">0</property>
-                                <child>
-                                  <widget class="GtkHBox" id="hbox16">
-                                    <property name="visible">True</property>
-                                    <property name="spacing">5</property>
-                                    <child>
-                                      <widget class="GtkLabel" id="label20">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">_Ir al análisis léxico</property>
-                                        <property name="use_underline">True</property>
-                                      </widget>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkImage" id="image11">
-                                        <property name="visible">True</property>
-                                        <property name="stock">gtk-media-next</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                  </widget>
-                                </child>
-                              </widget>
-                            </child>
-                          </widget>
-                          <packing>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </widget>
-                    </child>
-                  </widget>
-                </child>
-                <child>
-                  <widget class="GtkLabel" id="label3">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">page 1</property>
-                  </widget>
-                  <packing>
-                    <property name="type">tab</property>
-                    <property name="tab_fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkAlignment" id="alignNextButtons">
-                    <property name="visible">True</property>
-                    <property name="sensitive">False</property>
-                    <property name="has_tooltip">True</property>
-                    <property name="tooltip_text">El nodo procesado según cada base de datos</property>
-                    <property name="xscale">0</property>
-                    <child>
-                      <widget class="GtkHButtonBox" id="hbuttonbox2">
-                        <property name="visible">True</property>
-                        <property name="spacing">10</property>
-                        <child>
-                          <widget class="GtkButton" id="btnNextStep">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="response_id">1</property>
-                            <signal name="clicked" handler="OnBtnNextStepClicked"/>
-                            <child>
-                              <widget class="GtkAlignment" id="alignment4">
-                                <property name="visible">True</property>
-                                <property name="xscale">0</property>
-                                <property name="yscale">0</property>
-                                <child>
-                                  <widget class="GtkHBox" id="hbox5">
-                                    <property name="visible">True</property>
-                                    <property name="spacing">2</property>
-                                    <child>
-                                      <widget class="GtkLabel" id="label4">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">Siguiente _paso</property>
-                                        <property name="use_underline">True</property>
-                                      </widget>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkImage" id="image1">
-                                        <property name="visible">True</property>
-                                        <property name="stock">gtk-go-down</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">False</property>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                  </widget>
-                                </child>
-                              </widget>
-                            </child>
-                          </widget>
-                        </child>
-                        <child>
-                          <widget class="GtkButton" id="btnNextNode">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="response_id">0</property>
-                            <signal name="clicked" handler="OnBtnNextNodeClicked"/>
-                            <child>
-                              <widget class="GtkAlignment" id="alignment5">
-                                <property name="visible">True</property>
-                                <property name="xscale">0</property>
-                                <property name="yscale">0</property>
-                                <child>
-                                  <widget class="GtkHBox" id="hbox6">
-                                    <property name="visible">True</property>
-                                    <property name="spacing">2</property>
-                                    <child>
-                                      <widget class="GtkLabel" id="label9">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">Siguiente _nodo</property>
-                                        <property name="use_underline">True</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">False</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkImage" id="image2">
-                                        <property name="visible">True</property>
-                                        <property name="stock">gtk-go-forward</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                  </widget>
-                                </child>
-                              </widget>
-                            </child>
-                          </widget>
-                          <packing>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkButton" id="btnTilEnd">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="response_id">0</property>
-                            <signal name="clicked" handler="OnBtnTilEndClicked"/>
-                            <child>
-                              <widget class="GtkAlignment" id="alignment7">
-                                <property name="visible">True</property>
-                                <property name="xscale">0</property>
-                                <property name="yscale">0</property>
-                                <child>
-                                  <widget class="GtkHBox" id="hbox7">
-                                    <property name="visible">True</property>
-                                    <property name="spacing">2</property>
-                                    <child>
-                                      <widget class="GtkLabel" id="label18">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">Hasta el _final</property>
-                                        <property name="use_underline">True</property>
-                                      </widget>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkImage" id="image10">
-                                        <property name="visible">True</property>
-                                        <property name="stock">gtk-goto-last</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">False</property>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                  </widget>
-                                </child>
-                              </widget>
-                            </child>
-                          </widget>
-                          <packing>
-                            <property name="position">2</property>
-                          </packing>
-                        </child>
-                      </widget>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkLabel" id="label22">
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">page 2</property>
-                  </widget>
-                  <packing>
-                    <property name="type">tab</property>
-                    <property name="position">1</property>
-                    <property name="tab_fill">False</property>
-                  </packing>
-                </child>
+                <property name="label" translatable="yes">page 2</property>
               </widget>
               <packing>
-                <property name="expand">False</property>
-                <property name="padding">5</property>
-                <property name="position">2</property>
+                <property name="type">tab</property>
+                <property name="position">1</property>
+                <property name="tab_fill">False</property>
               </packing>
             </child>
           </widget>
           <packing>
-            <property name="resize">True</property>
-            <property name="shrink">True</property>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="padding">5</property>
+            <property name="position">1</property>
           </packing>
         </child>
       </widget>
@@ -2232,116 +2258,379 @@
   </widget>
   <widget class="GtkWindow" id="tokenizingStageWidget">
     <child>
-      <widget class="GtkAlignment" id="tokenizingStageWidget">
+      <widget class="GtkAlignment" id="tokenizingStageWidgetBase">
         <property name="visible">True</property>
         <child>
-          <widget class="GtkHPaned" id="hpaned1">
+          <widget class="GtkVBox" id="vbox3">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="position">260</property>
             <child>
-              <widget class="GtkAlignment" id="alignment20">
+              <widget class="GtkAlignment" id="align1232">
                 <property name="visible">True</property>
-                <property name="left_padding">5</property>
                 <child>
-                  <widget class="GtkScrolledWindow" id="sequencesNVPlaceholder">
+                  <widget class="GtkHPaned" id="hpaned1">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-                    <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-                    <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+                    <property name="position">260</property>
                     <child>
-                      <placeholder/>
+                      <widget class="GtkAlignment" id="alignment31">
+                        <property name="visible">True</property>
+                        <property name="left_padding">5</property>
+                        <child>
+                          <widget class="GtkScrolledWindow" id="sequencesNVPlaceholder">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                            <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                            <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+                            <child>
+                              <placeholder/>
+                            </child>
+                          </widget>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="resize">False</property>
+                        <property name="shrink">True</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkVBox" id="vbox7">
+                        <property name="visible">True</property>
+                        <child>
+                          <widget class="GtkNotebook" id="tokenizingStepsNB">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="show_tabs">False</property>
+                            <property name="show_border">False</property>
+                            <child>
+                              <widget class="GtkVBox" id="vbox7">
+                                <property name="visible">True</property>
+                                <property name="spacing">5</property>
+                                <child>
+                                  <widget class="GtkFrame" id="startSymbolsFrame">
+                                    <property name="visible">True</property>
+                                    <property name="label_xalign">0</property>
+                                    <property name="shadow_type">GTK_SHADOW_NONE</property>
+                                    <child>
+                                      <widget class="GtkAlignment" id="alignment34">
+                                        <property name="visible">True</property>
+                                        <property name="left_padding">5</property>
+                                        <child>
+                                          <widget class="GtkScrolledWindow" id="scrolledwindow2">
+                                            <property name="height_request">95</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                                            <property name="vscrollbar_policy">GTK_POLICY_NEVER</property>
+                                            <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+                                            <child>
+                                              <widget class="GtkIconView" id="symbolsIV">
+                                                <property name="height_request">95</property>
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                              </widget>
+                                            </child>
+                                          </widget>
+                                        </child>
+                                      </widget>
+                                    </child>
+                                    <child>
+                                      <widget class="GtkLabel" id="label33">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Símbolos iniciales:</property>
+                                        <property name="use_markup">True</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="type">label_item</property>
+                                      </packing>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="GtkAspectFrame" id="aspectframe1">
+                                    <property name="visible">True</property>
+                                    <property name="label_xalign">0</property>
+                                    <property name="shadow_type">GTK_SHADOW_NONE</property>
+                                    <property name="ratio">1</property>
+                                    <child>
+                                      <widget class="GtkFrame" id="currentImageFrm">
+                                        <property name="width_request">200</property>
+                                        <property name="height_request">100</property>
+                                        <property name="visible">True</property>
+                                        <property name="label_xalign">0</property>
+                                        <child>
+                                          <placeholder/>
+                                        </child>
+                                        <child>
+                                          <widget class="GtkLabel" id="label37">
+                                            <property name="visible">True</property>
+                                            <property name="label" translatable="yes">Imagen actual</property>
+                                            <property name="use_markup">True</property>
+                                          </widget>
+                                          <packing>
+                                            <property name="type">label_item</property>
+                                          </packing>
+                                        </child>
+                                      </widget>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="GtkAlignment" id="alignment36">
+                                    <property name="visible">True</property>
+                                    <property name="yscale">0</property>
+                                    <child>
+                                      <widget class="GtkLabel" id="label36">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">¿Concuerdan las líneas base de los símbolos y son cercanos?</property>
+                                        <property name="use_markup">True</property>
+                                        <property name="justify">GTK_JUSTIFY_CENTER</property>
+                                      </widget>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">2</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="GtkLabel" id="sequencingStepResultLbl">
+                                    <property name="height_request">40</property>
+                                    <property name="visible">True</property>
+                                    <property name="label" translatable="yes">-</property>
+                                    <property name="use_markup">True</property>
+                                    <property name="justify">GTK_JUSTIFY_CENTER</property>
+                                    <property name="wrap">True</property>
+                                    <property name="wrap_mode">PANGO_WRAP_WORD_CHAR</property>
+                                    <property name="width_chars">60</property>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">3</property>
+                                  </packing>
+                                </child>
+                              </widget>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="label34">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">page 1</property>
+                              </widget>
+                              <packing>
+                                <property name="type">tab</property>
+                                <property name="tab_fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkVBox" id="vbox8">
+                                <property name="visible">True</property>
+                                <property name="spacing">5</property>
+                                <child>
+                                  <widget class="GtkFrame" id="sequenceImageFrm">
+                                    <property name="height_request">130</property>
+                                    <property name="visible">True</property>
+                                    <property name="label_xalign">0</property>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                    <child>
+                                      <widget class="GtkLabel" id="label49">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Símbolos de la secuencia</property>
+                                        <property name="use_markup">True</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="type">label_item</property>
+                                      </packing>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="GtkFrame" id="frame9">
+                                    <property name="visible">True</property>
+                                    <property name="label_xalign">0</property>
+                                    <property name="shadow_type">GTK_SHADOW_NONE</property>
+                                    <child>
+                                      <widget class="GtkAlignment" id="alignment43">
+                                        <property name="visible">True</property>
+                                        <property name="left_padding">5</property>
+                                        <child>
+                                          <widget class="GtkScrolledWindow" id="scrolledwindow5">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                                            <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                                            <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+                                            <child>
+                                              <widget class="GtkTreeView" id="tokenizingRulesTV">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="has_tooltip">True</property>
+                                                <property name="search_column">0</property>
+                                              </widget>
+                                            </child>
+                                          </widget>
+                                        </child>
+                                      </widget>
+                                    </child>
+                                    <child>
+                                      <widget class="GtkLabel" id="label38">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Reglas léxicas:</property>
+                                        <property name="use_markup">True</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="type">label_item</property>
+                                      </packing>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <widget class="GtkAlignment" id="alignment37">
+                                    <property name="visible">True</property>
+                                    <property name="yscale">0</property>
+                                    <child>
+                                      <widget class="GtkVBox" id="vbox9">
+                                        <property name="visible">True</property>
+                                        <property name="spacing">5</property>
+                                        <child>
+                                          <widget class="GtkLabel" id="label39">
+                                            <property name="visible">True</property>
+                                            <property name="label" translatable="yes">¿Concuerda la secuencia con la regla seleccionada?</property>
+                                            <property name="justify">GTK_JUSTIFY_CENTER</property>
+                                            <property name="wrap">True</property>
+                                            <property name="width_chars">50</property>
+                                          </widget>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <widget class="GtkLabel" id="matchingResultLbl">
+                                            <property name="visible">True</property>
+                                            <property name="ypad">6</property>
+                                            <property name="label" translatable="yes">-</property>
+                                          </widget>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </widget>
+                                    </child>
+                                  </widget>
+                                  <packing>
+                                    <property name="position">2</property>
+                                  </packing>
+                                </child>
+                              </widget>
+                              <packing>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="label35">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">page 2</property>
+                              </widget>
+                              <packing>
+                                <property name="type">tab</property>
+                                <property name="position">1</property>
+                                <property name="tab_fill">False</property>
+                              </packing>
+                            </child>
+                          </widget>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="resize">True</property>
+                        <property name="shrink">True</property>
+                      </packing>
                     </child>
                   </widget>
                 </child>
               </widget>
-              <packing>
-                <property name="resize">False</property>
-                <property name="shrink">True</property>
-              </packing>
             </child>
             <child>
-              <widget class="GtkVBox" id="vbox3">
+              <widget class="GtkNotebook" id="tokenizingButtonsNB">
                 <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="show_tabs">False</property>
+                <property name="show_border">False</property>
                 <child>
-                  <widget class="GtkNotebook" id="tokenizingStepsNB">
+                  <widget class="GtkAlignment" id="tokenizingControlAlign">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="show_tabs">False</property>
-                    <property name="show_border">False</property>
+                    <property name="xscale">0</property>
                     <child>
-                      <widget class="GtkVBox" id="vbox7">
+                      <widget class="GtkHButtonBox" id="hbuttonbox6">
                         <property name="visible">True</property>
-                        <property name="spacing">5</property>
+                        <property name="spacing">10</property>
+                        <property name="homogeneous">True</property>
+                        <property name="layout_style">GTK_BUTTONBOX_SPREAD</property>
                         <child>
-                          <widget class="GtkFrame" id="startSymbolsFrame">
+                          <widget class="GtkButton" id="tokenizingBackBtn">
                             <property name="visible">True</property>
-                            <property name="label_xalign">0</property>
-                            <property name="shadow_type">GTK_SHADOW_NONE</property>
-                            <child>
-                              <widget class="GtkAlignment" id="alignment31">
-                                <property name="visible">True</property>
-                                <property name="left_padding">5</property>
-                                <child>
-                                  <widget class="GtkScrolledWindow" id="scrolledwindow2">
-                                    <property name="height_request">95</property>
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-                                    <property name="vscrollbar_policy">GTK_POLICY_NEVER</property>
-                                    <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
-                                    <child>
-                                      <widget class="GtkIconView" id="symbolsIV">
-                                        <property name="height_request">95</property>
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                      </widget>
-                                    </child>
-                                  </widget>
-                                </child>
-                              </widget>
-                            </child>
-                            <child>
-                              <widget class="GtkLabel" id="label33">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Símbolos iniciales:</property>
-                                <property name="use_markup">True</property>
-                              </widget>
-                              <packing>
-                                <property name="type">label_item</property>
-                              </packing>
-                            </child>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="has_tooltip">True</property>
+                            <property name="tooltip_text">Volver al paso anterior</property>
+                            <property name="label" translatable="yes">gtk-go-back</property>
+                            <property name="use_stock">True</property>
+                            <property name="response_id">0</property>
+                            <signal name="clicked" handler="OnTokenizingBackBtnClicked"/>
                           </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                          </packing>
                         </child>
                         <child>
-                          <widget class="GtkAspectFrame" id="aspectframe1">
+                          <widget class="GtkButton" id="processBtn">
                             <property name="visible">True</property>
-                            <property name="label_xalign">0</property>
-                            <property name="shadow_type">GTK_SHADOW_NONE</property>
-                            <property name="ratio">1</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="response_id">0</property>
+                            <signal name="clicked" handler="OnProcessBtnClicked"/>
                             <child>
-                              <widget class="GtkFrame" id="currentImageFrm">
-                                <property name="width_request">200</property>
-                                <property name="height_request">100</property>
+                              <widget class="GtkAlignment" id="alignment38">
                                 <property name="visible">True</property>
-                                <property name="label_xalign">0</property>
+                                <property name="xscale">0</property>
+                                <property name="yscale">0.79000002145767212</property>
                                 <child>
-                                  <placeholder/>
-                                </child>
-                                <child>
-                                  <widget class="GtkLabel" id="label37">
+                                  <widget class="GtkHBox" id="hbox30">
                                     <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Imagen actual</property>
-                                    <property name="use_markup">True</property>
+                                    <property name="spacing">5</property>
+                                    <child>
+                                      <widget class="GtkImage" id="image28">
+                                        <property name="visible">True</property>
+                                        <property name="stock">gtk-convert</property>
+                                      </widget>
+                                    </child>
+                                    <child>
+                                      <widget class="GtkLabel" id="processBtnLbl">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">_Secuenciar</property>
+                                        <property name="use_underline">True</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
                                   </widget>
-                                  <packing>
-                                    <property name="type">label_item</property>
-                                  </packing>
                                 </child>
                               </widget>
                             </child>
@@ -2351,458 +2640,222 @@
                           </packing>
                         </child>
                         <child>
-                          <widget class="GtkAlignment" id="alignment34">
+                          <widget class="GtkButton" id="nextStageBtn">
                             <property name="visible">True</property>
-                            <property name="yscale">0</property>
+                            <property name="sensitive">False</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="response_id">0</property>
+                            <signal name="clicked" handler="OnNextStageBtnClicked"/>
                             <child>
-                              <widget class="GtkLabel" id="label36">
+                              <widget class="GtkAlignment" id="alignment79">
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">¿Concuerdan las líneas base de los símbolos y son cercanos?</property>
-                                <property name="use_markup">True</property>
-                                <property name="justify">GTK_JUSTIFY_CENTER</property>
-                              </widget>
-                            </child>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                            <property name="position">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkLabel" id="sequencingStepResultLbl">
-                            <property name="height_request">40</property>
-                            <property name="visible">True</property>
-                            <property name="label" translatable="yes">-</property>
-                            <property name="use_markup">True</property>
-                            <property name="justify">GTK_JUSTIFY_CENTER</property>
-                            <property name="wrap">True</property>
-                            <property name="wrap_mode">PANGO_WRAP_WORD_CHAR</property>
-                            <property name="width_chars">60</property>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                            <property name="position">3</property>
-                          </packing>
-                        </child>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkLabel" id="label34">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">page 1</property>
-                      </widget>
-                      <packing>
-                        <property name="type">tab</property>
-                        <property name="tab_fill">False</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="GtkVBox" id="vbox8">
-                        <property name="visible">True</property>
-                        <property name="spacing">5</property>
-                        <child>
-                          <widget class="GtkFrame" id="sequenceImageFrm">
-                            <property name="height_request">130</property>
-                            <property name="visible">True</property>
-                            <property name="label_xalign">0</property>
-                            <child>
-                              <placeholder/>
-                            </child>
-                            <child>
-                              <widget class="GtkLabel" id="label49">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Símbolos de la secuencia</property>
-                                <property name="use_markup">True</property>
-                              </widget>
-                              <packing>
-                                <property name="type">label_item</property>
-                              </packing>
-                            </child>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkFrame" id="frame9">
-                            <property name="visible">True</property>
-                            <property name="label_xalign">0</property>
-                            <property name="shadow_type">GTK_SHADOW_NONE</property>
-                            <child>
-                              <widget class="GtkAlignment" id="alignment43">
-                                <property name="visible">True</property>
-                                <property name="left_padding">5</property>
+                                <property name="xscale">0</property>
                                 <child>
-                                  <widget class="GtkScrolledWindow" id="scrolledwindow5">
+                                  <widget class="GtkHBox" id="hbox31">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-                                    <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
-                                    <property name="shadow_type">GTK_SHADOW_ETCHED_IN</property>
+                                    <property name="spacing">5</property>
                                     <child>
-                                      <widget class="GtkTreeView" id="tokenizingRulesTV">
+                                      <widget class="GtkLabel" id="label42">
                                         <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="has_tooltip">True</property>
-                                        <property name="search_column">0</property>
+                                        <property name="label" translatable="yes">_Ir al análisis sintáctico</property>
+                                        <property name="use_underline">True</property>
                                       </widget>
+                                    </child>
+                                    <child>
+                                      <widget class="GtkImage" id="image29">
+                                        <property name="visible">True</property>
+                                        <property name="stock">gtk-media-next</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="position">1</property>
+                                      </packing>
                                     </child>
                                   </widget>
                                 </child>
                               </widget>
                             </child>
-                            <child>
-                              <widget class="GtkLabel" id="label38">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Reglas léxicas:</property>
-                                <property name="use_markup">True</property>
-                              </widget>
-                              <packing>
-                                <property name="type">label_item</property>
-                              </packing>
-                            </child>
-                          </widget>
-                          <packing>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkAlignment" id="alignment36">
-                            <property name="visible">True</property>
-                            <property name="yscale">0</property>
-                            <child>
-                              <widget class="GtkVBox" id="vbox9">
-                                <property name="visible">True</property>
-                                <property name="spacing">5</property>
-                                <child>
-                                  <widget class="GtkLabel" id="label39">
-                                    <property name="visible">True</property>
-                                    <property name="label" translatable="yes">¿Concuerda la secuencia con la regla seleccionada?</property>
-                                    <property name="justify">GTK_JUSTIFY_CENTER</property>
-                                    <property name="wrap">True</property>
-                                    <property name="width_chars">50</property>
-                                  </widget>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <widget class="GtkLabel" id="matchingResultLbl">
-                                    <property name="visible">True</property>
-                                    <property name="ypad">6</property>
-                                    <property name="label" translatable="yes">-</property>
-                                  </widget>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">False</property>
-                                    <property name="position">1</property>
-                                  </packing>
-                                </child>
-                              </widget>
-                            </child>
                           </widget>
                           <packing>
                             <property name="position">2</property>
                           </packing>
                         </child>
                       </widget>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="GtkLabel" id="label35">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">page 2</property>
-                      </widget>
-                      <packing>
-                        <property name="type">tab</property>
-                        <property name="position">1</property>
-                        <property name="tab_fill">False</property>
-                      </packing>
                     </child>
                   </widget>
                 </child>
                 <child>
-                  <widget class="GtkNotebook" id="tokenizingButtonsNB">
+                  <widget class="GtkLabel" id="label43">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="show_tabs">False</property>
-                    <property name="show_border">False</property>
+                    <property name="label" translatable="yes">page 1</property>
+                  </widget>
+                  <packing>
+                    <property name="type">tab</property>
+                    <property name="tab_fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkAlignment" id="tokenizingNextButtonsAlign">
+                    <property name="visible">True</property>
+                    <property name="has_tooltip">True</property>
+                    <property name="tooltip_text">El nodo procesado según cada base de datos</property>
+                    <property name="xscale">0</property>
                     <child>
-                      <widget class="GtkAlignment" id="tokenizingControlAlign">
+                      <widget class="GtkHButtonBox" id="hbuttonbox7">
                         <property name="visible">True</property>
-                        <property name="xscale">0</property>
+                        <property name="spacing">10</property>
                         <child>
-                          <widget class="GtkHButtonBox" id="hbuttonbox6">
+                          <widget class="GtkButton" id="tokenizingNextStepBtn">
                             <property name="visible">True</property>
-                            <property name="spacing">10</property>
-                            <property name="homogeneous">True</property>
-                            <property name="layout_style">GTK_BUTTONBOX_SPREAD</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="response_id">1</property>
+                            <signal name="clicked" handler="OnBtnNextStepClicked"/>
                             <child>
-                              <widget class="GtkButton" id="processBtn">
+                              <widget class="GtkAlignment" id="alignment39">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="response_id">0</property>
-                                <signal name="clicked" handler="OnProcessBtnClicked"/>
+                                <property name="xscale">0</property>
+                                <property name="yscale">0</property>
                                 <child>
-                                  <widget class="GtkAlignment" id="alignment37">
+                                  <widget class="GtkHBox" id="hbox32">
                                     <property name="visible">True</property>
-                                    <property name="xscale">0</property>
-                                    <property name="yscale">0.79000002145767212</property>
+                                    <property name="spacing">2</property>
                                     <child>
-                                      <widget class="GtkHBox" id="hbox30">
+                                      <widget class="GtkLabel" id="label44">
                                         <property name="visible">True</property>
-                                        <property name="spacing">5</property>
-                                        <child>
-                                          <widget class="GtkImage" id="image28">
-                                            <property name="visible">True</property>
-                                            <property name="stock">gtk-convert</property>
-                                          </widget>
-                                        </child>
-                                        <child>
-                                          <widget class="GtkLabel" id="processBtnLbl">
-                                            <property name="visible">True</property>
-                                            <property name="label" translatable="yes">_Secuenciar</property>
-                                            <property name="use_underline">True</property>
-                                          </widget>
-                                          <packing>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
+                                        <property name="label" translatable="yes">Siguiente _paso</property>
+                                        <property name="use_underline">True</property>
                                       </widget>
+                                    </child>
+                                    <child>
+                                      <widget class="GtkImage" id="image30">
+                                        <property name="visible">True</property>
+                                        <property name="stock">gtk-go-down</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">1</property>
+                                      </packing>
                                     </child>
                                   </widget>
                                 </child>
                               </widget>
-                            </child>
-                            <child>
-                              <widget class="GtkButton" id="nextStageBtn">
-                                <property name="visible">True</property>
-                                <property name="sensitive">False</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="response_id">0</property>
-                                <signal name="clicked" handler="OnNextStageBtnClicked"/>
-                                <child>
-                                  <widget class="GtkAlignment" id="alignment38">
-                                    <property name="visible">True</property>
-                                    <property name="xscale">0</property>
-                                    <child>
-                                      <widget class="GtkHBox" id="hbox31">
-                                        <property name="visible">True</property>
-                                        <property name="spacing">5</property>
-                                        <child>
-                                          <widget class="GtkLabel" id="label42">
-                                            <property name="visible">True</property>
-                                            <property name="label" translatable="yes">_Ir al análisis sintáctico</property>
-                                            <property name="use_underline">True</property>
-                                          </widget>
-                                        </child>
-                                        <child>
-                                          <widget class="GtkImage" id="image29">
-                                            <property name="visible">True</property>
-                                            <property name="stock">gtk-media-next</property>
-                                          </widget>
-                                          <packing>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
-                                      </widget>
-                                    </child>
-                                  </widget>
-                                </child>
-                              </widget>
-                              <packing>
-                                <property name="position">1</property>
-                              </packing>
                             </child>
                           </widget>
                         </child>
-                      </widget>
-                    </child>
-                    <child>
-                      <widget class="GtkLabel" id="label43">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">page 1</property>
-                      </widget>
-                      <packing>
-                        <property name="type">tab</property>
-                        <property name="tab_fill">False</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="GtkAlignment" id="tokenizingNextButtonsAlign">
-                        <property name="visible">True</property>
-                        <property name="has_tooltip">True</property>
-                        <property name="tooltip_text">El nodo procesado según cada base de datos</property>
-                        <property name="xscale">0</property>
                         <child>
-                          <widget class="GtkHButtonBox" id="hbuttonbox7">
+                          <widget class="GtkButton" id="tokenizingNextNodeBtn">
                             <property name="visible">True</property>
-                            <property name="spacing">10</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="response_id">0</property>
+                            <signal name="clicked" handler="OnBtnNextNodeClicked"/>
                             <child>
-                              <widget class="GtkButton" id="tokenizingNextStepBtn">
+                              <widget class="GtkAlignment" id="alignment40">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="response_id">1</property>
-                                <signal name="clicked" handler="OnBtnNextStepClicked"/>
+                                <property name="xscale">0</property>
+                                <property name="yscale">0</property>
                                 <child>
-                                  <widget class="GtkAlignment" id="alignment39">
+                                  <widget class="GtkHBox" id="hbox33">
                                     <property name="visible">True</property>
-                                    <property name="xscale">0</property>
-                                    <property name="yscale">0</property>
+                                    <property name="spacing">2</property>
                                     <child>
-                                      <widget class="GtkHBox" id="hbox32">
+                                      <widget class="GtkLabel" id="label45">
                                         <property name="visible">True</property>
-                                        <property name="spacing">2</property>
-                                        <child>
-                                          <widget class="GtkLabel" id="label44">
-                                            <property name="visible">True</property>
-                                            <property name="label" translatable="yes">Siguiente _paso</property>
-                                            <property name="use_underline">True</property>
-                                          </widget>
-                                        </child>
-                                        <child>
-                                          <widget class="GtkImage" id="image30">
-                                            <property name="visible">True</property>
-                                            <property name="stock">gtk-go-down</property>
-                                          </widget>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">False</property>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
+                                        <property name="label" translatable="yes">Siguiente _elemento</property>
+                                        <property name="use_underline">True</property>
                                       </widget>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <widget class="GtkImage" id="image31">
+                                        <property name="visible">True</property>
+                                        <property name="stock">gtk-go-forward</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="position">1</property>
+                                      </packing>
                                     </child>
                                   </widget>
                                 </child>
                               </widget>
-                            </child>
-                            <child>
-                              <widget class="GtkButton" id="tokenizingNextNodeBtn">
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="response_id">0</property>
-                                <signal name="clicked" handler="OnBtnNextNodeClicked"/>
-                                <child>
-                                  <widget class="GtkAlignment" id="alignment40">
-                                    <property name="visible">True</property>
-                                    <property name="xscale">0</property>
-                                    <property name="yscale">0</property>
-                                    <child>
-                                      <widget class="GtkHBox" id="hbox33">
-                                        <property name="visible">True</property>
-                                        <property name="spacing">2</property>
-                                        <child>
-                                          <widget class="GtkLabel" id="label45">
-                                            <property name="visible">True</property>
-                                            <property name="label" translatable="yes">Siguiente _elemento</property>
-                                            <property name="use_underline">True</property>
-                                          </widget>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">False</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <widget class="GtkImage" id="image31">
-                                            <property name="visible">True</property>
-                                            <property name="stock">gtk-go-forward</property>
-                                          </widget>
-                                          <packing>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
-                                      </widget>
-                                    </child>
-                                  </widget>
-                                </child>
-                              </widget>
-                              <packing>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="GtkButton" id="tokenizingTilEndBtn">
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="response_id">0</property>
-                                <signal name="clicked" handler="OnBtnTilEndClicked"/>
-                                <child>
-                                  <widget class="GtkAlignment" id="alignment41">
-                                    <property name="visible">True</property>
-                                    <property name="xscale">0</property>
-                                    <property name="yscale">0</property>
-                                    <child>
-                                      <widget class="GtkHBox" id="hbox34">
-                                        <property name="visible">True</property>
-                                        <property name="spacing">2</property>
-                                        <child>
-                                          <widget class="GtkLabel" id="label46">
-                                            <property name="visible">True</property>
-                                            <property name="label" translatable="yes">Hasta el _final</property>
-                                            <property name="use_underline">True</property>
-                                          </widget>
-                                        </child>
-                                        <child>
-                                          <widget class="GtkImage" id="image32">
-                                            <property name="visible">True</property>
-                                            <property name="stock">gtk-goto-last</property>
-                                          </widget>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">False</property>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
-                                      </widget>
-                                    </child>
-                                  </widget>
-                                </child>
-                              </widget>
-                              <packing>
-                                <property name="position">2</property>
-                              </packing>
                             </child>
                           </widget>
+                          <packing>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkButton" id="tokenizingTilEndBtn">
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="response_id">0</property>
+                            <signal name="clicked" handler="OnBtnTilEndClicked"/>
+                            <child>
+                              <widget class="GtkAlignment" id="alignment41">
+                                <property name="visible">True</property>
+                                <property name="xscale">0</property>
+                                <property name="yscale">0</property>
+                                <child>
+                                  <widget class="GtkHBox" id="hbox34">
+                                    <property name="visible">True</property>
+                                    <property name="spacing">2</property>
+                                    <child>
+                                      <widget class="GtkLabel" id="label46">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Hasta el _final</property>
+                                        <property name="use_underline">True</property>
+                                      </widget>
+                                    </child>
+                                    <child>
+                                      <widget class="GtkImage" id="image32">
+                                        <property name="visible">True</property>
+                                        <property name="stock">gtk-goto-last</property>
+                                      </widget>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </widget>
+                                </child>
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="position">2</property>
+                          </packing>
                         </child>
                       </widget>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="GtkLabel" id="label47">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">page 2</property>
-                      </widget>
-                      <packing>
-                        <property name="type">tab</property>
-                        <property name="position">1</property>
-                        <property name="tab_fill">False</property>
-                      </packing>
                     </child>
                   </widget>
                   <packing>
-                    <property name="expand">False</property>
-                    <property name="padding">5</property>
                     <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkLabel" id="label47">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">page 2</property>
+                  </widget>
+                  <packing>
+                    <property name="type">tab</property>
+                    <property name="position">1</property>
+                    <property name="tab_fill">False</property>
                   </packing>
                 </child>
               </widget>
               <packing>
-                <property name="resize">True</property>
-                <property name="shrink">True</property>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="padding">5</property>
+                <property name="position">1</property>
               </packing>
             </child>
           </widget>
@@ -2929,6 +2982,19 @@
                     <property name="homogeneous">True</property>
                     <property name="layout_style">GTK_BUTTONBOX_SPREAD</property>
                     <child>
+                      <widget class="GtkButton" id="parsingBackBtn">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="has_tooltip">True</property>
+                        <property name="tooltip_text">Volver al paso anterior</property>
+                        <property name="label" translatable="yes">gtk-go-back</property>
+                        <property name="use_stock">True</property>
+                        <property name="response_id">0</property>
+                        <signal name="clicked" handler="OnParsingBackBtnClicked"/>
+                      </widget>
+                    </child>
+                    <child>
                       <widget class="GtkButton" id="parsingProcessBtn">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -2965,6 +3031,9 @@
                           </widget>
                         </child>
                       </widget>
+                      <packing>
+                        <property name="position">1</property>
+                      </packing>
                     </child>
                     <child>
                       <widget class="GtkButton" id="parsingShowOutputBtn">
@@ -3004,7 +3073,7 @@
                         </child>
                       </widget>
                       <packing>
-                        <property name="position">1</property>
+                        <property name="position">2</property>
                       </packing>
                     </child>
                   </widget>
@@ -5240,6 +5309,7 @@ Interior</property>
                           <widget class="GtkImage" id="image23">
                             <property name="visible">True</property>
                             <property name="stock">gtk-media-pause</property>
+                            <property name="icon_size">5</property>
                           </widget>
                         </child>
                         <child>

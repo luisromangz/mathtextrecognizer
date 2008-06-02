@@ -121,10 +121,22 @@ namespace MathTextRecognizer.Controllers.Nodes
 		/// </param>
 		public void AddChildSequence(SequenceNode childNode)
 		{
-			AddChildSequenceArgs args = new AddChildSequenceArgs(childNode);
+			AddChildSequenceArgs _args = new AddChildSequenceArgs(childNode);
 			Application.Invoke(this, 
-			                   args,
-			                   AddChildSequenceInThread);
+			                   _args,
+			                   delegate(object sender, EventArgs args)
+			{
+				AddChildSequenceArgs a = args as AddChildSequenceArgs;
+			
+				a.ChildNode.NodeName = 
+					String.Format("{0}.{1}",this.NodeName,this.ChildCount+1);
+				
+				this.AddChild(a.ChildNode);
+				
+				// We expand the node			
+				widget.ExpandAll();
+				widget.ColumnsAutosize();
+			});
 		}
 		
 		
@@ -136,7 +148,12 @@ namespace MathTextRecognizer.Controllers.Nodes
 		/// </summary>
 		public void RemoveSequenceChildren()
 		{
-			Application.Invoke(RemoveSequenceChildrenInThread);
+			Application.Invoke(delegate(object sender, EventArgs args)
+            {
+				// We remove all children.
+				while(this.ChildCount > 0)
+					this.RemoveChild(this[0] as TreeNode);
+			});
 		}
 		
 		/// <summary>
@@ -144,7 +161,12 @@ namespace MathTextRecognizer.Controllers.Nodes
 		/// </summary>
 		public void Select()
 		{
-			Application.Invoke(SelectInThread);
+			Application.Invoke(delegate(object sender, EventArgs args)
+            {
+				widget.NodeSelection.SelectNode(this);			
+				TreePath path = widget.Selection.GetSelectedRows()[0];
+				widget.ScrollToCell(path,widget.Columns[0],true,1,0);
+			});
 		}
 #endregion Public methods
 		
@@ -159,43 +181,26 @@ namespace MathTextRecognizer.Controllers.Nodes
 		/// <param name="args">
 		/// A <see cref="EventArgs"/>
 		/// </param>
-		private void OnSequenceChanged(object sender, EventArgs args)
+		private void OnSequenceChanged(object sender, EventArgs _args)
 		{
-			Application.Invoke(OnSequenceChangedInThread);
-		}
-		
-		private void OnSequenceChangedInThread(object sender, EventArgs args)
-		{
-			
-			SequenceText = sequence.ToString();
-			
-			if(SequenceText =="")
+			Application.Invoke(delegate(object resender, EventArgs args)
 			{
-				// If we have removed the label, we warn the user.
-				SequenceText = "Error al reconocer";
-			}
+				SequenceText = sequence.ToString();
 			
-			// This shouldn't be required.
-			widget.Columns[1].QueueResize();
-			widget.QueueDraw();
-			widget.ColumnsAutosize();			
+				if(SequenceText =="")
+				{
+					// If we have removed the label, we warn the user.
+					SequenceText = "Error al reconocer";
+				}
+				
+				// This shouldn't be required.
+				widget.Columns[1].QueueResize();
+				widget.QueueDraw();
+				widget.ColumnsAutosize();	
+			});
 		}
+	
 
-		
-		private void AddChildSequenceInThread(object sender, EventArgs args)
-		{
-			AddChildSequenceArgs a = args as AddChildSequenceArgs;
-			
-			a.ChildNode.NodeName = 
-				String.Format("{0}.{1}",this.NodeName,this.ChildCount+1);
-			
-			this.AddChild(a.ChildNode);
-			
-			// We expand the node			
-			widget.ExpandAll();
-			widget.ColumnsAutosize();
-		}
-		
 		
 		/// <summary>
 		/// Appends a token to the node's token list.
@@ -207,44 +212,26 @@ namespace MathTextRecognizer.Controllers.Nodes
 		{
 			Application.Invoke(this, 
 			                   new SetTokenArgs(foundToken),
-			                   SetTokenInThread);
-		}
-		
-		
-		private void SetTokenInThread(object sender, EventArgs args)
-		{
-			// We append the node to the list, then build the label.
-			SetTokenArgs a = args as SetTokenArgs;
-			
-			token = a.FoundToken;
-			
-			if(token == null)
+			                   delegate(object sender, EventArgs args)
 			{
-				tokensLabel = "";
-			}
-			else 
-			{
-				tokensLabel = token.Type;
-			}
-			
-			widget.ColumnsAutosize();
+				// We append the node to the list, then build the label.
+				SetTokenArgs a = args as SetTokenArgs;
+				
+				token = a.FoundToken;
+				
+				if(token == null)
+				{
+					tokensLabel = "";
+				}
+				else 
+				{
+					tokensLabel = token.Type;
+				}
+				
+				widget.ColumnsAutosize();
+			});
 		}
 		
-		private void RemoveSequenceChildrenInThread(object sender, 
-		                                            EventArgs args)
-		{
-			// We remove all children.
-			while(this.ChildCount > 0)
-				this.RemoveChild(this[0] as TreeNode);
-		}
-		
-		private void SelectInThread(object sender, EventArgs args)
-		{
-			
-			widget.NodeSelection.SelectNode(this);			
-			TreePath path = widget.Selection.GetSelectedRows()[0];
-			widget.ScrollToCell(path,widget.Columns[0],true,1,0);
-		}
 	
 		
 #endregion Event handlers
