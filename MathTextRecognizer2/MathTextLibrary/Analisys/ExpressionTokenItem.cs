@@ -430,7 +430,7 @@ namespace MathTextLibrary.Analisys
 					// integral-like limit expressions.
 					
 					res = (matched.Left < checkedItem.Left
-					       && checkedItem.Baseline < matched.Percent0_33Line);
+					       && checkedItem.Baseline < matched.Percent0_66Line);
 					break;
 			}
 			

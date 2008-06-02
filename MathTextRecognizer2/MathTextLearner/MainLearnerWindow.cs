@@ -381,13 +381,12 @@ namespace MathTextLearner
 			if(learned)
 			{
 				SetModified(true);
-				Application.Invoke(OnSymbolLearnedInThread);
+				SymbolLearned();
 			}
 			else
 			{
-				Application.Invoke(this,
-					new LearningFailedArgs(symbol),
-					OnLearningProccessFailedInThread);
+				LearningProcessFailed(symbol);
+				
 			}
 				
 		}
@@ -587,24 +586,28 @@ namespace MathTextLearner
 			 
 		}
 		
-		private void OnLearningProccessFailedInThread(object sender, 
-		                                              EventArgs a)
+		private void LearningProcessFailed(MathSymbol symbol)
 		{
-			
-			string msg=
-				"!Ya hay un símbolo, «"
-				+(a as LearningFailedArgs).DuplicateSymbol 
-				+"», con las mismas propiedades en la base de datos!";	
+			Application.Invoke(this,
+					new LearningFailedArgs(symbol),
+					delegate(object sender, EventArgs a)
+			                   {
+				
+				string msg= 
+					String.Format("¡Ya hay un símbolo, «{0}», con las mismas propiedades en la base de datos!",
+					              (a as LearningFailedArgs).DuplicateSymbol );
 								
-			LogLine(msg);
-			ResetWidgets();
+				LogLine(msg);
+				ResetWidgets();
+				
+				// There were a conflict.
+				conflicts++;
+				
+				OkDialog.Show(mainWindow, MessageType.Error,msg);
+				
+				PrepareForNewImage();
+			});
 			
-			// Indicamos que ha habido un conflicto.
-			conflicts++;
-			
-			OkDialog.Show(mainWindow, MessageType.Error,msg);
-			
-			PrepareForNewImage();
 		}
 		
 		/// <summary>
@@ -673,11 +676,22 @@ namespace MathTextLearner
 		/// <param name="arg">
 		/// A <see cref="ProcessingStepDoneArgs"/>
 		/// </param>
-		private void OnLearningStepDone(object sender, StepDoneArgs arg)
+		private void OnLearningStepDone(object sender, StepDoneArgs args)
 		{
 			Application.Invoke(sender, 
-			                   arg, 
-			                   OnLearningStepDoneInThread);	
+			                   args, 
+			                   delegate(object resender, EventArgs a)
+			                   {
+				if(stepByStep)
+				{
+					nextButtonsHB.Sensitive = true;
+					btnNext.IsFocus = true;
+				}
+				
+				StepDoneArgs arg = (StepDoneArgs) a;
+				btnNext.Sensitive = true;
+				LogLine(arg.Message);
+			});	
 			
 			if(stepByStep)
 			{
@@ -685,20 +699,7 @@ namespace MathTextLearner
 				learningThread.Suspend();				
 			}
 		}
-		
-		private void OnLearningStepDoneInThread(object sender, EventArgs a)
-		{
-			if(stepByStep)
-			{
-				nextButtonsHB.Sensitive = true;
-				btnNext.IsFocus = true;
-			}
-			
-			StepDoneArgs arg = (StepDoneArgs) a;
-			btnNext.Sensitive = true;
-			LogLine(arg.Message);
-		}	
-		
+	
 		/// <summary>
 		/// Metodo que gestiona el evento que se provoca el cerrar la ventana.
 		/// </summary>
@@ -834,19 +835,21 @@ namespace MathTextLearner
 		}
 		
 	
-		private void OnSymbolLearnedInThread(object sender,EventArgs arg)
+		private void SymbolLearned()
 		{
-			ResetWidgets();
-			string msg="!Símbolo aprendido con éxito!";
-			
-			SetModified(true);
+			Application.Invoke(delegate(object sender, EventArgs args)
+			{
+				ResetWidgets();
+				string msg="!Símbolo aprendido con éxito!";
 				
-			LogLine(msg);	
-			OkDialog.Show(mainWindow, MessageType.Info, msg);
-			
-			
-			PrepareForNewImage();
-			
+				SetModified(true);
+					
+				LogLine(msg);	
+				OkDialog.Show(mainWindow, MessageType.Info, msg);
+				
+				
+				PrepareForNewImage();
+			});
 		}
 		
 		

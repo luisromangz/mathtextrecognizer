@@ -87,7 +87,7 @@ namespace MathTextRecognizer
 			
 		private LogView logView;
 		
-		private const string title="Reconocedor de caracteres matemáticos - ";	
+		private const string title="Reconocedor de caracteres matemáticos";	
 		
 		private DatabaseManagerDialog databaseManagerDialog;
 		
@@ -346,9 +346,6 @@ namespace MathTextRecognizer
 		private void LoadImage(string filename)
 		{
 			ocrWidget.SetInitialImage(filename);
-				
-			this.mainWindow.Title = 
-				title + System.IO.Path.GetFileName(filename);
 		
 			recognizementFinished=false;
 			ClearLog();
@@ -359,7 +356,7 @@ namespace MathTextRecognizer
 		/// </summary>
 		private void InitializeWidgets()
 		{		
-			mainWindow.Title = title + "Sin imagen";
+			mainWindow.Title = title;
 			
 			// Ponemos iconos personalizados en los botones
 			menuLoadImage.Image = ImageResources.LoadImage("insert-image16");
@@ -486,6 +483,10 @@ namespace MathTextRecognizer
 			stageNameLabel.Markup = 
 				String.Format("<b><i>{0}</i></b>",
 				              recognizingStepsNB.GetTabLabelText(page));
+			
+			bool hasLoadImage = page.GetType() == typeof(OCRStageWidget);
+			toolLoadImage.Sensitive = hasLoadImage;
+			this.menuLoadImage.Sensitive = hasLoadImage;
 		}
 		
 		/// <summary>

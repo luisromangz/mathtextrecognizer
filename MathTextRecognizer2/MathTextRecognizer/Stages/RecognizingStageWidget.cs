@@ -125,6 +125,14 @@ namespace MathTextRecognizer.Stages
 			return widget;
 		}
 		
+		public void PreviousStage()
+		{
+			Gtk.Notebook parentNB = (Gtk.Notebook)(this.Parent);
+			parentNB.PrevPage();
+			
+			parentNB.Remove(this);
+		}
+		
 		
 		/// <summary>
 		/// Shows a message sent by the controller in the log area.
@@ -141,14 +149,13 @@ namespace MathTextRecognizer.Stages
 		    // Llamamos a través de invoke para que funcione bien.			
 			Gtk.Application.Invoke(sender, 
 			                       args,
-			                       OnControllerMessageLogSentInThread);
+			                       delegate(object resender, EventArgs a)
+			                       {
+				Log(((MessageLogSentArgs)a).Message);
+			});
 		}
 		
-		private void OnControllerMessageLogSentInThread(object sender, 
-		                                                EventArgs a)
-		{		   
-		    Log(((MessageLogSentArgs)a).Message);
-		}
+	
 		
 		/// <summary>
 		/// Makes the controller process more data.
