@@ -35,10 +35,6 @@ namespace MathTextRecognizer.Controllers
 		
 		private NodeView nodeContainer;
 		
-		
-		
-		
-	
 		/// <summary>
 		/// <c>FormulaMatchingController</c>'s contructor.
 		/// </summary>
@@ -63,6 +59,9 @@ namespace MathTextRecognizer.Controllers
 			
 			ExpressionTokenItem.RelatedSequenceSet+=
 				new SequenceSetHandler(OnTokenItemRelatedSequenceSet);
+			
+			SyntacticalMatcher.LogSent+= 
+				new MessageLogSentHandler(OnMatcherLogSent);
 		}
 		
 #region Properties
@@ -139,6 +138,34 @@ namespace MathTextRecognizer.Controllers
 			
 			ProcessFinishedInvoker();
 		}
+		
+		/// <summary>
+		/// Deregisters the static event handlers, so they don't get
+		/// handled several times.
+		/// </summary>
+		public void DeregisterEvents()
+		{
+			SyntacticalMatcher.Matching -= 
+				new MatchingHandler(OnMatcherMatching);
+			
+			SyntacticalMatcher.MatchingFinished -= 
+				new MatchingFinishedHandler(OnMatcherMatchingFinished);
+			
+			SyntacticalRule.SequenceRestored -= 
+				new SequenceSetHandler(OnSyntacticalRuleSequenceRestored);
+			
+			ExpressionTokenItem.TokenMatching -= 
+				new TokenMatchingHandler(OnTokenItemMatching);
+			
+			ExpressionTokenItem.TokenMatchingFinished -=
+				new TokenMatchingFinishedHandler(OnTokenItemMatchingFinished);
+			
+			ExpressionTokenItem.RelatedSequenceSet -=
+				new SequenceSetHandler(OnTokenItemRelatedSequenceSet);
+			
+			SyntacticalMatcher.LogSent -= 
+				new MessageLogSentHandler(OnMatcherLogSent);
+		}
 
 		
 #endregion Public methods
@@ -158,6 +185,11 @@ namespace MathTextRecognizer.Controllers
 			Thread.Sleep(50);
 			SuspendByStep();
 			
+		}
+		
+		private void OnMatcherLogSent(object sender, MessageLogSentArgs args)
+		{
+			this.MessageLogSentInvoker(args.Message);
 		}
 		
 		private void OnMatcherMatchingFinished(object sender,

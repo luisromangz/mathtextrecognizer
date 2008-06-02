@@ -1,4 +1,4 @@
-﻿// SyntacticExpression.cs created with MonoDevelop
+// SyntacticExpression.cs created with MonoDevelop
 // User: luis at 14:19 12/05/2008
 
 using System;
@@ -85,6 +85,7 @@ namespace MathTextLibrary.Analisys
 		public override bool Match(ref TokenSequence sequence, out string output)
 		{		
 
+			string sequenceOriginal = sequence.ToString();
 			MatchingInvoker();
 			List<string> outputList = new List<string>();
 			
@@ -98,6 +99,13 @@ namespace MathTextLibrary.Analisys
 				if(!res)
 				{
 					output="";				
+					
+					LogSentInvoker("La expresión «"
+				               +this.Label
+				               +"» falló el reconocimiento, restaurando la secuencia ("
+				               +sequenceOriginal
+				               +")");
+					
 					MatchingFinishedInvoker(output);
 					return false;
 				}
@@ -106,7 +114,16 @@ namespace MathTextLibrary.Analisys
 			}
 			
 			output = String.Format(formatString, outputList.ToArray());
+			
+		
+			LogSentInvoker("La expresion «"
+					       +this.Label
+			               +"» tuvo exito al reconocer, se produjo la salida «"
+			               +output
+			               +"»");
+			
 			MatchingFinishedInvoker(output);
+			
 			return true;
 		}
 		

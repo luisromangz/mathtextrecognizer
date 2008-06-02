@@ -174,6 +174,8 @@ namespace MathTextLibrary.Analisys
 		{
 			MatchingInvoker();
 			
+			LogSentInvoker("Se intentará concordar el elemento «"+this.Label+"»");
+			
 			bool result = true;
 			res = "";
 			int counter =0;		
@@ -239,7 +241,22 @@ namespace MathTextLibrary.Analisys
 					break;
 			}
 			
+			if(result)
+			{
+				LogSentInvoker("Se logró concordar exitosamente «"
+				               +this.Label+
+				               "», se sube al elemento padre.");
+			}
+			else
+			{
+				LogSentInvoker("No se pudo concordar «"+ 
+				               this.Label+
+				               "», se sube al elemento padre.");
+			}
+			
 			MatchingFinishedInvoker(res);
+			
+			
 			return result;
 		}
 		

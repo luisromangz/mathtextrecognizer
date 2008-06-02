@@ -161,7 +161,16 @@ namespace MathTextLibrary.Controllers
 		{
 			if(MessageLogSent!=null)
 			{
-				MessageLogSent(this,new MessageLogSentArgs(String.Format(msg,args)));
+				if(args.Length > 0)
+				{
+					MessageLogSent(this,new MessageLogSentArgs(String.Format(msg,args)));
+				}
+					
+				else
+				{
+					MessageLogSent(this, new MessageLogSentArgs(msg));
+				}
+					
 			}
 		}
 		

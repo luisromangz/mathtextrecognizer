@@ -248,9 +248,6 @@ namespace MathTextLibrary.Analisys
 				if((covering.Top + covering.Height) > ( tested.Top + (int)(tested.Height*0.6f))
 				   || (covering.Left + covering.Width) > (tested.Left + tested.Width))
 				{
-					Console.WriteLine("{0} cubierto por {1}", 
-					                  tested.Text,
-					                  covering.Text);
 					return true;
 				}
 			}		

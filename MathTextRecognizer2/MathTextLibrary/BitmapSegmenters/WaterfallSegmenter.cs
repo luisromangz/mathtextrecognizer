@@ -240,13 +240,6 @@ namespace MathTextLibrary.BitmapSegmenters
 				}	
 
 			}
-#if DEBUG
-			
-			else
-			{
-				Console.WriteLine("Not border found {0}", mode);
-			}
-#endif
 			
 			return children;
 			

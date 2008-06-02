@@ -589,12 +589,10 @@ namespace MathTextRecognizer.Stages
 		    // Llamamos a través de invoke para que funcione.
 			Gtk.Application.Invoke(delegate(object resender, EventArgs args)
             {
-				Log("¡Reconocimiento terminado!");
-			
 				OkDialog.Show(
 					MainRecognizerWindow.Window,
 					MessageType.Info,
-				    "¡Proceso de reconocimiento terminado!\n"
+				    "¡Proceso de segmentado y OCR terminado!\n"
 				    + "Ahora puede revisar el resultado.");
 				    
 				
@@ -858,7 +856,6 @@ namespace MathTextRecognizer.Stages
 					return;
 			}
 			
-			Abort();
 			PreviousStage();
 			
 		}

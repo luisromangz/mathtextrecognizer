@@ -157,6 +157,7 @@ namespace MathTextRecognizer.Stages
 			
 			controller.MatchingFailed += OnControllerMatchingFailed;
 			
+			
 		
 			
 			InitializeWidgets();
@@ -1018,14 +1019,14 @@ namespace MathTextRecognizer.Stages
 			if(processFinished)
 			{
 				// The parsing finished and was successful
-				ResponseType res = ConfirmDialog.Show(MainRecognizerWindow.Window,
-				                                      "Si vuelve al paso anterior se perderá el análisis realizado, ¿quieres continuar?");
+				ResponseType res = 
+					ConfirmDialog.Show(MainRecognizerWindow.Window,
+					                   "Si regreasas al paso anterior se perderá el análisis realizado, ¿quieres continuar?");
 				
 				if(res == ResponseType.No)
 					return;
 			}
-			
-			Abort();
+		
 			PreviousStage();
 		}
 		
@@ -1042,9 +1043,6 @@ namespace MathTextRecognizer.Stages
 			controller.Next(mode);
 		}
 		
-		
-		
-
 		
 #endregion Non-public methods
 	}

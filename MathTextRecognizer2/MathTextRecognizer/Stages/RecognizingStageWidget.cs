@@ -129,6 +129,7 @@ namespace MathTextRecognizer.Stages
 		{
 			Gtk.Notebook parentNB = (Gtk.Notebook)(this.Parent);
 			parentNB.PrevPage();
+			this.Abort();
 			
 			parentNB.Remove(this);
 		}
