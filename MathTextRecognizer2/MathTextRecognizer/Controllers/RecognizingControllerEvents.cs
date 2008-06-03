@@ -129,8 +129,7 @@ namespace MathTextRecognizer.Controllers
 	}
 	
 	/// <summary>
-	/// Delegate for the <see cref="TokenzingController"/>'s 
-	/// SequenceBeingMatched event.
+	/// Delegate for the SequenceBeingMatched event.
 	/// </summary>
 	/// <param name="sender">
 	/// A <see cref="System.Object"/>
@@ -139,7 +138,7 @@ namespace MathTextRecognizer.Controllers
 	/// A <see cref="SequenceBeingMatchedArgs"/>
 	/// </param>
 	public delegate void SequenceBeingMatchedHandler(object sender,
-	                                                      SequenceBeingMatchedArgs a);
+	                                                 SequenceBeingMatchedArgs a);
 	
 	
 	/// <summary>

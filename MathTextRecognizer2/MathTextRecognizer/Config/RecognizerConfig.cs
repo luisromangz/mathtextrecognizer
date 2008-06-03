@@ -182,7 +182,7 @@ namespace MathTextRecognizer.Config
 		/// Crea el perfil para poder serializar la configuracion.
 		/// </summary>
 		/// <returns>
-		/// A <see cref="XmlSerializationOverrides"/>
+		/// A <see cref="XmlAttributeOverrides"/>
 		/// </returns>
 		private static XmlAttributeOverrides GetSerializationOverrides()
 		{

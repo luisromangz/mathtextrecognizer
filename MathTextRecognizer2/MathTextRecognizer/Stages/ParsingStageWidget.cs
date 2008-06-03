@@ -95,14 +95,14 @@ namespace MathTextRecognizer.Stages
 			
 			InitializeWidgets();
 			
-			controller = new ParsingController(syntacticalCoverTree);
+			controller = new ParsingController();
 			controller.MessageLogSent += 
 				new MessageLogSentHandler(OnControllerMessageLogSent);
 			
 			controller.ProcessFinished += OnControllerProcessFinishedHandler;
 			
-			controller.NodeBeingProcessed += 
-				new NodeBeingProcessedHandler(OnControllerNodeBeingProcessed);
+			controller.Matching += 
+				new MatchingHandler(OnControllerMatching);
 			
 			controller.MatchingFinished += 
 				new MatchingFinishedHandler(OnControllerMatchingFinished);
@@ -194,8 +194,11 @@ namespace MathTextRecognizer.Stages
 			syntacticalCoverTree.RowActivated+= 
 				new RowActivatedHandler(OnSyntacticalCoverTreeRowActivated);
 			
+			syntacticalCoverTree.Selection.Changed +=
+				new EventHandler(OnSyntacticalCoverTreeSelectionChanged);
+			
 			syntacticalCoverTree.ShowExpanders = false;
-		
+			
 			syntacticalTreePlaceholder.Add(syntacticalCoverTree);
 			
 			
@@ -232,6 +235,7 @@ namespace MathTextRecognizer.Stages
 					parsingNextButtonsAlign.Sensitive = true;
 				}
 				
+				currentNode.Select();
 				currentNode.SetOutput(_args.Output);
 				
 			});
@@ -278,15 +282,17 @@ namespace MathTextRecognizer.Stages
 			});
 		}
 		
-		private void OnControllerNodeBeingProcessed(object sender, 
-		                                            NodeBeingProcessedArgs _args)
+		private void OnControllerMatching(object sender, 
+		                                  MatchingArgs _args)
 		{
 			Application.Invoke(sender, 
 			                   _args,
 			                   delegate(object resender, EventArgs a)
 			{
-				NodeBeingProcessedArgs args = a as NodeBeingProcessedArgs;
-				SyntacticalCoverNode newNode = args.Node as SyntacticalCoverNode;
+				MatchingArgs args = a as MatchingArgs;
+				SyntacticalCoverNode newNode = 
+					new SyntacticalCoverNode(args.Matcher,
+					                         syntacticalCoverTree);
 				
 				if(currentNode == null)
 				{
@@ -294,20 +300,19 @@ namespace MathTextRecognizer.Stages
 				}
 				else
 				{
+					currentNode.Select();	
 					currentNode.AddChild(newNode);
-				}
+					syntacticalCoverTree.ExpandRow(syntacticalCoverTree.Selection.GetSelectedRows()[0],
+					                               false);
+					
+				}				
 				
-				syntacticalCoverTree.ColumnsAutosize();
-				currentNode = newNode;
+				currentNode = newNode;			
 				
-				syntacticalCoverTree.ExpandAll();	
-				
-				
-				
-				syntacticalCoverTree.Vadjustment.Value = 
-					syntacticalCoverTree.Vadjustment.Upper;
 				
 				currentNode.Select();
+				
+							
 				
 				parsingNextButtonsAlign.Sensitive = 
 					controller.StepMode == ControllerStepMode.StepByStep;
@@ -352,8 +357,11 @@ namespace MathTextRecognizer.Stages
 			{
 				if(currentNode.Parent !=null)
 				{
-					currentNode =  currentNode.Parent as SyntacticalCoverNode;
+					
+					currentNode =  currentNode.Parent as SyntacticalCoverNode;	
 					currentNode.Select();
+					syntacticalCoverTree.CollapseRow(syntacticalCoverTree.Selection.GetSelectedRows()[0]);
+					
 				}
 				
 				MarkImage(null);
@@ -371,6 +379,8 @@ namespace MathTextRecognizer.Stages
 			Application.Invoke(sender, _args, 
 			                   delegate(object resender, EventArgs a)
             {
+				currentNode.Select();
+				
 				TokenMatchingArgs args = a as TokenMatchingArgs;
 			
 				if(controller.StepMode == ControllerStepMode.StepByStep)
@@ -405,9 +415,9 @@ namespace MathTextRecognizer.Stages
 					this.MarkImage(args.MatchedToken);
 					
 					currentNode.AddMatchedToken(args.MatchedToken);	
+					currentNode.Select();
 					
-					remainingItemsStore.Remove(ref selectedRemainingItem);
-					
+					remainingItemsStore.Remove(ref selectedRemainingItem);					
 					
 				}
 				
@@ -542,6 +552,13 @@ namespace MathTextRecognizer.Stages
 			{
 				syntacticalCoverTree.ExpandRow(args.Path,true);
 			}
+			
+		}
+		
+		private void OnSyntacticalCoverTreeSelectionChanged(object sender,
+		                                                    EventArgs args)
+		{
+			
 			
 		}
 		
