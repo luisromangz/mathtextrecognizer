@@ -175,10 +175,10 @@ namespace MathTextRecognizer.Controllers.Nodes
 		}
 		 
 		/// <summary>
-		/// Añade un nodo hijo al nodo.
+		/// Adds a child to the node.
 		/// </summary>
-		/// <param name="childBitmap">
-		/// A <see cref="MathTextBitmap"/>
+		/// <param name="node">
+		/// A <see cref="SegmentedNode"/>
 		/// </param>
 		public void AddSegmentedChild(SegmentedNode node)
 		{		

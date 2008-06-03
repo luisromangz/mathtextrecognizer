@@ -58,12 +58,10 @@ namespace MathTextLibrary.Analisys
 		/// </summary>
 		protected void MatchingFinishedInvoker(string output)
 		{
-			Console.Write("mmm"+this.Label);
 			if(MatchingFinished!=null)
 			{
 				MatchingFinished(this, new MatchingFinishedArgs(output));
-			}
-				
+			}	
 		}
 		
 		protected void LogSentInvoker(string format, params object [] args)

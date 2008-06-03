@@ -81,8 +81,8 @@ namespace MathTextRecognizer.Controllers.Nodes
 			container.NodeSelection.SelectNode(this);
 			
 			container.ScrollToCell(container.Selection.GetSelectedRows()[0],
-			                       container.Columns[0],
-			                       true, 0.5f, 0.5f);
+			                       null,
+			                       true, 0.3f, 0.5f);
 			
 			container.QueueDraw();
 		}

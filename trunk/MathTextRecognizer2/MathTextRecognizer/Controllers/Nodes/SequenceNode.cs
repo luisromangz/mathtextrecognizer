@@ -178,7 +178,7 @@ namespace MathTextRecognizer.Controllers.Nodes
 		/// <param name="sender">
 		/// A <see cref="System.Object"/>
 		/// </param>
-		/// <param name="args">
+		/// <param name="_args">
 		/// A <see cref="EventArgs"/>
 		/// </param>
 		private void OnSequenceChanged(object sender, EventArgs _args)
