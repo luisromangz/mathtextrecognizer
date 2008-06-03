@@ -62,11 +62,13 @@ namespace MathTextLibrary.Analisys
 		/// <value>
 		/// Contains the label used by the rule.
 		/// </value>
-		public override string Label {
+		public override string Label
+		{
 			get { return Name; }
 		}
 		
-		public override string Type {
+		public override string Type 
+		{
 			get { return "Regla"; }
 		}
 

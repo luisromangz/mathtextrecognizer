@@ -130,6 +130,7 @@ namespace MathTextLibrary.Analisys
 				}
 			}
 			
+			
 			foundToken = Token.Join(tokens, this.ruleName);
 			
 			return found;

@@ -168,9 +168,13 @@ namespace MathTextRecognizer.Controllers.Nodes
 			
 			label = text.TrimEnd(',',' ');
 			
-			view.ColumnsAutosize();
+			if(view!=null)
+			{
+				view.ColumnsAutosize();
+				view.QueueDraw();
+			}
 			
-			view.QueueDraw();
+			
 			
 		}
 		 
@@ -185,7 +189,7 @@ namespace MathTextRecognizer.Controllers.Nodes
 			Application.Invoke(this, 
 			                   new AddNodeArgs(node),
 			                   delegate(object sender, EventArgs arg)
-			                   {
+			{
 				AddNodeArgs a = arg as AddNodeArgs;
 				this.AddChild(a.Node);
 				
@@ -199,8 +203,12 @@ namespace MathTextRecognizer.Controllers.Nodes
 					a.Node.name = String.Format("{0}.{1}",this.name, this.ChildCount);
 				}
 				
-				view.ExpandAll();
-				view.ColumnsAutosize();
+				if(view != null)
+				{
+					view.ExpandAll();
+					view.ColumnsAutosize();
+				}
+				
 			});
 			
 		}
@@ -212,11 +220,14 @@ namespace MathTextRecognizer.Controllers.Nodes
 		public void Select()
 		{
 			Application.Invoke(delegate(object sender, EventArgs args)
-			                   {
+			{
+				if(view != null)
+				{
+					view.NodeSelection.SelectNode(this);
+					TreePath path = view.Selection.GetSelectedRows()[0];
+					view.ScrollToCell(path,view.Columns[0],true,0.5f,0f);
+				}
 				
-				view.NodeSelection.SelectNode(this);
-				TreePath path = view.Selection.GetSelectedRows()[0];
-				view.ScrollToCell(path,view.Columns[0],true,0.5f,0f);
 			});
 		}
 			

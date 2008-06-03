@@ -120,8 +120,7 @@ namespace MathTextRecognizer.Controllers
 			SuspendByStep();
 			
 			TokenSequence inputTokens = new TokenSequence(startTokens);
-			parsingResult = 
-				startRule.Match(ref inputTokens, out output);
+			parsingResult = startRule.Match(ref inputTokens, out output);
 			
 			if(inputTokens.Count > 0)
 			{

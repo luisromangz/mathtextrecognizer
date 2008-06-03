@@ -41,7 +41,7 @@ namespace MathTextRecognizer
 	/// </summary>
 	public class MainRecognizerWindow
 	{
-		#region Glade-Widgets
+#region Glade-Widgets
 		[WidgetAttribute]
 		private Gtk.Window mainWindow = null;		
 		
@@ -75,9 +75,9 @@ namespace MathTextRecognizer
 		[WidgetAttribute]
 		private Label stageNameLabel = null;
 		
-		#endregion Glade-Widgets
-		
-		#region Otros atributos
+#endregion Glade-Widgets
+
+#region Fields
 		
 		private bool recognizementFinished;
 		
@@ -95,7 +95,11 @@ namespace MathTextRecognizer
 		
 		private SyntacticalRulesManagerDialog syntacticalRulesManagerDialog;
 		
-		#endregion Otros atributos
+		private string imageFile;
+		
+#endregion Fields
+		
+#region Main method
 		
 		public static void Main(string[] args)
 		{			
@@ -103,7 +107,9 @@ namespace MathTextRecognizer
 			new MainRecognizerWindow();
 			Application.Run();
 		}
+#endregion Main method
 		
+#region Constructors
 		/// <summary>
 		/// El constructor de <code>MainWindow</code>.
 		/// </summary>
@@ -132,16 +138,17 @@ namespace MathTextRecognizer
 				new SyntacticalRulesManagerDialog(this.Window);
 			
 			this.mainWindow.Icon = 
-				ImageResources.LoadPixbuf("mathtextrecognizer16");
+				ImageResources.LoadPixbuf("mathtextrecognizer48");
 		
 			
 		}
 		
+#endregion Constructors
 		
-#region Propiedades
+#region Properties
 		
 		/// <value>
-		/// Contiene el dialogo de gestion de bases de datos.
+		/// Contains the database manager
 		/// </value>
 		public DatabaseManagerDialog DatabaseManager
 		{
@@ -258,16 +265,24 @@ namespace MathTextRecognizer
 			}
 		}
 
+		/// <value>
+		/// Contains the image file path to be recognized.
+		/// </value>
+		public string ImageFile 
+		{
+			get 
+			{
+				return imageFile;
+			}
+		}
+
 		
+#endregion Properties
 		
-		
-		
-#endregion Propiedades
-		
-#region Metodos publicos
+#region Public methods
 		
 		/// <summary>
-		/// Método que permite borrar la zona de informacion de proceso.
+		/// Clears the log view
 		/// </summary>
 		public void ClearLog()
 		{			
@@ -275,9 +290,11 @@ namespace MathTextRecognizer
 		}
 		
 		/// <summary>
-		/// Método usado para escribir un mensaje en la zona de información de proceso.
+		/// Writes a message in the log view.
 		/// </summary>
-		/// <param name="message">El mensaje a escribir.</param>
+		/// <param name="message">
+		/// The message.
+		/// </param>
 		public void Log(string message, params object[] args)
 		{			
 			logView.LogLine(message, args);
@@ -295,6 +312,16 @@ namespace MathTextRecognizer
 			ocrWidget.ShowAll();
 			
 			
+		}
+		
+		public void CreateUnassistedWidget()
+		{
+			UnassistedStageWidget widget = new UnassistedStageWidget(this);
+			
+			recognizingStepsNB.AppendPage(widget,
+			                              new Label(UnassistedStageWidget.WidgetLabel));
+			
+			widget.ShowAll();
 		}
 		
 		public void CreateTokenizingWidget()
@@ -319,39 +346,31 @@ namespace MathTextRecognizer
 		/// Metodo que maneja el evento provocado al cerrarse el dialogo de 
 		/// apertura de imagen.
 		/// </summary>
-		public void LoadImage()
+		public bool LoadImage()
 		{
 			string filename;
 			
 			if(ImageLoadDialog.Show(mainWindow, out filename)
 				== ResponseType.Ok)
 			{			
-				// Cargamos la imagen desde disco
-					
-				LoadImage(filename);	
+				this.imageFile = filename;
+		
+				recognizementFinished=false;
+				ClearLog();
 				ResetState();
+				return true;
 			}
+			
+			return false;
 		}
+		
 	
 		
-#endregion Metodos publicos
+#endregion Public methods
 		
-#region Metodos privados
+#region Non-public methods
 		
-		/// <summary>
-		/// Loads an image as the image to be processed.
-		/// </summary>
-		/// <param name="filename">
-		/// The image's path.
-		/// </param>
-		private void LoadImage(string filename)
-		{
-			ocrWidget.SetInitialImage(filename);
-		
-			recognizementFinished=false;
-			ClearLog();
-		}
-		
+	
 		/// <summary>
 		/// Para facilitar la inicializacion de los widgets.
 		/// </summary>
@@ -451,7 +470,7 @@ namespace MathTextRecognizer
 			
 			if(res==ResponseType.Yes)
 			{			
-				LoadImage();
+				(recognizingStepsNB.Children[1] as RecognizingStageWidget).SetInitialData();
 			}
 		}
 		
@@ -485,7 +504,10 @@ namespace MathTextRecognizer
 				String.Format("<b><i>{0}</i></b>",
 				              recognizingStepsNB.GetTabLabelText(page));
 			
-			bool hasLoadImage = page.GetType() == typeof(OCRStageWidget);
+			bool hasLoadImage = 
+				(page.GetType() == typeof(OCRStageWidget)					
+				|| page.GetType() == typeof(UnassistedStageWidget));
+			
 			toolLoadImage.Sensitive = hasLoadImage;
 			this.menuLoadImage.Sensitive = hasLoadImage;
 		}
@@ -616,5 +638,5 @@ namespace MathTextRecognizer
 		}
 	}
 	
-#endregion Metodos privados
+#endregion Non-public methods
 }

@@ -91,7 +91,7 @@ namespace MathTextLibrary.Controllers
 		/// <summary>
 		/// Aborts the processing thread.
 		/// </summary>
-		public void TryAbort()
+		public void Abort()
 		{
 			if(processThread!=null)
 				processThread.Abort();

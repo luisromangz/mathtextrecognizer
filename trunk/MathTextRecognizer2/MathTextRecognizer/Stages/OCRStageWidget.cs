@@ -149,7 +149,7 @@ namespace MathTextRecognizer.Stages
 		{
 			get
 			{
-				return GetLeafs(rootNode);
+				return controller.Result;
 			}
 		}
 
@@ -166,9 +166,24 @@ namespace MathTextRecognizer.Stages
 		
 #endregion Properties
 		
+
 		
 #region Public methods
 		
+		public override void SetInitialData()
+		{
+			if(MainRecognizerWindow.LoadImage())
+			{
+				this.SetInitialImage(MainRecognizerWindow.ImageFile);
+			}
+		}
+		
+		
+#endregion Public methods
+
+		
+#region Non-public methods
+	
 			
 		/// <summary>
 		/// Establece la imagen inicial para segmentar y reconocer sus
@@ -177,7 +192,7 @@ namespace MathTextRecognizer.Stages
 		/// <param name="image">
 		/// La imagen inicial.
 		/// </param>
-		public void SetInitialImage(string  filename)
+		private void SetInitialImage(string  filename)
 		{
 			
 			imageOriginal = new Pixbuf(filename);
@@ -207,19 +222,7 @@ namespace MathTextRecognizer.Stages
 		}
 		
 		
-#endregion Public methods
-
-		
-#region Non-public methods
 	
-			
-		
-		
-		protected override void SetInitialData()
-		{
-			MainRecognizerWindow.LoadImage();
-		}
-		
 		
 		
 		protected void InitializeWidgets()
@@ -402,7 +405,7 @@ namespace MathTextRecognizer.Stages
 			// We have to check the leaf nodes for problems.
 			
 			SegmentedNode analizedNode = rootNode;
-			List<string> errors = CheckNode(analizedNode);
+			List<string> errors = CheckErrors();
 			
 			if(errors.Count == 0)
 			{
@@ -422,29 +425,18 @@ namespace MathTextRecognizer.Stages
 		}
 		
 		/// <summary>
-		/// Checks a node to see if its a leaf node, and if so it has some
-		/// label related issues.
+		/// Checks the result to see if there are errors.
 		/// </summary>
-		/// <param name="analizedNode">
-		/// The node to be analized
-		/// </param>
 		/// <returns>
 		/// A list with the problems found.
 		/// </returns>
-		private List<string> CheckNode(SegmentedNode analizedNode)
+		private List<string> CheckErrors()
 		{
 			List<string> errors = new List<string>();
-			if(analizedNode.ChildCount>0)
+			
+			foreach (SegmentedNode analizedNode in controller.Result) 
 			{
-				for(int i=0; i<analizedNode.ChildCount; i++)
-				{
-					SegmentedNode node = (SegmentedNode)(analizedNode[i]);
-					errors.AddRange(CheckNode(node));
-				}
-				
-			}
-			else
-			{
+			
 				// We have a problem if we have many symbols in a node, or
 				// we don't have any.
 				
@@ -811,36 +803,10 @@ namespace MathTextRecognizer.Stages
 		
 		public override void Abort ()
 		{
-			controller.TryAbort();
+			controller.Abort();
 		}
 		
-		/// <summary>
-		/// Retrieves the leaf nodes of a given node.
-		/// </summary>
-		/// <param name="node">
-		/// The node to check;
-		/// </param>
-		/// <returns>
-		/// A list with the leafs.
-		/// </returns>
-		private List<SegmentedNode> GetLeafs(SegmentedNode node)
-		{
-			List<SegmentedNode> leafs = new List<SegmentedNode>();
-			
-			if(node.ChildCount == 0)
-			{
-				leafs.Add(node);
-			}
-			else
-			{
-				for(int i=0; i< node.ChildCount; i++)
-				{
-					leafs.AddRange(GetLeafs((SegmentedNode)node[i]));
-				}
-			}
-			
-			return leafs;
-		}
+		
 		
 			
 		private void OnOcrBackBtnClicked(object sender, EventArgs args)

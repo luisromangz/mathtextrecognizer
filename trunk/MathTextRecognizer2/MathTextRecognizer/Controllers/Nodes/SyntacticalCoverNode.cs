@@ -27,9 +27,6 @@ namespace MathTextRecognizer.Controllers.Nodes
 		
 		private SyntacticalMatcher matcher;
 		
-		private string padding ;
-	
-		
 		public SyntacticalCoverNode(SyntacticalMatcher matcher, NodeView container)
 		{
 			this.container = container;
@@ -40,7 +37,6 @@ namespace MathTextRecognizer.Controllers.Nodes
 			
 			matchedTokens ="";
 			
-			padding = "";
 			
 			this.ChildAdded += new TreeNodeAddedHandler(OnChildAdded);
 		}
@@ -55,9 +51,8 @@ namespace MathTextRecognizer.Controllers.Nodes
 		{
 			get
 			{
-				return String.Format("{0}{1}: {2}{3}{4}", 
-				                     padding,
-					                 matcherType, 
+				return String.Format("{0}: {1}{2}{3}", 
+				                     matcherType, 
 					                 matcherLabel,
 					                 matchedTokens,
 					                 output);
@@ -81,10 +76,11 @@ namespace MathTextRecognizer.Controllers.Nodes
 			container.NodeSelection.SelectNode(this);
 			
 			container.ScrollToCell(container.Selection.GetSelectedRows()[0],
-			                       null,
-			                       true, 0.3f, 0.5f);
+			                       container.Columns[0],
+			                       true, 0.3f, 1f);
 			
 			container.QueueDraw();
+			container.QueueResize();
 		}
 		
 		/// <summary>
@@ -98,22 +94,37 @@ namespace MathTextRecognizer.Controllers.Nodes
 		
 			if(String.IsNullOrEmpty(matchedTokens))
 			{
-				matchedTokens = "; Reconocido: "+ matchedToken.Text;
+				matchedTokens = "; Encaja: <i>"+ matchedToken.Text+"</i>";
 				
 			}
 			else
 			{
-				matchedTokens = ", " +matchedToken.Text;
+				matchedTokens = ", <i>" +matchedToken.Text+"</i>";
 			}
 			
+			container.ColumnsAutosize();
+			
+			
+			container.QueueResize();
 			container.QueueDraw();
+			
+			container.Hadjustment.Value = container.Hadjustment.Upper;
+			container.QueueResize();
+			container.QueueDraw();
+		
 		}
 		
 		public void SetOutput(string output)
 		{
 			if(output != "")
 			{
-				this.output = "; «"+output +"»";
+				this.output = "; <i>"+output +"</i>";
+				container.ColumnsAutosize();
+				container.QueueResize();
+				container.QueueDraw();
+				
+				container.Hadjustment.Value = container.Hadjustment.Upper;
+				container.QueueResize();
 				container.QueueDraw();
 			}
 			
@@ -128,7 +139,6 @@ namespace MathTextRecognizer.Controllers.Nodes
 		{
 			SyntacticalCoverNode child = (SyntacticalCoverNode)_child;
 			
-			child.padding = this.padding +"   ";
 		}
 		
 #endregion Private methods

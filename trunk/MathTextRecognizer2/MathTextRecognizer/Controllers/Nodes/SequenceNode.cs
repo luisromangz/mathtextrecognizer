@@ -133,9 +133,13 @@ namespace MathTextRecognizer.Controllers.Nodes
 				
 				this.AddChild(a.ChildNode);
 				
-				// We expand the node			
-				widget.ExpandAll();
-				widget.ColumnsAutosize();
+				if(widget!=null)
+				{
+					// We expand the node			
+					widget.ExpandAll();
+					widget.ColumnsAutosize();
+				}
+				
 			});
 		}
 		
@@ -163,9 +167,12 @@ namespace MathTextRecognizer.Controllers.Nodes
 		{
 			Application.Invoke(delegate(object sender, EventArgs args)
             {
-				widget.NodeSelection.SelectNode(this);			
-				TreePath path = widget.Selection.GetSelectedRows()[0];
-				widget.ScrollToCell(path,widget.Columns[0],true,1,0);
+				if(widget != null)
+				{
+					widget.NodeSelection.SelectNode(this);			
+					TreePath path = widget.Selection.GetSelectedRows()[0];
+					widget.ScrollToCell(path,widget.Columns[0],true,1,0);
+				}
 			});
 		}
 #endregion Public methods
@@ -193,10 +200,14 @@ namespace MathTextRecognizer.Controllers.Nodes
 					SequenceText = "Error al reconocer";
 				}
 				
-				// This shouldn't be required.
-				widget.Columns[1].QueueResize();
-				widget.QueueDraw();
-				widget.ColumnsAutosize();	
+				if(widget != null)
+				{
+					// This shouldn't be required.
+					widget.Columns[1].QueueResize();
+					widget.QueueDraw();
+					widget.ColumnsAutosize();
+				}
+					
 			});
 		}
 	
@@ -228,7 +239,8 @@ namespace MathTextRecognizer.Controllers.Nodes
 					tokensLabel = token.Type;
 				}
 				
-				widget.ColumnsAutosize();
+				if(widget != null)
+					widget.ColumnsAutosize();
 			});
 		}
 		

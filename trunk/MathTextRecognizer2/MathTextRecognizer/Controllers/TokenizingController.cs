@@ -27,6 +27,8 @@ namespace MathTextRecognizer.Controllers
 		private List<Token> tokens;
 		private List<LexicalRule> lexicalRules;
 		
+		private List<SequenceNode> tokenSequences;
+		
 		private NodeView view;
 		
 		private SequenceNode sequenceForTokenizing;
@@ -48,6 +50,21 @@ namespace MathTextRecognizer.Controllers
 		}
 		
 #region Properties
+		
+		public List<Token> Result
+		{
+			get
+			{
+				List<Token> result = new List<Token>();
+				foreach (SequenceNode node in tokenSequences) 
+				{
+					result.AddRange(GetTokens(node));
+				}
+				
+				result.Sort();
+				return result;
+			}
+		}
 		
 #endregion Properties
 		
@@ -94,6 +111,34 @@ namespace MathTextRecognizer.Controllers
 #region Non-public methods
 		
 		/// <summary>
+		/// Gets the tokens of a given node.
+		/// </summary>
+		/// <param name="node">
+		/// A <see cref="SequencedNode"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="List`1"/>
+		/// </returns>
+		private List<Token> GetTokens(SequenceNode node)
+		{
+			List<Token> res = new List<Token>();
+			if(node.ChildCount ==0)
+			{
+				// It should have a token;
+				res.Add(node.FoundToken);
+			}
+			else
+			{
+				for(int i = 0; i< node.ChildCount; i++)
+				{
+					res.AddRange(GetTokens(node[i] as SequenceNode));
+				}
+			}
+			
+			return res;
+		}
+		
+		/// <summary>
 		/// Groups the tokens in others containing more symbols.
 		/// </summary>
 		protected override void Process ()
@@ -102,10 +147,10 @@ namespace MathTextRecognizer.Controllers
 			MessageLogSentInvoker(" Comenzando proceso de análisis léxico");
 			MessageLogSentInvoker("========================================");
 			
-			List<SequenceNode> tokenSequences;
+			
 			if(sequenceForTokenizing ==null)
 			{
-				Suspend();
+				SuspendByStep();
 			
 				MessageLogSentInvoker("========== Secuenciación ==========");
 				
@@ -264,6 +309,7 @@ namespace MathTextRecognizer.Controllers
 					                      rule.Name,
 					                      accepted.ToString(),
 					                      found?"Sí":"No");
+					
 					SequenceBeingMatchedInvoker(foundToken, rule, found);
 					SuspendByStep();
 					
@@ -295,8 +341,7 @@ namespace MathTextRecognizer.Controllers
 						
 					discarded.Prepend(accepted[lastIndex]);
 					
-					accepted.RemoveAt(lastIndex);
-					
+					accepted.RemoveAt(lastIndex);				
 					
 				}
 				else
@@ -304,8 +349,6 @@ namespace MathTextRecognizer.Controllers
 					// We found a token, so we stop searching and add
 					// the token to the result.
 					acceptedNode.FoundToken = foundToken;
-					
-					
 				}
 			}
 			
@@ -354,7 +397,6 @@ namespace MathTextRecognizer.Controllers
 				TokenChecked(this, 
 				             new TokenCheckedArgs(lastSequence, currentToken));
 			}
-				
 		}
 		
 		/// <summary>

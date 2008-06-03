@@ -156,22 +156,22 @@ namespace MathTextRecognizer.Stages
 			
 		public override void Abort ()
 		{
-			controller.TryAbort();
+			controller.Abort();
 		}
 		
-		
+		public override void SetInitialData()			
+		{
+			originalImage = MainRecognizerWindow.OCRWidget.StartImage;
+			this.originalImageArea.Image = originalImage;
+			SetRemainingTokens(MainRecognizerWindow.TokenizingWidget.ResultTokens);
+		}
 		
 		
 #endregion Public methods
 		
 #region Non-public methods		
 		
-		protected override void SetInitialData()			
-		{
-			originalImage = MainRecognizerWindow.OCRWidget.StartImage;
-			this.originalImageArea.Image = originalImage;
-			SetRemainingTokens(MainRecognizerWindow.TokenizingWidget.ResultTokens);
-		}
+		
 	
 		/// <summary>
 		/// Initializes the child widgets of the widget.
@@ -188,16 +188,13 @@ namespace MathTextRecognizer.Stages
 			                                  new CellRendererText(),
 			                                  "markup" ,0);
 			
-			syntacticalCoverTree.Columns[0].Sizing = 
-				TreeViewColumnSizing.Autosize;
-			
 			syntacticalCoverTree.RowActivated+= 
 				new RowActivatedHandler(OnSyntacticalCoverTreeRowActivated);
 			
 			syntacticalCoverTree.Selection.Changed +=
 				new EventHandler(OnSyntacticalCoverTreeSelectionChanged);
 			
-			syntacticalCoverTree.ShowExpanders = false;
+			//syntacticalCoverTree.ShowExpanders = false;
 			
 			syntacticalTreePlaceholder.Add(syntacticalCoverTree);
 			

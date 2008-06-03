@@ -45,6 +45,8 @@ namespace MathTextRecognizer.Controllers
 		
 		
 		private bool searchDatabase;
+
+#region Constructors
 		
 		/// <summary>
 		/// Constructor de la clase MathTextRecognizerController, debe ser invocado
@@ -76,53 +78,11 @@ namespace MathTextRecognizer.Controllers
 			searchDatabase = false;
 			               
 		}
-	
-		/// <summary>
-		/// Envolvemos el lanzamiento del evento BitmapBeingRecognized, por comodidad.
-		/// </summary>
-		/// <param name="bitmap">
-		/// La imagen que hemos comenzado a reconocer, que sera enviada como
-		/// argumentod del evento.
-		/// </param>		
-		protected void BitmapProcessedByDatabaseInvoker(MathTextBitmap bitmap)
-		{
-			if(BitmapProcessedByDatabase!=null)
-			{
-				BitmapProcessedByDatabase(this,new BitmapProcessedArgs(bitmap));
-			}
-		}
 		
-		/// <summary>
-		/// Manejador del evento RecognizingCharacteristicChecked de la base de datos de caracteres.
-		/// </summary>
-		/// <param name="sender">El objeto que envio el evento.</param>
-		/// <param name="args">Los argumentos del evento.</param>
-		private void OnProcessingStepDone(object sender,
-		                                  StepDoneArgs args)
-		{			
-			MessageLogSentInvoker(args.Message);
-			
-			SuspendByStep();
-			
-		}
+#endregion Constructors
 		
-		/// <summary>
-		/// Cargamos la base de datos que vamos a utilizar para intentar 
-		/// reconocer las imagenes como caracteres.
-		/// </summary>
-		/// <param name="path">
-		/// La ruta del fichero donde esta la base de datos.
-		/// </param>
-		public void LoadDatabase(string path)
-		{
-			
-			MathTextDatabase database = MathTextDatabase.Load(path);
-			
-			database.StepDone+=
-				new ProcessingStepDoneHandler(OnProcessingStepDone);
-			
-			databases.Add(database);
-		}
+#region Properties
+		
 		
 		/// <value>
 		/// Contiene la imagen de inicio que
@@ -177,6 +137,99 @@ namespace MathTextRecognizer.Controllers
 			{
 				searchDatabase = value;
 			}
+		}
+		
+		public List<SegmentedNode> Result
+		{
+			get
+			{
+				return this.GetLeafs(this.startNode);
+			}
+		}
+		
+#endregion Properties
+		
+#region Public methods
+		
+			
+		
+		/// <summary>
+		/// Cargamos la base de datos que vamos a utilizar para intentar 
+		/// reconocer las imagenes como caracteres.
+		/// </summary>
+		/// <param name="path">
+		/// La ruta del fichero donde esta la base de datos.
+		/// </param>
+		public void LoadDatabase(string path)
+		{
+			
+			MathTextDatabase database = MathTextDatabase.Load(path);
+			
+			database.StepDone+=
+				new ProcessingStepDoneHandler(OnProcessingStepDone);
+			
+			databases.Add(database);
+		}
+		
+#endregion Public methods
+		
+#region Non-public methods
+		
+		/// <summary>
+		/// Retrieves the leaf nodes of a given node.
+		/// </summary>
+		/// <param name="node">
+		/// The node to check;
+		/// </param>
+		/// <returns>
+		/// A list with the leafs.
+		/// </returns>
+		private List<SegmentedNode> GetLeafs(SegmentedNode node)
+		{
+			List<SegmentedNode> leafs = new List<SegmentedNode>();
+			
+			if(node.ChildCount == 0)
+			{
+				leafs.Add(node);
+			}
+			else
+			{
+				for(int i=0; i< node.ChildCount; i++)
+				{
+					leafs.AddRange(GetLeafs((SegmentedNode)node[i]));
+				}
+			}
+			
+			return leafs;
+		}
+		
+		/// <summary>
+		/// Envolvemos el lanzamiento del evento BitmapBeingRecognized, por comodidad.
+		/// </summary>
+		/// <param name="bitmap">
+		/// La imagen que hemos comenzado a reconocer, que sera enviada como
+		/// argumentod del evento.
+		/// </param>		
+		protected void BitmapProcessedByDatabaseInvoker(MathTextBitmap bitmap)
+		{
+			if(BitmapProcessedByDatabase!=null)
+			{
+				BitmapProcessedByDatabase(this,new BitmapProcessedArgs(bitmap));
+			}
+		}
+		
+		/// <summary>
+		/// Manejador del evento RecognizingCharacteristicChecked de la base de datos de caracteres.
+		/// </summary>
+		/// <param name="sender">El objeto que envio el evento.</param>
+		/// <param name="args">Los argumentos del evento.</param>
+		private void OnProcessingStepDone(object sender,
+		                                  StepDoneArgs args)
+		{			
+			MessageLogSentInvoker(args.Message);
+			
+			SuspendByStep();
+			
 		}
 		
 		/// <summary>
@@ -336,6 +389,13 @@ namespace MathTextRecognizer.Controllers
 			
 			return children;
 		}
+		
+		
+#endregion Non-public methods
+	
+	
+		
+		
 		
 	
 	}
