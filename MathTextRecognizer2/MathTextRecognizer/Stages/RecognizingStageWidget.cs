@@ -94,7 +94,7 @@ namespace MathTextRecognizer.Stages
 			mainWindow.Log(format, pars);
 		}
 		
-		protected virtual void SetInitialData()
+		public virtual void SetInitialData()
 		{
 			
 		}
@@ -116,6 +116,9 @@ namespace MathTextRecognizer.Stages
 		/// </returns>
 		public RecognizingStageWidget NextStage()			
 		{
+			// We try to free memory.
+			GC.Collect();
+			
 			Gtk.Notebook parentNB = (Gtk.Notebook)(this.Parent);
 			parentNB.NextPage();
 			RecognizingStageWidget widget = 
@@ -127,6 +130,9 @@ namespace MathTextRecognizer.Stages
 		
 		public void PreviousStage()
 		{
+			// We try to free memory.
+			GC.Collect();
+			
 			Gtk.Notebook parentNB = (Gtk.Notebook)(this.Parent);
 			parentNB.PrevPage();
 			this.Abort();

@@ -55,6 +55,7 @@
     <File name="../Common/Artwork/mathtextlearner.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../Common/Artwork/mathtextrecognizer16.png" subtype="Code" buildaction="EmbedAsResource" />
     <File name="../Common/Artwork/edu_miscellaneous32.png" subtype="Code" buildaction="EmbedAsResource" />
+    <File name="../Common/Artwork/mathtextrecognizer48.png" subtype="Code" buildaction="EmbedAsResource" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gtk-sharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

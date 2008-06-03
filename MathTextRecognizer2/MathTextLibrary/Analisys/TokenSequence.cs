@@ -187,7 +187,7 @@ namespace MathTextLibrary.Analisys
 			
 			foreach (Token t in sequence) 
 			{
-				res.Add(String.Format("«{0}»",t.Text));
+				res.Add(String.Format("«{0}»",t==null?"?":t.Text));
 			}
 			
 			return String.Join(", ", res.ToArray());			

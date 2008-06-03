@@ -61,6 +61,11 @@ namespace MathTextRecognizer.Stages
 			NextStage();
 		}
 		
+		private void OnAutoModeBtnClicked(object sender, EventArgs args)
+		{
+			MainRecognizerWindow.CreateUnassistedWidget();
+			NextStage();
+		}
 		
 #endregion Event handlers
 	}

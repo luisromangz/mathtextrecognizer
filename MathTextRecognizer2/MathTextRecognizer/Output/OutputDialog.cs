@@ -222,7 +222,7 @@ namespace MathTextRecognizer.Output
 			originalImageArea.ImageMode = ImageAreaMode.Zoom;
 			this.outputOriginalPlaceholder.Add(originalImageArea);
 			
-			originalImageArea.Image = this.mainWindow.OCRWidget.StartImage;
+			originalImageArea.Image = new Gdk.Pixbuf(mainWindow.ImageFile);
 			
 			if(Config.RecognizerConfig.Instance.ShowOutputConversion)
 			{

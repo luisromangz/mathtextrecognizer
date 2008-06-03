@@ -184,14 +184,7 @@ namespace MathTextRecognizer.Stages
 		{
 			get
 			{
-				List<Token> result = new List<Token>();
-				foreach (SequenceNode node in sequencesModel) 
-				{
-					result.AddRange(GetTokens(node));
-				}
-				
-				result.Sort();
-				return result;
+				return controller.Result;
 			}
 		}
 		
@@ -230,9 +223,13 @@ namespace MathTextRecognizer.Stages
 		
 		public override void Abort ()
 		{
-			controller.TryAbort();
+			controller.Abort();
 		}
 
+		public override void SetInitialData ()
+		{
+			this.SetStartSymbols(MainRecognizerWindow.OCRWidget.LeafNodes);	
+		}
 
 		
 #endregion Public methods
@@ -280,39 +277,9 @@ namespace MathTextRecognizer.Stages
 		
 		
 		
-		protected override void SetInitialData ()
-		{
-			this.SetStartSymbols(MainRecognizerWindow.OCRWidget.LeafNodes);	
-		}
-
+	
 		
-		/// <summary>
-		/// Gets the tokens of a given node.
-		/// </summary>
-		/// <param name="node">
-		/// A <see cref="SequencedNode"/>
-		/// </param>
-		/// <returns>
-		/// A <see cref="List`1"/>
-		/// </returns>
-		private List<Token> GetTokens(SequenceNode node)
-		{
-			List<Token> res = new List<Token>();
-			if(node.ChildCount ==0)
-			{
-				// It should have a token;
-				res.Add(node.FoundToken);
-			}
-			else
-			{
-				for(int i = 0; i< node.ChildCount; i++)
-				{
-					res.AddRange(GetTokens(node[i] as SequenceNode));
-				}
-			}
-			
-			return res;
-		}
+	
 		
 		/// <summary>
 		/// Initialize the widget's children widgets.
@@ -1021,7 +988,7 @@ namespace MathTextRecognizer.Stages
 				// The parsing finished and was successful
 				ResponseType res = 
 					ConfirmDialog.Show(MainRecognizerWindow.Window,
-					                   "Si regreasas al paso anterior se perderá el análisis realizado, ¿quieres continuar?");
+					                   "Si regresas al paso anterior se perderá el análisis realizado, ¿quieres continuar?");
 				
 				if(res == ResponseType.No)
 					return;
