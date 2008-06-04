@@ -259,50 +259,6 @@ namespace MathTextLibrary.Databases.Receptors
 			int		width = image.Width;
 			int		height = image.Height;
 			
-			/*
-			for(int i = 0; i<receptors.Count ;i++)
-			{
-				// We initialize the new check vector
-				vector.Values.Add(false);
-			}
-			
-			
-			
-			
-			Receptor receptor;
-			for (int y = 0; y < height; y++)
-			{
-				for (int x = 0; x < width; x++)
-				{
-					// Check for black pixel
-					if (image[x, y] == FloatBitmap.Black)
-					{
-						for (int i = 0; i < receptors.Count; i++)
-						{
-							// Skip already activated receptors
-							if (vector.Values[i])
-								continue;
-
-							receptor = receptors[i];
-							checkValue =
-								receptor.GetReceptorState(x, y, width, height);
-							vector.Values[i]= checkValue;
-							
-							
-							// We inform the controller.
-							StepDoneArgs args = 
-								new StepDoneArgs(String.Format("Comprobando receptor {0} en el pixel {1}: {2}", 
-								                               String.Format("({0}, {1}) -> ({2}, {3})",
-								                                             receptor.X0,receptor.Y0,
-								                                             receptor.X1, receptor.Y1),
-								                               String.Format("({0}, {1})" ,x, y),
-								                               checkValue));
-				
-							StepDoneInvoker(args);
-						}
-					}
-				}
-			}*/
 			
 			foreach (Receptor receptor in receptors) 
 			{

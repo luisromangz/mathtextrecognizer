@@ -100,17 +100,14 @@ namespace MathTextCustomWidgets.Widgets.Logger
 		
 		private void LogLineSimple(string message)
 		{
-			/*if(txtLog.Buffer.LineCount > MAX_LINES)
-			{
-				TextIter start =txtLog.Buffer.GetIterAtLine(0);
-				TextIter end =txtLog.Buffer.GetIterAtLine(1);
-				
-				txtLog.Buffer.Delete(ref start, ref end);
-			}*/
+			
 			
 			TextIter endIter = txtLog.Buffer.EndIter;
 			txtLog.Buffer.Insert(ref endIter,message+"\n");
 			
+#if DEBUG
+			Console.WriteLine("Log: " + message);
+#endif
 			
 			if(follow)
 			{

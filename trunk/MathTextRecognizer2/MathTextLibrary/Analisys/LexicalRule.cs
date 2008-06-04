@@ -128,8 +128,7 @@ namespace MathTextLibrary.Analisys
 					found = true;
 					break;
 				}
-			}
-			
+			}			
 			
 			foundToken = Token.Join(tokens, this.ruleName);
 			

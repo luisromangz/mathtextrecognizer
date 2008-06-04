@@ -300,10 +300,12 @@ namespace MathTextRecognizer.Controllers
 			
 			while(accepted.Count > 0 && !found)
 			{
+				
+				
 				foreach (LexicalRule rule in lexicalRules) 
 				{
 					found = rule.Match(accepted, out foundToken);
-					
+				
 					MessageLogSentInvoker("¿La regla «{0}» acepta la secuencia ({1})?: {2}", 
 					                      rule.Name,
 					                      accepted.ToString(),
