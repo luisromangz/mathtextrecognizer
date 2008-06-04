@@ -210,6 +210,8 @@ namespace MathTextRecognizer.Stages
 					                          node.MathTextBitmap.FloatImage));
 				}
 				
+				
+				tokenizingFinished = false;
 				tokenizingController.SetLexicalRules(MainRecognizerWindow.LexicalRulesManager.LexicalRules);
 				tokenizingController.SetInitialData(startTokens, null);
 				
@@ -289,13 +291,6 @@ namespace MathTextRecognizer.Stages
 					unassistedGlobalProgressBar.Fraction = 0.66;
 					
 					List<Token> result = tokenizingController.Result;
-					
-					Console.WriteLine("mmm {0}", result.Count);
-					foreach (Token t in result) 
-					{
-						Console.WriteLine(t.Text);
-						Console.WriteLine(t.Type);						
-					}
 					
 					SyntacticalRulesLibrary.Instance.ClearRules();
 					foreach (SyntacticalRule rule in  
