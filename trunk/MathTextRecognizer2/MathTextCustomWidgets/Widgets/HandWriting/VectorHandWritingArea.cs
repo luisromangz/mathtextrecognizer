@@ -9,7 +9,7 @@ using System.Threading;
 namespace MathTextCustomWidgets.Widgets.HandWriting
 {	
 	
-	public class VectorHandWritingArea : IHandWritingArea
+	public class VectorHandWritingArea : HandWritingArea
 	{	
 		//Lista de objetos object
 		private List<List<Point>> strokes;
@@ -131,11 +131,16 @@ namespace MathTextCustomWidgets.Widgets.HandWriting
 				
 		private void DrawStroke(Graphics g, List<Point> stroke)
 		{
-			Point[] arraystroke=new Point[stroke.Count];
-			//Creo un array a partir de una lista
-			stroke.CopyTo(arraystroke);
+			Point[] arraystroke= stroke.ToArray();						
 			//Dibujo una spline usando la funcion de GDI
-			g.DrawCurve(foreground,arraystroke);
+			try
+			{
+				g.DrawCurve(foreground,arraystroke);
+			}
+			catch(ArgumentException)
+			{
+				
+			}
 		}
 		
 		//Gestion del apretar el boton del raton en el control,

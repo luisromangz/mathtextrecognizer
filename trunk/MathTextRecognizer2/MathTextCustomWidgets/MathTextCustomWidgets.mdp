@@ -40,7 +40,7 @@
     <File name="Widgets/SymbolLabelEditorWidget.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/Logger/LogSaveDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/Logger/LogView.cs" subtype="Code" buildaction="Compile" />
-    <File name="Widgets/HandWriting/IHandWritingArea.cs" subtype="Code" buildaction="Compile" />
+    <File name="Widgets/HandWriting/HandWritingArea.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/HandWriting/RasterHandWritingArea.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/HandWriting/VectorHandWritingArea.cs" subtype="Code" buildaction="Compile" />
     <File name="Widgets/ImageArea/ImageArea.cs" subtype="Code" buildaction="Compile" />
