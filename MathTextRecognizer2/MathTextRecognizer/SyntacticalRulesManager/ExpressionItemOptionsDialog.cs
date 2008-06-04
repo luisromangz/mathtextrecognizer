@@ -120,7 +120,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				options.Modifier =
 					(ExpressionItemModifier)(itemOpModifierCombo.Active);
 				
-				options.FormatString = itemOpFormatEntry.Text.Trim();
+				options.FormatString = itemOpFormatEntry.Text;
 				
 				foreach (RelatedItemWidget childWidget in itemOpRelatedItemsBox.Children) 
 				{
@@ -299,11 +299,11 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			this.itemOpModifierCombo.Active = 0;
 			
 			bool isToken = expressionType == typeof(ExpressionTokenWidget);
-			bool isGroup = typeof(ExpressionGroupWidget) != expressionType;
+			bool isGroup = typeof(ExpressionGroupWidget) == expressionType;
 			
 			itemOpForceSearchCheck.Visible = isToken;
 			
-			itemOpFormatAlignment.Visible = isGroup;
+			itemOpFormatAlignment.Visible = !isGroup;
 			
 			itemOpRelatedItemsFrame.Visible =  isToken;
 			
@@ -348,9 +348,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			List<string> errors = new List<string>();
 			
-			if(itemOpFormatEntry.Visible)
+			if(itemOpFormatAlignment.Visible)
 			{
-				if(String.IsNullOrEmpty(itemOpFormatEntry.Text.Trim()))
+				if(String.IsNullOrEmpty(itemOpFormatEntry.Text))
 				{
 					errors.Add("· No hay definida cadena de formato para el item.");
 				}
@@ -417,6 +417,8 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		public ExpressionItemOptions()
 		{
 			RelatedItems = new List<ExpressionItem>();
+			FormatString = "{0}";
+			Modifier = ExpressionItemModifier.None;
 		}
 		
 	}

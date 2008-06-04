@@ -471,9 +471,7 @@ namespace MathTextRecognizer.Stages
 		
 		private void OnParsingProcessBtnClicked(object sender, EventArgs args)
 		{
-		
-			
-			
+			syntacticalCoverModel.Clear();
 			
 			// We set the tokens from the previous step.
 			controller.SetStartTokens(MainRecognizerWindow.TokenizingWidget.ResultTokens);

@@ -149,6 +149,7 @@ namespace MathTextRecognizer.Stages
 		{
 			get
 			{
+				controller.StartNode = this.rootNode;
 				return controller.Result;
 			}
 		}

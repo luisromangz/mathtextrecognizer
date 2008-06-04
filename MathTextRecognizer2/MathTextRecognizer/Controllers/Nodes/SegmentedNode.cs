@@ -163,10 +163,10 @@ namespace MathTextRecognizer.Controllers.Nodes
 			string text ="";
 			foreach(MathSymbol s in symbols)
 			{
-				text += String.Format("{0}, ", s.Text);
+				text += String.Format("{0}; ", s.Text);
 			}
 			
-			label = text.TrimEnd(',',' ');
+			label = text.TrimEnd(';',' ');
 			
 			if(view!=null)
 			{

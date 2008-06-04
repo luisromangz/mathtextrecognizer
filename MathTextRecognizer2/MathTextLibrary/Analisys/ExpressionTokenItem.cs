@@ -421,9 +421,11 @@ namespace MathTextLibrary.Analisys
 				case ExpressionItemPosition.SubIndex:
 					// This condition is used for subindexes and
 					// integral-like initialization expressions.
+					// We treat the comma case specialy :(
 					res = (matched.Left< checkedItem.Left 
-					       && checkedItem.Bodyline > matched.Percent0_33Line
-					       && checkedItem.Baseline > matched.Percent0_66Line);
+					       && ((checkedItem.Text =="," && checkedItem.Bodyline > matched.Baseline)
+					           ||( checkedItem.Text !="," && checkedItem.Bodyline > matched.Percent0_33Line))
+					       && checkedItem.Baseline > matched.Baseline);
 					
 					break;					
 				case ExpressionItemPosition.SuperIndex:

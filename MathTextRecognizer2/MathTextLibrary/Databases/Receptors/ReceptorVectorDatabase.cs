@@ -29,7 +29,7 @@ namespace MathTextLibrary.Databases.Receptors
 	[XmlInclude(typeof(CheckVector))]
 	public class ReceptorVectorDatabase : Database
 	{
-#region Atributos
+#region Fields
 		
 		private const float epsilon = 0.05f;  
 		
@@ -39,7 +39,7 @@ namespace MathTextLibrary.Databases.Receptors
 		
 		private List<IBinaryCharacteristic> characteristics;
 		
-#endregion Atributos
+#endregion Fields
 		
 #region Propiedades
 		/// <value>
