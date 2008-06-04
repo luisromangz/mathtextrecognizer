@@ -460,6 +460,8 @@ namespace MathTextRecognizer.Stages
 					// We are matching
 					SequenceNode node = (SequenceNode) a.Node;
 					
+					node.Select();
+					
 					Token t = Token.Join(node.Sequence, "");
 					
 					sequenceNodeImage = t.Image.CreatePixbuf();

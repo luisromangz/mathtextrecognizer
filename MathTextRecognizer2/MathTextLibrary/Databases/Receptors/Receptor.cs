@@ -18,6 +18,8 @@ namespace MathTextLibrary.Databases.Receptors
 		private float left, top, right, bottom;
 		
 		private static Random rand = new Random(Environment.TickCount);
+		
+#region Properties
 
 		/// <value>
 		/// Contains the first defining point x position.
@@ -145,6 +147,10 @@ namespace MathTextLibrary.Databases.Receptors
 			}
 		}
 		
+#endregion Properties
+		
+#region Constructors
+		
 		/// <summary>
 		/// Needed for serialization.
 		/// </summary>
@@ -181,6 +187,9 @@ namespace MathTextLibrary.Databases.Receptors
 			top		= Math.Min(y0, y1);
 			bottom	= Math.Max(y0, y1);
 		}
+#endregion Constructors
+		
+#region Public methods
 
 		// Check receptor state
 		public bool GetReceptorState(int x, int y, int width, int height)
@@ -201,14 +210,7 @@ namespace MathTextLibrary.Databases.Receptors
 			int x0n = (int)(x0*width);
 			int x1n = (int)(x1*width);
 				
-			/*int a = y0n - y1n;
-			int	b = x1n - x0n;
-			int	c = y0n * (x0n - x1n) + x0n * (y1n - y0n);
-			float	d = (float) Math.Sqrt(a * a + b * b);
-			// check if the point is on the receptors line
-			if (Math.Abs(a * x + b * y + c) / d < 1)
-				return true;*/
-			
+		
 			float k = (float) (y1n - y0n) / (float) (x1n - x0n);
 			float z = (float) y0n - k * x0n;
 			
@@ -255,6 +257,80 @@ namespace MathTextLibrary.Databases.Receptors
 			
 			return receptors;
 		}
+		
+		public bool CheckBressard(FloatBitmap bitmap)
+		{
+			int y0n = (int)(y0*bitmap.Height);
+			int y1n = (int)(y1*bitmap.Height);
+			int x0n = (int)(x0*bitmap.Width);
+			int x1n = (int)(x1*bitmap.Width);
+			
+			int xpos,ypos,ax,ay,sx,sy,temp;
+
+			xpos=x0n;
+			ypos=y0n;
+			ax=Math.Abs(x1n-x0n);
+			ay=Math.Abs(y1n-y0n);
+		
+			sx=1;
+			sy=1;
+		
+			if((x1-x0)<0)
+				sx=-1;
+			if((y1-y0)<0)
+				sy=-1;
+		
+			bool changeDirection= false;
+		
+			if(ay>ax)
+			{
+				temp=ax;
+				ax=ay;
+				ay=temp;
+				changeDirection=true;
+			}
+		
+			int e=2*ay-ax;
+		
+			for(int i=1;i<=ax;i++)
+			{
+		
+				if(bitmap[xpos, ypos] != FloatBitmap.White)
+				{
+					return true;
+				}				
+		
+				while(e>=0)
+				{
+					if(changeDirection)
+					{
+						xpos+=sx;
+					}						
+					else
+					{
+						ypos+=sy;
+					}						
+		
+					e-=2*ax;
+				}
+				
+				if(changeDirection)
+				{
+					ypos+=sy;
+				}					
+				else
+				{
+					xpos+=sx;
+				}					
+		
+				e+=2*ay;
+		
+			}
+			
+			return false;
+		}
+		
+#endregion Public methods
 	
 	}
 }
