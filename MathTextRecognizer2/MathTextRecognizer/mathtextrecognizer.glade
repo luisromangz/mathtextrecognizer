@@ -5375,6 +5375,7 @@ Interior</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="response_id">0</property>
+                <signal name="clicked" handler="OnBlackboardModeBtnClicked"/>
                 <child>
                   <widget class="GtkAlignment" id="alignment49">
                     <property name="visible">True</property>
@@ -5624,6 +5625,27 @@ Interior</property>
             </child>
           </widget>
         </child>
+      </widget>
+    </child>
+  </widget>
+  <widget class="GtkMenu" id="blackboardMenu">
+    <property name="visible">True</property>
+    <child>
+      <widget class="GtkImageMenuItem" id="blackboardUndoItem">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">gtk-undo</property>
+        <property name="use_underline">True</property>
+        <property name="use_stock">True</property>
+        <signal name="activate" handler="OnBlackboardUndoItemActivate"/>
+      </widget>
+    </child>
+    <child>
+      <widget class="GtkImageMenuItem" id="blackboardClearItem">
+        <property name="visible">True</property>
+        <property name="label" translatable="yes">gtk-clear</property>
+        <property name="use_underline">True</property>
+        <property name="use_stock">True</property>
+        <signal name="activate" handler="OnBlackboardClearItemActivate"/>
       </widget>
     </child>
   </widget>

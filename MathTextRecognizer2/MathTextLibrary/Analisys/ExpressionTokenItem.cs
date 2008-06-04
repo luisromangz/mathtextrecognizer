@@ -422,7 +422,8 @@ namespace MathTextLibrary.Analisys
 					// This condition is used for subindexes and
 					// integral-like initialization expressions.
 					res = (matched.Left< checkedItem.Left 
-					       && checkedItem.Bodyline > matched.Percent0_33Line);
+					       && checkedItem.Bodyline > matched.Percent0_33Line
+					       && checkedItem.Baseline > matched.Percent0_66Line);
 					
 					break;					
 				case ExpressionItemPosition.SuperIndex:
@@ -430,7 +431,8 @@ namespace MathTextLibrary.Analisys
 					// integral-like limit expressions.
 					
 					res = (matched.Left < checkedItem.Left
-					       && checkedItem.Baseline < matched.Percent0_75Line);
+					       && checkedItem.Baseline < matched.Percent0_75Line
+					       && checkedItem.Bodyline < matched.Percent0_33Line);
 					break;
 			}
 			

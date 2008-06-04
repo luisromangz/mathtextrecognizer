@@ -96,7 +96,7 @@ namespace MathTextLibrary.Analisys
 		/// </summary>
 		public ExpressionItem()
 		{
-				formatString = "{0}";
+			formatString = "{0}";
 		}
 
 		

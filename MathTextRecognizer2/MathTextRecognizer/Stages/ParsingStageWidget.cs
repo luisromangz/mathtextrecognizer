@@ -515,7 +515,9 @@ namespace MathTextRecognizer.Stages
 			string output =  controller.Output;
 			
 			Output.OutputDialog dialog = 
-				new Output.OutputDialog(MainRecognizerWindow,output);
+				new Output.OutputDialog(MainRecognizerWindow,
+				                        output,
+				                        MainRecognizerWindow.OCRWidget.StartImage);
 			
 			dialog.Show();
 			dialog.Destroy();

@@ -69,7 +69,9 @@ namespace MathTextRecognizer.Output
 		/// <param name="rootBitmap">
 		/// El <code>MathTextBitmap</code> reconocido para generar la salida a partir de el.
 		/// </param>
-		public OutputDialog(MainRecognizerWindow parent, string output)
+		public OutputDialog(MainRecognizerWindow parent, 
+		                    string output,
+		                    Gdk.Pixbuf originalImage)
 		{
 			Glade.XML gxml = new Glade.XML ("mathtextrecognizer.glade",
 			                                "outputDialog");
@@ -83,7 +85,7 @@ namespace MathTextRecognizer.Output
 			
 			InitializeWidgets();
 			
-		
+			originalImageArea.Image = originalImage;
 			
 		}
 	
@@ -215,14 +217,11 @@ namespace MathTextRecognizer.Output
 		/// </summary>
 		private void InitializeWidgets()
 		{	
-			textviewOutput.Buffer.Text = output;
-			
+			textviewOutput.Buffer.Text = output;			
 			
 			originalImageArea = new ImageArea();
 			originalImageArea.ImageMode = ImageAreaMode.Zoom;
 			this.outputOriginalPlaceholder.Add(originalImageArea);
-			
-			originalImageArea.Image = new Gdk.Pixbuf(mainWindow.ImageFile);
 			
 			if(Config.RecognizerConfig.Instance.ShowOutputConversion)
 			{

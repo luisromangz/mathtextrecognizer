@@ -14,7 +14,7 @@ namespace MathTextCustomWidgets.Widgets.HandWriting
 	public delegate void ClearedEventHandler(object sender);
 	public delegate void StrokeRemovedEventHandler(object sender);
 	
-	public abstract class IHandWritingArea : DrawingArea
+	public abstract class HandWritingArea : DrawingArea
 	{	
 		//Se declaran eventos, que se gestionaran con métodos de los tipos indicados
 		public event StrokeAddedEventHandler StrokeAdded;
@@ -26,7 +26,8 @@ namespace MathTextCustomWidgets.Widgets.HandWriting
 		protected SmoothingMode smoothingMode;
 		
 		//El constructor, con su llamadita al de la superclase		
-		public IHandWritingArea():base(){
+		public HandWritingArea():base()
+		{
 			
 			//Para que el widget gtk sea capaz de escuchar los eventos,
 			//hay que establecer unos flags de eventos
@@ -49,19 +50,23 @@ namespace MathTextCustomWidgets.Widgets.HandWriting
 		//un metodo protegido, de forma que de paso hacemos que el evento pueda
 		//ser lanzado desde clases derivadas, cosa que a pelo con el evento no es
 		//posible
-		protected void StrokeAddedEvent(){
-			if(StrokeAdded!=null){
+		protected void StrokeAddedEvent()
+		{
+			if(StrokeAdded!=null)
+			{
 				StrokeAdded(this);
 			}			
 		}
 		
-		protected void StrokeRemovedEvent(){
+		protected void StrokeRemovedEvent()
+		{
 			if(StrokeRemoved!=null){
 				StrokeRemoved(this);
 			}		
 		}
 		
-		protected void ClearedEvent(){
+		protected void ClearedEvent()
+		{
 			
 			if(Cleared!=null){
 				Cleared(this);			
@@ -76,20 +81,23 @@ namespace MathTextCustomWidgets.Widgets.HandWriting
 		/// <value>
 		/// Contiene la imagen del widget;
 		/// </value>	
-		public abstract Bitmap Bitmap{
-			get;
-		
+		public abstract Bitmap Bitmap
+		{
+			get;		
 		}
 		
 		/// <value>
 		/// Contiene el modo de suavizado que usa el widget.
 		/// </value>
-		public SmoothingMode SmoothingMode{
-			get{
+		public SmoothingMode SmoothingMode
+		{
+			get
+			{
 				return smoothingMode;				
 			}
 			
-			set{
+			set
+			{
 			
 				smoothingMode=value;
 			}

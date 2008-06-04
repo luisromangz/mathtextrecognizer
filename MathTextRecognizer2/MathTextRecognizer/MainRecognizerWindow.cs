@@ -341,6 +341,14 @@ namespace MathTextRecognizer
 			parsingWidget.ShowAll();
 		}
 		
+		public void CreateBlackboardWidget()
+		{
+			Widget stage = new BlackboardStageWidget(this);
+			recognizingStepsNB.AppendPage(stage,
+			                              new Label(BlackboardStageWidget.WidgetLabel));
+			stage.ShowAll();
+		}
+		
 		
 		/// <summary>
 		/// Metodo que maneja el evento provocado al cerrarse el dialogo de 

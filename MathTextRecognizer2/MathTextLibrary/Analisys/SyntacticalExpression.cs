@@ -25,6 +25,7 @@ namespace MathTextLibrary.Analisys
 		public SyntacticalExpression()
 		{
 			items = new List<ExpressionItem>();
+			formatString = "{0}";
 		}
 		
 #region Properties

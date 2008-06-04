@@ -27,8 +27,8 @@ namespace MathTextLibrary.Analisys
 		
 		private const float epsilon = 0.05f;
 		
-		private const string DESCENDERS = "yjgpq";
-		private const string ASCENDERS = "tijñ";
+		private const string DESCENDERS = "yjgpq()";
+		private const string ASCENDERS = "tijñ()";
 		private const string PUNCTUATION = ".,";
 		
 		private static Token empty = new Token("");

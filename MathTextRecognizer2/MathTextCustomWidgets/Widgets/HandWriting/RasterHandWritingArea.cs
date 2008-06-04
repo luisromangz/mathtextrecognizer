@@ -10,7 +10,7 @@ namespace MathTextCustomWidgets.Widgets.HandWriting
 {
 
 	
-	public class RasterHandWritingArea : IHandWritingArea
+	public class RasterHandWritingArea : HandWritingArea
 	{		
 	
 		//Lista de objetos object
@@ -130,16 +130,18 @@ namespace MathTextCustomWidgets.Widgets.HandWriting
 				//graficos nos va a permitir dibujar en plan "fasil"
 				
 							
-				
 				int x,y,sx,sy,d;
 				this.GdkWindow.GetGeometry(out x,out y,out sx,out sy,out d);	
-				g.DrawImageUnscaled(bgBitmap,0,0,sx,sy);			
-				
 				g.SmoothingMode=smoothingMode;	
+				
+				g.DrawImageUnscaled(bgBitmap,0,0,sx,sy);								
+					
 				if(lastStroke!=null)
 				{
 					lastStroke.Draw(g);
 				}
+				
+			
 			}
 			
 			return true;
@@ -161,6 +163,7 @@ namespace MathTextCustomWidgets.Widgets.HandWriting
 				{
 					using(Graphics bgGraphics = Graphics.FromImage(bgBitmap))
 					{
+						bgGraphics.SmoothingMode = this.smoothingMode;
 						lastStroke.Draw(bgGraphics);				
 					}
 				}
@@ -236,8 +239,15 @@ namespace MathTextCustomWidgets.Widgets.HandWriting
 				arrayPoints=new Point[points.Count];
 				
 				points.CopyTo(arrayPoints);
+				try
+				{
+					g.DrawCurve(pencil,arrayPoints);
+				}
+				catch(ArgumentException)
+				{
+					
+				}
 				
-				g.DrawCurve(pencil,arrayPoints);
 			}
 			
 			public Pen Pencil

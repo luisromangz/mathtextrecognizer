@@ -2,7 +2,6 @@
   <Configurations active="Debug">
     <Configuration name="Debug" ctype="CombineConfiguration">
       <Entry build="True" name="MathTextLearner" configuration="Debug" />
-      <Entry build="True" name="MathTextCustomWidgets" configuration="Debug" />
       <Entry build="True" name="MathTextLibrary" configuration="Debug" />
       <Entry build="True" name="MathTextRecognizer" configuration="Debug" />
       <Entry build="True" name="MathTextCustomWidgets" configuration="Debug" />
@@ -10,7 +9,6 @@
     </Configuration>
     <Configuration name="Release" ctype="CombineConfiguration">
       <Entry build="True" name="MathTextLearner" configuration="Release" />
-      <Entry build="True" name="MathTextCustomWidgets" configuration="Release" />
       <Entry build="True" name="MathTextLibrary" configuration="Release" />
       <Entry build="True" name="MathTextRecognizer" configuration="Release" />
       <Entry build="True" name="MathTextCustomWidgets" configuration="Release" />
@@ -24,8 +22,6 @@
   </Configurations>
   <StartMode startupentry="MathTextRecognizer" single="True">
     <Execute type="None" entry="MathTextLearner" />
-    <Execute type="None" entry="MathTextRecognizer" />
-    <Execute type="None" entry="MathTextCustomWidgets" />
     <Execute type="None" entry="MathTextLibrary" />
     <Execute type="None" entry="MathTextRecognizer" />
     <Execute type="None" entry="MathTextCustomWidgets" />

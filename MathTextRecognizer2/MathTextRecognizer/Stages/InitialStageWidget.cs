@@ -67,6 +67,12 @@ namespace MathTextRecognizer.Stages
 			NextStage();
 		}
 		
+		private void OnBlackboardModeBtnClicked(object sender, EventArgs args)
+		{
+			MainRecognizerWindow.CreateBlackboardWidget();
+			NextStage();
+		}
+		
 #endregion Event handlers
 	}
 }

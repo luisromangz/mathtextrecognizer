@@ -1,7 +1,9 @@
-// UnassistedImageStageWidget.cs created with MonoDevelop
-// User: luis at 18:19 03/06/2008
+// BlackboardStageWidget.cs created with MonoDevelop
+// User: luis at 12:37 04/06/2008
 
 using System;
+using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 
 using Gtk;
@@ -9,6 +11,7 @@ using Glade;
 
 
 using MathTextCustomWidgets.Widgets.ImageArea;
+using MathTextCustomWidgets.Widgets.HandWriting;
 using MathTextCustomWidgets.Dialogs;
 
 using MathTextLibrary.Symbol;
@@ -26,9 +29,9 @@ namespace MathTextRecognizer.Stages
 	
 	/// <summary>
 	/// This class implements a widget used for the processing 
-	/// of formulas in an unassisted fashion.
+	/// of handwritteng formulas in an unassisted fashion.
 	/// </summary>
-	public class UnassistedStageWidget : RecognizingStageWidget
+	public class BlackboardStageWidget : RecognizingStageWidget
 	{
 		
 #region Widgets
@@ -48,7 +51,8 @@ namespace MathTextRecognizer.Stages
 		private HButtonBox unassistedControlHBB = null;
 		
 		[Widget]
-		private Label unassistedTaskNameLabel = null;		
+		private Label unassistedTaskNameLabel = null;
+		
 		
 		[Widget]
 		private Button unassistedProcessBtn = null;
@@ -56,11 +60,15 @@ namespace MathTextRecognizer.Stages
 		[Widget]
 		private Alignment unassistedImagePlaceholder = null;
 		
+		[Widget]
+		private Menu blackboardMenu = null;
+		
+		
 #endregion Widgets
 		
 #region Fields
 		
-		private ImageArea originalImageArea;
+		private HandWritingArea handwritingArea;
 		
 		private NodeStore segmentationStore;
 		
@@ -70,15 +78,22 @@ namespace MathTextRecognizer.Stages
 		
 		private bool tokenizingFinished;
 		
+		private Gdk.Pixbuf originalImage;
+		
 #endregion Fields
 		
 #region Constructors
 		
-		public UnassistedStageWidget(MainRecognizerWindow parent)
+		public BlackboardStageWidget(MainRecognizerWindow parent)
 			: base(parent)
 		{
 			Glade.XML gladeXml = new XML("mathtextrecognizer.glade",
 			                             "unassistedStageWidgetBase");
+			
+			gladeXml.Autoconnect(this);
+			
+			gladeXml = new XML("mathtextrecognizer.glade",
+			                   "blackboardMenu");
 			
 			gladeXml.Autoconnect(this);
 			
@@ -117,23 +132,16 @@ namespace MathTextRecognizer.Stages
 			this.ShowAll();
 		}
 		
-		static UnassistedStageWidget()
+		static BlackboardStageWidget()
 		{
-			widgetLabel =  "Procesado de imagen desasistido";
+			widgetLabel =  "Pizarra virtual";
 		}
 		
 #endregion Constructors
 		
 #region Public methods
 		
-		public override void SetInitialData ()
-		{
-			if(MainRecognizerWindow.LoadImage())
-			{
-				this.SetInitialImage(MainRecognizerWindow.ImageFile);
-			}
-			
-		}
+	
 		
 		public override void Abort()
 		{
@@ -148,50 +156,20 @@ namespace MathTextRecognizer.Stages
 		
 		private void InitializeWidgets()
 		{
-			originalImageArea = new ImageArea();
-			originalImageArea.ImageMode = ImageAreaMode.Zoom;
-			
-			unassistedImagePlaceholder.Add(originalImageArea);
-			
-			segmentationStore = new NodeStore(typeof(SegmentedNode));
-		}
-		
-		/// <summary>
-		/// Sets the image to be processed.
-		/// </summary>
-		/// <param name="image">
-		/// The initial image's path.
-		/// </param>
-		private void SetInitialImage(string  filename)
-		{
-			segmentationStore.Clear();
-			
-			Gdk.Pixbuf imageOriginal = new Gdk.Pixbuf(filename);
-			originalImageArea.Image=imageOriginal;				
-			
-			
-			// Generamos el MaxtTextBitmap inicial, y lo añadimos como
-			// un nodo al arbol.
-			MathTextBitmap mtb = new MathTextBitmap(imageOriginal);			
-			SegmentedNode node = 
-				new SegmentedNode(System.IO.Path.GetFileNameWithoutExtension(filename),
-				                  mtb,
-				                  null);
-			    
-			segmentationStore.AddNode(node);
-			
-			ocrController.StartNode = node;
-
-			Log("¡Archivo de imagen «{0}» cargado correctamente!", filename);
-			
 			unassistedProcessBtn.Sensitive = true;
 			
-		}
-		
-		private void CheckOCRNodes()
-		{
+			handwritingArea = new RasterHandWritingArea();
+			handwritingArea.SmoothingMode = SmoothingMode.AntiAlias;
+			handwritingArea.LineStyle = new Pen(Color.Black, 3);
 			
-		}
+			handwritingArea.ButtonPressEvent += 
+				new ButtonPressEventHandler(OnHandwritingAreaButtonPress);
+			
+			unassistedImagePlaceholder.Add(handwritingArea);
+			
+			segmentationStore = new NodeStore(typeof(SegmentedNode));
+		}	
+	
 		
 #endregion Non-public methods
 		
@@ -201,8 +179,6 @@ namespace MathTextRecognizer.Stages
 		{
 			Application.Invoke(delegate(object resender, EventArgs a)
 			{
-				CheckOCRNodes();
-				
 				unassistedGlobalProgressBar.Fraction = 0.33;
 				
 				unassistedTaskNameLabel.Text = "Secuenciación";
@@ -278,6 +254,8 @@ namespace MathTextRecognizer.Stages
 		{
 			// We try to free memory.
 			GC.Collect();
+			segmentationStore.Clear();
+			
 			
 			MainRecognizerWindow.ProcessItemsSensitive = true;
 			unassistedControlHBB.Sensitive = false;
@@ -285,11 +263,36 @@ namespace MathTextRecognizer.Stages
 			
 			unassistedGlobalProgressBar.Fraction = 0;
 			
+			// We create the image to be recognized.
+			
+			Bitmap  bitmap = handwritingArea.Bitmap;
+			
+			FloatBitmap floatBitmap = 
+				new FloatBitmap(bitmap.Width, bitmap.Height);
+			
+			for(int i=0; i< bitmap.Width; i++)
+			{
+				for(int j = 0; j < bitmap.Height; j++)
+				{
+					floatBitmap[i,j] = bitmap.GetPixel(i,j).GetBrightness();
+				}
+			}
+			
+			// The original image is set.
+			originalImage = floatBitmap.CreatePixbuf();
+			
+			MathTextBitmap mtb = new MathTextBitmap(originalImage);
+			
+			SegmentedNode node = new SegmentedNode("Raíz",
+			                                       mtb,
+			                                       null);
+			    
+			segmentationStore.AddNode(node);
+			
+			ocrController.StartNode = node;
 			ocrController.SearchDatabase = false;
 			ocrController.Databases =  MainRecognizerWindow.DatabaseManager.Databases;
 			ocrController.Next(ControllerStepMode.UntilEnd);
-			
-			
 		}
 		
 		private void OnUnassistedShowOutputBtnClicked(object sender, EventArgs args)
@@ -298,7 +301,7 @@ namespace MathTextRecognizer.Stages
 			MathTextRecognizer.Output.OutputDialog dialog = 
 				new MathTextRecognizer.Output.OutputDialog(MainRecognizerWindow,
 				                                           parsingController.Output,
-				                                           originalImageArea.Image);
+				                                           originalImage);
 			dialog.Show();
 			dialog.Destroy();
 		}
@@ -375,9 +378,34 @@ namespace MathTextRecognizer.Stages
 					              MessageType.Warning,
 					              "¡El proceso de reconocimiento no tuvo éxito!");
 				}
-				
-				
 			});
+		}
+		
+		[GLib.ConnectBefore]
+		private void OnHandwritingAreaButtonPress(object sender,
+		                                          ButtonPressEventArgs args)
+		{
+			if(args.Event.Button == 3)
+			{
+				blackboardMenu.Popup();
+			}
+		}
+		
+		private void OnBlackboardUndoItemActivate(object sender, EventArgs args)
+		{
+			handwritingArea.UndoLastStroke();
+		}
+		
+		private void OnBlackboardClearItemActivate(object sender, EventArgs args)
+		{
+			ResponseType res = 
+				ConfirmDialog.Show(this.MainRecognizerWindow.Window,
+				                   "Se borrará toda la imagen, ¿quieres continuar?");
+			
+			if(res==ResponseType.Yes)
+			{
+				handwritingArea.Clear();
+			}
 		}
 		
 #endregion Event handlers
