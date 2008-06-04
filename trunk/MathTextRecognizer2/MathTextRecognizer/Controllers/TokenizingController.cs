@@ -225,7 +225,7 @@ namespace MathTextRecognizer.Controllers
 						break;
 					}
 					
-					Thread.Sleep(150);
+					Thread.Sleep(50);
 					
 				}
 				

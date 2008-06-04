@@ -131,7 +131,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			get
 			{
 				SyntacticalExpression expression = new SyntacticalExpression();
-				expression.FormatString = expFormatEntry.Text.Trim();
+				expression.FormatString = expFormatEntry.Text;
 				
 				foreach (ExpressionItemWidget childWidget in 
 				         expItemsBox.Children) 
@@ -284,7 +284,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			}
 			else
 			{
-				if(String.IsNullOrEmpty(expFormatEntry.Text.Trim()))
+				if(String.IsNullOrEmpty(expFormatEntry.Text))
 				{
 					errors.Add("\t· La cadena de formato de la expresión está vacia.");
 				}
@@ -300,7 +300,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 						}
 						
 						// We are going to test the format string.
-						String.Format(expFormatEntry.Text.Trim(),
+						String.Format(expFormatEntry.Text,
 						              testList.ToArray());
 					}
 					catch(Exception)
@@ -382,7 +382,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			ResponseType res =  ResponseType.Yes;
 				
 			if(expItemsBox.Children.Length >0 || 
-			   !String.IsNullOrEmpty(expFormatEntry.Text.Trim()))
+			   !String.IsNullOrEmpty(expFormatEntry.Text))
 			{
 				res=ConfirmDialog.Show(dialog.Window,
 				                   "¿Realmente quieres eliminar la expresión?");			

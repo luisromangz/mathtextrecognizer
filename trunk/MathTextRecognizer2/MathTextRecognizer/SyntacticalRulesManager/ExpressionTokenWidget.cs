@@ -75,7 +75,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			get 
 			{
 				ExpressionTokenItem res = new ExpressionTokenItem();
-				res.TokenType = expTokenTypeEntry.Text.Trim();
+				res.TokenType = expTokenTypeEntry.Text;
 				
 				res.ForceTokenSearch =  options.ForceTokenSearch;
 				res.Modifier = options.Modifier;
@@ -146,7 +146,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			List<string> errors = new List<string>();
 			
-			if(String.IsNullOrEmpty(expTokenTypeEntry.Text.Trim()))
+			if(String.IsNullOrEmpty(expTokenTypeEntry.Text))
 			{
 				errors.Add(String.Format( "· El item de la posición {0} no espefica el tipo de item con el que tiene que coincidir.",
 				                         position));

@@ -110,7 +110,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				
 				res.ChildrenItems = items;
 				
-				res.FormatString = expGroupFormatEntry.Text.Trim();
+				res.FormatString = expGroupFormatEntry.Text;
 				
 				res.Modifier = options.Modifier;
 				
@@ -306,7 +306,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			}
 			else
 			{
-				if(String.IsNullOrEmpty(expGroupFormatEntry.Text.Trim()))
+				if(String.IsNullOrEmpty(expGroupFormatEntry.Text))
 				{
 					errorList.Add("\t· La cadena de formato del grupo esta vacía.");
 				}
@@ -322,7 +322,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 						}
 						
 						// We are going to test the format string.
-						String.Format(expGroupFormatEntry.Text.Trim(),
+						String.Format(expGroupFormatEntry.Text,
 						              testList.ToArray());
 					}
 					catch(Exception)

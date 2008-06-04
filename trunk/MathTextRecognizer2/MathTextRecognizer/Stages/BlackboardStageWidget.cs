@@ -186,8 +186,7 @@ namespace MathTextRecognizer.Stages
 				List<Token> startTokens = new List<Token>();
 				foreach (SegmentedNode node in ocrController.Result) 
 				{
-					if(node.Label == ""
-					   || node.Label.Contains(","))
+					if(node.Symbols.Count != 1)
 					{
 						SymbolLabelEditorDialog dialog = 
 							new SymbolLabelEditorDialog(this.MainRecognizerWindow.Window, node);
@@ -368,7 +367,7 @@ namespace MathTextRecognizer.Stages
 					              "¡El proceso de reconocimiento tuvo éxito!");
 					
 					
-					unassistedControlHBB.Sensitive = true;
+					
 					unassistedShowOutputBtn.Sensitive = true;
 					
 				}
@@ -378,6 +377,7 @@ namespace MathTextRecognizer.Stages
 					              MessageType.Warning,
 					              "¡El proceso de reconocimiento no tuvo éxito!");
 				}
+				unassistedControlHBB.Sensitive = true;
 			});
 		}
 		

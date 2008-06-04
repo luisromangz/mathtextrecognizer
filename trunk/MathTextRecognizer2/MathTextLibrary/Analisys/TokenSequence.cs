@@ -212,19 +212,13 @@ namespace MathTextLibrary.Analisys
 			for(int i=0; i< sequence.Count; i++)
 			{
 				testedToken = sequence[i];
-				if(testedToken.Height > maxHeight 
+				if(testedToken.Type == type
+				   && testedToken.Height > maxHeight 
 				   && !CoveredByPreviousToken(testedToken))
 				{
 					maxHeight = testedToken.Height;
-					idx = i;
-					
+					idx = i;					
 				}
-			}
-			
-			if(idx >=0 && sequence[idx].Type != type)
-			{
-				// The symbol found wasnt the heightst, so it nos the main one.
-				idx = -1;
 			}
 			
 			return idx;
@@ -245,12 +239,23 @@ namespace MathTextLibrary.Analisys
 			for(int i =0 ; i<this.Count && sequence[i] != tested; i++)
 			{
 				Token covering =  sequence[i];
-				if((covering.Top + covering.Height) > ( tested.Top + (int)(tested.Height*0.6f))
-				   || (covering.Left + covering.Width) > (tested.Left + tested.Width))
+				if(((covering.Top < tested.Bottom)
+				   &&(covering.Baseline > tested.Top + (int)(tested.Height *0.6f)))
+				   //This tests make it be covered by the fraction line.
+				   || covering.Right >= tested.Left +(int)(tested.Width*0.9f))
 				{
+#if DEBUG 
+					Console.WriteLine("Log: {0} esta cubierto por {1}", 
+					                  tested.Type,
+					                  covering.Text);
+			
+#endif 
+					
 					return true;
 				}
-			}		
+			}	
+			
+
 			
 			return false;
 		}
