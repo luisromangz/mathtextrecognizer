@@ -104,7 +104,7 @@ namespace MathTextLibrary.Databases.Receptors
 		
 #endregion Propiedades
 				
-#region Métodos públicos
+
 		
 		/// <summary>
 		/// <c>ReceptorVectorDatabase</c>'s constructor.
@@ -118,6 +118,8 @@ namespace MathTextLibrary.Databases.Receptors
 			characteristics.Add(new TallerThanWiderCharacteristic());
 		}
 		
+		
+#region Public methods
 		/// <summary>
 		/// Con este metodos almacenamos un nuevo simbolo en la base de
 		/// datos.
@@ -227,7 +229,7 @@ namespace MathTextLibrary.Databases.Receptors
 		
 		
 		
-#endregion Métodos públicos
+#endregion Public methods
 		
 #region Private methods
 		/// <summary>
@@ -251,17 +253,22 @@ namespace MathTextLibrary.Databases.Receptors
 			}
 			
 			CheckVector vector = new CheckVector();
+			
 			bool checkValue;
 			
 			int		width = image.Width;
 			int		height = image.Height;
 			
+			/*
 			for(int i = 0; i<receptors.Count ;i++)
 			{
 				// We initialize the new check vector
 				vector.Values.Add(false);
 			}
-
+			
+			
+			
+			
 			Receptor receptor;
 			for (int y = 0; y < height; y++)
 			{
@@ -295,11 +302,33 @@ namespace MathTextLibrary.Databases.Receptors
 						}
 					}
 				}
+			}*/
+			
+			foreach (Receptor receptor in receptors) 
+			{
+				checkValue =receptor.CheckBressard(image);
+				vector.Values.Add(checkValue);
+				StepDoneArgs args = 
+					new StepDoneArgs(String.Format("Comprobando receptor {0}: {1}", 
+					                               String.Format("({0}, {1}) -> ({2}, {3})",
+					                                             receptor.X0,receptor.Y0,
+					                                             receptor.X1, receptor.Y1),					                               
+					                               checkValue));
+				
+				StepDoneInvoker(args);
 			}
 			
 			foreach (IBinaryCharacteristic characteristic in characteristics) 
 			{
-				vector.Values.Add(characteristic.Apply(image));
+				checkValue = characteristic.Apply(image);
+				vector.Values.Add(checkValue);
+				
+				StepDoneArgs args = 
+					new StepDoneArgs(String.Format("Comprobando característica {0}: {1}", 
+					                               characteristic.GetType().ToString(),
+					                               checkValue));
+				
+				StepDoneInvoker(args);
 			}
 			
 			return vector;

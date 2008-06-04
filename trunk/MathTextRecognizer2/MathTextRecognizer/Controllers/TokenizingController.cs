@@ -287,7 +287,6 @@ namespace MathTextRecognizer.Controllers
 				accepted.Append(t);
 			}
 			
-			node.Select();
 			NodeBeingProcessedInvoker(node);
 			SuspendByStep();
 			
