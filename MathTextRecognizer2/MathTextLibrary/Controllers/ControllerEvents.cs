@@ -143,8 +143,10 @@ namespace MathTextLibrary.Controllers
 	public class TokenMatchingFinishedArgs : EventArgs
 	{
 		private Token matchedToken;
+		private string expectedType;
 		
-		public TokenMatchingFinishedArgs(Token matchedToken)
+		public TokenMatchingFinishedArgs(Token matchedToken, 
+		                                 string expectedType)
 		{
 			this.matchedToken = matchedToken;
 		}
@@ -154,6 +156,14 @@ namespace MathTextLibrary.Controllers
 			get
 			{
 				return matchedToken;
+			}
+		}
+		
+		public String ExpectedType
+		{
+			get
+			{
+				return expectedType;
 			}
 		}
 	}
