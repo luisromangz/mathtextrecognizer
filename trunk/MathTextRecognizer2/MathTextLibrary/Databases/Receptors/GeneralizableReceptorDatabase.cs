@@ -1,5 +1,5 @@
-// CharacteristicHash.cs created with MonoDevelop
-// User: luis at 13:37 19/04/2008
+// ReceptorGridDatabase.cs created with MonoDevelop
+// User: luis at 16:04 05/06/2008
 
 using System;
 using System.IO;
@@ -23,11 +23,11 @@ namespace MathTextLibrary.Databases.Receptors
 	/// binarias para los caracteres aprendidos, asi como de realizar el añadido
 	/// de nuevos caracteres en la misma y realizar busquedas.
 	/// </summary>
-	[DatabaseTypeInfo("Base de datos de vectores de receptores en la imagen",
-	                  "Vectores de receptores")]	
+	[DatabaseTypeInfo("Base de datos de receptores en la imagen con generalizacion",
+	                  "Receptores con vectores generalizables")]	
 	
-	[XmlInclude(typeof(CheckVector))]
-	public class ReceptorVectorDatabase : Database
+	[XmlInclude(typeof(TristateCheckVector))]
+	public class GeneralizableReceptorDatabase : Database
 	{
 #region Fields
 		
@@ -35,7 +35,7 @@ namespace MathTextLibrary.Databases.Receptors
 		
 		private List<Receptor> receptors;
 		
-		private List<CheckVector> symbolsDict;
+		private List<TristateCheckVector> symbolsDict;
 		
 		private List<BinaryCharacteristic> characteristics;
 		
@@ -51,7 +51,7 @@ namespace MathTextLibrary.Databases.Receptors
 			get
 			{
 				List<MathSymbol> res = new List<MathSymbol>();
-				foreach(CheckVector vector in symbolsDict)
+				foreach(TristateCheckVector vector in symbolsDict)
 				{
 					List<MathSymbol> symbols = vector.Symbols;
 					foreach(MathSymbol symbol in symbols)
@@ -71,7 +71,7 @@ namespace MathTextLibrary.Databases.Receptors
 		/// <value>
 		/// Contains the association between value vectors and symbols.
 		/// </value>
-		public List<CheckVector> Vectors
+		public List<TristateCheckVector> Vectors
 		{
 			get 
 			{
@@ -109,54 +109,71 @@ namespace MathTextLibrary.Databases.Receptors
 		/// <summary>
 		/// <c>ReceptorVectorDatabase</c>'s constructor.
 		/// </summary>
-		public ReceptorVectorDatabase() : base()
+		public GeneralizableReceptorDatabase() : base()
 		{	
-			symbolsDict = new List<CheckVector>();
+			symbolsDict = new List<TristateCheckVector>();
 			
 			characteristics = new List<BinaryCharacteristic>();
 			
 			characteristics.Add(new TallerThanWiderCharacteristic());
+			//characteristics.Add(new SegmentableCharacteristic());
 		}
 		
 		
 #region Public methods
 		/// <summary>
-		/// Con este metodos almacenamos un nuevo simbolo en la base de
-		/// datos.
-		/// 
-		/// Lanza <c>DuplicateSymbolException</c> si ya existe un simbolo
-		/// con la misma etiqueta y caracteristicas binarias en la base de datos.
+		/// This method is used to add new symbols to the database.
 		/// </summary>
 		/// <param name="bitmap">
-		/// La imagen cuyas caracteristicas aprenderemos.
+		/// The image containing the symbol.
 		/// </param>
 		/// <param name="symbol">
-		/// El simbolo que representa a la imagen.
+		/// The symbol contained in the image.
 		/// </param>
 		public override bool Learn(MathTextBitmap bitmap,MathSymbol symbol)
 		{
 			FloatBitmap processedBitmap = bitmap.LastProcessedImage;
-			CheckVector vector = CreateVector(processedBitmap);			
+			TristateCheckVector newVector = CreateVector(processedBitmap);			
 			
-			int position = symbolsDict.IndexOf(vector);
-			if(position >=0)
+			TristateCheckVector found =null;
+			foreach (TristateCheckVector vector in symbolsDict) 
 			{
-				// The vector exists in the list
-			
-				List<MathSymbol> symbols = symbolsDict[position].Symbols;
-				if(symbols.Contains(symbol))
+				if(vector.Symbols.Contains(symbol))
 				{
+					found  = vector;
+					break;
+				}
+			}
+			
+			if(found ==null)
+			{
+				// The symbol wasnt present in the database.
+				newVector.Symbols.Add(symbol);
+				symbolsDict.Add(newVector);
+			}
+			else
+			{
+				// The symbol is present, we may have to retrain the database.
+				if(newVector.Equals(found))
+				{
+					// It's the same one, so there is a conflict.
 					return false;
 				}
 				else
 				{
-					symbols.Add(symbol);
+					// We have to find the differnces, and change them to
+					// don't care values.
+					for(int i=0; i< found.Length; i++)
+					{
+						if(found[i] != TristateValue.DontCare
+						   && found[i] != newVector[i])
+						{
+							// If the value is different from what we had learned, 
+							// then we make the vector more general in that point.
+							found[i] = TristateValue.DontCare;
+						}
+					}
 				}
-			}
-			else
-			{
-				vector.Symbols.Add(symbol);
-				symbolsDict.Add(vector);
 			}
 			
 			return true;
@@ -180,17 +197,19 @@ namespace MathTextLibrary.Databases.Receptors
 			
 			FloatBitmap processedImage = image.LastProcessedImage;
 			
-			CheckVector vector = CreateVector(processedImage);
+			TristateCheckVector vector = CreateVector(processedImage);
 			
 			// We have this image vector, now we will compare with the stored ones.
 			
-			// We consider a threshold.
 			
-			foreach(CheckVector storedVector in symbolsDict)
+			
+			foreach(TristateCheckVector storedVector in symbolsDict)
 			{
-				int threshold = (int)(storedVector.Length * epsilon); 
+				// We consider a threshold.
+				int threshold = (int)((storedVector.Length - storedVector.DontCares) * epsilon); 
+				
 				// If the distance is below the threshold, we consider it valid.
-				if(vector.Distance(storedVector) <= threshold)
+				if(storedVector.Distance(vector) <= threshold)
 				{
 					foreach(MathSymbol symbol in storedVector.Symbols)
 					{
@@ -234,36 +253,33 @@ namespace MathTextLibrary.Databases.Receptors
 		
 #region Private methods
 		/// <summary>
-		/// Creates a <c>CharacteristicVector</c> instance for a given
+		/// Creates a <see cref="TristateCheckVector"/> instance for a given
 		/// <c>FloatBitmap</c> object.
 		/// </summary>
 		/// <param name="image">
-		/// A <see cref="FloatBitmap"/>
+		/// A <see cref="FloatBitmap"/> for which the vector is created.
 		/// </param>
 		/// <returns>
-		/// A <see cref="CharacteristicVector"/>
+		/// The <see cref="TristateCheckVector"/> for the image.
 		/// </returns>
-		private CheckVector CreateVector(FloatBitmap image)
+		private TristateCheckVector CreateVector(FloatBitmap image)
 		{
-			
-			
 			// We create the receptors list.
 			if(receptors == null)
 			{
 				receptors = Receptor.GenerateList(40);
 			}
 			
-			CheckVector vector = new CheckVector();
+			TristateCheckVector vector = new TristateCheckVector();
 			
-			bool checkValue;
-			
-			int		width = image.Width;
-			int		height = image.Height;
-			
+			TristateValue checkValue;
 			
 			foreach (Receptor receptor in receptors) 
 			{
-				checkValue =receptor.CheckBressard(image);
+				checkValue = 
+					receptor.CheckBressard(image)? 
+						TristateValue.True:TristateValue.False;
+				
 				vector.Values.Add(checkValue);
 				StepDoneArgs args = 
 					new StepDoneArgs(String.Format("Comprobando receptor {0}: {1}", 
@@ -278,7 +294,11 @@ namespace MathTextLibrary.Databases.Receptors
 			
 			foreach (BinaryCharacteristic characteristic in characteristics) 
 			{
-				checkValue = characteristic.Apply(image);
+				checkValue = 
+					characteristic.Apply(image)?
+						TristateValue.True
+						: TristateValue.False;
+				
 				vector.Values.Add(checkValue);
 				
 				StepDoneArgs args = 
@@ -298,3 +318,4 @@ namespace MathTextLibrary.Databases.Receptors
 		
 	}
 }
+

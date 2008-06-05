@@ -10,7 +10,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 	/// con solo un vecino) es igual a 2.
 	/// </summary>
 	/// <seealso cref="MathTextLibrary.Characteristics.Helpers.CountPixelsWithXNeighboursHelper"/>
-	public class EndingPointsEqualsTwoCharacteristic:IBinaryCharacteristic
+	public class EndingPointsEqualsTwoCharacteristic:BinaryCharacteristic
 	{
 		public EndingPointsEqualsTwoCharacteristic()
 		{

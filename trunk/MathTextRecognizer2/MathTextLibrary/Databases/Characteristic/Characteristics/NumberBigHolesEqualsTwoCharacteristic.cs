@@ -11,7 +11,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 	/// es igual a 2.
 	/// </summary>
 	/// <seealso cref="MathTextLibrary.Characteristics.Helpers.CountNumberOfHolesHelper"/>
-	public class NumberBigHolesEqualsTwoCharacteristic:IBinaryCharacteristic
+	public class NumberBigHolesEqualsTwoCharacteristic:BinaryCharacteristic
 	{
 		public NumberBigHolesEqualsTwoCharacteristic()
 		{

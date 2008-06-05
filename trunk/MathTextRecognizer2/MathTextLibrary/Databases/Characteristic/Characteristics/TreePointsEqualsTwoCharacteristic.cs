@@ -10,7 +10,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 	/// con tres o mas vecinos) es igual a 2.
 	/// </summary>
 	/// <seealso cref="MathTextLibrary.Characteristics.Helpers.CountPixelsWithXNeighboursHelper"/>
-	public class TreePointsEqualsTwoCharacteristic:IBinaryCharacteristic
+	public class TreePointsEqualsTwoCharacteristic:BinaryCharacteristic
 	{
 		public TreePointsEqualsTwoCharacteristic()
 		{

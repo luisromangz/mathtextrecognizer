@@ -10,7 +10,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 	/// es como minimo tres veces mas alto que ancho.
 	/// </summary>
 	/// <seealso cref="MathTextLibrary.Characteristics.Helpers.ImageBoxerHelper"/>
-	public class ThriceTallerThanWiderCharacteristic:IBinaryCharacteristic
+	public class ThriceTallerThanWiderCharacteristic:BinaryCharacteristic
 	{
 		private const float epsilon = 0.05f;
 		public ThriceTallerThanWiderCharacteristic()

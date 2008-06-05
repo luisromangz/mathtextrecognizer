@@ -19,11 +19,11 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 	/// de prioridad 5 aparecera antes en la lista de caracteristicas que otra
 	/// de prioridad 10.</para>
 	/// </remarks>	
-	public abstract class IBinaryCharacteristic : IComparable, ISymbolProcess
+	public abstract class BinaryCharacteristic : IComparable, ISymbolProcess
 	{
 		protected int priority;
 		
-		public IBinaryCharacteristic()
+		public BinaryCharacteristic()
 		{
 						
 		}
@@ -49,7 +49,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 		public abstract bool Apply(FloatBitmap image);
 		
 		public virtual int CompareTo(object obj){			
-			return priority-((IBinaryCharacteristic)obj).priority;
+			return priority-((BinaryCharacteristic)obj).priority;
 		}		
 	}
 	

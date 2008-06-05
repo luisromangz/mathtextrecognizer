@@ -258,6 +258,27 @@ namespace MathTextLibrary.Databases.Receptors
 			return receptors;
 		}
 		
+		public static List<Receptor> GenerateGrid(int gridsize)
+		{
+			List<Receptor> receptors = new List<Receptor>();
+			
+			float inc = 1f/gridsize;
+			
+			for(int i = 0; i <gridsize ;i++)
+			{
+				float x = i*inc;
+				for(int j = 0; j < gridsize; j++)
+				{	
+					float y = j*inc;
+					receptors.Add(new Receptor(x,y,x+inc,y));
+					receptors.Add(new Receptor(x,y,x, y +inc));
+				}
+			}
+			
+			
+			return receptors;
+		}
+		
 		public bool CheckBressard(FloatBitmap bitmap)
 		{
 			int y0n = (int)(y0*bitmap.Height);

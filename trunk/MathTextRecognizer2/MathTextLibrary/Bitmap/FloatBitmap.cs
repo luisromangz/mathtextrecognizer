@@ -221,7 +221,9 @@ namespace MathTextLibrary.Bitmap
 			{
 				for(int j = 0; j < height; j++)
 				{
+					
 					resImage[i,j] = this[x + i, y + j];
+					
 				}			
 			}
 			
