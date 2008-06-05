@@ -53,6 +53,9 @@ namespace MathTextRecognizer.Stages
 		
 		[Widget]
 		private Alignment synImageOriginalPlaceholder = null;
+		
+		[Widget]
+		private Label parsingTaskLabel = null;
 	
 #endregion Glade widgets
 	
@@ -149,6 +152,8 @@ namespace MathTextRecognizer.Stages
 			
 			parsingShowOutputBtn.Sensitive = false;
 			
+			parsingTaskLabel.Markup="-";
+			
 			syntacticalCoverModel.Clear();
 			remainingItemsStore.Clear();
 		}
@@ -235,6 +240,21 @@ namespace MathTextRecognizer.Stages
 				currentNode.Select();
 				currentNode.SetOutput(_args.Output);
 				
+				if(String.IsNullOrEmpty(_args.Output))
+				{
+					parsingTaskLabel.Markup=
+					String.Format("<b>Falló el reconocimiento con  <i>{0}</i>",						         
+					              currentNode.Matcher.Label);
+				}
+				else
+				{
+					parsingTaskLabel.Markup=
+					String.Format("<b>Estableciendo la salida parcial <i>{0}</i> para <i></i></b>",
+						          _args.Output,
+					              currentNode.Matcher.Label);
+				}
+				
+				
 			});
 		}
 		
@@ -275,6 +295,8 @@ namespace MathTextRecognizer.Stages
 					
 				}
 				
+				parsingTaskLabel.Markup="-";
+				
 				parsingButtonsNB.Page = 0;
 			});
 		}
@@ -307,9 +329,12 @@ namespace MathTextRecognizer.Stages
 				currentNode = newNode;			
 				
 				
-				currentNode.Select();
-				
+				currentNode.Select();				
 							
+				
+				parsingTaskLabel.Markup=
+					String.Format("<b>Intentando encajar los elementos restantes con <i>{0}</i></b>",
+					              currentNode.Matcher.Label);
 				
 				parsingNextButtonsAlign.Sensitive = 
 					controller.StepMode == ControllerStepMode.StepByStep;
@@ -352,16 +377,23 @@ namespace MathTextRecognizer.Stages
 		{
 			Application.Invoke(delegate(object resender, EventArgs a)
 			{
+				
 				if(currentNode.Parent !=null)
 				{
-					
+					string currentLabel = currentNode.Matcher.Label;
 					currentNode =  currentNode.Parent as SyntacticalCoverNode;	
 					currentNode.Select();
 					syntacticalCoverTree.CollapseRow(syntacticalCoverTree.Selection.GetSelectedRows()[0]);
 					
+					parsingTaskLabel.Markup=
+					String.Format("<b>Volviendo al nodo padre de <i>{0}</i>, <i>{1}</i></b>",
+						          currentLabel,
+					              currentNode.Matcher.Label);
+					
 				}
 				
-				MarkImage(null);
+				MarkImage(null);				
+				
 				
 				if(controller.StepMode == ControllerStepMode.StepByStep)
 				{
@@ -378,7 +410,11 @@ namespace MathTextRecognizer.Stages
             {
 				currentNode.Select();
 				
-				TokenMatchingArgs args = a as TokenMatchingArgs;
+				TokenMatchingArgs args = a as TokenMatchingArgs;			
+				
+				parsingTaskLabel.Markup=
+					String.Format("<b>Buscando un item válido del tipo <i>{0}</i> entre los items restantes</b>",
+						          args.MatchableType);
 			
 				if(controller.StepMode == ControllerStepMode.StepByStep)
 				{
@@ -411,11 +447,22 @@ namespace MathTextRecognizer.Stages
 					
 					this.MarkImage(args.MatchedToken);
 					
+					parsingTaskLabel.Markup=
+						String.Format("<b>Se encontró un item válido del tipo <i>{0}</i>, <i>{1}</i> entre los items restantes</b>",
+							          args.MatchedToken.Type,
+							          args.ExpectedType);
+						
 					currentNode.AddMatchedToken(args.MatchedToken);	
 					currentNode.Select();
 					
 					remainingItemsStore.Remove(ref selectedRemainingItem);					
 					
+				}
+				else
+				{
+					parsingTaskLabel.Markup =
+						String.Format("<b>No se encotró un item válido del tipo <i>{0}</i> entre los items restantes</b>",
+						          _args.ExpectedType);
 				}
 				
 				if(controller.StepMode != ControllerStepMode.UntilEnd)
@@ -472,6 +519,8 @@ namespace MathTextRecognizer.Stages
 		private void OnParsingProcessBtnClicked(object sender, EventArgs args)
 		{
 			syntacticalCoverModel.Clear();
+			
+			parsingTaskLabel.Markup="-";
 			
 			// We set the tokens from the previous step.
 			controller.SetStartTokens(MainRecognizerWindow.TokenizingWidget.ResultTokens);

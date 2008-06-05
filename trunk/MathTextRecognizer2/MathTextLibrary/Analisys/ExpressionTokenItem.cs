@@ -178,7 +178,7 @@ namespace MathTextLibrary.Analisys
 			
 						
 			// We tell the controller we finished matching the token.
-			TokenMatchingFinishedInvoker(matched);
+			TokenMatchingFinishedInvoker(matched, this.tokenType);
 			
 			return res;
 			
@@ -301,12 +301,12 @@ namespace MathTextLibrary.Analisys
 		/// The token matched, or <c>null</c> if the matching was
 		/// unsuccesful.
 		/// </param>
-		protected void TokenMatchingFinishedInvoker(Token t)
+		protected void TokenMatchingFinishedInvoker(Token t, string expected)
 		{
 			if(TokenMatchingFinished !=null)
 			{
 				TokenMatchingFinished(this, 
-				                      new TokenMatchingFinishedArgs(t));
+				                      new TokenMatchingFinishedArgs(t, expected));
 			}
 		}
 		

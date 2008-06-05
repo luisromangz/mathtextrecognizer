@@ -87,7 +87,7 @@ namespace MathTextRecognizer
 			
 		private LogView logView;
 		
-		private const string title="Reconocedor de caracteres matemáticos";	
+		private const string title="Reconocedor de texto matemático";	
 		
 		private DatabaseManagerDialog databaseManagerDialog;
 		
@@ -432,8 +432,8 @@ namespace MathTextRecognizer
 		{
 			AppInfoDialog.Show(
 				mainWindow,
-				"Reconocedor de caracteres matemáticos",
-				"Este programa se encarga de el reconocimiento del las fórmulas contenidas en imágenes,y su posterior conversión.",
+				"Reconocedor de texto matemático",
+				"Este programa se encarga de el reconocimiento de fórmulas contenidas en imágenes y su conversión a un formato de texto plano especificado a traves de reglas.",
 			     "mathtextrecognizer");
 		}
 		

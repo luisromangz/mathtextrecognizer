@@ -272,6 +272,7 @@ namespace MathTextLibrary.Databases.Receptors
 					                               checkValue));
 				
 				StepDoneInvoker(args);
+				Thread.Sleep(20);
 			}
 			
 			foreach (IBinaryCharacteristic characteristic in characteristics) 
@@ -285,6 +286,7 @@ namespace MathTextLibrary.Databases.Receptors
 					                               checkValue));
 				
 				StepDoneInvoker(args);
+				Thread.Sleep(20);
 			}
 			
 			return vector;

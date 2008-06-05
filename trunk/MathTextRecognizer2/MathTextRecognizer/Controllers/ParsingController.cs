@@ -116,9 +116,7 @@ namespace MathTextRecognizer.Controllers
 					
 			OnMatcherMatching(this,
 			                  new MatchingArgs(SyntacticalRulesLibrary.Instance.StartRule));
-			
-			SuspendByStep();
-			
+				
 			TokenSequence inputTokens = new TokenSequence(startTokens);
 			parsingResult = startRule.Match(ref inputTokens, out output);
 			
