@@ -25,9 +25,9 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// </summary>
 		/// <param name="t">Tipo de la caracteristica deseada</param>
 		/// <returns>Characteristica del tipo deseado</returns>
-		public static IBinaryCharacteristic CreateCharacteristic(Type t)
+		public static BinaryCharacteristic CreateCharacteristic(Type t)
 		{
-			return (IBinaryCharacteristic) (t.GetConstructor(new Type[]{}).Invoke(null));
+			return (BinaryCharacteristic) (t.GetConstructor(new Type[]{}).Invoke(null));
 		}
 
 		/// <summary>
@@ -36,15 +36,15 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// </summary>
 		/// <returns>Lista de todas las clases que implementan
 		/// <c>IBinaryCharacteristic</c></returns>
-		public static List<IBinaryCharacteristic> CreateCharacteristicList() 
+		public static List<BinaryCharacteristic> CreateCharacteristicList() 
 		{
-			List<IBinaryCharacteristic> characteristics=new  List<IBinaryCharacteristic>();
+			List<BinaryCharacteristic> characteristics=new  List<BinaryCharacteristic>();
 			
-			Assembly a=Assembly.GetAssembly(typeof(IBinaryCharacteristic));
+			Assembly a=Assembly.GetAssembly(typeof(BinaryCharacteristic));
 			
 			foreach(Type t in a.GetTypes())
 			{
-				if(t.BaseType == typeof(IBinaryCharacteristic))
+				if(t.BaseType == typeof(BinaryCharacteristic))
 				{
 					characteristics.Add(CharacteristicFactory.CreateCharacteristic(t));														
 				}				

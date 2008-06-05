@@ -27,7 +27,7 @@ namespace MathTextLibrary.Databases.Characteristic
 		
 		
 		// Lista de caracteristicas binarias que se aplican sobre las imagenes.
-		private static List<IBinaryCharacteristic> characteristics;
+		private static List<BinaryCharacteristic> characteristics;
 		
 		// El nodo raiz del arbol binario de caracteristicas binarias en 
 		/// el que guardamos la informacion de caracteristicas.	
@@ -87,7 +87,7 @@ namespace MathTextLibrary.Databases.Characteristic
 			
 			// Recorremos las caracteristicas, y vamos creando el arbol segun
 			// vamos necesitando nodos.
-			foreach(IBinaryCharacteristic bc in characteristics)
+			foreach(BinaryCharacteristic bc in characteristics)
 			{					
 				if(characteristicValue=bc.Apply(processedBitmap))
 				{
@@ -136,7 +136,7 @@ namespace MathTextLibrary.Databases.Characteristic
 			
 			List<MathSymbol> res = new List<MathSymbol>();
 			CharacteristicNode nodo=rootNode;
-			IBinaryCharacteristic bc;
+			BinaryCharacteristic bc;
 			
 			bool exists=true; 
 			bool characteristicValue;
@@ -147,7 +147,7 @@ namespace MathTextLibrary.Databases.Characteristic
 			
 			for(int i=0;i<characteristics.Count && exists;i++)
 			{
-				bc=(IBinaryCharacteristic)(characteristics[i]);				
+				bc=(BinaryCharacteristic)(characteristics[i]);				
 
 				if(characteristicValue=bc.Apply(processedImage))
 				{
@@ -229,7 +229,7 @@ namespace MathTextLibrary.Databases.Characteristic
 		/// <returns>
 		/// The <c>ProcessingStepDoneArgs</c> instance created.
 		/// </returns>
-		private StepDoneArgs CreateStepDoneArgs(IBinaryCharacteristic bc,
+		private StepDoneArgs CreateStepDoneArgs(BinaryCharacteristic bc,
 		                                        bool value,
 		                                        List<MathSymbol> similarSymbols)
 		{

@@ -10,7 +10,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 	/// es como mas ancho que alto.
 	/// </summary>
 	/// <seealso cref="MathTextLibrary.Characteristics.Helpers.ImageBoxerHelper"/>
-	public class TallerThanWiderCharacteristic:IBinaryCharacteristic
+	public class TallerThanWiderCharacteristic:BinaryCharacteristic
 	{
 		private const float epsilon = 0.05f;
 		public TallerThanWiderCharacteristic()

@@ -11,7 +11,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 	/// derecha.
 	/// </summary>
 	/// <seealso cref="MathTextLibrary.Characteristics.Helpers.CountPixelsHelper"/>
-	public class PixelsLeftHalfCharacteristic:IBinaryCharacteristic
+	public class PixelsLeftHalfCharacteristic:BinaryCharacteristic
 	{
 
 		private const float epsilon = 0.01f;

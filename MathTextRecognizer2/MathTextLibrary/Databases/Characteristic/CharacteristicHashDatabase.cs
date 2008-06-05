@@ -31,7 +31,7 @@ namespace MathTextLibrary.Databases.Characteristic
 		private const float epsilon = 0.05f;  
 			
 		// Lista de caracteristicas binarias que se aplican sobre las imagenes.
-		private static List<IBinaryCharacteristic> characteristics;
+		private static List<BinaryCharacteristic> characteristics;
 		
 		private List<CheckVector> symbolsDict;
 		
@@ -230,7 +230,7 @@ namespace MathTextLibrary.Databases.Characteristic
 			CheckVector vector = new CheckVector();
 			bool characteristicValue;
 			
-			foreach(IBinaryCharacteristic bc in characteristics)
+			foreach(BinaryCharacteristic bc in characteristics)
 			{
 				characteristicValue = bc.Apply(image);
 				

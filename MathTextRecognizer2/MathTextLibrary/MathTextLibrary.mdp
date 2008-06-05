@@ -48,7 +48,7 @@
     <File name="Databases/Characteristic/Characteristics/EndingPointsEqualsThreeCharacteristic.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Characteristic/Characteristics/EndingPointsEqualsTwoCharacteristic.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Characteristic/Characteristics/EndingPointsEqualsZeroCharacteristic.cs" subtype="Code" buildaction="Compile" />
-    <File name="Databases/Characteristic/Characteristics/IBinaryCharacteristic.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/BinaryCharacteristic.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Characteristic/Characteristics/NumberBigHolesEqualsOneCharacteristic.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Characteristic/Characteristics/NumberBigHolesEqualsTwoCharacteristic.cs" subtype="Code" buildaction="Compile" />
     <File name="Databases/Characteristic/Characteristics/NumberBigHolesEqualsZeroCharacteristic.cs" subtype="Code" buildaction="Compile" />
@@ -121,6 +121,9 @@
     <File name="Analisys/ExpressionRuleCallItem.cs" subtype="Code" buildaction="Compile" />
     <File name="Analisys/SyntacticalRulesLibrary.cs" subtype="Code" buildaction="Compile" />
     <File name="Tests/SyntacticalRuleTests.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/TristateCheckVector.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Receptors/GeneralizableReceptorDatabase.cs" subtype="Code" buildaction="Compile" />
+    <File name="Databases/Characteristic/Characteristics/SegmentableCharacteristic.cs" subtype="Code" buildaction="Compile" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="gdk-sharp, Version=2.10.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />

@@ -10,7 +10,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 	/// en el eje X de la imagen es mayor estricto que 4.
 	/// </summary>
 	/// <seealso cref="MathTextLibrary.Characteristics.Helpers.CountColorChangesHelper"/>
-	public class ColorChangesXAboveFourCharacteristic :IBinaryCharacteristic
+	public class ColorChangesXAboveFourCharacteristic :BinaryCharacteristic
 	{
 		public ColorChangesXAboveFourCharacteristic()
 		{

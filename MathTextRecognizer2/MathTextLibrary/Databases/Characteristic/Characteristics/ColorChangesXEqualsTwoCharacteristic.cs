@@ -10,7 +10,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 	/// en el eje X de la imagen es 2.
 	/// </summary>
 	/// <seealso cref="MathTextLibrary.Characteristics.Helpers.CountColorChangesHelper"/>
-	public class ColorChangesXEqualsTwoCharacteristic:IBinaryCharacteristic
+	public class ColorChangesXEqualsTwoCharacteristic:BinaryCharacteristic
 	{
 		public ColorChangesXEqualsTwoCharacteristic()
 		{

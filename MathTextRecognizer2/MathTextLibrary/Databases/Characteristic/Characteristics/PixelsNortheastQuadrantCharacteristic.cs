@@ -11,7 +11,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 	/// de los demas cuadrantes.
 	/// </summary>
 	/// <seealso cref="MathTextLibrary.Characteristics.Helpers.CountPixelsHelper"/>
-	public class PixelsNortheastQuadrantCharacteristic:IBinaryCharacteristic
+	public class PixelsNortheastQuadrantCharacteristic:BinaryCharacteristic
 	{
 		private const float epsilon = 0.01f;
 		

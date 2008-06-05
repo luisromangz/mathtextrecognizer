@@ -11,7 +11,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 	/// con solo un vecino) es igual a 1.
 	/// </summary>
 	/// <seealso cref="MathTextLibrary.Characteristics.Helpers.CountPixelsWithXNeighboursHelper"/>
-	public class EndingPointsEqualsOneCharacteristic:IBinaryCharacteristic
+	public class EndingPointsEqualsOneCharacteristic:BinaryCharacteristic
 	{
 		public EndingPointsEqualsOneCharacteristic()
 		{

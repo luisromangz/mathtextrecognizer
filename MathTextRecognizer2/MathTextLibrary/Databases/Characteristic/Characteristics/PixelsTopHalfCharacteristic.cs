@@ -11,7 +11,7 @@ namespace MathTextLibrary.Databases.Characteristic.Characteristics
 	/// inferior.
 	/// </summary>
 	/// <seealso cref="MathTextLibrary.Characteristics.Helpers.CountPixelsHelper"/>
-	public class PixelsTopHalfCharacteristic:IBinaryCharacteristic
+	public class PixelsTopHalfCharacteristic:BinaryCharacteristic
 	{
 		private const float epsilon = 0.01f;
 		
