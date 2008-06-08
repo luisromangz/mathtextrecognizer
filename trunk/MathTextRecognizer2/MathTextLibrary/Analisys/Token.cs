@@ -486,33 +486,7 @@ namespace MathTextLibrary.Analisys
 			
 		}
 
-		/// <summary>
-		/// Tells if two <see cref="Token"/> instances are equal, based on
-		/// their types.
-		/// </summary>
-		/// <param name="o">
-		/// A <see cref="System.Object"/>
-		/// </param>
-		/// <returns>
-		/// A <see cref="System.Boolean"/>
-		/// </returns>
-		public override bool Equals (object o)
-		{
-			return (this.type == (o as Token).type);
-		}
-		
-		/// <summary>
-		/// Gets the hashcode for the token.
-		/// </summary>
-		/// <returns>
-		/// A <see cref="System.Int32"/>
-		/// </returns>
-		public override int GetHashCode ()
-		{
-			return this.type.GetHashCode();
-		}
-
-
+	
 		
 #endregion Public methods
 	}

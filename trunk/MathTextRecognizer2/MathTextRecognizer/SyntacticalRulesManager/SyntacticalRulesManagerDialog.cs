@@ -1,4 +1,4 @@
-﻿// SyntacticalRulesManagerDialog.cs created with MonoDevelop
+// SyntacticalRulesManagerDialog.cs created with MonoDevelop
 // User: luis at 11:24 16/05/2008
 
 using System;
@@ -223,7 +223,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			synRulesTree.AppendColumn("Expresión", 
 			                          new CellRendererText(),
-			                          "markup" ,1);
+			                          "text" ,1);
 			synRulesTree.Columns[1].Sizing = TreeViewColumnSizing.Autosize;
 		}
 		

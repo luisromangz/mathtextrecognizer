@@ -243,15 +243,15 @@ namespace MathTextRecognizer.Stages
 				if(String.IsNullOrEmpty(_args.Output))
 				{
 					parsingTaskLabel.Markup=
-					String.Format("<b>Falló el reconocimiento con  <i>{0}</i>",						         
-					              currentNode.Matcher.Label);
+					String.Format("<b>Falló el reconocimiento con  <i>{0}</i></b>",						         
+					               GLib.Markup.EscapeText(currentNode.Matcher.Label));
 				}
 				else
 				{
 					parsingTaskLabel.Markup=
-					String.Format("<b>Estableciendo la salida parcial <i>{0}</i> para <i></i></b>",
-						          _args.Output,
-					              currentNode.Matcher.Label);
+					String.Format("<b>Estableciendo la salida parcial <i>{0}</i> para <i>{1}</i></b>",
+						          GLib.Markup.EscapeText(_args.Output),
+					              GLib.Markup.EscapeText(currentNode.Matcher.Label));
 				}
 				
 				
@@ -334,7 +334,7 @@ namespace MathTextRecognizer.Stages
 				
 				parsingTaskLabel.Markup=
 					String.Format("<b>Intentando encajar los elementos restantes con <i>{0}</i></b>",
-					              currentNode.Matcher.Label);
+					              GLib.Markup.EscapeText(currentNode.Matcher.Label));
 				
 				parsingNextButtonsAlign.Sensitive = 
 					controller.StepMode == ControllerStepMode.StepByStep;
@@ -387,8 +387,8 @@ namespace MathTextRecognizer.Stages
 					
 					parsingTaskLabel.Markup=
 					String.Format("<b>Volviendo al nodo padre de <i>{0}</i>, <i>{1}</i></b>",
-						          currentLabel,
-					              currentNode.Matcher.Label);
+						          GLib.Markup.EscapeText(currentLabel),
+					              GLib.Markup.EscapeText(currentNode.Matcher.Label));
 					
 				}
 				
@@ -414,7 +414,7 @@ namespace MathTextRecognizer.Stages
 				
 				parsingTaskLabel.Markup=
 					String.Format("<b>Buscando un item válido del tipo <i>{0}</i> entre los items restantes</b>",
-						          args.MatchableType);
+						          GLib.Markup.EscapeText(args.MatchableType));
 			
 				if(controller.StepMode == ControllerStepMode.StepByStep)
 				{
@@ -432,8 +432,10 @@ namespace MathTextRecognizer.Stages
 			                   _args, 
 			                   delegate(object resender, EventArgs a)
 			{
-				TokenMatchingFinishedArgs args = a as TokenMatchingFinishedArgs;
-			
+				TokenMatchingFinishedArgs args = (TokenMatchingFinishedArgs)a;
+				
+				string tokenType = args.ExpectedType;
+							
 				if(args.MatchedToken != null)
 				{
 					int idx = SearchToken(args.MatchedToken);
@@ -449,20 +451,27 @@ namespace MathTextRecognizer.Stages
 					
 					parsingTaskLabel.Markup=
 						String.Format("<b>Se encontró un item válido del tipo <i>{0}</i>, <i>{1}</i> entre los items restantes</b>",
-							          args.MatchedToken.Type,
-							          args.ExpectedType);
+							          GLib.Markup.EscapeText(tokenType),
+							          GLib.Markup.EscapeText(args.MatchedToken.Text));
 						
 					currentNode.AddMatchedToken(args.MatchedToken);	
 					currentNode.Select();
 					
-					remainingItemsStore.Remove(ref selectedRemainingItem);					
+					remainingItemsStore.Remove(ref selectedRemainingItem);
 					
+					TreeIter first;
+					if(remainingItemsStore.GetIterFirst(out first))
+					{
+						remainingItemsIconView.ScrollToPath(remainingItemsStore.GetPath(first));
+					}
+										
 				}
 				else
 				{
+					
 					parsingTaskLabel.Markup =
 						String.Format("<b>No se encotró un item válido del tipo <i>{0}</i> entre los items restantes</b>",
-						          _args.ExpectedType);
+						              GLib.Markup.EscapeText( tokenType));
 				}
 				
 				if(controller.StepMode != ControllerStepMode.UntilEnd)

@@ -149,6 +149,7 @@ namespace MathTextLibrary.Controllers
 		                                 string expectedType)
 		{
 			this.matchedToken = matchedToken;
+			this.expectedType = expectedType;
 		}
 		
 		public Token MatchedToken

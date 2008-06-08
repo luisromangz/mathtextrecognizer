@@ -150,29 +150,58 @@ namespace MathTextLibrary.Analisys
 			// By default, we say we had a success
 			bool res = true;
 			Token matched = null;
-			if(idx==-1 || this.tokenType != sequence[idx].Type)
+			
+			
+			
+			if(idx==-1)
 			{
 				LogSentInvoker("El item esperado {0} no fue encontrado.", this.tokenType);
 				res = !IsCompulsory;
-			}
+			}			
 			else
 			{
-				
-				matched = sequence.RemoveAt(idx);				
-				if(this.relatedItems.Count ==0)
+				bool different;
+			
+				// If the token type is a literal, we compare with the text
+				// instead of the type.
+				if(this.tokenType.StartsWith("'")
+				   && this.tokenType.EndsWith("'"))
 				{
-					output= String.Format(formatString, matched.Text);
+					string expectedText = tokenType.Substring(1,
+					                                          this.tokenType.Length -2) ;
+					different =expectedText != sequence[idx].Text;
 				}
 				else
 				{
-					res = MatchRelatedItems(matched, ref sequence, out output);
-					if(!res)
-					{
-						matched = null;
-					}
-					
-					RelatedSequenceSetInvoker(sequence);
+					different = tokenType != sequence[idx].Type;
 				}
+				
+				if(different)
+				{
+					LogSentInvoker("El item esperado {0} no fue encontrado.", this.tokenType);
+					res = !IsCompulsory;
+				}
+				else
+				{
+					matched = sequence.RemoveAt(idx);				
+					if(this.relatedItems.Count ==0)
+					{
+						output= String.Format(formatString, matched.Text);
+					}
+					else
+					{
+						res = MatchRelatedItems(matched, ref sequence, out output);
+						if(!res)
+						{
+							matched = null;
+						}
+						
+						RelatedSequenceSetInvoker(sequence);
+					}
+				}
+				
+				
+				
 			}
 			
 			
@@ -245,6 +274,8 @@ namespace MathTextLibrary.Analisys
 			
 			foreach(ExpressionItem relatedItem in this.relatedItems)
 			{
+				
+				TokenSequence backupSequence = new TokenSequence(sequence);
 				string relatedItemOutput;
 				TokenSequence relatedRemnant = 
 					GetRelatedItems(matched,sequence,relatedItem.Position);
@@ -258,11 +289,39 @@ namespace MathTextLibrary.Analisys
 				
 				RelatedSequenceSetInvoker(relatedRemnant);
 				
-				if(relatedItem.Match(ref relatedRemnant, 
-				                     out relatedItemOutput)
-				   && relatedRemnant.Count == 0)
+				bool matchRes =
+					relatedItem.Match(ref relatedRemnant, out relatedItemOutput);
+				if(matchRes)
 				{
 					outputs.Add(relatedItemOutput);
+					
+					if(relatedRemnant.Count > 0)
+					{
+						// We weren't unable to match all the tokens,
+						// so we have to restore partially.
+						
+						sequence = backupSequence;
+						int i =0;
+						while(i<sequence.Count)
+						{
+							if(!relatedRemnant.Sequence.Contains(sequence[i]))
+							{
+								sequence.Sequence.Remove(sequence[i]);
+							}
+							else
+							{
+								i++;
+							}
+						}
+						
+					}
+				}
+				else if(!relatedItem.IsCompulsory)
+				{
+					// We can fail, because then we may be removing tokens useful
+					// to later rules;
+					outputs.Add("");
+					sequence = backupSequence;
 				}
 				else
 				{
@@ -458,14 +517,15 @@ namespace MathTextLibrary.Analisys
 		/// </returns>
 		protected bool SpecialPosition(Token referenceToken, Token checkedToken)
 		{
-			if(checkedToken.Left < referenceToken.Left
-			   || checkedToken.Baseline < referenceToken.Percent0_75Line
-			   || checkedToken.Bodyline > referenceToken.Percent0_33Line)
-			{
-				return true;
-			}
+
 			
-			return false;				
+			
+			return (CheckTokenInRelatedSequence(referenceToken, checkedToken, ExpressionItemPosition.Above)
+			        || CheckTokenInRelatedSequence(referenceToken, checkedToken, ExpressionItemPosition.Below)
+			        || CheckTokenInRelatedSequence(referenceToken, checkedToken, ExpressionItemPosition.SubIndex)
+			        || CheckTokenInRelatedSequence(referenceToken, checkedToken, ExpressionItemPosition.SuperIndex)
+			        || CheckTokenInRelatedSequence(referenceToken, checkedToken, ExpressionItemPosition.RootIndex)
+			        || CheckTokenInRelatedSequence(referenceToken, checkedToken, ExpressionItemPosition.Inside));				
 		}
 		
 		private void RelatedSequenceSetInvoker(TokenSequence relatedSequence)
