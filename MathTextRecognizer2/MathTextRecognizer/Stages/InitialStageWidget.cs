@@ -19,6 +19,9 @@ namespace MathTextRecognizer.Stages
 		[Widget]
 		private Image blackboardImage = null;
 		
+		[Widget]
+		private Button blackboardModeBtn = null;
+		
 		public InitialStageWidget(MainRecognizerWindow window)
 			: base(window)
 		{
@@ -29,6 +32,8 @@ namespace MathTextRecognizer.Stages
 			
 			
 			this.Add(initialStageWidgetBase);
+			
+			blackboardModeBtn.NoShowAll = true;
 			
 			blackboardImage.Pixbuf = ImageResources.LoadPixbuf("edu_miscellaneous32");
 		}

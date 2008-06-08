@@ -51,11 +51,12 @@ namespace MathTextRecognizer.Controllers.Nodes
 		{
 			get
 			{
+				
 				return String.Format("{0}: {1}{2}{3}", 
-				                     matcherType, 
-					                 matcherLabel,
-					                 matchedTokens,
-					                 output);
+				                     matcherType, 				                     
+					                 GLib.Markup.EscapeText(matcherLabel),
+				                     matchedTokens,
+				                     output);
 			}
 		}
 		
@@ -94,12 +95,12 @@ namespace MathTextRecognizer.Controllers.Nodes
 		
 			if(String.IsNullOrEmpty(matchedTokens))
 			{
-				matchedTokens = "; Encaja: <i>"+ matchedToken.Text+"</i>";
+				matchedTokens = ";  Encaja: <i>"+GLib.Markup.EscapeText( matchedToken.Text)+"</i>";
 				
 			}
 			else
 			{
-				matchedTokens = ", <i>" +matchedToken.Text+"</i>";
+				matchedTokens = ", <i>" +GLib.Markup.EscapeText( matchedToken.Text)+"</i>";
 			}
 			
 			container.ColumnsAutosize();
@@ -118,7 +119,7 @@ namespace MathTextRecognizer.Controllers.Nodes
 		{
 			if(output != "")
 			{
-				this.output = "; <i>"+output +"</i>";
+				this.output = ";  <i>"+GLib.Markup.EscapeText( output)+"</i>";
 				container.ColumnsAutosize();
 				container.QueueResize();
 				container.QueueDraw();
