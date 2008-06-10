@@ -279,15 +279,17 @@ namespace MathTextRecognizer.Output
 			FileFilter filter=new FileFilter();
 			
 			
-			//Latex
-			filter.Name="Archivo de LaTeX";
-			filter.AddPattern("*.tex");
-			filter.AddPattern("*.TEX");
+			// We set up the filter for plain text files.
+			filter.Name="Archivo de texto plano";
+			filter.AddPattern("*.txt");
+			filter.AddPattern("*.TXT");
 		
 			fileSaveDialog.AddFilter(filter);
 			fileSaveDialog.Modal=true;
 			fileSaveDialog.TransientFor = outputDialog;
 			outputDialog.Visible=false;
+			
+			
 			ResponseType res =(ResponseType) (fileSaveDialog.Run());
 			
 			if(res == ResponseType.Ok)
