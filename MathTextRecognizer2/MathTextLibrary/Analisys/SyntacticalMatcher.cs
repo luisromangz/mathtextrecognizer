@@ -25,15 +25,31 @@ namespace MathTextLibrary.Analisys
 	
 		
 #region Properties
+		/// <value>
+		/// Contains a label for the matcher's type.
+		/// </value>
 		public abstract string Type
 		{
 			get;
 		}
 		
+		/// <value>
+		/// Contains a label for the matcher.
+		/// </value>
 		public abstract string Label
 		{
 			get;
 		}
+		
+		/// <value>
+		/// Contains a list with the names of the rules used by this matcher
+		/// or/and its children machers.
+		/// </value>
+		public abstract List<string> RulesUsed
+		{
+			get;				
+		}
+			
 		
 #endregion Properties
 		

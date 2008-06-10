@@ -67,10 +67,29 @@ namespace MathTextLibrary.Analisys
 			get { return Name; }
 		}
 		
+		/// <value>
+		/// Contains a label for the rule's type.
+		/// </value>
 		public override string Type 
 		{
 			get { return "Regla"; }
 		}
+		
+		public override List<string> RulesUsed
+		{
+			get 
+			{ 
+				List<string> rulesUsed = new List<string>();
+				
+				foreach (SyntacticalExpression exp in expressions) 
+				{
+					rulesUsed.AddRange(exp.RulesUsed);
+				}
+				
+				return rulesUsed;
+			}
+		}
+
 
 
 		

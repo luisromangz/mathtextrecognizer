@@ -71,9 +71,31 @@ namespace MathTextLibrary.Analisys
 		}
 		
 		
+		/// <value>
+		/// Contains a label for the expression's type.
+		/// </value>
 		public override string Type {
 			get { return "Expresión"; }
 		}
+		
+		/// <value>
+		/// Contains the rules called from the expression.
+		/// </value>
+		public override List<string> RulesUsed 
+		{
+			get
+			{ 
+				List<string> ruleNames =  new List<string>();
+				
+				foreach (ExpressionItem item in items) 
+				{
+					ruleNames.AddRange(item.RulesUsed);
+				}
+				
+				return ruleNames;					
+			}
+		}
+
 
 
 		

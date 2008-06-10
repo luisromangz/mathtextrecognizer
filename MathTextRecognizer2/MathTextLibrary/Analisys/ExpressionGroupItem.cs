@@ -50,8 +50,26 @@ namespace MathTextLibrary.Analisys
 			get { return this.ToString(); }
 		}
 		
-		public override string Type {
+		/// <value>
+		/// Contains a label for the group type.
+		/// </value>
+		public override string Type 
+		{
 			get { return "Grupo de elementos"; }
+		}
+
+		public override List<string> RulesUsed {
+			get 
+			{
+				List<string> ruleNames = new List<string>();
+				
+				foreach (ExpressionItem item in this.childrenItems) 
+				{
+					ruleNames.AddRange(item.RulesUsed);
+				}
+				
+				return ruleNames;
+			}
 		}
 
 

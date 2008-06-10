@@ -175,6 +175,12 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		
 #region Non-public methods
 		
+		/// <summary>
+		/// Adds a rule to the rule list.
+		/// </summary>
+		/// <param name="rule">
+		/// A <see cref="SyntacticalRule"/>
+		/// </param>
 		private void AddRule(SyntacticalRule rule)
 		{
 			string [] parts = rule.ToString().Split(':');
@@ -189,6 +195,54 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			synRulesTree.ScrollToCell(synRulesModel.GetPath(iter), 
 			                          synRulesTree.Columns[0],
 			                          true,0.5f,0);
+		}
+		
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns>
+		/// A <see cref="System.Boolean"/>
+		/// </returns>
+		private bool CheckRules()
+		{
+			List<string> ruleNames = new List<string>();
+			
+			List<SyntacticalRule> rules = this.SyntacticalRules;
+			
+			foreach (SyntacticalRule rule in rules) 
+			{
+				ruleNames.Add(rule.Name);
+			}
+			
+			List<string> errors = new List<string>();
+			foreach (SyntacticalRule rule  in rules) 
+			{
+				foreach (string usedRule in rule.RulesUsed) 
+				{
+					if(!ruleNames.Contains(usedRule))
+					{
+						errors.Add(String.Format("· La regla «{0}» usada en la regla «{1}» no existe.",
+						                         usedRule,
+						                         rule.Name));
+					}
+				}
+			}
+			
+			if(errors.Count > 0)
+			{
+				string errorMessage = 
+					"No se puede continuar porque se encontraron los siguientes errores en las reglas:\n\n{0}";
+				
+				OkDialog.Show(this.syntacticalRulesManagerDialog,
+				              MessageType.Warning,
+				              errorMessage,
+				              String.Join("\n", errors.ToArray()));
+				
+				return true;
+			}
+			
+			return false;
+				
 		}
 		
 		/// <summary>
@@ -347,8 +401,14 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		[GLib.ConnectBefore]
 		private void OnSynRulesCloseBtnClicked(object sender, EventArgs args)
 		{
-			syntacticalRulesManagerDialog.Respond(ResponseType.Ok);
-			syntacticalRulesManagerDialog.Hide();
+			
+			if(!CheckRules())
+			{
+				// If there were no errors, we can close the manager.
+				syntacticalRulesManagerDialog.Respond(ResponseType.Ok);
+				syntacticalRulesManagerDialog.Hide();
+			}
+			
 		}
 		
 		/// <summary>
@@ -366,8 +426,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				ConfirmDialog.Show(syntacticalRulesManagerDialog,
 				                   "Esto cambiará la configuración de la aplicación, ¿desea continuar?");
 			
-			if(res == ResponseType.Yes)
+			if(res == ResponseType.Yes && !CheckRules())
 			{
+				// We save the rules if the user accepted and there were no errors.
 				RecognizerConfig.Instance.SyntacticalRules = SyntacticalRules;
 				RecognizerConfig.Instance.Save();
 			}
