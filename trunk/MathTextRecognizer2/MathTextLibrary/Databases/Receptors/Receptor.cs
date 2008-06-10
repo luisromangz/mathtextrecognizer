@@ -223,7 +223,7 @@ namespace MathTextLibrary.Databases.Receptors
 		}
 		
 		/// <summary>
-		/// Generates a randomized <c>Receptor</c> list.
+		/// Generates a randomized <see cref="Receptor"/> list.
 		/// </summary>
 		/// <param name="count">
 		/// The number of receptors.

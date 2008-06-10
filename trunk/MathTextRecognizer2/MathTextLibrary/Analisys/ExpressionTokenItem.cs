@@ -109,6 +109,25 @@ namespace MathTextLibrary.Analisys
 				return "Item"; 
 			}
 		}
+		
+		/// <value>
+		/// Contains the rules used by the token's related items.
+		/// </value>
+		public override List<string> RulesUsed 
+		{
+			get 
+			{ 
+				List<string> ruleNames = new List<string>();
+				
+				foreach (ExpressionItem item in this.relatedItems) 
+				{
+					ruleNames.AddRange(item.RulesUsed);
+				}
+				
+				return ruleNames;
+			}
+		}
+
 
 		
 #endregion Properties

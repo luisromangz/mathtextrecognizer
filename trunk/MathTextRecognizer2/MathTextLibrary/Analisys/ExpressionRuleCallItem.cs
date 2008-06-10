@@ -13,7 +13,7 @@ namespace MathTextLibrary.Analisys
 	/// </summary>
 	public class ExpressionRuleCallItem : ExpressionItem
 	{
-		string expressionName;
+		private string ruleName;
 		
 		
 		/// <summary>
@@ -34,41 +34,60 @@ namespace MathTextLibrary.Analisys
 		{
 			get 
 			{
-				return expressionName;
+				return ruleName;
 			}
 			set 
 			{
-				expressionName = value;
+				ruleName = value;
 			}
 		}
 		
 		/// <value>
 		/// Contains the label shown by the item.
 		/// </value>
-		public override string Label {
-			get { return ToString(); }
+		public override string Label 
+		{
+			get 
+			{ 
+				return ToString(); 
+			}
 		}
 		
-		public override string Type {
-			get { return "Llamada a regla"; }
+		/// <value>
+		/// Contains a label for the rule call type.
+		/// </value>
+		public override string Type 
+		{
+			get 
+			{ 
+				return "Llamada a regla"; 
+			}
 		}
-
-
+		
+		/// <value>
+		/// Contains a list with the name of the rule called.
+		/// </value>
+		public override List<string> RulesUsed 
+		{
+			get 
+			{ 
+				List<string> ruleNames = new List<string>();
+				
+				ruleNames.Add(this.ruleName);
+				
+				return ruleNames;
+			}
+		}
 		
 #endregion Properties
 
-#region Public methods
-
-		
-#endregion Public methods
-		
 #region Non-public methods
 		
 		protected override bool MatchSequence (ref TokenSequence sequence, out string output)
 		{
 			// The actual matching is done by the rule.
 			SyntacticalRule ruleCalled = 
-				SyntacticalRulesLibrary.Instance[expressionName];
+				SyntacticalRulesLibrary.Instance[ruleName];
 			
 			bool res =  ruleCalled.Match(ref sequence, out output);
 			if(res)
@@ -81,7 +100,7 @@ namespace MathTextLibrary.Analisys
 
 		protected override string SpecificToString ()
 		{
-			return this.expressionName;
+			return this.ruleName;
 		}
 
 
