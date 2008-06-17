@@ -152,13 +152,27 @@
                     <description>icons</description>
                     <destination>${installdir}/icons</destination>
                     <name>icons</name>
-                    <platforms>all</platforms>
+                    <platforms>linux</platforms>
                     <distributionFileList>
                         <distributionFile>
                             <origin>Artwork/mathtextlearner48.png</origin>
                         </distributionFile>
                         <distributionFile>
                             <origin>Artwork/mathtextrecognizer48.png</origin>
+                        </distributionFile>
+                    </distributionFileList>
+                </folder>
+                <folder>
+                    <description>icons</description>
+                    <destination>${installdir}/icons</destination>
+                    <name>iconsw</name>
+                    <platforms>windows</platforms>
+                    <distributionFileList>
+                        <distributionFile>
+                            <origin>Artwork/mathtextlearner48.ico</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>Artwork/mathtextrecognizer48.ico</origin>
                         </distributionFile>
                     </distributionFileList>
                 </folder>
@@ -175,11 +189,11 @@
                 </startMenuShortcut>
                 <startMenuShortcut>
                     <comment>Reconocedor de texto matematico</comment>
-                    <name>MathTextRecongizer</name>
+                    <name>MathTextRecognizer</name>
                     <runInTerminal>0</runInTerminal>
                     <windowsExec>${installdir}/bin/MathTextRecognizer.exe</windowsExec>
                     <windowsExecArgs></windowsExecArgs>
-                    <windowsIcon>${installdir}/icons/mathtextrecognizer48.png</windowsIcon>
+                    <windowsIcon>${installdir}/icons/mathtextrecognizer48.ico</windowsIcon>
                     <windowsPath>${installdir}/bin</windowsPath>
                 </startMenuShortcut>
                 <startMenuShortcut>
@@ -188,7 +202,7 @@
                     <runInTerminal>0</runInTerminal>
                     <windowsExec>${installdir}/bin/MathTextLearner.exe</windowsExec>
                     <windowsExecArgs></windowsExecArgs>
-                    <windowsIcon>${installdir}/icons/mathtextlearner48.png</windowsIcon>
+                    <windowsIcon>${installdir}/icons/mathtextlearner48.ico</windowsIcon>
                     <windowsPath>${installdir}/bin/</windowsPath>
                 </startMenuShortcut>
             </startMenuShortcutList>
