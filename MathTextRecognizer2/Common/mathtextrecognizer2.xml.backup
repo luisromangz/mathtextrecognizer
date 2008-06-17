@@ -9,6 +9,18 @@
     <allowLanguageSelection>1</allowLanguageSelection>
     <enableRollback>1</enableRollback>
     <saveRelativePaths>1</saveRelativePaths>
+    <preInstallationActionList>
+	<throwError>
+	  <text>Meh</text>
+	  <ruleList>
+	    <compareText>
+		<text></text>
+		<logic>does_not_contain</logic>
+		<value>linux</value>
+	    </compareText>   
+	  </ruleList>
+	</throwError>
+    </preInstallationActionList>
     <componentList>
         <component>
             <name>default</name>
@@ -43,29 +55,34 @@
                     <destination>${installdir}/</destination>
                     <name>installdir</name>
                     <platforms>all</platforms>
-                    <distributionFileList>
-                        <distributionFile>
-                            <origin>Artwork/mathtextlearner48.png</origin>
-                        </distributionFile>
-                        <distributionFile>
-                            <origin>Artwork/mathtextrecognizer48.png</origin>
-                        </distributionFile>
-                        <distributionFile>
-                            <origin>../MathTextLearnerLauncher/bin/Debug/MathTextLearner.exe</origin>
-                        </distributionFile>
-                        <distributionFile>
-                            <origin>../MathTextRecognizer/bin/Debug/MathTextCustomWidgets.dll</origin>
-                        </distributionFile>
-                        <distributionFile>
-                            <origin>../MathTextRecognizer/bin/Debug/MathTextLearner.dll</origin>
-                        </distributionFile>
-                        <distributionFile>
-                            <origin>../MathTextRecognizer/bin/Debug/MathTextLibrary.dll</origin>
-                        </distributionFile>
-                        <distributionFile>
-                            <origin>../MathTextRecognizer/bin/Debug/MathTextRecognizer.exe</origin>
-                        </distributionFile>
-                    </distributionFileList>
+                    <shortcutList>
+                        <shortcut>
+                            <comment>Reconocedor de texto matematico</comment>
+                            <exec>mono ${installdir}/bin/MathTextRecognizer.exe</exec>
+                            <icon>${installdir}/icons/mathtextrecognizer48.png</icon>
+                            <name>MathTextRecognizer</name>
+                            <path>${installdir}/bin</path>
+                            <platforms>all</platforms>
+                            <runInTerminal>0</runInTerminal>
+                            <windowsExec>${installdir}/bin/MathTextRecognizer.exe</windowsExec>
+                            <windowsExecArgs></windowsExecArgs>
+                            <windowsIcon>${installdir}/icons/mathtextrecognizer48.png</windowsIcon>
+                            <windowsPath>${installdir}/bin</windowsPath>
+                        </shortcut>
+                        <shortcut>
+                            <comment>Aprendedor de simbolos matematicos</comment>
+                            <exec>mono ${installdir}/bin/MathTextLearner.exe</exec>
+                            <icon>${installdir}/icons/mathtextlearner48.png</icon>
+                            <name>MathTextLearner</name>
+                            <path>${installdir}/bin/</path>
+                            <platforms>all</platforms>
+                            <runInTerminal>0</runInTerminal>
+                            <windowsExec>${installdir}/bin/MathTextLearner.exe</windowsExec>
+                            <windowsExecArgs></windowsExecArgs>
+                            <windowsIcon>${installdir}/icons/mathtextlearner48.png</windowsIcon>
+                            <windowsPath>${installdir}/bin/</windowsPath>
+                        </shortcut>
+                    </shortcutList>
                 </folder>
                 <folder>
                     <description>Menu</description>
@@ -75,10 +92,10 @@
                     <shortcutList>
                         <shortcut>
                             <comment>Aprendedor de simbolos matematios</comment>
-                            <exec>mono ${installdir}/MathTextLearner.exe</exec>
-                            <icon>${installdir}/mathtextlearner48.png</icon>
+                            <exec>mono ${installdir}/bin/MathTextLearner.exe</exec>
+                            <icon>${installdir}/icons/mathtextlearner48.png</icon>
                             <name>MathTextLearner</name>
-                            <path>${installdir}</path>
+                            <path>${installdir/bin</path>
                             <platforms>linux</platforms>
                             <runInTerminal>0</runInTerminal>
                             <windowsExec></windowsExec>
@@ -88,10 +105,10 @@
                         </shortcut>
                         <shortcut>
                             <comment>Reconocedor de texto matematico</comment>
-                            <exec>mono ${installdir}/MathTextRecognizer.exe</exec>
-                            <icon>${installdir}/mathtextrecognizer48.png</icon>
+                            <exec>mono ${installdir}/bin/MathTextRecognizer.exe</exec>
+                            <icon>${installdir}/icons/mathtextrecognizer48.png</icon>
                             <name>MathTextRecognizer</name>
-                            <path>${installdir}</path>
+                            <path>${installdir}/bin</path>
                             <platforms>linux</platforms>
                             <runInTerminal>0</runInTerminal>
                             <windowsExec></windowsExec>
@@ -115,6 +132,43 @@
                         </distributionFile>
                     </distributionFileList>
                 </folder>
+                <folder>
+                    <description>bin</description>
+                    <destination>${installdir}/bin</destination>
+                    <name>newfolder</name>
+                    <platforms>all</platforms>
+                    <distributionFileList>
+                        <distributionFile>
+                            <origin>../MathTextLearnerLauncher/bin/Debug/MathTextLearner.exe</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>../MathTextRecognizer/bin/Debug/MathTextCustomWidgets.dll</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>../MathTextRecognizer/bin/Debug/MathTextLearner.dll</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>../MathTextRecognizer/bin/Debug/MathTextLibrary.dll</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>../MathTextRecognizer/bin/Debug/MathTextRecognizer.exe</origin>
+                        </distributionFile>
+                    </distributionFileList>
+                </folder>
+                <folder>
+                    <description>icons</description>
+                    <destination>${installdir}/icons</destination>
+                    <name>icons</name>
+                    <platforms>all</platforms>
+                    <distributionFileList>
+                        <distributionFile>
+                            <origin>Artwork/mathtextlearner48.png</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>Artwork/mathtextrecognizer48.png</origin>
+                        </distributionFile>
+                    </distributionFileList>
+                </folder>
             </folderList>
             <startMenuShortcutList>
                 <startMenuShortcut>
@@ -130,19 +184,19 @@
                     <comment>Reconocedor de texto matematico</comment>
                     <name>MathTextRecongizer2</name>
                     <runInTerminal>0</runInTerminal>
-                    <windowsExec>${installdir}/MathTextRecognizer.exe</windowsExec>
+                    <windowsExec>${installdir}/bin/MathTextRecognizer.exe</windowsExec>
                     <windowsExecArgs></windowsExecArgs>
-                    <windowsIcon>${installdir}/mathtextrecognizer48.png</windowsIcon>
-                    <windowsPath>${installdir}</windowsPath>
+                    <windowsIcon>${installdir}/icons/mathtextrecognizer48.png</windowsIcon>
+                    <windowsPath>${installdir}/bin</windowsPath>
                 </startMenuShortcut>
                 <startMenuShortcut>
                     <comment>Aprendedor de simbolos matematicos</comment>
                     <name>MathTextLearner</name>
                     <runInTerminal>0</runInTerminal>
-                    <windowsExec>${installdir}/MathTextLearner.exe</windowsExec>
+                    <windowsExec>${installdir}/bin/MathTextLearner.exe</windowsExec>
                     <windowsExecArgs></windowsExecArgs>
-                    <windowsIcon>${installdir}/mathtextlearner48.png</windowsIcon>
-                    <windowsPath>${installdir}</windowsPath>
+                    <windowsIcon>${installdir}/icons/mathtextlearner48.png</windowsIcon>
+                    <windowsPath>${installdir}/bin/</windowsPath>
                 </startMenuShortcut>
             </startMenuShortcutList>
         </component>

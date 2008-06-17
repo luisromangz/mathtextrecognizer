@@ -2,25 +2,19 @@
     <shortName>mathtextrecognizer2</shortName>
     <fullName>MathTextRecognizer2</fullName>
     <version>1.0</version>
+    <installerFilename></installerFilename>
     <licenseFile>../../license.txt</licenseFile>
     <wrapLicenseFileText>0</wrapLicenseFileText>
     <logoImage>Artwork/mathtextrecognizer48.png</logoImage>
     <defaultLanguage>es</defaultLanguage>
     <allowLanguageSelection>1</allowLanguageSelection>
+    <preInstallationActionList>
+        <showWarning>
+            <text>Recuerde que debe instalar Mono (>= 1.9) junto a Gtk# 2.10 (en Linux) o bien .Net 2.0 y Gtk# 2.10 para .Net (en Windows) para que las aplicaciones puedan ejecutarse.</text>           
+        </showWarning>
+    </preInstallationActionList>
     <enableRollback>1</enableRollback>
     <saveRelativePaths>1</saveRelativePaths>
-    <preInstallationActionList>
-	<throwError>
-	  <text>Meh</text>
-	  <ruleList>
-	    <compareText>
-		<text></text>
-		<logic>does_not_contain</logic>
-		<value>linux</value>
-	    </compareText>   
-	  </ruleList>
-	</throwError>
-    </preInstallationActionList>
     <componentList>
         <component>
             <name>default</name>
