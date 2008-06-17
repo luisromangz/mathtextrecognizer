@@ -1,4 +1,4 @@
-// SyntacticalRulesManagerDialog.cs created with MonoDevelop
+﻿// SyntacticalRulesManagerDialog.cs created with MonoDevelop
 // User: luis at 11:24 16/05/2008
 
 using System;
@@ -63,11 +63,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			gladeXml.Autoconnect (this);
 			
 			syntacticalRulesManagerDialog.TransientFor = parent;
-			
-			// We remove the close button, because we aren't able to check the 
-			// dialog for validation errors.
-			syntacticalRulesManagerDialog.Deletable = false;
-			
+			syntacticalRulesManagerDialog.Modal = false;
 			
 			InitializeWidgets();
 			
@@ -129,7 +125,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// The <see cref="ResponseType"/> of the dialog.
 		/// </returns>
 		public ResponseType Show()
-		{
+		{			
 			ResponseType res;
 			do
 			{
@@ -407,6 +403,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				// If there were no errors, we can close the manager.
 				syntacticalRulesManagerDialog.Respond(ResponseType.Ok);
 				syntacticalRulesManagerDialog.Hide();
+				
+				Config.RecognizerConfig.Instance.SyntacticalRules = 
+					this.SyntacticalRules
 			}
 			
 		}
