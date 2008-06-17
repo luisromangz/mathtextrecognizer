@@ -1,4 +1,4 @@
-﻿// SyntacticalRulesManagerDialog.cs created with MonoDevelop
+// SyntacticalRulesManagerDialog.cs created with MonoDevelop
 // User: luis at 11:24 16/05/2008
 
 using System;
@@ -400,13 +400,16 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			if(!CheckRules())
 			{
 				// If there were no errors, we can close the manager.
-				syntacticalRulesManagerDialog.Respond(ResponseType.Ok);
-				syntacticalRulesManagerDialog.Hide();
+				syntacticalRulesManagerDialog.Respond(ResponseType.Ok);				
 				
 				Config.RecognizerConfig.Instance.SyntacticalRules = 
 					this.SyntacticalRules;
 				Config.RecognizerConfig.Instance.Save();
 			}			
+			else
+			{
+				syntacticalRulesManagerDialog.Respond(ResponseType.None);				
+			}
 		}
 		
 		

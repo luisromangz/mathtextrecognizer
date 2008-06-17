@@ -129,6 +129,8 @@ namespace MathTextRecognizer
 			this.mainWindow.Icon = 
 				ImageResources.LoadPixbuf("mathtextrecognizer48");
 			
+			OnConfigChanged(this, EventArgs.Empty);
+			
 			
 		}
 		
@@ -523,8 +525,18 @@ namespace MathTextRecognizer
 			if(Config.RecognizerConfig.Instance.DatabaseFilesInfo.Count ==0)
 			{
 				messageInfoHB.Visible = true;
-				messageInfoLabel.Text = "";
+				messageInfoLabel.Text = "No hay bases de datos  de caracteres para reconocer, añada una en el gestor de bases de datos.";
 			}			
+			else if(Config.RecognizerConfig.Instance.LexicalRules.Count == 0)
+			{
+				messageInfoHB.Visible = true;
+				messageInfoLabel.Text = "No hay reglas léxicas definidas, añada una en el gestor de reglas léxicas.";
+			}
+			else if(Config.RecognizerConfig.Instance.SyntacticalRules.Count == 0)
+			{
+				messageInfoHB.Visible = true;
+				messageInfoLabel.Text = "No hay reglas sintácticas definidas, añada una en el gestor de reglas sintácticas.";
+			}
 			else
 			{
 				messageInfoHB.Visible = false;

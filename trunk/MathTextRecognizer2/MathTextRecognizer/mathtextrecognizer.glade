@@ -3,6 +3,7 @@
 <!--*- mode: xml -*-->
 <glade-interface>
   <widget class="GtkWindow" id="mainWindow">
+    <property name="width_request">650</property>
     <property name="height_request">577</property>
     <property name="visible">True</property>
     <property name="title" translatable="yes">Reconocedor de caracteres matemáticos</property>
@@ -248,9 +249,10 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label11">
+                  <widget class="GtkLabel" id="messageInfoLabel">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">No hay bases de datos  de caracteres para reconocer, el gestor de bases de datos y seleccione al menos una.</property>
+                    <property name="label" translatable="yes">-
+</property>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
@@ -701,44 +703,6 @@
                     <property name="position">2</property>
                   </packing>
                 </child>
-                <child>
-                  <widget class="GtkButton" id="makeDefaultBtn">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="response_id">0</property>
-                    <signal name="clicked" handler="OnMakeDefaultBtnClicked"/>
-                    <child>
-                      <widget class="GtkHBox" id="hbox8">
-                        <property name="visible">True</property>
-                        <child>
-                          <widget class="GtkImage" id="image4">
-                            <property name="visible">True</property>
-                            <property name="stock">gtk-save</property>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkLabel" id="label8">
-                            <property name="visible">True</property>
-                            <property name="label" translatable="yes">Por _defecto</property>
-                            <property name="use_underline">True</property>
-                          </widget>
-                          <packing>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </widget>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="position">3</property>
-                    <property name="secondary">True</property>
-                  </packing>
-                </child>
               </widget>
               <packing>
                 <property name="expand">False</property>
@@ -757,49 +721,29 @@
             <property name="visible">True</property>
             <property name="layout_style">GTK_BUTTONBOX_END</property>
             <child>
+              <widget class="GtkButton" id="dbManCancelBtn">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-cancel</property>
+                <property name="use_stock">True</property>
+                <property name="response_id">0</property>
+              </widget>
+            </child>
+            <child>
               <widget class="GtkButton" id="closeBtn">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-ok</property>
+                <property name="use_stock">True</property>
                 <property name="response_id">0</property>
                 <signal name="clicked" handler="OnCloseBtnClicked"/>
-                <child>
-                  <widget class="GtkAlignment" id="alignment1">
-                    <property name="visible">True</property>
-                    <property name="xscale">0</property>
-                    <child>
-                      <widget class="GtkHBox" id="hbox1">
-                        <property name="visible">True</property>
-                        <property name="spacing">5</property>
-                        <child>
-                          <widget class="GtkImage" id="image3">
-                            <property name="visible">True</property>
-                            <property name="stock">gtk-close</property>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkLabel" id="label6">
-                            <property name="visible">True</property>
-                            <property name="label" translatable="yes">_Cerrar</property>
-                            <property name="use_underline">True</property>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </widget>
-                    </child>
-                  </widget>
-                </child>
               </widget>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
+                <property name="position">1</property>
               </packing>
             </child>
           </widget>
@@ -1743,51 +1687,6 @@
                     <property name="position">3</property>
                   </packing>
                 </child>
-                <child>
-                  <widget class="GtkButton" id="saveBtn">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="response_id">0</property>
-                    <signal name="clicked" handler="OnSaveBtnClicked"/>
-                    <child>
-                      <widget class="GtkAlignment" id="alignment44">
-                        <property name="visible">True</property>
-                        <property name="xscale">0</property>
-                        <child>
-                          <widget class="GtkHBox" id="hbox26">
-                            <property name="visible">True</property>
-                            <property name="spacing">2</property>
-                            <child>
-                              <widget class="GtkImage" id="image20">
-                                <property name="visible">True</property>
-                                <property name="stock">gtk-save</property>
-                              </widget>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <widget class="GtkLabel" id="label31">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Por _defecto</property>
-                                <property name="use_underline">True</property>
-                              </widget>
-                              <packing>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
-                          </widget>
-                        </child>
-                      </widget>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="position">4</property>
-                    <property name="secondary">True</property>
-                  </packing>
-                </child>
               </widget>
               <packing>
                 <property name="expand">False</property>
@@ -1830,45 +1729,27 @@
               </widget>
             </child>
             <child>
-              <widget class="GtkButton" id="closeBtn1">
+              <widget class="GtkButton" id="button1">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-cancel</property>
+                <property name="use_stock">True</property>
+                <property name="response_id">0</property>
+              </widget>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkButton" id="lexicalCloseBtn">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-ok</property>
+                <property name="use_stock">True</property>
                 <property name="response_id">0</property>
                 <signal name="clicked" handler="OnCloseBtnClicked"/>
-                <child>
-                  <widget class="GtkAlignment" id="alignment24">
-                    <property name="visible">True</property>
-                    <property name="xscale">0</property>
-                    <child>
-                      <widget class="GtkHBox" id="hbox27">
-                        <property name="visible">True</property>
-                        <property name="spacing">5</property>
-                        <child>
-                          <widget class="GtkImage" id="image21">
-                            <property name="visible">True</property>
-                            <property name="stock">gtk-close</property>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkLabel" id="label32">
-                            <property name="visible">True</property>
-                            <property name="label" translatable="yes">_Cerrar</property>
-                            <property name="use_underline">True</property>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </widget>
-                    </child>
-                  </widget>
-                </child>
               </widget>
               <packing>
                 <property name="expand">False</property>

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace MathTextLibrary.Analisys
 {
@@ -64,9 +65,11 @@ namespace MathTextLibrary.Analisys
 			}
 		}
 		
+		
 		/// <value>
 		/// Contains a list with the name of the rule called.
 		/// </value>
+		[XmlIgnore]
 		public override List<string> RulesUsed 
 		{
 			get 

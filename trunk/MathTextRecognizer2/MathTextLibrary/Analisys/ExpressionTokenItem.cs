@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 using MathTextLibrary.Controllers;
 
@@ -106,13 +107,14 @@ namespace MathTextLibrary.Analisys
 		{
 			get 
 			{ 
-				return "Item"; 
+				return "Ítem"; 
 			}
 		}
 		
 		/// <value>
 		/// Contains the rules used by the token's related items.
 		/// </value>
+		[XmlIgnore]
 		public override List<string> RulesUsed 
 		{
 			get 

@@ -60,6 +60,7 @@ namespace MathTextRecognizer.Config
 		/// <value>
 		/// Contains the stored databases objects.
 		/// </value>
+		[XmlIgnore]
 		public List<MathTextDatabase> Databases
 		{
 			get

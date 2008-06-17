@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
+
 
 namespace MathTextLibrary.Analisys
 {
@@ -58,7 +60,12 @@ namespace MathTextLibrary.Analisys
 			get { return "Grupo de elementos"; }
 		}
 
-		public override List<string> RulesUsed {
+		[XmlIgnore]
+		/// <value>
+		/// Contains the rules used by the groups members.
+		/// </value>
+		public override List<string> RulesUsed 
+		{
 			get 
 			{
 				List<string> ruleNames = new List<string>();
