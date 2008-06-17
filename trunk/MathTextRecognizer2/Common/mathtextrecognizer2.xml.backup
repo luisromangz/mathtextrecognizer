@@ -1,0 +1,171 @@
+<project>
+    <shortName>mathtextrecognizer2</shortName>
+    <fullName>MathTextRecognizer2</fullName>
+    <version>1.0</version>
+    <licenseFile>../../license.txt</licenseFile>
+    <wrapLicenseFileText>0</wrapLicenseFileText>
+    <logoImage>Artwork/mathtextrecognizer48.png</logoImage>
+    <defaultLanguage>es</defaultLanguage>
+    <allowLanguageSelection>1</allowLanguageSelection>
+    <enableRollback>1</enableRollback>
+    <saveRelativePaths>1</saveRelativePaths>
+    <componentList>
+        <component>
+            <name>default</name>
+            <description>Default Component</description>
+            <canBeEdited>1</canBeEdited>
+            <selected>1</selected>
+            <show>1</show>
+            <folderList>
+                <folder>
+                    <description>Program Files</description>
+                    <destination>${installdir}</destination>
+                    <name>programfiles</name>
+                    <platforms>all</platforms>
+                    <shortcutList>
+                        <shortcut>
+                            <comment>Uninstall</comment>
+                            <exec>${installdir}/${uninstallerName}</exec>
+                            <icon></icon>
+                            <name>Uninstall ${product_fullname}</name>
+                            <path>${installdir}</path>
+                            <platforms>all</platforms>
+                            <runInTerminal>0</runInTerminal>
+                            <windowsExec>${installdir}/${uninstallerName}.exe</windowsExec>
+                            <windowsExecArgs></windowsExecArgs>
+                            <windowsIcon></windowsIcon>
+                            <windowsPath>${installdir}</windowsPath>
+                        </shortcut>
+                    </shortcutList>
+                </folder>
+                <folder>
+                    <description>Program files</description>
+                    <destination>${installdir}/</destination>
+                    <name>installdir</name>
+                    <platforms>all</platforms>
+                    <distributionFileList>
+                        <distributionFile>
+                            <origin>Artwork/mathtextlearner48.png</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>Artwork/mathtextrecognizer48.png</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>../MathTextLearnerLauncher/bin/Debug/MathTextLearner.exe</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>../MathTextRecognizer/bin/Debug/MathTextCustomWidgets.dll</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>../MathTextRecognizer/bin/Debug/MathTextLearner.dll</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>../MathTextRecognizer/bin/Debug/MathTextLibrary.dll</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>../MathTextRecognizer/bin/Debug/MathTextRecognizer.exe</origin>
+                        </distributionFile>
+                    </distributionFileList>
+                </folder>
+                <folder>
+                    <description>Menu</description>
+                    <destination>${user_home_directory}/.local/share/applications/</destination>
+                    <name>menu</name>
+                    <platforms>linux</platforms>
+                    <shortcutList>
+                        <shortcut>
+                            <comment>Aprendedor de simbolos matematios</comment>
+                            <exec>mono ${installdir}/MathTextLearner.exe</exec>
+                            <icon>${installdir}/mathtextlearner48.png</icon>
+                            <name>MathTextLearner</name>
+                            <path>${installdir}</path>
+                            <platforms>linux</platforms>
+                            <runInTerminal>0</runInTerminal>
+                            <windowsExec></windowsExec>
+                            <windowsExecArgs></windowsExecArgs>
+                            <windowsIcon></windowsIcon>
+                            <windowsPath></windowsPath>
+                        </shortcut>
+                        <shortcut>
+                            <comment>Reconocedor de texto matematico</comment>
+                            <exec>mono ${installdir}/MathTextRecognizer.exe</exec>
+                            <icon>${installdir}/mathtextrecognizer48.png</icon>
+                            <name>MathTextRecognizer</name>
+                            <path>${installdir}</path>
+                            <platforms>linux</platforms>
+                            <runInTerminal>0</runInTerminal>
+                            <windowsExec></windowsExec>
+                            <windowsExecArgs></windowsExecArgs>
+                            <windowsIcon></windowsIcon>
+                            <windowsPath></windowsPath>
+                        </shortcut>
+                    </shortcutList>
+                </folder>
+                <folder>
+                    <description>databases</description>
+                    <destination>${installdir}/databases</destination>
+                    <name>databases</name>
+                    <platforms>all</platforms>
+                    <distributionFileList>
+                        <distributionFile>
+                            <origin>../../tests/malla receptores no cursivos.jilfml</origin>
+                        </distributionFile>
+                        <distributionFile>
+                            <origin>../../tests/malla receptores.jilfml</origin>
+                        </distributionFile>
+                    </distributionFileList>
+                </folder>
+            </folderList>
+            <startMenuShortcutList>
+                <startMenuShortcut>
+                    <comment>Uninstall ${product_fullname}</comment>
+                    <name>Uninstall ${product_fullname}</name>
+                    <runInTerminal>0</runInTerminal>
+                    <windowsExec>${installdir}/${uninstallerName}.exe</windowsExec>
+                    <windowsExecArgs></windowsExecArgs>
+                    <windowsIcon></windowsIcon>
+                    <windowsPath>${installdir}/</windowsPath>
+                </startMenuShortcut>
+                <startMenuShortcut>
+                    <comment>Reconocedor de texto matematico</comment>
+                    <name>MathTextRecongizer2</name>
+                    <runInTerminal>0</runInTerminal>
+                    <windowsExec>${installdir}/MathTextRecognizer.exe</windowsExec>
+                    <windowsExecArgs></windowsExecArgs>
+                    <windowsIcon>${installdir}/mathtextrecognizer48.png</windowsIcon>
+                    <windowsPath>${installdir}</windowsPath>
+                </startMenuShortcut>
+                <startMenuShortcut>
+                    <comment>Aprendedor de simbolos matematicos</comment>
+                    <name>MathTextLearner</name>
+                    <runInTerminal>0</runInTerminal>
+                    <windowsExec>${installdir}/MathTextLearner.exe</windowsExec>
+                    <windowsExecArgs></windowsExecArgs>
+                    <windowsIcon>${installdir}/mathtextlearner48.png</windowsIcon>
+                    <windowsPath>${installdir}</windowsPath>
+                </startMenuShortcut>
+            </startMenuShortcutList>
+        </component>
+    </componentList>
+    <parameterList>
+        <directoryParameter>
+            <name>installdir</name>
+            <description>Installer.Parameter.installdir.description</description>
+            <explanation>Installer.Parameter.installdir.explanation</explanation>
+            <value>${platform_install_prefix}/${product_shortname}-${product_version}</value>
+            <default>${platform_install_prefix}/${product_shortname}-${product_version}</default>
+            <allowEmptyValue>0</allowEmptyValue>
+            <ask>yes</ask>
+            <cliOptionName>prefix</cliOptionName>
+            <mustBeWritable>yes</mustBeWritable>
+            <mustExist>0</mustExist>
+            <width>30</width>
+        </directoryParameter>
+    </parameterList>
+    <platformOptionsList>
+        <platformOptions>
+            <platform>linux</platform>
+        </platformOptions>
+    </platformOptionsList>
+</project>
+

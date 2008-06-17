@@ -305,8 +305,7 @@ namespace MathTextRecognizer.Output
 			
 			fileSaveDialog.Destroy();
 			
-			this.outputDialog.Respond(ResponseType.None);
-			
+			this.outputDialog.Respond(ResponseType.None);			
 		}
 		
 #endregion Event handlers

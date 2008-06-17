@@ -4,17 +4,16 @@ using System;
 namespace MathTextLibrary.Projection
 {
 	/// <summary>
-	/// Esta enumeracion proporpociona informacion sobre el
-	/// sentido en que se realizo una proyeccion de una imagen
+	/// This enum contains the proyection modes avalaible.
 	/// </summary>
 	public enum ProjectionMode
 	{		
 		/// <summary>
-		/// La proyeccion se realiza sobre el eje X.
+		/// Projection on the X-axis.
 		/// </summary>
 		Horizontal,
 		/// <summary>
-		/// La proyeccion se realiza sobre el eje Y.
+		/// Projection on the Y-axis.
 		/// </summary>
 		Vertical
 	}

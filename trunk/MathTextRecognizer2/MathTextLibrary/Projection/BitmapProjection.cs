@@ -9,48 +9,31 @@ using MathTextLibrary.Bitmap;
 namespace MathTextLibrary.Projection
 {
 	/// <summary>
-	/// La clase abstracta <c>BitmapProjection</c> representa
-	/// la base comun necesaria para la realizacion de proyecciones
-	/// horizontales u verticales de imagenes, es decir,la suma por
-	/// columnas o por filas del numero de pixeles de una imagen, 
-	/// respectivamente.
-	/// </summary>
+	/// This class provides the common ground for bitmap projections.
+	/// </summary>
 	public abstract class BitmapProjection
 	{
-		/// <summary>
-		/// Array donde se almacena la suma por filas o columnas,
-		/// segun el caso.
-		/// </summary>
-		protected int [] projection;	
-		/// <summary>
-		/// El modo con el que se ha obtenido la proyeccion.
-		/// </summary>
-		protected ProjectionMode mode;
-		/// <summary>
-		/// Un <c>Pixbuf</c> en el que se almacena la representacion 
-		/// grafica de la proyeccion.
-		/// </summary>
-		protected Pixbuf projBitmap;
+		protected int [] projection;	
 		
-		/// <summary>
-		/// Una lista con los huecos que presenta la proyeccion.
-		/// </summary>
-		protected List<Hole> holes;
-		/// <summary>
-		/// Metodo fabrica para construir los distintos tipos de 
-		/// proyeccion disponibles.
-		/// </summary>
-		/// <param name="mode">
-		/// El sentido en el que se hara la proyeccion, vertical u horizontal.
-		/// </param>
-		/// <param name="mtb">
-		/// La imagen a la que se calculara la proyeccion.
-		/// </param>
-		/// <returns>
-		/// La proyeccion de la imagen <c>mtb</c> con el modo <c>mode</c>.
-		/// </returns>
-		public static BitmapProjection CreateProjection(
-			ProjectionMode mode, MathTextBitmap mtb)
+		protected ProjectionMode mode;
+		
+		protected List<Hole> holes;
+
+        
+        /// <summary>
+        /// Creates BitmapProjection instances.
+        /// </summary>
+        /// <param name="mode">
+        /// The <see cref="ProjectionMode"/> used for the projection.
+        /// </param>
+        /// <param name="mtb">
+        /// The <see cref="MathTextBitmap"/> to be projected.
+        /// </param>
+        /// <returns>
+        /// The <see cref="BitmapProjection"/> created.
+        /// </returns>
+		public static BitmapProjection CreateProjection(ProjectionMode mode, 
+                                                        MathTextBitmap mtb)
 		{
 			BitmapProjection res=null;
 			
@@ -70,7 +53,7 @@ namespace MathTextLibrary.Projection
 		}
 		
 		/// <value>
-		/// Contiene la lista de huecos presentes en la proyeccion.
+		/// Contains the projection holes.
 		/// </value>
 		public List<Hole> Holes
 		{
@@ -85,8 +68,7 @@ namespace MathTextLibrary.Projection
 		}
 		
 		/// <summary>
-		/// Este metodo se encarga de construir la lista de huecos de la
-		/// proyección.
+		/// Creates the projection's hole list.
 		/// </summary>
 		private void CreateHoles()
 		{
@@ -107,17 +89,17 @@ namespace MathTextLibrary.Projection
 		}
 		
 		/// <summary>
-		/// Este metodo sirve para invocar al abstracto <c>CreateProjection</c>.
+		/// <see cref="BitmapProjection"/>'s constructor
 		/// </summary>
 		/// <param name="image">
-		/// La imagen a la que le queremos calcular la proyeccion.
+		/// The <see cref="MathTextBitmap"/> to be projected.
 		/// </param>
 		protected BitmapProjection(MathTextBitmap image)
 		{		
 			CreateProjection(image);
 		}
 		/// <value>
-		/// Contiene el tamaño de la proyección.
+		/// Contains the projection size.
 		/// </value>
 		public int Size
 		{
@@ -126,18 +108,27 @@ namespace MathTextLibrary.Projection
 				return projection.Length;
 			}		
 		}
+
+        /// <value>
+        /// Contains the projection values.
+        /// </value>
+		public int[] Values 
+        {
+			get 
+            {
+				return projection;
+			}
+			set 
+            {
+				projection = value;
+			}
+		}
+			
 		/// <summary>
-		/// Crea una imagen que representa la proyeccion.
-		/// </summary>
-		/// <returns>
-		/// Un <c>Pixbuf</c> representando la proyeccion.
-		/// </returns>
-		// protected abstract Pixbuf CreateBitmap();		
-		/// <summary>
-		/// Crea la proyección de una imagen.
+		/// Creates the projection.
 		/// </summary>
 		/// <param name="image">
-		/// La imagen cuya proyeccion calcularemos.
+		/// The <see cref="MathTextBitmap"/> being projected.
 		/// </param>
 		protected abstract void CreateProjection(MathTextBitmap image);
 	}

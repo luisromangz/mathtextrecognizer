@@ -33,9 +33,10 @@ namespace MathTextRecognizer.Stages
 			
 			this.Add(initialStageWidgetBase);
 			
-			blackboardModeBtn.NoShowAll = true;
+			//blackboardModeBtn.NoShowAll = true;
 			
-			blackboardImage.Pixbuf = ImageResources.LoadPixbuf("edu_miscellaneous32");
+			blackboardImage.Pixbuf = 
+				ImageResources.LoadPixbuf("edu_miscellaneous32");
 		}
 		
 		static InitialStageWidget()

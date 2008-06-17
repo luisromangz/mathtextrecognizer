@@ -4024,7 +4024,7 @@
         <property name="spacing">2</property>
         <child>
           <widget class="GtkHBox" id="expressionTokenWidgetBase">
-            <property name="height_request">93</property>
+            <property name="height_request">95</property>
             <property name="visible">True</property>
             <property name="spacing">2</property>
             <child>
@@ -4254,7 +4254,7 @@
         <property name="spacing">2</property>
         <child>
           <widget class="GtkHBox" id="expressionRuleWidgetBase">
-            <property name="height_request">93</property>
+            <property name="height_request">95</property>
             <property name="visible">True</property>
             <property name="spacing">2</property>
             <child>
@@ -4269,7 +4269,7 @@
                     <child>
                       <widget class="GtkVBox" id="vbox13">
                         <property name="visible">True</property>
-                        <property name="spacing">5</property>
+                        <property name="spacing">2</property>
                         <child>
                           <widget class="GtkFrame" id="frame11">
                             <property name="visible">True</property>
@@ -4279,7 +4279,6 @@
                               <widget class="GtkAlignment" id="alignment63">
                                 <property name="visible">True</property>
                                 <property name="left_padding">5</property>
-                                <property name="right_padding">5</property>
                                 <child>
                                   <widget class="GtkEntry" id="expRuleNameEntry">
                                     <property name="visible">True</property>

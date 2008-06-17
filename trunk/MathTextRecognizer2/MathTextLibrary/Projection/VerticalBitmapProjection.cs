@@ -8,8 +8,8 @@ using MathTextLibrary.Bitmap;
 namespace MathTextLibrary.Projection
 {
 	/// <summary>
-	/// La clase <c>VerticalBitmapProjection</c> especializa <c>BitmapProjection</c>
-	/// para generar proyecciones sobre el eje Y.
+	/// This class specializes <see cref="BitmapProjection"/> and generates
+	/// projections on the Y axis.
 	/// </summary>
 	public class VerticalBitmapProjection:BitmapProjection
 	{
@@ -21,21 +21,21 @@ namespace MathTextLibrary.Projection
 		}
 	
 		/// <summary>
-		/// Crea la proyeccion vertical de la imagen.
+		/// Creates the projection.
 		/// </summary>
 		/// <param name="image">
-		/// La imagen a la que se calcula su proyeccion vertical.
+		/// The <see cref="MathTextBitmap"/> to be projected. 
 		/// </param>
 		protected override void CreateProjection(MathTextBitmap image)
 		{			
-			projection=new int [image.Height];
+			Values=new int [image.Height];
 			for(int i=0;i<image.Height;i++)
 			{
 				for(int j=0;j<image.Width;j++)
 				{
 					if(image[j,i]!=FloatBitmap.White)
 					{
-						projection[i]++;	
+						Values[i]++;	
 					}
 				}						
 			}

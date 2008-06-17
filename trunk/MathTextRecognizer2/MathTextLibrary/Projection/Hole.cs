@@ -5,8 +5,7 @@ namespace MathTextLibrary.Projection
 {
 	
 	/// <summary>
-	/// La clase <c>Hole</c> representa un hueco (espacio de pixeles
-	/// en blanco) en una proyeccion de una imagen.
+	/// This class represents a blank space in a projection.
 	/// </summary>
 	public class Hole
 	{
@@ -14,10 +13,14 @@ namespace MathTextLibrary.Projection
 		private int endPixel;
 		
 		/// <summary>
-		/// Constructor de <c>Hole</c>.
+		/// <see cref="Hole"/>'s constructor method.
 		/// </summary>
-		/// <param name="start">El pixel de inicio del hueco.</param>
-		/// <param name="end">El pixel de fin del hueco.</param>
+		/// <param name="start">
+		/// A <see cref="System.Int32"/> marking the hole's start.
+		/// </param>
+		/// <param name="end">
+		/// A <see cref="System.Int32"/> marking the hole's end.
+		/// </param>
 		public Hole(int start,int end)
 		{
 			if(end<start || start<0)
@@ -30,7 +33,7 @@ namespace MathTextLibrary.Projection
 		}	
 
 		/// <value>
-		/// Contiene el pixel final del hueco.
+		/// Contains the hole's end point.
 		/// </value>
 		public int EndPixel
 		{
@@ -41,7 +44,7 @@ namespace MathTextLibrary.Projection
 		}
 		
 		/// <value>
-		/// Contiene el pixel de inicio del hueco.
+		/// Contains the hole's start point.
 		/// </value>
 		public int StartPixel
 		{
@@ -53,7 +56,7 @@ namespace MathTextLibrary.Projection
 		}
 
 		/// <value>
-		/// Contiene el tamaño del hueco.
+		/// Contains the hole's size.
 		/// </value>
 		public int Size
 		{

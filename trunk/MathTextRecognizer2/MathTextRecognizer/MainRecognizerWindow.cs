@@ -139,7 +139,7 @@ namespace MathTextRecognizer
 			
 			this.mainWindow.Icon = 
 				ImageResources.LoadPixbuf("mathtextrecognizer48");
-		
+			
 			
 		}
 		
