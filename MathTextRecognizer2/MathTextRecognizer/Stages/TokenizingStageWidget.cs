@@ -822,10 +822,21 @@ namespace MathTextRecognizer.Stages
 				if(sequencingFinished)
 				{
 					// We retrieve the rules.
-					controller.SetLexicalRules(MainRecognizerWindow.LexicalRulesManager.LexicalRules);
+					List<LexicalRule> rules = 
+						Config.RecognizerConfig.Instance.LexicalRules;
+					controller.SetLexicalRules(rules);
 					
-					this.tokenizingRulesTV.Model = 
-						MainRecognizerWindow.LexicalRulesManager.RulesStore;
+					ListStore store = new ListStore(typeof(string),
+					                                typeof(string));
+					
+					foreach (LexicalRule rule  in rules) 
+					{
+						store.AppendValues(rule.Name, 
+						                   String.Join(" | ", 
+						                               rule.LexicalExpressions));
+					}
+					
+					this.tokenizingRulesTV.Model = rulesStore;
 					
 					tokenizingStepsNB.Page = 1;				
 					processBtnLbl.Text = "_Extraer items";
@@ -868,7 +879,7 @@ namespace MathTextRecognizer.Stages
 			selectedNode.FoundToken = null;
 			
 			// We set again the rules, because the user _should_ have modified them.
-			controller.SetLexicalRules(MainRecognizerWindow.LexicalRulesManager.LexicalRules);
+			controller.SetLexicalRules(Config.RecognizerConfig.Instance.LexicalRules);
 			
 			controller.SetSequenceForTokenizing(selectedNode);
 			

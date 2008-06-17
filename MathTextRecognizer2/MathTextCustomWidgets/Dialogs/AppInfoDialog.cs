@@ -29,14 +29,8 @@ namespace MathTextCustomWidgets.Dialogs
 		    
 		    appInfoDialog.Name = title;
 		    appInfoDialog.Comments = msg + 
-		    	"\n\nDesarrollado como proyecto de fin de carrera por:\n\n"+
-		    	"Luis Román Gutiérrez\n\n"+
-		    	"a partir de un trabajo para la asignatura PID de 5º Curso de\n"+
-		    	"Ingienería Informática (Universidad de Sevilla) realizando por:\n\n"+
-		    	"Fidel Ramos Sañudo\n" +
-				"Luis Román Gutiérrez\n" +
-				"Irene Román Rubio\n" +
-				"Francisco Javier Valdés López\n" ;
+		    	"Desarrollado como proyecto de fin de carrera por:\n\n"+
+		    	"Luis Román Gutiérrez";
 			
 			appInfoDialog.Logo = ImageResources.LoadPixbuf(logoResource);
 			

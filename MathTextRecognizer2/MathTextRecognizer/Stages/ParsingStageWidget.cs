@@ -538,7 +538,7 @@ namespace MathTextRecognizer.Stages
 			SyntacticalRulesLibrary.Instance.ClearRules();
 			
 			List<SyntacticalRule> rules = 
-				MainRecognizerWindow.SyntacticalRulesManager.SyntacticalRules;
+				Config.RecognizerConfig.Instance.SyntacticalRules;
 			
 			foreach (SyntacticalRule rule in  rules) 
 			{

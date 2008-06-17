@@ -224,7 +224,7 @@ namespace MathTextRecognizer.Stages
 				
 				
 				tokenizingFinished = false;
-				tokenizingController.SetLexicalRules(MainRecognizerWindow.LexicalRulesManager.LexicalRules);
+				tokenizingController.SetLexicalRules(Config.RecognizerConfig.Instance.LexicalRules);
 				tokenizingController.SetInitialData(startTokens, null);
 				
 				tokenizingController.Next(ControllerStepMode.UntilEnd);
@@ -290,7 +290,8 @@ namespace MathTextRecognizer.Stages
 			
 			ocrController.StartNode = node;
 			ocrController.SearchDatabase = false;
-			ocrController.Databases =  MainRecognizerWindow.DatabaseManager.Databases;
+			ocrController.Databases =  
+				Config.RecognizerConfig.Instance.Databases;
 			ocrController.Next(ControllerStepMode.UntilEnd);
 		}
 		
@@ -334,13 +335,13 @@ namespace MathTextRecognizer.Stages
 					
 					SyntacticalRulesLibrary.Instance.ClearRules();
 					foreach (SyntacticalRule rule in  
-					         MainRecognizerWindow.SyntacticalRulesManager.SyntacticalRules) 
+					         Config.RecognizerConfig.Instance.SyntacticalRules) 
 					{
 						SyntacticalRulesLibrary.Instance.AddRule(rule);
 					}
 					
 					SyntacticalRulesLibrary.Instance.StartRule = 
-						MainRecognizerWindow.SyntacticalRulesManager.SyntacticalRules[0];
+						Config.RecognizerConfig.Instance.SyntacticalRules[0];
 					parsingController.SetStartTokens(result);
 					parsingController.Next(ControllerStepMode.UntilEnd);
 				}

@@ -3375,47 +3375,7 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkButton" id="synMakeDefaultBtn">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="has_tooltip">True</property>
-                    <property name="tooltip_text">Guarda el conjunto de reglas para que aparezca por defecto en nuevas sesiones</property>
-                    <property name="response_id">0</property>
-                    <signal name="clicked" handler="OnSynMakeDefaultBtnClicked"/>
-                    <child>
-                      <widget class="GtkAlignment" id="alignment42">
-                        <property name="visible">True</property>
-                        <property name="xscale">0</property>
-                        <child>
-                          <widget class="GtkHBox" id="hbox19">
-                            <property name="visible">True</property>
-                            <property name="spacing">2</property>
-                            <child>
-                              <widget class="GtkImage" id="image16">
-                                <property name="visible">True</property>
-                                <property name="stock">gtk-save</property>
-                              </widget>
-                            </child>
-                            <child>
-                              <widget class="GtkLabel" id="label40">
-                                <property name="visible">True</property>
-                                <property name="label" translatable="yes">Por _defecto</property>
-                                <property name="use_underline">True</property>
-                              </widget>
-                              <packing>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
-                          </widget>
-                        </child>
-                      </widget>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="position">2</property>
-                    <property name="secondary">True</property>
-                  </packing>
+                  <placeholder/>
                 </child>
                 <child>
                   <widget class="GtkButton" id="synRuleEditBtn">
@@ -3475,17 +3435,30 @@
               </packing>
             </child>
             <child>
+              <widget class="GtkButton" id="cancelBt">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-cancel</property>
+                <property name="use_stock">True</property>
+                <property name="response_id">-6</property>
+              </widget>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
               <widget class="GtkButton" id="synRulesCloseBtn">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="label" translatable="yes">gtk-close</property>
+                <property name="label" translatable="yes">gtk-ok</property>
                 <property name="use_stock">True</property>
                 <property name="response_id">0</property>
                 <signal name="clicked" handler="OnSynRulesCloseBtnClicked"/>
               </widget>
               <packing>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
           </widget>
@@ -5314,6 +5287,7 @@ Interior</property>
     <child>
       <widget class="GtkAlignment" id="initialStageWidgetBase">
         <property name="visible">True</property>
+        <property name="yscale">0</property>
         <child>
           <widget class="GtkVButtonBox" id="vbuttonbox4">
             <property name="visible">True</property>

@@ -75,6 +75,9 @@ namespace MathTextRecognizer
 		[WidgetAttribute]
 		private Label stageNameLabel = null;
 		
+		[WidgetAttribute]
+		private Label messageInfoLabel = null;
+		
 #endregion Glade-Widgets
 
 #region Fields
@@ -87,13 +90,8 @@ namespace MathTextRecognizer
 			
 		private LogView logView;
 		
-		private const string title="Reconocedor de texto matemático";	
+		private const string title="Reconocedor de texto matemático";		
 		
-		private DatabaseManagerDialog databaseManagerDialog;
-		
-		private LexicalRulesManagerDialog lexicalRulesManagerDialog;
-		
-		private SyntacticalRulesManagerDialog syntacticalRulesManagerDialog;
 		
 		private string imageFile;
 		
@@ -122,20 +120,11 @@ namespace MathTextRecognizer
 			gxml.Autoconnect (this);			
 			this.InitializeWidgets();			
 			
-			databaseManagerDialog = new DatabaseManagerDialog(this.mainWindow);
-			databaseManagerDialog.DatabaseListChanged += 
-				new EventHandler(OnDatabaseManagerDialogDatabaseListChanged);
 			
-			// Asignamos la configuracion inicial al dialogo de gestion de
-			// bases de datos.			
-			databaseManagerDialog.DatabaseFilesInfo = 
-				Config.RecognizerConfig.Instance.DatabaseFilesInfo;
+			Config.RecognizerConfig.Instance.Changed+= new EventHandler(OnConfigChanged);	
 			
-			lexicalRulesManagerDialog = 
-				new LexicalRulesManagerDialog(this.mainWindow);		
 			
-			syntacticalRulesManagerDialog = 
-				new SyntacticalRulesManagerDialog(this.Window);
+			
 			
 			this.mainWindow.Icon = 
 				ImageResources.LoadPixbuf("mathtextrecognizer48");
@@ -147,42 +136,7 @@ namespace MathTextRecognizer
 		
 #region Properties
 		
-		/// <value>
-		/// Contains the database manager
-		/// </value>
-		public DatabaseManagerDialog DatabaseManager
-		{
-			get
-			{
-				return databaseManagerDialog;
-			}
-		}
-		
-		
-		
-		/// <value>
-		/// Contains the lexical rules manager.
-		/// </value>
-		public LexicalRulesManagerDialog LexicalRulesManager
-		{			
-			get
-			{
-				
-				return lexicalRulesManagerDialog;
-			}
-		}
-		
-		/// <value>
-		/// Contains the dialog used to manage the syntactical rules.
-		/// </value>
-		public SyntacticalRulesManagerDialog SyntacticalRulesManager
-		{
-			get 
-			{
-				return syntacticalRulesManagerDialog;
-			}
-		}
-		
+
 		/// <value>
 		/// Contiene el estado de expansión del visor del log.
 		/// </value>
@@ -443,7 +397,10 @@ namespace MathTextRecognizer
 		/// </summary>
 		private void OnOpenDatabaseManagerClicked(object sender, EventArgs arg)
 		{	
-			databaseManagerDialog.Show();			
+			DatabaseManagerDialog dialog = 
+				new DatabaseManagerDialog(this.Window);
+			dialog.Show();			
+			dialog.Destroy();
 		}
 		
 			
@@ -453,9 +410,6 @@ namespace MathTextRecognizer
 		/// </summary>
 		private void OnExitClicked(object sender, EventArgs arg)
 		{
-			databaseManagerDialog.Destroy();
-			lexicalRulesManagerDialog.Destroy();
-			syntacticalRulesManagerDialog.Destroy();
 			OnExit();
 		}
 		
@@ -556,8 +510,7 @@ namespace MathTextRecognizer
 		}	
 		
 		/// <summary>
-		/// Maneja el evento producido al cambiar la lista de bases de datos usadas
-		/// para reconocer. 
+		/// Handles the event produced when the config changes.
 		/// </summary>
 		/// <param name="sender">
 		/// A <see cref="System.Object"/>
@@ -565,11 +518,19 @@ namespace MathTextRecognizer
 		/// <param name="args">
 		/// A <see cref="EventArgs"/>
 		/// </param>
-		private void OnDatabaseManagerDialogDatabaseListChanged(object sender,
-		                                                        EventArgs args)
+		private void OnConfigChanged(object sender, EventArgs args)
 		{
-			messageInfoHB.Visible = 
-				databaseManagerDialog.DatabaseFilesInfo.Count == 0;
+			if(Config.RecognizerConfig.Instance.DatabaseFilesInfo.Count ==0)
+			{
+				messageInfoHB.Visible = true;
+				messageInfoLabel.Text = "";
+			}			
+			else
+			{
+				messageInfoHB.Visible = false;
+			}
+			
+				
 		}
 		
 		
@@ -609,7 +570,12 @@ namespace MathTextRecognizer
 		/// </param>
 		private void OnLexicalManagerItemClicked(object sender, EventArgs args)
 		{
-			lexicalRulesManagerDialog.Show();
+			LexicalRulesManagerDialog dialog = 
+				new LexicalRulesManagerDialog(this.Window);
+			
+			dialog.Show();
+			
+			dialog.Destroy();
 		}
 		
 		/// <summary>
@@ -624,7 +590,11 @@ namespace MathTextRecognizer
 		private void OnSyntacticalManagerItemActivate(object sender, 
 		                                              EventArgs args)
 		{
-			syntacticalRulesManagerDialog.Show();
+			SyntacticalRulesManagerDialog dialog = 
+				new SyntacticalRulesManagerDialog(this.Window);
+			dialog.Show();
+			
+			dialog.Destroy();
 		}
 		
 		/// <summary>

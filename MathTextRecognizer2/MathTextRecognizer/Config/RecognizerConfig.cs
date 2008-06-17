@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 
 using MathTextLibrary.Utils;
 using MathTextLibrary.Analisys;
+using MathTextLibrary.Databases;
 using MathTextRecognizer.DatabaseManager;
 
 namespace MathTextRecognizer.Config
@@ -28,6 +29,10 @@ namespace MathTextRecognizer.Config
 		
 		private static RecognizerConfig config;
 		
+		/// <summary>
+		/// This event is launched when the settings are changed.
+		/// </summary>
+		public event EventHandler Changed;
 	
 		
 		public RecognizerConfig()
@@ -48,6 +53,24 @@ namespace MathTextRecognizer.Config
 			set
 			{
 				databaseFilesInfo = value;
+				ChangedInvoker();
+			}
+		}
+		
+		/// <value>
+		/// Contains the stored databases objects.
+		/// </value>
+		public List<MathTextDatabase> Databases
+		{
+			get
+			{
+				List<MathTextDatabase> databases = new List<MathTextDatabase>();
+				foreach(DatabaseFileInfo info in databaseFilesInfo)
+				{
+					databases.Add(info.Database);
+				}
+				
+				return databases;
 			}
 		}
 		
@@ -59,7 +82,11 @@ namespace MathTextRecognizer.Config
 			get
 			{
 				if(config==null)
+				{
 					Load();
+					config.ChangedInvoker();
+				}
+					
 				return config;
 			}
 		}
@@ -76,6 +103,7 @@ namespace MathTextRecognizer.Config
 			set
 			{
 				lexicalRules = value;
+				ChangedInvoker();
 			}
 		}
 
@@ -91,6 +119,7 @@ namespace MathTextRecognizer.Config
 			set 
 			{
 				syntacticalRules = value;
+				ChangedInvoker();
 			}
 		}
 
@@ -107,6 +136,7 @@ namespace MathTextRecognizer.Config
 			set 
 			{
 				showOutputConversion = value;
+				ChangedInvoker();
 			}
 		}
 
@@ -122,6 +152,7 @@ namespace MathTextRecognizer.Config
 			set 
 			{
 				outputConversionCommand = value;
+				ChangedInvoker();
 			}
 		}
 		
@@ -158,6 +189,8 @@ namespace MathTextRecognizer.Config
 			config = (RecognizerConfig)serializer.Deserialize(configStream);					
 			configStream.Close();
 			
+			
+			
 		}
 		
 		/// <summary>
@@ -191,6 +224,17 @@ namespace MathTextRecognizer.Config
 		
 			
 			return attrOverrides;
+		}
+		
+		/// <summary>
+		/// Invokes the Changed event;
+		/// </summary>
+		private void ChangedInvoker()
+		{
+			if(Changed!=null)
+			{
+				Changed(this, EventArgs.Empty);
+			}
 		}
 	}
 }

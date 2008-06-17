@@ -544,7 +544,7 @@ namespace MathTextRecognizer.Stages
 				// We let the user select the database to be modified.
 				LearnSymbolDatabaseChooserDialog databaseDialog =
 					new LearnSymbolDatabaseChooserDialog(MainRecognizerWindow.Window,
-					                                     MainRecognizerWindow.DatabaseManager.DatabaseFilesInfo);
+					                                     Config.RecognizerConfig.Instance.DatabaseFilesInfo);
 				
 				res = databaseDialog.Show();
 				databaseDialog.Destroy();

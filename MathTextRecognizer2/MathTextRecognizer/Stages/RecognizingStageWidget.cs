@@ -54,16 +54,7 @@ namespace MathTextRecognizer.Stages
 			}
 		}
 		
-		/// <value>
-		/// Contains the selected databases.
-		/// </value>
-		protected List<MathTextDatabase> Databases
-		{
-			get
-			{
-				return mainWindow.DatabaseManager.Databases;
-			}
-		}
+	
 		
 		/// <value>
 		/// Contains the <c>MainRecognizerWindow</c>'s log area expansion state.
