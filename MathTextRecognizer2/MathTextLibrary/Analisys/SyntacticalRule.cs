@@ -75,6 +75,10 @@ namespace MathTextLibrary.Analisys
 			get { return "Regla"; }
 		}
 		
+		/// <value>
+		/// Contains the rules used in the rule's expressions.
+		/// </value>
+		[XmlIgnore]
 		public override List<string> RulesUsed
 		{
 			get 

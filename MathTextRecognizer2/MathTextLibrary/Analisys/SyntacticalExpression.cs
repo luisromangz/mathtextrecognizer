@@ -81,6 +81,7 @@ namespace MathTextLibrary.Analisys
 		/// <value>
 		/// Contains the rules called from the expression.
 		/// </value>
+		[XmlIgnore]
 		public override List<string> RulesUsed 
 		{
 			get

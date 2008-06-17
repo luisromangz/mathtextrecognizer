@@ -1,4 +1,4 @@
-﻿// TokenizingStageWidget.cs created with MonoDevelop
+// TokenizingStageWidget.cs created with MonoDevelop
 // User: luis at 16:19 26/04/2008
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
@@ -304,7 +304,7 @@ namespace MathTextRecognizer.Stages
 			                         new CellRendererText(), 
 			                         "text",1);
 			
-			sequencesNV.AppendColumn("Item",
+			sequencesNV.AppendColumn("Ítem",
 			                         new CellRendererText(),
 			                         "text",2);
 			

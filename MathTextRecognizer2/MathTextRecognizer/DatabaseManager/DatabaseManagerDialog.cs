@@ -62,7 +62,9 @@ namespace MathTextRecognizer.DatabaseManager
 			databasesLS.RowInserted +=
 				new RowInsertedHandler(OnDatabasesLSRowsChanged);
 			
-			databaseManagerDialog.Deletable = false;
+			
+			this.DatabaseFilesInfo =
+				Config.RecognizerConfig.Instance.DatabaseFilesInfo;
 		}
 		
 #region Propiedades
@@ -87,26 +89,7 @@ namespace MathTextRecognizer.DatabaseManager
 			}
 		}
 		
-		/// <value>
-		/// Contiene las bases de datos referenciadas en el manager.
-		/// </value>
-		/// <returns>
-		/// Una lista con las bases de datos.
-		/// </returns>
-		public List<MathTextDatabase> Databases
-		{
-			get
-			{
-				List<MathTextDatabase> databases = new List<MathTextDatabase>();
-				
-				foreach (DatabaseFileInfo info in databaseFilesInfo)
-				{
-					databases.Add(info.Database);
-				}
-				
-				return databases;
-			}
-		}
+		
 		
 	
 #endregion Propiedades
@@ -303,7 +286,10 @@ namespace MathTextRecognizer.DatabaseManager
 		/// </param>
 		private void OnCloseBtnClicked(object sender, EventArgs args)
 		{
+			RecognizerConfig.Instance.DatabaseFilesInfo=DatabaseFilesInfo;
+			RecognizerConfig.Instance.Save();
 			
+			databaseManagerDialog.Respond(ResponseType.Ok);
 		}
 		
 		/// Maneja el evento producido al pulsar el boton de ver las propiedades 
@@ -353,28 +339,6 @@ namespace MathTextRecognizer.DatabaseManager
 			
 		}
 		
-		/// Maneja el evento producido al pulsar el boton guardar la selección
-		/// como selección por defecto.
-		/// </summary>
-		/// <param name="sender">
-		/// A <see cref="System.Object"/>
-		/// </param>
-		/// <param name="args">
-		/// A <see cref="EventArgs"/>
-		/// </param>
-		private void OnMakeDefaultBtnClicked(object sender, EventArgs args)
-		{
-			ResponseType res = 
-				ConfirmDialog.Show(this.databaseManagerDialog,
-				                   "Se va a cambiar la configuración por defecto, ¿desea continuar?");
-			
-			if(res == ResponseType.Yes)
-			{
-				// Guardamos la seleccion actual como la por defecto.
-				RecognizerConfig.Instance.DatabaseFilesInfo=DatabaseFilesInfo;
-				RecognizerConfig.Instance.Save();
-			}
-		}
 		
 		/// <summary>
 		/// Maneja el cambio de las filas de la lista de bases de datos.
@@ -387,7 +351,8 @@ namespace MathTextRecognizer.DatabaseManager
 		/// </param>
 		private void OnDatabasesLSRowsChanged(object sender, EventArgs args)
 		{
-			DatabaseListChanged(this, EventArgs.Empty);
+			if(DatabaseListChanged!=null)
+				DatabaseListChanged(this, EventArgs.Empty);
 		}
 		
 		/// <summary>

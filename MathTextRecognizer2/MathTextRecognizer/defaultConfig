@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RecognizerConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <LexicalRules>
+ <LexicalRules>
     <LexicalRule>
       <LexicalExpressions>
-        <string>[0-9]+</string>
         <string>[0-9]+\.[0-9]+</string>
+        <string>[0-9]+</string>
       </LexicalExpressions>
       <Name>NUMBER</Name>
     </LexicalRule>
@@ -18,6 +18,10 @@
     <LexicalRule>
       <LexicalExpressions>
         <string>[A-Za-z]+</string>
+        <string>\\alpha</string>
+        <string>\\beta</string>
+        <string>\\delta</string>
+        <string>\\infty</string>
       </LexicalExpressions>
       <Name>IDENT</Name>
     </LexicalRule>
@@ -40,5 +44,553 @@
       </LexicalExpressions>
       <Name>RPAR</Name>
     </LexicalRule>
+    <LexicalRule>
+      <LexicalExpressions>
+        <string>/</string>
+      </LexicalExpressions>
+      <Name>DIV</Name>
+    </LexicalRule>
+    <LexicalRule>
+      <LexicalExpressions>
+        <string>\\sum</string>
+      </LexicalExpressions>
+      <Name>SUM</Name>
+    </LexicalRule>
+    <LexicalRule>
+      <LexicalExpressions>
+        <string>,</string>
+      </LexicalExpressions>
+      <Name>COMMA</Name>
+    </LexicalRule>
+    <LexicalRule>
+      <LexicalExpressions>
+        <string>\.</string>
+      </LexicalExpressions>
+      <Name>DOT</Name>
+    </LexicalRule>
+    <LexicalRule>
+      <LexicalExpressions>
+        <string>\\frac</string>
+      </LexicalExpressions>
+      <Name>FRAC</Name>
+    </LexicalRule>
+    <LexicalRule>
+      <LexicalExpressions>
+        <string>\\sqrt</string>
+      </LexicalExpressions>
+      <Name>SQRT</Name>
+    </LexicalRule>
+    <LexicalRule>
+      <LexicalExpressions>
+        <string>&lt;</string>
+        <string>&gt;</string>
+        <string>=</string>
+      </LexicalExpressions>
+      <Name>LOG</Name>
+    </LexicalRule>
   </LexicalRules>
-</RecognizerConfig>
+  <SyntacticalRules>
+    <SyntacticalRule>
+      <Name>expresion</Name>
+      <Expressions>
+        <SyntacticalExpression>
+          <FormatString>{0}{1}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionRuleCallItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}</FormatString>
+              <RuleName>suma</RuleName>
+            </ExpressionItem>
+            <ExpressionItem xsi:type="ExpressionGroupItem">
+              <Position>None</Position>
+              <Modifier>RepeatingNonCompulsory</Modifier>
+              <FormatString>{0}{1}</FormatString>
+              <ChildrenItems>
+                <ExpressionItem xsi:type="ExpressionRuleCallItem">
+                  <Position>None</Position>
+                  <Modifier>None</Modifier>
+                  <FormatString>{0}</FormatString>
+                  <RuleName>log</RuleName>
+                </ExpressionItem>
+                <ExpressionItem xsi:type="ExpressionRuleCallItem">
+                  <Position>None</Position>
+                  <Modifier>None</Modifier>
+                  <FormatString>{0}</FormatString>
+                  <RuleName>suma</RuleName>
+                </ExpressionItem>
+              </ChildrenItems>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+      </Expressions>
+    </SyntacticalRule>
+    <SyntacticalRule>
+      <Name>log</Name>
+      <Expressions>
+        <SyntacticalExpression>
+          <FormatString>{0}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionTokenItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>\geq</FormatString>
+              <TokenType>FRAC</TokenType>
+              <ForceTokenSearch>false</ForceTokenSearch>
+              <RelatedItems>
+                <ExpressionItem xsi:type="ExpressionTokenItem">
+                  <Position>Above</Position>
+                  <Modifier>None</Modifier>
+                  <FormatString>{0}</FormatString>
+                  <TokenType>"&gt;"</TokenType>
+                  <ForceTokenSearch>false</ForceTokenSearch>
+                  <RelatedItems />
+                </ExpressionItem>
+              </RelatedItems>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+        <SyntacticalExpression>
+          <FormatString>{0}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionTokenItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>\leq</FormatString>
+              <TokenType>FRAC</TokenType>
+              <ForceTokenSearch>false</ForceTokenSearch>
+              <RelatedItems>
+                <ExpressionItem xsi:type="ExpressionTokenItem">
+                  <Position>Below</Position>
+                  <Modifier>None</Modifier>
+                  <FormatString>{0}</FormatString>
+                  <TokenType>"&lt;"</TokenType>
+                  <ForceTokenSearch>false</ForceTokenSearch>
+                  <RelatedItems />
+                </ExpressionItem>
+              </RelatedItems>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+        <SyntacticalExpression>
+          <FormatString>{0}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionTokenItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}</FormatString>
+              <TokenType>LOG</TokenType>
+              <ForceTokenSearch>false</ForceTokenSearch>
+              <RelatedItems />
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+      </Expressions>
+    </SyntacticalRule>
+    <SyntacticalRule>
+      <Name>suma</Name>
+      <Expressions>
+        <SyntacticalExpression>
+          <FormatString>{0}{1}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionRuleCallItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}</FormatString>
+              <RuleName>multiplicacion</RuleName>
+            </ExpressionItem>
+            <ExpressionItem xsi:type="ExpressionGroupItem">
+              <Position>None</Position>
+              <Modifier>RepeatingNonCompulsory</Modifier>
+              <FormatString>{0}{1}</FormatString>
+              <ChildrenItems>
+                <ExpressionItem xsi:type="ExpressionTokenItem">
+                  <Position>None</Position>
+                  <Modifier>None</Modifier>
+                  <FormatString>{0}</FormatString>
+                  <TokenType>ADD</TokenType>
+                  <ForceTokenSearch>false</ForceTokenSearch>
+                  <RelatedItems />
+                </ExpressionItem>
+                <ExpressionItem xsi:type="ExpressionRuleCallItem">
+                  <Position>None</Position>
+                  <Modifier>None</Modifier>
+                  <FormatString>{0}</FormatString>
+                  <RuleName>multiplicacion</RuleName>
+                </ExpressionItem>
+              </ChildrenItems>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+      </Expressions>
+    </SyntacticalRule>
+    <SyntacticalRule>
+      <Name>multiplicacion</Name>
+      <Expressions>
+        <SyntacticalExpression>
+          <FormatString>{0}{1}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionRuleCallItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}</FormatString>
+              <RuleName>multiplicando</RuleName>
+            </ExpressionItem>
+            <ExpressionItem xsi:type="ExpressionGroupItem">
+              <Position>None</Position>
+              <Modifier>RepeatingNonCompulsory</Modifier>
+              <FormatString>{0} {1}</FormatString>
+              <ChildrenItems>
+                <ExpressionItem xsi:type="ExpressionTokenItem">
+                  <Position>None</Position>
+                  <Modifier>NonCompulsory</Modifier>
+                  <FormatString>\cdot</FormatString>
+                  <TokenType>DOT</TokenType>
+                  <ForceTokenSearch>false</ForceTokenSearch>
+                  <RelatedItems />
+                </ExpressionItem>
+                <ExpressionItem xsi:type="ExpressionRuleCallItem">
+                  <Position>None</Position>
+                  <Modifier>None</Modifier>
+                  <FormatString>{0}</FormatString>
+                  <RuleName>multiplicando</RuleName>
+                </ExpressionItem>
+              </ChildrenItems>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+      </Expressions>
+    </SyntacticalRule>
+    <SyntacticalRule>
+      <Name>multiplicando</Name>
+      <Expressions>
+        <SyntacticalExpression>
+          <FormatString>{0}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionRuleCallItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}</FormatString>
+              <RuleName>raiz</RuleName>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+        <SyntacticalExpression>
+          <FormatString>{0}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionTokenItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}{1}{2}</FormatString>
+              <TokenType>SUM</TokenType>
+              <ForceTokenSearch>true</ForceTokenSearch>
+              <RelatedItems>
+                <ExpressionItem xsi:type="ExpressionRuleCallItem">
+                  <Position>Above</Position>
+                  <Modifier>NonCompulsory</Modifier>
+                  <FormatString>^{{{0}}}</FormatString>
+                  <RuleName>expresion</RuleName>
+                </ExpressionItem>
+                <ExpressionItem xsi:type="ExpressionRuleCallItem">
+                  <Position>Below</Position>
+                  <Modifier>NonCompulsory</Modifier>
+                  <FormatString>_{{{0}}}</FormatString>
+                  <RuleName>expresion</RuleName>
+                </ExpressionItem>
+              </RelatedItems>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+        <SyntacticalExpression>
+          <FormatString>{0}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionTokenItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}{{{1}}}{{{2}}}</FormatString>
+              <TokenType>FRAC</TokenType>
+              <ForceTokenSearch>false</ForceTokenSearch>
+              <RelatedItems>
+                <ExpressionItem xsi:type="ExpressionRuleCallItem">
+                  <Position>Above</Position>
+                  <Modifier>None</Modifier>
+                  <FormatString>{0}</FormatString>
+                  <RuleName>expresion</RuleName>
+                </ExpressionItem>
+                <ExpressionItem xsi:type="ExpressionRuleCallItem">
+                  <Position>Below</Position>
+                  <Modifier>None</Modifier>
+                  <FormatString>{0}</FormatString>
+                  <RuleName>expresion</RuleName>
+                </ExpressionItem>
+              </RelatedItems>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+        <SyntacticalExpression>
+          <FormatString>-{1}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionTokenItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}</FormatString>
+              <TokenType>FRAC</TokenType>
+              <ForceTokenSearch>false</ForceTokenSearch>
+              <RelatedItems />
+            </ExpressionItem>
+            <ExpressionItem xsi:type="ExpressionRuleCallItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}</FormatString>
+              <RuleName>multiplicando</RuleName>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+        <SyntacticalExpression>
+          <FormatString>{0}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionRuleCallItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}</FormatString>
+              <RuleName>ident</RuleName>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+        <SyntacticalExpression>
+          <FormatString>\{0}\left({2}{3}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionTokenItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}</FormatString>
+              <TokenType>FUNCTION</TokenType>
+              <ForceTokenSearch>false</ForceTokenSearch>
+              <RelatedItems />
+            </ExpressionItem>
+            <ExpressionItem xsi:type="ExpressionTokenItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}</FormatString>
+              <TokenType>LPAR</TokenType>
+              <ForceTokenSearch>false</ForceTokenSearch>
+              <RelatedItems />
+            </ExpressionItem>
+            <ExpressionItem xsi:type="ExpressionRuleCallItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}</FormatString>
+              <RuleName>expresion</RuleName>
+            </ExpressionItem>
+            <ExpressionItem xsi:type="ExpressionRuleCallItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}</FormatString>
+              <RuleName>rpar</RuleName>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+        <SyntacticalExpression>
+          <FormatString>{0}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionTokenItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}{1}</FormatString>
+              <TokenType>NUMBER</TokenType>
+              <ForceTokenSearch>false</ForceTokenSearch>
+              <RelatedItems>
+                <ExpressionItem xsi:type="ExpressionRuleCallItem">
+                  <Position>SuperIndex</Position>
+                  <Modifier>NonCompulsory</Modifier>
+                  <FormatString>^{{{0}}}</FormatString>
+                  <RuleName>expresion</RuleName>
+                </ExpressionItem>
+              </RelatedItems>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+        <SyntacticalExpression>
+          <FormatString>\left({1}{2}{3}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionTokenItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}</FormatString>
+              <TokenType>LPAR</TokenType>
+              <ForceTokenSearch>false</ForceTokenSearch>
+              <RelatedItems />
+            </ExpressionItem>
+            <ExpressionItem xsi:type="ExpressionRuleCallItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}</FormatString>
+              <RuleName>expresion</RuleName>
+            </ExpressionItem>
+            <ExpressionItem xsi:type="ExpressionGroupItem">
+              <Position>None</Position>
+              <Modifier>RepeatingNonCompulsory</Modifier>
+              <FormatString>{0}{1}</FormatString>
+              <ChildrenItems>
+                <ExpressionItem xsi:type="ExpressionTokenItem">
+                  <Position>None</Position>
+                  <Modifier>None</Modifier>
+                  <FormatString>{0}</FormatString>
+                  <TokenType>COMMA</TokenType>
+                  <ForceTokenSearch>false</ForceTokenSearch>
+                  <RelatedItems />
+                </ExpressionItem>
+                <ExpressionItem xsi:type="ExpressionRuleCallItem">
+                  <Position>None</Position>
+                  <Modifier>None</Modifier>
+                  <FormatString>{0}</FormatString>
+                  <RuleName>expresion</RuleName>
+                </ExpressionItem>
+              </ChildrenItems>
+            </ExpressionItem>
+            <ExpressionItem xsi:type="ExpressionRuleCallItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}</FormatString>
+              <RuleName>rpar</RuleName>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+      </Expressions>
+    </SyntacticalRule>
+    <SyntacticalRule>
+      <Name>rpar</Name>
+      <Expressions>
+        <SyntacticalExpression>
+          <FormatString>{0}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionTokenItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>\right){1}</FormatString>
+              <TokenType>RPAR</TokenType>
+              <ForceTokenSearch>false</ForceTokenSearch>
+              <RelatedItems>
+                <ExpressionItem xsi:type="ExpressionRuleCallItem">
+                  <Position>SuperIndex</Position>
+                  <Modifier>NonCompulsory</Modifier>
+                  <FormatString>^{{{0}}}</FormatString>
+                  <RuleName>expresion</RuleName>
+                </ExpressionItem>
+              </RelatedItems>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+      </Expressions>
+    </SyntacticalRule>
+    <SyntacticalRule>
+      <Name>ident</Name>
+      <Expressions>
+        <SyntacticalExpression>
+          <FormatString>{0}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionTokenItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}{1}{2}</FormatString>
+              <TokenType>IDENT</TokenType>
+              <ForceTokenSearch>false</ForceTokenSearch>
+              <RelatedItems>
+                <ExpressionItem xsi:type="ExpressionTokenItem">
+                  <Position>SuperIndex</Position>
+                  <Modifier>Repeating</Modifier>
+                  <FormatString>'</FormatString>
+                  <TokenType>DIV</TokenType>
+                  <ForceTokenSearch>false</ForceTokenSearch>
+                  <RelatedItems />
+                </ExpressionItem>
+                <ExpressionItem xsi:type="ExpressionRuleCallItem">
+                  <Position>SubIndex</Position>
+                  <Modifier>NonCompulsory</Modifier>
+                  <FormatString>_{{{0}}}</FormatString>
+                  <RuleName>expresion</RuleName>
+                </ExpressionItem>
+              </RelatedItems>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+        <SyntacticalExpression>
+          <FormatString>{0}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionTokenItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}{1}{2}</FormatString>
+              <TokenType>IDENT</TokenType>
+              <ForceTokenSearch>false</ForceTokenSearch>
+              <RelatedItems>
+                <ExpressionItem xsi:type="ExpressionRuleCallItem">
+                  <Position>SuperIndex</Position>
+                  <Modifier>NonCompulsory</Modifier>
+                  <FormatString>^{{{0}}}</FormatString>
+                  <RuleName>expresion</RuleName>
+                </ExpressionItem>
+                <ExpressionItem xsi:type="ExpressionRuleCallItem">
+                  <Position>SubIndex</Position>
+                  <Modifier>NonCompulsory</Modifier>
+                  <FormatString>_{{{0}}}</FormatString>
+                  <RuleName>expresion</RuleName>
+                </ExpressionItem>
+              </RelatedItems>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+      </Expressions>
+    </SyntacticalRule>
+    <SyntacticalRule>
+      <Name>raiz</Name>
+      <Expressions>
+        <SyntacticalExpression>
+          <FormatString>{0}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionTokenItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}[{1}]{{{2}}}</FormatString>
+              <TokenType>SQRT</TokenType>
+              <ForceTokenSearch>true</ForceTokenSearch>
+              <RelatedItems>
+                <ExpressionItem xsi:type="ExpressionRuleCallItem">
+                  <Position>RootIndex</Position>
+                  <Modifier>None</Modifier>
+                  <FormatString>{0}</FormatString>
+                  <RuleName>expresion</RuleName>
+                </ExpressionItem>
+                <ExpressionItem xsi:type="ExpressionRuleCallItem">
+                  <Position>Inside</Position>
+                  <Modifier>None</Modifier>
+                  <FormatString>{0}</FormatString>
+                  <RuleName>expresion</RuleName>
+                </ExpressionItem>
+              </RelatedItems>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+        <SyntacticalExpression>
+          <FormatString>{0}</FormatString>
+          <Items>
+            <ExpressionItem xsi:type="ExpressionTokenItem">
+              <Position>None</Position>
+              <Modifier>None</Modifier>
+              <FormatString>{0}{{{1}}}</FormatString>
+              <TokenType>SQRT</TokenType>
+              <ForceTokenSearch>false</ForceTokenSearch>
+              <RelatedItems>
+                <ExpressionItem xsi:type="ExpressionRuleCallItem">
+                  <Position>Inside</Position>
+                  <Modifier>None</Modifier>
+                  <FormatString>{0}</FormatString>
+                  <RuleName>expresion</RuleName>
+                </ExpressionItem>
+              </RelatedItems>
+            </ExpressionItem>
+          </Items>
+        </SyntacticalExpression>
+      </Expressions>
+    </SyntacticalRule>
+  </SyntacticalRules></RecognizerConfig>

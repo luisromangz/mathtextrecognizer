@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 using MathTextLibrary.Controllers;
 
@@ -45,6 +46,7 @@ namespace MathTextLibrary.Analisys
 		/// Contains a list with the names of the rules used by this matcher
 		/// or/and its children machers.
 		/// </value>
+		[XmlIgnore]
 		public abstract List<string> RulesUsed
 		{
 			get;				

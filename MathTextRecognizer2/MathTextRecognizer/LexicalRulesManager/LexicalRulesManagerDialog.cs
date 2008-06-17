@@ -1,4 +1,4 @@
-﻿// LexicalRulesManagerDialog.cs created with MonoDevelop
+// LexicalRulesManagerDialog.cs created with MonoDevelop
 // User: luis at 19:10 28/04/2008
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
@@ -72,7 +72,6 @@ namespace MathTextRecognizer.LexicalRulesManager
 			
 			lexicalRulesManagerDialog.TransientFor = parent;
 			
-			lexicalRulesManagerDialog.Deletable = false;
 			
 			InitializeWidgets();
 			
@@ -280,9 +279,12 @@ namespace MathTextRecognizer.LexicalRulesManager
 		/// <param name="args">
 		/// A <see cref="EventArgs"/>
 		/// </param>
+		[GLib.ConnectBefore]
 		private void OnCloseBtnClicked(object sender, EventArgs args)
 		{
-			this.lexicalRulesManagerDialog.Hide();
+			Config.RecognizerConfig.Instance.LexicalRules = this.LexicalRules;
+			Config.RecognizerConfig.Instance.Save();
+			this.lexicalRulesManagerDialog.Respond(ResponseType.Ok);
 		}
 		
 		
@@ -348,28 +350,7 @@ namespace MathTextRecognizer.LexicalRulesManager
 			
 			dialog.Destroy();
 		}
-		
-		/// <summary>
-		/// If the user agrees, saves the rule-list.
-		/// </summary>
-		/// <param name="sender">
-		/// A <see cref="System.Object"/>
-		/// </param>
-		/// <param name="args">
-		/// A <see cref="EventArgs"/>
-		/// </param>
-		private void OnSaveBtnClicked(object sender, EventArgs args)
-		{
-			ResponseType res =
-				ConfirmDialog.Show(lexicalRulesManagerDialog,
-				                   "Esto cambiará la configuración de la aplicación, ¿desea continuar?");
-			
-			if(res == ResponseType.Yes)
-			{
-				RecognizerConfig.Instance.LexicalRules = this.LexicalRules;
-				RecognizerConfig.Instance.Save();
-			}
-		}
+	
 		
 		/// <summary>
 		/// Activates or deactivates the buttons based on the selected rows.
