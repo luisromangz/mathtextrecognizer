@@ -60,6 +60,7 @@
     <Reference Include="gtk-dotnet" />
     <Reference Include="gtk-sharp" />
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -69,6 +70,7 @@
     <Compile Include="DatabaseManager\DatabaseManagerDialog.cs" />
     <Compile Include="DatabaseManager\DatabaseFileInfo.cs" />
     <Compile Include="Config\RecognizerConfig.cs" />
+    <Compile Include="Stages\BlackboardStageWidget.cs" />
     <Compile Include="Stages\RecognizingStageWidget.cs" />
     <Compile Include="Stages\Dialogs\SymbolLabelEditorDialog.cs" />
     <Compile Include="Stages\Dialogs\LearnSymbolDatabaseChooserDialog.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="Controllers\Nodes\SequenceNode.cs" />
     <Compile Include="Stages\ParsingStageWidget.cs" />
     <Compile Include="Controllers\ParsingController.cs" />
+    <Compile Include="Stages\UnassistedStageWidget.cs" />
     <Compile Include="SyntacticalRulesManager\SyntacticalRulesManagerDialog.cs" />
     <Compile Include="SyntacticalRulesManager\SyntacticalRuleEditorDialog.cs" />
     <Compile Include="LexicalRulesManager\LexicalExpressionWidget.cs" />

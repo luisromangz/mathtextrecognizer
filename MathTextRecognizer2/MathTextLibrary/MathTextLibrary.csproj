@@ -82,6 +82,9 @@
     <Compile Include="BitmapSegmenters\BitmapSegmenter.cs" />
     <Compile Include="BitmapSegmenters\ProjectionSegmenter.cs" />
     <Compile Include="Controllers\ControllerEvents.cs" />
+    <Compile Include="Databases\Characteristic\Characteristics\BinaryCharacteristic.cs" />
+    <Compile Include="Databases\Receptors\GeneralizableReceptorDatabase.cs" />
+    <Compile Include="Databases\TristateCheckVector.cs" />
     <Compile Include="Projection\Hole.cs" />
     <Compile Include="Projection\HorizontalBitmapProjection.cs" />
     <Compile Include="Projection\ProjectionMode.cs" />
@@ -102,7 +105,6 @@
     <Compile Include="Databases\Characteristic\Characteristics\EndingPointsEqualsThreeCharacteristic.cs" />
     <Compile Include="Databases\Characteristic\Characteristics\EndingPointsEqualsTwoCharacteristic.cs" />
     <Compile Include="Databases\Characteristic\Characteristics\EndingPointsEqualsZeroCharacteristic.cs" />
-    <Compile Include="Databases\Characteristic\Characteristics\IBinaryCharacteristic.cs" />
     <Compile Include="Databases\Characteristic\Characteristics\NumberBigHolesEqualsOneCharacteristic.cs" />
     <Compile Include="Databases\Characteristic\Characteristics\NumberBigHolesEqualsTwoCharacteristic.cs" />
     <Compile Include="Databases\Characteristic\Characteristics\NumberBigHolesEqualsZeroCharacteristic.cs" />

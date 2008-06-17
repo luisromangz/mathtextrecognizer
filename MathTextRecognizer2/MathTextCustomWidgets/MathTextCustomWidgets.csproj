@@ -63,10 +63,10 @@
     <Compile Include="Dialogs\PanelAssistantStep.cs" />
     <Compile Include="ImageResources.cs" />
     <Compile Include="Dialogs\ImageSaveDialog.cs" />
+    <Compile Include="Widgets\HandWriting\HandWritingArea.cs" />
     <Compile Include="Widgets\SymbolLabelEditorWidget.cs" />
     <Compile Include="Widgets\Logger\LogSaveDialog.cs" />
     <Compile Include="Widgets\Logger\LogView.cs" />
-    <Compile Include="Widgets\HandWriting\IHandWritingArea.cs" />
     <Compile Include="Widgets\HandWriting\RasterHandWritingArea.cs" />
     <Compile Include="Widgets\HandWriting\VectorHandWritingArea.cs" />
     <Compile Include="Widgets\ImageArea\ImageArea.cs" />
@@ -75,6 +75,12 @@
     <Compile Include="Dialogs\SymbolLabel\SymbolLabelDialog.cs" />
     <Compile Include="Dialogs\SymbolLabel\SymbolLabelListDialog.cs" />
     <Compile Include="Dialogs\DatabaseInfoDialog.cs" />
+    <EmbeddedResource Include="..\Common\Artwork\mathtextlearner48.png">
+      <Link>mathtextlearner48.png</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Common\Artwork\mathtextrecognizer48.png">
+      <Link>mathtextrecognizer48.png</Link>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gui.glade" />
