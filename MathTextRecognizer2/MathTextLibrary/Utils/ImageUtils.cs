@@ -3,6 +3,9 @@ using System;
 
 using Gdk;
 
+using MathTextLibrary.Bitmap;
+using MathTextLibrary.Projection;
+
 namespace MathTextLibrary.Utils
 {
 	
@@ -58,6 +61,44 @@ namespace MathTextLibrary.Utils
 				
 			return res;
 			
+		}
+		
+		
+		/// <summary>
+		/// Creates a bitmap out of a projection
+		/// </summary>
+		/// <param name="projection">
+		/// The projection <see cref="BitmapProjection"/>
+		/// </param>
+		/// <returns>
+		/// A <see cref="Pixbuf"/> with the projection graphical representation.
+		/// </returns>
+		public static Pixbuf CreateProjectionBitmap(BitmapProjection projection)
+		{
+			int max=-1;
+			foreach(int i in projection.Values)
+			{
+				if(max<i)
+				{
+					max=i;
+				}		
+			}
+
+			FloatBitmap bitmap = new FloatBitmap(projection.Values.Length, 
+			                                     max);
+			
+			
+			for(int k=0;k<projection.Values.Length;k++)
+			{
+				Console.WriteLine(projection.Values[k]);
+				for(int j = 0; j< projection.Values[k];j++)
+				{
+				
+					bitmap[k,j] = FloatBitmap.Black;
+				}
+			}		
+			
+			return bitmap.CreatePixbuf();
 		}
 		
 	}
