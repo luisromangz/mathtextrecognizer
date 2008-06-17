@@ -142,7 +142,7 @@
                   <Position>Above</Position>
                   <Modifier>None</Modifier>
                   <FormatString>{0}</FormatString>
-                  <TokenType>"&gt;"</TokenType>
+                  <TokenType>'&gt;'</TokenType>
                   <ForceTokenSearch>false</ForceTokenSearch>
                   <RelatedItems />
                 </ExpressionItem>
@@ -164,7 +164,7 @@
                   <Position>Below</Position>
                   <Modifier>None</Modifier>
                   <FormatString>{0}</FormatString>
-                  <TokenType>"&lt;"</TokenType>
+                  <TokenType>'&lt;'</TokenType>
                   <ForceTokenSearch>false</ForceTokenSearch>
                   <RelatedItems />
                 </ExpressionItem>

@@ -1,4 +1,4 @@
-// ExpressionTokenItem.cs created with MonoDevelop
+﻿// ExpressionTokenItem.cs created with MonoDevelop
 // User: luis at 12:57 13/05/2008
 
 using System;
@@ -427,7 +427,7 @@ namespace MathTextLibrary.Analisys
 				else if(!SpecialPosition(matched, checkedItem))
 				{
 					LogSentInvoker("Encontrado {0}, cancelando la creación de la secuencia de items «{1}» {2}",
-					               checkedItem.Type,
+					               checkedItem.Text,
 					               position,
 					               matched.Type);
 					break;
