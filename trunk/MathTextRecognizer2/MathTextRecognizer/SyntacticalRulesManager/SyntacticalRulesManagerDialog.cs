@@ -1,4 +1,4 @@
-﻿// SyntacticalRulesManagerDialog.cs created with MonoDevelop
+// SyntacticalRulesManagerDialog.cs created with MonoDevelop
 // User: luis at 11:24 16/05/2008
 
 using System;
@@ -405,7 +405,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				syntacticalRulesManagerDialog.Hide();
 				
 				Config.RecognizerConfig.Instance.SyntacticalRules = 
-					this.SyntacticalRules
+					this.SyntacticalRules;
 			}
 			
 		}

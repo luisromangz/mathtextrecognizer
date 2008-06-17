@@ -303,7 +303,7 @@ namespace MathTextRecognizer.DatabaseManager
 		/// </param>
 		private void OnCloseBtnClicked(object sender, EventArgs args)
 		{
-			this.databaseManagerDialog.Hide();
+			
 		}
 		
 		/// Maneja el evento producido al pulsar el boton de ver las propiedades 

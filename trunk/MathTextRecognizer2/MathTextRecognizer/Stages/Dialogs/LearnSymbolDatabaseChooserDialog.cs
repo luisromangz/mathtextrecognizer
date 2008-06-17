@@ -46,6 +46,9 @@ namespace MathTextRecognizer.Stages.Dialogs
 		/// <param name="parent">
 		/// The dialog's parent dialog, to which it's modal.
 		/// </param>
+		/// <param name="databases">
+		/// The databases the user can choose from.
+		/// </param>
 		public LearnSymbolDatabaseChooserDialog(Window parent,
 		                                        List<DatabaseFileInfo> databases)
 		{
