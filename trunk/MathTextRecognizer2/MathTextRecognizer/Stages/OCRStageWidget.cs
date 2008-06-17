@@ -1,4 +1,4 @@
-// SegmentingAndMathingStepWidget.cs created with MonoDevelop
+﻿// SegmentingAndMathingStepWidget.cs created with MonoDevelop
 // User: luis at 20:16 14/04/2008
 
 using System;
@@ -712,7 +712,8 @@ namespace MathTextRecognizer.Stages
 			{
 				// We reload the databases because the new segmentation may be
 				// due a database change.
-				controller.Databases = this.Databases;
+				controller.Databases = 
+					Config.RecognizerConfig.Instance.Databases;
 				
 				controller.StartNode = selectedNode;
 				controller.SearchDatabase = false;
@@ -765,7 +766,7 @@ namespace MathTextRecognizer.Stages
 		/// </param>
 		public void OnSegmentBtnClicked(object sender, EventArgs args)
 		{
-			controller.Databases = this.Databases;
+			controller.Databases = Config.RecognizerConfig.Instance.Databases;
 			this.MainRecognizerWindow.ProcessItemsSensitive=false;
 			segmentBtn.Sensitive = false;
 			gotoTokenizerBtn.Sensitive =  true;

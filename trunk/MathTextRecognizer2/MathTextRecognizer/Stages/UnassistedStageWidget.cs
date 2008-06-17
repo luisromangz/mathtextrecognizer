@@ -1,4 +1,4 @@
-// UnassistedImageStageWidget.cs created with MonoDevelop
+﻿// UnassistedImageStageWidget.cs created with MonoDevelop
 // User: luis at 18:19 03/06/2008
 
 using System;
@@ -244,7 +244,7 @@ namespace MathTextRecognizer.Stages
 				
 				
 				tokenizingFinished = false;
-				tokenizingController.SetLexicalRules(Config.RecognizerConfig.Instance.LexicalRulesManager.LexicalRules);
+				tokenizingController.SetLexicalRules(Config.RecognizerConfig.Instance.LexicalRules);
 				tokenizingController.SetInitialData(startTokens, null);
 				
 				tokenizingController.Next(ControllerStepMode.UntilEnd);

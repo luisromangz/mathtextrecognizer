@@ -1,4 +1,4 @@
-// SyntacticalRulesManagerDialog.cs created with MonoDevelop
+﻿// SyntacticalRulesManagerDialog.cs created with MonoDevelop
 // User: luis at 11:24 16/05/2008
 
 using System;
@@ -396,8 +396,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// </param>
 		[GLib.ConnectBefore]
 		private void OnSynRulesCloseBtnClicked(object sender, EventArgs args)
-		{
-			
+		{			
 			if(!CheckRules())
 			{
 				// If there were no errors, we can close the manager.
@@ -406,32 +405,10 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				
 				Config.RecognizerConfig.Instance.SyntacticalRules = 
 					this.SyntacticalRules;
-			}
-			
+				Config.RecognizerConfig.Instance.Save();
+			}			
 		}
 		
-		/// <summary>
-		/// Saves the current rule set as the default one.
-		/// </summary>
-		/// <param name="sender">
-		/// A <see cref="System.Object"/>
-		/// </param>
-		/// <param name="args">
-		/// A <see cref="EventArgs"/>
-		/// </param>
-		private void OnSynMakeDefaultBtnClicked(object sender, EventArgs args)
-		{
-			ResponseType res =
-				ConfirmDialog.Show(syntacticalRulesManagerDialog,
-				                   "Esto cambiará la configuración de la aplicación, ¿desea continuar?");
-			
-			if(res == ResponseType.Yes && !CheckRules())
-			{
-				// We save the rules if the user accepted and there were no errors.
-				RecognizerConfig.Instance.SyntacticalRules = SyntacticalRules;
-				RecognizerConfig.Instance.Save();
-			}
-		}
 		
 		/// <summary>
 		/// Shows a message dialog with information about the dialog.

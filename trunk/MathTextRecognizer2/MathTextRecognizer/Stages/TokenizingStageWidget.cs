@@ -1,4 +1,4 @@
-// TokenizingStageWidget.cs created with MonoDevelop
+﻿// TokenizingStageWidget.cs created with MonoDevelop
 // User: luis at 16:19 26/04/2008
 //
 // To change standard headers go to Edit->Preferences->Coding->Standard Headers
@@ -833,10 +833,10 @@ namespace MathTextRecognizer.Stages
 					{
 						store.AppendValues(rule.Name, 
 						                   String.Join(" | ", 
-						                               rule.LexicalExpressions));
+						                               rule.LexicalExpressions.ToArray()));
 					}
 					
-					this.tokenizingRulesTV.Model = rulesStore;
+					this.tokenizingRulesTV.Model = store;
 					
 					tokenizingStepsNB.Page = 1;				
 					processBtnLbl.Text = "_Extraer items";
