@@ -74,10 +74,10 @@
         </Symbols>
         <Values>
           <TristateValue>True</TristateValue>
+          <TristateValue>DontCare</TristateValue>
+          <TristateValue>DontCare</TristateValue>
           <TristateValue>True</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>True</TristateValue>
+          <TristateValue>DontCare</TristateValue>
           <TristateValue>False</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>False</TristateValue>
@@ -87,32 +87,32 @@
           <TristateValue>True</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>False</TristateValue>
-          <TristateValue>True</TristateValue>
+          <TristateValue>DontCare</TristateValue>
           <TristateValue>False</TristateValue>
+          <TristateValue>DontCare</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>True</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>False</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>False</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>False</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>True</TristateValue>
+          <TristateValue>DontCare</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>False</TristateValue>
           <TristateValue>True</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>DontCare</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>True</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>DontCare</TristateValue>
+          <TristateValue>DontCare</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>DontCare</TristateValue>
           <TristateValue>False</TristateValue>
           <TristateValue>False</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>False</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>True</TristateValue>
+          <TristateValue>DontCare</TristateValue>
+          <TristateValue>DontCare</TristateValue>
+          <TristateValue>DontCare</TristateValue>
           <TristateValue>True</TristateValue>
         </Values>
       </TristateCheckVector>
@@ -123,26 +123,16 @@
           </MathSymbol>
         </Symbols>
         <Values>
-          <TristateValue>True</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>False</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>False</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>False</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>True</TristateValue>
+          <TristateValue>DontCare</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>False</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>True</TristateValue>
-          <TristateValue>True</TristateValue>
+          <TristateValue>DontCare</TristateValue>
+          <TristateValue>DontCare</TristateValue>
+          <TristateValue>DontCare</TristateValue>
           <TristateValue>False</TristateValue>
-          <TristateValue>False</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>True</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>False</TristateValue>
@@ -151,14 +141,24 @@
           <TristateValue>True</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>True</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>DontCare</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>DontCare</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>True</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>DontCare</TristateValue>
           <TristateValue>False</TristateValue>
           <TristateValue>False</TristateValue>
-          <TristateValue>False</TristateValue>
+          <TristateValue>DontCare</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>True</TristateValue>
           <TristateValue>True</TristateValue>
