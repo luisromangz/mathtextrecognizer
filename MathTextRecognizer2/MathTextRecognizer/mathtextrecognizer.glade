@@ -930,9 +930,6 @@
                         <property name="response_id">0</property>
                         <signal name="clicked" handler="OnOcrBackBtnClicked"/>
                       </widget>
-                      <packing>
-                        <property name="secondary">True</property>
-                      </packing>
                     </child>
                     <child>
                       <widget class="GtkButton" id="segmentBtn">
