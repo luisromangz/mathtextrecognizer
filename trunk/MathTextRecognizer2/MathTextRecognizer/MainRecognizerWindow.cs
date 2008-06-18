@@ -463,7 +463,7 @@ namespace MathTextRecognizer
 		{
 			
 			Widget page = 
-				recognizingStepsNB.GetNthPage(recognizingStepsNB.Page);
+				recognizingStepsNB.Children[(int)arg.PageNum];
 			stageNameLabel.Markup = 
 				String.Format("<b><i>{0}</i></b>",
 				              recognizingStepsNB.GetTabLabelText(page));
