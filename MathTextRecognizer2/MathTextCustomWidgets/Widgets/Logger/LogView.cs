@@ -47,7 +47,7 @@ namespace MathTextCustomWidgets.Widgets.Logger
             
             this.Add(mainBox);
 			
-			follow = false;
+			follow = true;
         }
         
 #region Público

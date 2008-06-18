@@ -146,7 +146,7 @@ namespace MathTextLearner
 		
 		private Thread learningThread;
 		
-		private const string title="Aprendedor de caracteres matemáticos";
+		private const string title="Aprendedor de símbolos matemáticos";
 		
 		private bool databaseModified;	
 		private string databasePath;
@@ -513,8 +513,9 @@ namespace MathTextLearner
 		private void OnBtnNextClicked(object sender, EventArgs arg)
 		{
 			nextButtonsHB.Sensitive = false;
-			expanderLog.Expanded = true;
+			expanderLog.Expanded = true;			
 			stepByStep = true;
+			
 			learningThread.Resume();
 		}
 		
@@ -558,6 +559,8 @@ namespace MathTextLearner
 				database.Description = dialog.LongDescription;
 				
 				SetModified(true);
+				
+				SetDatabaseInfo();
 			}
 			
 			dialog.Destroy();
@@ -715,7 +718,7 @@ namespace MathTextLearner
 		{
 			AppInfoDialog.Show(
 				mainWindow,
-				"Aprendedor de caracteres matemáticos",
+				"Aprendedor de símbolos matemáticos",
 				"Esta aplicación permite aprender un caracter y añadirlo a una base de datos de caracteres nueva o creada previamente.",
 			    "mathtextlearner");	
 			
