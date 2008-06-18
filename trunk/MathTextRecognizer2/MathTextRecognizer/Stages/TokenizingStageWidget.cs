@@ -900,6 +900,22 @@ namespace MathTextRecognizer.Stages
 			selectedNode.RemoveSequenceChildren();
 			selectedNode.FoundToken = null;
 			
+			List<LexicalRule> rules = 
+			Config.RecognizerConfig.Instance.LexicalRules;
+			controller.SetLexicalRules(rules);
+			
+			ListStore store = new ListStore(typeof(string),
+			                                typeof(string));
+			
+			foreach (LexicalRule rule  in rules) 
+			{
+				store.AppendValues(rule.Name, 
+				                   String.Join(" | ", 
+				                               rule.LexicalExpressions.ToArray()));
+			}
+			
+			this.tokenizingRulesTV.Model = store;
+	
 			// We set again the rules, because the user _should_ have modified them.
 			controller.SetLexicalRules(Config.RecognizerConfig.Instance.LexicalRules);
 			
