@@ -1,4 +1,4 @@
-﻿// UnassistedImageStageWidget.cs created with MonoDevelop
+// UnassistedImageStageWidget.cs created with MonoDevelop
 // User: luis at 18:19 03/06/2008
 
 using System;
@@ -320,10 +320,32 @@ namespace MathTextRecognizer.Stages
 				}
 				else
 				{
-					unassistedTaskNameLabel.Text = "Análisis sintáctico";
-					unassistedGlobalProgressBar.Fraction = 0.66;
 					
 					List<Token> result = tokenizingController.Result;
+					
+					bool fail =false;
+					
+					foreach (Token t in result) 
+					{
+						if(t == null)
+						{
+							fail = true;
+							break;
+						}
+					}
+					
+					if(fail)
+					{
+						OkDialog.Show(this.MainRecognizerWindow.Window,
+						              MessageType.Warning,
+						              "El análisis léxico falló, hubo ítems que no concordaron con ninguna regla léxica.\nPrueba a añadir más reglas léxicas y vuelve a intentarlo.");
+						
+						unassistedControlHBB.Sensitive = true;
+						return;
+					}
+					
+					unassistedTaskNameLabel.Text = "Análisis sintáctico";
+					unassistedGlobalProgressBar.Fraction = 0.66;
 					
 					SyntacticalRulesLibrary.Instance.ClearRules();
 					foreach (SyntacticalRule rule in  
