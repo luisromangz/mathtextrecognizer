@@ -200,8 +200,6 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				relWidget.CheckPosition();
 			}
 			
-			itemOpFormatAlignment.Sensitive = 
-				itemOpRelatedItemsBox.Children.Length > 0;
 		}
 
 		/// <summary>
