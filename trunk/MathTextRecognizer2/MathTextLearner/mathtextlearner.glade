@@ -65,6 +65,7 @@
                     <child>
                       <widget class="GtkImageMenuItem" id="menuSaveAs">
                         <property name="visible">True</property>
+                        <property name="sensitive">False</property>
                         <property name="label" translatable="yes">Guardar base de datos c_omo...</property>
                         <property name="use_underline">True</property>
                         <child internal-child="image">
@@ -950,7 +951,7 @@
             <property name="visible">True</property>
             <property name="spacing">2</property>
             <child>
-              <widget class="GtkLabel" id="label9">
+              <widget class="GtkLabel" id="label12">
                 <property name="visible">True</property>
                 <property name="xalign">0</property>
                 <property name="xpad">5</property>
@@ -968,7 +969,7 @@
                 <property name="label_xalign">0</property>
                 <property name="shadow_type">GTK_SHADOW_NONE</property>
                 <child>
-                  <widget class="GtkAlignment" id="alignment2">
+                  <widget class="GtkAlignment" id="alignment14">
                     <property name="visible">True</property>
                     <property name="xalign">0</property>
                     <property name="xscale">0</property>
@@ -987,7 +988,7 @@
                   </widget>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label5">
+                  <widget class="GtkLabel" id="label15">
                     <property name="visible">True</property>
                     <property name="yalign">0</property>
                     <property name="label" translatable="yes">Descripción corta:</property>
@@ -1009,7 +1010,7 @@
                 <property name="label_xalign">0</property>
                 <property name="shadow_type">GTK_SHADOW_NONE</property>
                 <child>
-                  <widget class="GtkAlignment" id="alignment7">
+                  <widget class="GtkAlignment" id="alignment15">
                     <property name="visible">True</property>
                     <property name="left_padding">5</property>
                     <child>
@@ -1031,7 +1032,7 @@
                   </widget>
                 </child>
                 <child>
-                  <widget class="GtkLabel" id="label10">
+                  <widget class="GtkLabel" id="label16">
                     <property name="visible">True</property>
                     <property name="label" translatable="yes">Descripción larga:</property>
                     <property name="use_markup">True</property>
