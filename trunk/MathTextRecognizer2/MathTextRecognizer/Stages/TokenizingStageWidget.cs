@@ -184,7 +184,29 @@ namespace MathTextRecognizer.Stages
 		{
 			get
 			{
-				return controller.Result;
+				List<Token> result = new List<Token>();
+				List<SequenceNode> stack = new List<SequenceNode>();
+				foreach (SequenceNode node in sequencesModel) 
+				{
+					stack.Add(node);
+				}
+				
+				while(stack.Count > 0)
+				{
+					if(stack[0].FoundToken != null)
+					{
+						result.Add(stack[0].FoundToken);
+					}
+					
+					for(int i =0; i< stack[0].ChildCount; i++)
+					{
+						stack.Add(stack[0][i] as SequenceNode);
+					}
+					
+					stack.RemoveAt(0);
+				}
+				
+				return result;
 			}
 		}
 		
