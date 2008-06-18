@@ -122,8 +122,7 @@ namespace MathTextRecognizer.Stages
 		public void PreviousStage()
 		{
 			// We try to free memory.
-			GC.Collect();
-			
+			GC.Collect();			
 			Gtk.Notebook parentNB = (Gtk.Notebook)(this.Parent);
 			parentNB.PrevPage();
 			this.Abort();
