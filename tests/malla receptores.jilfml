@@ -1920,6 +1920,6 @@
       </Receptor>
     </Receptors>
   </GeneralizableReceptorDatabase>
-  <Description>fsafsaf</Description>
-  <ShortDescription>ads</ShortDescription>
+  <Description>Base de datos generalizable de receptores para letras cursivas, y resto de símbolos matemáticos.</Description>
+  <ShortDescription>Letras cursivas y resto de símbolos</ShortDescription>
 </MathTextDatabase>

@@ -39,7 +39,6 @@
     <File name="LexicalRulesManager/LexicalRulesManagerDialog.cs" subtype="Code" buildaction="Compile" />
     <File name="Controllers/TokenizingController.cs" subtype="Code" buildaction="Compile" />
     <File name="Controllers/Nodes/SegmentedNode.cs" subtype="Code" buildaction="Compile" />
-    <File name="Tests" subtype="Directory" buildaction="Compile" />
     <File name="Controllers/RecognizingControllerEvents.cs" subtype="Code" buildaction="Compile" />
     <File name="Controllers/Nodes/SequenceNode.cs" subtype="Code" buildaction="Compile" />
     <File name="Stages/ParsingStageWidget.cs" subtype="Code" buildaction="Compile" />
