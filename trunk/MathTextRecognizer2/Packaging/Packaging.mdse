@@ -1,0 +1,16 @@
+<CombineEntry name="Packaging" fileversion="2.0" ctype="PackagingProject">
+  <Packages>
+    <Package name="MonoDevelop Project Model fuentes">
+      <Builder rootEntry="../MathTextRecognizer2.mds" targetFile="../MathTextRecognizer2.tar.gz" format="MonoDevelop.Projects.MonoDevelopFileFormat" ctype="SourcesZipPackageBuilder">
+        <ChildEntries>
+          <Entry>../MathTextLearnerLauncher/MathTextLearnerLauncher.mdp</Entry>
+          <Entry>Packaging.mdse</Entry>
+          <Entry>../MathTextRecognizer/MathTextRecognizer.mdp</Entry>
+          <Entry>../MathTextLearner/MathTextLearner.mdp</Entry>
+          <Entry>../MathTextCustomWidgets/MathTextCustomWidgets.mdp</Entry>
+          <Entry>../MathTextLibrary/MathTextLibrary.mdp</Entry>
+        </ChildEntries>
+      </Builder>
+    </Package>
+  </Packages>
+</CombineEntry>
