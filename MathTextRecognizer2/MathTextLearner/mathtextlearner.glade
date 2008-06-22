@@ -150,6 +150,7 @@
         <child>
           <widget class="GtkToolbar" id="toolbar">
             <property name="visible">True</property>
+            <property name="toolbar_style">GTK_TOOLBAR_ICONS</property>
             <child>
               <widget class="GtkToolButton" id="toolNewDatabase">
                 <property name="visible">True</property>
