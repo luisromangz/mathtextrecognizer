@@ -1516,6 +1516,56 @@
           <TristateValue>True</TristateValue>
         </Values>
       </TristateCheckVector>
+      <TristateCheckVector>
+        <Symbols>
+          <MathSymbol>
+            <Text>\int</Text>
+          </MathSymbol>
+        </Symbols>
+        <Values>
+          <TristateValue>False</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>True</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>False</TristateValue>
+          <TristateValue>True</TristateValue>
+        </Values>
+      </TristateCheckVector>
     </Vectors>
     <Receptors>
       <Receptor>

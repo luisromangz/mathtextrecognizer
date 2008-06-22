@@ -28,8 +28,9 @@ namespace MathTextLibrary.Analisys
 		private const float epsilon = 0.05f;
 		
 		private const string DESCENDERS = "yjgpq()";
-		private const string ASCENDERS = "tijñ()";
-		private const string PUNCTUATION = ".,";
+		private const string ASCENDERS = "dtijñ()";
+		private const string PUNCTUATION = ".,";	
+		
 		
 		private static Token empty = new Token("");
 		
@@ -209,16 +210,18 @@ namespace MathTextLibrary.Analisys
 				
 					bool isAscender = (ASCENDERS.Contains(this.text) 
 					                   || char.IsUpper(this.Text[0])
-					                   || char.IsNumber(this.text[0]));
+					                   || char.IsNumber(this.text[0])
+					                   || this.type == "INT");
+					
+					bool isDescender = (DESCENDERS.Contains(this.text)
+					                    ||this.type == "INT");
 					
 					
-					if(DESCENDERS.Contains(this.text)
-					   && !isAscender)
+					if(isDescender && !isAscender)
 					{
 						baseline = (int)(baseline*0.66f);
 					}
-					else if(DESCENDERS.Contains(this.text)
-					        && isAscender)
+					else if(isDescender && isAscender)
 					{
 						baseline = (int)(baseline*0.87f);
 					}
@@ -244,15 +247,19 @@ namespace MathTextLibrary.Analisys
 				
 					bool isAscender = (ASCENDERS.Contains(this.text) 
 					                   || char.IsUpper(this.Text[0])
-					                   || char.IsNumber(this.text[0]));
+					                   || char.IsNumber(this.text[0])
+					                   || this.type == "INT");
+					
+					bool isDescender = (DESCENDERS.Contains(this.text)
+					                    ||this.type == "INT");
 					
 					if(isAscender
-					   && !DESCENDERS.Contains(this.text))
+					   && !isDescender)
 					{
 						bodyline += (int)(this.Height*0.33f);
 					}
 					else if(isAscender
-					        && DESCENDERS.Contains(this.text))
+					        && isDescender)
 					{
 						bodyline += (int)(this.Height*0.13f);
 					}
