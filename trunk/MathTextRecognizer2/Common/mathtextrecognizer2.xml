@@ -8,11 +8,58 @@
     <wrapLicenseFileText>0</wrapLicenseFileText>
     <logoImage>Artwork/mathtextrecognizer48.png</logoImage>
     <defaultLanguage>es</defaultLanguage>
-    <postInstallationActionList>
-        <showWarning>
-            <text>Recuerde que debe instalar Mono (&gt;= 1.9) junto a Gtk# 2.10 (o superior) y que el ejecutable "mono" debe estar en el PATH de su sistema para que las aplicaciones puedan ejecutarse.</text>
-        </showWarning>
-    </postInstallationActionList>
+    <preInstallationActionList>
+        <actionGroup>
+            <actionList>
+                <writeFile>
+                    <path>${system_temp_directory}\checkmono.bat</path>
+                    <text>@mono -V || echo monofail</text>
+                </writeFile>
+                <setInstallerVariableFromScriptOutput>
+                    <exec>${system_temp_directory}\checkmono.bat</exec>
+                    <execArgs></execArgs>
+                    <name>monofail</name>
+                </setInstallerVariableFromScriptOutput>
+            </actionList>
+            <ruleList>
+                <compareText>
+                    <logic>contains</logic>
+                    <text>${platform_name}</text>
+                    <value>windows</value>
+                </compareText>
+            </ruleList>
+        </actionGroup>
+        <actionGroup>
+            <actionList>
+                <writeFile>
+                    <path>${system_temp_directory}/checkmono.sh</path>
+                    <text>mono -V || echo monofail</text>
+                </writeFile>
+                <setInstallerVariableFromScriptOutput>
+                    <exec>sh</exec>
+                    <execArgs>${system_temp_directory}/checkmono.sh</execArgs>
+                    <name>monofail</name>
+                </setInstallerVariableFromScriptOutput>
+            </actionList>
+            <ruleList>
+                <compareText>
+                    <logic>contains</logic>
+                    <text>${platform_name}</text>
+                    <value>linux</value>
+                </compareText>
+            </ruleList>
+        </actionGroup>
+        <throwError>
+            <text>No tiene Mono (version 1.9 o superior) instalado y en el Path. Solucione esto y vuelva a lanzar la instalacion.</text>
+            <ruleList>
+                <compareText>
+                    <logic>contains</logic>
+                    <text>${monofail}</text>
+                    <value>monofail</value>
+                </compareText>
+            </ruleList>
+        </throwError>
+    </preInstallationActionList>
     <enableRollback>1</enableRollback>
     <saveRelativePaths>1</saveRelativePaths>
     <componentList>
