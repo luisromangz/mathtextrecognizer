@@ -29,7 +29,6 @@
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <StartupObject />
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <AssemblyKeyFile>.</AssemblyKeyFile>
     <Execution>
@@ -40,7 +39,7 @@
     </Build>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
-    
+    <ApplicationIcon>..\Common\Artwork\mathtextlearner48.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="atk-sharp" />

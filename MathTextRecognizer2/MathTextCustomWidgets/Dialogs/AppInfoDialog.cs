@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using Gtk;
 using Glade;
@@ -29,7 +29,7 @@ namespace MathTextCustomWidgets.Dialogs
 		    
 		    appInfoDialog.Name = title;
 		    appInfoDialog.Comments = msg + 
-		    	"Desarrollado como proyecto de fin de carrera por:\n\n"+
+		    	"\n\nDesarrollado como proyecto de fin de carrera por:\n\n"+
 		    	"Luis Román Gutiérrez";
 			
 			appInfoDialog.Logo = ImageResources.LoadPixbuf(logoResource);
