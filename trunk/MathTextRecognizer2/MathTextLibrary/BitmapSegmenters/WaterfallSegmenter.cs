@@ -19,6 +19,7 @@ namespace MathTextLibrary.BitmapSegmenters
 	{
 		private WaterfallSegmenterMode mode;
 		private bool reflection;
+		private bool search;
 		
 		/// <summary>
 		/// Constructor de <c>WaterfallSegmenter</c>
@@ -26,10 +27,16 @@ namespace MathTextLibrary.BitmapSegmenters
 		/// <param name="mode">
 		/// A <see cref="WaterfallSegmenterMode"/>
 		/// </param>
-		public WaterfallSegmenter(WaterfallSegmenterMode mode, bool reflection)
+		/// <param name="search">
+		/// true if the start point must be searched.
+		/// </param>
+		public WaterfallSegmenter(WaterfallSegmenterMode mode,
+		                          bool reflection,
+		                          bool search)
 		{
 			this.mode = mode;
 			this.reflection = reflection;
+			this.search = search;
 		}
 
 		/// <summary>
@@ -67,27 +74,38 @@ namespace MathTextLibrary.BitmapSegmenters
 			// Buscamos por filas, desde abajo, para encontrar el primer pixel 
 			// negro mas cercano a la esquina (0,0).
 			int i,j,k;
-			bool startFound = false;
-			for(j=0; j<image.Height && !startFound; j++)
+			
+			if(search)
+			
 			{
-				for(i=0; i<image.Width && !startFound;i++)
+				bool startFound = false;
+				for(j=0; j<image.Height && !startFound; j++)
 				{
-					
-					if(image[i,j] != FloatBitmap.White)
+					for(i=0; i<image.Width && !startFound;i++)
 					{
-						for(k=0; k<j ;k++)
+						
+						if(image[i,j] != FloatBitmap.White)
 						{
-							// Añadimos a la lista de puntos los puntos 
-							// entre el borde inferior y el punto en la fila
-							// inmediatamente inferior a la del punto negro.
-							
-							points.Add(new Point(i,k));
-							cutImage[i,k] = FloatBitmap.Black;
-						}						
-						startFound = true;
-					}					
+							for(k=0; k<j ;k++)
+							{
+								// Añadimos a la lista de puntos los puntos 
+								// entre el borde inferior y el punto en la fila
+								// inmediatamente inferior a la del punto negro.
+								
+								points.Add(new Point(i,k));
+								cutImage[i,k] = FloatBitmap.Black;
+							}						
+							startFound = true;
+						}					
+					}
 				}
 			}
+			else
+			{
+				points.Add(new Point(image.Width/2, 0));
+				cutImage[image.Width/2,0] = FloatBitmap.Black;
+			}
+			
 			
 			if(points.Count ==0)
 			{
@@ -175,17 +193,21 @@ namespace MathTextLibrary.BitmapSegmenters
 				
 				// Tenemos que rotar la imagen de corte para alinearla con la orginal.				
 				cutImage = UndoRotate(cutImage);
-#if DEBUG			
-				string path = System.IO.Path.GetTempFileName();
-				cutImage.CreatePixbuf().Save(String.Format(path+"_{0}_{1}", mode, reflection), "png");
-#endif
+
 				
 				// Rellenamos la imagen de negro a partir del punto encontrado.
 				cutImage.Fill(x0, y0, FloatBitmap.Black);
 				
+#if DEBUG			
+				string path = System.IO.Path.GetTempFileName();
+				cutImage.CreatePixbuf().Save(String.Format(path+"_{0}_{1}.png", mode, reflection), "png");
+#endif				
+				
 				// Recorremos la imagen de corte, y sacamos dos imagenes;
 				FloatBitmap res1 = new FloatBitmap(cutImage.Width, cutImage.Height);
 				FloatBitmap res2 = new FloatBitmap(cutImage.Width, cutImage.Height);
+				
+
 				
 				FloatBitmap origImage = bitmap.FloatImage;
 				bool res1HasBlack = false;
@@ -216,6 +238,8 @@ namespace MathTextLibrary.BitmapSegmenters
 						}
 					}
 				}
+				
+
 				
 				// Si las dos imágenes tienen pixeles negros, hemos separado la
 				// imagen correctamente, sino, solo hemos rodeado algo

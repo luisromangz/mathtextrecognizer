@@ -1,4 +1,4 @@
-﻿// ExpressionTokenItem.cs created with MonoDevelop
+// ExpressionTokenItem.cs created with MonoDevelop
 // User: luis at 12:57 13/05/2008
 
 using System;
@@ -505,7 +505,7 @@ namespace MathTextLibrary.Analisys
 					res = (matched.Left< checkedItem.Left 
 					       && ((checkedItem.Text =="," && checkedItem.Bodyline > matched.Baseline)
 					           ||( checkedItem.Text !="," && checkedItem.Bodyline > matched.Percent0_33Line))
-					       && checkedItem.Baseline > matched.Baseline);
+					       && checkedItem.Baseline > matched.Percent0_75Line);
 					
 					break;					
 				case ExpressionItemPosition.SuperIndex:

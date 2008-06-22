@@ -206,6 +206,8 @@ namespace MathTextRecognizer.Stages
 					stack.RemoveAt(0);
 				}
 				
+				result.Sort();
+				
 				return result;
 			}
 		}
