@@ -359,6 +359,7 @@ namespace MathTextRecognizer
 			while(recognizingStepsNB.NPages > 0)
 			{
 				recognizingStepsNB.RemovePage(0);
+			
 			}
 			
 			recognizingStepsNB.AppendPage(new InitialStageWidget(this),
@@ -492,12 +493,7 @@ namespace MathTextRecognizer
 			
 			dialog.Show();
 			dialog.Destroy();
-		}
-	
-		
-	
-		
-		
+		}		
 
 		/// <summary>
 		/// Metodo que se encarga de gestionar la salida de la aplicacion.
@@ -626,7 +622,9 @@ namespace MathTextRecognizer
 			dialog.Show();
 			dialog.Destroy();
 		}
+		
+#endregion Non-public methods
 	}
 	
-#endregion Non-public methods
+
 }
