@@ -45,6 +45,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		
 #endregion Fields
 		
+#region Constructors
 		/// <summary>
 		/// <see cref="ExpressionTokenWidget"/>'s constructor.
 		/// </summary>
@@ -66,7 +67,10 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			this.ShowAll();
 		}
 		
+#endregion Constructors
+		
 #region Properties
+
 		/// <value>
 		/// Contains the widget's item.
 		/// </value>
@@ -176,16 +180,43 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			Remove();
 		}
 		
+		/// <summary>
+		/// Moves the widget fordwards.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
 		private void OnExpTokenNextBtnClicked(object sender, EventArgs args)
 		{
 			this.MoveFordwards();
 		}
 		
+		/// <summary>
+		/// Moves the widget backwards.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
 		private void OnExpTokenPreviousBtnClicked(object sender, EventArgs args)
 		{
 			this.MoveBackwards();
 		}
 		
+		/// <summary>
+		/// Shows the associated token's option dialog.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
 		private void OnExpTokenOptionsBtnClicked(object sender, EventArgs args)
 		{
 			this.ShowOptions();

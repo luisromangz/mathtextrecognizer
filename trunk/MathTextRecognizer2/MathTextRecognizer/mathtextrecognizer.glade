@@ -22,21 +22,6 @@
                 <child>
                   <widget class="GtkMenu" id="menuArchivo_menu">
                     <child>
-                      <widget class="GtkImageMenuItem" id="menuNewSession">
-                        <property name="visible">True</property>
-                        <property name="label" translatable="yes">_Nueva sesion de reconocimiento</property>
-                        <property name="use_underline">True</property>
-                        <signal name="activate" handler="OnNewSessionClicked"/>
-                        <child internal-child="image">
-                          <widget class="GtkImage" id="image36">
-                            <property name="visible">True</property>
-                            <property name="stock">gtk-new</property>
-                            <property name="icon_size">1</property>
-                          </widget>
-                        </child>
-                      </widget>
-                    </child>
-                    <child>
                       <widget class="GtkImageMenuItem" id="menuLoadImage">
                         <property name="visible">True</property>
                         <property name="sensitive">False</property>
@@ -177,21 +162,6 @@
           <widget class="GtkToolbar" id="toolbar">
             <property name="visible">True</property>
             <property name="toolbar_style">GTK_TOOLBAR_BOTH_HORIZ</property>
-            <child>
-              <widget class="GtkToolButton" id="toolNewSession">
-                <property name="visible">True</property>
-                <property name="has_tooltip">True</property>
-                <property name="tooltip_text">Abrir nueva sesión de reconocimiento</property>
-                <property name="resize_mode">GTK_RESIZE_QUEUE</property>
-                <property name="label" translatable="yes">Abrir nueva sesión de reconocimiento</property>
-                <property name="use_underline">True</property>
-                <property name="stock_id">gtk-new</property>
-                <signal name="clicked" handler="OnNewSessionClicked"/>
-              </widget>
-              <packing>
-                <property name="expand">False</property>
-              </packing>
-            </child>
             <child>
               <widget class="GtkToolButton" id="toolLoadImage">
                 <property name="visible">True</property>

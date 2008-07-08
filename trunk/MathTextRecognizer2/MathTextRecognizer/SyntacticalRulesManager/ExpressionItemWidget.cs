@@ -19,13 +19,26 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 	/// </summary>
 	public abstract class ExpressionItemWidget : Alignment
 	{
+	
+#region Fields
+
 		protected IExpressionItemContainer container;
-		
-		public event EventHandler HeightRequestChanged;
-		
 		protected ExpressionItemOptions options;
 		
+#endregion Fields
+
+#region Events
+		public event EventHandler HeightRequestChanged;
+#endregion Events
 		
+#region Constructors	
+		
+		/// <summary>
+		///	<see cref="ExpressionItemWidget"/>'s constructor.
+		/// </summary>
+		/// <param name="container">
+		/// The item widget container.
+		/// </param>
 		public ExpressionItemWidget(IExpressionItemContainer container) 
 			: base(0.5f, 0.5f, 1,1)
 		{
@@ -33,6 +46,10 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			options = new ExpressionItemOptions();
 		}
+		
+#endregion Contructors
+
+#region Properties
 		
 		/// <value>
 		/// Contains the widget's item.
@@ -85,6 +102,22 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			}
 		}
 		
+		/// <value>
+		/// Contains the widget's parent window.
+		/// </value>
+		public Window Window
+		{
+			get
+			{
+				return container.Window;
+			}
+		}
+	
+		
+#endregion Properties
+
+#region Public methods
+		
 		/// <summary>
 		/// Checks the widget for validation errors.
 		/// </summary>
@@ -106,45 +139,9 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// Sets the widget in a mode suitable to be shown inside 
 		/// a <see cref="RelatedItemWidget"/>.
 		/// </summary>
-		public abstract void SetRelatedMode();
-		
-		protected void Remove()
+		public virtual void SetRelatedMode()
 		{
-			ResponseType res = 
-				ConfirmDialog.Show(this.container.Window,
-				                   "¿Realmente quieres eliminar este elemento?");
-			
-			if(res == ResponseType.No)
-				return;
-			
-			container.RemoveItem(this);
-		}
-		
-		/// <summary>
-		/// Moves the item towards the container's end.
-		/// </summary>
-		protected void MoveFordwards()
-		{
-			this.container.MoveItemFordwards(this);
-		}
-		
-		/// <summary>
-		/// Moves the item towards the container's beginning.
-		/// </summary>
-		protected void MoveBackwards()
-		{
-			this.container.MoveItemBackwards(this);
-		}
-		
-		/// <value>
-		/// Contains the widget's parent window.
-		/// </value>
-		public Window Window
-		{
-			get
-			{
-				return container.Window;
-			}
+			// Does nothing by default.
 		}
 		
 		/// <summary>
@@ -184,6 +181,41 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			return widget;
 		}
 		
+#endregion Public methods
+		
+#region Non-public methods
+		
+		/// <summary>
+		/// Removes the widget from its container.
+		/// </summary>
+		protected void Remove()
+		{
+			ResponseType res = 
+				ConfirmDialog.Show(this.container.Window,
+				                   "¿Realmente quieres eliminar este elemento?");
+			
+			if(res == ResponseType.No)
+				return;
+			
+			container.RemoveItem(this);
+		}
+		
+		/// <summary>
+		/// Moves the item towards the container's end.
+		/// </summary>
+		protected void MoveFordwards()
+		{
+			this.container.MoveItemFordwards(this);
+		}
+		
+		/// <summary>
+		/// Moves the item towards the container's beginning.
+		/// </summary>
+		protected void MoveBackwards()
+		{
+			this.container.MoveItemBackwards(this);
+		}		
+		
 		/// <summary>
 		/// Shows the options dialog.
 		/// </summary>
@@ -202,5 +234,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			}
 			dialog.Destroy();
 		}
+		
+#endregion Non-public methods
 	}
 }

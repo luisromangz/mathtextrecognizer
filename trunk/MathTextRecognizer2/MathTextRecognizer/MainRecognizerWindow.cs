@@ -14,6 +14,8 @@ using Gtk;
 using Gdk;
 using Glade;
 
+using Mono.Unix;
+
 using MathTextCustomWidgets;
 using MathTextCustomWidgets.Widgets.Logger;
 using MathTextCustomWidgets.Widgets.ImageArea;
@@ -36,8 +38,7 @@ using MathTextRecognizer.SyntacticalRulesManager;
 namespace MathTextRecognizer
 {
 	/// <summary>
-	/// Esta clase representa la ventana principal de la aplicacion de
-	/// reconocimiento de formulas.
+	/// This class implements the MathTextRecognizer app's main window.
 	/// </summary>
 	public class MainRecognizerWindow
 	{
@@ -55,9 +56,6 @@ namespace MathTextRecognizer
 		private Expander expLog = null;
 		
 		[WidgetAttribute]
-		private ImageMenuItem menuNewSession = null;
-		
-		[WidgetAttribute]
 		private ImageMenuItem menuOpenDatabaseManager = null;
 		
 		[WidgetAttribute]
@@ -65,9 +63,6 @@ namespace MathTextRecognizer
 		
 		[WidgetAttribute]
 		private HBox messageInfoHB = null;
-		
-		[WidgetAttribute]
-		private ToolButton toolNewSession = null;
 		
 		[WidgetAttribute]
 		private Notebook recognizingStepsNB = null;
@@ -90,7 +85,7 @@ namespace MathTextRecognizer
 			
 		private LogView logView;
 		
-		private const string title="Reconocedor de texto matemático";		
+		private static string title;		
 		
 		
 		private string imageFile;
@@ -99,8 +94,12 @@ namespace MathTextRecognizer
 		
 #region Main method
 		
+		/// <summary>
+		/// The app's entry point.
+		/// </summary>
 		public static void Main(string[] args)
 		{			
+			
 			Application.Init();
 			new MainRecognizerWindow();
 			Application.Run();
@@ -109,7 +108,7 @@ namespace MathTextRecognizer
 		
 #region Constructors
 		/// <summary>
-		/// El constructor de <code>MainWindow</code>.
+		/// <see cref="MainRecognizer">'s constructor.
 		/// </summary>
 		public MainRecognizerWindow()
 		{
@@ -121,9 +120,8 @@ namespace MathTextRecognizer
 			this.InitializeWidgets();			
 			
 			
-			Config.RecognizerConfig.Instance.Changed+= new EventHandler(OnConfigChanged);	
-			
-			
+			Config.RecognizerConfig.Instance.Changed+= 
+				new EventHandler(OnConfigChanged);	
 			
 			
 			this.mainWindow.Icon = 
@@ -133,6 +131,14 @@ namespace MathTextRecognizer
 			
 			
 		}
+	
+		/// <summary>
+		/// <see cref="MainRecognizer"/>'s static constructor.
+		/// </summary>
+		static MainRecognizerWindow()
+		{
+			title ="Reconocedor de texto matemático";
+		}
 		
 #endregion Constructors
 		
@@ -140,7 +146,7 @@ namespace MathTextRecognizer
 		
 
 		/// <value>
-		/// Contiene el estado de expansión del visor del log.
+		/// Contains the log area expanded state value.
 		/// </value>
 		public bool LogAreaExpanded
 		{
@@ -156,7 +162,8 @@ namespace MathTextRecognizer
 		}
 
 		/// <value>
-		/// Contiene la ventana de la aplicacion.
+		/// Contains the <see cref="Gdk.Window"/> used to actually draw de 
+		/// app's window.
 		/// </value>
 		public Gtk.Window Window 
 		{
@@ -238,7 +245,7 @@ namespace MathTextRecognizer
 #region Public methods
 		
 		/// <summary>
-		/// Clears the log view
+		/// Clears the log view.
 		/// </summary>
 		public void ClearLog()
 		{			
@@ -249,13 +256,16 @@ namespace MathTextRecognizer
 		/// Writes a message in the log view.
 		/// </summary>
 		/// <param name="message">
-		/// The message.
+		/// The message to be written.
 		/// </param>
 		public void Log(string message, params object[] args)
 		{			
 			logView.LogLine(message, args);
 		}
 		
+		/// <summary>
+		/// Creates the OCR stage widget.
+		/// </summary>		
 		public void CreateOCRWidget()
 		{
 			// We add the OCR widget.
@@ -266,10 +276,11 @@ namespace MathTextRecognizer
 			                              new Label(OCRStageWidget.WidgetLabel));
 			
 			ocrWidget.ShowAll();
-			
-			
 		}
 		
+		/// <summary>
+		/// Creates the unassisted stage widget.
+		/// </summary>	
 		public void CreateUnassistedWidget()
 		{
 			UnassistedStageWidget widget = new UnassistedStageWidget(this);
@@ -280,6 +291,9 @@ namespace MathTextRecognizer
 			widget.ShowAll();
 		}
 		
+		/// <summary>
+		/// Creates the tokenizing stage widget.
+		/// </summary>	
 		public void CreateTokenizingWidget()
 		{
 			// We add the tokenizer widget.
@@ -289,6 +303,9 @@ namespace MathTextRecognizer
 			tokenizingWidget.ShowAll();
 		}
 		
+		/// <summary>
+		/// Creates the parsing stage widget.
+		/// </summary>	
 		public void CreateParsingWidget()
 		{
 			parsingWidget = new ParsingStageWidget(this);
@@ -297,6 +314,9 @@ namespace MathTextRecognizer
 			parsingWidget.ShowAll();
 		}
 		
+		/// <summary>
+		/// Creates the blackboard stage widget.
+		/// </summary>	
 		public void CreateBlackboardWidget()
 		{
 			Widget stage = new BlackboardStageWidget(this);
@@ -307,8 +327,7 @@ namespace MathTextRecognizer
 		
 		
 		/// <summary>
-		/// Metodo que maneja el evento provocado al cerrarse el dialogo de 
-		/// apertura de imagen.
+		/// Allows the user to select an image and then loads it.
 		/// </summary>
 		public bool LoadImage()
 		{
@@ -336,23 +355,20 @@ namespace MathTextRecognizer
 		
 	
 		/// <summary>
-		/// Para facilitar la inicializacion de los widgets.
+		/// Intializes the windows widgets.
 		/// </summary>
 		private void InitializeWidgets()
 		{		
 			mainWindow.Title = title;
 			
-			// Ponemos iconos personalizados en los botones
+			// We load the icons
 			menuLoadImage.Image = ImageResources.LoadImage("insert-image16");
 			toolLoadImage.IconWidget = ImageResources.LoadImage("insert-image22");
 			
 			menuOpenDatabaseManager.Image = ImageResources.LoadImage("database16");
 			toolDatabase.IconWidget = ImageResources.LoadImage("database22");
 			
-			toolNewSession.IconWidget = ImageResources.LoadImage("window-new22");
-			menuNewSession.Image = ImageResources.LoadImage("window-new16");
-			
-			// Creamos el cuadro de registro.
+			// The log view is created
 			logView = new LogView();
 			expLog.Add(logView);	
 			
@@ -372,18 +388,17 @@ namespace MathTextRecognizer
 		
 		
 		/// <summary>
-		/// Metodo que maneja el evento provocado al cerrar la ventana.
+		/// Handles the window destruction.
 		/// </summary>
-		/// <param name="sender">El objeto que provoca el evento.</param>
-		/// <param name="arg">Los argumentos del evento.</param>
+		/// <param name="sender">An <see cref="object"/></param>
+		/// <param name="arg">A <see cref="DeleteEventArgs"/></param>
 		private void OnMainWindowDeleteEvent(object sender,DeleteEventArgs arg)
 		{
 			OnExit();
 		}		
 		
 		/// <summary>
-		/// Manejo del evento provocado al hacer clic sobre la opcion de menu
-		/// "Acerca de".
+		/// Shows the app's info dialog.
 		/// </summary>
 		private void OnMenuAboutClicked(object sender, EventArgs arg)
 		{
@@ -395,8 +410,7 @@ namespace MathTextRecognizer
 		}
 		
 		/// <summary>
-		///	Manejo del evento provocado al hacer click en el boton 
-		/// "Abrir base de datos". 
+		/// Opens the database manager.
 		/// </summary>
 		private void OnOpenDatabaseManagerClicked(object sender, EventArgs arg)
 		{	
@@ -408,8 +422,7 @@ namespace MathTextRecognizer
 		
 			
 		/// <summary>
-		/// Manejo del evento provocado al hacer click en la opcion "Salir"
-		/// del menu.
+		/// Exits the application.
 		/// </summary>
 		private void OnExitClicked(object sender, EventArgs arg)
 		{
@@ -417,8 +430,7 @@ namespace MathTextRecognizer
 		}
 		
 		/// <summary>
-		/// Manejo del evento provocado al hacer click en el boton 
-		/// "Cargar imagen".
+		/// Handles the clicking on the load image button.
 		/// </summary>
 		private void OnLoadImageClicked(object sender, EventArgs arg)
 		{
@@ -427,10 +439,10 @@ namespace MathTextRecognizer
 			
 			if(recognizementFinished)
 			{
-				 res = ConfirmDialog.Show(
-					mainWindow,
-					"Si cargas una nueva imágen perderás el reconocimiento realizado.\n"+
-					"¿Deseas continuar?");
+				 res = 
+				 	ConfirmDialog.Show(mainWindow,
+									   "Si cargas una nueva imágen perderás el reconocimiento realizado.\n"+
+									   "¿Deseas continuar?");
 			}
 			
 			if(res==ResponseType.Yes)
@@ -440,15 +452,6 @@ namespace MathTextRecognizer
 		}
 		
 			
-		/// <summary>
-		/// Manejo del evento provocado al hacer click en el botón
-		/// "Nueva sesion".
-		/// </summary>
-		private void OnNewSessionClicked(object sender, EventArgs arg)
-		{			
-			System.Diagnostics.Process.Start(System.Environment.CommandLine);			
-		}
-		
 		/// <summary>
 		/// Handles the change in the notebook holding the widgets for the
 		/// recognizing stages, so we can chow its name in a label.
@@ -478,7 +481,7 @@ namespace MathTextRecognizer
 		}
 		
 		/// <summary>
-		/// Handles the click on the simbol list editor menu item.
+		/// Opens the symbol list editor.
 		/// </summary>
 		/// <param name="sender">
 		/// A <see cref="System.Object"/>
@@ -496,7 +499,7 @@ namespace MathTextRecognizer
 		}		
 
 		/// <summary>
-		/// Metodo que se encarga de gestionar la salida de la aplicacion.
+		/// Takes care of running threads before exiting the app.
 		/// </summary>
 		private void OnExit()
 		{
@@ -544,7 +547,7 @@ namespace MathTextRecognizer
 		
 		
 		/// <summary>
-		/// Reiniciamos los valores de los widgets al estado inicial.
+		/// Resets the widgets values to sanitized standards.
 		/// </summary>
 		private void ResetState()
 		{
@@ -567,8 +570,7 @@ namespace MathTextRecognizer
 		}
 		
 		/// <summary>
-		/// Opens the lexical rules manager when the appropiate menu item is
-		/// clicked.
+		/// Opens the lexical rules manager.
 		/// </summary>
 		/// <param name="sender">
 		/// A <see cref="System.Object"/>
@@ -587,7 +589,7 @@ namespace MathTextRecognizer
 		}
 		
 		/// <summary>
-		/// Shows the syntactical rules manager.
+		/// Opens the syntactical rules manager.
 		/// </summary>
 		/// <param name="sender">
 		/// A <see cref="System.Object"/>
@@ -606,7 +608,7 @@ namespace MathTextRecognizer
 		}
 		
 		/// <summary>
-		/// Shows the output settings dialog.
+		/// Opens the output settings dialog.
 		/// </summary>
 		/// <param name="sender">
 		/// A <see cref="System.Object"/>

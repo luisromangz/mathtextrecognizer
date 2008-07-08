@@ -44,6 +44,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		
 #endregion Fields
 		
+#region Constructors
 		/// <summary>
 		/// <see cref="ExpressionRuleCallWidget"/>'s constructor.
 		/// </summary>
@@ -64,6 +65,8 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			this.ShowAll();
 		}
+		
+#endregion Constructors
 		
 #region Properties
 		/// <value>
@@ -113,13 +116,11 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			expRuleSeparator.Visible = position < container.ItemCount -1;
 			
 			expRulePreviousBtn.Sensitive =  position > 0;
-			
-			
 		}
 		
 		/// <summary>
 		/// Sets the widget in a mode suitable to be shown inside 
-		/// a <see cref="RelatedItemWidget"/>.
+		/// a <see cref="RelatedItemWidget"/> object.
 		/// </summary>
 		public override void SetRelatedMode ()
 		{
@@ -170,16 +171,43 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			Remove();
 		}
 		
+		/// <summary>
+		/// Moves the widget fordwards.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
 		protected void OnExpRuleNextBtnClicked(object sender, EventArgs args)
 		{
 			this.MoveFordwards();
 		}
 		
+		/// <summary>
+		/// Moves the widget backwards.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
 		protected void OnExpRulePreviousBtnClicked(object sender, EventArgs args)
 		{
 			this.MoveBackwards();
 		}
 		
+		/// <summary>
+		/// Shows the option dialog for the associated item.
+		/// </summary>
+		/// <param name="sender">
+		/// A <see cref="System.Object"/>
+		/// </param>
+		/// <param name="args">
+		/// A <see cref="EventArgs"/>
+		/// </param>
 		protected void OnExpRuleOptionsBtnClicked(object sender, EventArgs args)
 		{
 			this.ShowOptions();

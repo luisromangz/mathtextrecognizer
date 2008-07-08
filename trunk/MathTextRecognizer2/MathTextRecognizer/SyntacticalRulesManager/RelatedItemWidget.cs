@@ -46,7 +46,12 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		private ExpressionItemWidget itemWidget;
 		
 #endregion Fields
+	
+#region Constructors
 		
+		/// <summary>
+		/// <see cref="RelatedItemWidget"/>'s constructor.
+		/// </summary>
 		public RelatedItemWidget(ExpressionItemWidget itemWidget, 
 		                         IExpressionItemContainer container)
 			:base(container)
@@ -64,6 +69,8 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			this.ShowAll();
 		}
+		
+#endregion Constructors
 		
 		
 #region Properties
@@ -126,13 +133,12 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			relatedItemDownBtn.Sensitive =  position < container.ItemCount-1;
 			relatedItemSeparator.Visible = position < container.ItemCount -1;
 		}
-
-
-		public override void SetRelatedMode ()
-		{
-			throw new NotImplementedException ();
-		}
 		
+		
+		
+		/// <summary>
+		/// Checks the widget for validation errors.
+		/// </summary>
 		public override List<string> CheckErrors ()
 		{
 			List<string> errors = new List<string>(itemWidget.CheckErrors());

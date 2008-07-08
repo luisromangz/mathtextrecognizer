@@ -63,6 +63,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		public ExpressionGroupWidget(IExpressionItemContainer container) 
 			: base(container)
 		{
+			// We load the glade widgets.
 			Glade.XML gladeXml = new XML("mathtextrecognizer.glade",
 			                             "expressionGroupWidgetBase");
 			
@@ -72,8 +73,11 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			this.HeightRequest = expressionGroupWidgetBase.HeightRequest;
 			
+			// The menu is created.
 			addItemMenu = new AddSubItemMenu(this);
 			
+			// We tell the widget to redraw itself when the size is changed,
+			// fixs some graphical glitches.
 			expGroupItemsScroller.Hadjustment.ValueChanged +=
 				delegate(object sender, EventArgs args)
 			{
@@ -87,7 +91,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 
 #region Properties
 		/// <value>
-		/// Contains the widget's item.
+		/// Contains the widget's associated item.
 		/// </value>
 		public override ExpressionItem ExpressionItem 
 		{
@@ -95,40 +99,39 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			{
 				ExpressionGroupItem res = new ExpressionGroupItem();
 				
-				List<ExpressionItem> items = new List<ExpressionItem>();
-				
-				
-				
+				// We add the contained widgets' items.
+				List<ExpressionItem> items = new List<ExpressionItem>();	
 				foreach (ExpressionItemWidget childWidget in 
 				         expGroupItemsBox.Children) 
-				{
-					
+				{					
 					items.Add(childWidget.ExpressionItem);
-				}
-				
+				}	
 				
 				
 				res.ChildrenItems = items;
 				
-				res.FormatString = expGroupFormatEntry.Text;
-				
-				res.Modifier = options.Modifier;
-				
-				
+				// Then we set the other properties.
+				res.FormatString = expGroupFormatEntry.Text;				
+				res.Modifier = options.Modifier;							
 				
 				return res;
 			}
 			set 
 			{
+				// Check if the argument is valid.
 				if(value.GetType() != typeof(ExpressionGroupItem))
 				{
 					throw new ArgumentException("The type of the value wasn't ExpressionGroupItem");
 				}
 				
+				
 				ExpressionGroupItem item = value as ExpressionGroupItem;
 				
+				// We load the items parameters.
 				expGroupFormatEntry.Text = item.FormatString;
+				options.Modifier = value.Modifier;								
 				
+				// We create a children widget foreach contained subexpression.
 				foreach (ExpressionItem childItem in item.ChildrenItems) 
 				{
 					ExpressionItemWidget childWidget =
@@ -137,7 +140,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 					AddItem(childWidget);
 				}
 				
-				options.Modifier = value.Modifier;								
+				
 			}
 		}
 
@@ -192,15 +195,12 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			CheckHeight();
 			
 			expGroupItemsScroller.Hadjustment.Value =
-				expGroupItemsScroller.Hadjustment.Upper;
+				expGroupItemsScroller.Hadjustment.Upper;		
 			
-			
-				
+			// We need to listen to changes in the childrens' height to
+			// adjust the container's own.
 			widget.HeightRequestChanged += 
 				new EventHandler(OnChildWidgetHeightRequestChanged);
-				
-			
-			
 		}
 		
 		/// <summary>
@@ -216,7 +216,6 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			expGroupSeparator.Visible = false;
 		}
 
-		
 		
 		/// <summary>
 		/// Remove an item from this container.
@@ -345,6 +344,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 				
 				if(errorList.Count>0)
 				{
+					// There were errors, the user must be told.
 					errorList.Insert(0,
 					                 String.Format("· El grupo de items de la posición {0} tiene los siguientes errores:",
 					                               position));
@@ -435,16 +435,25 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			CheckHeight();
 		}
 		
+		/// <summary>
+		/// Moves the widget fordward.
+		/// </summary>
 		private void OnExpGroupNextBtnClicked(object sender, EventArgs args)
 		{
 			this.MoveFordwards();
 		}
 		
+		/// <summary>
+		/// Moves the widget backwards.
+		/// </summary>
 		private void OnExpGroupPreviousBtnClicked(object sender, EventArgs args)
 		{
 			this.MoveBackwards();
 		}
 		
+		/// <summary>
+		/// Opens the item's option dialog.
+		/// </summary>
 		private void OnExpGroupOptionsBtnClicked(object sender, EventArgs args)
 		{
 			this.ShowOptions();
