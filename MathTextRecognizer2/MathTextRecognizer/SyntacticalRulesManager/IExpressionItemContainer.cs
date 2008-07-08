@@ -13,12 +13,10 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 	/// </summary>
 	public interface IExpressionItemContainer
 	{
-		/// <summary>
-		/// Adds an item to the item container.
-		/// </summary>
-		void AddItem(ExpressionItemWidget widget);
-		
-		void RemoveItem(ExpressionItemWidget widget);
+	
+
+
+#region Properties
 		
 		/// <value>
 		/// Contains the number of items of the container.
@@ -27,6 +25,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			get;
 		}
+		
 		
 		Gtk.Box.BoxChild this[Widget w]
 		{
@@ -38,6 +37,26 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			get;
 		}
 		
+#endregion Properties
+
+#region Methods
+		/// <summary>
+		/// Adds an item to the item container.
+		/// </summary>
+		/// <param name="widget">
+		/// A <see cref="ExpressionItemWidget"/> to be added.
+		/// </param>
+		void AddItem(ExpressionItemWidget widget);
+		
+		/// <summary>
+		/// Removes an item from the container.
+		/// </summary>
+		/// <param name="widget">
+		/// The <see cref="ExpressionItemWidget"/> to be removed.
+		/// </param>
+		void RemoveItem(ExpressionItemWidget widget);
+		
+			
 		/// <summary>
 		/// Moves an items towars the container start.
 		/// </summary>
@@ -53,5 +72,8 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		/// A <see cref="ExpressionItemWidget"/>
 		/// </param>
 		void MoveItemFordwards(ExpressionItemWidget widget);
+		
+#endregion Methods
+	
 	}
 }

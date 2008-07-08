@@ -54,7 +54,12 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		AddSubItemMenu addItemMenu;
 		
 #endregion Fields
-		
+
+#region Constructors
+
+		/// <summary>
+		/// <see cref="ExpressionItemOptionsDialog"/>'s constructor.
+		/// </summary>
 		public ExpressionItemOptionsDialog(Window parent, Type expressionType)
 		{
 			XML gladeXml = new XML("mathtextrecognizer.glade",
@@ -68,6 +73,8 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			InitializeWidgets(expressionType);
 		}
+#endregion Constructors
+
 		
 #region Properties
 		
@@ -115,6 +122,8 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			get
 			{
+				// We create a new options object, from the values in
+				// the dialog's widgets.
 				ExpressionItemOptions options = new ExpressionItemOptions();
 				options.ForceTokenSearch = itemOpForceSearchCheck.Active;
 				options.Modifier =
@@ -133,6 +142,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			
 			set
 			{
+				// We load the values in the dialog's widgets.
 				itemOpForceSearchCheck.Active =  value.ForceTokenSearch;
 				itemOpFormatEntry.Text =  value.FormatString;
 				
@@ -157,8 +167,6 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 #endregion Properties
 		
 #region Public methods
-
-
 		
 		/// <summary>
 		/// Adds an item to the container.
@@ -402,8 +410,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 	}
 	
 	/// <summary>
-	/// This class implements a way for the dialog to encapsulate the item's 
-	/// options.
+	/// This class encapsulates an item's options.
 	/// </summary>
 	public class ExpressionItemOptions
 	{
@@ -419,8 +426,5 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			Modifier = ExpressionItemModifier.None;
 		}
 		
-	}
-	
-
-		
+	}	
 }

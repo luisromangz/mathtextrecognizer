@@ -30,7 +30,7 @@
     <Execute type="None" entry="MathTextLearnerLauncher" />
     <Execute type="None" entry="Packaging" />
   </StartMode>
-  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="NoChangeLog" />
+  <MonoDevelop.ChangeLogAddIn.ChangeLogInfo policy="OneChangeLogInProjectRootDirectory" />
   <DeployTargets />
   <Entries>
     <Entry filename="MathTextLearner/MathTextLearner.mdp" />

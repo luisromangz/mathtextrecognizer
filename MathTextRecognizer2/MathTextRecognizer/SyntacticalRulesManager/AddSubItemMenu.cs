@@ -15,10 +15,16 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 	/// </summary>
 	public class AddSubItemMenu
 	{
+	
+#region Fields
 		private IExpressionItemContainer container;
 		
 		[Widget]
 		private Menu addExpressionItemMenu = null;
+		
+#endregion Fields
+		
+#region Constructors
 		
 		/// <summary>
 		/// <see cref="AddSubItemMenu"/>'s constructor.
@@ -38,6 +44,10 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 			this.container = container;
 		}
 		
+#endregion Constructors
+	
+#region Public methods
+		
 		/// <summary>
 		/// Shows the menu.
 		/// </summary>
@@ -45,6 +55,10 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			addExpressionItemMenu.Popup();
 		}
+		
+#endregion Public methods
+		
+#region Non-public methods
 		
 		/// <summary>
 		/// Adds a <see cref="ItemWidget"/> to the container.
@@ -87,5 +101,7 @@ namespace MathTextRecognizer.SyntacticalRulesManager
 		{
 			container.AddItem(new ExpressionRuleCallWidget(container));
 		}
+		
+#endregion Non-public methods
 	}
 }
