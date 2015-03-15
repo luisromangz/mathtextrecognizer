@@ -1,0 +1,1 @@
+An utility class in [MathTextLibrary](MathTextLibrary.md) used to retrieve a valid path for a file in which an application may store its settings. This is tricky because of the multiplataform nature of the application suite, so it has to rely in using the Environment class provided by the .Net/Mono class library.
